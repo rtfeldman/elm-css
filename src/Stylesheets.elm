@@ -362,8 +362,8 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
         |> Style selector attrs
 
 
-(|%|~) : Style class -> List Tag -> Style class
-(|%|~) (Style selector attrs children) tags =
+(|%|...) : Style class -> List Tag -> Style class
+(|%|...) (Style selector attrs children) tags =
     let
         childSelector =
             tags

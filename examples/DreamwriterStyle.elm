@@ -9,7 +9,7 @@ type CssClasses
 exports : Style CssClasses
 exports =
     stylesheet
-        |%|~ [ html, body ]
+        |%|... [ html, body ]
             |-| width 100 pct
             |-| height 100 pct
             |-| boxSizing borderBox
@@ -31,7 +31,7 @@ exports =
             |%| nowrap
                 |-| whiteSpace noWrap
 
-        |%|~ [ div, span, button, h1, h2, h3, h4, p, ol ]
+        |%|... [ div, span, button, h1, h2, h3, h4, p, ol ]
             |%| input
                 |-| outline 0 px solid transparent
                 |-| boxSizing borderBox
