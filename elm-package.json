@@ -1,0 +1,17 @@
+{
+    "version": "1.2.0",
+    "elm-version": "0.15.1 <= v <= 0.15.1",
+    "summary": "Streamlined long-form writing software.",
+    "repository": "https://github.com/rtfeldman/dreamwriter.git",
+    "license": "BSD-3-Clause",
+    "source-directories": [
+        "src",
+        "examples"
+    ],
+    "exposed-modules": [],
+    "dependencies": {
+        "elm-lang/core": "2.1.0 <= v <= 2.1.0",
+        "evancz/elm-html": "4.0.0 <= v <= 4.0.0",
+        "evancz/elm-svg": "2.0.0 <= v < 3.0.0"
+    }
+}
