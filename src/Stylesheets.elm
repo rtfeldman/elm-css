@@ -12,13 +12,25 @@ module Stylesheets where
         width: 100%
 -}
 
+import String
 
 {- Tags -}
 
-html = "html"
-body = "body"
-div = "div"
-nowrap = "nowrap"
+html = Tag "html"
+body = Tag "body"
+div = Tag "div"
+span = Tag "span"
+nowrap = Tag "nowrap"
+button = Tag "button"
+h1 = Tag "h1"
+h2 = Tag "h2"
+h3 = Tag "h3"
+h4 = Tag "h4"
+p = Tag "p"
+ol = Tag "ol"
+input = Tag "input"
+
+tagToString (Tag str) = str
 
 
 -- TODO these are just for @media - maybe improve type guarantees?
@@ -62,8 +74,6 @@ noneToString translate value =
 unitsToString : Units -> String
 unitsToString =
     (\(ExplicitUnits str) -> str)
-        |> autoToString
-        |> inheritToString
 
 
 boxSizingToString : BoxSizing -> String
@@ -123,6 +133,16 @@ explicitTextShadowToString value =
         NoTextShadow ->
             "TODO"
 
+outlineStyleToString : OutlineStyle -> String
+outlineStyleToString (OutlineStyle str) = str
+
+
+opacityStyleToString : OpacityStyle -> String
+opacityStyleToString (OpacityStyle str) = str
+
+
+type Tag
+    = Tag String
 
 type InheritOr a
     = Inherit
@@ -136,15 +156,15 @@ type NoneOr a
     = None
     | NotNone a
 
-type alias Units = InheritOr (AutoOr ExplicitUnits)
 type alias BoxSizing = InheritOr ExplicitBoxSizing
 type alias Overflow = InheritOr (AutoOr ExplicitOverflow)
 type alias Display = InheritOr (NoneOr ExplicitDisplay)
 type alias WhiteSpace = InheritOr (AutoOr ExplicitWhiteSpace)
 type alias Color = InheritOr (AutoOr ExplicitColor)
 type alias TextShadow = InheritOr (NoneOr ExplicitTextShadow)
+type alias Outline = InheritOr ExplicitOutline
 
-type ExplicitUnits = ExplicitUnits String
+type Units = ExplicitUnits String
 type ExplicitBoxSizing = ExplicitBoxSizing String
 type ExplicitOverflow = ExplicitOverflow String
 type ExplicitDisplay = ExplicitDisplay String
@@ -155,8 +175,23 @@ type ExplicitColor
     | RGBA Float Float Float Float
     | Hex String
 
+type ExplicitOutline
+    = ExplicitOutline Float Units OutlineStyle OpacityStyle
+
+type OutlineStyle
+    = OutlineStyle String
+
+type OpacityStyle
+    = OpacityStyle String
+
 type ExplicitTextShadow
     = NoTextShadow
+
+solid : OutlineStyle
+solid = OutlineStyle "solid"
+
+transparent : OpacityStyle
+transparent = OpacityStyle "solid"
 
 rgb : number -> number -> number -> Color
 rgb r g b =
@@ -171,13 +206,13 @@ hex str =
     Hex str |> NotAuto |> NotInherit
 
 pct : Units
-pct = "%" |> ExplicitUnits |> NotAuto |> NotInherit
+pct = "%" |> ExplicitUnits
 
 em : Units
-em = "em" |> ExplicitUnits |> NotAuto |> NotInherit
+em = "em" |> ExplicitUnits
 
 px : Units
-px = "px" |> ExplicitUnits |> NotAuto |> NotInherit
+px = "px" |> ExplicitUnits
 
 borderBox = "border-box" |> ExplicitBoxSizing |> NotInherit
 
@@ -196,6 +231,7 @@ inherit = Inherit
 noWrap : WhiteSpace
 noWrap = "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> NotInherit
 
+
 {- Attributes -}
 
 attr1 name translate value =
@@ -204,6 +240,19 @@ attr1 name translate value =
 
 attr2 name translateA translateB valueA valueB =
     Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB))
+
+
+attr3 name translateA translateB translateC valueA valueB valueC =
+    Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB) ++ " " ++ (translateC valueC))
+
+
+attr4 name translateA translateB translateC translateD valueA valueB valueC valueD =
+    Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB) ++ " " ++ (translateC valueC) ++ " " ++ (translateD valueD))
+
+
+attr5 name translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
+    Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB) ++ " " ++ (translateC valueC) ++ " " ++ (translateD valueD) ++ " " ++ (translateE valueE))
+
 
 
 display : Display -> Attribute
@@ -280,6 +329,12 @@ textShadow : TextShadow -> Attribute
 textShadow =
     attr1 "text-shadow" textShadowToString
 
+
+outline : Float -> Units -> OutlineStyle -> OpacityStyle -> Attribute
+outline =
+    attr4 "outline" toString unitsToString outlineStyleToString opacityStyleToString
+
+
 {- Types -}
 
 type Style class
@@ -301,37 +356,49 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
         |> Style selector attrs
 
 
-(|%) : Style class -> a -> Style class
-(|%) (Style selector attrs children) childSelector =
-    children ++ [ Style (toString childSelector) [] [] ]
+(|%|) : Style class -> Tag -> Style class
+(|%|) (Style selector attrs children) tag =
+    children ++ [ Style (tagToString tag) [] [] ]
         |> Style selector attrs
 
 
-(|@) : Style class -> a -> Style class
-(|@) = styleWithPrefix "@"
+(|%|~) : Style class -> List Tag -> Style class
+(|%|~) (Style selector attrs children) tags =
+    let
+        childSelector =
+            tags
+                |> List.map tagToString
+                |> String.join " "
+    in
+        children ++ [ Style childSelector [] [] ]
+            |> Style selector attrs
 
 
-(|::) : Style class -> a -> Style class
-(|::) = styleWithPrefix "::"
+(|@|) : Style class -> a -> Style class
+(|@|) = styleWithPrefix "@"
 
 
-(|>%) : Style class -> a -> Style class
-(|>%) = styleWithPrefix ">"
+(|::|) : Style class -> a -> Style class
+(|::|) = styleWithPrefix "::"
 
 
-(|.) : Style class -> a -> Style class
-(|.) = styleWithPrefix "."
+(|>|) : Style class -> a -> Style class
+(|>|) = styleWithPrefix ">"
 
 
-(|>.) : Style class -> a -> Style class
-(|>.) = styleWithPrefix ">."
+(|.|) : Style class -> class -> Style class
+(|.|) = styleWithPrefix "."
 
 
-(|!) : Style class -> Attribute -> Style class
-(|!) (Style selector attrs children) (Attribute attrString) =
+(|>.|) : Style class -> a -> Style class
+(|>.|) = styleWithPrefix ">."
+
+
+(|!|) : Style class -> Attribute -> Style class
+(|!|) (Style selector attrs children) (Attribute attrString) =
     Style selector (attrs ++ [ (Attribute (attrString ++ " !important")) ]) children
 
 
-(|-) : Style class -> Attribute -> Style class
-(|-) (Style selector attrs children) attr =
+(|-|) : Style class -> Attribute -> Style class
+(|-|) (Style selector attrs children) attr =
     Style selector (attrs ++ [ attr ]) children
