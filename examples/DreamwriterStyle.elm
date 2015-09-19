@@ -6,7 +6,7 @@ import Stylesheets exposing (..)
 type CssClasses
     = Hidden
 
-exports : Style
+exports : Style CssClasses
 exports =
     stylesheet
         |% [ html, body ]

@@ -282,56 +282,56 @@ textShadow =
 
 {- Types -}
 
-type Style
-    = Style String (List Attribute) (List Style)
+type Style class
+    = Style String (List Attribute) (List (Style class))
 
 
 type Attribute
     = Attribute String
 
 
-stylesheet : Style
+stylesheet : Style class
 stylesheet =
     Style "" [] []
 
 
-styleWithPrefix : String -> Style -> a -> Style
+styleWithPrefix : String -> Style class -> a -> Style class
 styleWithPrefix prefix (Style selector attrs children) childSelector =
     children ++ [ Style (prefix ++ (toString childSelector)) [] [] ]
         |> Style selector attrs
 
 
-(|%) : Style -> a -> Style
+(|%) : Style class -> a -> Style class
 (|%) (Style selector attrs children) childSelector =
     children ++ [ Style (toString childSelector) [] [] ]
         |> Style selector attrs
 
 
-(|@) : Style -> a -> Style
+(|@) : Style class -> a -> Style class
 (|@) = styleWithPrefix "@"
 
 
-(|::) : Style -> a -> Style
+(|::) : Style class -> a -> Style class
 (|::) = styleWithPrefix "::"
 
 
-(|>%) : Style -> a -> Style
+(|>%) : Style class -> a -> Style class
 (|>%) = styleWithPrefix ">"
 
 
-(|.) : Style -> a -> Style
+(|.) : Style class -> a -> Style class
 (|.) = styleWithPrefix "."
 
 
-(|>.) : Style -> a -> Style
+(|>.) : Style class -> a -> Style class
 (|>.) = styleWithPrefix ">."
 
 
-(|!) : Style -> Attribute -> Style
+(|!) : Style class -> Attribute -> Style class
 (|!) (Style selector attrs children) (Attribute attrString) =
     Style selector (attrs ++ [ (Attribute (attrString ++ " !important")) ]) children
 
 
-(|-) : Style -> Attribute -> Style
+(|-) : Style class -> Attribute -> Style class
 (|-) (Style selector attrs children) attr =
     Style selector (attrs ++ [ attr ]) children
