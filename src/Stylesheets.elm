@@ -14,6 +14,57 @@ module Stylesheets where
 
 import String
 
+prettyPrint : Int -> Style class id -> String
+prettyPrint =
+    prettyPrintHelp 0
+
+
+prettyPrintHelp : Int -> Int -> Style class id -> String
+prettyPrintHelp indentLevel indentSpaces (Style selector attributes children) =
+    if (indentLevel == 0) && (String.isEmpty selector) then
+        children
+            |> List.map (prettyPrintHelp indentLevel indentSpaces)
+            |> String.join "\n\n"
+    else
+        let
+            indentStr =
+                String.repeat (indentSpaces * indentLevel) " "
+
+            subIndentStr =
+                indentStr ++ String.repeat (indentSpaces) " "
+
+            attrsStr =
+                if List.isEmpty attributes then
+                    ""
+                else
+                    attributes
+                        |> List.map attributeToString
+                        |> String.join subIndentStr
+                        |> (++) subIndentStr
+
+            prettyPrintChild =
+                prettyPrintHelp (indentLevel + 1) indentSpaces
+
+            childrenStr =
+                if List.isEmpty children then
+                    ""
+                else
+                    children
+                        |> List.map prettyPrintChild
+                        |> String.join subIndentStr
+                        |> (++) subIndentStr
+        in
+            indentStr ++ selector ++ " {\n"
+                ++ attrsStr
+                ++ childrenStr
+                ++ "}"
+
+
+attributeToString : Attribute -> String
+attributeToString (Attribute str) =
+    str ++ ";\n"
+
+
 {- Tags -}
 
 html = Tag "html"
@@ -191,7 +242,7 @@ solid : OutlineStyle
 solid = OutlineStyle "solid"
 
 transparent : OpacityStyle
-transparent = OpacityStyle "solid"
+transparent = OpacityStyle "transparent"
 
 rgb : number -> number -> number -> Color
 rgb r g b =
@@ -239,19 +290,19 @@ attr1 name translate value =
 
 
 attr2 name translateA translateB valueA valueB =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB))
+    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB))
 
 
 attr3 name translateA translateB translateC valueA valueB valueC =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB) ++ " " ++ (translateC valueC))
+    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB) ++ (translateC valueC))
 
 
 attr4 name translateA translateB translateC translateD valueA valueB valueC valueD =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB) ++ " " ++ (translateC valueC) ++ " " ++ (translateD valueD))
+    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD))
 
 
 attr5 name translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ " " ++ (translateB valueB) ++ " " ++ (translateC valueC) ++ " " ++ (translateD valueD) ++ " " ++ (translateE valueE))
+    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) ++ (translateE valueE))
 
 
 
@@ -332,73 +383,126 @@ textShadow =
 
 outline : Float -> Units -> OutlineStyle -> OpacityStyle -> Attribute
 outline =
-    attr4 "outline" toString unitsToString outlineStyleToString opacityStyleToString
+    attr4
+        "outline"
+            toString unitsToString
+            (\str -> " " ++ outlineStyleToString str ++ " ")
+            opacityStyleToString
 
 
 {- Types -}
 
-type Style class
-    = Style String (List Attribute) (List (Style class))
+type Style class id
+    = Style String (List Attribute) (List (Style class id))
 
 
 type Attribute
     = Attribute String
 
 
-stylesheet : Style class
+stylesheet : Style class id
 stylesheet =
     Style "" [] []
 
 
-styleWithPrefix : String -> Style class -> a -> Style class
+styleWithPrefix : String -> Style class id -> a -> Style class id
 styleWithPrefix prefix (Style selector attrs children) childSelector =
     children ++ [ Style (prefix ++ (toString childSelector)) [] [] ]
         |> Style selector attrs
 
 
-(|%|) : Style class -> Tag -> Style class
+(|%|) : Style class id -> Tag -> Style class id
 (|%|) (Style selector attrs children) tag =
     children ++ [ Style (tagToString tag) [] [] ]
         |> Style selector attrs
 
 
-(|%|...) : Style class -> List Tag -> Style class
+(|%|...) : Style class id -> List Tag -> Style class id
 (|%|...) (Style selector attrs children) tags =
     let
         childSelector =
             tags
                 |> List.map tagToString
-                |> String.join " "
+                |> String.join ", "
     in
         children ++ [ Style childSelector [] [] ]
             |> Style selector attrs
 
 
-(|@|) : Style class -> a -> Style class
+(|@|) : Style class id -> a -> Style class id
 (|@|) = styleWithPrefix "@"
 
 
-(|::|) : Style class -> a -> Style class
+(|::|) : Style class id -> a -> Style class id
 (|::|) = styleWithPrefix "::"
 
 
-(|>|) : Style class -> a -> Style class
-(|>|) = styleWithPrefix ">"
+-- TODO use tagToString
+(|>%|) : Style class id -> Tag -> Style class id
+(|>%|) (Style selector attrs children) tag =
+    case splitStartLast children of
+        ( _, Nothing ) ->
+            children ++ [ Style (selector ++ " > " ++ tagToString tag) [] [] ]
+                |> Style selector attrs
+
+        ( start, Just (Style activeSelector _ _) ) ->
+            children ++ [ Style (activeSelector ++ " > " ++ tagToString tag) [] [] ]
+                |> Style selector attrs
 
 
-(|.|) : Style class -> class -> Style class
+(|.|) : Style class id -> class -> Style class id
 (|.|) = styleWithPrefix "."
 
 
-(|>.|) : Style class -> a -> Style class
+(|#|) : Style class id -> id -> Style class id
+(|#|) = styleWithPrefix "#"
+
+
+(|>.|) : Style class id -> a -> Style class id
 (|>.|) = styleWithPrefix ">."
 
 
-(|!|) : Style class -> Attribute -> Style class
-(|!|) (Style selector attrs children) (Attribute attrString) =
-    Style selector (attrs ++ [ (Attribute (attrString ++ " !important")) ]) children
+(|!|) : Style class id -> Attribute -> Style class id
+(|!|) style (Attribute attrString) =
+    transformActiveChild (addAttr (Attribute (attrString ++ " !important"))) style
 
 
-(|-|) : Style class -> Attribute -> Style class
-(|-|) (Style selector attrs children) attr =
+(|-|) : Style class id -> Attribute -> Style class id
+(|-|) style attr =
+    transformActiveChild (addAttr attr) style
+
+
+addAttr : Attribute -> Style a b -> Style a b
+addAttr attr (Style selector attrs children) =
     Style selector (attrs ++ [ attr ]) children
+
+
+transformActiveChild : (Style a b -> Style a b) -> Style a b -> Style a b
+transformActiveChild transform (( Style selector attrs children ) as style) =
+    case splitStartLast children of
+        ( _, Nothing ) ->
+            transform style
+
+        ( inactiveChildren, Just activeChild ) ->
+            Style
+                selector
+                attrs
+                (inactiveChildren ++ [ transform activeChild ])
+
+
+splitStartLast : List a -> (List a, Maybe a)
+splitStartLast list =
+    case list of
+        [] ->
+            ( [], Nothing )
+
+        elem :: [] ->
+            ( [], Just elem )
+
+        elem :: rest ->
+            let
+                ( start, last ) =
+                    splitStartLast rest
+            in
+                ( elem :: start, last )
+

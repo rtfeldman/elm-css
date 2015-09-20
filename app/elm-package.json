@@ -5,10 +5,13 @@
     "repository": "https://github.com/rtfeldman/dreamwriter.git",
     "license": "BSD-3-Clause",
     "source-directories": [
-        "src"
+        "src",
+        "../src"
     ],
     "exposed-modules": [],
     "dependencies": {
-        "elm-lang/core": "2.1.0 <= v <= 2.1.0"
+        "elm-lang/core": "2.1.0 <= v <= 2.1.0",
+        "evancz/elm-html": "4.0.0 <= v <= 4.0.0",
+        "evancz/elm-svg": "2.0.0 <= v < 3.0.0"
     }
 }
