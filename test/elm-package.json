@@ -1,0 +1,17 @@
+{
+    "version": "1.0.0",
+    "summary": "Unit tests for elm-stylesheets",
+    "repository": "https://github.com/rtfeldman/elm-stylesheets.git",
+    "license": "BSD-3-Clause",
+    "source-directories": [
+        ".",
+        "../src"
+    ],
+    "exposed-modules": [],
+    "dependencies": {
+        "deadfoxygrandpa/Elm-Test": "1.0.4 <= v < 2.0.0",
+        "elm-lang/core": "2.1.0 <= v < 3.0.0",
+        "maxsnew/IO": "1.0.1 <= v < 2.0.0"
+    },
+    "elm-version": "0.15.1 <= v < 0.16.0"
+}
