@@ -10,10 +10,10 @@ pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
 
-dreamwriter : Style CssClasses CssIds
-dreamwriter =
+exports : Style CssClasses CssIds
+exports =
     stylesheet
-        |%|... [ html, body ]
+        |%|= [ html, body ]
             |-| width 100 pct
             |-| height 100 pct
             |-| boxSizing borderBox
