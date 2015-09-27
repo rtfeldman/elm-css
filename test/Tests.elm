@@ -44,7 +44,6 @@ dreamwriter =
 
         output =
             String.trim """
-
 html, body {
   width: 100%;
   height: 100%;
@@ -76,12 +75,12 @@ body > div {
   background-color: rgb(100, 90, 128);
   color: rgb(40, 35, 76);
 }
-            """
+
+      """
     in
         suite "Sample stylesheet from Dreamwriter"
             [ test "pretty prints the expected output" <|
                 assertEqual output (prettyPrint input)
-            ]
 
 multiDescendent : Test
 multiDescendent =
@@ -120,7 +119,7 @@ span > h2, span > h1 {
   width: 1px;
   height: 2%;
 }
-            """
+        """
     in
         suite "Multi-descendent stylesheet"
             [ test "pretty prints the expected output" <|
