@@ -18,8 +18,8 @@ divWidthHeight =
             |-| height 50 px
 
 
-exports : Style CssClasses CssIds
-exports =
+dreamwriter : Style CssClasses CssIds
+dreamwriter =
     stylesheet
         |%|... [ html, body ]
             |-| width 100 pct

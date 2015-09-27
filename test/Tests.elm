@@ -16,6 +16,7 @@ all : Test
 all =
     suite "elm-stylesheets"
         [ divWidthHeight
+        , dreamwriter
         ]
 
 
@@ -29,6 +30,52 @@ divWidthHeight =
             "div {\n  width: 32%;\n  height: 50px;\n}"
     in
         suite "basic div with fixed width and height"
+            [ test "pretty prints the expected output" <|
+                assertEqual output (prettyPrint input)
+            ]
+
+
+dreamwriter : Test
+dreamwriter =
+    let
+        input =
+            Fixtures.dreamwriter
+
+        output = String.trim """
+html, body {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  min-width: 1280px;
+  overflow-x: auto;
+}
+
+body > div {
+  width: 100%;
+  height: 100%;
+}
+
+.Hidden {
+  display: none !important;
+}
+
+#Page {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 8px;
+  background-color: rgb(100, 90, 128);
+  color: rgb(40, 35, 76);
+}
+        """
+    in
+        suite "Sample stylesheet from Dreamwriter"
             [ test "pretty prints the expected output" <|
                 assertEqual output (prettyPrint input)
             ]

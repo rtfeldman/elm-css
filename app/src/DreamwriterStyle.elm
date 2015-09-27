@@ -9,8 +9,9 @@ type CssIds = Page
 pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
-exports : Style CssClasses CssIds
-exports =
+
+dreamwriter : Style CssClasses CssIds
+dreamwriter =
     stylesheet
         |%|... [ html, body ]
             |-| width 100 pct
