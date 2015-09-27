@@ -157,7 +157,7 @@ whiteSpaceToString =
 
 colorToString : Color -> String
 colorToString =
-    explicitColorToString
+    (\(ExplicitColor str) -> str)
         |> autoToString
         |> inheritToString
 
@@ -167,18 +167,6 @@ textShadowToString =
         |> noneToString
         |> inheritToString
 
-
-explicitColorToString : ExplicitColor -> String
-explicitColorToString value =
-    case value of
-        RGB r g b ->
-            "rgb(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ")"
-
-        RGBA r g b a ->
-            "rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ")"
-
-        Hex str ->
-            "#" ++ str
 
 explicitTextShadowToString : ExplicitTextShadow -> String
 explicitTextShadowToString value =
@@ -223,11 +211,7 @@ type ExplicitBoxSizing = ExplicitBoxSizing String
 type ExplicitOverflow = ExplicitOverflow String
 type ExplicitDisplay = ExplicitDisplay String
 type ExplicitWhiteSpace = ExplicitWhiteSpace String
-
-type ExplicitColor
-    = RGB Float Float Float
-    | RGBA Float Float Float Float
-    | Hex String
+type ExplicitColor = ExplicitColor String
 
 type ExplicitOutline
     = ExplicitOutline Float ExplicitUnits OutlineStyle OpacityStyle
@@ -249,15 +233,20 @@ transparent = OpacityStyle "transparent"
 
 rgb : number -> number -> number -> Color
 rgb r g b =
-    RGB r g b |> NotAuto |> NotInherit
+    ExplicitColor ("rgb(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ")")
+        |> NotAuto |> NotInherit
+
 
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
-    RGBA r g b a |> NotAuto |> NotInherit
+    ExplicitColor ("rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ")")
+        |> NotAuto |> NotInherit
+
 
 hex : String -> Color
 hex str =
-    Hex str |> NotAuto |> NotInherit
+    ExplicitColor ("#" ++ str)
+        |> NotAuto |> NotInherit
 
 pct : Units
 pct = "%" |> ExplicitUnits |> NotInherit
