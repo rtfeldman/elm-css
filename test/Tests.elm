@@ -41,7 +41,9 @@ dreamwriter =
         input =
             Fixtures.dreamwriter
 
-        output = String.trim """
+        output =
+            String.trim """
+
 html, body {
   width: 100%;
   height: 100%;
