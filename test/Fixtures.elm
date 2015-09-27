@@ -21,7 +21,7 @@ divWidthHeight =
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
     stylesheet
-        |%|... [ html, body ]
+        |%|= [ html, body ]
             |-| width 100 pct
             |-| height 100 pct
             |-| boxSizing borderBox

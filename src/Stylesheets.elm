@@ -409,8 +409,8 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
         |> Style selector attrs
 
 
-(|%|...) : Style class id -> List Tag -> Style class id
-(|%|...) (Style selector attrs children) tags =
+(|%|=) : Style class id -> List Tag -> Style class id
+(|%|=) (Style selector attrs children) tags =
     let
         childSelector =
             tags
@@ -429,7 +429,6 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
 (|::|) = styleWithPrefix "::"
 
 
--- TODO use tagToString
 (|>%|) : Style class id -> Tag -> Style class id
 (|>%|) (Style selector attrs children) tag =
     case splitStartLast children of
@@ -440,6 +439,26 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
         ( start, Just (Style activeSelector _ _) ) ->
             children ++ [ Style (activeSelector ++ " > " ++ tagToString tag) [] [] ]
                 |> Style selector attrs
+
+
+(|>%|=) : Style class id -> List Tag -> Style class id
+(|>%|=) (Style selector attrs children) tags =
+    let
+        selectorFromTag tag =
+            case splitStartLast children of
+                ( _, Nothing ) ->
+                    selector ++ " > " ++ tagToString tag
+
+                ( start, Just (Style activeSelector _ _) ) ->
+                    activeSelector ++ " > " ++ tagToString tag
+
+        childSelector =
+            tags
+                |> List.map selectorFromTag
+                |> String.join ", "
+    in
+        children ++ [ Style childSelector [] [] ]
+            |> Style selector attrs
 
 
 (|.|) : Style class id -> class -> Style class id
