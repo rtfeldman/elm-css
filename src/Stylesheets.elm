@@ -103,6 +103,7 @@ inheritToString translate value =
         NotInherit notInherit ->
             translate notInherit
 
+
 autoToString : (a -> String) -> AutoOr a -> String
 autoToString translate value =
     case value of
@@ -125,6 +126,7 @@ noneToString translate value =
 unitsToString : Units -> String
 unitsToString =
     (\(ExplicitUnits str) -> str)
+        |> inheritToString
 
 
 boxSizingToString : BoxSizing -> String
@@ -214,8 +216,9 @@ type alias WhiteSpace = InheritOr (AutoOr ExplicitWhiteSpace)
 type alias Color = InheritOr (AutoOr ExplicitColor)
 type alias TextShadow = InheritOr (NoneOr ExplicitTextShadow)
 type alias Outline = InheritOr ExplicitOutline
+type alias Units = InheritOr ExplicitUnits
 
-type Units = ExplicitUnits String
+type ExplicitUnits = ExplicitUnits String
 type ExplicitBoxSizing = ExplicitBoxSizing String
 type ExplicitOverflow = ExplicitOverflow String
 type ExplicitDisplay = ExplicitDisplay String
@@ -227,7 +230,7 @@ type ExplicitColor
     | Hex String
 
 type ExplicitOutline
-    = ExplicitOutline Float Units OutlineStyle OpacityStyle
+    = ExplicitOutline Float ExplicitUnits OutlineStyle OpacityStyle
 
 type OutlineStyle
     = OutlineStyle String
@@ -257,13 +260,13 @@ hex str =
     Hex str |> NotAuto |> NotInherit
 
 pct : Units
-pct = "%" |> ExplicitUnits
+pct = "%" |> ExplicitUnits |> NotInherit
 
 em : Units
-em = "em" |> ExplicitUnits
+em = "em" |> ExplicitUnits |> NotInherit
 
 px : Units
-px = "px" |> ExplicitUnits
+px = "px" |> ExplicitUnits |> NotInherit
 
 borderBox = "border-box" |> ExplicitBoxSizing |> NotInherit
 
