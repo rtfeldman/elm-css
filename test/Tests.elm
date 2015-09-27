@@ -17,6 +17,7 @@ all =
     suite "elm-stylesheets"
         [ divWidthHeight
         , dreamwriter
+        , multiDescendent
         ]
 
 
@@ -75,9 +76,53 @@ body > div {
   background-color: rgb(100, 90, 128);
   color: rgb(40, 35, 76);
 }
-        """
+            """
     in
         suite "Sample stylesheet from Dreamwriter"
+            [ test "pretty prints the expected output" <|
+                assertEqual output (prettyPrint input)
+            ]
+
+multiDescendent : Test
+multiDescendent =
+    let
+        input =
+            Fixtures.multiDescendent
+
+        output =
+            String.trim """
+html, body {
+  box-sizing: border-box;
+  display: none;
+}
+
+html, body > div {
+  width: 100%;
+  height: 100%;
+}
+
+h1, h2 {
+  padding: 0px;
+  margin: 0px;
+}
+
+h1, h2 > h3, h1, h2 > h4 {
+  width: 100%;
+  height: 100%;
+}
+
+span {
+  padding: 10px;
+  margin: 11px;
+}
+
+span > h2, span > h1 {
+  width: 1px;
+  height: 2%;
+}
+            """
+    in
+        suite "Multi-descendent stylesheet"
             [ test "pretty prints the expected output" <|
                 assertEqual output (prettyPrint input)
             ]

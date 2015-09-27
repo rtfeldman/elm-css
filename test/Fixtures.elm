@@ -18,6 +18,34 @@ divWidthHeight =
             |-| height 50 px
 
 
+multiDescendent : Style CssClasses CssIds
+multiDescendent =
+    stylesheet
+        |%|= [ html, body ]
+            |-| boxSizing borderBox
+            |-| display none
+
+            |>%| div
+                |-| width 100 pct
+                |-| height 100 pct
+
+        |%|= [ h1, h2 ]
+            |-| padding 0 px
+            |-| margin 0 px
+
+            |>%|= [ h3, h4 ]
+                |-| width 100 pct
+                |-| height 100 pct
+
+        |%| span
+            |-| padding 10 px
+            |-| margin 11 px
+
+            |>%|= [ h2, h1 ]
+                |-| width 1 px
+                |-| height 2 pct
+
+
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
     stylesheet
