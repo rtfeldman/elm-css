@@ -67,30 +67,21 @@ attributeToString (Attribute str) =
 
 {- Tags -}
 
-html = [ Tag "html" ]
-body = [ Tag "body" ]
-div = [ Tag "div" ]
-span = [ Tag "span" ]
-nowrap = [ Tag "nowrap" ]
-button = [ Tag "button" ]
-h1 = [ Tag "h1" ]
-h2 = [ Tag "h2" ]
-h3 = [ Tag "h3" ]
-h4 = [ Tag "h4" ]
-p = [ Tag "p" ]
-ol = [ Tag "ol" ]
-input = [ Tag "input" ]
+html = Tag "html"
+body = Tag "body"
+div = Tag "div"
+span = Tag "span"
+nowrap = Tag "nowrap"
+button = Tag "button"
+h1 = Tag "h1"
+h2 = Tag "h2"
+h3 = Tag "h3"
+h4 = Tag "h4"
+p = Tag "p"
+ol = Tag "ol"
+input = Tag "input"
 
 tagToString (Tag str) = str
-
-
-type alias ElementSelector =
-    List Tag
-
-customElement : String -> ElementSelector
-customElement str =
-    [ Tag str ]
-
 
 
 -- TODO these are just for @media - maybe improve type guarantees?
@@ -412,8 +403,14 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
         |> Style selector attrs
 
 
-(|%|) : Style class id -> ElementSelector -> Style class id
-(|%|) (Style selector attrs children) tags =
+(|%|) : Style class id -> Tag -> Style class id
+(|%|) (Style selector attrs children) tag =
+    children ++ [ Style (tagToString tag) [] [] ]
+        |> Style selector attrs
+
+
+(|%|...) : Style class id -> List Tag -> Style class id
+(|%|...) (Style selector attrs children) tags =
     let
         childSelector =
             tags
@@ -433,24 +430,16 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
 
 
 -- TODO use tagToString
-(|>%|) : Style class id -> ElementSelector -> Style class id
-(|>%|) (Style selector attrs children) tags =
-    let
-        selectorFromTag tag =
-            case splitStartLast children of
-                ( _, Nothing ) ->
-                    selector ++ " > " ++ tagToString tag
+(|>%|) : Style class id -> Tag -> Style class id
+(|>%|) (Style selector attrs children) tag =
+    case splitStartLast children of
+        ( _, Nothing ) ->
+            children ++ [ Style (selector ++ " > " ++ tagToString tag) [] [] ]
+                |> Style selector attrs
 
-                ( start, Just (Style activeSelector _ _) ) ->
-                    activeSelector ++ " > " ++ tagToString tag
-
-        childSelector =
-            tags
-                |> List.map selectorFromTag
-                |> String.join ", "
-    in
-        children ++ [ Style childSelector [] [] ]
-            |> Style selector attrs
+        ( start, Just (Style activeSelector _ _) ) ->
+            children ++ [ Style (activeSelector ++ " > " ++ tagToString tag) [] [] ]
+                |> Style selector attrs
 
 
 (|.|) : Style class id -> class -> Style class id
