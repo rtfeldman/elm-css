@@ -20,8 +20,8 @@ prettyPrint =
 
 
 prettyPrintHelp : Int -> Int -> Style class id -> String
-prettyPrintHelp indentLevel indentSpaces (Style selector attributes children) =
-    if (indentLevel == 0) && (String.isEmpty selector) then
+prettyPrintHelp indentLevel indentSpaces (Style selectors attributes children) =
+    if (indentLevel == 0) && (String.isEmpty (Maybe.withDefault "" (List.head selectors))) then
         children
             |> List.map (prettyPrintHelp indentLevel indentSpaces)
             |> String.join "\n\n"
@@ -53,8 +53,12 @@ prettyPrintHelp indentLevel indentSpaces (Style selector attributes children) =
                         |> List.map prettyPrintChild
                         |> String.join subIndentStr
                         |> (++) subIndentStr
+
+            selectorStr =
+                selectors
+                    |> String.join ", "
         in
-            indentStr ++ selector ++ " {\n"
+            indentStr ++ selectorStr ++ " {\n"
                 ++ attrsStr
                 ++ childrenStr
                 ++ "}"
@@ -462,7 +466,7 @@ outline =
 {- Types -}
 
 type Style class id
-    = Style String (List Attribute) (List (Style class id))
+    = Style (List String) (List Attribute) (List (Style class id))
 
 
 type Attribute
@@ -471,31 +475,25 @@ type Attribute
 
 stylesheet : Style class id
 stylesheet =
-    Style "" [] []
+    Style [] [] []
 
 
 styleWithPrefix : String -> Style class id -> a -> Style class id
-styleWithPrefix prefix (Style selector attrs children) childSelector =
-    children ++ [ Style (prefix ++ (toString childSelector)) [] [] ]
-        |> Style selector attrs
+styleWithPrefix prefix (Style selectors attrs children) childSelector =
+    children ++ [ Style [ prefix ++ (toString childSelector) ] [] [] ]
+        |> Style selectors attrs
 
 
 (|%|) : Style class id -> Tag -> Style class id
-(|%|) (Style selector attrs children) tag =
-    children ++ [ Style (tagToString tag) [] [] ]
-        |> Style selector attrs
+(|%|) (Style selectors attrs children) tag =
+    children ++ [ Style [ tagToString tag ] [] [] ]
+        |> Style selectors attrs
 
 
 (|%|=) : Style class id -> List Tag -> Style class id
-(|%|=) (Style selector attrs children) tags =
-    let
-        childSelector =
-            tags
-                |> List.map tagToString
-                |> String.join ", "
-    in
-        children ++ [ Style childSelector [] [] ]
-            |> Style selector attrs
+(|%|=) (Style selectors attrs children) tags =
+    children ++ [ Style (List.map tagToString tags) [] [] ]
+        |> Style selectors attrs
 
 
 (|@|) : Style class id -> a -> Style class id
@@ -506,21 +504,34 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
 (|::|) = styleWithPrefix "::"
 
 
-(|>%|) : Style class id -> Tag -> Style class id
-(|>%|) (Style selector attrs children) tag =
-    case splitStartLast children of
-        ( _, Nothing ) ->
-            children ++ [ Style (selector ++ " > " ++ tagToString tag) [] [] ]
-                |> Style selector attrs
-
-        ( start, Just (Style activeSelector _ _) ) ->
-            children ++ [ Style (activeSelector ++ " > " ++ tagToString tag) [] [] ]
-                |> Style selector attrs
+-- TODO take "tags" instead of "tag" and have |>%|= call this too!
+--descendentFromSelector tags selector =
+--    Style (selector ++ " > " ++ tagToString tag) [] []
+--        |> Style selectors attrs
 
 
-(|>%|=) : Style class id -> List Tag -> Style class id
-(|>%|=) (Style selector attrs children) tags =
+--(|&>%|) : Style class id -> Tag -> Style class id
+--(|&>%|) (Style selectors attrs children) tag =
+--    let
+--        childSelectors =
+--            case splitStartLast children of
+--                ( _, Nothing ) ->
+--                    selectors
+
+--                ( start, Just (Style activeSelectors _ _) ) ->
+--                    activeSelectors
+--    in
+--        children ++ (List.map (descendentFromSelector tag) childSelectors)
+--            |> Style selectors attrs
+
+
+(|&>%|=) : Style class id -> List Tag -> Style class id
+(|&>%|=) (Style selectors attrs children) tags =
     let
+        childFromSelector selector =
+            Style (selector ++ " > " ++ tagToString tag) [] []
+                |> Style selectors attrs
+
         selectorFromTag tag =
             case splitStartLast children of
                 ( _, Nothing ) ->
@@ -535,7 +546,7 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
                 |> String.join ", "
     in
         children ++ [ Style childSelector [] [] ]
-            |> Style selector attrs
+            |> Style selectors attrs
 
 
 (|.|) : Style class id -> class -> Style class id
@@ -561,19 +572,19 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
 
 
 addAttr : Attribute -> Style a b -> Style a b
-addAttr attr (Style selector attrs children) =
-    Style selector (attrs ++ [ attr ]) children
+addAttr attr (Style selectors attrs children) =
+    Style selectors (attrs ++ [ attr ]) children
 
 
 transformActiveChild : (Style a b -> Style a b) -> Style a b -> Style a b
-transformActiveChild transform (( Style selector attrs children ) as style) =
+transformActiveChild transform (( Style selectors attrs children ) as style) =
     case splitStartLast children of
         ( _, Nothing ) ->
             transform style
 
         ( inactiveChildren, Just activeChild ) ->
             Style
-                selector
+                selectors
                 attrs
                 (inactiveChildren ++ [ transform activeChild ])
 

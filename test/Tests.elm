@@ -105,7 +105,7 @@ h1, h2 {
   margin: 0px;
 }
 
-h1, h2 > h3, h1, h2 > h4 {
+h1 > h3, h2 > h3, h1 > h4, h2 > h4 {
   width: 100%;
   height: 100%;
 }
