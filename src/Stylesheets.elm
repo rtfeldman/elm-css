@@ -69,8 +69,11 @@ attributeToString (Attribute str) =
 
 html = Tag "html"
 body = Tag "body"
+header = Tag "header"
+nav = Tag "nav"
 div = Tag "div"
 span = Tag "span"
+img = Tag "img"
 nowrap = Tag "nowrap"
 button = Tag "button"
 h1 = Tag "h1"
@@ -103,6 +106,7 @@ inheritToString translate value =
         NotInherit notInherit ->
             translate notInherit
 
+
 autoToString : (a -> String) -> AutoOr a -> String
 autoToString translate value =
     case value of
@@ -125,6 +129,7 @@ noneToString translate value =
 unitsToString : Units -> String
 unitsToString =
     (\(ExplicitUnits str) -> str)
+        |> inheritToString
 
 
 boxSizingToString : BoxSizing -> String
@@ -147,6 +152,12 @@ displayToString =
         |> inheritToString
 
 
+verticalAlignToString : VerticalAlign -> String
+verticalAlignToString =
+    (\(ExplicitVerticalAlign str) -> str)
+        |> inheritToString
+
+
 whiteSpaceToString : WhiteSpace -> String
 whiteSpaceToString =
     (\(ExplicitWhiteSpace str) -> str)
@@ -155,9 +166,15 @@ whiteSpaceToString =
 
 colorToString : Color -> String
 colorToString =
-    explicitColorToString
+    (\(ExplicitColor str) -> str)
         |> autoToString
         |> inheritToString
+
+
+numberToString : number -> String
+numberToString num =
+    toString (num + 0)
+
 
 textShadowToString : TextShadow -> String
 textShadowToString =
@@ -165,18 +182,6 @@ textShadowToString =
         |> noneToString
         |> inheritToString
 
-
-explicitColorToString : ExplicitColor -> String
-explicitColorToString value =
-    case value of
-        RGB r g b ->
-            "rgb(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ")"
-
-        RGBA r g b a ->
-            "rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ")"
-
-        Hex str ->
-            "#" ++ str
 
 explicitTextShadowToString : ExplicitTextShadow -> String
 explicitTextShadowToString value =
@@ -214,20 +219,19 @@ type alias WhiteSpace = InheritOr (AutoOr ExplicitWhiteSpace)
 type alias Color = InheritOr (AutoOr ExplicitColor)
 type alias TextShadow = InheritOr (NoneOr ExplicitTextShadow)
 type alias Outline = InheritOr ExplicitOutline
+type alias Units = InheritOr ExplicitUnits
+type alias VerticalAlign = InheritOr ExplicitVerticalAlign
 
-type Units = ExplicitUnits String
+type ExplicitUnits = ExplicitUnits String
 type ExplicitBoxSizing = ExplicitBoxSizing String
 type ExplicitOverflow = ExplicitOverflow String
 type ExplicitDisplay = ExplicitDisplay String
 type ExplicitWhiteSpace = ExplicitWhiteSpace String
-
-type ExplicitColor
-    = RGB Float Float Float
-    | RGBA Float Float Float Float
-    | Hex String
+type ExplicitColor = ExplicitColor String
+type ExplicitVerticalAlign = ExplicitVerticalAlign String
 
 type ExplicitOutline
-    = ExplicitOutline Float Units OutlineStyle OpacityStyle
+    = ExplicitOutline Float ExplicitUnits OutlineStyle OpacityStyle
 
 type OutlineStyle
     = OutlineStyle String
@@ -246,29 +250,43 @@ transparent = OpacityStyle "transparent"
 
 rgb : number -> number -> number -> Color
 rgb r g b =
-    RGB r g b |> NotAuto |> NotInherit
+    ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
+        |> NotAuto |> NotInherit
+
 
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
-    RGBA r g b a |> NotAuto |> NotInherit
+    ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
+        |> NotAuto |> NotInherit
+
 
 hex : String -> Color
 hex str =
-    Hex str |> NotAuto |> NotInherit
+    ExplicitColor ("#" ++ str)
+        |> NotAuto |> NotInherit
 
 pct : Units
-pct = "%" |> ExplicitUnits
+pct = "%" |> ExplicitUnits |> NotInherit
 
 em : Units
-em = "em" |> ExplicitUnits
+em = "em" |> ExplicitUnits |> NotInherit
 
 px : Units
-px = "px" |> ExplicitUnits
+px = "px" |> ExplicitUnits |> NotInherit
 
 borderBox = "border-box" |> ExplicitBoxSizing |> NotInherit
 
 visible : Display
 visible = "visible" |> ExplicitDisplay |> NotNone |> NotInherit
+
+block : Display
+block = "block" |> ExplicitDisplay |> NotNone |> NotInherit
+
+inlineBlock : Display
+inlineBlock = "inline-block" |> ExplicitDisplay |> NotNone |> NotInherit
+
+inline : Display
+inline = "inline" |> ExplicitDisplay |> NotNone |> NotInherit
 
 none : InheritOr (NoneOr a)
 none = None |> NotInherit
@@ -281,6 +299,15 @@ inherit = Inherit
 
 noWrap : WhiteSpace
 noWrap = "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> NotInherit
+
+top : VerticalAlign
+top = "top" |> ExplicitVerticalAlign |> NotInherit
+
+middle : VerticalAlign
+middle = "middle" |> ExplicitVerticalAlign |> NotInherit
+
+bottom : VerticalAlign
+bottom = "bottom" |> ExplicitVerticalAlign |> NotInherit
 
 
 {- Attributes -}
@@ -305,41 +332,80 @@ attr5 name translateA translateB translateC translateD translateE valueA valueB 
     Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) ++ (translateE valueE))
 
 
+verticalAlign : VerticalAlign -> Attribute
+verticalAlign =
+    attr1 "vertical-align" verticalAlignToString
+
 
 display : Display -> Attribute
 display =
     attr1 "display" displayToString
 
 
+opacity : OpacityStyle -> Attribute
+opacity =
+    attr1 "opacity" toString
+
+
 width : number -> Units -> Attribute
 width =
-    attr2 "width" toString unitsToString
+    attr2 "width" numberToString unitsToString
 
 
 minWidth : number -> Units -> Attribute
 minWidth =
-    attr2 "min-width" toString unitsToString
+    attr2 "min-width" numberToString unitsToString
 
 
 height : number -> Units -> Attribute
 height =
-    attr2 "height" toString unitsToString
+    attr2 "height" numberToString unitsToString
 
 
 minHeight : number -> Units -> Attribute
 minHeight =
-    attr2 "min-height" toString unitsToString
+    attr2 "min-height" numberToString unitsToString
 
 
 padding : number -> Units -> Attribute
 padding =
-    attr2 "padding" toString unitsToString
+    attr2 "padding" numberToString unitsToString
 
+paddingTop : number -> Units -> Attribute
+paddingTop =
+    attr2 "padding-top" numberToString unitsToString
+
+paddingBottom : number -> Units -> Attribute
+paddingBottom =
+    attr2 "padding-bottom" numberToString unitsToString
+
+paddingRight : number -> Units -> Attribute
+paddingRight =
+    attr2 "padding-right" numberToString unitsToString
+
+paddingLeft : number -> Units -> Attribute
+paddingLeft =
+    attr2 "padding-left" numberToString unitsToString
 
 margin : number -> Units -> Attribute
 margin =
-    attr2 "margin" toString unitsToString
+    attr2 "margin" numberToString unitsToString
 
+marginTop : number -> Units -> Attribute
+marginTop =
+    attr2 "margin-top" numberToString unitsToString
+
+marginBottom : number -> Units -> Attribute
+marginBottom =
+    attr2 "margin-bottom" numberToString unitsToString
+
+marginRight : number -> Units -> Attribute
+marginRight =
+    attr2 "margin-right" numberToString unitsToString
+
+marginLeft : number -> Units -> Attribute
+marginLeft =
+    attr2 "margin-left" numberToString unitsToString
 
 boxSizing : BoxSizing -> Attribute
 boxSizing =
@@ -359,6 +425,9 @@ overflowY =
 whiteSpace : WhiteSpace -> Attribute
 whiteSpace =
     attr1 "white-space" whiteSpaceToString
+
+
+
 
 
 backgroundColor : Color -> Attribute
@@ -400,8 +469,8 @@ type Attribute
     = Attribute String
 
 
-stylesheet : Style class id
-stylesheet =
+css : Style class id
+css =
     Style "" [] []
 
 
@@ -417,8 +486,8 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
         |> Style selector attrs
 
 
-(|%|...) : Style class id -> List Tag -> Style class id
-(|%|...) (Style selector attrs children) tags =
+(|%|=) : Style class id -> List Tag -> Style class id
+(|%|=) (Style selector attrs children) tags =
     let
         childSelector =
             tags
@@ -437,7 +506,6 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
 (|::|) = styleWithPrefix "::"
 
 
--- TODO use tagToString
 (|>%|) : Style class id -> Tag -> Style class id
 (|>%|) (Style selector attrs children) tag =
     case splitStartLast children of
@@ -448,6 +516,26 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
         ( start, Just (Style activeSelector _ _) ) ->
             children ++ [ Style (activeSelector ++ " > " ++ tagToString tag) [] [] ]
                 |> Style selector attrs
+
+
+(|>%|=) : Style class id -> List Tag -> Style class id
+(|>%|=) (Style selector attrs children) tags =
+    let
+        selectorFromTag tag =
+            case splitStartLast children of
+                ( _, Nothing ) ->
+                    selector ++ " > " ++ tagToString tag
+
+                ( start, Just (Style activeSelector _ _) ) ->
+                    activeSelector ++ " > " ++ tagToString tag
+
+        childSelector =
+            tags
+                |> List.map selectorFromTag
+                |> String.join ", "
+    in
+        children ++ [ Style childSelector [] [] ]
+            |> Style selector attrs
 
 
 (|.|) : Style class id -> class -> Style class id
