@@ -4,7 +4,6 @@
     "repository": "https://github.com/rtfeldman/elm-stylesheets.git",
     "license": "BSD-3-Clause",
     "source-directories": [
-        "app/src",
         "src"
     ],
     "exposed-modules": [],
