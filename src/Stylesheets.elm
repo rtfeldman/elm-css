@@ -469,8 +469,8 @@ type Attribute
     = Attribute String
 
 
-css : Style class id
-css =
+stylesheet : Style class id
+stylesheet =
     Style "" [] []
 
 
