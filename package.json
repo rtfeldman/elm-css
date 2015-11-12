@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/rtfeldman/elm-stylesheets#readme",
   "dependencies": {
-    "node-cp": "0.1.1",
     "node-elm-compiler": "1.0.1",
     "tmp": "0.0.28"
   }
