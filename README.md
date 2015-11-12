@@ -14,3 +14,11 @@ This is a proof of concept for a CSS preprocessor written in Elm, which outputs 
 Here's a sketch of the current proof of concept. It's far from complete, but if you try to do something that would result in invalid CSS, it will probably give you a compiler error instead of silently generating broken CSS.
 
 ![screen shot 2015-09-20 at 11 59 14 am](https://cloud.githubusercontent.com/assets/1094080/10029275/9e561f72-6136-11e5-8fa9-7f2d47f604aa.png)
+
+## Development
+
+To get your environment working, just install the dependencies and head to [http://localhost:8000/app/index.html](http://localhost:8000/app/index.html).
+
+```console
+$ elm-package install
+```
