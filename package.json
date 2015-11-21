@@ -1,0 +1,33 @@
+{
+  "name": "elm-stylesheets",
+  "version": "0.1.0",
+  "description": "Elm-based CSS Preprocessor",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtfeldman/elm-stylesheets.git"
+  },
+  "keywords": [
+    "elm",
+    "css",
+    "sass",
+    "less",
+    "preprocessor"
+  ],
+  "author": "Richard Feldman <richard.t.feldman@gmail.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/rtfeldman/elm-stylesheets/issues"
+  },
+  "homepage": "https://github.com/rtfeldman/elm-stylesheets#readme",
+  "dependencies": {
+    "node-elm-compiler": "1.0.1",
+    "tmp": "0.0.28"
+  }
+}
