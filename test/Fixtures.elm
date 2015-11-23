@@ -12,7 +12,7 @@ pageDefaultText = rgb 40 35 76
 
 divWidthHeight : Style a b
 divWidthHeight =
-    stylesheet
+    namespace "multi-descendent"
         |%| div
             |-| width 32 pct
             |-| height 50 px
@@ -20,7 +20,7 @@ divWidthHeight =
 
 multiDescendent : Style CssClasses CssIds
 multiDescendent =
-    stylesheet
+    namespace "multi-descendent"
         |%|= [ html, body ]
             |-| boxSizing borderBox
             |-| display none
@@ -48,7 +48,7 @@ multiDescendent =
 
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
-    stylesheet
+    namespace "dreamwiter"
         |%|= [ html, body ]
             |-| width 100 pct
             |-| height 100 pct

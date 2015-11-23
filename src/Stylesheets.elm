@@ -466,7 +466,7 @@ outline =
 {- Types -}
 
 type Style class id
-    = Style (List String) (List Attribute) (List (Style class id))
+    = Style String (List String) (List Attribute) (List (Style class id))
 
 
 type Attribute
@@ -475,11 +475,39 @@ type Attribute
 
 stylesheet : Style class id
 stylesheet =
-    Style [] [] []
+    namespace ""
+
+
+whitespaceRegex : Regex
+whitespaceRegex =
+    regex "\\s+"
+
+
+{-| Trim the string and replace any remaining whitespace with dashes. -}
+sanitizeClassName : String -> String
+sanitizeClassName str =
+    str
+        |> String.trim
+        |> replace All whitespaceRegex (\_ -> "-")
+
+
+namespace : String -> Style class id
+namespace namespacePrefix =
+    let
+        sanitized =
+            sanitizeClassName namespacePrefix
+
+        finalPrefix =
+            if String.isEmpty sanitized then
+                sanitized
+            else
+                sanitized + "-"
+    in
+        Style finalPrefix [] [] []
 
 
 styleWithPrefix : String -> Style class id -> a -> Style class id
-styleWithPrefix prefix (Style selectors attrs children) childSelector =
+styleWithPrefix prefix (Style namespacePrefix selectors attrs children) childSelector =
     children ++ [ Style [ prefix ++ (toString childSelector) ] [] [] ]
         |> Style selectors attrs
 
@@ -537,7 +565,7 @@ styleWithPrefix prefix (Style selectors attrs children) childSelector =
                 ( _, Nothing ) ->
                     selector ++ " > " ++ tagToString tag
 
-                ( start, Just (Style activeSelector _ _) ) ->
+                ( start, Just (Style activeSelector _ _ _) ) ->
                     activeSelector ++ " > " ++ tagToString tag
 
         childSelector =
@@ -550,7 +578,8 @@ styleWithPrefix prefix (Style selectors attrs children) childSelector =
 
 
 (|.|) : Style class id -> class -> Style class id
-(|.|) = styleWithPrefix "."
+(|.|) (Style namespacePrefix _ _ _ as style) =
+    styleWithPrefix ("." ++ namespacePrefix) style
 
 
 (|#|) : Style class id -> id -> Style class id
