@@ -48,31 +48,31 @@ multiDescendent =
 
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
-    namespace "dreamwiter"
-        |%|= [ html, body ]
-            |-| width 100 pct
-            |-| height 100 pct
-            |-| boxSizing borderBox
-            |-| padding 0 px
-            |-| margin 0 px
+    css "dreamwiter"
+         $ html |$ body |: hover
+            |- width 100 pct
+            |- height 100 pct
+            |- boxSizing borderBox
+            |- padding 0 px
+            |- margin 0 px
 
-        |%| body
-            |-| minWidth 1280 px
-            |-| overflowX auto
+        $ body >$ div >. Foo
+            |- minWidth 1280 px
+            |- overflowX auto
 
-            |>%| div
-                |-| width 100 pct
-                |-| height 100 pct
+            >>$ div
+                |- width 100 pct
+                |- height 100 pct
 
-        |.| Hidden
-            |!| display none
+        . Hidden
+            |! display none
 
-        |#| Page
-            |-| width 100 pct
-            |-| height 100 pct
-            |-| boxSizing borderBox
-            |-| margin 0 px
-            |-| padding 8 px
+        # Page
+            |- width 100 pct
+            |- height 100 pct
+            |- boxSizing borderBox
+            |- margin 0 px
+            |- padding 8 px
 
-            |-| backgroundColor pageBackground
-            |-| color pageDefaultText
+            |- backgroundColor pageBackground
+            |- color pageDefault

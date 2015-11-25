@@ -508,12 +508,12 @@ styleWithPrefix prefix (Style namespacePrefix selectors attrs children) childSel
         |> Style selectors attrs
 
 
-{-| The "fill in the blank" selector. Give it a `String` and it use that
-exact value as the outputted CSS selector. Use it for wildcard `*` selectors,
+{-| The custom statement. Give it a `String` and it use that
+exact value as the outputted CSS statement. Use it for wildcard `*` selectors,
 attribute selectors like `[name=foo]`, or anything else you desire!
 
-    |_| "* [lang^=en]"
-        |-| textDecoration underline
+    $= "* [lang^=en]"
+        ~ textDecoration underline
 
 This translates to:
 
@@ -521,75 +521,70 @@ This translates to:
         text-decoration: underline;
     }
 -}
-(|_|) : Style class id -> String -> Style class id
-(|_|) (Style selectors attrs children) str =
+($=) : Style class id -> String -> Style class id
+($=) (Style selectors attrs children) str =
     children ++ [ Style [ str ] [] [] ]
         |> Style selectors attrs
 
 
-{-| The "fill in the blank" modifier.
+{-| The custom modifier. Give it a `String` and it use that
+exact value as the outputted CSS statement. Use it for wildcard `*` selectors,
+attribute selectors like `[name=foo]`, or anything else you desire!
+
+    $= "* [lang^=en]" &= "foo"
+        ~ textDecoration underline
+
+This translates to:
+
+    * [lang^=en] {
+        text-decoration: underline;
+    }
 -}
-(/_/) : Style class id -> String -> Style class id
-(/_/) (Style selectors attrs children) str =
+(&=) : Style class id -> String -> Style class id
+(&=) (Style selectors attrs children) str =
     children ++ [ Style [ str ] [] [] ]
         |> Style selectors attrs
+
 
 
 {-| The [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
 specifier. Use it with [`media`](#media), [`viewport`](#viewport),
 [`charset`](#charset), etc.
 -}
-(|@|) : Style class id -> String -> Style class id
-(|@|) (Style selectors attrs children) str =
+(@) : Style class id -> String -> Style class id
+(@) (Style selectors attrs children) str =
     children ++ [ Style [ str ] [] [] ]
         |> Style selectors attrs
 
+type SelectorSpecifier class id
+    = TagSelector Tag
+    | ClassSelector class
+    | IdSelector id
+    | PseudoClassSelector class id
 
-{-| Add a selector onto a previous one.
+type PseudoClassModifier class id
+    = PseudoClassModifier class id
 
-    |%| html /%/ body /./ content /:/ hover
-        |-| width 100 pct
-        |-| height 100 pct
+type Stylesheet class id
+    = Stylesheet String (List TopLevelStatement class id)
 
-This translates to:
-
-    html, body, .content:hover {
-        width: 100%;
-    }
-
--}
-(++) : appendable -> appendable -> appendable
-(++) =
-    (++)
+type TopLevelStatement class id
+    = AtRule AtRuleSpecifier
+    | SelectorStatement (SelectorSpecifier class id)
 
 
 
-{-| Select multiple things at once.
-
-    |%| (html ++ body)
-        |-| width 100 pct
-
-This translates to:
-
-    html, body {
-        width: 100%;
-    }
-
--}
-(++) : appendable -> appendable -> appendable
-(++) =
-    (++)
 
 {-| The pseudo-element modifier. Use it with pseudo-elements like `after`,
 `firstLine`, etc.
 
-    |%| h1
-        |-| fontFamily "Georgia"
-        |-| color (rgb 120 30 76)
+    $ h1
+        ~ fontFamily "Georgia"
+        ~ color (rgb 120 30 76)
 
-    |%| h1 /::/ after
-        |-| fontWeight bold
-        |-| content "this has been a presentation of H1 Industries"
+    $ h1 |:: after
+        ~ fontWeight bold
+        ~ content "this has been a presentation of H1 Industries"
 
 This translates to:
 
@@ -598,24 +593,24 @@ This translates to:
         color: rgb(120, 30, 76);
     }
 
-    h1:after {
+    h1::after {
         font-weight: bold;
         content: "this has been a presentation of H1 Industries"
     }
 
 You can also do this, which gives the same output:
 
-    |%| h1
-        |-| fontFamily "Georgia"
-        |-| color (rgb 120 30 76)
+    $ h1
+        ~ fontFamily "Georgia"
+        ~ color (rgb 120 30 76)
 
-        /::/ after
-            |-| fontWeight bold
-            |-| content "this has been a presentation of H1 Industries"
+        |:: after
+            ~ fontWeight bold
+            ~ content "this has been a presentation of H1 Industries"
 
 -}
-(/::/) : Style class id -> String -> Style class id
-(/::/) (Style selectors attrs children) str =
+(|::) : Style class id -> String -> Style class id
+(|::) (Style selectors attrs children) str =
     children ++ [ Style [ str ] [] [] ]
         |> Style selectors attrs
 
@@ -623,13 +618,13 @@ You can also do this, which gives the same output:
 {-| The pseudo-class modifier. Use it in conjunction with pseudo-classes
 like `hover`, `nthChild`, etc.
 
-    |%| a
-        |-| color (hex "ff00aa")
-        |-| textDecoration none
+    $ a
+        ~ color (hex "ff00aa")
+        ~ textDecoration none
 
-    |%| a /:/ hover
-        |-| color (hex "aabbcc")
-        |-| textDecoration underline
+    $ a |: hover
+        ~ color (hex "aabbcc")
+        ~ textDecoration underline
 
 This translates to:
 
@@ -645,16 +640,16 @@ This translates to:
 
 You can also do this, which gives the same output:
 
-    |%| a
-        |-| color (hex "ff00aa")
-        |-| textDecoration underline
+    $ a
+        ~ color (hex "ff00aa")
+        ~ textDecoration underline
 
-         /:/ hover
-            |-| color (hex "aabbcc")
-            |-| textDecoration underline
+        |: hover
+            ~ color (hex "aabbcc")
+            ~ textDecoration underline
 -}
-(/:/) : Style class id -> String -> Style class id
-(/:/) (Style selectors attrs children) tag =
+(|:) : Style class id -> String -> Style class id
+(|:) (Style selectors attrs children) tag =
     children ++ [ Style [ tagToString tag ] [] [] ]
         |> Style selectors attrs
 
@@ -670,7 +665,7 @@ You can also do this, which gives the same output:
 {-| The [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/:lang)
 pseudo-class. Use it after [`/:/`](#/:/).
 
-    /:/ (lang "fr") />/ q
+    $= "*" |: (lang "fr") />/ q
         quotes [ "« ", " »" ]
 
 This translates to:
@@ -686,11 +681,11 @@ lang str =
 {-| The [adjacent sibling](https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_selectors)
 modifier. This one is for tags, whereas `/+./` is for classes and `/+#/` is for ids.
 
-    li /:/ firstOfType
-        fontWeight Bold
+    $ li |: firstOfType
+        ~ fontWeight Bold
 
-    li /:/ firstOfType /+/ li
-        color (rgb 3 2 1)
+    $ li |: firstOfType |+ li
+        ~ color (rgb 3 2 1)
 
 This translates to:
 
@@ -704,14 +699,14 @@ This translates to:
 
 You can also do this, which gives the same output:
 
-    li /:/ firstOfType
-        fontWeight Bold
+    $ li |: firstOfType
+        |- fontWeight Bold
 
-        /+/ li
-            color (rgb 3 2 1)
+        |+ li
+            |- color (rgb 3 2 1)
 -}
-(/+/) : Style class id -> String -> Style class id
-(/+/) (Style selectors attrs children) tag =
+(|+) : Style class id -> String -> Style class id
+(|+) (Style selectors attrs children) tag =
     children ++ [ Style [ tagToString tag ] [] [] ]
         |> Style selectors attrs
 
