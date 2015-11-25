@@ -485,6 +485,25 @@ styleWithPrefix prefix (Style selector attrs children) childSelector =
     children ++ [ Style (tagToString tag) [] [] ]
         |> Style selector attrs
 
+{-| Specify that one selector is a descendant of another.
+
+In CSS, this has historically been done without an operator
+(e.g. `form input { color: "#ff0000" }`) although the proposed
+[CSS4 descendant combinator `>>`](https://drafts.csswg.org/selectors-4/#descendant-combinators)
+would allow for explicitly declaring the relationship
+(e.g. `form >> input { color: "#ff0000" }`)
+
+The />>/ operator works like the proposed `>>` in CSS4:
+
+    |%| form />>/ input
+        |-| color (hex "ff0000")
+
+    -- CSS equivalent: form input { color: "#ff0000" }
+
+To use this with classes and ids instead of tags (e.g. `form .field { color: "#ff0000" }`),
+see />>./ and />>#/
+-}
+(/>>/)
 
 (|%|=) : Style class id -> List Tag -> Style class id
 (|%|=) (Style selector attrs children) tags =
