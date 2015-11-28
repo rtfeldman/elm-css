@@ -1,7 +1,6 @@
 module Tests (all) where
 
-import ElmTest.Assertion exposing (..)
-import ElmTest.Test exposing (..)
+import ElmTest exposing (..)
 import Stylesheets
 import Fixtures
 
