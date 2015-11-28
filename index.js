@@ -29,7 +29,7 @@ tmp.dir({unsafeCleanup: true}, function (err, tmpDirPath, cleanup) {
     fs.appendFileSync(emitterDest, "\nmodule.exports = Elm;");
 
     var Elm = require(emitterDest);
-    var compiledCss = Elm.worker(Elm[elmModuleName]).ports.css;
+    var compiledCss = Elm.worker(Elm[elmModuleName]).ports.css + "\n";
 
     fs.writeFileSync(destCssFile, compiledCss);
   }, function(exitCode) {
