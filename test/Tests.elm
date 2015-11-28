@@ -1,13 +1,13 @@
 module Tests (all) where
 
 import ElmTest exposing (..)
-import Stylesheets
-import Fixtures
+import Css
+import FixturesCss as Fixtures
 import String
 
 
 prettyPrint =
-    Stylesheets.prettyPrint 2
+    Css.prettyPrint 2
 
 
 all : Test

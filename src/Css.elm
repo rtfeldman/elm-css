@@ -1,4 +1,4 @@
-module Stylesheets where
+module Css where
 
 {-
     Implementation notes:
@@ -593,4 +593,3 @@ splitStartLast list =
                     splitStartLast rest
             in
                 ( elem :: start, last )
-

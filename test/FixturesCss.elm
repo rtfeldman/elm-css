@@ -1,6 +1,6 @@
-module Fixtures where
+module FixturesCss where
 
-import Stylesheets exposing (..)
+import Css exposing (..)
 
 
 type CssClasses = Hidden
