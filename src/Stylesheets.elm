@@ -20,8 +20,8 @@ prettyPrint =
 
 
 prettyPrintHelp : Int -> Int -> Style class id -> String
-prettyPrintHelp indentLevel indentSpaces (Style selectors attributes children) =
-    if (indentLevel == 0) && (String.isEmpty (Maybe.withDefault "" (List.head selectors))) then
+prettyPrintHelp indentLevel indentSpaces (Style selector attributes children) =
+    if (indentLevel == 0) && (String.isEmpty selector) then
         children
             |> List.map (prettyPrintHelp indentLevel indentSpaces)
             |> String.join "\n\n"
@@ -53,12 +53,8 @@ prettyPrintHelp indentLevel indentSpaces (Style selectors attributes children) =
                         |> List.map prettyPrintChild
                         |> String.join subIndentStr
                         |> (++) subIndentStr
-
-            selectorStr =
-                selectors
-                    |> String.join ", "
         in
-            indentStr ++ selectorStr ++ " {\n"
+            indentStr ++ selector ++ " {\n"
                 ++ attrsStr
                 ++ childrenStr
                 ++ "}"
@@ -430,6 +426,10 @@ whiteSpace : WhiteSpace -> Attribute
 whiteSpace =
     attr1 "white-space" whiteSpaceToString
 
+
+
+
+
 backgroundColor : Color -> Attribute
 backgroundColor =
     attr1 "background-color" colorToString
@@ -462,7 +462,7 @@ outline =
 {- Types -}
 
 type Style class id
-    = Style String (List String) (List Attribute) (List (Style class id))
+    = Style String (List Attribute) (List (Style class id))
 
 
 type Attribute
@@ -471,306 +471,31 @@ type Attribute
 
 stylesheet : Style class id
 stylesheet =
-    namespace ""
-
-
-whitespaceRegex : Regex
-whitespaceRegex =
-    regex "\\s+"
-
-
-{-| Trim the string and replace any remaining whitespace with dashes. -}
-sanitizeClassName : String -> String
-sanitizeClassName str =
-    str
-        |> String.trim
-        |> replace All whitespaceRegex (\_ -> "-")
-
-
-namespace : String -> Style class id
-namespace namespacePrefix =
-    let
-        sanitized =
-            sanitizeClassName namespacePrefix
-
-        finalPrefix =
-            if String.isEmpty sanitized then
-                sanitized
-            else
-                sanitized + "-"
-    in
-        Style finalPrefix [] [] []
+    Style "" [] []
 
 
 styleWithPrefix : String -> Style class id -> a -> Style class id
-styleWithPrefix prefix (Style namespacePrefix selectors attrs children) childSelector =
-    children ++ [ Style [ prefix ++ (toString childSelector) ] [] [] ]
-        |> Style selectors attrs
-
-
-{-| The custom statement. Give it a `String` and it use that
-exact value as the outputted CSS statement. Use it for wildcard `*` selectors,
-attribute selectors like `[name=foo]`, or anything else you desire!
-
-    $= "* [lang^=en]"
-        ~ textDecoration underline
-
-This translates to:
-
-    * [lang^=en] {
-        text-decoration: underline;
-    }
--}
-($=) : Style class id -> String -> Style class id
-($=) (Style selectors attrs children) str =
-    children ++ [ Style [ str ] [] [] ]
-        |> Style selectors attrs
-
-
-{-| The custom modifier. Give it a `String` and it use that
-exact value as the outputted CSS statement. Use it for wildcard `*` selectors,
-attribute selectors like `[name=foo]`, or anything else you desire!
-
-    $= "* [lang^=en]" &= "foo"
-        ~ textDecoration underline
-
-This translates to:
-
-    * [lang^=en] {
-        text-decoration: underline;
-    }
--}
-(&=) : Style class id -> String -> Style class id
-(&=) (Style selectors attrs children) str =
-    children ++ [ Style [ str ] [] [] ]
-        |> Style selectors attrs
-
-
-
-{-| The [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
-specifier. Use it with [`media`](#media), [`viewport`](#viewport),
-[`charset`](#charset), etc.
--}
-(@) : Style class id -> String -> Style class id
-(@) (Style selectors attrs children) str =
-    children ++ [ Style [ str ] [] [] ]
-        |> Style selectors attrs
-
-type SelectorSpecifier class id
-    = TagSelector Tag
-    | ClassSelector class
-    | IdSelector id
-    | PseudoClassSelector class id
-
-type PseudoClassModifier class id
-    = PseudoClassModifier class id
-
-type Stylesheet class id
-    = Stylesheet String (List TopLevelStatement class id)
-
-type TopLevelStatement class id
-    = AtRule AtRuleSpecifier
-    | SelectorStatement (SelectorSpecifier class id)
-
-
-
-
-{-| The pseudo-element modifier. Use it with pseudo-elements like `after`,
-`firstLine`, etc.
-
-    $ h1
-        ~ fontFamily "Georgia"
-        ~ color (rgb 120 30 76)
-
-    $ h1 |:: after
-        ~ fontWeight bold
-        ~ content "this has been a presentation of H1 Industries"
-
-This translates to:
-
-    h1 {
-        font-family: Georgia;
-        color: rgb(120, 30, 76);
-    }
-
-    h1::after {
-        font-weight: bold;
-        content: "this has been a presentation of H1 Industries"
-    }
-
-You can also do this, which gives the same output:
-
-    $ h1
-        ~ fontFamily "Georgia"
-        ~ color (rgb 120 30 76)
-
-        |:: after
-            ~ fontWeight bold
-            ~ content "this has been a presentation of H1 Industries"
-
--}
-(|::) : Style class id -> String -> Style class id
-(|::) (Style selectors attrs children) str =
-    children ++ [ Style [ str ] [] [] ]
-        |> Style selectors attrs
-
-
-{-| The pseudo-class modifier. Use it in conjunction with pseudo-classes
-like `hover`, `nthChild`, etc.
-
-    $ a
-        ~ color (hex "ff00aa")
-        ~ textDecoration none
-
-    $ a |: hover
-        ~ color (hex "aabbcc")
-        ~ textDecoration underline
-
-This translates to:
-
-    a {
-        color: #ff00aa
-        text-decoration: none;
-    }
-
-    a:hover {
-        color: #aabbcc
-        text-decoration: none;
-    }
-
-You can also do this, which gives the same output:
-
-    $ a
-        ~ color (hex "ff00aa")
-        ~ textDecoration underline
-
-        |: hover
-            ~ color (hex "aabbcc")
-            ~ textDecoration underline
--}
-(|:) : Style class id -> String -> Style class id
-(|:) (Style selectors attrs children) tag =
-    children ++ [ Style [ tagToString tag ] [] [] ]
-        |> Style selectors attrs
-
-
-{-| The child modifier.
--}
-(/>/) : Style class id -> String -> Style class id
-(/>/) (Style selectors attrs children) tag =
-    children ++ [ Style [ tagToString tag ] [] [] ]
-        |> Style selectors attrs
-
-
-{-| The [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/:lang)
-pseudo-class. Use it after [`/:/`](#/:/).
-
-    $= "*" |: (lang "fr") />/ q
-        quotes [ "« ", " »" ]
-
-This translates to:
-
-    :lang(fr) > q {
-        quotes: "« " " »";
-    }
--}
-lang str =
-    "lang(" ++ str ++ ")"
-
-
-{-| The [adjacent sibling](https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_selectors)
-modifier. This one is for tags, whereas `/+./` is for classes and `/+#/` is for ids.
-
-    $ li |: firstOfType
-        ~ fontWeight Bold
-
-    $ li |: firstOfType |+ li
-        ~ color (rgb 3 2 1)
-
-This translates to:
-
-    li:first-of-type {
-        color: rgb(3, 2, 1);
-    }
-
-    li:first-of-type + li {
-        color: rgb(3, 2, 1);
-    }
-
-You can also do this, which gives the same output:
-
-    $ li |: firstOfType
-        |- fontWeight Bold
-
-        |+ li
-            |- color (rgb 3 2 1)
--}
-(|+) : Style class id -> String -> Style class id
-(|+) (Style selectors attrs children) tag =
-    children ++ [ Style [ tagToString tag ] [] [] ]
-        |> Style selectors attrs
-
-
-{-| The [general sibling](https://developer.mozilla.org/en-US/docs/Web/CSS/General_sibling_selectors)
-modifier. This one is for tags, whereas `/~./` is for classes and `/~#/` is for ids.
-
-    |%| p
-        color (hex "aabbcc")
-        fontWeight bold
-
-    |%| p /~/ span
-        color (rgb 1 2 3)
-        textDecoration underline
-
-This translates to:
-
-    p {
-        color: #aabbcc;
-        font-weight: bold;
-    }
-
-    p ~ span {
-        color: rgb(1, 2, 3);
-        text-decoration: underline;
-    }
-
-You can also do this, which gives the same output:
-
-    |%| p
-        color (hex "aabbcc")
-        fontWeight bold
-
-        /~/ span
-            color (rgb 1 2 3)
-            textDecoration underline
-
--}
-(/~/) : Style class id -> String -> Style class id
-(/~/) (Style selectors attrs children) tag =
-    children ++ [ Style [ tagToString tag ] [] [] ]
-        |> Style selectors attrs
-
-
-
-{-| The descendant modifier.
--}
-(/>>/) : Style class id -> String -> Style class id
-(/>>/) (Style selectors attrs children) tag =
-    children ++ [ Style [ tagToString tag ] [] [] ]
-        |> Style selectors attrs
-
+styleWithPrefix prefix (Style selector attrs children) childSelector =
+    children ++ [ Style (prefix ++ (toString childSelector)) [] [] ]
+        |> Style selector attrs
 
 
 (|%|) : Style class id -> Tag -> Style class id
-(|%|) (Style selectors attrs children) tag =
-    children ++ [ Style [ tagToString tag ] [] [] ]
-        |> Style selectors attrs
+(|%|) (Style selector attrs children) tag =
+    children ++ [ Style (tagToString tag) [] [] ]
+        |> Style selector attrs
 
 
 (|%|=) : Style class id -> List Tag -> Style class id
-(|%|=) (Style selectors attrs children) tags =
-    children ++ [ Style (List.map tagToString tags) [] [] ]
-        |> Style selectors attrs
+(|%|=) (Style selector attrs children) tags =
+    let
+        childSelector =
+            tags
+                |> List.map tagToString
+                |> String.join ", "
+    in
+        children ++ [ Style childSelector [] [] ]
+            |> Style selector attrs
 
 
 (|@|) : Style class id -> a -> Style class id
@@ -781,40 +506,27 @@ You can also do this, which gives the same output:
 (|::|) = styleWithPrefix "::"
 
 
--- TODO take "tags" instead of "tag" and have |>%|= call this too!
---descendentFromSelector tags selector =
---    Style (selector ++ " > " ++ tagToString tag) [] []
---        |> Style selectors attrs
+(|>%|) : Style class id -> Tag -> Style class id
+(|>%|) (Style selector attrs children) tag =
+    case splitStartLast children of
+        ( _, Nothing ) ->
+            children ++ [ Style (selector ++ " > " ++ tagToString tag) [] [] ]
+                |> Style selector attrs
+
+        ( start, Just (Style activeSelector _ _) ) ->
+            children ++ [ Style (activeSelector ++ " > " ++ tagToString tag) [] [] ]
+                |> Style selector attrs
 
 
---(|&>%|) : Style class id -> Tag -> Style class id
---(|&>%|) (Style selectors attrs children) tag =
---    let
---        childSelectors =
---            case splitStartLast children of
---                ( _, Nothing ) ->
---                    selectors
-
---                ( start, Just (Style activeSelectors _ _) ) ->
---                    activeSelectors
---    in
---        children ++ (List.map (descendentFromSelector tag) childSelectors)
---            |> Style selectors attrs
-
-
-(|&>%|=) : Style class id -> List Tag -> Style class id
-(|&>%|=) (Style selectors attrs children) tags =
+(|>%|=) : Style class id -> List Tag -> Style class id
+(|>%|=) (Style selector attrs children) tags =
     let
-        childFromSelector selector =
-            Style (selector ++ " > " ++ tagToString tag) [] []
-                |> Style selectors attrs
-
         selectorFromTag tag =
             case splitStartLast children of
                 ( _, Nothing ) ->
                     selector ++ " > " ++ tagToString tag
 
-                ( start, Just (Style activeSelector _ _ _) ) ->
+                ( start, Just (Style activeSelector _ _) ) ->
                     activeSelector ++ " > " ++ tagToString tag
 
         childSelector =
@@ -823,12 +535,11 @@ You can also do this, which gives the same output:
                 |> String.join ", "
     in
         children ++ [ Style childSelector [] [] ]
-            |> Style selectors attrs
+            |> Style selector attrs
 
 
 (|.|) : Style class id -> class -> Style class id
-(|.|) (Style namespacePrefix _ _ _ as style) =
-    styleWithPrefix ("." ++ namespacePrefix) style
+(|.|) = styleWithPrefix "."
 
 
 (|#|) : Style class id -> id -> Style class id
@@ -850,19 +561,19 @@ You can also do this, which gives the same output:
 
 
 addAttr : Attribute -> Style a b -> Style a b
-addAttr attr (Style selectors attrs children) =
-    Style selectors (attrs ++ [ attr ]) children
+addAttr attr (Style selector attrs children) =
+    Style selector (attrs ++ [ attr ]) children
 
 
 transformActiveChild : (Style a b -> Style a b) -> Style a b -> Style a b
-transformActiveChild transform (( Style selectors attrs children ) as style) =
+transformActiveChild transform (( Style selector attrs children ) as style) =
     case splitStartLast children of
         ( _, Nothing ) ->
             transform style
 
         ( inactiveChildren, Just activeChild ) ->
             Style
-                selectors
+                selector
                 attrs
                 (inactiveChildren ++ [ transform activeChild ])
 

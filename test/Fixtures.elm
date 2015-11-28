@@ -12,7 +12,7 @@ pageDefaultText = rgb 40 35 76
 
 divWidthHeight : Style a b
 divWidthHeight =
-    namespace "multi-descendent"
+    stylesheet
         |%| div
             |-| width 32 pct
             |-| height 50 px
@@ -20,7 +20,7 @@ divWidthHeight =
 
 multiDescendent : Style CssClasses CssIds
 multiDescendent =
-    namespace "multi-descendent"
+    stylesheet
         |%|= [ html, body ]
             |-| boxSizing borderBox
             |-| display none
@@ -48,31 +48,31 @@ multiDescendent =
 
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
-    css "dreamwiter"
-         $ html |$ body |: hover
-            |- width 100 pct
-            |- height 100 pct
-            |- boxSizing borderBox
-            |- padding 0 px
-            |- margin 0 px
+    stylesheet
+        |%|= [ html, body ]
+            |-| width 100 pct
+            |-| height 100 pct
+            |-| boxSizing borderBox
+            |-| padding 0 px
+            |-| margin 0 px
 
-        $ body >$ div >. Foo
-            |- minWidth 1280 px
-            |- overflowX auto
+        |%| body
+            |-| minWidth 1280 px
+            |-| overflowX auto
 
-            >>$ div
-                |- width 100 pct
-                |- height 100 pct
+            |>%| div
+                |-| width 100 pct
+                |-| height 100 pct
 
-        . Hidden
-            |! display none
+        |.| Hidden
+            |!| display none
 
-        # Page
-            |- width 100 pct
-            |- height 100 pct
-            |- boxSizing borderBox
-            |- margin 0 px
-            |- padding 8 px
+        |#| Page
+            |-| width 100 pct
+            |-| height 100 pct
+            |-| boxSizing borderBox
+            |-| margin 0 px
+            |-| padding 8 px
 
-            |- backgroundColor pageBackground
-            |- color pageDefault
+            |-| backgroundColor pageBackground
+            |-| color pageDefaultText
