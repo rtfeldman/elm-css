@@ -1,4 +1,4 @@
-# elm-stylesheets
+# elm-css
 
 Isn't it a pain when you want to rename a CSS class or ID, but can't be sure that the rename wouldn't break things?  
 Or when it turns out the reason something wasn't displaying as expected was that you had a typo in the class name?
