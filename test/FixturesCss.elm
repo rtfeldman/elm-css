@@ -50,7 +50,7 @@ multiDescendent =
 
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
-    stylesheet ""
+    stylesheet "dreamwriter"
         $ html |$ body
             ~ width 100 pct
             ~ height 100 pct

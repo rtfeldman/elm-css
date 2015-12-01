@@ -66,7 +66,7 @@ dreamwriter =
               height: 100%;
             }
 
-            .Hidden {
+            .dreamwriter_Hidden {
               display: none !important;
             }
 
