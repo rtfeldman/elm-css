@@ -1,4 +1,4 @@
-module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection) where
+module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
 {-| Functions for building stylesheets.
 
 # Style
@@ -20,7 +20,7 @@ module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$
 @docs (~), (!), solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom
 
 # Pseudo-Classes
-@docs (&:)
+@docs (&:), active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid
 
 # Pseudo-Elements
 @docs (&::), after, before, firstLetter, firstLine, selection
@@ -861,25 +861,220 @@ extendTypeSelector operatorName update style =
         InvalidStyle _ ->
             style
 
+-- Pseudo-Classes --
+
+type Directionality
+    = Ltr | Rtl
+
+directionalityToString : Directionality -> String
+directionalityToString directionality =
+    case directionality of
+        Ltr ->
+            "ltr"
+
+        Rtl ->
+            "rtl"
+
+{-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+active : PseudoClass
+active = ExplicitPseudoClass "active"
+
+{-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+any : String -> PseudoClass
+any str = ExplicitPseudoClass ("any(" ++ str ++ ")")
+
+{-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+checked : PseudoClass
+checked = ExplicitPseudoClass "checked"
+
+{-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+dir : Directionality -> PseudoClass
+dir directionality = ExplicitPseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
+
+{-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+disabled : PseudoClass
+disabled = ExplicitPseudoClass "disabled"
+
+{-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+empty : PseudoClass
+empty = ExplicitPseudoClass "empty"
+
+{-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+enabled : PseudoClass
+enabled = ExplicitPseudoClass "enabled"
+
+{-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+first : PseudoClass
+first = ExplicitPseudoClass "first"
+
+{-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+firstChild : PseudoClass
+firstChild = ExplicitPseudoClass "first-child"
+
+{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+firstOfType : PseudoClass
+firstOfType = ExplicitPseudoClass "first-of-type"
+
+{-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+fullscreen : PseudoClass
+fullscreen = ExplicitPseudoClass "fullscreen"
+
+{-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+focus : PseudoClass
+focus = ExplicitPseudoClass "focus"
+
+{-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+hover : PseudoClass
+hover = ExplicitPseudoClass "hover"
+
+{-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+indeterminate : PseudoClass
+indeterminate = ExplicitPseudoClass "indeterminate"
+
+{-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+invalid : PseudoClass
+invalid = ExplicitPseudoClass "invalid"
+
+{-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+lang : String -> PseudoClass
+lang str = ExplicitPseudoClass ("lang(" ++ str ++ ")")
+
+{-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+lastChild : PseudoClass
+lastChild = ExplicitPseudoClass "last-child"
+
+{-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+lastOfType : PseudoClass
+lastOfType = ExplicitPseudoClass "last-of-type"
+
+{-| A [`:left`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aleft)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+left : PseudoClass
+left = ExplicitPseudoClass "left"
+
+{-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+link : PseudoClass
+link = ExplicitPseudoClass "link"
+
+{-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+nthChild : String -> PseudoClass
+nthChild str = ExplicitPseudoClass ("nth-child(" ++ str ++ ")")
+
+{-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+nthLastChild : String -> PseudoClass
+nthLastChild str = ExplicitPseudoClass ("nth-last-child(" ++ str ++ ")")
+
+{-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+nthLastOfType : String -> PseudoClass
+nthLastOfType str = ExplicitPseudoClass ("nth-last-of-type(" ++ str ++ ")")
+
+{-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+nthOfType : String -> PseudoClass
+nthOfType str = ExplicitPseudoClass ("nth-of-type(" ++ str ++ ")")
+
+{-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+onlyChild : PseudoClass
+onlyChild = ExplicitPseudoClass "only-child"
+
+{-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+onlyOfType : PseudoClass
+onlyOfType = ExplicitPseudoClass "only-of-type"
+
+{-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+optional : PseudoClass
+optional = ExplicitPseudoClass "optional"
+
+{-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+outOfRange : PseudoClass
+outOfRange = ExplicitPseudoClass "out-of-range"
+
+{-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+readWrite : PseudoClass
+readWrite = ExplicitPseudoClass "read-write"
+
+{-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+required : PseudoClass
+required = ExplicitPseudoClass "required"
+
+{-| A [`:right`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aright)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+right : PseudoClass
+right = ExplicitPseudoClass "right"
+
+{-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+root : PseudoClass
+root = ExplicitPseudoClass "root"
+
+{-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+scope : PseudoClass
+scope = ExplicitPseudoClass "scope"
+
+{-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+target : PseudoClass
+target = ExplicitPseudoClass "target"
+
+{-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+valid : PseudoClass
+valid = ExplicitPseudoClass "valid"
+
+
 -- Pseudo-Elements --
 
-{-|-}
+{-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
 after : PseudoElement
 after = ExplicitPseudoElement "after"
 
-{-|-}
+{-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
 before : PseudoElement
 before = ExplicitPseudoElement "before"
 
-{-|-}
+{-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
 firstLetter : PseudoElement
-firstLetter = ExplicitPseudoElement "firstLetter"
+firstLetter = ExplicitPseudoElement "first-letter"
 
-{-|-}
+{-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
 firstLine : PseudoElement
-firstLine = ExplicitPseudoElement "firstLine"
+firstLine = ExplicitPseudoElement "first-line"
 
-{-|-}
+{-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
 selection : PseudoElement
 selection = ExplicitPseudoElement "selection"
 
