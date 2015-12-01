@@ -6,8 +6,13 @@ import FixturesCss as Fixtures
 import String
 
 
-prettyPrint =
-    Css.prettyPrint 2
+prettyPrint style =
+    case Css.prettyPrint style of
+        Ok result ->
+            result
+
+        Err message ->
+            "Invalid Stylesheet: " ++ message
 
 
 all : Test
@@ -27,7 +32,7 @@ divWidthHeight =
             Fixtures.divWidthHeight
 
         output =
-            "div {\n  width: 32%;\n  height: 50px;\n}"
+            "div {\n    width: 32%;\n    height: 50px;\n}"
     in
         suite
             "basic div with fixed width and height"
@@ -95,7 +100,7 @@ multiDescendent =
               display: none;
             }
 
-            html, body > div {
+            html > div, body > div {
               width: 100%;
               height: 100%;
             }
@@ -105,8 +110,11 @@ multiDescendent =
               margin: 0px;
             }
 
-            h1, h2 > h3, h1, h2 > h4 {
+            h1 > h3, h2 > h3 {
               width: 100%;
+            }
+
+            h1 > h3 > h4, h2 > h3 > h4 {
               height: 100%;
             }
 
@@ -115,7 +123,7 @@ multiDescendent =
               margin: 11px;
             }
 
-            span > h2, span > h1 {
+            span > h2 > h1 {
               width: 1px;
               height: 2%;
             }

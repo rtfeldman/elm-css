@@ -1,68 +1,40 @@
 module Css where
 
-{-
-    Implementation notes:
-
-    - strip out []()""'' - so:
-    - toString ["html", "body"] -> "[\"html\",\"body\"]" -> "html,body"
-
-    How would you write this?
-
-    html, body, .foo, .bar
-        width: 100%
--}
-
 import String
-
-prettyPrint : Int -> Style class id -> String
-prettyPrint =
-    prettyPrintHelp 0
-
-
-prettyPrintHelp : Int -> Int -> Style class id -> String
-prettyPrintHelp indentLevel indentSpaces (Style selector attributes children) =
-    if (indentLevel == 0) && (String.isEmpty selector) then
-        children
-            |> List.map (prettyPrintHelp indentLevel indentSpaces)
-            |> String.join "\n\n"
-    else
-        let
-            indentStr =
-                String.repeat (indentSpaces * indentLevel) " "
-
-            subIndentStr =
-                indentStr ++ String.repeat (indentSpaces) " "
-
-            attrsStr =
-                if List.isEmpty attributes then
-                    ""
-                else
-                    attributes
-                        |> List.map attributeToString
-                        |> String.join subIndentStr
-                        |> (++) subIndentStr
-
-            prettyPrintChild =
-                prettyPrintHelp (indentLevel + 1) indentSpaces
-
-            childrenStr =
-                if List.isEmpty children then
-                    ""
-                else
-                    children
-                        |> List.map prettyPrintChild
-                        |> String.join subIndentStr
-                        |> (++) subIndentStr
-        in
-            indentStr ++ selector ++ " {\n"
-                ++ attrsStr
-                ++ childrenStr
-                ++ "}"
+import Regex
+import Css.Declaration as Declaration exposing (..)
+import Css.Declaration.Output exposing (prettyPrintDeclarations)
 
 
-attributeToString : Attribute -> String
-attributeToString (Attribute str) =
-    str ++ ";\n"
+prettyPrint : Style class id -> Result String String
+prettyPrint style =
+    case style of
+        Style name declarations ->
+            Ok (prettyPrintDeclarations declarations)
+
+        InvalidStyle message ->
+            Err message
+
+
+toCssIdentifier : a -> String
+toCssIdentifier identifier =
+    identifier
+        |> toString
+        |> String.trim
+        |> Regex.replace Regex.All (Regex.regex "\\s+") (\_ -> "-")
+
+
+classToString : String -> a -> String
+classToString name class =
+    let
+        cleanedClass : String
+        cleanedClass =
+            toCssIdentifier class
+    in
+        if String.isEmpty name then
+            cleanedClass
+        else
+            name ++ "_" ++ cleanedClass
 
 
 {- Tags -}
@@ -310,134 +282,133 @@ bottom : VerticalAlign
 bottom = "bottom" |> ExplicitVerticalAlign |> NotInherit
 
 
-{- Attributes -}
+{- Properties -}
 
-attr1 name translate value =
-    Attribute (name ++ ": " ++ (translate value))
-
-
-attr2 name translateA translateB valueA valueB =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB))
+prop1 key translate value =
+    ( key, (translate value) )
 
 
-attr3 name translateA translateB translateC valueA valueB valueC =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB) ++ (translateC valueC))
+prop2 key translateA translateB valueA valueB =
+    ( key, (translateA valueA) ++ (translateB valueB) )
 
 
-attr4 name translateA translateB translateC translateD valueA valueB valueC valueD =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD))
+prop3 key translateA translateB translateC valueA valueB valueC =
+    ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) )
 
 
-attr5 name translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
-    Attribute (name ++ ": " ++ (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) ++ (translateE valueE))
+prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
+    ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) )
+
+prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
+    ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) ++ (translateE valueE) )
 
 
-verticalAlign : VerticalAlign -> Attribute
+verticalAlign : VerticalAlign -> (String, String)
 verticalAlign =
-    attr1 "vertical-align" verticalAlignToString
+    prop1 "vertical-align" verticalAlignToString
 
 
-display : Display -> Attribute
+display : Display -> (String, String)
 display =
-    attr1 "display" displayToString
+    prop1 "display" displayToString
 
 
-opacity : OpacityStyle -> Attribute
+opacity : OpacityStyle -> (String, String)
 opacity =
-    attr1 "opacity" toString
+    prop1 "opacity" toString
 
 
-width : number -> Units -> Attribute
+width : number -> Units -> (String, String)
 width =
-    attr2 "width" numberToString unitsToString
+    prop2 "width" numberToString unitsToString
 
 
-minWidth : number -> Units -> Attribute
+minWidth : number -> Units -> (String, String)
 minWidth =
-    attr2 "min-width" numberToString unitsToString
+    prop2 "min-width" numberToString unitsToString
 
 
-height : number -> Units -> Attribute
+height : number -> Units -> (String, String)
 height =
-    attr2 "height" numberToString unitsToString
+    prop2 "height" numberToString unitsToString
 
 
-minHeight : number -> Units -> Attribute
+minHeight : number -> Units -> (String, String)
 minHeight =
-    attr2 "min-height" numberToString unitsToString
+    prop2 "min-height" numberToString unitsToString
 
 
-padding : number -> Units -> Attribute
+padding : number -> Units -> (String, String)
 padding =
-    attr2 "padding" numberToString unitsToString
+    prop2 "padding" numberToString unitsToString
 
-paddingTop : number -> Units -> Attribute
+paddingTop : number -> Units -> (String, String)
 paddingTop =
-    attr2 "padding-top" numberToString unitsToString
+    prop2 "padding-top" numberToString unitsToString
 
-paddingBottom : number -> Units -> Attribute
+paddingBottom : number -> Units -> (String, String)
 paddingBottom =
-    attr2 "padding-bottom" numberToString unitsToString
+    prop2 "padding-bottom" numberToString unitsToString
 
-paddingRight : number -> Units -> Attribute
+paddingRight : number -> Units -> (String, String)
 paddingRight =
-    attr2 "padding-right" numberToString unitsToString
+    prop2 "padding-right" numberToString unitsToString
 
-paddingLeft : number -> Units -> Attribute
+paddingLeft : number -> Units -> (String, String)
 paddingLeft =
-    attr2 "padding-left" numberToString unitsToString
+    prop2 "padding-left" numberToString unitsToString
 
-margin : number -> Units -> Attribute
+margin : number -> Units -> (String, String)
 margin =
-    attr2 "margin" numberToString unitsToString
+    prop2 "margin" numberToString unitsToString
 
-marginTop : number -> Units -> Attribute
+marginTop : number -> Units -> (String, String)
 marginTop =
-    attr2 "margin-top" numberToString unitsToString
+    prop2 "margin-top" numberToString unitsToString
 
-marginBottom : number -> Units -> Attribute
+marginBottom : number -> Units -> (String, String)
 marginBottom =
-    attr2 "margin-bottom" numberToString unitsToString
+    prop2 "margin-bottom" numberToString unitsToString
 
-marginRight : number -> Units -> Attribute
+marginRight : number -> Units -> (String, String)
 marginRight =
-    attr2 "margin-right" numberToString unitsToString
+    prop2 "margin-right" numberToString unitsToString
 
-marginLeft : number -> Units -> Attribute
+marginLeft : number -> Units -> (String, String)
 marginLeft =
-    attr2 "margin-left" numberToString unitsToString
+    prop2 "margin-left" numberToString unitsToString
 
-boxSizing : BoxSizing -> Attribute
+boxSizing : BoxSizing -> (String, String)
 boxSizing =
-    attr1 "box-sizing" boxSizingToString
+    prop1 "box-sizing" boxSizingToString
 
 
-overflowX : Overflow -> Attribute
+overflowX : Overflow -> (String, String)
 overflowX =
-    attr1 "overflow-x" overflowToString
+    prop1 "overflow-x" overflowToString
 
 
-overflowY : Overflow -> Attribute
+overflowY : Overflow -> (String, String)
 overflowY =
-    attr1 "overflow-y" overflowToString
+    prop1 "overflow-y" overflowToString
 
 
-whiteSpace : WhiteSpace -> Attribute
+whiteSpace : WhiteSpace -> (String, String)
 whiteSpace =
-    attr1 "white-space" whiteSpaceToString
+    prop1 "white-space" whiteSpaceToString
 
 
 
 
 
-backgroundColor : Color -> Attribute
+backgroundColor : Color -> (String, String)
 backgroundColor =
-    attr1 "background-color" colorToString
+    prop1 "background-color" colorToString
 
 
-color : Color -> Attribute
+color : Color -> (String, String)
 color =
-    attr1 "color" colorToString
+    prop1 "color" colorToString
 
 
 media : a -> String
@@ -445,14 +416,14 @@ media value =
     "media " ++ (toString value)
     -- TODO
 
-textShadow : TextShadow -> Attribute
+textShadow : TextShadow -> (String, String)
 textShadow =
-    attr1 "text-shadow" textShadowToString
+    prop1 "text-shadow" textShadowToString
 
 
-outline : Float -> Units -> OutlineStyle -> OpacityStyle -> Attribute
+outline : Float -> Units -> OutlineStyle -> OpacityStyle -> (String, String)
 outline =
-    attr4
+    prop4
         "outline"
             toString unitsToString
             (\str -> " " ++ outlineStyleToString str ++ " ")
@@ -462,134 +433,299 @@ outline =
 {- Types -}
 
 type Style class id
-    = Style String (List Attribute) (List (Style class id))
+    = Style String (List Declaration)
+    | InvalidStyle String
 
 
-type Attribute
-    = Attribute String
+stylesheet : String -> Style class id
+stylesheet name =
+    Style name []
+
+{-|
+    stylesheet "homepage"
+        $ body
+            ~ width 960 px
+            ~ color (rgb 7 7 7)
+-}
+($) : Style class id -> Tag -> Style class id
+($) style tag =
+    case style of
+        Style name declarations ->
+            let
+                declaration =
+                    selectorToBlock (TypeSelector (tagToString tag))
+            in
+                declarations ++ [ declaration ]
+                    |> Style name
+
+        InvalidStyle _ ->
+            style
 
 
-stylesheet : Style class id
-stylesheet =
-    Style "" [] []
+(#) : Style class id -> id -> Style class id
+(#) style id =
+    case style of
+        Style name declarations ->
+            let
+                declaration =
+                    selectorToBlock (IdSelector (toCssIdentifier id))
+            in
+                declarations ++ [ declaration ]
+                    |> Style name
+
+        InvalidStyle _ ->
+            style
 
 
-styleWithPrefix : String -> Style class id -> a -> Style class id
-styleWithPrefix prefix (Style selector attrs children) childSelector =
-    children ++ [ Style (prefix ++ (toString childSelector)) [] [] ]
-        |> Style selector attrs
+(.) : Style class id -> class -> Style class id
+(.) style class =
+    case style of
+        Style name declarations ->
+            let
+                declaration =
+                    selectorToBlock (ClassSelector (classToString name class))
+            in
+                declarations ++ [ declaration ]
+                    |> Style name
+
+        InvalidStyle _ ->
+            style
 
 
-(|%|) : Style class id -> Tag -> Style class id
-(|%|) (Style selector attrs children) tag =
-    children ++ [ Style (tagToString tag) [] [] ]
-        |> Style selector attrs
+(~) : Style class id -> ( String, String ) -> Style class id
+(~) style ( key, value ) =
+    case style of
+        Style name declarations ->
+            let
+                property =
+                    { key = key, value = value, important = False }
+            in
+                case addProperty "~" property declarations of
+                    Ok newDeclarations ->
+                        Style name newDeclarations
+
+                    Err message ->
+                        InvalidStyle message
+
+        InvalidStyle _ ->
+            style
 
 
-(|%|=) : Style class id -> List Tag -> Style class id
-(|%|=) (Style selector attrs children) tags =
-    let
-        childSelector =
-            tags
-                |> List.map tagToString
-                |> String.join ", "
-    in
-        children ++ [ Style childSelector [] [] ]
-            |> Style selector attrs
+(!) : Style class id -> ( String, String ) -> Style class id
+(!) style ( key, value ) =
+    case style of
+        Style name declarations ->
+            let
+                property =
+                    { key = key, value = value, important = True }
+            in
+                case addProperty "!" property declarations of
+                    Ok newDeclarations ->
+                        Style name newDeclarations
+
+                    Err message ->
+                        InvalidStyle message
+
+        InvalidStyle _ ->
+            style
 
 
-(|@|) : Style class id -> a -> Style class id
-(|@|) = styleWithPrefix "@"
+{-|
+    stylesheet "homepage"
+        $ html >$ body
+            ~ width 960 px
+            ~ color (rgb 7 7 7)
+-}
+(>$) : Style class id -> Tag -> Style class id
+(>$) style tag =
+    case style of
+        Style name declarations ->
+            let
+                update selector =
+                    tag
+                        |> tagToString
+                        |> TypeSelector
+                        |> SingleSelector
+                        |> Child selector
+            in
+                case extendLastSelector ">$" update declarations of
+                    Ok newDeclarations ->
+                        Style name newDeclarations
+
+                    Err message ->
+                        InvalidStyle message
+
+        InvalidStyle _ ->
+            style
+
+{-|
+    stylesheet "homepage"
+        $ html |$ body
+            ~ width 960 px
+            ~ color (rgb 7 7 7)
+-}
+(|$) : Style class id -> Tag -> Style class id
+(|$) style tag =
+    case style of
+        Style name declarations ->
+            let
+                newSelector =
+                    tag
+                        |> tagToString
+                        |> TypeSelector
+                        |> SingleSelector
+            in
+                case addSelector "|$" newSelector declarations of
+                    Ok newDeclarations ->
+                        Style name newDeclarations
+
+                    Err message ->
+                        InvalidStyle message
+
+        InvalidStyle _ ->
+            style
 
 
-(|::|) : Style class id -> a -> Style class id
-(|::|) = styleWithPrefix "::"
+
+selectorToBlock : Selector -> Declaration
+selectorToBlock selector =
+    StyleBlock (SingleSelector selector) [] []
 
 
-(|>%|) : Style class id -> Tag -> Style class id
-(|>%|) (Style selector attrs children) tag =
-    case splitStartLast children of
-        ( _, Nothing ) ->
-            children ++ [ Style (selector ++ " > " ++ tagToString tag) [] [] ]
-                |> Style selector attrs
+--updateSelector : String -> (CompoundSelector -> CompoundSelector) -> Style class id -> Style class id
+--updateSelector operatorName update style =
+--    case style of
+--        Style name declarations ->
+--            declarations ++ [ Style (tagToString tag) [] [] ]
+--                |> Style name
 
-        ( start, Just (Style activeSelector _ _) ) ->
-            children ++ [ Style (activeSelector ++ " > " ++ tagToString tag) [] [] ]
-                |> Style selector attrs
-
-
-(|>%|=) : Style class id -> List Tag -> Style class id
-(|>%|=) (Style selector attrs children) tags =
-    let
-        selectorFromTag tag =
-            case splitStartLast children of
-                ( _, Nothing ) ->
-                    selector ++ " > " ++ tagToString tag
-
-                ( start, Just (Style activeSelector _ _) ) ->
-                    activeSelector ++ " > " ++ tagToString tag
-
-        childSelector =
-            tags
-                |> List.map selectorFromTag
-                |> String.join ", "
-    in
-        children ++ [ Style childSelector [] [] ]
-            |> Style selector attrs
+--        InvalidStyle _ ->
+--            style
 
 
-(|.|) : Style class id -> class -> Style class id
-(|.|) = styleWithPrefix "."
+addProperty
+    :  String
+    -> Property
+    -> List Declaration
+    -> Result String (List Declaration)
+addProperty operatorName property declarations =
+    case declarations of
+        [] ->
+            Err (operatorName ++ " cannot be used as the first declaration.")
 
+        declaration :: [] ->
+            case declaration of
+                StyleBlock firstSelector extraSelectors properties ->
+                    let
+                        newDeclaration =
+                            StyleBlock
+                                firstSelector
+                                extraSelectors
+                                (properties ++ [ property ])
+                    in
+                        Ok [ newDeclaration ]
 
-(|#|) : Style class id -> id -> Style class id
-(|#|) = styleWithPrefix "#"
+                ConditionalGroupRule _ _ ->
+                    Err (operatorName ++ " cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
 
+                StandaloneAtRule _ _ ->
+                    Err (operatorName ++ " cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
 
-(|>.|) : Style class id -> a -> Style class id
-(|>.|) = styleWithPrefix ">."
+        first :: rest ->
+            case addProperty operatorName property rest of
+                Ok result ->
+                    Ok (first :: result)
 
+                Err _ as err ->
+                    err
 
-(|!|) : Style class id -> Attribute -> Style class id
-(|!|) style (Attribute attrString) =
-    transformActiveChild (addAttr (Attribute (attrString ++ " !important"))) style
+extendLastSelector
+    :  String
+    -> (CompoundSelector -> CompoundSelector)
+    -> List Declaration
+    -> Result String (List Declaration)
+extendLastSelector operatorName update declarations =
+    case declarations of
+        [] ->
+            Err (operatorName ++ " cannot be used as the first declaration.")
 
+        declaration :: [] ->
+            case declaration of
+                StyleBlock firstSelector extraSelectors properties ->
+                    let
+                        newDeclaration =
+                            StyleBlock
+                                (update firstSelector)
+                                (List.map update extraSelectors)
+                                []
 
-(|-|) : Style class id -> Attribute -> Style class id
-(|-|) style attr =
-    transformActiveChild (addAttr attr) style
+                        newDeclarations =
+                            if List.isEmpty properties then
+                                -- Don't bother keeping empty declarations.
+                                [ newDeclaration ]
+                            else
+                                [ declaration, newDeclaration ]
+                    in
+                        Ok newDeclarations
 
+                ConditionalGroupRule _ _ ->
+                    Err (operatorName ++ " cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
 
-addAttr : Attribute -> Style a b -> Style a b
-addAttr attr (Style selector attrs children) =
-    Style selector (attrs ++ [ attr ]) children
+                StandaloneAtRule _ _ ->
+                    Err (operatorName ++ " cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
 
+        first :: rest ->
+            case extendLastSelector operatorName update rest of
+                Ok result ->
+                    Ok (first :: result)
 
-transformActiveChild : (Style a b -> Style a b) -> Style a b -> Style a b
-transformActiveChild transform (( Style selector attrs children ) as style) =
-    case splitStartLast children of
-        ( _, Nothing ) ->
-            transform style
+                Err _ as err ->
+                    err
 
-        ( inactiveChildren, Just activeChild ) ->
-            Style
-                selector
-                attrs
-                (inactiveChildren ++ [ transform activeChild ])
+addSelector
+    :  String
+    -> CompoundSelector
+    -> List Declaration
+    -> Result String (List Declaration)
+addSelector operatorName newSelector declarations =
+    case declarations of
+        [] ->
+            Err (operatorName ++ " cannot be used as the first declaration.")
 
+        declaration :: [] ->
+            case declaration of
+                StyleBlock firstSelector extraSelectors properties ->
+                    let
+                        newDeclaration =
+                            StyleBlock
+                                firstSelector
+                                (extraSelectors ++ [ newSelector ])
+                                properties
+                    in
+                        Ok [ newDeclaration ]
 
-splitStartLast : List a -> (List a, Maybe a)
-splitStartLast list =
+                ConditionalGroupRule _ _ ->
+                    Err (operatorName ++ " cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
+
+                StandaloneAtRule _ _ ->
+                    Err (operatorName ++ " cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
+
+        first :: rest ->
+            case addSelector operatorName newSelector rest of
+                Ok result ->
+                    Ok (first :: result)
+
+                Err _ as err ->
+                    err
+
+updateLast : (a -> a) -> List a -> List a
+updateLast update list =
     case list of
         [] ->
-            ( [], Nothing )
+            list
 
-        elem :: [] ->
-            ( [], Just elem )
+        singleton :: [] ->
+            [ update singleton ]
 
-        elem :: rest ->
-            let
-                ( start, last ) =
-                    splitStartLast rest
-            in
-                ( elem :: start, last )
+        first :: rest ->
+            first :: updateLast update rest
