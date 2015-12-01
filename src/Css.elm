@@ -1,9 +1,8 @@
 module Css where
 
-import String
-import Regex
 import Css.Declaration as Declaration exposing (..)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
+import Css.Util exposing (toCssIdentifier, classToString)
 
 
 prettyPrint : Style class id -> Result String String
@@ -14,27 +13,6 @@ prettyPrint style =
 
         InvalidStyle message ->
             Err message
-
-
-toCssIdentifier : a -> String
-toCssIdentifier identifier =
-    identifier
-        |> toString
-        |> String.trim
-        |> Regex.replace Regex.All (Regex.regex "\\s+") (\_ -> "-")
-
-
-classToString : String -> a -> String
-classToString name class =
-    let
-        cleanedClass : String
-        cleanedClass =
-            toCssIdentifier class
-    in
-        if String.isEmpty name then
-            cleanedClass
-        else
-            name ++ "_" ++ cleanedClass
 
 
 {- Tags -}
