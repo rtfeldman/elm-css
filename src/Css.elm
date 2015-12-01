@@ -1,10 +1,32 @@
-module Css where
+module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), ($=), (~), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom) where
+{-| Functions for building stylesheets.
+
+# Style
+@docs Style, stylesheet, prettyPrint
+
+# Statements
+@docs ($), (#), (.), (@), ($=)
+
+# Combinators
+@docs (|$), (>$)
+
+# Elements
+@docs html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input
+
+# Attributes
+@docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
+
+# Values
+@docs (~), (!), solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom
+-}
+
 
 import Css.Declaration as Declaration exposing (..)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Util exposing (toCssIdentifier, classToString)
 
 
+{-|-}
 prettyPrint : Style class id -> Result String String
 prettyPrint style =
     case style of
@@ -17,22 +39,70 @@ prettyPrint style =
 
 {- Tags -}
 
+{-| Selector for a html element. -}
+html : Tag
 html = Tag "html"
+
+{-| Selector for a body element. -}
+body : Tag
 body = Tag "body"
+
+{-| Selector for a header element. -}
+header : Tag
 header = Tag "header"
+
+{-| Selector for a nav element. -}
+nav : Tag
 nav = Tag "nav"
+
+{-| Selector for a div element. -}
+div : Tag
 div = Tag "div"
+
+{-| Selector for a span element. -}
+span : Tag
 span = Tag "span"
+
+{-| Selector for a img element. -}
+img : Tag
 img = Tag "img"
+
+{-| Selector for a nowrap element. -}
+nowrap : Tag
 nowrap = Tag "nowrap"
+
+{-| Selector for a button element. -}
+button : Tag
 button = Tag "button"
+
+{-| Selector for an h1 element. -}
+h1 : Tag
 h1 = Tag "h1"
+
+{-| Selector for an h2 element. -}
+h2 : Tag
 h2 = Tag "h2"
+
+{-| Selector for an h3 element. -}
+h3 : Tag
 h3 = Tag "h3"
+
+{-| Selector for an h4 element. -}
+h4 : Tag
 h4 = Tag "h4"
+
+{-| Selector for a p element. -}
+p : Tag
 p = Tag "p"
+
+{-| Selector for an ol element. -}
+ol : Tag
 ol = Tag "ol"
+
+{-| Selector for an input element. -}
+input : Tag
 input = Tag "input"
+
 
 tagToString (Tag str) = str
 
@@ -192,70 +262,93 @@ type OpacityStyle
 type ExplicitTextShadow
     = NoTextShadow
 
+-- Properties --
+
+{-|-}
 solid : OutlineStyle
 solid = OutlineStyle "solid"
 
+{-|-}
 transparent : OpacityStyle
 transparent = OpacityStyle "transparent"
 
+{-|-}
 rgb : number -> number -> number -> Color
 rgb r g b =
     ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
         |> NotAuto |> NotInherit
 
 
+{-|-}
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
     ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
         |> NotAuto |> NotInherit
 
 
+{-|-}
 hex : String -> Color
 hex str =
     ExplicitColor ("#" ++ str)
         |> NotAuto |> NotInherit
 
+{-|-}
 pct : Units
 pct = "%" |> ExplicitUnits |> NotInherit
 
+{-|-}
 em : Units
 em = "em" |> ExplicitUnits |> NotInherit
 
+{-|-}
 px : Units
 px = "px" |> ExplicitUnits |> NotInherit
 
+{-|-}
+borderBox : BoxSizing
 borderBox = "border-box" |> ExplicitBoxSizing |> NotInherit
 
+{-|-}
 visible : Display
 visible = "visible" |> ExplicitDisplay |> NotNone |> NotInherit
 
+{-|-}
 block : Display
 block = "block" |> ExplicitDisplay |> NotNone |> NotInherit
 
+{-|-}
 inlineBlock : Display
 inlineBlock = "inline-block" |> ExplicitDisplay |> NotNone |> NotInherit
 
+{-|-}
 inline : Display
 inline = "inline" |> ExplicitDisplay |> NotNone |> NotInherit
 
+{-|-}
 none : InheritOr (NoneOr a)
 none = None |> NotInherit
 
+{-|-}
 auto : InheritOr (AutoOr a)
 auto = Auto |> NotInherit
 
+{-|-}
 inherit : InheritOr a
 inherit = Inherit
 
+{-|-}
 noWrap : WhiteSpace
 noWrap = "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> NotInherit
 
+{-|-}
 top : VerticalAlign
 top = "top" |> ExplicitVerticalAlign |> NotInherit
 
+{-|-}
 middle : VerticalAlign
 middle = "middle" |> ExplicitVerticalAlign |> NotInherit
 
+{-|-}
 bottom : VerticalAlign
 bottom = "bottom" |> ExplicitVerticalAlign |> NotInherit
 
@@ -281,124 +374,146 @@ prop5 key translateA translateB translateC translateD translateE valueA valueB v
     ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) ++ (translateE valueE) )
 
 
+{-|-}
 verticalAlign : VerticalAlign -> (String, String)
 verticalAlign =
     prop1 "vertical-align" verticalAlignToString
 
 
+{-|-}
 display : Display -> (String, String)
 display =
     prop1 "display" displayToString
 
 
+{-|-}
 opacity : OpacityStyle -> (String, String)
 opacity =
     prop1 "opacity" toString
 
 
+{-|-}
 width : number -> Units -> (String, String)
 width =
     prop2 "width" numberToString unitsToString
 
 
+{-|-}
 minWidth : number -> Units -> (String, String)
 minWidth =
     prop2 "min-width" numberToString unitsToString
 
 
+{-|-}
 height : number -> Units -> (String, String)
 height =
     prop2 "height" numberToString unitsToString
 
 
+{-|-}
 minHeight : number -> Units -> (String, String)
 minHeight =
     prop2 "min-height" numberToString unitsToString
 
 
+{-|-}
 padding : number -> Units -> (String, String)
 padding =
     prop2 "padding" numberToString unitsToString
 
+{-|-}
 paddingTop : number -> Units -> (String, String)
 paddingTop =
     prop2 "padding-top" numberToString unitsToString
 
+{-|-}
 paddingBottom : number -> Units -> (String, String)
 paddingBottom =
     prop2 "padding-bottom" numberToString unitsToString
 
+{-|-}
 paddingRight : number -> Units -> (String, String)
 paddingRight =
     prop2 "padding-right" numberToString unitsToString
 
+{-|-}
 paddingLeft : number -> Units -> (String, String)
 paddingLeft =
     prop2 "padding-left" numberToString unitsToString
 
+{-|-}
 margin : number -> Units -> (String, String)
 margin =
     prop2 "margin" numberToString unitsToString
 
+{-|-}
 marginTop : number -> Units -> (String, String)
 marginTop =
     prop2 "margin-top" numberToString unitsToString
 
+{-|-}
 marginBottom : number -> Units -> (String, String)
 marginBottom =
     prop2 "margin-bottom" numberToString unitsToString
 
+{-|-}
 marginRight : number -> Units -> (String, String)
 marginRight =
     prop2 "margin-right" numberToString unitsToString
 
+{-|-}
 marginLeft : number -> Units -> (String, String)
 marginLeft =
     prop2 "margin-left" numberToString unitsToString
 
+{-|-}
 boxSizing : BoxSizing -> (String, String)
 boxSizing =
     prop1 "box-sizing" boxSizingToString
 
 
+{-|-}
 overflowX : Overflow -> (String, String)
 overflowX =
     prop1 "overflow-x" overflowToString
 
 
+{-|-}
 overflowY : Overflow -> (String, String)
 overflowY =
     prop1 "overflow-y" overflowToString
 
 
+{-|-}
 whiteSpace : WhiteSpace -> (String, String)
 whiteSpace =
     prop1 "white-space" whiteSpaceToString
 
 
-
-
-
+{-|-}
 backgroundColor : Color -> (String, String)
 backgroundColor =
     prop1 "background-color" colorToString
 
 
+{-|-}
 color : Color -> (String, String)
 color =
     prop1 "color" colorToString
 
-
+{-|-}
 media : a -> String
 media value =
     "media " ++ (toString value)
     -- TODO
 
+{-|-}
 textShadow : TextShadow -> (String, String)
 textShadow =
     prop1 "text-shadow" textShadowToString
 
 
+{-|-}
 outline : Float -> Units -> OutlineStyle -> OpacityStyle -> (String, String)
 outline =
     prop4
@@ -410,16 +525,27 @@ outline =
 
 {- Types -}
 
+{-| A namespaced stylesheet. -}
 type Style class id
     = Style String (List Declaration)
     | InvalidStyle String
 
 
+{-| An empty namespaced stylesheet. Use this as the foundation on which to build
+your stylesheet.
+
+    stylesheet "homepage"
+        $ body
+            ~ width 960 px
+            ~ color (rgb 7 7 7)
+-}
 stylesheet : String -> Style class id
 stylesheet name =
     Style name []
 
-{-|
+
+{-| A [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors).
+
     stylesheet "homepage"
         $ body
             ~ width 960 px
@@ -440,6 +566,13 @@ stylesheet name =
             style
 
 
+{-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
+
+    stylesheet "homepage"
+        # NavBar
+            ~ width 960 px
+            ~ backgroundColor (rgb 123 42 208)
+-}
 (#) : Style class id -> id -> Style class id
 (#) style id =
     case style of
@@ -455,6 +588,13 @@ stylesheet name =
             style
 
 
+{-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
+
+    stylesheet "homepage"
+        . Hero
+            ~ fontWeight bold
+            ~ color (rgb 7 7 7)
+-}
 (.) : Style class id -> class -> Style class id
 (.) style class =
     case style of
@@ -470,6 +610,67 @@ stylesheet name =
             style
 
 
+{-| An [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule).
+
+    stylesheet "homepage"
+        @ charset "utf-8"
+
+        html
+            width 100 pct
+
+        @ media screen
+            $ body
+                width 960 px
+
+        @ media print
+            $ body
+                width 100 pct
+-}
+(@) : Style class id -> String -> Style class id
+(@) style rule =
+    case style of
+        Style name declarations ->
+            let
+                declaration =
+                    ConditionalGroupRule rule []
+            in
+                declarations ++ [ declaration ]
+                    |> Style name
+
+        InvalidStyle _ ->
+            style
+
+{-| A custom selector. Use this for things like
+[attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
+and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
+
+    stylesheet "homepage"
+        $= "* [lang^=en]"
+            ~ textDecoration underline
+            ~ color (rgb 7 7 7)
+-}
+($=) : Style class id -> class -> Style class id
+($=) style class =
+    case style of
+        Style name declarations ->
+            let
+                declaration =
+                    selectorToBlock (ClassSelector (classToString name class))
+            in
+                declarations ++ [ declaration ]
+                    |> Style name
+
+        InvalidStyle _ ->
+            style
+
+
+{-| A [property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
+
+    stylesheet "homepage"
+        $ body
+            ~ width 960 px
+            ~ color (rgb 7 7 7)
+-}
 (~) : Style class id -> ( String, String ) -> Style class id
 (~) style ( key, value ) =
     case style of
@@ -489,6 +690,14 @@ stylesheet name =
             style
 
 
+{-| An [`!important`](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity#The_!important_exception)
+property.
+
+    stylesheet "homepage"
+        $ button
+            ~ color (rgb 7 7 7)
+            ! fontWeight normal
+-}
 (!) : Style class id -> ( String, String ) -> Style class id
 (!) style ( key, value ) =
     case style of
@@ -568,17 +777,6 @@ stylesheet name =
 selectorToBlock : Selector -> Declaration
 selectorToBlock selector =
     StyleBlock (SingleSelector selector) [] []
-
-
---updateSelector : String -> (CompoundSelector -> CompoundSelector) -> Style class id -> Style class id
---updateSelector operatorName update style =
---    case style of
---        Style name declarations ->
---            declarations ++ [ Style (tagToString tag) [] [] ]
---                |> Style name
-
---        InvalidStyle _ ->
---            style
 
 
 addProperty
