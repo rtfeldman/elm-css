@@ -1,20 +1,24 @@
 module Tests (all) where
 
-import ElmTest.Assertion exposing (..)
-import ElmTest.Test exposing (..)
-import Stylesheets
-import Fixtures
-
+import ElmTest exposing (..)
+import Css
+import FixturesCss as Fixtures
 import String
 
 
-prettyPrint =
-    Stylesheets.prettyPrint 2
+prettyPrint style =
+    case Css.prettyPrint style of
+        Ok result ->
+            result
+
+        Err message ->
+            "Invalid Stylesheet: " ++ message
 
 
 all : Test
 all =
-    suite "elm-stylesheets"
+    suite
+        "elm-stylesheets"
         [ divWidthHeight
         , dreamwriter
         , multiDescendent
@@ -28,11 +32,12 @@ divWidthHeight =
             Fixtures.divWidthHeight
 
         output =
-            "div {\n  width: 32%;\n  height: 50px;\n}"
+            "div {\n    width: 32%;\n    height: 50px;\n}"
     in
-        suite "basic div with fixed width and height"
-            [ test "pretty prints the expected output" <|
-                assertEqual output (prettyPrint input)
+        suite
+            "basic div with fixed width and height"
+            [ test "pretty prints the expected output"
+                <| assertEqual output (prettyPrint input)
             ]
 
 
@@ -42,46 +47,46 @@ dreamwriter =
         input =
             Fixtures.dreamwriter
 
-        output =
-            String.trim """
+        output = """
+            html, body {
+              width: 100%;
+              height: 100%;
+              box-sizing: border-box;
+              padding: 0px;
+              margin: 0px;
+            }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 0px;
-  margin: 0px;
-}
+            body {
+              min-width: 1280px;
+              overflow-x: auto;
+            }
 
-body {
-  min-width: 1280px;
-  overflow-x: auto;
-}
+            body > div {
+              width: 100%;
+              height: 100%;
+            }
 
-body > div {
-  width: 100%;
-  height: 100%;
-}
+            .dreamwriter_Hidden {
+              display: none !important;
+            }
 
-.Hidden {
-  display: none !important;
-}
-
-#Page {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 8px;
-  background-color: rgb(100, 90, 128);
-  color: rgb(40, 35, 76);
-}
-            """
+            #Page {
+              width: 100%;
+              height: 100%;
+              box-sizing: border-box;
+              margin: 0px;
+              padding: 8px;
+              background-color: rgb(100, 90, 128);
+              color: rgb(40, 35, 76);
+            }
+        """
     in
-        suite "Sample stylesheet from Dreamwriter"
-            [ test "pretty prints the expected output" <|
-                assertEqual output (prettyPrint input)
+        suite
+            "Sample stylesheet from Dreamwriter"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
+
 
 multiDescendent : Test
 multiDescendent =
@@ -89,40 +94,52 @@ multiDescendent =
         input =
             Fixtures.multiDescendent
 
-        output =
-            String.trim """
-html, body {
-  box-sizing: border-box;
-  display: none;
-}
+        output = """
+            html, body {
+              box-sizing: border-box;
+              display: none;
+            }
 
-html, body > div {
-  width: 100%;
-  height: 100%;
-}
+            html > div, body > div {
+              width: 100%;
+              height: 100%;
+            }
 
-h1, h2 {
-  padding: 0px;
-  margin: 0px;
-}
+            h1, h2 {
+              padding: 0px;
+              margin: 0px;
+            }
 
-h1, h2 > h3, h1, h2 > h4 {
-  width: 100%;
-  height: 100%;
-}
+            h1 > h3, h2 > h3 {
+              width: 100%;
+            }
 
-span {
-  padding: 10px;
-  margin: 11px;
-}
+            h1 > h3 > h4, h2 > h3 > h4 {
+              height: 100%;
+            }
 
-span > h2, span > h1 {
-  width: 1px;
-  height: 2%;
-}
-            """
+            span {
+              padding: 10px;
+              margin: 11px;
+            }
+
+            span > h2 > h1 {
+              width: 1px;
+              height: 2%;
+            }
+        """
     in
-        suite "Multi-descendent stylesheet"
-            [ test "pretty prints the expected output" <|
-                assertEqual output (prettyPrint input)
+        suite
+            "Multi-descendent stylesheet"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
+
+
+outdented : String -> String
+outdented str =
+    str
+        |> String.split "\n"
+        |> List.map String.trim
+        |> String.join "\n"
+        |> String.trim

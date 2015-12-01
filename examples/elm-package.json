@@ -1,7 +1,7 @@
 {
-    "version": "1.2.0",
-    "summary": "Streamlined long-form writing software.",
-    "repository": "https://github.com/rtfeldman/dreamwriter.git",
+    "version": "1.0.0",
+    "summary": "Examples for elm-css",
+    "repository": "https://github.com/rtfeldman/elm-css.git",
     "license": "BSD-3-Clause",
     "source-directories": [
         "src",
