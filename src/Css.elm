@@ -1,4 +1,4 @@
-module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), ($=), (~), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom) where
+module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection) where
 {-| Functions for building stylesheets.
 
 # Style
@@ -8,7 +8,7 @@ module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), ($=)
 @docs ($), (#), (.), (@), ($=)
 
 # Combinators
-@docs (|$), (>$)
+@docs (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.)
 
 # Elements
 @docs html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input
@@ -18,6 +18,12 @@ module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), ($=)
 
 # Values
 @docs (~), (!), solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom
+
+# Pseudo-Classes
+@docs (&:)
+
+# Pseudo-Elements
+@docs (&::), after, before, firstLetter, firstLine, selection
 -}
 
 
@@ -110,9 +116,6 @@ tagToString (Tag str) = str
 -- TODO these are just for @media - maybe improve type guarantees?
 screen = "screen"
 print = "print"
-
--- TODO this is just for ::selection - maybe improve type guarantees?
-selection = "selection"
 
 
 {- Units -}
@@ -725,25 +728,172 @@ property.
 -}
 (>$) : Style class id -> Tag -> Style class id
 (>$) style tag =
+    extendTypeSelector
+        ">$"
+        (\_ -> (Child (SingleSelector (TypeSelector (tagToString tag)))))
+        style
+
+
+{-|-}
+(>>$) : Style class id -> Tag -> Style class id
+(>>$) style tag =
+    extendTypeSelector
+        ">>$"
+        (\_ -> (Descendant (SingleSelector (TypeSelector (tagToString tag)))))
+        style
+
+{-|-}
+(+$) : Style class id -> Tag -> Style class id
+(+$) style tag =
+    extendTypeSelector
+        "+$"
+        (\_ -> (AdjacentSibling (SingleSelector (TypeSelector (tagToString tag)))))
+        style
+
+{-|-}
+(~$) : Style class id -> Tag -> Style class id
+(~$) style tag =
+    extendTypeSelector
+        "~$"
+        (\_ -> (GeneralSibling (SingleSelector (TypeSelector (tagToString tag)))))
+        style
+
+
+{-|-}
+(>.) : Style class id -> class -> Style class id
+(>.) style class =
+    extendTypeSelector
+        ">."
+        (\name -> (Child (SingleSelector (ClassSelector (classToString name class)))))
+        style
+
+
+{-|-}
+(>>.) : Style class id -> class -> Style class id
+(>>.) style class =
+    extendTypeSelector
+        ">>."
+        (\name -> (Descendant (SingleSelector (ClassSelector (classToString name class)))))
+        style
+
+{-|-}
+(+.) : Style class id -> class -> Style class id
+(+.) style class =
+    extendTypeSelector
+        "+."
+        (\name -> (AdjacentSibling (SingleSelector (ClassSelector (classToString name class)))))
+        style
+
+
+{-|-}
+(~.) : Style class id -> class -> Style class id
+(~.) style class =
+    extendTypeSelector
+        "~."
+        (\name -> (GeneralSibling (SingleSelector (ClassSelector (classToString name class)))))
+        style
+
+
+{-|-}
+(>#) : Style class id -> id -> Style class id
+(>#) style id =
+    extendTypeSelector
+        ">#"
+        (\_ -> (Child (SingleSelector (IdSelector (toCssIdentifier id)))))
+        style
+
+
+{-|-}
+(>>#) : Style class id -> id -> Style class id
+(>>#) style id =
+    extendTypeSelector
+        ">>#"
+        (\_ -> (Descendant (SingleSelector (IdSelector (toCssIdentifier id)))))
+        style
+
+{-|-}
+(+#) : Style class id -> id -> Style class id
+(+#) style id =
+    extendTypeSelector
+        "+#"
+        (\_ -> (AdjacentSibling (SingleSelector (IdSelector (toCssIdentifier id)))))
+        style
+
+
+{-|-}
+(~#) : Style class id -> id -> Style class id
+(~#) style id =
+    extendTypeSelector
+        "~#"
+        (\_ -> (GeneralSibling (SingleSelector (IdSelector (toCssIdentifier id)))))
+        style
+
+
+{-|-}
+(&:) : Style class id -> PseudoClass -> Style class id
+(&:) style pseudoClass =
+    extendTypeSelector
+        "&:"
+        (\_ -> (PseudoClass (pseudoClassToString pseudoClass)))
+        style
+
+
+{-|-}
+(&::) : Style class id -> PseudoElement -> Style class id
+(&::) style pseudoElement =
+    extendTypeSelector
+        "&::"
+        (\_ -> (PseudoElement (pseudoElementToString pseudoElement)))
+        style
+
+
+extendTypeSelector : String -> (String -> CompoundSelector -> CompoundSelector) -> Style class id -> Style class id
+extendTypeSelector operatorName update style =
     case style of
         Style name declarations ->
-            let
-                update selector =
-                    tag
-                        |> tagToString
-                        |> TypeSelector
-                        |> SingleSelector
-                        |> Child selector
-            in
-                case extendLastSelector ">$" update declarations of
-                    Ok newDeclarations ->
-                        Style name newDeclarations
+            case extendLastSelector operatorName (update name) declarations of
+                Ok newDeclarations ->
+                    Style name newDeclarations
 
-                    Err message ->
-                        InvalidStyle message
+                Err message ->
+                    InvalidStyle message
 
         InvalidStyle _ ->
             style
+
+-- Pseudo-Elements --
+
+{-|-}
+after : PseudoElement
+after = ExplicitPseudoElement "after"
+
+{-|-}
+before : PseudoElement
+before = ExplicitPseudoElement "before"
+
+{-|-}
+firstLetter : PseudoElement
+firstLetter = ExplicitPseudoElement "firstLetter"
+
+{-|-}
+firstLine : PseudoElement
+firstLine = ExplicitPseudoElement "firstLine"
+
+{-|-}
+selection : PseudoElement
+selection = ExplicitPseudoElement "selection"
+
+pseudoElementToString : PseudoElement -> String
+pseudoElementToString (ExplicitPseudoElement str) = str
+
+type PseudoElement =
+    ExplicitPseudoElement String
+
+pseudoClassToString : PseudoClass -> String
+pseudoClassToString (ExplicitPseudoClass str) = str
+
+type PseudoClass =
+    ExplicitPseudoClass String
 
 {-|
     stylesheet "homepage"

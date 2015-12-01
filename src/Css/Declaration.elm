@@ -6,8 +6,6 @@ type Selector
     | ClassSelector String
     | IdSelector String
     | CustomSelector String
-    | PseudoClass String Selector
-    | PseudoElement String Selector
 
 
 type CompoundSelector
@@ -16,6 +14,8 @@ type CompoundSelector
     | GeneralSibling CompoundSelector CompoundSelector
     | Child CompoundSelector CompoundSelector
     | Descendant CompoundSelector CompoundSelector
+    | PseudoClass String CompoundSelector
+    | PseudoElement String CompoundSelector
 
 
 type alias Property =
