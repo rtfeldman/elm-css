@@ -1,4 +1,4 @@
-module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
+module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, CompilerOutput, outputToPort) where
 {-| Functions for building stylesheets.
 
 # Style
@@ -24,6 +24,9 @@ module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$
 
 # Pseudo-Elements
 @docs (&::), after, before, firstLetter, firstLine, selection
+
+# Compiler Output
+@docs (CompilerOutput, outputToPort)
 -}
 
 
@@ -1250,3 +1253,33 @@ updateLast update list =
 
         first :: rest ->
             first :: updateLast update rest
+
+
+{- Compiler Output -}
+
+{-| Record type for converting a Result to something consumable in Node
+-}
+type alias CompilerOutput =
+    { success: Bool
+    , content: String
+    }
+
+
+{-| Converts a Result emitted by prettyPrint to a CompilerOutput
+
+    port output =
+        outputToPort css
+
+    css =
+        prettyPrint <|
+            stylsheet "example"
+                $ body
+                    ~ margin 0 px
+-}
+outputToPort : Result String String -> CompilerOutput
+outputToPort result =
+    case result of
+        Ok styleString ->
+            CompilerOutput True styleString
+        Err message ->
+            CompilerOutput False message
