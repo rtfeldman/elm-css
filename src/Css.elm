@@ -1,4 +1,5 @@
 module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
+
 {-| Functions for building stylesheets.
 
 # Style
@@ -26,13 +27,12 @@ module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$
 @docs (&::), after, before, firstLetter, firstLine, selection
 -}
 
-
 import Css.Declaration as Declaration exposing (..)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Util exposing (toCssIdentifier, classToString)
 
 
-{-|-}
+{-| -}
 prettyPrint : Style class id -> Result String String
 prettyPrint style =
     case style of
@@ -43,82 +43,141 @@ prettyPrint style =
             Err message
 
 
+
 {- Tags -}
 
-{-| Selector for a html element. -}
+
+{-| Selector for a html element.
+-}
 html : Tag
-html = Tag "html"
+html =
+    Tag "html"
 
-{-| Selector for a body element. -}
+
+{-| Selector for a body element.
+-}
 body : Tag
-body = Tag "body"
+body =
+    Tag "body"
 
-{-| Selector for a header element. -}
+
+{-| Selector for a header element.
+-}
 header : Tag
-header = Tag "header"
+header =
+    Tag "header"
 
-{-| Selector for a nav element. -}
+
+{-| Selector for a nav element.
+-}
 nav : Tag
-nav = Tag "nav"
+nav =
+    Tag "nav"
 
-{-| Selector for a div element. -}
+
+{-| Selector for a div element.
+-}
 div : Tag
-div = Tag "div"
+div =
+    Tag "div"
 
-{-| Selector for a span element. -}
+
+{-| Selector for a span element.
+-}
 span : Tag
-span = Tag "span"
+span =
+    Tag "span"
 
-{-| Selector for a img element. -}
+
+{-| Selector for a img element.
+-}
 img : Tag
-img = Tag "img"
+img =
+    Tag "img"
 
-{-| Selector for a nowrap element. -}
+
+{-| Selector for a nowrap element.
+-}
 nowrap : Tag
-nowrap = Tag "nowrap"
+nowrap =
+    Tag "nowrap"
 
-{-| Selector for a button element. -}
+
+{-| Selector for a button element.
+-}
 button : Tag
-button = Tag "button"
+button =
+    Tag "button"
 
-{-| Selector for an h1 element. -}
+
+{-| Selector for an h1 element.
+-}
 h1 : Tag
-h1 = Tag "h1"
+h1 =
+    Tag "h1"
 
-{-| Selector for an h2 element. -}
+
+{-| Selector for an h2 element.
+-}
 h2 : Tag
-h2 = Tag "h2"
+h2 =
+    Tag "h2"
 
-{-| Selector for an h3 element. -}
+
+{-| Selector for an h3 element.
+-}
 h3 : Tag
-h3 = Tag "h3"
+h3 =
+    Tag "h3"
 
-{-| Selector for an h4 element. -}
+
+{-| Selector for an h4 element.
+-}
 h4 : Tag
-h4 = Tag "h4"
+h4 =
+    Tag "h4"
 
-{-| Selector for a p element. -}
+
+{-| Selector for a p element.
+-}
 p : Tag
-p = Tag "p"
+p =
+    Tag "p"
 
-{-| Selector for an ol element. -}
+
+{-| Selector for an ol element.
+-}
 ol : Tag
-ol = Tag "ol"
+ol =
+    Tag "ol"
 
-{-| Selector for an input element. -}
+
+{-| Selector for an input element.
+-}
 input : Tag
-input = Tag "input"
+input =
+    Tag "input"
 
 
-tagToString (Tag str) = str
+tagToString (Tag str) =
+    str
+
 
 
 -- TODO these are just for @media - maybe improve type guarantees?
-screen = "screen"
-print = "print"
+
+
+screen =
+    "screen"
+
+
+print =
+    "print"
+
 
 
 {- Units -}
+
 
 inheritToString : (a -> String) -> InheritOr a -> String
 inheritToString translate value =
@@ -138,6 +197,7 @@ autoToString translate value =
 
         NotAuto notAuto ->
             translate notAuto
+
 
 noneToString : (a -> String) -> NoneOr a -> String
 noneToString translate value =
@@ -187,6 +247,7 @@ whiteSpaceToString =
         |> autoToString
         |> inheritToString
 
+
 colorToString : Color -> String
 colorToString =
     (\(ExplicitColor str) -> str)
@@ -212,151 +273,249 @@ explicitTextShadowToString value =
         NoTextShadow ->
             "TODO"
 
+
 outlineStyleToString : OutlineStyle -> String
-outlineStyleToString (OutlineStyle str) = str
+outlineStyleToString (OutlineStyle str) =
+    str
 
 
 opacityStyleToString : OpacityStyle -> String
-opacityStyleToString (OpacityStyle str) = str
+opacityStyleToString (OpacityStyle str) =
+    str
 
 
 type Tag
     = Tag String
 
+
 type InheritOr a
     = Inherit
     | NotInherit a
+
 
 type AutoOr a
     = Auto
     | NotAuto a
 
+
 type NoneOr a
     = None
     | NotNone a
 
-type alias BoxSizing = InheritOr ExplicitBoxSizing
-type alias Overflow = InheritOr (AutoOr ExplicitOverflow)
-type alias Display = InheritOr (NoneOr ExplicitDisplay)
-type alias WhiteSpace = InheritOr (AutoOr ExplicitWhiteSpace)
-type alias Color = InheritOr (AutoOr ExplicitColor)
-type alias TextShadow = InheritOr (NoneOr ExplicitTextShadow)
-type alias Outline = InheritOr ExplicitOutline
-type alias Units = InheritOr ExplicitUnits
-type alias VerticalAlign = InheritOr ExplicitVerticalAlign
 
-type ExplicitUnits = ExplicitUnits String
-type ExplicitBoxSizing = ExplicitBoxSizing String
-type ExplicitOverflow = ExplicitOverflow String
-type ExplicitDisplay = ExplicitDisplay String
-type ExplicitWhiteSpace = ExplicitWhiteSpace String
-type ExplicitColor = ExplicitColor String
-type ExplicitVerticalAlign = ExplicitVerticalAlign String
+type alias BoxSizing =
+    InheritOr ExplicitBoxSizing
+
+
+type alias Overflow =
+    InheritOr (AutoOr ExplicitOverflow)
+
+
+type alias Display =
+    InheritOr (NoneOr ExplicitDisplay)
+
+
+type alias WhiteSpace =
+    InheritOr (AutoOr ExplicitWhiteSpace)
+
+
+type alias Color =
+    InheritOr (AutoOr ExplicitColor)
+
+
+type alias TextShadow =
+    InheritOr (NoneOr ExplicitTextShadow)
+
+
+type alias Outline =
+    InheritOr ExplicitOutline
+
+
+type alias Units =
+    InheritOr ExplicitUnits
+
+
+type alias VerticalAlign =
+    InheritOr ExplicitVerticalAlign
+
+
+type ExplicitUnits
+    = ExplicitUnits String
+
+
+type ExplicitBoxSizing
+    = ExplicitBoxSizing String
+
+
+type ExplicitOverflow
+    = ExplicitOverflow String
+
+
+type ExplicitDisplay
+    = ExplicitDisplay String
+
+
+type ExplicitWhiteSpace
+    = ExplicitWhiteSpace String
+
+
+type ExplicitColor
+    = ExplicitColor String
+
+
+type ExplicitVerticalAlign
+    = ExplicitVerticalAlign String
+
 
 type ExplicitOutline
     = ExplicitOutline Float ExplicitUnits OutlineStyle OpacityStyle
 
+
 type OutlineStyle
     = OutlineStyle String
+
 
 type OpacityStyle
     = OpacityStyle String
 
+
 type ExplicitTextShadow
     = NoTextShadow
 
+
+
 -- Properties --
 
-{-|-}
+
+{-| -}
 solid : OutlineStyle
-solid = OutlineStyle "solid"
+solid =
+    OutlineStyle "solid"
 
-{-|-}
+
+{-| -}
 transparent : OpacityStyle
-transparent = OpacityStyle "transparent"
+transparent =
+    OpacityStyle "transparent"
 
-{-|-}
+
+{-| -}
 rgb : number -> number -> number -> Color
 rgb r g b =
     ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
-        |> NotAuto |> NotInherit
+        |> NotAuto
+        |> NotInherit
 
 
-{-|-}
+{-| -}
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
     ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
-        |> NotAuto |> NotInherit
+        |> NotAuto
+        |> NotInherit
 
 
-{-|-}
+{-| -}
 hex : String -> Color
 hex str =
     ExplicitColor ("#" ++ str)
-        |> NotAuto |> NotInherit
+        |> NotAuto
+        |> NotInherit
 
-{-|-}
+
+{-| -}
 pct : Units
-pct = "%" |> ExplicitUnits |> NotInherit
+pct =
+    "%" |> ExplicitUnits |> NotInherit
 
-{-|-}
+
+{-| -}
 em : Units
-em = "em" |> ExplicitUnits |> NotInherit
+em =
+    "em" |> ExplicitUnits |> NotInherit
 
-{-|-}
+
+{-| -}
 px : Units
-px = "px" |> ExplicitUnits |> NotInherit
+px =
+    "px" |> ExplicitUnits |> NotInherit
 
-{-|-}
+
+{-| -}
 borderBox : BoxSizing
-borderBox = "border-box" |> ExplicitBoxSizing |> NotInherit
+borderBox =
+    "border-box" |> ExplicitBoxSizing |> NotInherit
 
-{-|-}
+
+{-| -}
 visible : Display
-visible = "visible" |> ExplicitDisplay |> NotNone |> NotInherit
+visible =
+    "visible" |> ExplicitDisplay |> NotNone |> NotInherit
 
-{-|-}
+
+{-| -}
 block : Display
-block = "block" |> ExplicitDisplay |> NotNone |> NotInherit
+block =
+    "block" |> ExplicitDisplay |> NotNone |> NotInherit
 
-{-|-}
+
+{-| -}
 inlineBlock : Display
-inlineBlock = "inline-block" |> ExplicitDisplay |> NotNone |> NotInherit
+inlineBlock =
+    "inline-block" |> ExplicitDisplay |> NotNone |> NotInherit
 
-{-|-}
+
+{-| -}
 inline : Display
-inline = "inline" |> ExplicitDisplay |> NotNone |> NotInherit
+inline =
+    "inline" |> ExplicitDisplay |> NotNone |> NotInherit
 
-{-|-}
+
+{-| -}
 none : InheritOr (NoneOr a)
-none = None |> NotInherit
+none =
+    None |> NotInherit
 
-{-|-}
+
+{-| -}
 auto : InheritOr (AutoOr a)
-auto = Auto |> NotInherit
+auto =
+    Auto |> NotInherit
 
-{-|-}
+
+{-| -}
 inherit : InheritOr a
-inherit = Inherit
+inherit =
+    Inherit
 
-{-|-}
+
+{-| -}
 noWrap : WhiteSpace
-noWrap = "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> NotInherit
+noWrap =
+    "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> NotInherit
 
-{-|-}
+
+{-| -}
 top : VerticalAlign
-top = "top" |> ExplicitVerticalAlign |> NotInherit
+top =
+    "top" |> ExplicitVerticalAlign |> NotInherit
 
-{-|-}
+
+{-| -}
 middle : VerticalAlign
-middle = "middle" |> ExplicitVerticalAlign |> NotInherit
+middle =
+    "middle" |> ExplicitVerticalAlign |> NotInherit
 
-{-|-}
+
+{-| -}
 bottom : VerticalAlign
-bottom = "bottom" |> ExplicitVerticalAlign |> NotInherit
+bottom =
+    "bottom" |> ExplicitVerticalAlign |> NotInherit
+
 
 
 {- Properties -}
+
 
 prop1 key translate value =
     ( key, (translate value) )
@@ -373,162 +532,182 @@ prop3 key translateA translateB translateC valueA valueB valueC =
 prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
     ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) )
 
+
 prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
     ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) ++ (translateE valueE) )
 
 
-{-|-}
-verticalAlign : VerticalAlign -> (String, String)
+{-| -}
+verticalAlign : VerticalAlign -> ( String, String )
 verticalAlign =
     prop1 "vertical-align" verticalAlignToString
 
 
-{-|-}
-display : Display -> (String, String)
+{-| -}
+display : Display -> ( String, String )
 display =
     prop1 "display" displayToString
 
 
-{-|-}
-opacity : OpacityStyle -> (String, String)
+{-| -}
+opacity : OpacityStyle -> ( String, String )
 opacity =
     prop1 "opacity" toString
 
 
-{-|-}
-width : number -> Units -> (String, String)
+{-| -}
+width : number -> Units -> ( String, String )
 width =
     prop2 "width" numberToString unitsToString
 
 
-{-|-}
-minWidth : number -> Units -> (String, String)
+{-| -}
+minWidth : number -> Units -> ( String, String )
 minWidth =
     prop2 "min-width" numberToString unitsToString
 
 
-{-|-}
-height : number -> Units -> (String, String)
+{-| -}
+height : number -> Units -> ( String, String )
 height =
     prop2 "height" numberToString unitsToString
 
 
-{-|-}
-minHeight : number -> Units -> (String, String)
+{-| -}
+minHeight : number -> Units -> ( String, String )
 minHeight =
     prop2 "min-height" numberToString unitsToString
 
 
-{-|-}
-padding : number -> Units -> (String, String)
+{-| -}
+padding : number -> Units -> ( String, String )
 padding =
     prop2 "padding" numberToString unitsToString
 
-{-|-}
-paddingTop : number -> Units -> (String, String)
+
+{-| -}
+paddingTop : number -> Units -> ( String, String )
 paddingTop =
     prop2 "padding-top" numberToString unitsToString
 
-{-|-}
-paddingBottom : number -> Units -> (String, String)
+
+{-| -}
+paddingBottom : number -> Units -> ( String, String )
 paddingBottom =
     prop2 "padding-bottom" numberToString unitsToString
 
-{-|-}
-paddingRight : number -> Units -> (String, String)
+
+{-| -}
+paddingRight : number -> Units -> ( String, String )
 paddingRight =
     prop2 "padding-right" numberToString unitsToString
 
-{-|-}
-paddingLeft : number -> Units -> (String, String)
+
+{-| -}
+paddingLeft : number -> Units -> ( String, String )
 paddingLeft =
     prop2 "padding-left" numberToString unitsToString
 
-{-|-}
-margin : number -> Units -> (String, String)
+
+{-| -}
+margin : number -> Units -> ( String, String )
 margin =
     prop2 "margin" numberToString unitsToString
 
-{-|-}
-marginTop : number -> Units -> (String, String)
+
+{-| -}
+marginTop : number -> Units -> ( String, String )
 marginTop =
     prop2 "margin-top" numberToString unitsToString
 
-{-|-}
-marginBottom : number -> Units -> (String, String)
+
+{-| -}
+marginBottom : number -> Units -> ( String, String )
 marginBottom =
     prop2 "margin-bottom" numberToString unitsToString
 
-{-|-}
-marginRight : number -> Units -> (String, String)
+
+{-| -}
+marginRight : number -> Units -> ( String, String )
 marginRight =
     prop2 "margin-right" numberToString unitsToString
 
-{-|-}
-marginLeft : number -> Units -> (String, String)
+
+{-| -}
+marginLeft : number -> Units -> ( String, String )
 marginLeft =
     prop2 "margin-left" numberToString unitsToString
 
-{-|-}
-boxSizing : BoxSizing -> (String, String)
+
+{-| -}
+boxSizing : BoxSizing -> ( String, String )
 boxSizing =
     prop1 "box-sizing" boxSizingToString
 
 
-{-|-}
-overflowX : Overflow -> (String, String)
+{-| -}
+overflowX : Overflow -> ( String, String )
 overflowX =
     prop1 "overflow-x" overflowToString
 
 
-{-|-}
-overflowY : Overflow -> (String, String)
+{-| -}
+overflowY : Overflow -> ( String, String )
 overflowY =
     prop1 "overflow-y" overflowToString
 
 
-{-|-}
-whiteSpace : WhiteSpace -> (String, String)
+{-| -}
+whiteSpace : WhiteSpace -> ( String, String )
 whiteSpace =
     prop1 "white-space" whiteSpaceToString
 
 
-{-|-}
-backgroundColor : Color -> (String, String)
+{-| -}
+backgroundColor : Color -> ( String, String )
 backgroundColor =
     prop1 "background-color" colorToString
 
 
-{-|-}
-color : Color -> (String, String)
+{-| -}
+color : Color -> ( String, String )
 color =
     prop1 "color" colorToString
 
-{-|-}
+
+{-| -}
 media : a -> String
 media value =
     "media " ++ (toString value)
-    -- TODO
 
-{-|-}
-textShadow : TextShadow -> (String, String)
+
+
+-- TODO
+
+
+{-| -}
+textShadow : TextShadow -> ( String, String )
 textShadow =
     prop1 "text-shadow" textShadowToString
 
 
-{-|-}
-outline : Float -> Units -> OutlineStyle -> OpacityStyle -> (String, String)
+{-| -}
+outline : Float -> Units -> OutlineStyle -> OpacityStyle -> ( String, String )
 outline =
     prop4
         "outline"
-            toString unitsToString
-            (\str -> " " ++ outlineStyleToString str ++ " ")
-            opacityStyleToString
+        toString
+        unitsToString
+        (\str -> " " ++ outlineStyleToString str ++ " ")
+        opacityStyleToString
+
 
 
 {- Types -}
 
-{-| A namespaced stylesheet. -}
+
+{-| A namespaced stylesheet.
+-}
 type Style class id
     = Style String (List Declaration)
     | InvalidStyle String
@@ -562,7 +741,8 @@ stylesheet name =
                 declaration =
                     selectorToBlock (TypeSelector (tagToString tag))
             in
-                declarations ++ [ declaration ]
+                declarations
+                    ++ [ declaration ]
                     |> Style name
 
         InvalidStyle _ ->
@@ -584,7 +764,8 @@ stylesheet name =
                 declaration =
                     selectorToBlock (IdSelector (toCssIdentifier id))
             in
-                declarations ++ [ declaration ]
+                declarations
+                    ++ [ declaration ]
                     |> Style name
 
         InvalidStyle _ ->
@@ -606,7 +787,8 @@ stylesheet name =
                 declaration =
                     selectorToBlock (ClassSelector (classToString name class))
             in
-                declarations ++ [ declaration ]
+                declarations
+                    ++ [ declaration ]
                     |> Style name
 
         InvalidStyle _ ->
@@ -637,11 +819,13 @@ stylesheet name =
                 declaration =
                     ConditionalGroupRule rule []
             in
-                declarations ++ [ declaration ]
+                declarations
+                    ++ [ declaration ]
                     |> Style name
 
         InvalidStyle _ ->
             style
+
 
 {-| A custom selector. Use this for things like
 [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
@@ -660,7 +844,8 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
                 declaration =
                     selectorToBlock (ClassSelector (classToString name class))
             in
-                declarations ++ [ declaration ]
+                declarations
+                    ++ [ declaration ]
                     |> Style name
 
         InvalidStyle _ ->
@@ -734,7 +919,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (>>$) : Style class id -> Tag -> Style class id
 (>>$) style tag =
     extendTypeSelector
@@ -742,7 +927,8 @@ property.
         (\_ -> (Descendant (SingleSelector (TypeSelector (tagToString tag)))))
         style
 
-{-|-}
+
+{-| -}
 (+$) : Style class id -> Tag -> Style class id
 (+$) style tag =
     extendTypeSelector
@@ -750,7 +936,8 @@ property.
         (\_ -> (AdjacentSibling (SingleSelector (TypeSelector (tagToString tag)))))
         style
 
-{-|-}
+
+{-| -}
 (~$) : Style class id -> Tag -> Style class id
 (~$) style tag =
     extendTypeSelector
@@ -759,7 +946,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (>.) : Style class id -> class -> Style class id
 (>.) style class =
     extendTypeSelector
@@ -768,7 +955,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (>>.) : Style class id -> class -> Style class id
 (>>.) style class =
     extendTypeSelector
@@ -776,7 +963,8 @@ property.
         (\name -> (Descendant (SingleSelector (ClassSelector (classToString name class)))))
         style
 
-{-|-}
+
+{-| -}
 (+.) : Style class id -> class -> Style class id
 (+.) style class =
     extendTypeSelector
@@ -785,7 +973,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (~.) : Style class id -> class -> Style class id
 (~.) style class =
     extendTypeSelector
@@ -794,7 +982,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (>#) : Style class id -> id -> Style class id
 (>#) style id =
     extendTypeSelector
@@ -803,7 +991,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (>>#) : Style class id -> id -> Style class id
 (>>#) style id =
     extendTypeSelector
@@ -811,7 +999,8 @@ property.
         (\_ -> (Descendant (SingleSelector (IdSelector (toCssIdentifier id)))))
         style
 
-{-|-}
+
+{-| -}
 (+#) : Style class id -> id -> Style class id
 (+#) style id =
     extendTypeSelector
@@ -820,7 +1009,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (~#) : Style class id -> id -> Style class id
 (~#) style id =
     extendTypeSelector
@@ -829,7 +1018,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (&:) : Style class id -> PseudoClass -> Style class id
 (&:) style pseudoClass =
     extendTypeSelector
@@ -838,7 +1027,7 @@ property.
         style
 
 
-{-|-}
+{-| -}
 (&::) : Style class id -> PseudoElement -> Style class id
 (&::) style pseudoElement =
     extendTypeSelector
@@ -861,10 +1050,15 @@ extendTypeSelector operatorName update style =
         InvalidStyle _ ->
             style
 
+
+
 -- Pseudo-Classes --
 
+
 type Directionality
-    = Ltr | Rtl
+    = Ltr
+    | Rtl
+
 
 directionalityToString : Directionality -> String
 directionalityToString directionality =
@@ -875,220 +1069,348 @@ directionalityToString directionality =
         Rtl ->
             "rtl"
 
+
 {-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 active : PseudoClass
-active = ExplicitPseudoClass "active"
+active =
+    ExplicitPseudoClass "active"
+
 
 {-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 any : String -> PseudoClass
-any str = ExplicitPseudoClass ("any(" ++ str ++ ")")
+any str =
+    ExplicitPseudoClass ("any(" ++ str ++ ")")
+
 
 {-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 checked : PseudoClass
-checked = ExplicitPseudoClass "checked"
+checked =
+    ExplicitPseudoClass "checked"
+
 
 {-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 dir : Directionality -> PseudoClass
-dir directionality = ExplicitPseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
+dir directionality =
+    ExplicitPseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
+
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 disabled : PseudoClass
-disabled = ExplicitPseudoClass "disabled"
+disabled =
+    ExplicitPseudoClass "disabled"
+
 
 {-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 empty : PseudoClass
-empty = ExplicitPseudoClass "empty"
+empty =
+    ExplicitPseudoClass "empty"
+
 
 {-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 enabled : PseudoClass
-enabled = ExplicitPseudoClass "enabled"
+enabled =
+    ExplicitPseudoClass "enabled"
+
 
 {-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 first : PseudoClass
-first = ExplicitPseudoClass "first"
+first =
+    ExplicitPseudoClass "first"
+
 
 {-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 firstChild : PseudoClass
-firstChild = ExplicitPseudoClass "first-child"
+firstChild =
+    ExplicitPseudoClass "first-child"
+
 
 {-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 firstOfType : PseudoClass
-firstOfType = ExplicitPseudoClass "first-of-type"
+firstOfType =
+    ExplicitPseudoClass "first-of-type"
+
 
 {-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 fullscreen : PseudoClass
-fullscreen = ExplicitPseudoClass "fullscreen"
+fullscreen =
+    ExplicitPseudoClass "fullscreen"
+
 
 {-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 focus : PseudoClass
-focus = ExplicitPseudoClass "focus"
+focus =
+    ExplicitPseudoClass "focus"
+
 
 {-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 hover : PseudoClass
-hover = ExplicitPseudoClass "hover"
+hover =
+    ExplicitPseudoClass "hover"
+
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 indeterminate : PseudoClass
-indeterminate = ExplicitPseudoClass "indeterminate"
+indeterminate =
+    ExplicitPseudoClass "indeterminate"
+
 
 {-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 invalid : PseudoClass
-invalid = ExplicitPseudoClass "invalid"
+invalid =
+    ExplicitPseudoClass "invalid"
+
 
 {-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 lang : String -> PseudoClass
-lang str = ExplicitPseudoClass ("lang(" ++ str ++ ")")
+lang str =
+    ExplicitPseudoClass ("lang(" ++ str ++ ")")
+
 
 {-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 lastChild : PseudoClass
-lastChild = ExplicitPseudoClass "last-child"
+lastChild =
+    ExplicitPseudoClass "last-child"
+
 
 {-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 lastOfType : PseudoClass
-lastOfType = ExplicitPseudoClass "last-of-type"
+lastOfType =
+    ExplicitPseudoClass "last-of-type"
+
 
 {-| A [`:left`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aleft)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 left : PseudoClass
-left = ExplicitPseudoClass "left"
+left =
+    ExplicitPseudoClass "left"
+
 
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 link : PseudoClass
-link = ExplicitPseudoClass "link"
+link =
+    ExplicitPseudoClass "link"
+
 
 {-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 nthChild : String -> PseudoClass
-nthChild str = ExplicitPseudoClass ("nth-child(" ++ str ++ ")")
+nthChild str =
+    ExplicitPseudoClass ("nth-child(" ++ str ++ ")")
+
 
 {-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 nthLastChild : String -> PseudoClass
-nthLastChild str = ExplicitPseudoClass ("nth-last-child(" ++ str ++ ")")
+nthLastChild str =
+    ExplicitPseudoClass ("nth-last-child(" ++ str ++ ")")
+
 
 {-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 nthLastOfType : String -> PseudoClass
-nthLastOfType str = ExplicitPseudoClass ("nth-last-of-type(" ++ str ++ ")")
+nthLastOfType str =
+    ExplicitPseudoClass ("nth-last-of-type(" ++ str ++ ")")
+
 
 {-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 nthOfType : String -> PseudoClass
-nthOfType str = ExplicitPseudoClass ("nth-of-type(" ++ str ++ ")")
+nthOfType str =
+    ExplicitPseudoClass ("nth-of-type(" ++ str ++ ")")
+
 
 {-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 onlyChild : PseudoClass
-onlyChild = ExplicitPseudoClass "only-child"
+onlyChild =
+    ExplicitPseudoClass "only-child"
+
 
 {-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 onlyOfType : PseudoClass
-onlyOfType = ExplicitPseudoClass "only-of-type"
+onlyOfType =
+    ExplicitPseudoClass "only-of-type"
+
 
 {-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 optional : PseudoClass
-optional = ExplicitPseudoClass "optional"
+optional =
+    ExplicitPseudoClass "optional"
+
 
 {-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 outOfRange : PseudoClass
-outOfRange = ExplicitPseudoClass "out-of-range"
+outOfRange =
+    ExplicitPseudoClass "out-of-range"
+
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 readWrite : PseudoClass
-readWrite = ExplicitPseudoClass "read-write"
+readWrite =
+    ExplicitPseudoClass "read-write"
+
 
 {-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 required : PseudoClass
-required = ExplicitPseudoClass "required"
+required =
+    ExplicitPseudoClass "required"
+
 
 {-| A [`:right`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aright)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 right : PseudoClass
-right = ExplicitPseudoClass "right"
+right =
+    ExplicitPseudoClass "right"
+
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 root : PseudoClass
-root = ExplicitPseudoClass "root"
+root =
+    ExplicitPseudoClass "root"
+
 
 {-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 scope : PseudoClass
-scope = ExplicitPseudoClass "scope"
+scope =
+    ExplicitPseudoClass "scope"
+
 
 {-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 target : PseudoClass
-target = ExplicitPseudoClass "target"
+target =
+    ExplicitPseudoClass "target"
+
 
 {-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes). -}
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
 valid : PseudoClass
-valid = ExplicitPseudoClass "valid"
+valid =
+    ExplicitPseudoClass "valid"
+
 
 
 -- Pseudo-Elements --
 
+
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
-[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
 after : PseudoElement
-after = ExplicitPseudoElement "after"
+after =
+    ExplicitPseudoElement "after"
+
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
-[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
 before : PseudoElement
-before = ExplicitPseudoElement "before"
+before =
+    ExplicitPseudoElement "before"
+
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
-[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
 firstLetter : PseudoElement
-firstLetter = ExplicitPseudoElement "first-letter"
+firstLetter =
+    ExplicitPseudoElement "first-letter"
+
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
-[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
 firstLine : PseudoElement
-firstLine = ExplicitPseudoElement "first-line"
+firstLine =
+    ExplicitPseudoElement "first-line"
+
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
-[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements). -}
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
 selection : PseudoElement
-selection = ExplicitPseudoElement "selection"
+selection =
+    ExplicitPseudoElement "selection"
+
 
 pseudoElementToString : PseudoElement -> String
-pseudoElementToString (ExplicitPseudoElement str) = str
+pseudoElementToString (ExplicitPseudoElement str) =
+    str
 
-type PseudoElement =
-    ExplicitPseudoElement String
+
+type PseudoElement
+    = ExplicitPseudoElement String
+
 
 pseudoClassToString : PseudoClass -> String
-pseudoClassToString (ExplicitPseudoClass str) = str
+pseudoClassToString (ExplicitPseudoClass str) =
+    str
 
-type PseudoClass =
-    ExplicitPseudoClass String
+
+type PseudoClass
+    = ExplicitPseudoClass String
+
 
 {-|
     stylesheet "homepage"
@@ -1118,17 +1440,12 @@ type PseudoClass =
             style
 
 
-
 selectorToBlock : Selector -> Declaration
 selectorToBlock selector =
     StyleBlock (SingleSelector selector) [] []
 
 
-addProperty
-    :  String
-    -> Property
-    -> List Declaration
-    -> Result String (List Declaration)
+addProperty : String -> Property -> List Declaration -> Result String (List Declaration)
 addProperty operatorName property declarations =
     case declarations of
         [] ->
@@ -1157,14 +1474,11 @@ addProperty operatorName property declarations =
                 Ok result ->
                     Ok (first :: result)
 
-                Err _ as err ->
+                (Err _) as err ->
                     err
 
-extendLastSelector
-    :  String
-    -> (CompoundSelector -> CompoundSelector)
-    -> List Declaration
-    -> Result String (List Declaration)
+
+extendLastSelector : String -> (CompoundSelector -> CompoundSelector) -> List Declaration -> Result String (List Declaration)
 extendLastSelector operatorName update declarations =
     case declarations of
         [] ->
@@ -1200,14 +1514,11 @@ extendLastSelector operatorName update declarations =
                 Ok result ->
                     Ok (first :: result)
 
-                Err _ as err ->
+                (Err _) as err ->
                     err
 
-addSelector
-    :  String
-    -> CompoundSelector
-    -> List Declaration
-    -> Result String (List Declaration)
+
+addSelector : String -> CompoundSelector -> List Declaration -> Result String (List Declaration)
 addSelector operatorName newSelector declarations =
     case declarations of
         [] ->
@@ -1236,8 +1547,9 @@ addSelector operatorName newSelector declarations =
                 Ok result ->
                     Ok (first :: result)
 
-                Err _ as err ->
+                (Err _) as err ->
                     err
+
 
 updateLast : (a -> a) -> List a -> List a
 updateLast update list =
