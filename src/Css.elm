@@ -721,13 +721,13 @@ outline =
 {-| An empty namespaced stylesheet. Use this as the foundation on which to build
 your stylesheet.
 
-    stylesheet "homepage"
+    stylesheet { name = "homepage" }
         $ body
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-stylesheet : String -> Style class id
-stylesheet name =
+stylesheet : { a | name : String } -> Style class id
+stylesheet { name } =
     NamespacedStyle name []
 
 

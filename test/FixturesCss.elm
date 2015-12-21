@@ -13,13 +13,13 @@ pageDefaultText = rgb 40 35 76
 
 unstyledDiv : Style a b
 unstyledDiv =
-    stylesheet ""
+    stylesheet { name = "" }
         $ div
 
 
 divWidthHeight : Style a b
 divWidthHeight =
-    stylesheet ""
+    stylesheet { name = "" }
         $ div
             ~ width 32 pct
             ~ height 50 px
@@ -27,7 +27,7 @@ divWidthHeight =
 
 multiDescendent : Style CssClasses CssIds
 multiDescendent =
-    stylesheet ""
+    stylesheet { name = "" }
         $ html |$ body
             ~ boxSizing borderBox
             ~ display none
@@ -57,7 +57,7 @@ multiDescendent =
 
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
-    stylesheet "dreamwriter"
+    stylesheet { name = "dreamwriter" }
         $ html |$ body
             ~ width 100 pct
             ~ height 100 pct
@@ -107,7 +107,7 @@ greenOnHover =
 
 mixinGreenOnHoverStyle : Style CssClasses CssIds
 mixinGreenOnHoverStyle =
-    stylesheet "greenOnHoverStylesheet"
+    stylesheet { name = "greenOnHoverStylesheet" }
         $ button
             ~ color (rgb 11 22 33)
             ~= greenOnHover
@@ -115,14 +115,14 @@ mixinGreenOnHoverStyle =
 
 mixinUnderlineOnHoverStyle : Style CssClasses CssIds
 mixinUnderlineOnHoverStyle =
-    stylesheet "underlineOnHoverStylesheet"
+    stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
             --~ color (rgb 128 64 32)
             ~= underlineOnHover
 
 manualUnderlineOnHoverStyle : Style CssClasses CssIds
 manualUnderlineOnHoverStyle =
-    stylesheet "underlineOnHoverStylesheet"
+    stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
             ~ color (rgb 128 127 126)
 
