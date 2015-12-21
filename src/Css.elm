@@ -759,8 +759,8 @@ mixin =
             -- TODO detect if the user tried to use two $ operators without
             -- intervening properties (e.g. `$ button $ img`) and return
             -- InvalidStyle if so; this will for sure emit invalid CSS!
-            TypeSelector (tagToString tag)
-                |> introduceSelector declarations
+            declarations
+                |> introduceSelector (TypeSelector (tagToString tag))
                 |> NamespacedStyle name
 
         InvalidStyle _ ->
@@ -782,8 +782,8 @@ mixin =
 (#) style id =
     case style of
         NamespacedStyle name declarations ->
-            IdSelector (toCssIdentifier id)
-                |> introduceSelector declarations
+            declarations
+                |> introduceSelector (IdSelector (toCssIdentifier id))
                 |> NamespacedStyle name
 
         InvalidStyle _ ->
@@ -806,8 +806,8 @@ mixin =
 (.) style class =
     case style of
         NamespacedStyle name declarations ->
-            ClassSelector (classToString name class)
-                |> introduceSelector declarations
+            declarations
+                |> introduceSelector (ClassSelector (classToString name class))
                 |> NamespacedStyle name
 
         InvalidStyle _ ->
@@ -855,16 +855,16 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
 ($=) style selectorStr =
     case style of
         NamespacedStyle name declarations ->
-            CustomSelector selectorStr
-                |> introduceSelector declarations
+            declarations
+                |> introduceSelector (CustomSelector selectorStr)
                 |> NamespacedStyle name
 
         InvalidStyle _ ->
             style
 
 
-introduceSelector : List Declaration -> Selector -> List Declaration
-introduceSelector declarations selector =
+introduceSelector : Selector -> List Declaration -> List Declaration
+introduceSelector selector declarations =
     case declarations of
         [] ->
             []
@@ -903,7 +903,7 @@ introduceSelector declarations selector =
 
         {- We haven't reached the last declaration yet, so recurse. -}
         firstDeclaration :: otherDeclarations ->
-            firstDeclaration :: (introduceSelector otherDeclarations selector)
+            firstDeclaration :: (introduceSelector selector otherDeclarations)
 
 
 {-| A [property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
