@@ -10,6 +10,7 @@ type Selector
 
 type CompoundSelector
     = SingleSelector Selector
+    | MultiSelector CompoundSelector Selector
     | AdjacentSibling CompoundSelector CompoundSelector
     | GeneralSibling CompoundSelector CompoundSelector
     | Child CompoundSelector CompoundSelector

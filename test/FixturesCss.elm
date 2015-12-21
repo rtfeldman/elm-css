@@ -55,6 +55,23 @@ multiDescendent =
                 ~ height 2 pct
 
 
+multiSelector : Style CssClasses CssIds
+multiSelector =
+    stylesheet { name = "multiSelector" }
+        $ div # Page . Hidden
+            ~ display none
+            ~ width 100 pct
+            ~ height 100 pct
+
+        $ span
+            ~ padding 10 px
+            ~ margin 11 px
+
+            >$ h2 >$ h1
+                ~ width 1 px
+                ~ height 2 pct
+
+
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
     stylesheet { name = "dreamwriter" }

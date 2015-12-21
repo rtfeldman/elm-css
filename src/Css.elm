@@ -910,6 +910,21 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             style
 
 
+{-| Concatenate the given selector to the end of the last selector in the given list, e.g. ".foo#bar"
+-}
+lastSelectorToMulti : Selector -> List CompoundSelector -> List CompoundSelector
+lastSelectorToMulti selector otherSelectors =
+    case otherSelectors of
+        [] ->
+            [ SingleSelector selector ]
+
+        compoundSelector :: [] ->
+            [ MultiSelector compoundSelector selector ]
+
+        first :: rest ->
+            first :: (lastSelectorToMulti selector rest)
+
+
 introduceSelector : Selector -> List Declaration -> List Declaration
 introduceSelector selector declarations =
     case declarations of
@@ -933,7 +948,12 @@ introduceSelector selector declarations =
             the new selector to the existing list of selectors.
         -}
         (StyleBlock firstSelector otherSelectors []) :: [] ->
-            [ StyleBlock firstSelector (otherSelectors ++ [ SingleSelector selector ]) [] ]
+            case lastSelectorToMulti selector (firstSelector :: otherSelectors) of
+                [] ->
+                    [ StyleBlock (SingleSelector selector) [] [] ]
+
+                first :: rest ->
+                    [ StyleBlock first rest [] ]
 
         {- Here the most recent declaration had properties defined, meaning
              this must be a new top-level declaration, like `Bar` in the following:

@@ -23,6 +23,7 @@ all =
         , divWidthHeight
         , dreamwriter
         , multiDescendent
+        , multiSelector
         , underlineOnHoverMixin
         , underlineOnHoverManual
         , greenOnHoverMixin
@@ -147,6 +148,37 @@ multiDescendent =
               width: 1px;
               height: 2%;
             }
+        """
+    in
+        suite
+            "Multi-descendent stylesheet"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+multiSelector : Test
+multiSelector =
+    let
+        input =
+            Fixtures.multiSelector
+
+        output = """
+          div#Page.multiSelector_Hidden {
+            display: none;
+            width: 100%;
+            height: 100%;
+          }
+
+          span {
+            padding: 10px;
+            margin: 11px;
+          }
+
+          span > h2 > h1 {
+            width: 1px;
+            height: 2%;
+          }
         """
     in
         suite

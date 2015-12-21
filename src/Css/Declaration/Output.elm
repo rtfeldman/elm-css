@@ -33,6 +33,10 @@ compoundSelectorToString compoundSelector =
         SingleSelector selector ->
             selectorToString selector
 
+        MultiSelector compound single ->
+            (compoundSelectorToString compound)
+                ++ (selectorToString single)
+
         AdjacentSibling selectorA selectorB ->
             (compoundSelectorToString selectorA)
                 ++ " + "
