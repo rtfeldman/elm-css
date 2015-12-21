@@ -897,6 +897,28 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             style
 
 
+{-| Inject the contents of a [`mixin`](#mixin).
+
+    underlineOnHover =
+        mixin "underlineOnHover"
+            ~ textDecoration none
+
+            &: hover
+                ~ textDecoration underline
+
+    a . FancyLink
+        ~ color (rgb 128 64 32)
+        ~= underlineOnHover
+
+...has the same result as:
+
+    a . FancyLink
+        ~ color (rgb 128 64 32)
+        ~ textDecoration none
+
+        &: hover
+            ~ textDecoration underline
+-}
 (~=) : Style class id -> Style class id -> Style class id
 (~=) style mixinToApply =
     case mixinToApply of
