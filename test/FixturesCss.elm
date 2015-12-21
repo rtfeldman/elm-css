@@ -98,6 +98,21 @@ underlineOnHover =
             ~ color (rgb 23 24 25)
 
 
+greenOnHover : Style CssClasses CssIds
+greenOnHover =
+    mixin "greenOnHover"
+        &: hover
+            ~ color (rgb 0 0 122)
+
+
+mixinGreenOnHoverStyle : Style CssClasses CssIds
+mixinGreenOnHoverStyle =
+    stylesheet "greenOnHoverStylesheet"
+        $ button
+            ~ color (rgb 11 22 33)
+            ~= greenOnHover
+
+
 mixinUnderlineOnHoverStyle : Style CssClasses CssIds
 mixinUnderlineOnHoverStyle =
     stylesheet "underlineOnHoverStylesheet"

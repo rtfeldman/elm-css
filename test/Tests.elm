@@ -25,6 +25,7 @@ all =
         , multiDescendent
         , underlineOnHoverMixin
         , underlineOnHoverManual
+        , greenOnHoverMixin
         ]
 
 
@@ -207,6 +208,30 @@ underlineOnHoverManual =
     in
         suite
             "underline on hover link (manual)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+greenOnHoverMixin : Test
+greenOnHoverMixin =
+    let
+        input =
+            Fixtures.mixinGreenOnHoverStyle
+
+        output =
+            """
+            a {
+                color: rgb(128, 127, 126);
+            }
+
+            a:hover {
+                color: rgb(23, 24, 25);
+            }
+            """
+    in
+        suite
+            "green on hover (mixin)"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
