@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
+module Css (stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
 
 {-| Functions for building stylesheets.
 
@@ -21,7 +21,10 @@ module Css (stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$)
 @docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs (~), (!), solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom
+@docs (~), (!), solid, transparent, rgb, rgba, hex, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom
+
+# Units
+@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc
 
 # Pseudo-Classes
 @docs (&:), active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid
@@ -439,22 +442,111 @@ hex str =
         |> NotInherit
 
 
-{-| -}
+{-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
+-}
 pct : Units
 pct =
     "%" |> ExplicitUnits |> NotInherit
 
 
-{-| -}
+{-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
+-}
 em : Units
 em =
     "em" |> ExplicitUnits |> NotInherit
 
 
-{-| -}
+{-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
+-}
+ex : Units
+ex =
+    "ex" |> ExplicitUnits |> NotInherit
+
+
+{-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
+-}
+ch : Units
+ch =
+    "ch" |> ExplicitUnits |> NotInherit
+
+
+{-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
+-}
+rem : Units
+rem =
+    "rem" |> ExplicitUnits |> NotInherit
+
+
+{-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
+-}
+vh : Units
+vh =
+    "vh" |> ExplicitUnits |> NotInherit
+
+
+{-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
+-}
+vw : Units
+vw =
+    "vw" |> ExplicitUnits |> NotInherit
+
+
+{-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
+-}
+vmin : Units
+vmin =
+    "vmin" |> ExplicitUnits |> NotInherit
+
+
+{-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
+-}
+vmax : Units
+vmax =
+    "vmax" |> ExplicitUnits |> NotInherit
+
+
+{-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
+-}
 px : Units
 px =
     "px" |> ExplicitUnits |> NotInherit
+
+
+{-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+-}
+mm : Units
+mm =
+    "mm" |> ExplicitUnits |> NotInherit
+
+
+{-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
+-}
+cm : Units
+cm =
+    "cm" |> ExplicitUnits |> NotInherit
+
+
+{-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
+
+(This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
+-}
+inches : Units
+inches =
+    "in" |> ExplicitUnits |> NotInherit
+
+
+{-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
+-}
+pt : Units
+pt =
+    "pt" |> ExplicitUnits |> NotInherit
+
+
+{-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
+-}
+pc : Units
+pc =
+    "pc" |> ExplicitUnits |> NotInherit
 
 
 {-| -}
