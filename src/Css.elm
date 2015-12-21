@@ -40,8 +40,10 @@ import Style exposing (Style(..))
 prettyPrint : Style class id -> Result String String
 prettyPrint style =
     case style of
-        NamespacedStyle name declarations ->
-            Ok (prettyPrintDeclarations declarations)
+        NamespacedStyle _ declarations ->
+            declarations
+                |> prettyPrintDeclarations
+                |> Ok
 
         Mixin name _ ->
             Err ("Cannot translate mixin `" ++ name ++ "` to CSS directly. Use `~=` to apply it to a stylesheet instead!")

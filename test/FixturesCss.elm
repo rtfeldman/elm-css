@@ -11,6 +11,12 @@ pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
 
+unstyledDiv : Style a b
+unstyledDiv =
+    stylesheet ""
+        $ div
+
+
 divWidthHeight : Style a b
 divWidthHeight =
     stylesheet ""

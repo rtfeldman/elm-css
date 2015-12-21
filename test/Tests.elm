@@ -19,10 +19,27 @@ all : Test
 all =
     suite
         "elm-stylesheets"
-        [ divWidthHeight
+        [ unstyledDiv
+        , divWidthHeight
         , dreamwriter
         , multiDescendent
         ]
+
+
+unstyledDiv : Test
+unstyledDiv =
+    let
+        input =
+            Fixtures.unstyledDiv
+
+        output =
+            "div {\n\n}"
+    in
+        suite
+            "unstyled div"
+            [ test "does not bother emitting anything"
+                <| assertEqual output (prettyPrint input)
+            ]
 
 
 divWidthHeight : Test
