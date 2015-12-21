@@ -1008,7 +1008,7 @@ introduceSelector : Selector -> List Declaration -> List Declaration
 introduceSelector selector declarations =
     case declarations of
         [] ->
-            []
+            [ StyleBlock (SingleSelector selector) [] [] ]
 
         {- If there are no properties declared, then we have a situation
             like `Bar` in the following:
