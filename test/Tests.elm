@@ -19,10 +19,30 @@ all : Test
 all =
     suite
         "elm-stylesheets"
-        [ divWidthHeight
+        [ unstyledDiv
+        , divWidthHeight
         , dreamwriter
         , multiDescendent
+        , underlineOnHoverMixin
+        , underlineOnHoverManual
+        , greenOnHoverMixin
         ]
+
+
+unstyledDiv : Test
+unstyledDiv =
+    let
+        input =
+            Fixtures.unstyledDiv
+
+        output =
+            "div {\n\n}"
+    in
+        suite
+            "unstyled div"
+            [ test "pretty prints the expected output"
+                <| assertEqual output (prettyPrint input)
+            ]
 
 
 divWidthHeight : Test
@@ -143,3 +163,75 @@ outdented str =
         |> List.map String.trim
         |> String.join "\n"
         |> String.trim
+
+
+underlineOnHoverMixin : Test
+underlineOnHoverMixin =
+    let
+        input =
+            Fixtures.mixinUnderlineOnHoverStyle
+
+        output =
+            """
+            a {
+                color: rgb(128, 127, 126);
+            }
+
+            a:hover {
+                color: rgb(23, 24, 25);
+            }
+            """
+    in
+        suite
+            "underline on hover link (mixin)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+underlineOnHoverManual : Test
+underlineOnHoverManual =
+    let
+        input =
+            Fixtures.manualUnderlineOnHoverStyle
+
+        output =
+            """
+            a {
+                color: rgb(128, 127, 126);
+            }
+
+            a:hover {
+                color: rgb(23, 24, 25);
+            }
+            """
+    in
+        suite
+            "underline on hover link (manual)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+greenOnHoverMixin : Test
+greenOnHoverMixin =
+    let
+        input =
+            Fixtures.mixinGreenOnHoverStyle
+
+        output =
+            """
+            button {
+                color: rgb(11, 22, 33);
+            }
+
+            button:hover {
+                color: rgb(0, 0, 122);
+            }
+            """
+    in
+        suite
+            "green on hover (mixin)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
