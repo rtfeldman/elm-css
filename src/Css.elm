@@ -886,7 +886,7 @@ introduceSelector declarations selector =
             the new selector to the existing list of selectors.
         -}
         (StyleBlock firstSelector otherSelectors []) :: [] ->
-            [ StyleBlock firstSelector (otherSelectors ++ selector) [] ]
+            [ StyleBlock firstSelector (otherSelectors ++ [ SingleSelector selector ]) [] ]
 
         {- Here the most recent declaration had properties defined, meaning
          this must be a new top-level declaration, like `Bar` in the following:
