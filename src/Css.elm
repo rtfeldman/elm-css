@@ -1130,7 +1130,7 @@ property.
 (>$) style tag =
     extendTypeSelector
         ">$"
-        (\_ -> (Child (SingleSelector (TypeSelector (tagToString tag)))))
+        (\_ parent -> (Child parent (SingleSelector (TypeSelector (tagToString tag)))))
         style
 
 
