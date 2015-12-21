@@ -1,9 +1,9 @@
-module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
+module Css (stylesheet, mixin, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, em, px, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
 
 {-| Functions for building stylesheets.
 
 # Style
-@docs Style, stylesheet, prettyPrint
+@docs stylesheet, mixin, prettyPrint
 
 # Statements
 @docs ($), (#), (.), (@), ($=)
@@ -30,13 +30,14 @@ module Css (Style, stylesheet, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$
 import Css.Declaration as Declaration exposing (..)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Util exposing (toCssIdentifier, classToString)
+import Style exposing (Style(..))
 
 
 {-| -}
 prettyPrint : Style class id -> Result String String
 prettyPrint style =
     case style of
-        Style name declarations ->
+        NamespacedStyle name declarations ->
             Ok (prettyPrintDeclarations declarations)
 
         InvalidStyle message ->
@@ -702,17 +703,6 @@ outline =
         opacityStyleToString
 
 
-
-{- Types -}
-
-
-{-| A namespaced stylesheet.
--}
-type Style class id
-    = Style String (List Declaration)
-    | InvalidStyle String
-
-
 {-| An empty namespaced stylesheet. Use this as the foundation on which to build
 your stylesheet.
 
@@ -723,7 +713,36 @@ your stylesheet.
 -}
 stylesheet : String -> Style class id
 stylesheet name =
-    Style name []
+    NamespacedStyle name []
+
+
+{-| A Mixin allowing you to modularly reuse common styles in other styles.
+`mixin` declares the mixin, and `~=` adds the contents of a mixin to another
+style.
+
+    underlineOnHover =
+        mixin
+            ~ textDecoration none
+
+            &: hover
+                ~ textDecoration underline
+
+    a . FancyLink
+        ~ color (rgb 128 64 32)
+        ~= underlineOnHover
+
+...has the same result as:
+
+    a . FancyLink
+        ~ color (rgb 128 64 32)
+        ~ textDecoration none
+
+        &: hover
+            ~ textDecoration underline
+-}
+mixin : Style class id
+mixin =
+    Mixin []
 
 
 {-| A [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors).
@@ -736,14 +755,13 @@ stylesheet name =
 ($) : Style class id -> Tag -> Style class id
 ($) style tag =
     case style of
-        Style name declarations ->
-            let
-                declaration =
-                    selectorToBlock (TypeSelector (tagToString tag))
-            in
-                declarations
-                    ++ [ declaration ]
-                    |> Style name
+        NamespacedStyle name declarations ->
+            -- TODO detect if the user tried to use two $ operators without
+            -- intervening properties (e.g. `$ button $ img`) and return
+            -- InvalidStyle if so; this will for sure emit invalid CSS!
+            TypeSelector (tagToString tag)
+                |> introduceSelector declarations
+                |> NamespacedStyle name
 
         InvalidStyle _ ->
             style
@@ -755,18 +773,18 @@ stylesheet name =
         # NavBar
             ~ width 960 px
             ~ backgroundColor (rgb 123 42 208)
+
+    stylesheet "login"
+        button # Cancel
+            ~ backgroundColor (rgb 128 64 32)
 -}
 (#) : Style class id -> id -> Style class id
 (#) style id =
     case style of
-        Style name declarations ->
-            let
-                declaration =
-                    selectorToBlock (IdSelector (toCssIdentifier id))
-            in
-                declarations
-                    ++ [ declaration ]
-                    |> Style name
+        NamespacedStyle name declarations ->
+            IdSelector (toCssIdentifier id)
+                |> introduceSelector declarations
+                |> NamespacedStyle name
 
         InvalidStyle _ ->
             style
@@ -778,18 +796,19 @@ stylesheet name =
         . Hero
             ~ fontWeight bold
             ~ color (rgb 7 7 7)
+
+    stylesheet "login"
+        button . LoginFormButton
+            ~ fontWeight normal
+            ~ color (rgb 128 64 32)
 -}
 (.) : Style class id -> class -> Style class id
 (.) style class =
     case style of
-        Style name declarations ->
-            let
-                declaration =
-                    selectorToBlock (ClassSelector (classToString name class))
-            in
-                declarations
-                    ++ [ declaration ]
-                    |> Style name
+        NamespacedStyle name declarations ->
+            ClassSelector (classToString name class)
+                |> introduceSelector declarations
+                |> NamespacedStyle name
 
         InvalidStyle _ ->
             style
@@ -814,14 +833,10 @@ stylesheet name =
 (@) : Style class id -> String -> Style class id
 (@) style rule =
     case style of
-        Style name declarations ->
-            let
-                declaration =
-                    ConditionalGroupRule rule []
-            in
-                declarations
-                    ++ [ declaration ]
-                    |> Style name
+        NamespacedStyle name declarations ->
+            declarations
+                ++ [ ConditionalGroupRule rule [] ]
+                |> NamespacedStyle name
 
         InvalidStyle _ ->
             style
@@ -836,20 +851,59 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ~ textDecoration underline
             ~ color (rgb 7 7 7)
 -}
-($=) : Style class id -> class -> Style class id
-($=) style class =
+($=) : Style class id -> String -> Style class id
+($=) style selectorStr =
     case style of
-        Style name declarations ->
-            let
-                declaration =
-                    selectorToBlock (ClassSelector (classToString name class))
-            in
-                declarations
-                    ++ [ declaration ]
-                    |> Style name
+        NamespacedStyle name declarations ->
+            CustomSelector selectorStr
+                |> introduceSelector declarations
+                |> NamespacedStyle name
 
         InvalidStyle _ ->
             style
+
+
+introduceSelector : List Declaration -> Selector -> List Declaration
+introduceSelector declarations selector =
+    case declarations of
+        [] ->
+            []
+
+        {- If there are no properties declared, then we have a situation
+            like `Bar` in the following:
+
+                stylesheet "homepage"
+                    . Foo . Bar
+                        ~ fontWeight bold
+
+                ...as opposed to:
+
+                stylesheet "homepage"
+                    . Foo
+                        ~ fontWeight bold
+
+            In this case, we don't make a new declaration, but rather add
+            the new selector to the existing list of selectors.
+        -}
+        (StyleBlock firstSelector otherSelectors []) :: [] ->
+            [ StyleBlock firstSelector (otherSelectors ++ selector) [] ]
+
+        {- Here the most recent declaration had properties defined, meaning
+         this must be a new top-level declaration, like `Bar` in the following:
+
+            stylesheet "homepage"
+                . Foo
+                    ~ fontWeight normal
+
+                . Bar
+                    ~ fontWeight bold
+        -}
+        lastDeclaration :: [] ->
+            lastDeclaration :: [ StyleBlock (SingleSelector selector) [] [] ]
+
+        {- We haven't reached the last declaration yet, so recurse. -}
+        firstDeclaration :: otherDeclarations ->
+            firstDeclaration :: (introduceSelector otherDeclarations selector)
 
 
 {-| A [property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
@@ -862,14 +916,14 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
 (~) : Style class id -> ( String, String ) -> Style class id
 (~) style ( key, value ) =
     case style of
-        Style name declarations ->
+        NamespacedStyle name declarations ->
             let
                 property =
                     { key = key, value = value, important = False }
             in
                 case addProperty "~" property declarations of
                     Ok newDeclarations ->
-                        Style name newDeclarations
+                        NamespacedStyle name newDeclarations
 
                     Err message ->
                         InvalidStyle message
@@ -889,14 +943,14 @@ property.
 (!) : Style class id -> ( String, String ) -> Style class id
 (!) style ( key, value ) =
     case style of
-        Style name declarations ->
+        NamespacedStyle name declarations ->
             let
                 property =
                     { key = key, value = value, important = True }
             in
                 case addProperty "!" property declarations of
                     Ok newDeclarations ->
-                        Style name newDeclarations
+                        NamespacedStyle name newDeclarations
 
                     Err message ->
                         InvalidStyle message
@@ -1039,10 +1093,10 @@ property.
 extendTypeSelector : String -> (String -> CompoundSelector -> CompoundSelector) -> Style class id -> Style class id
 extendTypeSelector operatorName update style =
     case style of
-        Style name declarations ->
+        NamespacedStyle name declarations ->
             case extendLastSelector operatorName (update name) declarations of
                 Ok newDeclarations ->
-                    Style name newDeclarations
+                    NamespacedStyle name newDeclarations
 
                 Err message ->
                     InvalidStyle message
@@ -1421,7 +1475,7 @@ type PseudoClass
 (|$) : Style class id -> Tag -> Style class id
 (|$) style tag =
     case style of
-        Style name declarations ->
+        NamespacedStyle name declarations ->
             let
                 newSelector =
                     tag
@@ -1431,7 +1485,7 @@ type PseudoClass
             in
                 case addSelector "|$" newSelector declarations of
                     Ok newDeclarations ->
-                        Style name newDeclarations
+                        NamespacedStyle name newDeclarations
 
                     Err message ->
                         InvalidStyle message
