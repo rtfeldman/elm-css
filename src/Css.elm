@@ -3,7 +3,10 @@ module Css (stylesheet, mixin, prettyPrint, ($), (#), (.), (@), (|$), (>$), (>>$
 {-| Functions for building stylesheets.
 
 # Style
-@docs stylesheet, mixin, prettyPrint
+@docs stylesheet, prettyPrint
+
+# Mixins
+@docs mixin, (~=)
 
 # Statements
 @docs ($), (#), (.), (@), ($=)
@@ -39,6 +42,9 @@ prettyPrint style =
     case style of
         NamespacedStyle name declarations ->
             Ok (prettyPrintDeclarations declarations)
+
+        Mixin name _ ->
+            Err ("Cannot translate mixin `" ++ name ++ "` to CSS directly. Use `~=` to apply it to a stylesheet instead!")
 
         InvalidStyle message ->
             Err message
@@ -740,9 +746,9 @@ style.
         &: hover
             ~ textDecoration underline
 -}
-mixin : Style class id
-mixin =
-    Mixin []
+mixin : String -> Style class id
+mixin name =
+    Mixin name []
 
 
 {-| A [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors).
@@ -754,17 +760,24 @@ mixin =
 -}
 ($) : Style class id -> Tag -> Style class id
 ($) style tag =
-    case style of
-        NamespacedStyle name declarations ->
-            -- TODO detect if the user tried to use two $ operators without
-            -- intervening properties (e.g. `$ button $ img`) and return
-            -- InvalidStyle if so; this will for sure emit invalid CSS!
-            declarations
-                |> introduceSelector (TypeSelector (tagToString tag))
-                |> NamespacedStyle name
+    let
+        selector =
+            TypeSelector (tagToString tag)
+    in
+        case style of
+            NamespacedStyle name declarations ->
+                -- TODO detect if the user tried to use two $ operators without
+                -- intervening properties (e.g. `$ button $ img`) and return
+                -- InvalidStyle if so; this will for sure emit invalid CSS!
+                declarations
+                    |> introduceSelector selector
+                    |> NamespacedStyle name
 
-        InvalidStyle _ ->
-            style
+            Mixin name mixinStyles ->
+                addSelectorToMixin selector name mixinStyles
+
+            InvalidStyle _ ->
+                style
 
 
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
@@ -780,14 +793,21 @@ mixin =
 -}
 (#) : Style class id -> id -> Style class id
 (#) style id =
-    case style of
-        NamespacedStyle name declarations ->
-            declarations
-                |> introduceSelector (IdSelector (toCssIdentifier id))
-                |> NamespacedStyle name
+    let
+        selector =
+            IdSelector (toCssIdentifier id)
+    in
+        case style of
+            NamespacedStyle name declarations ->
+                declarations
+                    |> introduceSelector selector
+                    |> NamespacedStyle name
 
-        InvalidStyle _ ->
-            style
+            Mixin name mixinStyles ->
+                addSelectorToMixin selector name mixinStyles
+
+            InvalidStyle _ ->
+                style
 
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
@@ -809,6 +829,9 @@ mixin =
             declarations
                 |> introduceSelector (ClassSelector (classToString name class))
                 |> NamespacedStyle name
+
+        Mixin name mixinStyles ->
+            addSelectorToMixin (ClassSelector (classToString name class)) name mixinStyles
 
         InvalidStyle _ ->
             style
@@ -838,6 +861,9 @@ mixin =
                 ++ [ ConditionalGroupRule rule [] ]
                 |> NamespacedStyle name
 
+        Mixin _ _ ->
+            InvalidStyle "@-rules are not allowed in mixins."
+
         InvalidStyle _ ->
             style
 
@@ -853,14 +879,127 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
 -}
 ($=) : Style class id -> String -> Style class id
 ($=) style selectorStr =
-    case style of
-        NamespacedStyle name declarations ->
-            declarations
-                |> introduceSelector (CustomSelector selectorStr)
-                |> NamespacedStyle name
+    let
+        selector =
+            CustomSelector selectorStr
+    in
+        case style of
+            NamespacedStyle name declarations ->
+                declarations
+                    |> introduceSelector selector
+                    |> NamespacedStyle name
+
+            Mixin name mixinStyles ->
+                addSelectorToMixin selector name mixinStyles
+
+            InvalidStyle _ ->
+                style
+
+
+addSelectorToMixin : Selector -> String -> List ( List CompoundSelector, List Property ) -> Style class id
+addSelectorToMixin selector name mixinStyles =
+    let
+        selectorAsMixinStyle =
+            [ ( [ SingleSelector selector ], [] ) ]
+
+        newStyles =
+            if List.isEmpty mixinStyles then
+                selectorAsMixinStyle
+            else
+                mixinStyles ++ selectorAsMixinStyle
+    in
+        Mixin name newStyles
+
+
+(~=) : Style class id -> Style class id -> Style class id
+(~=) style mixinToApply =
+    case mixinToApply of
+        Mixin _ stylesToApply ->
+            case style of
+                NamespacedStyle name declarations ->
+                    case applyMixinStyles stylesToApply declarations of
+                        Ok newDeclarations ->
+                            NamespacedStyle name newDeclarations
+
+                        Err err ->
+                            InvalidStyle err
+
+                Mixin name existingMixinStyles ->
+                    existingMixinStyles
+                        |> combineMixinStyles stylesToApply
+                        |> Mixin name
+
+                InvalidStyle _ ->
+                    style
+
+        NamespacedStyle name _ ->
+            InvalidStyle ("A stylesheet with namespace \"" ++ name ++ "\" is not a valid mixin.")
 
         InvalidStyle _ ->
             style
+
+
+combineMixinStyles : List ( List CompoundSelector, List Property ) -> List ( List CompoundSelector, List Property ) -> List ( List CompoundSelector, List Property )
+combineMixinStyles newStyles originalStyles =
+    originalStyles
+        ++ case newStyles of
+            ( [], properties ) :: otherNewStyles ->
+                addPropertiesToMixin properties newStyles
+
+            _ ->
+                newStyles
+
+
+addPropertiesToMixin : List Property -> List ( List CompoundSelector, List Property ) -> List ( List CompoundSelector, List Property )
+addPropertiesToMixin properties mixinStyles =
+    case mixinStyles of
+        [] ->
+            [ ( [], properties ) ]
+
+        ( selectors, existingProperties ) :: [] ->
+            [ ( selectors, existingProperties ++ properties ) ]
+
+        firstStyle :: otherStyles ->
+            firstStyle :: (addPropertiesToMixin properties otherStyles)
+
+
+applyMixinStyles : List ( List CompoundSelector, List Property ) -> List Declaration -> Result String (List Declaration)
+applyMixinStyles stylesToApply declarations =
+    case declarations of
+        [] ->
+            Err "Cannot apply a mixin to an empty declaration list."
+
+        (ConditionalGroupRule ruleName []) :: [] ->
+            Err ("Cannot apply a mixin to a conditional group rule `" ++ ruleName ++ "` with no declarations.")
+
+        (ConditionalGroupRule ruleName ruleDeclarations) :: [] ->
+            case applyMixinStyles stylesToApply ruleDeclarations of
+                Ok newDeclarations ->
+                    Ok [ ConditionalGroupRule ruleName newDeclarations ]
+
+                (Err _) as err ->
+                    err
+
+        ((StyleBlock selector otherSelectors properties) as lastDeclaration) :: [] ->
+            case stylesToApply of
+                [] ->
+                    Ok declarations
+
+                ( [], newProperties ) :: otherStylesToApply ->
+                    [ StyleBlock selector otherSelectors (properties ++ newProperties) ]
+                        |> applyMixinStyles otherStylesToApply
+
+                ( firstNewSelector :: otherNewSelectors, newProperties ) :: otherStylesToApply ->
+                    (lastDeclaration :: [ StyleBlock firstNewSelector otherNewSelectors newProperties ])
+                        |> applyMixinStyles otherStylesToApply
+
+        firstDeclaration :: otherDeclarations ->
+            case applyMixinStyles stylesToApply otherDeclarations of
+                Ok newDeclarations ->
+                    Ok (firstDeclaration :: newDeclarations)
+
+                (Err _) as err ->
+                    err
 
 
 introduceSelector : Selector -> List Declaration -> List Declaration
@@ -889,14 +1028,14 @@ introduceSelector selector declarations =
             [ StyleBlock firstSelector (otherSelectors ++ [ SingleSelector selector ]) [] ]
 
         {- Here the most recent declaration had properties defined, meaning
-         this must be a new top-level declaration, like `Bar` in the following:
+             this must be a new top-level declaration, like `Bar` in the following:
 
-            stylesheet "homepage"
-                . Foo
-                    ~ fontWeight normal
+                stylesheet "homepage"
+                    . Foo
+                        ~ fontWeight normal
 
-                . Bar
-                    ~ fontWeight bold
+                    . Bar
+                        ~ fontWeight bold
         -}
         lastDeclaration :: [] ->
             lastDeclaration :: [ StyleBlock (SingleSelector selector) [] [] ]
@@ -915,12 +1054,12 @@ introduceSelector selector declarations =
 -}
 (~) : Style class id -> ( String, String ) -> Style class id
 (~) style ( key, value ) =
-    case style of
-        NamespacedStyle name declarations ->
-            let
-                property =
-                    { key = key, value = value, important = False }
-            in
+    let
+        property =
+            { key = key, value = value, important = False }
+    in
+        case style of
+            NamespacedStyle name declarations ->
                 case addProperty "~" property declarations of
                     Ok newDeclarations ->
                         NamespacedStyle name newDeclarations
@@ -928,8 +1067,18 @@ introduceSelector selector declarations =
                     Err message ->
                         InvalidStyle message
 
-        InvalidStyle _ ->
-            style
+            Mixin name [] ->
+                -- Create a fresh property list containing only this property.
+                [ ( [], [ property ] ) ]
+                    |> Mixin name
+
+            Mixin name (( selectors, properties ) :: otherMixinStyles) ->
+                -- Add this proprerty to the running list of mixin properties.
+                (( selectors, properties ++ [ property ] ) :: otherMixinStyles)
+                    |> Mixin name
+
+            InvalidStyle _ ->
+                style
 
 
 {-| An [`!important`](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity#The_!important_exception)
@@ -942,12 +1091,12 @@ property.
 -}
 (!) : Style class id -> ( String, String ) -> Style class id
 (!) style ( key, value ) =
-    case style of
-        NamespacedStyle name declarations ->
-            let
-                property =
-                    { key = key, value = value, important = True }
-            in
+    let
+        property =
+            { key = key, value = value, important = True }
+    in
+        case style of
+            NamespacedStyle name declarations ->
                 case addProperty "!" property declarations of
                     Ok newDeclarations ->
                         NamespacedStyle name newDeclarations
@@ -955,8 +1104,18 @@ property.
                     Err message ->
                         InvalidStyle message
 
-        InvalidStyle _ ->
-            style
+            Mixin name [] ->
+                -- Create a fresh property list containing only this property.
+                [ ( [], [ property ] ) ]
+                    |> Mixin name
+
+            Mixin name (( selectors, properties ) :: otherMixinStyles) ->
+                -- Add this proprerty to the running list of mixin properties.
+                (( selectors, properties ++ [ property ] ) :: otherMixinStyles)
+                    |> Mixin name
+
+            InvalidStyle _ ->
+                style
 
 
 {-|
@@ -1101,8 +1260,34 @@ extendTypeSelector operatorName update style =
                 Err message ->
                     InvalidStyle message
 
+        Mixin name mixinStyles ->
+            case extendLastMixinSelector operatorName (update name) mixinStyles of
+                Ok newMixinStyles ->
+                    Mixin name newMixinStyles
+
+                Err message ->
+                    InvalidStyle message
+
         InvalidStyle _ ->
             style
+
+
+extendLastMixinSelector : String -> (CompoundSelector -> CompoundSelector) -> List ( List CompoundSelector, List Property ) -> Result String (List ( List CompoundSelector, List Property ))
+extendLastMixinSelector operatorName update mixinStyles =
+    case mixinStyles of
+        [] ->
+            Err (operatorName ++ " cannot be used as the first mixin style.")
+
+        ( selectors, properties ) :: [] ->
+            Ok [ ( List.map update selectors, properties ) ]
+
+        first :: rest ->
+            case extendLastMixinSelector operatorName update rest of
+                Ok result ->
+                    Ok (first :: result)
+
+                (Err _) as err ->
+                    err
 
 
 
@@ -1474,24 +1659,26 @@ type PseudoClass
 -}
 (|$) : Style class id -> Tag -> Style class id
 (|$) style tag =
-    case style of
-        NamespacedStyle name declarations ->
-            let
-                newSelector =
-                    tag
-                        |> tagToString
-                        |> TypeSelector
-                        |> SingleSelector
-            in
-                case addSelector "|$" newSelector declarations of
+    let
+        newSelector =
+            tag
+                |> tagToString
+                |> TypeSelector
+    in
+        case style of
+            NamespacedStyle name declarations ->
+                case addSelector "|$" (SingleSelector newSelector) declarations of
                     Ok newDeclarations ->
                         NamespacedStyle name newDeclarations
 
                     Err message ->
                         InvalidStyle message
 
-        InvalidStyle _ ->
-            style
+            Mixin name mixinStyles ->
+                addSelectorToMixin newSelector name mixinStyles
+
+            InvalidStyle _ ->
+                style
 
 
 selectorToBlock : Selector -> Declaration
