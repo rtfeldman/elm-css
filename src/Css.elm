@@ -420,13 +420,16 @@ solid =
     OutlineStyle "solid"
 
 
-{-| -}
+{-| A [transparent](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
+-}
 transparent : OpacityStyle
 transparent =
     OpacityStyle "transparent"
 
 
-{-| -}
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
+    in functional notation.
+-}
 rgb : number -> number -> number -> Color
 rgb r g b =
     ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
@@ -434,7 +437,8 @@ rgb r g b =
         |> NotInherit
 
 
-{-| -}
+{-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
+-}
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
     ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
@@ -442,7 +446,9 @@ rgba r g b a =
         |> NotInherit
 
 
-{-| -}
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
+    in hexadecimal notation.
+-}
 hex : String -> Color
 hex str =
     ExplicitColor ("#" ++ str)
@@ -599,19 +605,25 @@ auto =
     Auto |> NotInherit
 
 
-{-| -}
+{-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
+Any CSS property can be set to this value.
+-}
 inherit : InheritOr a
 inherit =
     Inherit
 
 
-{-| -}
+{-| The [`unset`](https://developer.mozilla.org/en-US/docs/Web/CSS/unset) value.
+Any CSS property can be set to this value.
+-}
 unset : InheritOr a
 unset =
     Unset
 
 
-{-| -}
+{-| The [`initial`](https://developer.mozilla.org/en-US/docs/Web/CSS/initial) value.
+Any CSS property can be set to this value.
+-}
 initial : InheritOr a
 initial =
     Initial
