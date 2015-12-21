@@ -89,7 +89,7 @@ dreamwriter =
 
 underlineOnHover : Style CssClasses CssIds
 underlineOnHover =
-    mixin "underlineOnHover"
+    mixin
         --~ textDecoration none
         ~ color (rgb 128 127 126)
 
@@ -100,7 +100,7 @@ underlineOnHover =
 
 greenOnHover : Style CssClasses CssIds
 greenOnHover =
-    mixin "greenOnHover"
+    mixin
         &: hover
             ~ color (rgb 0 0 122)
 

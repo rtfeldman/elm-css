@@ -7,5 +7,5 @@ import Css.Declaration exposing (Declaration, CompoundSelector, Property)
 -}
 type Style class id
     = NamespacedStyle String (List Declaration)
-    | Mixin String (List ( List CompoundSelector, List Property ))
+    | Mixin (Style class id -> Style class id)
     | InvalidStyle String

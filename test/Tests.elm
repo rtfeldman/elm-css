@@ -221,12 +221,12 @@ greenOnHoverMixin =
 
         output =
             """
-            a {
-                color: rgb(128, 127, 126);
+            button {
+                color: rgb(11, 22, 33);
             }
 
-            a:hover {
-                color: rgb(23, 24, 25);
+            button:hover {
+                color: rgb(0, 0, 122);
             }
             """
     in
