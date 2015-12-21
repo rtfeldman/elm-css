@@ -20,6 +20,7 @@ all =
     suite
         "elm-stylesheets"
         [ unstyledDiv
+        , keyValue
         , divWidthHeight
         , dreamwriter
         , multiDescendent
@@ -183,6 +184,26 @@ multiSelector =
     in
         suite
             "Multi-descendent stylesheet"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+keyValue : Test
+keyValue =
+    let
+        input =
+            Fixtures.keyValue
+
+        output = """
+          body {
+            -webkit-font-smoothing: none;
+            -moz-font-smoothing: none !important;
+          }
+        """
+    in
+        suite
+            "Arbitrary key-value properties"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]

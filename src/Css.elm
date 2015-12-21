@@ -979,6 +979,13 @@ introduceSelector selector declarations =
         $ body
             ~ width 960 px
             ~ color (rgb 7 7 7)
+
+You can also give `~` an arbitrary key-value pair:
+
+    stylesheet "homepage"
+        $ body
+            ~ width 960 px
+            ~ ("-webkit-font-smoothing", "none")
 -}
 (~) : Style class id -> ( String, String ) -> Style class id
 (~) style (( key, value ) as tuple) =
@@ -1009,6 +1016,13 @@ property.
         $ button
             ~ color (rgb 7 7 7)
             ! fontWeight normal
+
+You can also give `!` an arbitrary key-value pair:
+
+    stylesheet "homepage"
+        $ body
+            ~ width 960 px
+            ! ("-webkit-font-smoothing", "none")
 -}
 (!) : Style class id -> ( String, String ) -> Style class id
 (!) style (( key, value ) as tuple) =

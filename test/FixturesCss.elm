@@ -71,6 +71,13 @@ multiSelector =
                 ~ width 1 px
                 ~ height 2 pct
 
+keyValue : Style CssClasses CssIds
+keyValue =
+    stylesheet { name = "multiSelector" }
+        $ body
+            ~ ("-webkit-font-smoothing", "none")
+            ! ("-moz-font-smoothing", "none")
+
 
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
