@@ -1,4 +1,4 @@
-module FixturesCss where
+module FixturesCss (..) where
 
 import Css exposing (..)
 import Style exposing (Style(..))
@@ -85,3 +85,32 @@ dreamwriter =
 
             ~ backgroundColor pageBackground
             ~ color pageDefaultText
+
+
+underlineOnHover : Style CssClasses CssIds
+underlineOnHover =
+    mixin "underlineOnHover"
+        --~ textDecoration none
+        ~ color (rgb 128 127 126)
+
+        &: hover
+            --~ textDecoration underline
+            ~ color (rgb 23 24 25)
+
+
+mixinUnderlineOnHoverStyle : Style CssClasses CssIds
+mixinUnderlineOnHoverStyle =
+    stylesheet "underlineOnHoverStylesheet"
+        $ a
+            --~ color (rgb 128 64 32)
+            ~= underlineOnHover
+
+manualUnderlineOnHoverStyle : Style CssClasses CssIds
+manualUnderlineOnHoverStyle =
+    stylesheet "underlineOnHoverStylesheet"
+        $ a
+            ~ color (rgb 128 127 126)
+
+            &: hover
+                ~ color (rgb 23 24 25)
+

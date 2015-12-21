@@ -22,7 +22,9 @@ all =
         [ unstyledDiv
         , divWidthHeight
         , dreamwriter
-          --, multiDescendent
+        , multiDescendent
+        , underlineOnHoverMixin
+        , underlineOnHoverManual
         ]
 
 
@@ -37,7 +39,7 @@ unstyledDiv =
     in
         suite
             "unstyled div"
-            [ test "does not bother emitting anything"
+            [ test "pretty prints the expected output"
                 <| assertEqual output (prettyPrint input)
             ]
 
@@ -160,3 +162,51 @@ outdented str =
         |> List.map String.trim
         |> String.join "\n"
         |> String.trim
+
+
+underlineOnHoverMixin : Test
+underlineOnHoverMixin =
+    let
+        input =
+            Fixtures.mixinUnderlineOnHoverStyle
+
+        output =
+            """
+            a {
+                color: rgb(128, 127, 126);
+            }
+
+            a:hover {
+                color: rgb(23, 24, 25);
+            }
+            """
+    in
+        suite
+            "underline on hover link (mixin)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+underlineOnHoverManual : Test
+underlineOnHoverManual =
+    let
+        input =
+            Fixtures.manualUnderlineOnHoverStyle
+
+        output =
+            """
+            a {
+                color: rgb(128, 127, 126);
+            }
+
+            a:hover {
+                color: rgb(23, 24, 25);
+            }
+            """
+    in
+        suite
+            "underline on hover link (manual)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
