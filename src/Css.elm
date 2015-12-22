@@ -198,8 +198,8 @@ print =
 {- Units -}
 
 
-inheritToString : (a -> String) -> InheritOr a -> String
-inheritToString translate value =
+propertyValueToString : (a -> String) -> PropertyValue a -> String
+propertyValueToString translate value =
     case value of
         Inherit ->
             "inherit"
@@ -237,47 +237,47 @@ noneToString translate value =
 unitsToString : Units -> String
 unitsToString =
     (\(ExplicitUnits str) -> str)
-        |> inheritToString
+        |> propertyValueToString
 
 
 boxSizingToString : BoxSizing -> String
 boxSizingToString =
     (\(ExplicitBoxSizing str) -> str)
-        |> inheritToString
+        |> propertyValueToString
 
 
 overflowToString : Overflow -> String
 overflowToString =
     (\(ExplicitOverflow str) -> str)
         |> autoToString
-        |> inheritToString
+        |> propertyValueToString
 
 
 displayToString : Display -> String
 displayToString =
     (\(ExplicitDisplay str) -> str)
         |> noneToString
-        |> inheritToString
+        |> propertyValueToString
 
 
 verticalAlignToString : VerticalAlign -> String
 verticalAlignToString =
     (\(ExplicitVerticalAlign str) -> str)
-        |> inheritToString
+        |> propertyValueToString
 
 
 whiteSpaceToString : WhiteSpace -> String
 whiteSpaceToString =
     (\(ExplicitWhiteSpace str) -> str)
         |> autoToString
-        |> inheritToString
+        |> propertyValueToString
 
 
 colorToString : Color -> String
 colorToString =
     (\(ExplicitColor str) -> str)
         |> autoToString
-        |> inheritToString
+        |> propertyValueToString
 
 
 numberToString : number -> String
@@ -289,7 +289,7 @@ textShadowToString : TextShadow -> String
 textShadowToString =
     explicitTextShadowToString
         |> noneToString
-        |> inheritToString
+        |> propertyValueToString
 
 
 explicitTextShadowToString : ExplicitTextShadow -> String
@@ -313,7 +313,7 @@ type Tag
     = Tag String
 
 
-type InheritOr a
+type PropertyValue a
     = Inherit
     | Unset
     | Initial
@@ -331,39 +331,39 @@ type NoneOr a
 
 
 type alias BoxSizing =
-    InheritOr ExplicitBoxSizing
+    PropertyValue ExplicitBoxSizing
 
 
 type alias Overflow =
-    InheritOr (AutoOr ExplicitOverflow)
+    PropertyValue (AutoOr ExplicitOverflow)
 
 
 type alias Display =
-    InheritOr (NoneOr ExplicitDisplay)
+    PropertyValue (NoneOr ExplicitDisplay)
 
 
 type alias WhiteSpace =
-    InheritOr (AutoOr ExplicitWhiteSpace)
+    PropertyValue (AutoOr ExplicitWhiteSpace)
 
 
 type alias Color =
-    InheritOr (AutoOr ExplicitColor)
+    PropertyValue (AutoOr ExplicitColor)
 
 
 type alias TextShadow =
-    InheritOr (NoneOr ExplicitTextShadow)
+    PropertyValue (NoneOr ExplicitTextShadow)
 
 
 type alias Outline =
-    InheritOr ExplicitOutline
+    PropertyValue ExplicitOutline
 
 
 type alias Units =
-    InheritOr ExplicitUnits
+    PropertyValue ExplicitUnits
 
 
 type alias VerticalAlign =
-    InheritOr ExplicitVerticalAlign
+    PropertyValue ExplicitVerticalAlign
 
 
 type ExplicitUnits
@@ -594,13 +594,13 @@ inline =
 
 
 {-| -}
-none : InheritOr (NoneOr a)
+none : PropertyValue (NoneOr a)
 none =
     None |> NotInherit
 
 
 {-| -}
-auto : InheritOr (AutoOr a)
+auto : PropertyValue (AutoOr a)
 auto =
     Auto |> NotInherit
 
@@ -608,7 +608,7 @@ auto =
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
 Any CSS property can be set to this value.
 -}
-inherit : InheritOr a
+inherit : PropertyValue a
 inherit =
     Inherit
 
@@ -616,7 +616,7 @@ inherit =
 {-| The [`unset`](https://developer.mozilla.org/en-US/docs/Web/CSS/unset) value.
 Any CSS property can be set to this value.
 -}
-unset : InheritOr a
+unset : PropertyValue a
 unset =
     Unset
 
@@ -624,7 +624,7 @@ unset =
 {-| The [`initial`](https://developer.mozilla.org/en-US/docs/Web/CSS/initial) value.
 Any CSS property can be set to this value.
 -}
-initial : InheritOr a
+initial : PropertyValue a
 initial =
     Initial
 
