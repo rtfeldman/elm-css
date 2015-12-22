@@ -1,4 +1,4 @@
-module HomepageStylesheet (..) where
+module HomepageStylesheet (css) where
 
 import Css exposing (..)
 import SharedStyles exposing (..)
