@@ -10,7 +10,7 @@ port cssOutput =
 css : Result String String
 css =
     Css.prettyPrint <|
-        stylesheet "homepage"
+        stylesheet { name = "homepage" }
             $ header
                 ~ backgroundColor (rgb 90 90 90)
                 ~ boxSizing borderBox
