@@ -1,0 +1,32 @@
+header {
+    background-color: rgb(90, 90, 90);
+    box-sizing: border-box;
+    padding: -80px;
+}
+
+nav {
+    display: inline-block;
+    padding-bottom: 12px;
+}
+
+.homepage_NavLink {
+    margin: 12px;
+    color: rgb(255, 255, 255);
+}
+
+#ReactiveLogo {
+    display: inline-block;
+    margin-left: 150px;
+    margin-right: 80px;
+    vertical-align: middle;
+}
+
+#BuyTickets {
+    padding: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-left: 50px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(27, 217, 130);
+    vertical-align: middle;
+}
