@@ -14,7 +14,7 @@ describe("emitting", function() {
     // Use a timeout of 5 minutes because Travis on Linux can be SUPER slow.
     this.timeout(300000);
 
-    var srcFile = path.join(__dirname, "..", "examples/src/HomepageStylesheet.elm");
+    var srcFile = path.join(__dirname, "..", "examples", "src", "HomepageStylesheet.elm");
     var destCssFile = path.join(__dirname, "output.css")
 
     emitter(srcFile, destCssFile).then(function() {
