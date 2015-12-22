@@ -16,7 +16,7 @@ install:
   - node --version
   - npm --version
   - cd test
-  - npm install -g elm@%ELM_VERSION% elm-test
+  - npm install -g elm@%ELM_VERSION% elm-test@0.16.1-alpha
   - npm install
 
 test_script:
