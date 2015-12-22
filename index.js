@@ -3,16 +3,9 @@ var tmp = require("tmp");
 var path = require("path");
 var compile = require("node-elm-compiler").compile;
 var jsEmitterFilename = "emitter.js";
-var replaceStream = require("replacestream");
-
-var templatesDir = path.join(__dirname, "templates", "emitter");
-var elmPackageFilename = "elm-package.json";
-var elmPackageSrc = path.join(templatesDir, elmPackageFilename);
-var emitterFilename = "Emitter.elm"
-var emitterSrc = path.join(templatesDir, emitterFilename);
 
 // elmModuleName is optional, and is by default inferred based on the filename.
-module.exports = function(srcElmFile, destCssFile, elmModuleName) {
+module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort) {
   return new Promise(function(resolve, reject) {
     var originalWorkingDir = process.cwd();
 
@@ -21,85 +14,34 @@ module.exports = function(srcElmFile, destCssFile, elmModuleName) {
         return reject(err);
       }
 
-      if (!elmModuleName) {
-        elmModuleName = path.basename(srcElmFile, ".elm");
-      }
+      process.chdir(projectDir);
 
-      process.chdir(tmpDirPath);
-
-      return generateCssFile(
-        tmpDirPath, srcElmFile, elmModuleName, destCssFile
-      ).then(function(result) {
-        process.chdir(originalWorkingDir);
-        resolve(result);
-      }, function(err) {
-        process.chdir(originalWorkingDir);
-        reject(result);
-      });
+      return generateCssFiles(
+          stylesheetsPath,
+          path.join(tmpDirPath, jsEmitterFilename),
+          outputDir,
+          stylesheetsModule || "Stylesheets",
+          stylesheetsPort || "files"
+        )
+        .then(function(result) {
+          process.chdir(originalWorkingDir);
+          resolve(result);
+        }, function(err) {
+          process.chdir(originalWorkingDir);
+          reject(result);
+        });
     });
   });
 }
 
-function generateCssFile(tmpDirPath, srcElmFile, elmModuleName, destCssFile) {
+function generateCssFiles(stylesheetsPath, emitterDest, outputDir, stylesheetsModule, stylesheetsPort) {
   return new Promise(function(resolve, reject) {
-    var elmPackageDest = path.join(tmpDirPath, elmPackageFilename);
-    var emitterDest = path.join(tmpDirPath, emitterFilename);
-    var jsEmitterDest = path.join(tmpDirPath, jsEmitterFilename);
-
-    return Promise.all([
-      prepareElmPackageJson(elmPackageSrc, elmPackageDest, srcElmFile),
-      prepareEmitter(emitterSrc, emitterDest, elmModuleName)
-    ]).then(function(){
-      return emit(emitterDest, jsEmitterDest).then(function(content) {
-        fs.writeFile(destCssFile, content + "\n", function(err, file) {
-          return err ? reject(err) : resolve(file);
-        });
-      }, reject);
-    }, reject);
-  });
+    return emit(stylesheetsPath, emitterDest, stylesheetsModule, stylesheetsPort)
+      .then(writeResults(outputDir), reject).then(resolve, reject);
+    });
 }
 
-function prepareElmPackageJson(src, dest, srcElmFile) {
-  return new Promise(function(resolve, reject) {
-    // Substitute the target source dir into our temporary elm-package.json
-    fs.createReadStream(src)
-      .pipe(replaceStream(
-          "$nameOfTargetSourceDirectoryGoesHere",
-
-          // BEGIN HACKY WORKAROUND
-          //
-          // once elm-css has been published,
-          // templates/emitter/elm-package.json can include this
-          // as a depdencency: "rtfeldman/elm-css": "1.0.0 <= v < 2.0.0"
-          // - but until then, we hack it into the sources list like so:
-          path.join(__dirname, "src\",\n        \"") +
-          // ...but once it's been published and we can add that dependency
-          // to elm-package.json, we can chop out this workaround.
-          //
-          // END HACKY WORKAROUND
-
-          path.dirname(srcElmFile),
-          { limit: 1 }
-        )
-      )
-      .pipe(fs.createWriteStream(dest))
-      .on("close", resolve)
-      .on("error", reject);
-  });
-}
-
-function prepareEmitter(src, dest, elmModuleName) {
-  return new Promise(function(resolve, reject) {
-    // Substitute the target module name into our temporary Emitter.elm
-    fs.createReadStream(src)
-      .pipe(replaceStream("NameOfSourceModuleGoesHere", elmModuleName, {limit: 1}))
-      .pipe(fs.createWriteStream(dest))
-      .on("close", resolve)
-      .on("error", reject);
-  });
-}
-
-function emit(src, dest) {
+function emit(src, dest, stylesheetsModule, stylesheetsPort) {
   return new Promise(function(resolve, reject) {
     // Compile the temporary file.
     compileEmitter(src, {output: dest, yes: true}).then(function() {
@@ -110,14 +52,38 @@ function emit(src, dest) {
         }
 
         var Elm = require(dest);
-        var result = Elm.worker(Elm.Emitter).ports.cssOutput;
+        var stylesheets = Elm.worker(Elm[stylesheetsModule]).ports[stylesheetsPort];
+        var failures = stylesheets.filter(function(result) {
+          return !result.success;
+        });
 
-        return result.success
-          ? resolve(result.content)
-          : reject("Compilation error: " + result.content);
+        return failures.length > 0
+          ? reject(reportFailures(failures))
+          : resolve(stylesheets);
       });
     }, reject);
   });
+}
+
+function writeResults(outputDir) {
+  return function(results) {
+    return Promise.all(
+      results.map(function(result) {
+        return new Promise(function(resolve, reject) {
+          fs.writeFile(path.join(outputDir, result.filename), result.content + "\n", function(err, file) {
+            return err ? reject(err) : resolve(file);
+          });
+        })
+      })
+    );
+  };
+}
+
+function reportFailures(failures) {
+  return "The following errors occurred during compilation:\n\n" +
+    failures.map(function(result) {
+      return result.filename + ": " + result.content;
+    }).join("\n\n");
 }
 
 function compileEmitter(src, options) {

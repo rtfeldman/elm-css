@@ -28,7 +28,6 @@
   "homepage": "https://github.com/rtfeldman/elm-css#readme",
   "dependencies": {
     "node-elm-compiler": "2.3.2",
-    "replacestream": "4.0.0",
     "tmp": "0.0.28"
   },
   "devDependencies": {
