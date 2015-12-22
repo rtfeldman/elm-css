@@ -29,12 +29,16 @@ tmp.dir({unsafeCleanup: true}, function (err, tmpDirPath, cleanup) {
     fs.appendFileSync(emitterDest, "\nmodule.exports = Elm;");
 
     var Elm = require(emitterDest);
-    var compiledCss = Elm.worker(Elm[elmModuleName]).ports.css + "\n";
+    var result = Elm.worker(Elm[elmModuleName]).ports.cssOutput;
 
-    fs.writeFileSync(destCssFile, compiledCss);
+    if(result.success) {
+      fs.writeFileSync(destCssFile, result.content + "\n");
+    } else {
+      console.error("Compilation error: " + result.content, 1);
+      process.exit(1);
+    }
   }, function(exitCode) {
     console.error("Errored with exit code", exitCode);
-
     process.exit(exitCode);
   });
 });

@@ -20,7 +20,7 @@ Here's an example:
 
 ```elm
 dreamwriter =
-    stylesheet "dreamwriter"
+    stylesheet { name = "dreamwriter" }
         $ html
             ~ width 100 pct
             ~ height 100 pct
