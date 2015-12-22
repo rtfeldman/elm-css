@@ -1,9 +1,31 @@
 sudo: false
 
+sudo: false
+
+os:
+  - linux
+  - osx
+
+env:
+  matrix:
+    - ELM_VERSION=0.16.0 TARGET_NODE_VERSION=node
+    - ELM_VERSION=0.16.0 TARGET_NODE_VERSION=0.12
+
+before_install:
+  - if [ ${TRAVIS_OS_NAME} == "osx" ];
+    then brew update; brew install nvm; mkdir ~/.nvm; export NVM_DIR=~/.nvm; source $(brew --prefix nvm)/nvm.sh;
+    fi
+
 install:
- - npm install -g elm elm-test
+  - nvm install $TARGET_NODE_VERSION
+  - nvm use $TARGET_NODE_VERSION
+  - node --version
+  - npm --version
+  - npm install -g elm@$ELM_VERSION elm-test
+  - npm install
 
 script:
  - elm package install --yes
  - cd test
  - elm-test TestRunner.elm
+ - npm test
