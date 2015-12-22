@@ -26,18 +26,16 @@ selectorToString selector =
         CustomSelector str ->
             str
 
-        PseudoClass str selector ->
-            (selectorToString selector) ++ ":" ++ str
-
-        PseudoElement str selector ->
-            (selectorToString selector) ++ "::" ++ str
-
 
 compoundSelectorToString : CompoundSelector -> String
 compoundSelectorToString compoundSelector =
     case compoundSelector of
         SingleSelector selector ->
             selectorToString selector
+
+        MultiSelector compound single ->
+            (compoundSelectorToString compound)
+                ++ (selectorToString single)
 
         AdjacentSibling selectorA selectorB ->
             (compoundSelectorToString selectorA)
@@ -58,6 +56,16 @@ compoundSelectorToString compoundSelector =
             (compoundSelectorToString selectorA)
                 ++ " "
                 ++ (compoundSelectorToString selectorB)
+
+        PseudoClass str selector ->
+            (compoundSelectorToString selector)
+                ++ ":"
+                ++ str
+
+        PseudoElement str selector ->
+            (compoundSelectorToString selector)
+                ++ "::"
+                ++ str
 
 
 prettyPrintProperty : Property -> String

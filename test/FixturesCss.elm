@@ -1,6 +1,7 @@
-module FixturesCss where
+module FixturesCss (..) where
 
 import Css exposing (..)
+import Style exposing (Style(..))
 
 
 type CssClasses = Hidden
@@ -10,9 +11,15 @@ pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
 
+unstyledDiv : Style a b
+unstyledDiv =
+    stylesheet { name = "" }
+        $ div
+
+
 divWidthHeight : Style a b
 divWidthHeight =
-    stylesheet ""
+    stylesheet { name = "" }
         $ div
             ~ width 32 pct
             ~ height 50 px
@@ -20,7 +27,7 @@ divWidthHeight =
 
 multiDescendent : Style CssClasses CssIds
 multiDescendent =
-    stylesheet ""
+    stylesheet { name = "" }
         $ html |$ body
             ~ boxSizing borderBox
             ~ display none
@@ -48,9 +55,33 @@ multiDescendent =
                 ~ height 2 pct
 
 
+multiSelector : Style CssClasses CssIds
+multiSelector =
+    stylesheet { name = "multiSelector" }
+        $ div # Page . Hidden
+            ~ display none
+            ~ width 100 pct
+            ~ height 100 pct
+
+        $ span
+            ~ padding 10 px
+            ~ margin 11 px
+
+            >$ h2 >$ h1
+                ~ width 1 px
+                ~ height 2 pct
+
+keyValue : Style CssClasses CssIds
+keyValue =
+    stylesheet { name = "multiSelector" }
+        $ body
+            ~ ("-webkit-font-smoothing", "none")
+            ! ("-moz-font-smoothing", "none")
+
+
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
-    stylesheet "dreamwriter"
+    stylesheet { name = "dreamwriter" }
         $ html |$ body
             ~ width 100 pct
             ~ height 100 pct
@@ -78,3 +109,47 @@ dreamwriter =
 
             ~ backgroundColor pageBackground
             ~ color pageDefaultText
+
+
+underlineOnHover : Style CssClasses CssIds
+underlineOnHover =
+    mixin
+        --~ textDecoration none
+        ~ color (rgb 128 127 126)
+
+        &: hover
+            --~ textDecoration underline
+            ~ color (rgb 23 24 25)
+
+
+greenOnHover : Style CssClasses CssIds
+greenOnHover =
+    mixin
+        &: hover
+            ~ color (rgb 0 0 122)
+
+
+mixinGreenOnHoverStyle : Style CssClasses CssIds
+mixinGreenOnHoverStyle =
+    stylesheet { name = "greenOnHoverStylesheet" }
+        $ button
+            ~ color (rgb 11 22 33)
+            ~= greenOnHover
+
+
+mixinUnderlineOnHoverStyle : Style CssClasses CssIds
+mixinUnderlineOnHoverStyle =
+    stylesheet { name = "underlineOnHoverStylesheet" }
+        $ a
+            --~ color (rgb 128 64 32)
+            ~= underlineOnHover
+
+manualUnderlineOnHoverStyle : Style CssClasses CssIds
+manualUnderlineOnHoverStyle =
+    stylesheet { name = "underlineOnHoverStylesheet" }
+        $ a
+            ~ color (rgb 128 127 126)
+
+            &: hover
+                ~ color (rgb 23 24 25)
+

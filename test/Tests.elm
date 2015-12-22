@@ -19,10 +19,32 @@ all : Test
 all =
     suite
         "elm-stylesheets"
-        [ divWidthHeight
+        [ unstyledDiv
+        , keyValue
+        , divWidthHeight
         , dreamwriter
         , multiDescendent
+        , multiSelector
+        , underlineOnHoverMixin
+        , underlineOnHoverManual
+        , greenOnHoverMixin
         ]
+
+
+unstyledDiv : Test
+unstyledDiv =
+    let
+        input =
+            Fixtures.unstyledDiv
+
+        output =
+            "div {\n\n}"
+    in
+        suite
+            "unstyled div"
+            [ test "pretty prints the expected output"
+                <| assertEqual output (prettyPrint input)
+            ]
 
 
 divWidthHeight : Test
@@ -136,6 +158,57 @@ multiDescendent =
             ]
 
 
+multiSelector : Test
+multiSelector =
+    let
+        input =
+            Fixtures.multiSelector
+
+        output = """
+          div#Page.multiSelector_Hidden {
+            display: none;
+            width: 100%;
+            height: 100%;
+          }
+
+          span {
+            padding: 10px;
+            margin: 11px;
+          }
+
+          span > h2 > h1 {
+            width: 1px;
+            height: 2%;
+          }
+        """
+    in
+        suite
+            "Multi-descendent stylesheet"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+keyValue : Test
+keyValue =
+    let
+        input =
+            Fixtures.keyValue
+
+        output = """
+          body {
+            -webkit-font-smoothing: none;
+            -moz-font-smoothing: none !important;
+          }
+        """
+    in
+        suite
+            "Arbitrary key-value properties"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
 outdented : String -> String
 outdented str =
     str
@@ -143,3 +216,75 @@ outdented str =
         |> List.map String.trim
         |> String.join "\n"
         |> String.trim
+
+
+underlineOnHoverMixin : Test
+underlineOnHoverMixin =
+    let
+        input =
+            Fixtures.mixinUnderlineOnHoverStyle
+
+        output =
+            """
+            a {
+                color: rgb(128, 127, 126);
+            }
+
+            a:hover {
+                color: rgb(23, 24, 25);
+            }
+            """
+    in
+        suite
+            "underline on hover link (mixin)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+underlineOnHoverManual : Test
+underlineOnHoverManual =
+    let
+        input =
+            Fixtures.manualUnderlineOnHoverStyle
+
+        output =
+            """
+            a {
+                color: rgb(128, 127, 126);
+            }
+
+            a:hover {
+                color: rgb(23, 24, 25);
+            }
+            """
+    in
+        suite
+            "underline on hover link (manual)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+greenOnHoverMixin : Test
+greenOnHoverMixin =
+    let
+        input =
+            Fixtures.mixinGreenOnHoverStyle
+
+        output =
+            """
+            button {
+                color: rgb(11, 22, 33);
+            }
+
+            button:hover {
+                color: rgb(0, 0, 122);
+            }
+            """
+    in
+        suite
+            "green on hover (mixin)"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]

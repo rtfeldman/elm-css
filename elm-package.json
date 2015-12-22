@@ -6,7 +6,7 @@
     "source-directories": [
         "src"
     ],
-    "exposed-modules": [],
+    "exposed-modules": ["Css", "Css.Util"],
     "dependencies": {
         "elm-lang/core": "2.0.0 <= v < 4.0.0"
     },
