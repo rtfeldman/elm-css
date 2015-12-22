@@ -21,11 +21,11 @@ install:
   - nvm use $TARGET_NODE_VERSION
   - node --version
   - npm --version
+  - cd test
   - npm install -g elm@$ELM_VERSION elm-test
   - npm install
 
 script:
- - elm package install --yes
- - cd test
- - elm-test TestRunner.elm
- - npm test
+  - elm package install --yes
+  - elm-test TestRunner.elm
+  - npm test

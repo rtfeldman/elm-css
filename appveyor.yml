@@ -15,12 +15,12 @@ install:
   - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version) $env:Platform
   - node --version
   - npm --version
+  - cd test
   - npm install -g elm@%ELM_VERSION% elm-test
   - npm install
 
 test_script:
-  - elm package install --yes
-  - cd test
+  - elm-package install --yes
   - elm-test TestRunner.elm
   - npm test
 
