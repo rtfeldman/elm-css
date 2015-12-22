@@ -1,5 +1,4 @@
 var fs = require("fs");
-var spawn = require("child_process").spawn;
 var tmp = require("tmp");
 var path = require("path");
 var templatesDir = path.join(__dirname, "templates");
