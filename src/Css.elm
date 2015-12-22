@@ -23,7 +23,7 @@ module Css (stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$)
 # Values
 @docs (~), (!), solid, transparent, rgb, rgba, hex, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom
 
-# Units
+# Length
 @docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc
 
 # Pseudo-Classes
@@ -198,7 +198,7 @@ print =
 
 
 
-{- Units -}
+{- Length -}
 
 
 propertyValueToString : (a -> String) -> PropertyValue a -> String
@@ -237,9 +237,9 @@ noneToString translate value =
             translate notNone
 
 
-unitsToString : Units -> String
+unitsToString : Length -> String
 unitsToString =
-    (\(ExplicitUnits str) -> str)
+    (\(ExplicitLength str) -> str)
         |> propertyValueToString
 
 
@@ -361,16 +361,16 @@ type alias Outline =
     PropertyValue ExplicitOutline
 
 
-type alias Units =
-    PropertyValue ExplicitUnits
+type alias Length =
+    PropertyValue ExplicitLength
 
 
 type alias VerticalAlign =
     PropertyValue ExplicitVerticalAlign
 
 
-type ExplicitUnits
-    = ExplicitUnits String
+type ExplicitLength
+    = ExplicitLength String
 
 
 type ExplicitBoxSizing
@@ -398,7 +398,7 @@ type ExplicitVerticalAlign
 
 
 type ExplicitOutline
-    = ExplicitOutline Float ExplicitUnits OutlineStyle OpacityStyle
+    = ExplicitOutline Float ExplicitLength OutlineStyle OpacityStyle
 
 
 type OutlineStyle
@@ -461,109 +461,109 @@ hex str =
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
-pct : Units
+pct : Length
 pct =
-    "%" |> ExplicitUnits |> NotInherit
+    "%" |> ExplicitLength |> NotInherit
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
-em : Units
+em : Length
 em =
-    "em" |> ExplicitUnits |> NotInherit
+    "em" |> ExplicitLength |> NotInherit
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
-ex : Units
+ex : Length
 ex =
-    "ex" |> ExplicitUnits |> NotInherit
+    "ex" |> ExplicitLength |> NotInherit
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
-ch : Units
+ch : Length
 ch =
-    "ch" |> ExplicitUnits |> NotInherit
+    "ch" |> ExplicitLength |> NotInherit
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
-rem : Units
+rem : Length
 rem =
-    "rem" |> ExplicitUnits |> NotInherit
+    "rem" |> ExplicitLength |> NotInherit
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
-vh : Units
+vh : Length
 vh =
-    "vh" |> ExplicitUnits |> NotInherit
+    "vh" |> ExplicitLength |> NotInherit
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
-vw : Units
+vw : Length
 vw =
-    "vw" |> ExplicitUnits |> NotInherit
+    "vw" |> ExplicitLength |> NotInherit
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
-vmin : Units
+vmin : Length
 vmin =
-    "vmin" |> ExplicitUnits |> NotInherit
+    "vmin" |> ExplicitLength |> NotInherit
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
-vmax : Units
+vmax : Length
 vmax =
-    "vmax" |> ExplicitUnits |> NotInherit
+    "vmax" |> ExplicitLength |> NotInherit
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
-px : Units
+px : Length
 px =
-    "px" |> ExplicitUnits |> NotInherit
+    "px" |> ExplicitLength |> NotInherit
 
 
 {-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
-mm : Units
+mm : Length
 mm =
-    "mm" |> ExplicitUnits |> NotInherit
+    "mm" |> ExplicitLength |> NotInherit
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
-cm : Units
+cm : Length
 cm =
-    "cm" |> ExplicitUnits |> NotInherit
+    "cm" |> ExplicitLength |> NotInherit
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 -}
-inches : Units
+inches : Length
 inches =
-    "in" |> ExplicitUnits |> NotInherit
+    "in" |> ExplicitLength |> NotInherit
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
-pt : Units
+pt : Length
 pt =
-    "pt" |> ExplicitUnits |> NotInherit
+    "pt" |> ExplicitLength |> NotInherit
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
-pc : Units
+pc : Length
 pc =
-    "pc" |> ExplicitUnits |> NotInherit
+    "pc" |> ExplicitLength |> NotInherit
 
 
 {-| -}
@@ -699,85 +699,85 @@ opacity =
 
 
 {-| -}
-width : number -> Units -> ( String, String )
+width : number -> Length -> ( String, String )
 width =
     prop2 "width" numberToString unitsToString
 
 
 {-| -}
-minWidth : number -> Units -> ( String, String )
+minWidth : number -> Length -> ( String, String )
 minWidth =
     prop2 "min-width" numberToString unitsToString
 
 
 {-| -}
-height : number -> Units -> ( String, String )
+height : number -> Length -> ( String, String )
 height =
     prop2 "height" numberToString unitsToString
 
 
 {-| -}
-minHeight : number -> Units -> ( String, String )
+minHeight : number -> Length -> ( String, String )
 minHeight =
     prop2 "min-height" numberToString unitsToString
 
 
 {-| -}
-padding : number -> Units -> ( String, String )
+padding : number -> Length -> ( String, String )
 padding =
     prop2 "padding" numberToString unitsToString
 
 
 {-| -}
-paddingTop : number -> Units -> ( String, String )
+paddingTop : number -> Length -> ( String, String )
 paddingTop =
     prop2 "padding-top" numberToString unitsToString
 
 
 {-| -}
-paddingBottom : number -> Units -> ( String, String )
+paddingBottom : number -> Length -> ( String, String )
 paddingBottom =
     prop2 "padding-bottom" numberToString unitsToString
 
 
 {-| -}
-paddingRight : number -> Units -> ( String, String )
+paddingRight : number -> Length -> ( String, String )
 paddingRight =
     prop2 "padding-right" numberToString unitsToString
 
 
 {-| -}
-paddingLeft : number -> Units -> ( String, String )
+paddingLeft : number -> Length -> ( String, String )
 paddingLeft =
     prop2 "padding-left" numberToString unitsToString
 
 
 {-| -}
-margin : number -> Units -> ( String, String )
+margin : number -> Length -> ( String, String )
 margin =
     prop2 "margin" numberToString unitsToString
 
 
 {-| -}
-marginTop : number -> Units -> ( String, String )
+marginTop : number -> Length -> ( String, String )
 marginTop =
     prop2 "margin-top" numberToString unitsToString
 
 
 {-| -}
-marginBottom : number -> Units -> ( String, String )
+marginBottom : number -> Length -> ( String, String )
 marginBottom =
     prop2 "margin-bottom" numberToString unitsToString
 
 
 {-| -}
-marginRight : number -> Units -> ( String, String )
+marginRight : number -> Length -> ( String, String )
 marginRight =
     prop2 "margin-right" numberToString unitsToString
 
 
 {-| -}
-marginLeft : number -> Units -> ( String, String )
+marginLeft : number -> Length -> ( String, String )
 marginLeft =
     prop2 "margin-left" numberToString unitsToString
 
@@ -831,7 +831,7 @@ textShadow =
 
 
 {-| -}
-outline : Float -> Units -> OutlineStyle -> OpacityStyle -> ( String, String )
+outline : Float -> Length -> OutlineStyle -> OpacityStyle -> ( String, String )
 outline =
     prop4
         "outline"
@@ -1877,13 +1877,15 @@ updateLast update list =
             first :: updateLast update rest
 
 
+
 {- Compiler Output -}
+
 
 {-| Record type for converting a Result to something consumable in Node
 -}
 type alias CompilerOutput =
-    { success: Bool
-    , content: String
+    { success : Bool
+    , content : String
     }
 
 
@@ -1903,5 +1905,6 @@ outputToPort result =
     case result of
         Ok styleString ->
             CompilerOutput True styleString
+
         Err message ->
             CompilerOutput False message
