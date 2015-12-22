@@ -6,7 +6,7 @@ import NameOfSourceModuleGoesHere as SourceModule
 
 port cssOutput : CompilerOutput
 port cssOutput =
-    SourceModule Css.prettyPrint SourceModule.css
+    Css.prettyPrint SourceModule.css
         |> outputToPort
 
 
@@ -21,13 +21,12 @@ type alias CompilerOutput =
 {-| Converts a Result emitted by prettyPrint to a CompilerOutput
 
     port output =
-        outputToPort css
+        outputToPort (prettyPrint css)
 
     css =
-        prettyPrint <|
-            stylsheet "example"
-                $ body
-                    ~ margin 0 px
+        stylsheet { name = "example" }
+            $ body
+                ~ margin 0 px
 -}
 outputToPort : Result String String -> CompilerOutput
 outputToPort result =
