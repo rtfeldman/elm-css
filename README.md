@@ -1,4 +1,4 @@
-# elm-css
+# elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
 
 Isn't it a pain when you want to rename a CSS class or ID, but can't be sure that the rename wouldn't break things?  
 Or when it turns out the reason something wasn't displaying as expected was that you had a typo in the class name?
