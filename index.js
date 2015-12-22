@@ -3,7 +3,6 @@ var tmp = require("tmp");
 var path = require("path");
 var compile = require("node-elm-compiler").compile;
 var jsEmitterFilename = "emitter.js";
-var cp = require("node-cp");
 var replaceStream = require("replacestream");
 
 var templatesDir = path.join(__dirname, "templates", "emitter");
