@@ -10,17 +10,18 @@ function prependFixturesDir(filename) {
 }
 
 describe("emitting", function() {
-  it("works with HomepageStylesheet.elm", function (done) {
+  it("works with HomepageCss.elm", function (done) {
     // Use a timeout of 5 minutes because Travis on Linux can be SUPER slow.
     this.timeout(300000);
 
-    var srcFile = path.join(__dirname, "..", "examples", "src", "HomepageStylesheet.elm");
-    var destCssFile = path.join(__dirname, "output.css")
+    var projectDir = path.join(__dirname, "..", "examples");
+    var srcFile = path.join(projectDir, "src", "Stylesheets.elm");
+    var outputDir = __dirname;
 
-    emitter(srcFile, destCssFile).then(function() {
+    emitter(projectDir, srcFile, outputDir).then(function() {
       var expectedFile = path.join(fixturesDir, "homepage-compiled.css");
       var expected = fs.readFileSync(expectedFile, {encoding: "utf8"});
-      var actual = fs.readFileSync(destCssFile, {encoding: "utf8"});
+      var actual = fs.readFileSync(path.join(outputDir, "homepage.css"), {encoding: "utf8"});
 
       assert.strictEqual(expected, actual);
       done();
