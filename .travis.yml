@@ -24,8 +24,7 @@ install:
   - cd test
   - npm install -g elm@$ELM_VERSION elm-test@0.16.1-alpha2
   - npm install
+  - elm package install --yes
 
 script:
-  - elm package install --yes
-  - elm-test TestRunner.elm
   - npm test
