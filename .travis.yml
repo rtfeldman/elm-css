@@ -1,0 +1,9 @@
+sudo: false
+
+install:
+ - npm install -g elm elm-test
+
+script:
+ - elm package install --yes
+ - cd test
+ - elm-test TestRunner.elm
