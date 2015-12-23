@@ -1,13 +1,14 @@
 module Css.File (compile, toFileStructure, CssFileStructure) where
 
-import Style exposing (Style(..))
-import Css.Declaration.Output exposing (prettyPrintDeclarations)
-
-
 {-| Functions for writing CSS files from elm-css.
 
 @docs toFileStructure, CssFileStructure
 -}
+
+import Style exposing (Style(..))
+import Css.Declaration.Output exposing (prettyPrintDeclarations)
+
+
 {-| A description of CSS files that will be created by elm-css.
 -}
 type alias CssFileStructure =
