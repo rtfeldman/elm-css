@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var elmCss = require('./');
 var program = require('commander');
 var chalk = require('chalk');
