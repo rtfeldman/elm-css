@@ -2,12 +2,13 @@ module Tests (all) where
 
 import ElmTest exposing (..)
 import Css
+import Css.File exposing (compile)
 import FixturesCss as Fixtures
 import String
 
 
 prettyPrint style =
-    case Css.prettyPrint style of
+    case compile style of
         Ok result ->
             result
 

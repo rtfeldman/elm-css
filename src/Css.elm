@@ -1,12 +1,9 @@
-module Css (toFileStructure, CssFileStructure, stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
 
 {-| Functions for building stylesheets.
 
 # Style
-@docs stylesheet, prettyPrint, toFileStructure, CssFileStructure
-
-# Mixins
-@docs mixin, (~=)
+@docs stylesheet, mixin
 
 # Statements
 @docs ($), (#), (.), (@), ($=)
@@ -21,7 +18,7 @@ module Css (toFileStructure, CssFileStructure, stylesheet, mixin, prettyPrint, (
 @docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs (~), (!), solid, transparent, rgb, rgba, hex, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom
+@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom
 
 # Length
 @docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc
@@ -34,26 +31,8 @@ module Css (toFileStructure, CssFileStructure, stylesheet, mixin, prettyPrint, (
 -}
 
 import Css.Declaration as Declaration exposing (..)
-import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Util exposing (toCssIdentifier, classToString)
 import Style exposing (Style(..))
-
-
-{-| -}
-prettyPrint : Style class id -> Result String String
-prettyPrint style =
-    case style of
-        NamespacedStyle _ declarations ->
-            declarations
-                |> prettyPrintDeclarations
-                |> Ok
-
-        Mixin _ ->
-            Err ("Cannot translate mixin to CSS directly. Use `~=` to apply it to a stylesheet instead!")
-
-        InvalidStyle message ->
-            Err message
-
 
 
 {- Tags -}
@@ -1872,30 +1851,3 @@ updateLast update list =
 
         first :: rest ->
             first :: updateLast update rest
-
-
-{-| A description of CSS files that will be created by elm-css.
--}
-type alias CssFileStructure =
-    List
-        { filename : String
-        , content : String
-        , success : Bool
-        }
-
-
-{-| Translate a list of filenames and [`prettyPrint`](#prettyPrint) results
-to a list of tuples suitable for being sent to a port in a Stylesheets.elm file.
--}
-toFileStructure : List ( String, Result String String ) -> CssFileStructure
-toFileStructure stylesheets =
-    let
-        asTuple ( filename, result ) =
-            case result of
-                Ok content ->
-                    { success = True, filename = filename, content = content }
-
-                Err msg ->
-                    { success = False, filename = filename, content = msg }
-    in
-        List.map asTuple stylesheets
