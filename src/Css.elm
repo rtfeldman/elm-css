@@ -219,6 +219,13 @@ lengthToString =
         |> propertyValueToString
 
 
+borderStyleToString : BorderStyle -> String
+borderStyleToString =
+    (\(ExplicitBorderStyle str) -> str)
+        |> noneToString
+        |> propertyValueToString
+
+
 boxSizingToString : BoxSizing -> String
 boxSizingToString =
     (\(ExplicitBoxSizing str) -> str)
@@ -276,11 +283,6 @@ explicitTextShadowToString value =
     case value of
         NoTextShadow ->
             "TODO"
-
-
-outlineStyleToString : OutlineStyle -> String
-outlineStyleToString (OutlineStyle str) =
-    str
 
 
 opacityStyleToString : OpacityStyle -> String
@@ -345,6 +347,10 @@ type alias VerticalAlign =
     PropertyValue ExplicitVerticalAlign
 
 
+type alias BorderStyle =
+    PropertyValue (NoneOr ExplicitBorderStyle)
+
+
 type ExplicitLength
     = ExplicitLength String
 
@@ -369,16 +375,16 @@ type ExplicitColor
     = ExplicitColor String
 
 
+type ExplicitBorderStyle
+    = ExplicitBorderStyle String
+
+
 type ExplicitVerticalAlign
     = ExplicitVerticalAlign String
 
 
 type ExplicitOutline
-    = ExplicitOutline Float ExplicitLength OutlineStyle OpacityStyle
-
-
-type OutlineStyle
-    = OutlineStyle String
+    = ExplicitOutline Float ExplicitLength BorderStyle OpacityStyle
 
 
 type OpacityStyle
@@ -391,12 +397,6 @@ type ExplicitTextShadow
 
 
 -- Properties --
-
-
-{-| -}
-solid : OutlineStyle
-solid =
-    OutlineStyle "solid"
 
 
 {-| A [transparent](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
@@ -433,6 +433,69 @@ hex str =
     ExplicitColor ("#" ++ str)
         |> NotAuto
         |> ExplicitValue
+
+
+{-| A `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+hidden : BorderStyle
+hidden =
+    "hidden" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `dotted` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+dotted : BorderStyle
+dotted =
+    "dotted" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `dashed` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+dashed : BorderStyle
+dashed =
+    "dashed" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `solid` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+solid : BorderStyle
+solid =
+    "solid" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `double` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+double : BorderStyle
+double =
+    "double" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `groove` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+groove : BorderStyle
+groove =
+    "groove" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `ridge` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+ridge : BorderStyle
+ridge =
+    "ridge" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| An `inset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+inset : BorderStyle
+inset =
+    "inset" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| An `outset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+outset : BorderStyle
+outset =
+    "outset" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
@@ -540,6 +603,10 @@ pt =
 pc : Length
 pc =
     "pc" |> ExplicitLength |> ExplicitValue
+
+
+
+{- BORDERS -}
 
 
 {-| -}
@@ -807,13 +874,13 @@ textShadow =
 
 
 {-| -}
-outline : Float -> Length -> OutlineStyle -> OpacityStyle -> ( String, String )
+outline : Float -> Length -> BorderStyle -> OpacityStyle -> ( String, String )
 outline =
     prop4
         "outline"
         toString
         lengthToString
-        (\str -> " " ++ outlineStyleToString str ++ " ")
+        (\str -> " " ++ borderStyleToString str ++ " ")
         opacityStyleToString
 
 
