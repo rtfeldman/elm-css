@@ -1,55 +1,100 @@
 var fs = require("fs");
-var spawn = require("child_process").spawn;
 var tmp = require("tmp");
 var path = require("path");
-var templatesDir = path.join(__dirname, "templates");
 var compile = require("node-elm-compiler").compile;
-var emitterFilename = "emitter.js";
+var jsEmitterFilename = "emitter.js";
 
+// elmModuleName is optional, and is by default inferred based on the filename.
+module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort) {
+  return new Promise(function(resolve, reject) {
+    var originalWorkingDir = process.cwd();
 
-// TODO: externalize all this and make it configurable
-var srcFile = "examples/src/HomepageStylesheet.elm";
-var elmModuleName = "HomepageStylesheet";
-var destCssFile = path.join(__dirname, "output.css")
-process.chdir("examples")
-// END TODO
-
-
-tmp.dir({unsafeCleanup: true}, function (err, tmpDirPath, cleanup) {
-  if (err) {
-    throw err;
-  }
-
-  var emitterDest = path.join(tmpDirPath, emitterFilename);
-
-  compileEmitter({
-    output: emitterDest
-  }, function() {
-    // Make the compiled emitter.js Node-friendly.
-    fs.appendFileSync(emitterDest, "\nmodule.exports = Elm;");
-
-    var Elm = require(emitterDest);
-    var result = Elm.worker(Elm[elmModuleName]).ports.cssOutput;
-
-    if(result.success) {
-      fs.writeFileSync(destCssFile, result.content + "\n");
-    } else {
-      console.error("Compilation error: " + result.content, 1);
-      process.exit(1);
-    }
-  }, function(exitCode) {
-    console.error("Errored with exit code", exitCode);
-    process.exit(exitCode);
-  });
-});
-
-function compileEmitter(options, onSuccess, onError) {
-  compile(path.join(__dirname, srcFile), options)
-    .on("close", function(exitCode) {
-      if (exitCode === 0) {
-        onSuccess()
-      } else {
-        onError(exitCode);
+    tmp.dir(function (err, tmpDirPath) {
+      if (err) {
+        return reject(err);
       }
+
+      process.chdir(projectDir);
+
+      return generateCssFiles(
+          stylesheetsPath,
+          path.join(tmpDirPath, jsEmitterFilename),
+          outputDir,
+          stylesheetsModule || "Stylesheets",
+          stylesheetsPort || "files"
+        )
+        .then(function(result) {
+          process.chdir(originalWorkingDir);
+          resolve(result);
+        }, function(err) {
+          process.chdir(originalWorkingDir);
+          reject(result);
+        });
     });
+  });
+}
+
+function generateCssFiles(stylesheetsPath, emitterDest, outputDir, stylesheetsModule, stylesheetsPort) {
+  return new Promise(function(resolve, reject) {
+    return emit(stylesheetsPath, emitterDest, stylesheetsModule, stylesheetsPort)
+      .then(writeResults(outputDir), reject).then(resolve, reject);
+    });
+}
+
+function emit(src, dest, stylesheetsModule, stylesheetsPort) {
+  return new Promise(function(resolve, reject) {
+    // Compile the temporary file.
+    compileEmitter(src, {output: dest, yes: true}).then(function() {
+      // Make the compiled emitter.js Node-friendly.
+      fs.appendFile(dest, "\nmodule.exports = Elm;", function(err) {
+        if (err) {
+          return reject(err);
+        }
+
+        var Elm = require(dest);
+        var stylesheets = Elm.worker(Elm[stylesheetsModule]).ports[stylesheetsPort];
+        var failures = stylesheets.filter(function(result) {
+          return !result.success;
+        });
+
+        return failures.length > 0
+          ? reject(reportFailures(failures))
+          : resolve(stylesheets);
+      });
+    }, reject);
+  });
+}
+
+function writeResults(outputDir) {
+  return function(results) {
+    return Promise.all(
+      results.map(function(result) {
+        return new Promise(function(resolve, reject) {
+          fs.writeFile(path.join(outputDir, result.filename), result.content + "\n", function(err, file) {
+            return err ? reject(err) : resolve(file);
+          });
+        })
+      })
+    );
+  };
+}
+
+function reportFailures(failures) {
+  return "The following errors occurred during compilation:\n\n" +
+    failures.map(function(result) {
+      return result.filename + ": " + result.content;
+    }).join("\n\n");
+}
+
+function compileEmitter(src, options) {
+  return new Promise(function(resolve, reject) {
+    compile(src, options)
+      .on("close", function(exitCode) {
+        if (exitCode === 0) {
+          resolve();
+        } else {
+          reject("Errored with exit code " + exitCode);
+        }
+      });
+  });
 }

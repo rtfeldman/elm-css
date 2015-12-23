@@ -1,5 +1,5 @@
 {
-  "name": "elm-stylesheets",
+  "name": "elm-css",
   "version": "0.1.0",
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
@@ -7,11 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd test && elm-test TestRunner.elm && mocha *.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rtfeldman/elm-stylesheets.git"
+    "url": "git+https://github.com/rtfeldman/elm-css.git"
   },
   "keywords": [
     "elm",
@@ -23,11 +23,15 @@
   "author": "Richard Feldman <richard.t.feldman@gmail.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/rtfeldman/elm-stylesheets/issues"
+    "url": "https://github.com/rtfeldman/elm-css/issues"
   },
-  "homepage": "https://github.com/rtfeldman/elm-stylesheets#readme",
+  "homepage": "https://github.com/rtfeldman/elm-css#readme",
   "dependencies": {
-    "node-elm-compiler": "1.0.1",
+    "node-elm-compiler": "2.3.2",
     "tmp": "0.0.28"
+  },
+  "devDependencies": {
+    "chai": "3.4.1",
+    "mocha": "2.3.4"
   }
 }

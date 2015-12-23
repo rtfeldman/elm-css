@@ -1,12 +1,9 @@
-module Css (stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, CompilerOutput, outputToPort) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
 
 {-| Functions for building stylesheets.
 
 # Style
-@docs stylesheet, prettyPrint
-
-# Mixins
-@docs mixin, (~=)
+@docs stylesheet, mixin
 
 # Statements
 @docs ($), (#), (.), (@), ($=)
@@ -21,9 +18,9 @@ module Css (stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$)
 @docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs (~), (!), solid, transparent, rgb, rgba, hex, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom
+@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom
 
-# Units
+# Length
 @docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc
 
 # Pseudo-Classes
@@ -31,32 +28,11 @@ module Css (stylesheet, mixin, prettyPrint, (~=), ($), (#), (.), (@), (|$), (>$)
 
 # Pseudo-Elements
 @docs (&::), after, before, firstLetter, firstLine, selection
-
-# Compiler Output
-@docs (CompilerOutput, outputToPort)
 -}
 
 import Css.Declaration as Declaration exposing (..)
-import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Util exposing (toCssIdentifier, classToString)
 import Style exposing (Style(..))
-
-
-{-| -}
-prettyPrint : Style class id -> Result String String
-prettyPrint style =
-    case style of
-        NamespacedStyle _ declarations ->
-            declarations
-                |> prettyPrintDeclarations
-                |> Ok
-
-        Mixin _ ->
-            Err ("Cannot translate mixin to CSS directly. Use `~=` to apply it to a stylesheet instead!")
-
-        InvalidStyle message ->
-            Err message
-
 
 
 {- Tags -}
@@ -198,7 +174,7 @@ print =
 
 
 
-{- Units -}
+{- Length -}
 
 
 propertyValueToString : (a -> String) -> PropertyValue a -> String
@@ -213,7 +189,7 @@ propertyValueToString translate value =
         Unset ->
             "unset"
 
-        NotInherit notInherit ->
+        ExplicitValue notInherit ->
             translate notInherit
 
 
@@ -237,9 +213,9 @@ noneToString translate value =
             translate notNone
 
 
-unitsToString : Units -> String
-unitsToString =
-    (\(ExplicitUnits str) -> str)
+lengthToString : Length -> String
+lengthToString =
+    (\(ExplicitLength str) -> str)
         |> propertyValueToString
 
 
@@ -320,7 +296,7 @@ type PropertyValue a
     = Inherit
     | Unset
     | Initial
-    | NotInherit a
+    | ExplicitValue a
 
 
 type AutoOr a
@@ -361,16 +337,16 @@ type alias Outline =
     PropertyValue ExplicitOutline
 
 
-type alias Units =
-    PropertyValue ExplicitUnits
+type alias Length =
+    PropertyValue ExplicitLength
 
 
 type alias VerticalAlign =
     PropertyValue ExplicitVerticalAlign
 
 
-type ExplicitUnits
-    = ExplicitUnits String
+type ExplicitLength
+    = ExplicitLength String
 
 
 type ExplicitBoxSizing
@@ -398,7 +374,7 @@ type ExplicitVerticalAlign
 
 
 type ExplicitOutline
-    = ExplicitOutline Float ExplicitUnits OutlineStyle OpacityStyle
+    = ExplicitOutline Float ExplicitLength OutlineStyle OpacityStyle
 
 
 type OutlineStyle
@@ -437,7 +413,7 @@ rgb : number -> number -> number -> Color
 rgb r g b =
     ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
         |> NotAuto
-        |> NotInherit
+        |> ExplicitValue
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
@@ -446,7 +422,7 @@ rgba : number -> number -> number -> number -> Color
 rgba r g b a =
     ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
         |> NotAuto
-        |> NotInherit
+        |> ExplicitValue
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
@@ -456,156 +432,156 @@ hex : String -> Color
 hex str =
     ExplicitColor ("#" ++ str)
         |> NotAuto
-        |> NotInherit
+        |> ExplicitValue
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
-pct : Units
+pct : Length
 pct =
-    "%" |> ExplicitUnits |> NotInherit
+    "%" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
-em : Units
+em : Length
 em =
-    "em" |> ExplicitUnits |> NotInherit
+    "em" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
-ex : Units
+ex : Length
 ex =
-    "ex" |> ExplicitUnits |> NotInherit
+    "ex" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
-ch : Units
+ch : Length
 ch =
-    "ch" |> ExplicitUnits |> NotInherit
+    "ch" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
-rem : Units
+rem : Length
 rem =
-    "rem" |> ExplicitUnits |> NotInherit
+    "rem" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
-vh : Units
+vh : Length
 vh =
-    "vh" |> ExplicitUnits |> NotInherit
+    "vh" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
-vw : Units
+vw : Length
 vw =
-    "vw" |> ExplicitUnits |> NotInherit
+    "vw" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
-vmin : Units
+vmin : Length
 vmin =
-    "vmin" |> ExplicitUnits |> NotInherit
+    "vmin" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
-vmax : Units
+vmax : Length
 vmax =
-    "vmax" |> ExplicitUnits |> NotInherit
+    "vmax" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
-px : Units
+px : Length
 px =
-    "px" |> ExplicitUnits |> NotInherit
+    "px" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
-mm : Units
+mm : Length
 mm =
-    "mm" |> ExplicitUnits |> NotInherit
+    "mm" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
-cm : Units
+cm : Length
 cm =
-    "cm" |> ExplicitUnits |> NotInherit
+    "cm" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 -}
-inches : Units
+inches : Length
 inches =
-    "in" |> ExplicitUnits |> NotInherit
+    "in" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
-pt : Units
+pt : Length
 pt =
-    "pt" |> ExplicitUnits |> NotInherit
+    "pt" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
-pc : Units
+pc : Length
 pc =
-    "pc" |> ExplicitUnits |> NotInherit
+    "pc" |> ExplicitLength |> ExplicitValue
 
 
 {-| -}
 borderBox : BoxSizing
 borderBox =
-    "border-box" |> ExplicitBoxSizing |> NotInherit
+    "border-box" |> ExplicitBoxSizing |> ExplicitValue
 
 
 {-| -}
 visible : Display
 visible =
-    "visible" |> ExplicitDisplay |> NotNone |> NotInherit
+    "visible" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 block : Display
 block =
-    "block" |> ExplicitDisplay |> NotNone |> NotInherit
+    "block" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 inlineBlock : Display
 inlineBlock =
-    "inline-block" |> ExplicitDisplay |> NotNone |> NotInherit
+    "inline-block" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 inline : Display
 inline =
-    "inline" |> ExplicitDisplay |> NotNone |> NotInherit
+    "inline" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 none : PropertyValue (NoneOr a)
 none =
-    None |> NotInherit
+    None |> ExplicitValue
 
 
 {-| -}
 auto : PropertyValue (AutoOr a)
 auto =
-    Auto |> NotInherit
+    Auto |> ExplicitValue
 
 
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
@@ -635,25 +611,25 @@ initial =
 {-| -}
 noWrap : WhiteSpace
 noWrap =
-    "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> NotInherit
+    "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> ExplicitValue
 
 
 {-| -}
 top : VerticalAlign
 top =
-    "top" |> ExplicitVerticalAlign |> NotInherit
+    "top" |> ExplicitVerticalAlign |> ExplicitValue
 
 
 {-| -}
 middle : VerticalAlign
 middle =
-    "middle" |> ExplicitVerticalAlign |> NotInherit
+    "middle" |> ExplicitVerticalAlign |> ExplicitValue
 
 
 {-| -}
 bottom : VerticalAlign
 bottom =
-    "bottom" |> ExplicitVerticalAlign |> NotInherit
+    "bottom" |> ExplicitVerticalAlign |> ExplicitValue
 
 
 
@@ -699,87 +675,87 @@ opacity =
 
 
 {-| -}
-width : number -> Units -> ( String, String )
+width : number -> Length -> ( String, String )
 width =
-    prop2 "width" numberToString unitsToString
+    prop2 "width" numberToString lengthToString
 
 
 {-| -}
-minWidth : number -> Units -> ( String, String )
+minWidth : number -> Length -> ( String, String )
 minWidth =
-    prop2 "min-width" numberToString unitsToString
+    prop2 "min-width" numberToString lengthToString
 
 
 {-| -}
-height : number -> Units -> ( String, String )
+height : number -> Length -> ( String, String )
 height =
-    prop2 "height" numberToString unitsToString
+    prop2 "height" numberToString lengthToString
 
 
 {-| -}
-minHeight : number -> Units -> ( String, String )
+minHeight : number -> Length -> ( String, String )
 minHeight =
-    prop2 "min-height" numberToString unitsToString
+    prop2 "min-height" numberToString lengthToString
 
 
 {-| -}
-padding : number -> Units -> ( String, String )
+padding : number -> Length -> ( String, String )
 padding =
-    prop2 "padding" numberToString unitsToString
+    prop2 "padding" numberToString lengthToString
 
 
 {-| -}
-paddingTop : number -> Units -> ( String, String )
+paddingTop : number -> Length -> ( String, String )
 paddingTop =
-    prop2 "padding-top" numberToString unitsToString
+    prop2 "padding-top" numberToString lengthToString
 
 
 {-| -}
-paddingBottom : number -> Units -> ( String, String )
+paddingBottom : number -> Length -> ( String, String )
 paddingBottom =
-    prop2 "padding-bottom" numberToString unitsToString
+    prop2 "padding-bottom" numberToString lengthToString
 
 
 {-| -}
-paddingRight : number -> Units -> ( String, String )
+paddingRight : number -> Length -> ( String, String )
 paddingRight =
-    prop2 "padding-right" numberToString unitsToString
+    prop2 "padding-right" numberToString lengthToString
 
 
 {-| -}
-paddingLeft : number -> Units -> ( String, String )
+paddingLeft : number -> Length -> ( String, String )
 paddingLeft =
-    prop2 "padding-left" numberToString unitsToString
+    prop2 "padding-left" numberToString lengthToString
 
 
 {-| -}
-margin : number -> Units -> ( String, String )
+margin : number -> Length -> ( String, String )
 margin =
-    prop2 "margin" numberToString unitsToString
+    prop2 "margin" numberToString lengthToString
 
 
 {-| -}
-marginTop : number -> Units -> ( String, String )
+marginTop : number -> Length -> ( String, String )
 marginTop =
-    prop2 "margin-top" numberToString unitsToString
+    prop2 "margin-top" numberToString lengthToString
 
 
 {-| -}
-marginBottom : number -> Units -> ( String, String )
+marginBottom : number -> Length -> ( String, String )
 marginBottom =
-    prop2 "margin-bottom" numberToString unitsToString
+    prop2 "margin-bottom" numberToString lengthToString
 
 
 {-| -}
-marginRight : number -> Units -> ( String, String )
+marginRight : number -> Length -> ( String, String )
 marginRight =
-    prop2 "margin-right" numberToString unitsToString
+    prop2 "margin-right" numberToString lengthToString
 
 
 {-| -}
-marginLeft : number -> Units -> ( String, String )
+marginLeft : number -> Length -> ( String, String )
 marginLeft =
-    prop2 "margin-left" numberToString unitsToString
+    prop2 "margin-left" numberToString lengthToString
 
 
 {-| -}
@@ -831,12 +807,12 @@ textShadow =
 
 
 {-| -}
-outline : Float -> Units -> OutlineStyle -> OpacityStyle -> ( String, String )
+outline : Float -> Length -> OutlineStyle -> OpacityStyle -> ( String, String )
 outline =
     prop4
         "outline"
         toString
-        unitsToString
+        lengthToString
         (\str -> " " ++ outlineStyleToString str ++ " ")
         opacityStyleToString
 
@@ -1875,33 +1851,3 @@ updateLast update list =
 
         first :: rest ->
             first :: updateLast update rest
-
-
-{- Compiler Output -}
-
-{-| Record type for converting a Result to something consumable in Node
--}
-type alias CompilerOutput =
-    { success: Bool
-    , content: String
-    }
-
-
-{-| Converts a Result emitted by prettyPrint to a CompilerOutput
-
-    port output =
-        outputToPort css
-
-    css =
-        prettyPrint <|
-            stylsheet "example"
-                $ body
-                    ~ margin 0 px
--}
-outputToPort : Result String String -> CompilerOutput
-outputToPort result =
-    case result of
-        Ok styleString ->
-            CompilerOutput True styleString
-        Err message ->
-            CompilerOutput False message
