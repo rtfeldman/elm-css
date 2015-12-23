@@ -213,6 +213,16 @@ noneToString translate value =
             translate notNone
 
 
+optionalLengthToString : (a -> String) -> LengthOr a -> String
+optionalLengthToString translate value =
+    case value of
+        NotLength notLength ->
+            translate notLength
+
+        JustLength (ExplicitLength str) ->
+            str
+
+
 lengthToString : Length -> String
 lengthToString =
     (\(ExplicitLength str) -> str)
@@ -223,6 +233,13 @@ borderStyleToString : BorderStyle -> String
 borderStyleToString =
     (\(ExplicitBorderStyle str) -> str)
         |> noneToString
+        |> propertyValueToString
+
+
+borderWidthToString : BorderWidth -> String
+borderWidthToString =
+    (\(ExplicitBorderWidth str) -> str)
+        |> optionalLengthToString
         |> propertyValueToString
 
 
@@ -351,6 +368,15 @@ type alias BorderStyle =
     PropertyValue (NoneOr ExplicitBorderStyle)
 
 
+type alias BorderWidth =
+    PropertyValue (LengthOr ExplicitBorderWidth)
+
+
+type LengthOr a
+    = JustLength ExplicitLength
+    | NotLength a
+
+
 type ExplicitLength
     = ExplicitLength String
 
@@ -377,6 +403,10 @@ type ExplicitColor
 
 type ExplicitBorderStyle
     = ExplicitBorderStyle String
+
+
+type ExplicitBorderWidth
+    = ExplicitBorderWidth String
 
 
 type ExplicitVerticalAlign
@@ -496,6 +526,31 @@ inset =
 outset : BorderStyle
 outset =
     "outset" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `thin` [border width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
+-}
+thin : BorderWidth
+thin =
+    "thin" |> ExplicitBorderWidth |> NotLength |> ExplicitValue
+
+
+{-| A `medium` [border width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
+-}
+medium : BorderWidth
+medium =
+    "thin" |> ExplicitBorderWidth |> NotLength |> ExplicitValue
+
+
+{-| A `thick` [border width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
+-}
+thick : BorderWidth
+thick =
+    "thin" |> ExplicitBorderWidth |> NotLength |> ExplicitValue
+
+
+
+{- LENGTHS -}
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
@@ -829,6 +884,19 @@ marginLeft =
 boxSizing : BoxSizing -> ( String, String )
 boxSizing =
     prop1 "box-sizing" boxSizingToString
+
+
+
+{- BORDER PROPERTIES -}
+
+
+{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
+
+    borderLeft thick dashed (rgb 11 14 17)
+-}
+borderLeft : BorderWidth -> BorderStyle -> Color -> ( String, String )
+borderLeft =
+    prop3 "border-left" borderWidthToString borderStyleToString colorToString
 
 
 {-| -}
