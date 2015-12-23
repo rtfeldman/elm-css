@@ -6,78 +6,103 @@ var jsEmitterFilename = "emitter.js";
 
 // elmModuleName is optional, and is by default inferred based on the filename.
 module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort) {
-  return new Promise(function(resolve, reject) {
-    var originalWorkingDir = process.cwd();
 
+  var originalWorkingDir = process.cwd();
+  process.chdir(projectDir);
+
+  return createTmpDir()
+    .then(function (tmpDirPath) {
+      return generateCssFiles(
+        stylesheetsPath,
+        path.join(tmpDirPath, jsEmitterFilename),
+        outputDir,
+        stylesheetsModule || "Stylesheets",
+        stylesheetsPort || "files"
+      );
+    })
+    .then(function(result) {
+      process.chdir(originalWorkingDir);
+      return result;
+    })
+    .catch(function(err) {
+      process.chdir(originalWorkingDir);
+      throw Error(err);
+    });
+}
+
+function createTmpDir() {
+  return new Promise(function (resolve, reject) {
     tmp.dir(function (err, tmpDirPath) {
       if (err) {
-        return reject(err);
+        reject(err);
+      } else {
+        resolve(tmpDirPath);
       }
-
-      process.chdir(projectDir);
-
-      return generateCssFiles(
-          stylesheetsPath,
-          path.join(tmpDirPath, jsEmitterFilename),
-          outputDir,
-          stylesheetsModule || "Stylesheets",
-          stylesheetsPort || "files"
-        )
-        .then(function(result) {
-          process.chdir(originalWorkingDir);
-          resolve(result);
-        }, function(err) {
-          process.chdir(originalWorkingDir);
-          reject(result);
-        });
     });
   });
 }
 
 function generateCssFiles(stylesheetsPath, emitterDest, outputDir, stylesheetsModule, stylesheetsPort) {
-  return new Promise(function(resolve, reject) {
-    return emit(stylesheetsPath, emitterDest, stylesheetsModule, stylesheetsPort)
-      .then(writeResults(outputDir), reject).then(resolve, reject);
-    });
+  return emit(stylesheetsPath, emitterDest, stylesheetsModule, stylesheetsPort)
+    .then(writeResults(outputDir));
 }
 
 function emit(src, dest, stylesheetsModule, stylesheetsPort) {
-  return new Promise(function(resolve, reject) {
     // Compile the temporary file.
-    compileEmitter(src, {output: dest, yes: true}).then(function() {
+  return compileEmitter(src, {output: dest, yes: true})
+    .then(makeRequirable(dest))
+    .then(extractCssResults(dest, stylesheetsModule, stylesheetsPort));
+}
+
+function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
+  return function () {
+    return new Promise(function (resolve, reject) {
+      var Elm = require(dest);
+      var stylesheets = Elm.worker(Elm[stylesheetsModule]).ports[stylesheetsPort];
+      var failures = stylesheets.filter(function(result) {
+        return !result.success;
+      });
+
+      return failures.length > 0
+      ? reject(reportFailures(failures))
+      : resolve(stylesheets);
+    });
+  };
+}
+
+function makeRequirable(dest) {
+  return function () {
+    return new Promise(function (resolve, reject) {
       // Make the compiled emitter.js Node-friendly.
       fs.appendFile(dest, "\nmodule.exports = Elm;", function(err) {
         if (err) {
-          return reject(err);
+          reject(err);
+        } else {
+          resolve();
         }
-
-        var Elm = require(dest);
-        var stylesheets = Elm.worker(Elm[stylesheetsModule]).ports[stylesheetsPort];
-        var failures = stylesheets.filter(function(result) {
-          return !result.success;
-        });
-
-        return failures.length > 0
-          ? reject(reportFailures(failures))
-          : resolve(stylesheets);
       });
-    }, reject);
-  });
+    });
+  }
 }
 
 function writeResults(outputDir) {
   return function(results) {
     return Promise.all(
-      results.map(function(result) {
-        return new Promise(function(resolve, reject) {
-          fs.writeFile(path.join(outputDir, result.filename), result.content + "\n", function(err, file) {
-            return err ? reject(err) : resolve(file);
-          });
-        })
-      })
+      results.map(writeResult(outputDir))
     );
   };
 }
+
+function writeResult(outputDir) {
+  return function (result) {
+    return new Promise(function(resolve, reject) {
+      fs.writeFile(path.join(outputDir, result.filename), result.content + "\n", function(err, file) {
+        return err ? reject(err) : resolve(result);
+      });
+    });
+  }
+}
+
 
 function reportFailures(failures) {
   return "The following errors occurred during compilation:\n\n" +

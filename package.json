@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
+  "bin": {
+    "elm-css": "./elm-css.js"
+  },
   "directories": {
     "test": "test"
   },
@@ -27,6 +30,8 @@
   },
   "homepage": "https://github.com/rtfeldman/elm-css#readme",
   "dependencies": {
+    "chalk": "^1.1.1",
+    "commander": "^2.9.0",
     "node-elm-compiler": "2.3.2",
     "tmp": "0.0.28"
   },
