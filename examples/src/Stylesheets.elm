@@ -1,10 +1,10 @@
 module Stylesheets (..) where
 
-import Css exposing (..)
+import Css.File exposing (..)
 import HomepageCss as Homepage
 
 
 port files : CssFileStructure
 port files =
     toFileStructure
-        [ ( "homepage.css", prettyPrint Homepage.css ) ]
+        [ ( "homepage.css", compile Homepage.css ) ]
