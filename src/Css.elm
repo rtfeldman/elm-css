@@ -189,7 +189,7 @@ propertyValueToString translate value =
         Unset ->
             "unset"
 
-        NotInherit notInherit ->
+        ExplicitValue notInherit ->
             translate notInherit
 
 
@@ -213,8 +213,8 @@ noneToString translate value =
             translate notNone
 
 
-unitsToString : Length -> String
-unitsToString =
+lengthToString : Length -> String
+lengthToString =
     (\(ExplicitLength str) -> str)
         |> propertyValueToString
 
@@ -296,7 +296,7 @@ type PropertyValue a
     = Inherit
     | Unset
     | Initial
-    | NotInherit a
+    | ExplicitValue a
 
 
 type AutoOr a
@@ -413,7 +413,7 @@ rgb : number -> number -> number -> Color
 rgb r g b =
     ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
         |> NotAuto
-        |> NotInherit
+        |> ExplicitValue
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
@@ -422,7 +422,7 @@ rgba : number -> number -> number -> number -> Color
 rgba r g b a =
     ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
         |> NotAuto
-        |> NotInherit
+        |> ExplicitValue
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
@@ -432,91 +432,91 @@ hex : String -> Color
 hex str =
     ExplicitColor ("#" ++ str)
         |> NotAuto
-        |> NotInherit
+        |> ExplicitValue
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
 pct : Length
 pct =
-    "%" |> ExplicitLength |> NotInherit
+    "%" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
 em : Length
 em =
-    "em" |> ExplicitLength |> NotInherit
+    "em" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
 ex : Length
 ex =
-    "ex" |> ExplicitLength |> NotInherit
+    "ex" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
 ch : Length
 ch =
-    "ch" |> ExplicitLength |> NotInherit
+    "ch" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
 rem : Length
 rem =
-    "rem" |> ExplicitLength |> NotInherit
+    "rem" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
 vh : Length
 vh =
-    "vh" |> ExplicitLength |> NotInherit
+    "vh" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
 vw : Length
 vw =
-    "vw" |> ExplicitLength |> NotInherit
+    "vw" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
 vmin : Length
 vmin =
-    "vmin" |> ExplicitLength |> NotInherit
+    "vmin" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
 vmax : Length
 vmax =
-    "vmax" |> ExplicitLength |> NotInherit
+    "vmax" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
 px : Length
 px =
-    "px" |> ExplicitLength |> NotInherit
+    "px" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 mm : Length
 mm =
-    "mm" |> ExplicitLength |> NotInherit
+    "mm" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
 cm : Length
 cm =
-    "cm" |> ExplicitLength |> NotInherit
+    "cm" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
@@ -525,63 +525,63 @@ cm =
 -}
 inches : Length
 inches =
-    "in" |> ExplicitLength |> NotInherit
+    "in" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
 pt : Length
 pt =
-    "pt" |> ExplicitLength |> NotInherit
+    "pt" |> ExplicitLength |> ExplicitValue
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
 pc : Length
 pc =
-    "pc" |> ExplicitLength |> NotInherit
+    "pc" |> ExplicitLength |> ExplicitValue
 
 
 {-| -}
 borderBox : BoxSizing
 borderBox =
-    "border-box" |> ExplicitBoxSizing |> NotInherit
+    "border-box" |> ExplicitBoxSizing |> ExplicitValue
 
 
 {-| -}
 visible : Display
 visible =
-    "visible" |> ExplicitDisplay |> NotNone |> NotInherit
+    "visible" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 block : Display
 block =
-    "block" |> ExplicitDisplay |> NotNone |> NotInherit
+    "block" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 inlineBlock : Display
 inlineBlock =
-    "inline-block" |> ExplicitDisplay |> NotNone |> NotInherit
+    "inline-block" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 inline : Display
 inline =
-    "inline" |> ExplicitDisplay |> NotNone |> NotInherit
+    "inline" |> ExplicitDisplay |> NotNone |> ExplicitValue
 
 
 {-| -}
 none : PropertyValue (NoneOr a)
 none =
-    None |> NotInherit
+    None |> ExplicitValue
 
 
 {-| -}
 auto : PropertyValue (AutoOr a)
 auto =
-    Auto |> NotInherit
+    Auto |> ExplicitValue
 
 
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
@@ -611,25 +611,25 @@ initial =
 {-| -}
 noWrap : WhiteSpace
 noWrap =
-    "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> NotInherit
+    "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> ExplicitValue
 
 
 {-| -}
 top : VerticalAlign
 top =
-    "top" |> ExplicitVerticalAlign |> NotInherit
+    "top" |> ExplicitVerticalAlign |> ExplicitValue
 
 
 {-| -}
 middle : VerticalAlign
 middle =
-    "middle" |> ExplicitVerticalAlign |> NotInherit
+    "middle" |> ExplicitVerticalAlign |> ExplicitValue
 
 
 {-| -}
 bottom : VerticalAlign
 bottom =
-    "bottom" |> ExplicitVerticalAlign |> NotInherit
+    "bottom" |> ExplicitVerticalAlign |> ExplicitValue
 
 
 
@@ -677,85 +677,85 @@ opacity =
 {-| -}
 width : number -> Length -> ( String, String )
 width =
-    prop2 "width" numberToString unitsToString
+    prop2 "width" numberToString lengthToString
 
 
 {-| -}
 minWidth : number -> Length -> ( String, String )
 minWidth =
-    prop2 "min-width" numberToString unitsToString
+    prop2 "min-width" numberToString lengthToString
 
 
 {-| -}
 height : number -> Length -> ( String, String )
 height =
-    prop2 "height" numberToString unitsToString
+    prop2 "height" numberToString lengthToString
 
 
 {-| -}
 minHeight : number -> Length -> ( String, String )
 minHeight =
-    prop2 "min-height" numberToString unitsToString
+    prop2 "min-height" numberToString lengthToString
 
 
 {-| -}
 padding : number -> Length -> ( String, String )
 padding =
-    prop2 "padding" numberToString unitsToString
+    prop2 "padding" numberToString lengthToString
 
 
 {-| -}
 paddingTop : number -> Length -> ( String, String )
 paddingTop =
-    prop2 "padding-top" numberToString unitsToString
+    prop2 "padding-top" numberToString lengthToString
 
 
 {-| -}
 paddingBottom : number -> Length -> ( String, String )
 paddingBottom =
-    prop2 "padding-bottom" numberToString unitsToString
+    prop2 "padding-bottom" numberToString lengthToString
 
 
 {-| -}
 paddingRight : number -> Length -> ( String, String )
 paddingRight =
-    prop2 "padding-right" numberToString unitsToString
+    prop2 "padding-right" numberToString lengthToString
 
 
 {-| -}
 paddingLeft : number -> Length -> ( String, String )
 paddingLeft =
-    prop2 "padding-left" numberToString unitsToString
+    prop2 "padding-left" numberToString lengthToString
 
 
 {-| -}
 margin : number -> Length -> ( String, String )
 margin =
-    prop2 "margin" numberToString unitsToString
+    prop2 "margin" numberToString lengthToString
 
 
 {-| -}
 marginTop : number -> Length -> ( String, String )
 marginTop =
-    prop2 "margin-top" numberToString unitsToString
+    prop2 "margin-top" numberToString lengthToString
 
 
 {-| -}
 marginBottom : number -> Length -> ( String, String )
 marginBottom =
-    prop2 "margin-bottom" numberToString unitsToString
+    prop2 "margin-bottom" numberToString lengthToString
 
 
 {-| -}
 marginRight : number -> Length -> ( String, String )
 marginRight =
-    prop2 "margin-right" numberToString unitsToString
+    prop2 "margin-right" numberToString lengthToString
 
 
 {-| -}
 marginLeft : number -> Length -> ( String, String )
 marginLeft =
-    prop2 "margin-left" numberToString unitsToString
+    prop2 "margin-left" numberToString lengthToString
 
 
 {-| -}
@@ -812,7 +812,7 @@ outline =
     prop4
         "outline"
         toString
-        unitsToString
+        lengthToString
         (\str -> " " ++ outlineStyleToString str ++ " ")
         opacityStyleToString
 
