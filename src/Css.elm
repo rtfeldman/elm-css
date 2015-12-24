@@ -33,6 +33,7 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 import Css.Declaration as Declaration exposing (..)
 import Css.Util exposing (toCssIdentifier, classToString)
 import Style exposing (Style(..))
+import String
 
 
 {- Tags -}
@@ -751,19 +752,19 @@ prop1 key translate value =
 
 
 prop2 key translateA translateB valueA valueB =
-    ( key, (translateA valueA) ++ (translateB valueB) )
+    ( key, String.join " " [ translateA valueA, translateB valueB ] )
 
 
 prop3 key translateA translateB translateC valueA valueB valueC =
-    ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) )
+    ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC ] )
 
 
 prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
-    ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) )
+    ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ] )
 
 
 prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
-    ( key, (translateA valueA) ++ (translateB valueB) ++ (translateC valueC) ++ (translateD valueD) ++ (translateE valueE) )
+    ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ] )
 
 
 {-| -}
