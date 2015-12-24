@@ -2,7 +2,7 @@ module Css.File (compile, toFileStructure, CssFileStructure) where
 
 {-| Functions for writing CSS files from elm-css.
 
-@docs toFileStructure, CssFileStructure
+@docs compile, toFileStructure, CssFileStructure
 -}
 
 import Style exposing (Style(..))
