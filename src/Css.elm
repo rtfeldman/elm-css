@@ -237,13 +237,6 @@ borderStyleToString =
         |> propertyValueToString
 
 
-borderWidthToString : BorderWidth -> String
-borderWidthToString =
-    (\(ExplicitBorderWidth str) -> str)
-        |> optionalLengthToString
-        |> propertyValueToString
-
-
 boxSizingToString : BoxSizing -> String
 boxSizingToString =
     (\(ExplicitBoxSizing str) -> str)
@@ -369,10 +362,6 @@ type alias BorderStyle =
     PropertyValue (NoneOr ExplicitBorderStyle)
 
 
-type alias BorderWidth =
-    PropertyValue (LengthOr ExplicitBorderWidth)
-
-
 type LengthOr a
     = JustLength ExplicitLength
     | NotLength a
@@ -404,10 +393,6 @@ type ExplicitColor
 
 type ExplicitBorderStyle
     = ExplicitBorderStyle String
-
-
-type ExplicitBorderWidth
-    = ExplicitBorderWidth String
 
 
 type ExplicitVerticalAlign
@@ -527,27 +512,6 @@ inset =
 outset : BorderStyle
 outset =
     "outset" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
-
-
-{-| A `thin` [border width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
--}
-thin : BorderWidth
-thin =
-    "thin" |> ExplicitBorderWidth |> NotLength |> ExplicitValue
-
-
-{-| A `medium` [border width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
--}
-medium : BorderWidth
-medium =
-    "thin" |> ExplicitBorderWidth |> NotLength |> ExplicitValue
-
-
-{-| A `thick` [border width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
--}
-thick : BorderWidth
-thick =
-    "thin" |> ExplicitBorderWidth |> NotLength |> ExplicitValue
 
 
 
@@ -916,11 +880,16 @@ boxSizing =
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
 
-    borderLeft thick dashed (rgb 11 14 17)
+    borderLeft (px 5) dashed (rgb 11 14 17)
+
+Note that the
+[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+of `thin`, `medium`, and `thick` have unspecified behavior according to the
+CSS specification, and as such are intentionally unsupported.
 -}
-borderLeft : BorderWidth -> BorderStyle -> Color -> ( String, String )
+borderLeft : Length -> BorderStyle -> Color -> ( String, String )
 borderLeft =
-    prop3 "border-left" borderWidthToString borderStyleToString colorToString
+    prop3 "border-left" lengthToString borderStyleToString colorToString
 
 
 {-| -}
