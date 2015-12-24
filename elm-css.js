@@ -33,7 +33,7 @@ elmCss(
   program.module,
   program.port
 ).then(function (results) {
-  console.log(chalk.green('Successfully generated output! The following css files were createTmpDir: '));
+  console.log(chalk.green('Successfully generated output! The following css files were created: '));
   results.forEach(function (result) {
     console.log(chalk.blue('- ' + result.filename));
   });
