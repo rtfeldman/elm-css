@@ -30,6 +30,13 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 @docs (&::), after, before, firstLetter, firstLine, selection
 
 # Intentionally Unsupported
+
+These are features you might expect to be in elm-css (because they are in the
+CSS specification) but which have been omitted because using them is discouraged.
+
+They have been included in the documentation in order to be explicit about
+their exclusion from elm-css rather than pretending they don't exist.
+
 @docs thin, medium, thick
 -}
 
@@ -1246,16 +1253,16 @@ mixin =
     stylesheet "homepage"
         @ charset "utf-8"
 
-        html
-            width 100 pct
+        $ html
+            ~ width (pct 100)
 
         @ media screen
             $ body
-                width 960 px
+                ~ width (px 960)
 
         @ media print
             $ body
-                width 100 pct
+                ~ width (pct 100)
 -}
 (@) : Style class id -> String -> Style class id
 (@) style rule =
@@ -1995,7 +2002,7 @@ fall back on something like this:
 
     stylesheet { name = "badIdeas" }
         $ button
-            ~ ("border-left", "thin")
+            ~ ( "border-left", "thin" )
 -}
 thin : IntentionallyUnsupportedPleaseSeeDocs
 thin =
@@ -2012,7 +2019,7 @@ fall back on something like this:
 
     stylesheet { name = "badIdeas" }
         $ button
-            ~ ("border-left", "medium")
+            ~ ( "border-left", "thin" )
 -}
 medium : IntentionallyUnsupportedPleaseSeeDocs
 medium =
@@ -2029,7 +2036,7 @@ fall back on something like this:
 
     stylesheet { name = "badIdeas" }
         $ button
-            ~ ("border-left", "thick")
+            ~ ( "border-left", "thin" )
 -}
 thick : IntentionallyUnsupportedPleaseSeeDocs
 thick =
