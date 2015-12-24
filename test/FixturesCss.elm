@@ -79,6 +79,17 @@ keyValue =
             ! ("-moz-font-smoothing", "none")
 
 
+borders : Style CssClasses CssIds
+borders =
+    stylesheet { name = "border-test" }
+        $ button
+            ~ borderLeft3 (px 5) dashed (rgb 11 14 17)
+            ~ borderRight (px 7)
+
+        $ a
+            ~ border2 (px 10) solid
+
+
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
     stylesheet { name = "dreamwriter" }
@@ -143,6 +154,7 @@ mixinUnderlineOnHoverStyle =
         $ a
             --~ color (rgb 128 64 32)
             ~= underlineOnHover
+
 
 manualUnderlineOnHoverStyle : Style CssClasses CssIds
 manualUnderlineOnHoverStyle =

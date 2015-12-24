@@ -23,6 +23,7 @@ all =
         [ unstyledDiv
         , keyValue
         , divWidthHeight
+        , borders
         , dreamwriter
         , multiDescendent
         , multiSelector
@@ -61,6 +62,30 @@ divWidthHeight =
             "basic div with fixed width and height"
             [ test "pretty prints the expected output"
                 <| assertEqual output (prettyPrint input)
+            ]
+
+
+borders : Test
+borders =
+    let
+        input =
+            Fixtures.borders
+
+        output = """
+            button {
+                border-left: 5px dashed rgb(11, 14, 17);
+                border-right: 7px;
+            }
+
+            a {
+                border: 10px solid;
+            }
+        """
+    in
+        suite
+            "Borders test"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
 
 

@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset) where
 
 {-| Functions for building stylesheets.
 
@@ -18,7 +18,7 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 @docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderBox, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom
+@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
 
 # Length
 @docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, zero
@@ -879,18 +879,196 @@ boxSizing =
 {- BORDER PROPERTIES -}
 
 
-{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
+{-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
 
-    borderLeft (px 5) dashed (rgb 11 14 17)
+    border  (px 10)
+    border2 (px 10) dashed
+    border3 (px 10) dashed (rgb 11 14 17)
 
 Note that the
 [border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 of `thin`, `medium`, and `thick` have unspecified behavior according to the
 CSS specification, and as such are intentionally unsupported.
 -}
-borderLeft : Length -> BorderStyle -> Color -> ( String, String )
+border : Length -> ( String, String )
+border =
+    prop1 "border" lengthToString
+
+
+{-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
+
+    border  (px 10)
+    border2 (px 10) dashed
+    border3 (px 10) dashed (rgb 11 14 17)
+
+Note that the
+[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+of `thin`, `medium`, and `thick` have unspecified behavior according to the
+CSS specification, and as such are intentionally unsupported.
+-}
+border2 : Length -> BorderStyle -> ( String, String )
+border2 =
+    prop2 "border" lengthToString borderStyleToString
+
+
+{-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
+
+    border  (px 10)
+    border2 (px 10) dashed
+    border3 (px 10) dashed (rgb 11 14 17)
+
+Note that the
+[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+of `thin`, `medium`, and `thick` have unspecified behavior according to the
+CSS specification, and as such are intentionally unsupported.
+-}
+border3 : Length -> BorderStyle -> Color -> ( String, String )
+border3 =
+    prop3 "border" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
+
+    borderTop  (px 5)
+    borderTop2 (px 5) dashed
+    borderTop3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderTop : Length -> ( String, String )
+borderTop =
+    prop1 "border-top" lengthToString
+
+
+{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
+
+    borderTop  (px 5)
+    borderTop2 (px 5) dashed
+    borderTop3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderTop2 : Length -> BorderStyle -> ( String, String )
+borderTop2 =
+    prop2 "border-top" lengthToString borderStyleToString
+
+
+{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
+
+    borderTop  (px 5)
+    borderTop2 (px 5) dashed
+    borderTop3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderTop3 : Length -> BorderStyle -> Color -> ( String, String )
+borderTop3 =
+    prop3 "border-top" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
+
+    borderBottom  (px 5)
+    borderBottom2 (px 5) dashed
+    borderBottom3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBottom : Length -> ( String, String )
+borderBottom =
+    prop1 "border-bottom" lengthToString
+
+
+{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
+
+    borderBottom  (px 5)
+    borderBottom2 (px 5) dashed
+    borderBottom3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBottom2 : Length -> BorderStyle -> ( String, String )
+borderBottom2 =
+    prop2 "border-bottom" lengthToString borderStyleToString
+
+
+{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
+
+    borderBottom  (px 5)
+    borderBottom2 (px 5) dashed
+    borderBottom3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBottom3 : Length -> BorderStyle -> Color -> ( String, String )
+borderBottom3 =
+    prop3 "border-bottom" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
+
+    borderLeft  (px 5)
+    borderLeft2 (px 5) dashed
+    borderLeft3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderLeft : Length -> ( String, String )
 borderLeft =
+    prop1 "border-left" lengthToString
+
+
+{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
+
+    borderLeft  (px 5)
+    borderLeft2 (px 5) dashed
+    borderLeft3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderLeft2 : Length -> BorderStyle -> ( String, String )
+borderLeft2 =
+    prop2 "border-left" lengthToString borderStyleToString
+
+
+{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
+
+    borderLeft  (px 5)
+    borderLeft2 (px 5) dashed
+    borderLeft3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderLeft3 : Length -> BorderStyle -> Color -> ( String, String )
+borderLeft3 =
     prop3 "border-left" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
+
+    borderRight  (px 5)
+    borderRight2 (px 5) dashed
+    borderRight3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderRight : Length -> ( String, String )
+borderRight =
+    prop1 "border-right" lengthToString
+
+
+{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
+
+    borderRight  (px 5)
+    borderRight2 (px 5) dashed
+    borderRight3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderRight2 : Length -> BorderStyle -> ( String, String )
+borderRight2 =
+    prop2 "border-right" lengthToString borderStyleToString
+
+
+{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
+
+    borderRight  (px 5)
+    borderRight2 (px 5) dashed
+    borderRight3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderRight3 : Length -> BorderStyle -> Color -> ( String, String )
+borderRight3 =
+    prop3 "border-right" lengthToString borderStyleToString colorToString
 
 
 {-| -}
