@@ -23,6 +23,7 @@ all =
         [ unstyledDiv
         , keyValue
         , divWidthHeight
+        , borders
         , dreamwriter
         , multiDescendent
         , multiSelector
@@ -64,6 +65,30 @@ divWidthHeight =
             ]
 
 
+borders : Test
+borders =
+    let
+        input =
+            Fixtures.borders
+
+        output = """
+            button {
+                border-left: 5px dashed rgb(11, 14, 17);
+                border-right: 7px;
+            }
+
+            a {
+                border: 10px solid;
+            }
+        """
+    in
+        suite
+            "Borders test"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
 dreamwriter : Test
 dreamwriter =
     let
@@ -75,8 +100,8 @@ dreamwriter =
               width: 100%;
               height: 100%;
               box-sizing: border-box;
-              padding: 0px;
-              margin: 0px;
+              padding: 0;
+              margin: 0;
             }
 
             body {
@@ -97,7 +122,7 @@ dreamwriter =
               width: 100%;
               height: 100%;
               box-sizing: border-box;
-              margin: 0px;
+              margin: 0;
               padding: 8px;
               background-color: rgb(100, 90, 128);
               color: rgb(40, 35, 76);
@@ -129,8 +154,8 @@ multiDescendent =
             }
 
             h1, h2 {
-              padding: 0px;
-              margin: 0px;
+              padding: 0;
+              margin: 0;
             }
 
             h1 > h3, h2 > h3 {

@@ -1,5 +1,15 @@
 # elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
 
+Try it out! (make sure you already have [elm](http://elm-lang.org) installed, e.g. with `npm install -g elm`)
+
+```
+$ npm install -g elm-css
+$ git clone https://github.com/rtfeldman/elm-css.git
+$ cd elm-css/examples
+$ elm-css src/Stylesheets.elm
+$ less homepage.css
+```
+
 Isn't it a pain when you want to rename a CSS class or ID, but can't be sure that the rename wouldn't break things?  
 Or when it turns out the reason something wasn't displaying as expected was that you had a typo in the class name?
 How about when you load multiple stylesheets onto the same page and some of the
@@ -21,33 +31,33 @@ Here's an example:
 ```elm
 dreamwriter =
     stylesheet { name = "dreamwriter" }
-        $ html
-            ~ width 100 pct
-            ~ height 100 pct
-            ~ boxSizing borderBox
-            ~ padding 0 px
-            ~ margin 0 px
-
         $ body
-            ~ minWidth 1280 px
             ~ overflowX auto
-
-            >$ div
-                ~ width 100 pct
-                ~ height 100 pct
+            ~ minWidth (px 1280)
 
         . Hidden
             ! display none
 
         # Page
-            ~ width 100 pct
-            ~ height 100 pct
-            ~ boxSizing borderBox
-            ~ margin 0 px
-            ~ padding 8 px
+            ~ backgroundColor (rgb 200 128 64)
+            ~ color (hex "CCFFFF")
 
-            ~ backgroundColor pageBackground
-            ~ color pageDefaultText
+            ~ width (pct 100)
+            ~ height (pct 100)
+            ~ boxSizing borderBox
+            ~ padding (px 8)
+            ~ margin zero
+
+        $ ul . NavBar
+            ~ margin zero
+            ~ padding zero
+
+            >$ li
+                ~ display inlineBlock
+                ~ color primaryAccentColor
+
+primaryAccentColor =
+    hex "ccffaa"
 ```
 
 The above is vanilla Elm code. `Hidden` and `Page` are backed by union types, so
@@ -57,22 +67,9 @@ if they get out of sync with your view code, you'll get a nice build error.
 The above `elm-css` stylesheet compiles to the following .css file:
 
 ```css
-html {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 0px;
-  margin: 0px;
-}
-
 body {
-  min-width: 1280px;
   overflow-x: auto;
-}
-
-body > div {
-  width: 100%;
-  height: 100%;
+  min-width: 1280px;
 }
 
 .dreamwriter_Hidden {
@@ -80,13 +77,23 @@ body > div {
 }
 
 #Page {
+  background-color: rgb(200, 128, 64);
+  color: #CCFFFF;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  margin: 0px;
   padding: 8px;
-  background-color: rgb(100, 90, 128);
-  color: rgb(40, 35, 76);
+  margin: 0;
+}
+
+ul.dreamwriter_NavBar {
+  margin: 0;
+  padding: 0;
+}
+
+ul.dreamwriter_NavBar > li {
+  display: inline-block;
+  color: #ccffaa;
 }
 ```
 
