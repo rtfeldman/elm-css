@@ -1,6 +1,6 @@
 {
   "name": "elm-css",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
   "directories": {
@@ -8,6 +8,9 @@
   },
   "scripts": {
     "test": "cd test && elm-test TestRunner.elm && mocha *.js"
+  },
+  "bin": {
+    "elm-css": "bin/elm-css"
   },
   "repository": {
     "type": "git",

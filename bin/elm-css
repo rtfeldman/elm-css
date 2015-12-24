@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+var processTitle = "elm-css"
+
+process.title = processTitle;
+
+var compile = require("node-elm-compiler").compile,
+  path = require("path"),
+  emit = require(path.join(__dirname, "..", "index.js")),
+  cwd = process.cwd(),
+  fs = require("fs");
+
+function printHelp() {
+  console.log("Usage: elm-css STYLESHEETS_FILE [output_directory]\n");
+  console.log("Generate .css files from the given Stylesheets.elm file.");
+  console.log("(See the README for how to structure a Stylesheet.elm file.)");
+}
+
+if (process.argv[2] == "--version") {
+  console.log(require(path.join(__dirname, "..", "package.json")).version);
+  process.exit(0);
+}
+
+if (process.argv[2] == "--help") {
+  printHelp();
+  process.exit(0);
+}
+
+var stylesheetsFile = process.argv[2],
+  outputDir = process.argv[3] || cwd;
+
+if (typeof stylesheetsFile !== "string") {
+  printHelp();
+  process.exit(1);
+}
+
+if (!fs.existsSync(stylesheetsFile)) {
+  console.error("Could not find file " + stylesheetsFile);
+  process.exit(2);
+}
+
+emit(cwd, stylesheetsFile, outputDir).then(function() {
+  console.log("Finished writing .css files!");
+  process.exit(0);
+});
