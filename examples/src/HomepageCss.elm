@@ -30,6 +30,7 @@ css =
             ~ paddingLeft (px 24)
             ~ paddingRight (px 24)
             ~ marginLeft (px 50)
+            ~ marginRight auto
             ~ color (rgb 255 255 255)
             ~ backgroundColor (rgb 27 217 130)
             ~ verticalAlign middle
