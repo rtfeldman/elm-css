@@ -373,7 +373,6 @@ type alias BorderStyle =
     PropertyValue (NoneOr ExplicitBorderStyle)
 
 
-
 type LengthOr a
     = JustLength ExplicitLength
     | NotLength a
@@ -856,6 +855,7 @@ paddingLeft =
     prop1 "padding-left" lengthToString
 
 
+
 {- MARGIN PROPERTIES -}
 
 
@@ -868,7 +868,7 @@ paddingLeft =
 -}
 margin : Length -> ( String, String )
 margin =
-  prop1 "margin" lengthToString
+    prop1 "margin" lengthToString
 
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
@@ -892,7 +892,7 @@ margin2 =
 -}
 margin3 : Length -> Length -> Length -> ( String, String )
 margin3 =
-  prop3 "margin" lengthToString lengthToString lengthToString
+    prop3 "margin" lengthToString lengthToString lengthToString
 
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
@@ -904,7 +904,7 @@ margin3 =
 -}
 margin4 : Length -> Length -> Length -> Length -> ( String, String )
 margin4 =
-  prop4 "margin" lengthToString lengthToString lengthToString lengthToString
+    prop4 "margin" lengthToString lengthToString lengthToString lengthToString
 
 
 {-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top)
@@ -949,7 +949,7 @@ marginLeft =
 -}
 marginBlockStart : Length -> ( String, String )
 marginBlockStart =
-  prop1 "margin-block-start" lengthToString
+    prop1 "margin-block-start" lengthToString
 
 
 {-| Sets [`margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-end)
@@ -977,6 +977,7 @@ marginInlineStart =
 marginInlineEnd : Length -> ( String, String )
 marginInlineEnd =
     prop1 "margin-inline-end" lengthToString
+
 
 
 {- BORDER PROPERTIES -}
