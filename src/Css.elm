@@ -1556,20 +1556,20 @@ introduceSelector selector declarations =
             [ StyleBlock (SingleSelector selector) [] [] ]
 
         {- If there are no properties declared, then we have a situation
-                    like `Bar` in the following:
+                            like `Bar` in the following:
 
-                        stylesheet "homepage"
-                            . Foo . Bar
-                                ~ fontWeight bold
+                                stylesheet "homepage"
+                                    . Foo . Bar
+                                        ~ fontWeight bold
 
-                        ...as opposed to:
+                                ...as opposed to:
 
-                        stylesheet "homepage"
-                            . Foo
-                                ~ fontWeight bold
+                                stylesheet "homepage"
+                                    . Foo
+                                        ~ fontWeight bold
 
-                    In this case, we don't make a new declaration, but rather add
-                    the new selector to the existing list of selectors.
+                            In this case, we don't make a new declaration, but rather add
+                            the new selector to the existing list of selectors.
         -}
         (StyleBlock firstSelector otherSelectors []) :: [] ->
             case lastSelectorToMulti selector (firstSelector :: otherSelectors) of
@@ -1580,14 +1580,14 @@ introduceSelector selector declarations =
                     [ StyleBlock first rest [] ]
 
         {- Here the most recent declaration had properties defined, meaning
-                     this must be a new top-level declaration, like `Bar` in the following:
+                             this must be a new top-level declaration, like `Bar` in the following:
 
-                        stylesheet "homepage"
-                            . Foo
-                                ~ fontWeight normal
+                                stylesheet "homepage"
+                                    . Foo
+                                        ~ fontWeight normal
 
-                            . Bar
-                                ~ fontWeight bold
+                                    . Bar
+                                        ~ fontWeight bold
         -}
         lastDeclaration :: [] ->
             lastDeclaration :: [ StyleBlock (SingleSelector selector) [] [] ]
