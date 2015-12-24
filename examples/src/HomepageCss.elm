@@ -9,27 +9,27 @@ css =
         $ header
             ~ backgroundColor (rgb 90 90 90)
             ~ boxSizing borderBox
-            ~ padding -80 px
+            ~ padding (px -80)
 
         $ nav
             ~ display inlineBlock
-            ~ paddingBottom 12 px
+            ~ paddingBottom (px 12)
 
         . NavLink
-            ~ margin 12 px
+            ~ margin (px 12)
             ~ color (rgb 255 255 255)
 
         # ReactiveLogo
             ~ display inlineBlock
-            ~ marginLeft 150 px
-            ~ marginRight 80 px
+            ~ marginLeft (px 150)
+            ~ marginRight (px 80)
             ~ verticalAlign middle
 
         # BuyTickets
-            ~ padding 16 px
-            ~ paddingLeft 24 px
-            ~ paddingRight 24 px
-            ~ marginLeft 50 px
+            ~ padding (px 16)
+            ~ paddingLeft (px 24)
+            ~ paddingRight (px 24)
+            ~ marginLeft (px 50)
             ~ color (rgb 255 255 255)
             ~ backgroundColor (rgb 27 217 130)
             ~ verticalAlign middle
