@@ -224,29 +224,16 @@ noneToString translate value =
             translate notNone
 
 
-optionalNumberToString : (a -> String) -> NumberOr a -> String
-optionalNumberToString translate value =
-    case value of
-        NotNumber notNumber ->
-            translate notNumber
-
-        ExplicitNumber num ->
-            numberToString num
-
-
-lengthOrNumberToString : LengthOrNumber -> String
-lengthOrNumberToString =
-    (\(ExplicitLength str) -> str)
-        |> autoToString
-        |> optionalNumberToString
-        |> propertyValueToString
-
-
 lengthToString : Length -> String
 lengthToString =
     (\(ExplicitLength str) -> str)
         |> autoToString
         |> propertyValueToString
+
+
+lengthOrNumberToString : LengthOrNumber -> String
+lengthOrNumberToString =
+    lengthToString
 
 
 borderStyleToString : BorderStyle -> String
@@ -341,11 +328,6 @@ type NoneOr a
     | NotNone a
 
 
-type NumberOr a
-    = ExplicitNumber Float
-    | NotNumber a
-
-
 type alias BoxSizing =
     PropertyValue ExplicitBoxSizing
 
@@ -378,8 +360,12 @@ type alias Length =
     PropertyValue (AutoOr ExplicitLength)
 
 
+{-| Although not many propeties accept either a length or a number,
+there's no way to type check them separately. Having a separate type
+alias is at least more self-documenting.
+-}
 type alias LengthOrNumber =
-    PropertyValue (NumberOr (AutoOr ExplicitLength))
+    Length
 
 
 type alias VerticalAlign =
@@ -674,10 +660,9 @@ pc =
 {-| A unitless number. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-n : Float -> LengthOrNumber
-n num =
-    ExplicitNumber num
-        |> ExplicitValue
+n : number -> LengthOrNumber
+n =
+    lengthConverter ""
 
 
 
