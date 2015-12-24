@@ -12,9 +12,6 @@
   "scripts": {
     "test": "cd test && elm-test TestRunner.elm && mocha *.js"
   },
-  "bin": {
-    "elm-css": "bin/elm-css"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rtfeldman/elm-css.git"
