@@ -75,8 +75,8 @@ dreamwriter =
               width: 100%;
               height: 100%;
               box-sizing: border-box;
-              padding: 0px;
-              margin: 0px;
+              padding: 0;
+              margin: 0;
             }
 
             body {
@@ -97,7 +97,7 @@ dreamwriter =
               width: 100%;
               height: 100%;
               box-sizing: border-box;
-              margin: 0px;
+              margin: 0;
               padding: 8px;
               background-color: rgb(100, 90, 128);
               color: rgb(40, 35, 76);
@@ -129,8 +129,8 @@ multiDescendent =
             }
 
             h1, h2 {
-              padding: 0px;
-              margin: 0px;
+              padding: 0;
+              margin: 0;
             }
 
             h1 > h3, h2 > h3 {

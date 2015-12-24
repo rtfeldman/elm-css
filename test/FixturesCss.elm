@@ -37,8 +37,8 @@ multiDescendent =
                 ~ height (pct 100)
 
         $ h1 |$ h2
-            ~ padding (px 0)
-            ~ margin (px 0)
+            ~ padding zero
+            ~ margin zero
 
             >$ h3
                 ~ width (pct 100)
@@ -86,8 +86,8 @@ dreamwriter =
             ~ width (pct 100)
             ~ height (pct 100)
             ~ boxSizing borderBox
-            ~ padding (px 0)
-            ~ margin (px 0)
+            ~ padding zero
+            ~ margin zero
 
         $ body
             ~ minWidth (px 1280)
@@ -104,7 +104,7 @@ dreamwriter =
             ~ width (pct 100)
             ~ height (pct 100)
             ~ boxSizing borderBox
-            ~ margin (px 0)
+            ~ margin zero
             ~ padding (px 8)
 
             ~ backgroundColor pageBackground
