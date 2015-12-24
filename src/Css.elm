@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, thin, medium, thick) where
 
 {-| Functions for building stylesheets.
 
@@ -28,6 +28,9 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 
 # Pseudo-Elements
 @docs (&::), after, before, firstLetter, firstLine, selection
+
+# Intentionally Unsupported
+@docs thin, medium, thick
 -}
 
 import Css.Declaration as Declaration exposing (..)
@@ -884,11 +887,6 @@ boxSizing =
     border  (px 10)
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
-
-Note that the
-[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
-of `thin`, `medium`, and `thick` have unspecified behavior according to the
-CSS specification, and as such are intentionally unsupported.
 -}
 border : Length -> ( String, String )
 border =
@@ -901,10 +899,6 @@ border =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 
-Note that the
-[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
-of `thin`, `medium`, and `thick` have unspecified behavior according to the
-CSS specification, and as such are intentionally unsupported.
 -}
 border2 : Length -> BorderStyle -> ( String, String )
 border2 =
@@ -916,11 +910,6 @@ border2 =
     border  (px 10)
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
-
-Note that the
-[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
-of `thin`, `medium`, and `thick` have unspecified behavior according to the
-CSS specification, and as such are intentionally unsupported.
 -}
 border3 : Length -> BorderStyle -> Color -> ( String, String )
 border3 =
@@ -1986,6 +1975,65 @@ firstLine =
 selection : PseudoElement
 selection =
     ExplicitPseudoElement "selection"
+
+
+
+-- Intentionally Unsupported --
+
+
+type IntentionallyUnsupportedPleaseSeeDocs
+    = IntentionallyUnsupportedPleaseSeeDocs
+
+
+{-| The
+[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+of `thin`, `medium`, and `thick` have unspecified behavior according to the
+CSS specification, and as such are intentionally unsupported.
+
+Using them is a bad idea, but if the fate of the world depends on it, you can
+fall back on something like this:
+
+    stylesheet { name = "badIdeas" }
+        $ button
+            ~ ("border-left", "thin")
+-}
+thin : IntentionallyUnsupportedPleaseSeeDocs
+thin =
+    IntentionallyUnsupportedPleaseSeeDocs
+
+
+{-| The
+[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+of `thin`, `medium`, and `thick` have unspecified behavior according to the
+CSS specification, and as such are intentionally unsupported.
+
+Using them is a bad idea, but if the fate of the world depends on it, you can
+fall back on something like this:
+
+    stylesheet { name = "badIdeas" }
+        $ button
+            ~ ("border-left", "medium")
+-}
+medium : IntentionallyUnsupportedPleaseSeeDocs
+medium =
+    IntentionallyUnsupportedPleaseSeeDocs
+
+
+{-| The
+[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+of `thin`, `medium`, and `thick` have unspecified behavior according to the
+CSS specification, and as such are intentionally unsupported.
+
+Using them is a bad idea, but if the fate of the world depends on it, you can
+fall back on something like this:
+
+    stylesheet { name = "badIdeas" }
+        $ button
+            ~ ("border-left", "thick")
+-}
+thick : IntentionallyUnsupportedPleaseSeeDocs
+thick =
+    IntentionallyUnsupportedPleaseSeeDocs
 
 
 pseudoElementToString : PseudoElement -> String
