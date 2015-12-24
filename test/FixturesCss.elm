@@ -11,13 +11,13 @@ pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
 
-unstyledDiv : Style a b
+unstyledDiv : Style a b String
 unstyledDiv =
     stylesheet { name = "" }
         $ div
 
 
-divWidthHeight : Style a b
+divWidthHeight : Style a b String
 divWidthHeight =
     stylesheet { name = "" }
         $ div
@@ -25,7 +25,7 @@ divWidthHeight =
             ~ height (px 50)
 
 
-multiDescendent : Style CssClasses CssIds
+multiDescendent : Style CssClasses CssIds String
 multiDescendent =
     stylesheet { name = "" }
         $ html |$ body
@@ -55,7 +55,7 @@ multiDescendent =
                 ~ height (pct 2)
 
 
-multiSelector : Style CssClasses CssIds
+multiSelector : Style CssClasses CssIds String
 multiSelector =
     stylesheet { name = "multiSelector" }
         $ div # Page . Hidden
@@ -71,7 +71,7 @@ multiSelector =
                 ~ width (px 1)
                 ~ height (pct 2)
 
-keyValue : Style CssClasses CssIds
+keyValue : Style CssClasses CssIds String
 keyValue =
     stylesheet { name = "multiSelector" }
         $ body
@@ -79,7 +79,7 @@ keyValue =
             ! ("-moz-font-smoothing", "none")
 
 
-borders : Style CssClasses CssIds
+borders : Style CssClasses CssIds String
 borders =
     stylesheet { name = "border-test" }
         $ button
@@ -90,7 +90,7 @@ borders =
             ~ border2 (px 10) solid
 
 
-dreamwriter : Style CssClasses CssIds
+dreamwriter : Style CssClasses CssIds String
 dreamwriter =
     stylesheet { name = "dreamwriter" }
         $ html |$ body
@@ -122,7 +122,7 @@ dreamwriter =
             ~ color pageDefaultText
 
 
-underlineOnHover : Style CssClasses CssIds
+underlineOnHover : Style CssClasses CssIds String
 underlineOnHover =
     mixin
         --~ textDecoration none
@@ -133,14 +133,14 @@ underlineOnHover =
             ~ color (rgb 23 24 25)
 
 
-greenOnHover : Style CssClasses CssIds
+greenOnHover : Style CssClasses CssIds String
 greenOnHover =
     mixin
         &: hover
             ~ color (rgb 0 0 122)
 
 
-mixinGreenOnHoverStyle : Style CssClasses CssIds
+mixinGreenOnHoverStyle : Style CssClasses CssIds String
 mixinGreenOnHoverStyle =
     stylesheet { name = "greenOnHoverStylesheet" }
         $ button
@@ -148,7 +148,7 @@ mixinGreenOnHoverStyle =
             ~= greenOnHover
 
 
-mixinUnderlineOnHoverStyle : Style CssClasses CssIds
+mixinUnderlineOnHoverStyle : Style CssClasses CssIds String
 mixinUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
@@ -156,7 +156,7 @@ mixinUnderlineOnHoverStyle =
             ~= underlineOnHover
 
 
-manualUnderlineOnHoverStyle : Style CssClasses CssIds
+manualUnderlineOnHoverStyle : Style CssClasses CssIds String
 manualUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
