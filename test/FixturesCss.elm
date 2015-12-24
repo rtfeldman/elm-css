@@ -85,6 +85,7 @@ borders =
         $ button
             ~ borderLeft3 (px 5) dashed (rgb 11 14 17)
             ~ borderRight (px 7)
+            ~ borderImageOutset2 (n 3) (em 4)
 
         $ a
             ~ border2 (px 10) solid
