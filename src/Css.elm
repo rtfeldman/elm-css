@@ -226,6 +226,7 @@ optionalLengthToString translate value =
 lengthToString : Length -> String
 lengthToString =
     (\(ExplicitLength str) -> str)
+        |> autoToString
         |> propertyValueToString
 
 
@@ -357,7 +358,7 @@ type alias Outline =
 
 
 type alias Length =
-    PropertyValue ExplicitLength
+    PropertyValue (AutoOr ExplicitLength)
 
 
 type alias VerticalAlign =
@@ -553,111 +554,118 @@ thick =
 {- LENGTHS -}
 
 
+lengthConverter : String -> number -> Length
+lengthConverter suffix num =
+    ExplicitLength ((numberToString num) ++ suffix)
+        |> NotAuto
+        |> ExplicitValue
+
+
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
-pct : Length
+pct : number -> Length
 pct =
-    "%" |> ExplicitLength |> ExplicitValue
+    lengthConverter "%"
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
-em : Length
+em : number -> Length
 em =
-    "em" |> ExplicitLength |> ExplicitValue
+    lengthConverter "em"
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
-ex : Length
+ex : number -> Length
 ex =
-    "ex" |> ExplicitLength |> ExplicitValue
+    lengthConverter "ex"
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
-ch : Length
+ch : number -> Length
 ch =
-    "ch" |> ExplicitLength |> ExplicitValue
+    lengthConverter "ch"
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
-rem : Length
+rem : number -> Length
 rem =
-    "rem" |> ExplicitLength |> ExplicitValue
+    lengthConverter "rem"
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
-vh : Length
+vh : number -> Length
 vh =
-    "vh" |> ExplicitLength |> ExplicitValue
+    lengthConverter "vh"
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
-vw : Length
+vw : number -> Length
 vw =
-    "vw" |> ExplicitLength |> ExplicitValue
+    lengthConverter "vw"
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
-vmin : Length
+vmin : number -> Length
 vmin =
-    "vmin" |> ExplicitLength |> ExplicitValue
+    lengthConverter "vmin"
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
-vmax : Length
+vmax : number -> Length
 vmax =
-    "vmax" |> ExplicitLength |> ExplicitValue
+    lengthConverter "vmax"
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
-px : Length
+px : number -> Length
 px =
-    "px" |> ExplicitLength |> ExplicitValue
+    lengthConverter "px"
 
 
 {-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
-mm : Length
+mm : number -> Length
 mm =
-    "mm" |> ExplicitLength |> ExplicitValue
+    lengthConverter "mm"
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
-cm : Length
+cm : number -> Length
 cm =
-    "cm" |> ExplicitLength |> ExplicitValue
+    lengthConverter "cm"
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 -}
-inches : Length
+inches : number -> Length
 inches =
-    "in" |> ExplicitLength |> ExplicitValue
+    lengthConverter "in"
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
-pt : Length
+pt : number -> Length
 pt =
-    "pt" |> ExplicitLength |> ExplicitValue
+    lengthConverter "pt"
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
-pc : Length
+pc : number -> Length
 pc =
-    "pc" |> ExplicitLength |> ExplicitValue
+    lengthConverter "pc"
 
 
 
@@ -797,87 +805,87 @@ opacity =
 
 
 {-| -}
-width : number -> Length -> ( String, String )
+width : Length -> ( String, String )
 width =
-    prop2 "width" numberToString lengthToString
+    prop1 "width" lengthToString
 
 
 {-| -}
-minWidth : number -> Length -> ( String, String )
+minWidth : Length -> ( String, String )
 minWidth =
-    prop2 "min-width" numberToString lengthToString
+    prop1 "min-width" lengthToString
 
 
 {-| -}
-height : number -> Length -> ( String, String )
+height : Length -> ( String, String )
 height =
-    prop2 "height" numberToString lengthToString
+    prop1 "height" lengthToString
 
 
 {-| -}
-minHeight : number -> Length -> ( String, String )
+minHeight : Length -> ( String, String )
 minHeight =
-    prop2 "min-height" numberToString lengthToString
+    prop1 "min-height" lengthToString
 
 
 {-| -}
-padding : number -> Length -> ( String, String )
+padding : Length -> ( String, String )
 padding =
-    prop2 "padding" numberToString lengthToString
+    prop1 "padding" lengthToString
 
 
 {-| -}
-paddingTop : number -> Length -> ( String, String )
+paddingTop : Length -> ( String, String )
 paddingTop =
-    prop2 "padding-top" numberToString lengthToString
+    prop1 "padding-top" lengthToString
 
 
 {-| -}
-paddingBottom : number -> Length -> ( String, String )
+paddingBottom : Length -> ( String, String )
 paddingBottom =
-    prop2 "padding-bottom" numberToString lengthToString
+    prop1 "padding-bottom" lengthToString
 
 
 {-| -}
-paddingRight : number -> Length -> ( String, String )
+paddingRight : Length -> ( String, String )
 paddingRight =
-    prop2 "padding-right" numberToString lengthToString
+    prop1 "padding-right" lengthToString
 
 
 {-| -}
-paddingLeft : number -> Length -> ( String, String )
+paddingLeft : Length -> ( String, String )
 paddingLeft =
-    prop2 "padding-left" numberToString lengthToString
+    prop1 "padding-left" lengthToString
 
 
 {-| -}
-margin : number -> Length -> ( String, String )
+margin : Length -> ( String, String )
 margin =
-    prop2 "margin" numberToString lengthToString
+    prop1 "margin" lengthToString
 
 
 {-| -}
-marginTop : number -> Length -> ( String, String )
+marginTop : Length -> ( String, String )
 marginTop =
-    prop2 "margin-top" numberToString lengthToString
+    prop1 "margin-top" lengthToString
 
 
 {-| -}
-marginBottom : number -> Length -> ( String, String )
+marginBottom : Length -> ( String, String )
 marginBottom =
-    prop2 "margin-bottom" numberToString lengthToString
+    prop1 "margin-bottom" lengthToString
 
 
 {-| -}
-marginRight : number -> Length -> ( String, String )
+marginRight : Length -> ( String, String )
 marginRight =
-    prop2 "margin-right" numberToString lengthToString
+    prop1 "margin-right" lengthToString
 
 
 {-| -}
-marginLeft : number -> Length -> ( String, String )
+marginLeft : Length -> ( String, String )
 marginLeft =
-    prop2 "margin-left" numberToString lengthToString
+    prop1 "margin-left" lengthToString
 
 
 {-| -}
