@@ -1128,7 +1128,7 @@ your stylesheet.
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-stylesheet : { a | name : name } -> Style class id name
+stylesheet : { a | name : namespace } -> Style class id namespace
 stylesheet { name } =
     NamespacedStyle name []
 
@@ -1157,7 +1157,7 @@ style.
         &: hover
             ~ textDecoration underline
 -}
-mixin : Style class id name
+mixin : Style class id namespace
 mixin =
     Mixin identity
 
@@ -1169,7 +1169,7 @@ mixin =
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-($) : Style class id name -> Tag -> Style class id name
+($) : Style class id namespace -> Tag -> Style class id namespace
 ($) style tag =
     let
         selector =
@@ -1202,7 +1202,7 @@ mixin =
         button # Cancel
             ~ backgroundColor (rgb 128 64 32)
 -}
-(#) : Style class id name -> id -> Style class id name
+(#) : Style class id namespace -> id -> Style class id namespace
 (#) style id =
     let
         selector =
@@ -1233,7 +1233,7 @@ mixin =
             ~ fontWeight normal
             ~ color (rgb 128 64 32)
 -}
-(.) : Style class id name -> class -> Style class id name
+(.) : Style class id namespace -> class -> Style class id namespace
 (.) style class =
     case style of
         NamespacedStyle name declarations ->
@@ -1264,7 +1264,7 @@ mixin =
             $ body
                 ~ width (pct 100)
 -}
-(@) : Style class id name -> String -> Style class id name
+(@) : Style class id namespace -> String -> Style class id namespace
 (@) style rule =
     case style of
         NamespacedStyle name declarations ->
@@ -1288,7 +1288,7 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ~ textDecoration underline
             ~ color (rgb 7 7 7)
 -}
-($=) : Style class id name -> String -> Style class id name
+($=) : Style class id namespace -> String -> Style class id namespace
 ($=) style selectorStr =
     case style of
         NamespacedStyle name declarations ->
@@ -1325,7 +1325,7 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
         &: hover
             ~ textDecoration underline
 -}
-(~=) : Style class id name -> Style class id name -> Style class id name
+(~=) : Style class id namespace -> Style class id namespace -> Style class id namespace
 (~=) style mixinToApply =
     case mixinToApply of
         Mixin update ->
@@ -1415,7 +1415,7 @@ You can also give `~` an arbitrary key-value pair:
             ~ width 960 px
             ~ ("-webkit-font-smoothing", "none")
 -}
-(~) : Style class id name -> ( String, String ) -> Style class id name
+(~) : Style class id namespace -> ( String, String ) -> Style class id namespace
 (~) style (( key, value ) as tuple) =
     let
         property =
@@ -1452,7 +1452,7 @@ You can also give `!` an arbitrary key-value pair:
             ~ width 960 px
             ! ("-webkit-font-smoothing", "none")
 -}
-(!) : Style class id name -> ( String, String ) -> Style class id name
+(!) : Style class id namespace -> ( String, String ) -> Style class id namespace
 (!) style (( key, value ) as tuple) =
     let
         property =
@@ -1480,7 +1480,7 @@ You can also give `!` an arbitrary key-value pair:
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-(>$) : Style class id name -> Tag -> Style class id name
+(>$) : Style class id namespace -> Tag -> Style class id namespace
 (>$) style tag =
     extendTypeSelector
         ">$"
@@ -1489,7 +1489,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(>>$) : Style class id name -> Tag -> Style class id name
+(>>$) : Style class id namespace -> Tag -> Style class id namespace
 (>>$) style tag =
     extendTypeSelector
         ">>$"
@@ -1498,7 +1498,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(+$) : Style class id name -> Tag -> Style class id name
+(+$) : Style class id namespace -> Tag -> Style class id namespace
 (+$) style tag =
     extendTypeSelector
         "+$"
@@ -1507,7 +1507,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(~$) : Style class id name -> Tag -> Style class id name
+(~$) : Style class id namespace -> Tag -> Style class id namespace
 (~$) style tag =
     extendTypeSelector
         "~$"
@@ -1516,7 +1516,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(>.) : Style class id name -> class -> Style class id name
+(>.) : Style class id namespace -> class -> Style class id namespace
 (>.) style class =
     extendTypeSelector
         ">."
@@ -1525,7 +1525,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(>>.) : Style class id name -> class -> Style class id name
+(>>.) : Style class id namespace -> class -> Style class id namespace
 (>>.) style class =
     extendTypeSelector
         ">>."
@@ -1534,7 +1534,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(+.) : Style class id name -> class -> Style class id name
+(+.) : Style class id namespace -> class -> Style class id namespace
 (+.) style class =
     extendTypeSelector
         "+."
@@ -1543,7 +1543,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(~.) : Style class id name -> class -> Style class id name
+(~.) : Style class id namespace -> class -> Style class id namespace
 (~.) style class =
     extendTypeSelector
         "~."
@@ -1552,7 +1552,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(>#) : Style class id name -> id -> Style class id name
+(>#) : Style class id namespace -> id -> Style class id namespace
 (>#) style id =
     extendTypeSelector
         ">#"
@@ -1561,7 +1561,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(>>#) : Style class id name -> id -> Style class id name
+(>>#) : Style class id namespace -> id -> Style class id namespace
 (>>#) style id =
     extendTypeSelector
         ">>#"
@@ -1570,7 +1570,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(+#) : Style class id name -> id -> Style class id name
+(+#) : Style class id namespace -> id -> Style class id namespace
 (+#) style id =
     extendTypeSelector
         "+#"
@@ -1579,7 +1579,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(~#) : Style class id name -> id -> Style class id name
+(~#) : Style class id namespace -> id -> Style class id namespace
 (~#) style id =
     extendTypeSelector
         "~#"
@@ -1588,7 +1588,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(&:) : Style class id name -> PseudoClass -> Style class id name
+(&:) : Style class id namespace -> PseudoClass -> Style class id namespace
 (&:) style pseudoClass =
     extendTypeSelector
         "&:"
@@ -1597,7 +1597,7 @@ You can also give `!` an arbitrary key-value pair:
 
 
 {-| -}
-(&::) : Style class id name -> PseudoElement -> Style class id name
+(&::) : Style class id namespace -> PseudoElement -> Style class id namespace
 (&::) style pseudoElement =
     extendTypeSelector
         "&::"
@@ -1605,7 +1605,7 @@ You can also give `!` an arbitrary key-value pair:
         style
 
 
-extendTypeSelector : String -> (name -> CompoundSelector -> CompoundSelector) -> Style class id name -> Style class id name
+extendTypeSelector : String -> (namespace -> CompoundSelector -> CompoundSelector) -> Style class id namespace -> Style class id namespace
 extendTypeSelector operatorName update style =
     case style of
         NamespacedStyle name declarations ->
@@ -2067,7 +2067,7 @@ type PseudoClass
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-(|$) : Style class id name -> Tag -> Style class id name
+(|$) : Style class id namespace -> Tag -> Style class id namespace
 (|$) style tag =
     case style of
         NamespacedStyle name declarations ->

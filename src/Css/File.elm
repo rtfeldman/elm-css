@@ -39,7 +39,7 @@ toFileStructure stylesheets =
 {-| Compiles the given stylesheet into either a string of css declarations
 that can be written directly to a CSS file, or an error message string.
 -}
-compile : Style class id name -> Result String String
+compile : Style class id namespace -> Result String String
 compile style =
     case style of
         NamespacedStyle _ declarations ->
