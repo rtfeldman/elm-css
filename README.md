@@ -31,33 +31,33 @@ Here's an example:
 ```elm
 dreamwriter =
     stylesheet { name = "dreamwriter" }
-        $ html
-            ~ width 100 pct
-            ~ height 100 pct
-            ~ boxSizing borderBox
-            ~ padding 0 px
-            ~ margin 0 px
-
         $ body
-            ~ minWidth 1280 px
             ~ overflowX auto
-
-            >$ div
-                ~ width 100 pct
-                ~ height 100 pct
+            ~ minWidth (px 1280)
 
         . Hidden
             ! display none
 
         # Page
-            ~ width 100 pct
-            ~ height 100 pct
-            ~ boxSizing borderBox
-            ~ margin 0 px
-            ~ padding 8 px
+            ~ backgroundColor (rgb 200 128 64)
+            ~ color (hex "CCFFFF")
 
-            ~ backgroundColor pageBackground
-            ~ color pageDefaultText
+            ~ width (pct 100)
+            ~ height (pct 100)
+            ~ boxSizing borderBox
+            ~ padding (px 8)
+            ~ margin zero
+
+        $ ul . NavBar
+            ~ margin zero
+            ~ padding zero
+
+            >$ li
+                ~ display inlineBlock
+                ~ color primaryAccentColor
+
+primaryAccentColor =
+    hex "ccffaa"
 ```
 
 The above is vanilla Elm code. `Hidden` and `Page` are backed by union types, so
@@ -67,22 +67,9 @@ if they get out of sync with your view code, you'll get a nice build error.
 The above `elm-css` stylesheet compiles to the following .css file:
 
 ```css
-html {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 0px;
-  margin: 0px;
-}
-
 body {
-  min-width: 1280px;
   overflow-x: auto;
-}
-
-body > div {
-  width: 100%;
-  height: 100%;
+  min-width: 1280px;
 }
 
 .dreamwriter_Hidden {
@@ -90,13 +77,23 @@ body > div {
 }
 
 #Page {
+  background-color: rgb(200, 128, 64);
+  color: #CCFFFF;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  margin: 0px;
   padding: 8px;
-  background-color: rgb(100, 90, 128);
-  color: rgb(40, 35, 76);
+  margin: 0;
+}
+
+ul.dreamwriter_NavBar {
+  margin: 0;
+  padding: 0;
+}
+
+ul.dreamwriter_NavBar > li {
+  display: inline-block;
+  color: #ccffaa;
 }
 ```
 

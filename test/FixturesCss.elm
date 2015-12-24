@@ -21,8 +21,8 @@ divWidthHeight : Style a b
 divWidthHeight =
     stylesheet { name = "" }
         $ div
-            ~ width 32 pct
-            ~ height 50 px
+            ~ width (pct 32)
+            ~ height (px 50)
 
 
 multiDescendent : Style CssClasses CssIds
@@ -33,26 +33,26 @@ multiDescendent =
             ~ display none
 
             >$ div
-                ~ width 100 pct
-                ~ height 100 pct
+                ~ width (pct 100)
+                ~ height (pct 100)
 
         $ h1 |$ h2
-            ~ padding 0 px
-            ~ margin 0 px
+            ~ padding zero
+            ~ margin zero
 
             >$ h3
-                ~ width 100 pct
+                ~ width (pct 100)
 
                 >$ h4
-                    ~ height 100 pct
+                    ~ height (pct 100)
 
         $ span
-            ~ padding 10 px
-            ~ margin 11 px
+            ~ padding (px 10)
+            ~ margin (px 11)
 
             >$ h2 >$ h1
-                ~ width 1 px
-                ~ height 2 pct
+                ~ width (px 1)
+                ~ height (pct 2)
 
 
 multiSelector : Style CssClasses CssIds
@@ -60,16 +60,16 @@ multiSelector =
     stylesheet { name = "multiSelector" }
         $ div # Page . Hidden
             ~ display none
-            ~ width 100 pct
-            ~ height 100 pct
+            ~ width (pct 100)
+            ~ height (pct 100)
 
         $ span
-            ~ padding 10 px
-            ~ margin 11 px
+            ~ padding (px 10)
+            ~ margin (px 11)
 
             >$ h2 >$ h1
-                ~ width 1 px
-                ~ height 2 pct
+                ~ width (px 1)
+                ~ height (pct 2)
 
 keyValue : Style CssClasses CssIds
 keyValue =
@@ -79,33 +79,44 @@ keyValue =
             ! ("-moz-font-smoothing", "none")
 
 
+borders : Style CssClasses CssIds
+borders =
+    stylesheet { name = "border-test" }
+        $ button
+            ~ borderLeft3 (px 5) dashed (rgb 11 14 17)
+            ~ borderRight (px 7)
+
+        $ a
+            ~ border2 (px 10) solid
+
+
 dreamwriter : Style CssClasses CssIds
 dreamwriter =
     stylesheet { name = "dreamwriter" }
         $ html |$ body
-            ~ width 100 pct
-            ~ height 100 pct
+            ~ width (pct 100)
+            ~ height (pct 100)
             ~ boxSizing borderBox
-            ~ padding 0 px
-            ~ margin 0 px
+            ~ padding zero
+            ~ margin zero
 
         $ body
-            ~ minWidth 1280 px
+            ~ minWidth (px 1280)
             ~ overflowX auto
 
             >$ div
-                ~ width 100 pct
-                ~ height 100 pct
+                ~ width (pct 100)
+                ~ height (pct 100)
 
         . Hidden
             ! display none
 
         # Page
-            ~ width 100 pct
-            ~ height 100 pct
+            ~ width (pct 100)
+            ~ height (pct 100)
             ~ boxSizing borderBox
-            ~ margin 0 px
-            ~ padding 8 px
+            ~ margin zero
+            ~ padding (px 8)
 
             ~ backgroundColor pageBackground
             ~ color pageDefaultText
@@ -143,6 +154,7 @@ mixinUnderlineOnHoverStyle =
         $ a
             --~ color (rgb 128 64 32)
             ~= underlineOnHover
+
 
 manualUnderlineOnHoverStyle : Style CssClasses CssIds
 manualUnderlineOnHoverStyle =
