@@ -20,19 +20,22 @@ toCssIdentifier identifier =
         |> toString
         |> String.trim
         |> Regex.replace Regex.All (Regex.regex "\\s+") (\_ -> "-")
+        |> Regex.replace Regex.All (Regex.regex "[^a-zA-Z0-9_-]") (\_ -> "")
 
 
 {-| Converts an arbitrary class value to a valid CSS identifier, then prepends
 the given namespace (if it is non-empty), along with an `_` character.
 -}
-classToString : String -> a -> String
+classToString : a -> b -> String
 classToString name class =
     let
         cleanedClass : String
         cleanedClass =
             toCssIdentifier class
     in
-        if String.isEmpty name then
-            cleanedClass
-        else
-            name ++ "_" ++ cleanedClass
+        case toCssIdentifier name of
+            "" ->
+                cleanedClass
+
+            prefix ->
+                prefix ++ "_" ++ cleanedClass

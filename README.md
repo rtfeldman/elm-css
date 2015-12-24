@@ -23,8 +23,8 @@ It lets you:
 
 1. Share code between your render logic and your CSS stylesheets, so you can easily keep names synchronized
 2. Use union types instead of strings for class names and IDs, so typos will result in compile errors instead of bugs
-3. Assemble your stylesheets by writing normal Elm code, so you have access to your full suite of programming logic tools instead of the limited set that typical preprocessors ship with.
-4. Automatically namespace all your classes to avoid name conflicts between stylesheets.
+3. Automatically namespace all your classes to avoid name conflicts between stylesheets.
+4. Assemble your stylesheets by writing normal Elm code, so you have access to your full suite of programming tools. elm-css doesn't need a special notion of "parameterized mixins" because you can already write arbitrary Elm functions...and not just to parameterize mixins, but to parameterize anything!
 
 Here's an example:
 
