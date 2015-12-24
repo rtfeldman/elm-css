@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, thin, medium, thick) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, thin, medium, thick) where
 
 {-| Functions for building stylesheets.
 
@@ -15,7 +15,7 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 @docs a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input
 
 # Attributes
-@docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
+@docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
 @docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
@@ -371,6 +371,7 @@ type alias VerticalAlign =
 
 type alias BorderStyle =
     PropertyValue (NoneOr ExplicitBorderStyle)
+
 
 
 type LengthOr a
@@ -820,6 +821,12 @@ minHeight =
 
 
 {-| -}
+boxSizing : BoxSizing -> ( String, String )
+boxSizing =
+    prop1 "box-sizing" boxSizingToString
+
+
+{-| -}
 padding : Length -> ( String, String )
 padding =
     prop1 "padding" lengthToString
@@ -849,41 +856,127 @@ paddingLeft =
     prop1 "padding-left" lengthToString
 
 
-{-| -}
+{- MARGIN PROPERTIES -}
+
+
+{-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
+
+    margin  (px 10)
+    margin2 (px 10) (px 10)
+    margin3 (px 10) (px 10) (px 10)
+    margin4 (px 10) (px 10) (px 10) (px 10)
+-}
 margin : Length -> ( String, String )
 margin =
-    prop1 "margin" lengthToString
+  prop1 "margin" lengthToString
 
 
-{-| -}
+{-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
+
+    margin  (px 10)
+    margin2 (px 10) (px 10)
+    margin3 (px 10) (px 10) (px 10)
+    margin4 (px 10) (px 10) (px 10) (px 10)
+-}
+margin2 : Length -> Length -> ( String, String )
+margin2 =
+    prop2 "margin" lengthToString lengthToString
+
+
+{-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
+
+    margin  (px 10)
+    margin2 (px 10) (px 10)
+    margin3 (px 10) (px 10) (px 10)
+    margin4 (px 10) (px 10) (px 10) (px 10)
+-}
+margin3 : Length -> Length -> Length -> ( String, String )
+margin3 =
+  prop3 "margin" lengthToString lengthToString lengthToString
+
+
+{-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
+
+    margin  (px 10)
+    margin2 (px 10) (px 10)
+    margin3 (px 10) (px 10) (px 10)
+    margin4 (px 10) (px 10) (px 10) (px 10)
+-}
+margin4 : Length -> Length -> Length -> Length -> ( String, String )
+margin4 =
+  prop4 "margin" lengthToString lengthToString lengthToString lengthToString
+
+
+{-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top)
+
+    marginTop (px 10)
+-}
 marginTop : Length -> ( String, String )
 marginTop =
     prop1 "margin-top" lengthToString
 
 
-{-| -}
+{-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom)
+
+    marginBottom (px 10)
+-}
 marginBottom : Length -> ( String, String )
 marginBottom =
     prop1 "margin-bottom" lengthToString
 
 
-{-| -}
+{-| Sets [`margin-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right)
+
+    marginRight (px 10)
+-}
 marginRight : Length -> ( String, String )
 marginRight =
     prop1 "margin-right" lengthToString
 
 
-{-| -}
+{-| Sets [`margin-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left)
+
+    marginLeft (px 10)
+-}
 marginLeft : Length -> ( String, String )
 marginLeft =
     prop1 "margin-left" lengthToString
 
 
-{-| -}
-boxSizing : BoxSizing -> ( String, String )
-boxSizing =
-    prop1 "box-sizing" boxSizingToString
+{-| Sets [`margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-start)
 
+    marginBlockStart (px 10)
+-}
+marginBlockStart : Length -> ( String, String )
+marginBlockStart =
+  prop1 "margin-block-start" lengthToString
+
+
+{-| Sets [`margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-end)
+
+    marginBlockEnd (px 10)
+-}
+marginBlockEnd : Length -> ( String, String )
+marginBlockEnd =
+    prop1 "margin-block-end" lengthToString
+
+
+{-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start)
+
+    marginInlineStart (px 10)
+-}
+marginInlineStart : Length -> ( String, String )
+marginInlineStart =
+    prop1 "margin-inline-start" lengthToString
+
+
+{-| Sets [`margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end)
+
+    marginInlineEnd (px 10)
+-}
+marginInlineEnd : Length -> ( String, String )
+marginInlineEnd =
+    prop1 "margin-inline-end" lengthToString
 
 
 {- BORDER PROPERTIES -}
