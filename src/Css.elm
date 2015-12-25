@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, thin, medium, thick) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
 
 {-| Functions for building stylesheets.
 
@@ -15,16 +15,16 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 @docs a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input
 
 # Attributes
-@docs verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
+@docs currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
 
 # Length
-@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, zero
+@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
 
 # Pseudo-Classes
-@docs (&:), active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, left, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, right, root, scope, target, valid
+@docs (&:), active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
 # Pseudo-Elements
 @docs (&::), after, before, firstLetter, firstLine, selection
@@ -32,12 +32,10 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 # Intentionally Unsupported
 
 These are features you might expect to be in elm-css (because they are in the
-CSS specification) but which have been omitted because using them is discouraged.
+CSS specification) but which have been omitted because their use is either
+deprecated or discouraged.
 
-They have been included in the documentation in order to be explicit about
-their exclusion from elm-css rather than pretending they don't exist.
-
-@docs thin, medium, thick
+@docs thin, medium, thick, blink
 -}
 
 import Css.Declaration as Declaration exposing (..)
@@ -227,21 +225,16 @@ noneToString translate value =
             translate notNone
 
 
-optionalLengthToString : (a -> String) -> LengthOr a -> String
-optionalLengthToString translate value =
-    case value of
-        NotLength notLength ->
-            translate notLength
-
-        JustLength (ExplicitLength str) ->
-            str
-
-
 lengthToString : Length -> String
 lengthToString =
     (\(ExplicitLength str) -> str)
         |> autoToString
         |> propertyValueToString
+
+
+lengthOrNumberToString : LengthOrNumber -> String
+lengthOrNumberToString =
+    lengthToString
 
 
 borderStyleToString : BorderStyle -> String
@@ -271,6 +264,13 @@ displayToString =
         |> propertyValueToString
 
 
+alignmentToString : Alignment -> String
+alignmentToString =
+    (\(ExplicitAlignment str) -> str)
+        |> autoToString
+        |> propertyValueToString
+
+
 verticalAlignToString : VerticalAlign -> String
 verticalAlignToString =
     (\(ExplicitVerticalAlign str) -> str)
@@ -284,9 +284,29 @@ whiteSpaceToString =
         |> propertyValueToString
 
 
+textDecorationStyleToString : TextDecorationStyle -> String
+textDecorationStyleToString =
+    borderStyleToString
+
+
+textDecorationLinesToString : List TextDecorationLine -> String
+textDecorationLinesToString list =
+    list
+        |> List.map textDecorationLineToString
+        |> String.join " "
+
+
+textDecorationLineToString : TextDecorationLine -> String
+textDecorationLineToString =
+    (\(ExplicitTextDecorationLine str) -> str)
+        |> noneToString
+        |> propertyValueToString
+
+
 colorToString : Color -> String
 colorToString =
     (\(ExplicitColor str) -> str)
+        |> transparentToString
         |> autoToString
         |> propertyValueToString
 
@@ -310,9 +330,26 @@ explicitTextShadowToString value =
             "TODO"
 
 
-opacityStyleToString : OpacityStyle -> String
-opacityStyleToString (OpacityStyle str) =
+explicitOpacityStyleToString : ExplicitOpacityStyle -> String
+explicitOpacityStyleToString (ExplicitOpacityStyle str) =
     str
+
+
+transparentToString : (a -> String) -> TransparentOr a -> String
+transparentToString translate value =
+    case value of
+        Transparent ->
+            "transparent"
+
+        NotTransparent notTransparent ->
+            translate notTransparent
+
+
+opacityStyleToString : OpacityStyle -> String
+opacityStyleToString =
+    explicitOpacityStyleToString
+        |> transparentToString
+        |> propertyValueToString
 
 
 type Tag
@@ -326,6 +363,11 @@ type PropertyValue a
     | ExplicitValue a
 
 
+type TransparentOr a
+    = Transparent
+    | NotTransparent a
+
+
 type AutoOr a
     = Auto
     | NotAuto a
@@ -334,6 +376,10 @@ type AutoOr a
 type NoneOr a
     = None
     | NotNone a
+
+
+type alias TextDecorationLine =
+    PropertyValue (NoneOr ExplicitTextDecorationLine)
 
 
 type alias BoxSizing =
@@ -353,7 +399,7 @@ type alias WhiteSpace =
 
 
 type alias Color =
-    PropertyValue (AutoOr ExplicitColor)
+    PropertyValue (AutoOr (TransparentOr ExplicitColor))
 
 
 type alias TextShadow =
@@ -364,21 +410,40 @@ type alias Outline =
     PropertyValue ExplicitOutline
 
 
+type alias OpacityStyle =
+    PropertyValue (TransparentOr ExplicitOpacityStyle)
+
+
 type alias Length =
     PropertyValue (AutoOr ExplicitLength)
+
+
+type alias Alignment =
+    PropertyValue (AutoOr ExplicitAlignment)
+
+
+{-| Although not many propeties accept either a length or a number,
+there's no way to type check them separately. Having a separate type
+alias is at least more self-documenting.
+-}
+type alias LengthOrNumber =
+    Length
 
 
 type alias VerticalAlign =
     PropertyValue ExplicitVerticalAlign
 
 
+type alias TextDecorationStyle =
+    BorderStyle
+
+
 type alias BorderStyle =
     PropertyValue (NoneOr ExplicitBorderStyle)
 
 
-type LengthOr a
-    = JustLength ExplicitLength
-    | NotLength a
+type ExplicitTextDecorationLine
+    = ExplicitTextDecorationLine String
 
 
 type ExplicitLength
@@ -417,12 +482,16 @@ type ExplicitOutline
     = ExplicitOutline Float ExplicitLength BorderStyle OpacityStyle
 
 
-type OpacityStyle
-    = OpacityStyle String
+type ExplicitOpacityStyle
+    = ExplicitOpacityStyle String
 
 
 type ExplicitTextShadow
     = NoTextShadow
+
+
+type ExplicitAlignment
+    = ExplicitAlignment String
 
 
 
@@ -433,15 +502,27 @@ type ExplicitTextShadow
 -}
 transparent : OpacityStyle
 transparent =
-    OpacityStyle "transparent"
+    Transparent |> ExplicitValue
 
 
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
+{-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
+    value.
+-}
+currentColor : Color
+currentColor =
+    ExplicitColor "currentColor"
+        |> NotTransparent
+        |> NotAuto
+        |> ExplicitValue
+
+
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in functional notation.
 -}
 rgb : number -> number -> number -> Color
 rgb r g b =
     ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
+        |> NotTransparent
         |> NotAuto
         |> ExplicitValue
 
@@ -451,16 +532,18 @@ rgb r g b =
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
     ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
+        |> NotTransparent
         |> NotAuto
         |> ExplicitValue
 
 
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in hexadecimal notation.
 -}
 hex : String -> Color
 hex str =
     ExplicitColor ("#" ++ str)
+        |> NotTransparent
         |> NotAuto
         |> ExplicitValue
 
@@ -470,6 +553,13 @@ hex str =
 hidden : BorderStyle
 hidden =
     "hidden" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
+-}
+wavy : TextDecorationStyle
+wavy =
+    "wavy" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
 
 
 {-| A `dotted` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
@@ -526,6 +616,73 @@ inset =
 outset : BorderStyle
 outset =
     "outset" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+
+
+
+{- ALIGNMENTS -}
+
+
+{-| `left` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+left : Alignment
+left =
+    "left" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+right : Alignment
+right =
+    "right" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+center : Alignment
+center =
+    "center" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `textJustify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+textJustify : Alignment
+textJustify =
+    "textJustify" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `justifyAll` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+justifyAll : Alignment
+justifyAll =
+    "justifyAll" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+start : Alignment
+start =
+    "start" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+end : Alignment
+end =
+    "end" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `matchParent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+matchParent : Alignment
+matchParent =
+    "matchParent" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+
+
+{-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+true : Alignment
+true =
+    "true" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 
@@ -662,6 +819,42 @@ pc =
     lengthConverter "pc"
 
 
+{-| A unitless number. Useful with properties like [`borderImageOutset`](#borderImageOutset)
+which accept either length units or unitless numbers for some properties.
+-}
+n : number -> LengthOrNumber
+n =
+    lengthConverter ""
+
+
+
+{- TEXT DECORATION LINES -}
+
+
+{-| An [`underline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
+text decoration line.
+-}
+underline : TextDecorationLine
+underline =
+    "underline" |> ExplicitTextDecorationLine |> NotNone |> ExplicitValue
+
+
+{-| An [`overline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
+text decoration line.
+-}
+overline : TextDecorationLine
+overline =
+    "overline" |> ExplicitTextDecorationLine |> NotNone |> ExplicitValue
+
+
+{-| A [`line-through`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
+text decoration line.
+-}
+lineThrough : TextDecorationLine
+lineThrough =
+    "line-through" |> ExplicitTextDecorationLine |> NotNone |> ExplicitValue
+
+
 
 {- BORDERS -}
 
@@ -785,7 +978,31 @@ prop5 key translateA translateB translateC translateD translateE valueA valueB v
     ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ] )
 
 
-{-| -}
+{-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
+
+    textDecorationColor (rgb 12 11 10)
+-}
+textDecorationColor : Color -> ( String, String )
+textDecorationColor =
+    prop1 "text-decoration-color" colorToString
+
+
+{-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
+-}
+textAlignLast : Alignment -> ( String, String )
+textAlignLast =
+    prop1 "text-align-last" alignmentToString
+
+
+{-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+-}
+textAlign : Alignment -> ( String, String )
+textAlign =
+    prop1 "text-align" alignmentToString
+
+
+{-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
+-}
 verticalAlign : VerticalAlign -> ( String, String )
 verticalAlign =
     prop1 "vertical-align" verticalAlignToString
@@ -1263,6 +1480,659 @@ borderRight3 =
     prop3 "border-right" lengthToString borderStyleToString colorToString
 
 
+{-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
+
+    borderBlockStart  (px 5)
+    borderBlockStart2 (px 5) dashed
+    borderBlockStart3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBlockStart : Length -> ( String, String )
+borderBlockStart =
+    prop1 "border-block-start" lengthToString
+
+
+{-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
+
+    borderBlockStart  (px 5)
+    borderBlockStart2 (px 5) dashed
+    borderBlockStart3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBlockStart2 : Length -> BorderStyle -> ( String, String )
+borderBlockStart2 =
+    prop2 "border-block-start" lengthToString borderStyleToString
+
+
+{-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
+
+    borderBlockStart  (px 5)
+    borderBlockStart2 (px 5) dashed
+    borderBlockStart3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBlockStart3 : Length -> BorderStyle -> Color -> ( String, String )
+borderBlockStart3 =
+    prop3 "border-block-start" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
+
+    borderBlockEnd  (px 5)
+    borderBlockEnd2 (px 5) dashed
+    borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBlockEnd : Length -> ( String, String )
+borderBlockEnd =
+    prop1 "border-block-end" lengthToString
+
+
+{-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
+
+    borderBlockEnd  (px 5)
+    borderBlockEnd2 (px 5) dashed
+    borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBlockEnd2 : Length -> BorderStyle -> ( String, String )
+borderBlockEnd2 =
+    prop2 "border-block-end" lengthToString borderStyleToString
+
+
+{-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
+
+    borderBlockEnd  (px 5)
+    borderBlockEnd2 (px 5) dashed
+    borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderBlockEnd3 : Length -> BorderStyle -> Color -> ( String, String )
+borderBlockEnd3 =
+    prop3 "border-block-end" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
+
+    borderInlineStart  (px 5)
+    borderInlineStart2 (px 5) dashed
+    borderInlineStart3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderInlineStart : Length -> ( String, String )
+borderInlineStart =
+    prop1 "border-block-start" lengthToString
+
+
+{-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
+
+    borderInlineStart  (px 5)
+    borderInlineStart2 (px 5) dashed
+    borderInlineStart3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderInlineStart2 : Length -> BorderStyle -> ( String, String )
+borderInlineStart2 =
+    prop2 "border-block-start" lengthToString borderStyleToString
+
+
+{-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
+
+    borderInlineStart  (px 5)
+    borderInlineStart2 (px 5) dashed
+    borderInlineStart3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderInlineStart3 : Length -> BorderStyle -> Color -> ( String, String )
+borderInlineStart3 =
+    prop3 "border-block-start" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
+
+    borderInlineEnd  (px 5)
+    borderInlineEnd2 (px 5) dashed
+    borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderInlineEnd : Length -> ( String, String )
+borderInlineEnd =
+    prop1 "border-block-end" lengthToString
+
+
+{-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
+
+    borderInlineEnd  (px 5)
+    borderInlineEnd2 (px 5) dashed
+    borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderInlineEnd2 : Length -> BorderStyle -> ( String, String )
+borderInlineEnd2 =
+    prop2 "border-block-end" lengthToString borderStyleToString
+
+
+{-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
+
+    borderInlineEnd  (px 5)
+    borderInlineEnd2 (px 5) dashed
+    borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
+
+-}
+borderInlineEnd3 : Length -> BorderStyle -> Color -> ( String, String )
+borderInlineEnd3 =
+    prop3 "border-block-end" lengthToString borderStyleToString colorToString
+
+
+{-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
+
+    borderImageOutset  (n 2)
+    borderImageOutset2 (n 2) (px 15)
+    borderImageOutset3 (n 2) (px 15) (n 1.5)
+    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+
+-}
+borderImageOutset : LengthOrNumber -> ( String, String )
+borderImageOutset =
+    prop1 "border-image-outset" lengthOrNumberToString
+
+
+{-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
+
+    borderImageOutset  (n 2)
+    borderImageOutset2 (n 2) (px 15)
+    borderImageOutset3 (n 2) (px 15) (n 1.5)
+    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+
+-}
+borderImageOutset2 : LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageOutset2 =
+    prop2 "border-image-outset" lengthOrNumberToString lengthOrNumberToString
+
+
+{-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
+
+    borderImageOutset  (n 2)
+    borderImageOutset2 (n 2) (px 15)
+    borderImageOutset3 (n 2) (px 15) (n 1.5)
+    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+
+-}
+borderImageOutset3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageOutset3 =
+    prop3 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+
+
+{-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
+
+    borderImageOutset  (n 2)
+    borderImageOutset2 (n 2) (px 15)
+    borderImageOutset3 (n 2) (px 15) (n 1.5)
+    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+
+-}
+borderImageOutset4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageOutset4 =
+    prop4 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+
+
+{-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
+
+    borderImageWidth  (n 3)
+    borderImageWidth2 (n 3) (px 15)
+    borderImageWidth3 (n 3) (px 15) auto
+    borderImageWidth4 (n 3) (px 15) auto (n 2)
+
+-}
+borderImageWidth : LengthOrNumber -> ( String, String )
+borderImageWidth =
+    prop1 "border-image-width" lengthOrNumberToString
+
+
+{-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
+
+    borderImageWidth  (n 3)
+    borderImageWidth2 (n 3) (px 15)
+    borderImageWidth3 (n 3) (px 15) auto
+    borderImageWidth4 (n 3) (px 15) auto (n 2)
+
+-}
+borderImageWidth2 : LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageWidth2 =
+    prop2 "border-image-width" lengthOrNumberToString lengthOrNumberToString
+
+
+{-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
+
+    borderImageWidth  (n 3)
+    borderImageWidth2 (n 3) (px 15)
+    borderImageWidth3 (n 3) (px 15) auto
+    borderImageWidth4 (n 3) (px 15) auto (n 2)
+
+-}
+borderImageWidth3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageWidth3 =
+    prop3 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+
+
+{-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
+
+    borderImageWidth  (n 3)
+    borderImageWidth2 (n 3) (px 15)
+    borderImageWidth3 (n 3) (px 15) auto
+    borderImageWidth4 (n 3) (px 15) auto (n 2)
+
+-}
+borderImageWidth4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageWidth4 =
+    prop4 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+
+
+{-| Sets [`border-block-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-color)
+
+    borderBlockStartColor (rgb 101 202 0)
+-}
+borderBlockStartColor : Color -> ( String, String )
+borderBlockStartColor =
+    prop1 "border-block-start-color" colorToString
+
+
+{-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
+
+    borderBottomColor (rgb 101 202 0)
+-}
+borderBottomColor : Color -> ( String, String )
+borderBottomColor =
+    prop1 "border-bottom-color" colorToString
+
+
+{-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color)
+
+    borderInlineStartColor (rgb 101 202 0)
+-}
+borderInlineStartColor : Color -> ( String, String )
+borderInlineStartColor =
+    prop1 "border-inline-start-color" colorToString
+
+
+{-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color)
+
+    borderInlineEndColor (rgb 101 202 0)
+-}
+borderInlineEndColor : Color -> ( String, String )
+borderInlineEndColor =
+    prop1 "border-inline-end-color" colorToString
+
+
+{-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
+
+    borderLeftColor (rgb 101 202 0)
+-}
+borderLeftColor : Color -> ( String, String )
+borderLeftColor =
+    prop1 "border-left-color" colorToString
+
+
+{-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
+
+    borderRightColor (rgb 101 202 0)
+-}
+borderRightColor : Color -> ( String, String )
+borderRightColor =
+    prop1 "border-right-color" colorToString
+
+
+{-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
+
+    borderTopColor (rgb 101 202 0)
+-}
+borderTopColor : Color -> ( String, String )
+borderTopColor =
+    prop1 "border-top-color" colorToString
+
+
+{-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color)
+
+    borderBlockEndColor (rgb 101 202 0)
+-}
+borderBlockEndColor : Color -> ( String, String )
+borderBlockEndColor =
+    prop1 "border-block-end-color" colorToString
+
+
+{-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style)
+
+    borderBlockEndStyle dashed
+-}
+borderBlockEndStyle : BorderStyle -> ( String, String )
+borderBlockEndStyle =
+    prop1 "border-block-end-style" borderStyleToString
+
+
+{-| Sets [`border-block-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style)
+
+    borderBlockStartStyle dashed
+-}
+borderBlockStartStyle : BorderStyle -> ( String, String )
+borderBlockStartStyle =
+    prop1 "border-block-start-style" borderStyleToString
+
+
+{-| Sets [`border-inline-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style)
+
+    borderInlineEndStyle dashed
+-}
+borderInlineEndStyle : BorderStyle -> ( String, String )
+borderInlineEndStyle =
+    prop1 "border-inline-end-style" borderStyleToString
+
+
+{-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style)
+
+    borderBottomStyle dashed
+-}
+borderBottomStyle : BorderStyle -> ( String, String )
+borderBottomStyle =
+    prop1 "border-bottom-style" borderStyleToString
+
+
+{-| Sets [`border-inline-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style)
+
+    borderInlineStartStyle dashed
+-}
+borderInlineStartStyle : BorderStyle -> ( String, String )
+borderInlineStartStyle =
+    prop1 "border-inline-start-style" borderStyleToString
+
+
+{-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style)
+
+    borderLeftStyle dashed
+-}
+borderLeftStyle : BorderStyle -> ( String, String )
+borderLeftStyle =
+    prop1 "border-left-style" borderStyleToString
+
+
+{-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style)
+
+    borderRightStyle dashed
+-}
+borderRightStyle : BorderStyle -> ( String, String )
+borderRightStyle =
+    prop1 "border-right-style" borderStyleToString
+
+
+{-| Sets [`border-top-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style)
+
+    borderTopStyle dashed
+-}
+borderTopStyle : BorderStyle -> ( String, String )
+borderTopStyle =
+    prop1 "border-top-style" borderStyleToString
+
+
+{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style)
+
+    borderStyle dashed
+-}
+borderStyle : BorderStyle -> ( String, String )
+borderStyle =
+    prop1 "border-style" borderStyleToString
+
+
+{-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
+
+    borderBottomWidth (em 4)
+-}
+borderBottomWidth : Length -> ( String, String )
+borderBottomWidth =
+    prop1 "border-bottom-width" lengthToString
+
+
+{-| Sets [`border-inline-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width)
+
+    borderInlineEndWidth (em 4)
+-}
+borderInlineEndWidth : Length -> ( String, String )
+borderInlineEndWidth =
+    prop1 "border-inline-end-width" lengthToString
+
+
+{-| Sets [`border-left-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width)
+
+    borderLeftWidth (em 4)
+-}
+borderLeftWidth : Length -> ( String, String )
+borderLeftWidth =
+    prop1 "border-left-width" lengthToString
+
+
+{-| Sets [`border-right-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width)
+
+    borderRightWidth (em 4)
+-}
+borderRightWidth : Length -> ( String, String )
+borderRightWidth =
+    prop1 "border-right-width" lengthToString
+
+
+{-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
+
+    borderTopWidth  (em 4)
+    borderTopWidth2 (em 4) (px 2)
+-}
+borderTopWidth : Length -> ( String, String )
+borderTopWidth =
+    prop1 "border-top-width" lengthToString
+
+
+{-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
+
+    borderTopWidth  (em 4)
+    borderTopWidth2 (em 4) (px 2)
+-}
+borderTopWidth2 : Length -> Length -> ( String, String )
+borderTopWidth2 =
+    prop2 "border-top-width" lengthToString lengthToString
+
+
+{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
+
+    borderBottomLeftRadius  (em 4)
+    borderBottomLeftRadius2 (em 4) (px 2)
+-}
+borderBottomLeftRadius : Length -> ( String, String )
+borderBottomLeftRadius =
+    prop1 "border-bottom-left-radius" lengthToString
+
+
+{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
+
+    borderBottomLeftRadius  (em 4)
+    borderBottomLeftRadius2 (em 4) (px 2)
+-}
+borderBottomLeftRadius2 : Length -> Length -> ( String, String )
+borderBottomLeftRadius2 =
+    prop2 "border-bottom-left-radius" lengthToString lengthToString
+
+
+{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
+
+    borderBottomRightRadius  (em 4)
+    borderBottomRightRadius2 (em 4) (px 2)
+-}
+borderBottomRightRadius : Length -> ( String, String )
+borderBottomRightRadius =
+    prop1 "border-bottom-right-radius" lengthToString
+
+
+{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
+
+    borderBottomRightRadius  (em 4)
+    borderBottomRightRadius2 (em 4) (px 2)
+-}
+borderBottomRightRadius2 : Length -> Length -> ( String, String )
+borderBottomRightRadius2 =
+    prop2 "border-bottom-right-radius" lengthToString lengthToString
+
+
+{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
+
+    borderTopLeftRadius  (em 4)
+    borderTopLeftRadius2 (em 4) (px 2)
+-}
+borderTopLeftRadius : Length -> ( String, String )
+borderTopLeftRadius =
+    prop1 "border-top-left-radius" lengthToString
+
+
+{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
+
+    borderTopLeftRadius  (em 4)
+    borderTopLeftRadius2 (em 4) (px 2)
+-}
+borderTopLeftRadius2 : Length -> Length -> ( String, String )
+borderTopLeftRadius2 =
+    prop2 "border-top-left-radius" lengthToString lengthToString
+
+
+{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
+
+    borderTopRightRadius  (em 4)
+    borderTopRightRadius2 (em 4) (px 2)
+-}
+borderTopRightRadius : Length -> ( String, String )
+borderTopRightRadius =
+    prop1 "border-top-right-radius" lengthToString
+
+
+{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
+
+    borderTopRightRadius  (em 4)
+    borderTopRightRadius2 (em 4) (px 2)
+-}
+borderTopRightRadius2 : Length -> Length -> ( String, String )
+borderTopRightRadius2 =
+    prop2 "border-top-right-radius" lengthToString lengthToString
+
+
+{-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
+
+    borderRadius  (em 4)
+    borderRadius2 (em 4) (px 2)
+    borderRadius3 (em 4) (px 2) (pct 5)
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderRadius : Length -> ( String, String )
+borderRadius =
+    prop1 "border-radius" lengthToString
+
+
+{-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
+
+    borderRadius  (em 4)
+    borderRadius2 (em 4) (px 2)
+    borderRadius3 (em 4) (px 2) (pct 5)
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderRadius2 : Length -> Length -> ( String, String )
+borderRadius2 =
+    prop2 "border-radius" lengthToString lengthToString
+
+
+{-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
+
+    borderRadius  (em 4)
+    borderRadius2 (em 4) (px 2)
+    borderRadius3 (em 4) (px 2) (pct 5)
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderRadius3 : Length -> Length -> Length -> ( String, String )
+borderRadius3 =
+    prop3 "border-radius" lengthToString lengthToString lengthToString
+
+
+{-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
+
+    borderRadius  (em 4)
+    borderRadius2 (em 4) (px 2)
+    borderRadius3 (em 4) (px 2) (pct 5)
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderRadius4 : Length -> Length -> Length -> Length -> ( String, String )
+borderRadius4 =
+    prop4 "border-radius" lengthToString lengthToString lengthToString lengthToString
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing)
+
+    borderSpacing  (em 4)
+    borderSpacing2 (em 4) (px 2)
+-}
+borderSpacing : Length -> ( String, String )
+borderSpacing =
+    prop1 "border-spacing" lengthToString
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing)
+
+    borderSpacing  (em 4)
+    borderSpacing2 (em 4) (px 2)
+-}
+borderSpacing2 : Length -> Length -> ( String, String )
+borderSpacing2 =
+    prop2 "border-spacing" lengthToString lengthToString
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
+
+    borderColor  (rgb 12 11 10)
+    borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+    borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+    borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+-}
+borderColor : Color -> ( String, String )
+borderColor =
+    prop1 "border-color" colorToString
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
+
+    borderColor  (rgb 12 11 10)
+    borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+    borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+    borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+-}
+borderColor2 : Color -> Color -> ( String, String )
+borderColor2 =
+    prop2 "border-color" colorToString colorToString
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
+
+    borderColor  (rgb 12 11 10)
+    borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+    borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+    borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+-}
+borderColor3 : Color -> Color -> Color -> ( String, String )
+borderColor3 =
+    prop3 "border-color" colorToString colorToString colorToString
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
+
+    borderColor  (rgb 12 11 10)
+    borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+    borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+    borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+-}
+borderColor4 : Color -> Color -> Color -> Color -> ( String, String )
+borderColor4 =
+    prop4 "border-color" colorToString colorToString colorToString colorToString
+
+
 {-| -}
 overflowX : Overflow -> ( String, String )
 overflowX =
@@ -1303,6 +2173,121 @@ media value =
 textShadow : TextShadow -> ( String, String )
 textShadow =
     prop1 "text-shadow" textShadowToString
+
+
+{-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
+
+    ~ textDecoration  underline
+    ~ textDecoration2 underline wavy
+    ~ textDecoration3 underline wavy (rgb 128 64 32)
+
+You can specify multiple line decorations with `textDecorations`.
+
+    ~ textDecorations  [ underline, overline ]
+    ~ textDecorations2 [ underline, overline ] wavy
+    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+-}
+textDecoration : TextDecorationLine -> ( String, String )
+textDecoration =
+    prop1 "text-decoration" textDecorationLineToString
+
+
+{-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
+
+    ~ textDecoration  underline
+    ~ textDecoration2 underline wavy
+    ~ textDecoration3 underline wavy (rgb 128 64 32)
+
+You can specify multiple line decorations with `textDecorations`.
+
+    ~ textDecorations  [ underline, overline ]
+    ~ textDecorations2 [ underline, overline ] wavy
+    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+-}
+textDecoration2 : TextDecorationLine -> TextDecorationStyle -> ( String, String )
+textDecoration2 =
+    prop2 "text-decoration" textDecorationLineToString textDecorationStyleToString
+
+
+{-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
+
+    ~ textDecoration  underline
+    ~ textDecoration2 underline wavy
+    ~ textDecoration3 underline wavy (rgb 128 64 32)
+
+You can specify multiple line decorations with `textDecorations`.
+
+    ~ textDecorations  [ underline, overline ]
+    ~ textDecorations2 [ underline, overline ] wavy
+    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+-}
+textDecoration3 : TextDecorationLine -> TextDecorationStyle -> Color -> ( String, String )
+textDecoration3 =
+    prop3 "text-decoration" textDecorationLineToString textDecorationStyleToString colorToString
+
+
+{-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
+
+    ~ textDecorations  [ underline, overline ]
+    ~ textDecorations2 [ underline, overline ] wavy
+    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+-}
+textDecorations : List TextDecorationLine -> ( String, String )
+textDecorations =
+    prop1 "text-decoration" textDecorationLinesToString
+
+
+{-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
+
+    ~ textDecorations  [ underline, overline ]
+    ~ textDecorations2 [ underline, overline ] wavy
+    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+-}
+textDecorations2 : List TextDecorationLine -> TextDecorationStyle -> ( String, String )
+textDecorations2 =
+    prop2 "text-decoration" textDecorationLinesToString textDecorationStyleToString
+
+
+{-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
+
+    ~ textDecorations  [ underline, overline ]
+    ~ textDecorations2 [ underline, overline ] wavy
+    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+-}
+textDecorations3 : List TextDecorationLine -> TextDecorationStyle -> Color -> ( String, String )
+textDecorations3 =
+    prop3 "text-decoration" textDecorationLinesToString textDecorationStyleToString colorToString
+
+
+{-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
+
+    ~ textDecorationLine underline
+
+You can specify multiple line decorations with `textDecorationLines`.
+
+    ~ textDecorationLines  [ underline, overline ]
+-}
+textDecorationLine : TextDecorationLine -> ( String, String )
+textDecorationLine =
+    prop1 "text-decoration-line" textDecorationLineToString
+
+
+{-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
+
+    ~ textDecorationLines  [ underline, overline ]
+-}
+textDecorationLines : List TextDecorationLine -> ( String, String )
+textDecorationLines =
+    prop1 "text-decoration-line" textDecorationLinesToString
+
+
+{-| Sets [`text-decoration-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style)
+
+    ~ textDecorationStyle dotted
+-}
+textDecorationStyle : TextDecorationStyle -> ( String, String )
+textDecorationStyle =
+    prop1 "text-decoration-style" textDecorationStyleToString
 
 
 {-| -}
@@ -1555,22 +2540,18 @@ introduceSelector selector declarations =
         [] ->
             [ StyleBlock (SingleSelector selector) [] [] ]
 
-        {- If there are no properties declared, then we have a situation
-                            like `Bar` in the following:
 
-                                stylesheet "homepage"
-                                    . Foo . Bar
-                                        ~ fontWeight bold
-
-                                ...as opposed to:
-
-                                stylesheet "homepage"
-                                    . Foo
-                                        ~ fontWeight bold
-
-                            In this case, we don't make a new declaration, but rather add
-                            the new selector to the existing list of selectors.
-        -}
+        -- If there are no properties declared, then we have a situation
+        --   like `Bar` in the following:
+        --       stylesheet "homepage"
+        --           . Foo . Bar
+        --               ~ fontWeight bold
+        -- ...as opposed to:
+        --       stylesheet "homepage"
+        --           . Foo
+        --               ~ fontWeight bold
+        -- In this case, we don't make a new declaration, but rather add
+        -- the new selector to the existing list of selectors.
         (StyleBlock firstSelector otherSelectors []) :: [] ->
             case lastSelectorToMulti selector (firstSelector :: otherSelectors) of
                 [] ->
@@ -1579,16 +2560,13 @@ introduceSelector selector declarations =
                 first :: rest ->
                     [ StyleBlock first rest [] ]
 
-        {- Here the most recent declaration had properties defined, meaning
-                             this must be a new top-level declaration, like `Bar` in the following:
-
-                                stylesheet "homepage"
-                                    . Foo
-                                        ~ fontWeight normal
-
-                                    . Bar
-                                        ~ fontWeight bold
-        -}
+        -- Here the most recent declaration had properties defined, meaning
+        -- this must be a new top-level declaration, like `Bar` in the following:
+        --    stylesheet "homepage"
+        --        . Foo
+        --            ~ fontWeight normal
+        --        . Bar
+        --            ~ fontWeight bold
         lastDeclaration :: [] ->
             lastDeclaration :: [ StyleBlock (SingleSelector selector) [] [] ]
 
@@ -2000,14 +2978,6 @@ lastOfType =
     ExplicitPseudoClass "last-of-type"
 
 
-{-| A [`:left`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aleft)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
--}
-left : PseudoClass
-left =
-    ExplicitPseudoClass "left"
-
-
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
@@ -2094,14 +3064,6 @@ readWrite =
 required : PseudoClass
 required =
     ExplicitPseudoClass "required"
-
-
-{-| A [`:right`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aright)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
--}
-right : PseudoClass
-right =
-    ExplicitPseudoClass "right"
 
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
@@ -2236,6 +3198,15 @@ fall back on something like this:
 -}
 thick : IntentionallyUnsupportedPleaseSeeDocs
 thick =
+    IntentionallyUnsupportedPleaseSeeDocs
+
+
+{-| [`blink`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
+is ~~totally rad~~ deprecated, and as such has been ~~reluctantly~~ omitted
+from elm-css.
+-}
+blink : IntentionallyUnsupportedPleaseSeeDocs
+blink =
     IntentionallyUnsupportedPleaseSeeDocs
 
 
