@@ -627,20 +627,6 @@ outset =
 {- ALIGNMENTS -}
 
 
-{-| `left` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
--}
-left : Alignment
-left =
-    \length -> ( "left", lengthToString length )
-
-
-{-| `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
--}
-right : Alignment
-right =
-    \length -> ( "right", lengthToString length )
-
-
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 center : Alignment
@@ -1309,6 +1295,34 @@ marginInlineStart =
 marginInlineEnd : Length -> ( String, String )
 marginInlineEnd =
     prop1 "margin-inline-end" lengthToString
+
+
+{-| The [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/left) property.
+
+    ~ position absolute
+    ~ left (px 5)
+
+This can also be used as a `left` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
+
+    ~ textAlign left
+-}
+left : Length -> ( String, String )
+left length =
+    ( "left", lengthToString length )
+
+
+{-| Sets [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
+
+    ~ position absolute
+    ~ right (px 5)
+
+This can also be used as a `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
+
+    ~ textAlign right
+-}
+right : Length -> ( String, String )
+right length =
+    ( "right", lengthToString length )
 
 
 
@@ -2552,7 +2566,6 @@ introduceSelector selector declarations =
     case declarations of
         [] ->
             [ StyleBlock (SingleSelector selector) [] [] ]
-
 
         -- If there are no properties declared, then we have a situation
         --   like `Bar` in the following:
