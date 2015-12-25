@@ -23,7 +23,7 @@ all =
         [ unstyledDiv
         , keyValue
         , divWidthHeight
-        , leftRight
+        , leftRightTopBottom
         , borders
         , dreamwriter
         , multiDescendent
@@ -66,26 +66,30 @@ divWidthHeight =
             ]
 
 
-leftRight : Test
-leftRight =
+leftRightTopBottom : Test
+leftRightTopBottom =
     let
         input =
-            Fixtures.leftRight
+            Fixtures.leftRightTopBottom
 
         output = """
             div {
                 left: 5px;
+                top: 2em;
                 text-align: left;
+                vertical-align: bottom;
             }
 
             a {
                 right: 0;
                 text-align: right;
+                bottom: 2em;
+                vertical-align: top;
             }
         """
     in
         suite
-            "left & right property/value duality test"
+            "left & right, top & bottom property/value duality test"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
