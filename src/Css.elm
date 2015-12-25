@@ -264,8 +264,8 @@ displayToString =
         |> propertyValueToString
 
 
-alignmentToString : Alignment -> String
-alignmentToString fn =
+textAlignToString : TextAlign -> String
+textAlignToString fn =
     fn zero
         |> fst
 
@@ -423,11 +423,11 @@ in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
 we implement it as a property (for the `left: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String in the first part of the tuple, and use
-that. (See `alignmentToString`.)
+that. (See `textAlignToString`.)
 -}
 
 
-type alias Alignment =
+type alias TextAlign =
     Length -> ( String, String )
 
 
@@ -629,49 +629,49 @@ outset =
 
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-center : Alignment
+center : TextAlign
 center =
     \length -> ( "center", lengthToString length )
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : Alignment
+textJustify : TextAlign
 textJustify =
     \length -> ( "text-justify", lengthToString length )
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : Alignment
+justifyAll : TextAlign
 justifyAll =
     \length -> ( "justify-all", lengthToString length )
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : Alignment
+start : TextAlign
 start =
     \length -> ( "start", lengthToString length )
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : Alignment
+end : TextAlign
 end =
     \length -> ( "end", lengthToString length )
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : Alignment
+matchParent : TextAlign
 matchParent =
     \length -> ( "match-parent", lengthToString length )
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : Alignment
+true : TextAlign
 true =
     \length -> ( "true", lengthToString length )
 
@@ -988,16 +988,16 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : Alignment -> ( String, String )
+textAlignLast : TextAlign -> ( String, String )
 textAlignLast =
-    prop1 "text-align-last" alignmentToString
+    prop1 "text-align-last" textAlignToString
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : Alignment -> ( String, String )
+textAlign : TextAlign -> ( String, String )
 textAlign =
-    prop1 "text-align" alignmentToString
+    prop1 "text-align" textAlignToString
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
