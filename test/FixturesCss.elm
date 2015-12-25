@@ -78,13 +78,14 @@ keyValue =
             ~ ("-webkit-font-smoothing", "none")
             ! ("-moz-font-smoothing", "none")
 
+
 leftRightTopBottom : Style CssClasses CssIds String
 leftRightTopBottom =
-    stylesheet { name = "left-right" }
+    stylesheet { name = "left-right-top-bottom" }
         $ div
             ~ position absolute
-            ~ left (px 5)
             ~ top (em 2)
+            ~ left (px 5)
             ~ textAlign left
             ~ verticalAlign bottom
 
