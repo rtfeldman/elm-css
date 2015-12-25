@@ -1307,8 +1307,8 @@ This can also be used as a `left` [alignment](https://developer.mozilla.org/en-U
     ~ textAlign left
 -}
 left : Length -> ( String, String )
-left length =
-    ( "left", lengthToString length )
+left =
+    prop1 "left" lengthToString
 
 
 {-| Sets [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
@@ -1321,8 +1321,8 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
     ~ textAlign right
 -}
 right : Length -> ( String, String )
-right length =
-    ( "right", lengthToString length )
+right =
+    prop1 "right" lengthToString
 
 
 
