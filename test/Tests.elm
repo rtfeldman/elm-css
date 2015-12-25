@@ -75,8 +75,8 @@ leftRightTopBottom =
         output = """
             div {
                 position: absolute;
-                left: 5px;
                 top: 2em;
+                left: 5px;
                 text-align: left;
                 vertical-align: bottom;
             }
