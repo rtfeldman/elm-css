@@ -78,6 +78,17 @@ keyValue =
             ~ ("-webkit-font-smoothing", "none")
             ! ("-moz-font-smoothing", "none")
 
+leftRight : Style CssClasses CssIds String
+leftRight =
+    stylesheet { name = "left-right" }
+        $ div
+            ~ left (px 5)
+            ~ textAlign left
+
+        $ a
+            ~ right zero
+            ~ textAlign right
+
 
 borders : Style CssClasses CssIds String
 borders =

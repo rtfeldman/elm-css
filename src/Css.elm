@@ -265,10 +265,9 @@ displayToString =
 
 
 alignmentToString : Alignment -> String
-alignmentToString =
-    (\(ExplicitAlignment str) -> str)
-        |> autoToString
-        |> propertyValueToString
+alignmentToString fn =
+    fn zero
+        |> fst
 
 
 verticalAlignToString : VerticalAlign -> String
@@ -418,8 +417,18 @@ type alias Length =
     PropertyValue (AutoOr ExplicitLength)
 
 
+
+{- Because `left` and `right` are both common properties and common values
+in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
+we implement it as a property (for the `left: 5px` case) and allow it to
+be used as a value as well. When being used as a value, we call it, expect
+that it will return the desired String in the first part of the tuple, and use
+that. (See `alignmentToString`.)
+-}
+
+
 type alias Alignment =
-    PropertyValue (AutoOr ExplicitAlignment)
+    Length -> ( String, String )
 
 
 {-| Although not many propeties accept either a length or a number,
@@ -488,10 +497,6 @@ type ExplicitOpacityStyle
 
 type ExplicitTextShadow
     = NoTextShadow
-
-
-type ExplicitAlignment
-    = ExplicitAlignment String
 
 
 
@@ -626,63 +631,63 @@ outset =
 -}
 left : Alignment
 left =
-    "left" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "left", lengthToString length )
 
 
 {-| `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 right : Alignment
 right =
-    "right" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "right", lengthToString length )
 
 
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 center : Alignment
 center =
-    "center" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "center", lengthToString length )
 
 
-{-| `textJustify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+{-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 textJustify : Alignment
 textJustify =
-    "textJustify" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "text-justify", lengthToString length )
 
 
-{-| `justifyAll` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+{-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 justifyAll : Alignment
 justifyAll =
-    "justifyAll" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "justify-all", lengthToString length )
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 start : Alignment
 start =
-    "start" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "start", lengthToString length )
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 end : Alignment
 end =
-    "end" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "end", lengthToString length )
 
 
-{-| `matchParent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+{-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 matchParent : Alignment
 matchParent =
-    "matchParent" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "match-parent", lengthToString length )
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 true : Alignment
 true =
-    "true" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    \length -> ( "true", lengthToString length )
 
 
 
@@ -988,6 +993,14 @@ textDecorationColor =
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
+
+    ~ textAlignLast start
+
+    **Note:** Due to certain implementation constraints, `auto` cannot be
+    supported here. If you need to set this property to `auto`,
+    use this workaround:
+
+    ~ ("text-align-last", "auto")
 -}
 textAlignLast : Alignment -> ( String, String )
 textAlignLast =
