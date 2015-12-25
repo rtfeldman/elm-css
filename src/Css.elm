@@ -266,6 +266,7 @@ displayToString =
 alignmentToString : Alignment -> String
 alignmentToString =
     (\(ExplicitAlignment str) -> str)
+        |> autoToString
         |> propertyValueToString
 
 
@@ -367,7 +368,7 @@ type alias Length =
 
 
 type alias Alignment =
-    PropertyValue ExplicitAlignment
+    PropertyValue (AutoOr ExplicitAlignment)
 
 
 {-| Although not many propeties accept either a length or a number,
@@ -545,63 +546,63 @@ outset =
 -}
 left : Alignment
 left =
-    "left" |> ExplicitAlignment |> ExplicitValue
+    "left" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 right : Alignment
 right =
-    "right" |> ExplicitAlignment |> ExplicitValue
+    "right" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 center : Alignment
 center =
-    "center" |> ExplicitAlignment |> ExplicitValue
+    "center" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `textJustify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 textJustify : Alignment
 textJustify =
-    "textJustify" |> ExplicitAlignment |> ExplicitValue
+    "textJustify" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `justifyAll` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 justifyAll : Alignment
 justifyAll =
-    "justifyAll" |> ExplicitAlignment |> ExplicitValue
+    "justifyAll" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 start : Alignment
 start =
-    "start" |> ExplicitAlignment |> ExplicitValue
+    "start" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 end : Alignment
 end =
-    "end" |> ExplicitAlignment |> ExplicitValue
+    "end" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `matchParent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 matchParent : Alignment
 matchParent =
-    "matchParent" |> ExplicitAlignment |> ExplicitValue
+    "matchParent" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 true : Alignment
 true =
-    "true" |> ExplicitAlignment |> ExplicitValue
+    "true" |> ExplicitAlignment |> NotAuto |> ExplicitValue
 
 
 
