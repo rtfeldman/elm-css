@@ -23,6 +23,7 @@ all =
         [ unstyledDiv
         , keyValue
         , divWidthHeight
+        , leftRightTopBottom
         , borders
         , dreamwriter
         , multiDescendent
@@ -62,6 +63,37 @@ divWidthHeight =
             "basic div with fixed width and height"
             [ test "pretty prints the expected output"
                 <| assertEqual output (prettyPrint input)
+            ]
+
+
+leftRightTopBottom : Test
+leftRightTopBottom =
+    let
+        input =
+            Fixtures.leftRightTopBottom
+
+        output = """
+            div {
+                position: absolute;
+                left: 5px;
+                top: 2em;
+                text-align: left;
+                vertical-align: bottom;
+            }
+
+            a {
+                position: relative;
+                right: 0;
+                text-align: right;
+                bottom: 2em;
+                vertical-align: top;
+            }
+        """
+    in
+        suite
+            "left & right, top & bottom property/value duality test"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
 
 

@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
 
 {-| Functions for building stylesheets.
 
@@ -18,7 +18,7 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 @docs currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
 
 # Length
 @docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
@@ -264,17 +264,22 @@ displayToString =
         |> propertyValueToString
 
 
-alignmentToString : Alignment -> String
-alignmentToString =
-    (\(ExplicitAlignment str) -> str)
-        |> autoToString
+positionToString : Position -> String
+positionToString =
+    (\(ExplicitPosition str) -> str)
         |> propertyValueToString
+
+
+textAlignToString : TextAlign -> String
+textAlignToString fn =
+    fn zero
+        |> fst
 
 
 verticalAlignToString : VerticalAlign -> String
-verticalAlignToString =
-    (\(ExplicitVerticalAlign str) -> str)
-        |> propertyValueToString
+verticalAlignToString fn =
+    fn zero
+        |> fst
 
 
 whiteSpaceToString : WhiteSpace -> String
@@ -418,8 +423,34 @@ type alias Length =
     PropertyValue (AutoOr ExplicitLength)
 
 
-type alias Alignment =
-    PropertyValue (AutoOr ExplicitAlignment)
+
+{- Because `left` and `right` are both common properties and common values
+in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
+we implement it as a property (for the `left: 5px` case) and allow it to
+be used as a value as well. When being used as a value, we call it, expect
+that it will return the desired String in the first part of the tuple, and use
+that. (See `textAlignToString`. Note that `VerticalAlign follows a similar
+pattern.)
+-}
+
+
+type alias TextAlign =
+    Length -> ( String, String )
+
+
+
+{- Because `top` and `bottom` are both common properties and common values
+in CSS (e.g. `top: 5px` with `position: absolute` and `vertical-align: top`),
+we implement it as a property (for the `top: 5px` case) and allow it to
+be used as a value as well. When being used as a value, we call it, expect
+that it will return the desired String in the first part of the tuple, and use
+that. (See `verticalAlignToString`. Note that `TextAlign` follows a similar
+pattern.)
+-}
+
+
+type alias VerticalAlign =
+    Length -> ( String, String )
 
 
 {-| Although not many propeties accept either a length or a number,
@@ -430,16 +461,20 @@ type alias LengthOrNumber =
     Length
 
 
-type alias VerticalAlign =
-    PropertyValue ExplicitVerticalAlign
-
-
 type alias TextDecorationStyle =
     BorderStyle
 
 
+type alias Position =
+    PropertyValue ExplicitPosition
+
+
 type alias BorderStyle =
     PropertyValue (NoneOr ExplicitBorderStyle)
+
+
+type ExplicitPosition
+    = ExplicitPosition String
 
 
 type ExplicitTextDecorationLine
@@ -488,10 +523,6 @@ type ExplicitOpacityStyle
 
 type ExplicitTextShadow
     = NoTextShadow
-
-
-type ExplicitAlignment
-    = ExplicitAlignment String
 
 
 
@@ -622,67 +653,53 @@ outset =
 {- ALIGNMENTS -}
 
 
-{-| `left` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
--}
-left : Alignment
-left =
-    "left" |> ExplicitAlignment |> NotAuto |> ExplicitValue
-
-
-{-| `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
--}
-right : Alignment
-right =
-    "right" |> ExplicitAlignment |> NotAuto |> ExplicitValue
-
-
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-center : Alignment
+center : TextAlign
 center =
-    "center" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    prop1 "center" lengthToString
 
 
-{-| `textJustify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+{-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : Alignment
+textJustify : TextAlign
 textJustify =
-    "textJustify" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    prop1 "text-justify" lengthToString
 
 
-{-| `justifyAll` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+{-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : Alignment
+justifyAll : TextAlign
 justifyAll =
-    "justifyAll" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    prop1 "justify-all" lengthToString
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : Alignment
+start : TextAlign
 start =
-    "start" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    prop1 "start" lengthToString
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : Alignment
+end : TextAlign
 end =
-    "end" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    prop1 "end" lengthToString
 
 
-{-| `matchParent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
+{-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : Alignment
+matchParent : TextAlign
 matchParent =
-    "matchParent" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    prop1 "match-parent" lengthToString
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : Alignment
+true : TextAlign
 true =
-    "true" |> ExplicitAlignment |> NotAuto |> ExplicitValue
+    prop1 "true" lengthToString
 
 
 
@@ -931,22 +948,67 @@ noWrap =
     "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> ExplicitValue
 
 
-{-| -}
-top : VerticalAlign
-top =
-    "top" |> ExplicitVerticalAlign |> ExplicitValue
+
+{- VERTICAL-ALIGN -}
 
 
-{-| -}
+{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+
+    ~ verticalAlign middle
+-}
 middle : VerticalAlign
 middle =
-    "middle" |> ExplicitVerticalAlign |> ExplicitValue
+    prop1 "middle" lengthToString
 
 
-{-| -}
-bottom : VerticalAlign
-bottom =
-    "bottom" |> ExplicitVerticalAlign |> ExplicitValue
+{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+
+    ~ verticalAlign baseline
+-}
+baseline : VerticalAlign
+baseline =
+    prop1 "baseline" lengthToString
+
+
+{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+
+    ~ verticalAlign sub
+-}
+sub : VerticalAlign
+sub =
+    prop1 "sub" lengthToString
+
+
+{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+
+    ~ verticalAlign super
+-}
+super : VerticalAlign
+super =
+    prop1 "super" lengthToString
+
+
+{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+
+    ~ verticalAlign textTop
+-}
+textTop : VerticalAlign
+textTop =
+    prop1 "text-top" lengthToString
+
+
+{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+
+    ~ verticalAlign textBottom
+-}
+textBottom : VerticalAlign
+textBottom =
+    prop1 "text-bottom" lengthToString
+
+
+position : Position -> ( String, String )
+position =
+    prop1 "position" positionToString
 
 
 
@@ -988,17 +1050,25 @@ textDecorationColor =
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
+
+    ~ textAlignLast start
+
+    **Note:** Due to certain implementation constraints, `auto` cannot be
+    supported here. If you need to set this property to `auto`,
+    use this workaround:
+
+    ~ ("text-align-last", "auto")
 -}
-textAlignLast : Alignment -> ( String, String )
+textAlignLast : TextAlign -> ( String, String )
 textAlignLast =
-    prop1 "text-align-last" alignmentToString
+    prop1 "text-align-last" textAlignToString
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : Alignment -> ( String, String )
+textAlign : TextAlign -> ( String, String )
 textAlign =
-    prop1 "text-align" alignmentToString
+    prop1 "text-align" textAlignToString
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
@@ -1296,6 +1366,111 @@ marginInlineStart =
 marginInlineEnd : Length -> ( String, String )
 marginInlineEnd =
     prop1 "margin-inline-end" lengthToString
+
+
+{-| The [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/top) property.
+
+    ~ position absolute
+    ~ top (px 5)
+
+This can also be used as a `top` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
+
+    ~ verticalAlign top
+-}
+top : Length -> ( String, String )
+top =
+    prop1 "top" lengthToString
+
+
+{-| The [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom) property.
+
+    ~ position absolute
+    ~ bottom (px 5)
+
+This can also be used as a `bottom` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
+
+    ~ verticalAlign bottom
+-}
+bottom : Length -> ( String, String )
+bottom =
+    prop1 "bottom" lengthToString
+
+
+{-| The [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/left) property.
+
+    ~ position absolute
+    ~ left (px 5)
+
+This can also be used as a `left` [text alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
+
+    ~ textAlign left
+-}
+left : Length -> ( String, String )
+left =
+    prop1 "left" lengthToString
+
+
+{-| Sets [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
+
+    ~ position absolute
+    ~ right (px 5)
+
+This can also be used as a `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
+
+    ~ textAlign right
+-}
+right : Length -> ( String, String )
+right =
+    prop1 "right" lengthToString
+
+
+
+{- POSITIONING -}
+
+
+{-| A `static` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
+
+    ~ position static
+-}
+static : Position
+static =
+    "static" |> ExplicitPosition |> ExplicitValue
+
+
+{-| A `fixed` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
+
+    ~ position fixed
+-}
+fixed : Position
+fixed =
+    "fixed" |> ExplicitPosition |> ExplicitValue
+
+
+{-| A `sticky` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
+
+    ~ position sticky
+-}
+sticky : Position
+sticky =
+    "sticky" |> ExplicitPosition |> ExplicitValue
+
+
+{-| A `relative` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
+
+    ~ position relative
+-}
+relative : Position
+relative =
+    "relative" |> ExplicitPosition |> ExplicitValue
+
+
+{-| An `absolute` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
+
+    ~ position absolute
+-}
+absolute : Position
+absolute =
+    "absolute" |> ExplicitPosition |> ExplicitValue
 
 
 
@@ -2539,7 +2714,6 @@ introduceSelector selector declarations =
     case declarations of
         [] ->
             [ StyleBlock (SingleSelector selector) [] [] ]
-
 
         -- If there are no properties declared, then we have a situation
         --   like `Bar` in the following:
