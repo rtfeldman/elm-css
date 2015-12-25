@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
+module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, top, middle, bottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
 
 {-| Functions for building stylesheets.
 
@@ -15,7 +15,7 @@ module Css (stylesheet, mixin, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$)
 @docs a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input
 
 # Attributes
-@docs currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, paddingTop, paddingBottom, paddingRight, paddingLeft, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
+@docs currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
 @docs (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, middle, bottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
@@ -166,6 +166,7 @@ input =
     Tag "input"
 
 
+tagToString : Tag -> String
 tagToString (Tag str) =
     str
 
@@ -174,10 +175,12 @@ tagToString (Tag str) =
 -- TODO these are just for @media - maybe improve type guarantees?
 
 
+screen : String
 screen =
     "screen"
 
 
+print : String
 print =
     "print"
 
@@ -950,22 +953,27 @@ bottom =
 {- Properties -}
 
 
+prop1 : String -> (a -> String) -> a -> ( String, String )
 prop1 key translate value =
     ( key, (translate value) )
 
 
+prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> ( String, String )
 prop2 key translateA translateB valueA valueB =
     ( key, String.join " " [ translateA valueA, translateB valueB ] )
 
 
+prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> ( String, String )
 prop3 key translateA translateB translateC valueA valueB valueC =
     ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC ] )
 
 
+prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> ( String, String )
 prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
     ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ] )
 
 
+prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> ( String, String )
 prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
     ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ] )
 
@@ -1042,31 +1050,125 @@ boxSizing =
     prop1 "box-sizing" boxSizingToString
 
 
-{-| -}
+
+{- PADDING PROPERTIES -}
+
+
+{-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
+
+    padding  (px 10)
+    padding2 (px 10) (px 10)
+    padding3 (px 10) (px 10) (px 10)
+    padding4 (px 10) (px 10) (px 10) (px 10)
+-}
 padding : Length -> ( String, String )
 padding =
     prop1 "padding" lengthToString
 
 
-{-| -}
+{-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
+
+    padding  (px 10)
+    padding2 (px 10) (px 10)
+    padding3 (px 10) (px 10) (px 10)
+    padding4 (px 10) (px 10) (px 10) (px 10)
+-}
+padding2 : Length -> Length -> ( String, String )
+padding2 =
+    prop2 "padding" lengthToString lengthToString
+
+
+{-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
+
+    padding  (px 10)
+    padding2 (px 10) (px 10)
+    padding3 (px 10) (px 10) (px 10)
+    padding4 (px 10) (px 10) (px 10) (px 10)
+-}
+padding3 : Length -> Length -> Length -> ( String, String )
+padding3 =
+    prop3 "padding" lengthToString lengthToString lengthToString
+
+
+{-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
+
+    padding  (px 10)
+    padding2 (px 10) (px 10)
+    padding3 (px 10) (px 10) (px 10)
+    padding4 (px 10) (px 10) (px 10) (px 10)
+-}
+padding4 : Length -> Length -> Length -> Length -> ( String, String )
+padding4 =
+    prop4 "padding" lengthToString lengthToString lengthToString lengthToString
+
+
+{-| Sets [`padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-start)
+
+    paddingBlockStart (px 10)
+-}
+paddingBlockStart : Length -> ( String, String )
+paddingBlockStart =
+    prop1 "padding-block-start" lengthToString
+
+
+{-| Sets [`padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end)
+
+    paddingBlockEnd (px 10)
+-}
+paddingBlockEnd : Length -> ( String, String )
+paddingBlockEnd =
+    prop1 "padding-block-end" lengthToString
+
+
+{-| Sets [`padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start)
+
+    paddingInlineStart (px 10)
+-}
+paddingInlineStart : Length -> ( String, String )
+paddingInlineStart =
+    prop1 "padding-inline-start" lengthToString
+
+
+{-| Sets [`padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end)
+
+    paddingInlineEnd (px 10)
+-}
+paddingInlineEnd : Length -> ( String, String )
+paddingInlineEnd =
+    prop1 "padding-inline-end" lengthToString
+
+
+{-| Sets [`padding-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top)
+
+    paddingTop (px 10)
+-}
 paddingTop : Length -> ( String, String )
 paddingTop =
     prop1 "padding-top" lengthToString
 
 
-{-| -}
+{-| Sets [`padding-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom)
+
+    paddingBottom (px 10)
+-}
 paddingBottom : Length -> ( String, String )
 paddingBottom =
     prop1 "padding-bottom" lengthToString
 
 
-{-| -}
+{-| Sets [`padding-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right)
+
+    paddingRight (px 10)
+-}
 paddingRight : Length -> ( String, String )
 paddingRight =
     prop1 "padding-right" lengthToString
 
 
-{-| -}
+{-| Sets [`padding-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left)
+
+    paddingLeft (px 10)
+-}
 paddingLeft : Length -> ( String, String )
 paddingLeft =
     prop1 "padding-left" lengthToString
@@ -2437,6 +2539,7 @@ introduceSelector selector declarations =
     case declarations of
         [] ->
             [ StyleBlock (SingleSelector selector) [] [] ]
+
 
         -- If there are no properties declared, then we have a situation
         --   like `Bar` in the following:
