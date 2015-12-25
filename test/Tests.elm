@@ -75,6 +75,7 @@ borders =
             button {
                 border-left: 5px dashed rgb(11, 14, 17);
                 border-right: 7px;
+                border-image-outset: 3 4em;
             }
 
             a {
