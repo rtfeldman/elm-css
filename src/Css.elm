@@ -473,7 +473,7 @@ transparent =
     Transparent |> ExplicitValue
 
 
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in functional notation.
 -}
 rgb : number -> number -> number -> Color
@@ -494,7 +494,7 @@ rgba r g b a =
         |> ExplicitValue
 
 
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()]
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in hexadecimal notation.
 -}
 hex : String -> Color
