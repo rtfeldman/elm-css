@@ -74,6 +74,7 @@ leftRightTopBottom =
 
         output = """
             div {
+                position: absolute;
                 left: 5px;
                 top: 2em;
                 text-align: left;
@@ -81,6 +82,7 @@ leftRightTopBottom =
             }
 
             a {
+                position: relative;
                 right: 0;
                 text-align: right;
                 bottom: 2em;

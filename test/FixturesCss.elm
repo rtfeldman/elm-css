@@ -82,12 +82,14 @@ leftRightTopBottom : Style CssClasses CssIds String
 leftRightTopBottom =
     stylesheet { name = "left-right" }
         $ div
+            ~ position absolute
             ~ left (px 5)
             ~ top (em 2)
             ~ textAlign left
             ~ verticalAlign bottom
 
         $ a
+            ~ position relative
             ~ right zero
             ~ textAlign right
             ~ bottom (em 2)
