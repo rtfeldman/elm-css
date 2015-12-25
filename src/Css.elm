@@ -545,7 +545,7 @@ hidden =
     "hidden" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
 
 
-{-| A `dotted` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
+{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
 -}
 wavy : TextDecorationStyle
 wavy =
