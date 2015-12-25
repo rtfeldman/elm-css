@@ -271,9 +271,9 @@ textAlignToString fn =
 
 
 verticalAlignToString : VerticalAlign -> String
-verticalAlignToString =
-    (\(ExplicitVerticalAlign str) -> str)
-        |> propertyValueToString
+verticalAlignToString fn =
+    fn zero
+        |> fst
 
 
 whiteSpaceToString : WhiteSpace -> String
@@ -423,11 +423,27 @@ in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
 we implement it as a property (for the `left: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String in the first part of the tuple, and use
-that. (See `textAlignToString`.)
+that. (See `textAlignToString`. Note that `VerticalAlign follows a similar
+pattern.)
 -}
 
 
 type alias TextAlign =
+    Length -> ( String, String )
+
+
+
+{- Because `top` and `bottom` are both common properties and common values
+in CSS (e.g. `top: 5px` with `position: absolute` and `vertical-align: top`),
+we implement it as a property (for the `top: 5px` case) and allow it to
+be used as a value as well. When being used as a value, we call it, expect
+that it will return the desired String in the first part of the tuple, and use
+that. (See `verticalAlignToString`. Note that `TextAlign` follows a similar
+pattern.)
+-}
+
+
+type alias VerticalAlign =
     Length -> ( String, String )
 
 
@@ -437,10 +453,6 @@ alias is at least more self-documenting.
 -}
 type alias LengthOrNumber =
     Length
-
-
-type alias VerticalAlign =
-    PropertyValue ExplicitVerticalAlign
 
 
 type alias TextDecorationStyle =
@@ -631,49 +643,49 @@ outset =
 -}
 center : TextAlign
 center =
-    \length -> ( "center", lengthToString length )
+    prop1 "center" lengthToString
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 textJustify : TextAlign
 textJustify =
-    \length -> ( "text-justify", lengthToString length )
+    prop1 "text-justify" lengthToString
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 justifyAll : TextAlign
 justifyAll =
-    \length -> ( "justify-all", lengthToString length )
+    prop1 "justify-all" lengthToString
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 start : TextAlign
 start =
-    \length -> ( "start", lengthToString length )
+    prop1 "start" lengthToString
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 end : TextAlign
 end =
-    \length -> ( "end", lengthToString length )
+    prop1 "end" lengthToString
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 matchParent : TextAlign
 matchParent =
-    \length -> ( "match-parent", lengthToString length )
+    prop1 "match-parent" lengthToString
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
 true : TextAlign
 true =
-    \length -> ( "true", lengthToString length )
+    prop1 "true" lengthToString
 
 
 
@@ -922,22 +934,11 @@ noWrap =
     "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> ExplicitValue
 
 
-{-| -}
-top : VerticalAlign
-top =
-    "top" |> ExplicitVerticalAlign |> ExplicitValue
-
-
-{-| -}
+{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+-}
 middle : VerticalAlign
 middle =
-    "middle" |> ExplicitVerticalAlign |> ExplicitValue
-
-
-{-| -}
-bottom : VerticalAlign
-bottom =
-    "bottom" |> ExplicitVerticalAlign |> ExplicitValue
+    prop1 "middle" lengthToString
 
 
 
@@ -1297,12 +1298,40 @@ marginInlineEnd =
     prop1 "margin-inline-end" lengthToString
 
 
+{-| The [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/top) property.
+
+    ~ position absolute
+    ~ top (px 5)
+
+This can also be used as a `top` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
+
+    ~ verticalAlign top
+-}
+top : Length -> ( String, String )
+top =
+    prop1 "top" lengthToString
+
+
+{-| The [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom) property.
+
+    ~ position absolute
+    ~ bottom (px 5)
+
+This can also be used as a `bottom` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
+
+    ~ verticalAlign bottom
+-}
+bottom : Length -> ( String, String )
+bottom =
+    prop1 "bottom" lengthToString
+
+
 {-| The [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/left) property.
 
     ~ position absolute
     ~ left (px 5)
 
-This can also be used as a `left` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
+This can also be used as a `left` [text alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
 
     ~ textAlign left
 -}
