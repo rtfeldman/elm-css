@@ -286,6 +286,7 @@ whiteSpaceToString =
 colorToString : Color -> String
 colorToString =
     (\(ExplicitColor str) -> str)
+        |> transparentToString
         |> autoToString
         |> propertyValueToString
 
@@ -374,7 +375,7 @@ type alias WhiteSpace =
 
 
 type alias Color =
-    PropertyValue (AutoOr ExplicitColor)
+    PropertyValue (AutoOr (TransparentOr ExplicitColor))
 
 
 type alias TextShadow =
@@ -478,6 +479,7 @@ transparent =
 rgb : number -> number -> number -> Color
 rgb r g b =
     ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
+        |> NotTransparent
         |> NotAuto
         |> ExplicitValue
 
@@ -487,6 +489,7 @@ rgb r g b =
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
     ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
+        |> NotTransparent
         |> NotAuto
         |> ExplicitValue
 
@@ -497,6 +500,7 @@ rgba r g b a =
 hex : String -> Color
 hex str =
     ExplicitColor ("#" ++ str)
+        |> NotTransparent
         |> NotAuto
         |> ExplicitValue
 
