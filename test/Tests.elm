@@ -347,3 +347,29 @@ greenOnHoverMixin =
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
+
+
+transformsStyle : Test
+transformsStyle =
+    let
+        input =
+            Fixtures.transformsStyle
+
+        output =
+            """
+            body {
+                transform: none;
+                transform: matrix(1, 2, 3, 4, 5, 6) matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+                transform: perspective(1);
+                transform: rotate(90deg) rotateX(3.14rad) rotateY(3.14grad) rotateZ(1turn) rotate3d(1, 1, 1, 90deg);
+                transform: scale(1) scale(1, 1) scaleX(1) scaleY(1) scale3d(1, 1, 1);
+                transform: skew(90deg) skew(90deg, 90deg) skewX(90deg) skewY(90deg);
+                transform: translate(1px) translate(1px, 1px) translateX(1px) translateY(1px) translate3d(1px, 1px, 1px);
+            }
+            """
+    in
+        suite
+            "transforms"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
