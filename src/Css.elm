@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, all, (~=), ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), (!), currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
+module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
 
 {-| Functions for building stylesheets.
 
@@ -15,7 +15,7 @@ module Css (stylesheet, mixin, all, (~=), ($), (#), (.), (@), (|$), (>$), (>>$),
 @docs currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs all, (~), (!), (~=), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
 
 # Length
 @docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
@@ -35,7 +35,7 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
-import Css.Declaration as Declaration exposing (..)
+import Css.Declaration as Declaration exposing (Declaration(..), Selector(..), CompoundSelector(..))
 import Css.Elements exposing (Tag, tagToString)
 import Css.Util exposing (toCssIdentifier, identifierToString)
 import Style exposing (Style(..))
@@ -140,16 +140,18 @@ positionToString =
         |> propertyValueToString
 
 
-textAlignToString : TextAlign -> String
+textAlignToString : TextAlign class id namespace -> String
 textAlignToString fn =
-    fn zero
-        |> fst
+    --fn zero
+    -- TODO look at the last declaration and pull it out of there. gross, but it'll work.
+    "TODO"
 
 
-verticalAlignToString : VerticalAlign -> String
+verticalAlignToString : VerticalAlign class id namespace -> String
 verticalAlignToString fn =
-    fn zero
-        |> fst
+    --fn zero
+    -- TODO look at the last declaration and pull it out of there. gross, but it'll work.
+    "TODO"
 
 
 whiteSpaceToString : WhiteSpace -> String
@@ -300,8 +302,8 @@ pattern.)
 -}
 
 
-type alias TextAlign =
-    Length -> ( String, String )
+type alias TextAlign class id namespace =
+    Length -> Property class id namespace
 
 
 
@@ -315,8 +317,12 @@ pattern.)
 -}
 
 
-type alias VerticalAlign =
-    Length -> ( String, String )
+type alias VerticalAlign class id namespace =
+    Length -> Property class id namespace
+
+
+type alias Property class id namespace =
+    Style class id namespace
 
 
 {-| Although not many propeties accept either a length or a number,
@@ -397,9 +403,17 @@ type ExplicitTextShadow
 
 {-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
 -}
-all : PropertyValue String -> ( String, String )
+all : PropertyValue String -> Property class id namespace
 all =
     prop1 "all" (propertyValueToString (\_ -> ""))
+
+
+{-| Transforms the given property by adding !important to the end of its
+declaration.
+-}
+important : Property class id namespace -> Property class id namespace
+important =
+    identity
 
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
@@ -528,49 +542,49 @@ outset =
 
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-center : TextAlign
+center : TextAlign class id namespace
 center =
     prop1 "center" lengthToString
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : TextAlign
+textJustify : TextAlign class id namespace
 textJustify =
     prop1 "text-justify" lengthToString
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : TextAlign
+justifyAll : TextAlign class id namespace
 justifyAll =
     prop1 "justify-all" lengthToString
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : TextAlign
+start : TextAlign class id namespace
 start =
     prop1 "start" lengthToString
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : TextAlign
+end : TextAlign class id namespace
 end =
     prop1 "end" lengthToString
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : TextAlign
+matchParent : TextAlign class id namespace
 matchParent =
     prop1 "match-parent" lengthToString
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : TextAlign
+true : TextAlign class id namespace
 true =
     prop1 "true" lengthToString
 
@@ -829,7 +843,7 @@ noWrap =
 
     ~ verticalAlign middle
 -}
-middle : VerticalAlign
+middle : VerticalAlign class id namespace
 middle =
     prop1 "middle" lengthToString
 
@@ -838,7 +852,7 @@ middle =
 
     ~ verticalAlign baseline
 -}
-baseline : VerticalAlign
+baseline : VerticalAlign class id namespace
 baseline =
     prop1 "baseline" lengthToString
 
@@ -847,7 +861,7 @@ baseline =
 
     ~ verticalAlign sub
 -}
-sub : VerticalAlign
+sub : VerticalAlign class id namespace
 sub =
     prop1 "sub" lengthToString
 
@@ -856,7 +870,7 @@ sub =
 
     ~ verticalAlign super
 -}
-super : VerticalAlign
+super : VerticalAlign class id namespace
 super =
     prop1 "super" lengthToString
 
@@ -865,7 +879,7 @@ super =
 
     ~ verticalAlign textTop
 -}
-textTop : VerticalAlign
+textTop : VerticalAlign class id namespace
 textTop =
     prop1 "text-top" lengthToString
 
@@ -874,14 +888,14 @@ textTop =
 
     ~ verticalAlign textBottom
 -}
-textBottom : VerticalAlign
+textBottom : VerticalAlign class id namespace
 textBottom =
     prop1 "text-bottom" lengthToString
 
 
 {-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
 -}
-position : Position -> ( String, String )
+position : Position -> Property class id namespace
 position =
     prop1 "position" positionToString
 
@@ -890,27 +904,60 @@ position =
 {- Properties -}
 
 
-prop1 : String -> (a -> String) -> a -> ( String, String )
+prop1 : String -> (a -> String) -> a -> Property class id namespace
 prop1 key translate value =
-    ( key, (translate value) )
+    let
+        property =
+            { key = key, value = translate value, important = False }
+
+        update : Style class id namespace -> Style class id namespace
+        update style =
+            case style of
+                NamespacedStyle name declarations ->
+                    case addProperty property declarations of
+                        Ok newDeclarations ->
+                            NamespacedStyle name newDeclarations
+
+                        Err message ->
+                            InvalidStyle message
+
+                Mixin applyMixin ->
+                    let
+                        newUpdate subject =
+                            case applyMixin subject of
+                                (NamespacedStyle _ _) as newStyle ->
+                                    update newStyle
+
+                                Mixin subUpdate ->
+                                    Mixin (subUpdate >> newUpdate)
+
+                                (InvalidStyle _) as invalidStyle ->
+                                    invalidStyle
+                    in
+                        Mixin newUpdate
+
+                InvalidStyle _ ->
+                    style
+    in
+        Mixin update
 
 
-prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> ( String, String )
+prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> Property class id namespace
 prop2 key translateA translateB valueA valueB =
     prop1 key (String.join " ") [ translateA valueA, translateB valueB ]
 
 
-prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> ( String, String )
+prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> Property class id namespace
 prop3 key translateA translateB translateC valueA valueB valueC =
     prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC ]
 
 
-prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> ( String, String )
+prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> Property class id namespace
 prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
     prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ]
 
 
-prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> ( String, String )
+prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> Property class id namespace
 prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
     prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ]
 
@@ -919,7 +966,7 @@ prop5 key translateA translateB translateC translateD translateE valueA valueB v
 
     textDecorationColor (rgb 12 11 10)
 -}
-textDecorationColor : Color -> ( String, String )
+textDecorationColor : Color -> Property class id namespace
 textDecorationColor =
     prop1 "text-decoration-color" colorToString
 
@@ -934,63 +981,63 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : TextAlign -> ( String, String )
+textAlignLast : TextAlign class id namespace -> Property class id namespace
 textAlignLast =
     prop1 "text-align-last" textAlignToString
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : TextAlign -> ( String, String )
+textAlign : TextAlign class id namespace -> Property class id namespace
 textAlign =
     prop1 "text-align" textAlignToString
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : VerticalAlign -> ( String, String )
+verticalAlign : VerticalAlign class id namespace -> Property class id namespace
 verticalAlign =
     prop1 "vertical-align" verticalAlignToString
 
 
 {-| -}
-display : Display -> ( String, String )
+display : Display -> Property class id namespace
 display =
     prop1 "display" displayToString
 
 
 {-| -}
-opacity : OpacityStyle -> ( String, String )
+opacity : OpacityStyle -> Property class id namespace
 opacity =
     prop1 "opacity" toString
 
 
 {-| -}
-width : Length -> ( String, String )
+width : Length -> Property class id namespace
 width =
     prop1 "width" lengthToString
 
 
 {-| -}
-minWidth : Length -> ( String, String )
+minWidth : Length -> Property class id namespace
 minWidth =
     prop1 "min-width" lengthToString
 
 
 {-| -}
-height : Length -> ( String, String )
+height : Length -> Property class id namespace
 height =
     prop1 "height" lengthToString
 
 
 {-| -}
-minHeight : Length -> ( String, String )
+minHeight : Length -> Property class id namespace
 minHeight =
     prop1 "min-height" lengthToString
 
 
 {-| -}
-boxSizing : BoxSizing -> ( String, String )
+boxSizing : BoxSizing -> Property class id namespace
 boxSizing =
     prop1 "box-sizing" boxSizingToString
 
@@ -1006,7 +1053,7 @@ boxSizing =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length -> ( String, String )
+padding : Length -> Property class id namespace
 padding =
     prop1 "padding" lengthToString
 
@@ -1018,7 +1065,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length -> Length -> ( String, String )
+padding2 : Length -> Length -> Property class id namespace
 padding2 =
     prop2 "padding" lengthToString lengthToString
 
@@ -1030,7 +1077,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length -> Length -> Length -> ( String, String )
+padding3 : Length -> Length -> Length -> Property class id namespace
 padding3 =
     prop3 "padding" lengthToString lengthToString lengthToString
 
@@ -1042,7 +1089,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length -> Length -> Length -> Length -> ( String, String )
+padding4 : Length -> Length -> Length -> Length -> Property class id namespace
 padding4 =
     prop4 "padding" lengthToString lengthToString lengthToString lengthToString
 
@@ -1051,7 +1098,7 @@ padding4 =
 
     paddingBlockStart (px 10)
 -}
-paddingBlockStart : Length -> ( String, String )
+paddingBlockStart : Length -> Property class id namespace
 paddingBlockStart =
     prop1 "padding-block-start" lengthToString
 
@@ -1060,7 +1107,7 @@ paddingBlockStart =
 
     paddingBlockEnd (px 10)
 -}
-paddingBlockEnd : Length -> ( String, String )
+paddingBlockEnd : Length -> Property class id namespace
 paddingBlockEnd =
     prop1 "padding-block-end" lengthToString
 
@@ -1069,7 +1116,7 @@ paddingBlockEnd =
 
     paddingInlineStart (px 10)
 -}
-paddingInlineStart : Length -> ( String, String )
+paddingInlineStart : Length -> Property class id namespace
 paddingInlineStart =
     prop1 "padding-inline-start" lengthToString
 
@@ -1078,7 +1125,7 @@ paddingInlineStart =
 
     paddingInlineEnd (px 10)
 -}
-paddingInlineEnd : Length -> ( String, String )
+paddingInlineEnd : Length -> Property class id namespace
 paddingInlineEnd =
     prop1 "padding-inline-end" lengthToString
 
@@ -1087,7 +1134,7 @@ paddingInlineEnd =
 
     paddingTop (px 10)
 -}
-paddingTop : Length -> ( String, String )
+paddingTop : Length -> Property class id namespace
 paddingTop =
     prop1 "padding-top" lengthToString
 
@@ -1096,7 +1143,7 @@ paddingTop =
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length -> ( String, String )
+paddingBottom : Length -> Property class id namespace
 paddingBottom =
     prop1 "padding-bottom" lengthToString
 
@@ -1105,7 +1152,7 @@ paddingBottom =
 
     paddingRight (px 10)
 -}
-paddingRight : Length -> ( String, String )
+paddingRight : Length -> Property class id namespace
 paddingRight =
     prop1 "padding-right" lengthToString
 
@@ -1114,7 +1161,7 @@ paddingRight =
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length -> ( String, String )
+paddingLeft : Length -> Property class id namespace
 paddingLeft =
     prop1 "padding-left" lengthToString
 
@@ -1130,7 +1177,7 @@ paddingLeft =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin : Length -> ( String, String )
+margin : Length -> Property class id namespace
 margin =
     prop1 "margin" lengthToString
 
@@ -1142,7 +1189,7 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : Length -> Length -> ( String, String )
+margin2 : Length -> Length -> Property class id namespace
 margin2 =
     prop2 "margin" lengthToString lengthToString
 
@@ -1154,7 +1201,7 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : Length -> Length -> Length -> ( String, String )
+margin3 : Length -> Length -> Length -> Property class id namespace
 margin3 =
     prop3 "margin" lengthToString lengthToString lengthToString
 
@@ -1166,7 +1213,7 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : Length -> Length -> Length -> Length -> ( String, String )
+margin4 : Length -> Length -> Length -> Length -> Property class id namespace
 margin4 =
     prop4 "margin" lengthToString lengthToString lengthToString lengthToString
 
@@ -1175,7 +1222,7 @@ margin4 =
 
     marginTop (px 10)
 -}
-marginTop : Length -> ( String, String )
+marginTop : Length -> Property class id namespace
 marginTop =
     prop1 "margin-top" lengthToString
 
@@ -1184,7 +1231,7 @@ marginTop =
 
     marginBottom (px 10)
 -}
-marginBottom : Length -> ( String, String )
+marginBottom : Length -> Property class id namespace
 marginBottom =
     prop1 "margin-bottom" lengthToString
 
@@ -1193,7 +1240,7 @@ marginBottom =
 
     marginRight (px 10)
 -}
-marginRight : Length -> ( String, String )
+marginRight : Length -> Property class id namespace
 marginRight =
     prop1 "margin-right" lengthToString
 
@@ -1202,7 +1249,7 @@ marginRight =
 
     marginLeft (px 10)
 -}
-marginLeft : Length -> ( String, String )
+marginLeft : Length -> Property class id namespace
 marginLeft =
     prop1 "margin-left" lengthToString
 
@@ -1211,7 +1258,7 @@ marginLeft =
 
     marginBlockStart (px 10)
 -}
-marginBlockStart : Length -> ( String, String )
+marginBlockStart : Length -> Property class id namespace
 marginBlockStart =
     prop1 "margin-block-start" lengthToString
 
@@ -1220,7 +1267,7 @@ marginBlockStart =
 
     marginBlockEnd (px 10)
 -}
-marginBlockEnd : Length -> ( String, String )
+marginBlockEnd : Length -> Property class id namespace
 marginBlockEnd =
     prop1 "margin-block-end" lengthToString
 
@@ -1229,7 +1276,7 @@ marginBlockEnd =
 
     marginInlineStart (px 10)
 -}
-marginInlineStart : Length -> ( String, String )
+marginInlineStart : Length -> Property class id namespace
 marginInlineStart =
     prop1 "margin-inline-start" lengthToString
 
@@ -1238,7 +1285,7 @@ marginInlineStart =
 
     marginInlineEnd (px 10)
 -}
-marginInlineEnd : Length -> ( String, String )
+marginInlineEnd : Length -> Property class id namespace
 marginInlineEnd =
     prop1 "margin-inline-end" lengthToString
 
@@ -1252,7 +1299,7 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
 
     ~ verticalAlign top
 -}
-top : Length -> ( String, String )
+top : Length -> Property class id namespace
 top =
     prop1 "top" lengthToString
 
@@ -1266,7 +1313,7 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
 
     ~ verticalAlign bottom
 -}
-bottom : Length -> ( String, String )
+bottom : Length -> Property class id namespace
 bottom =
     prop1 "bottom" lengthToString
 
@@ -1280,7 +1327,7 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
     ~ textAlign left
 -}
-left : Length -> ( String, String )
+left : Length -> Property class id namespace
 left =
     prop1 "left" lengthToString
 
@@ -1294,7 +1341,7 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
     ~ textAlign right
 -}
-right : Length -> ( String, String )
+right : Length -> Property class id namespace
 right =
     prop1 "right" lengthToString
 
@@ -1358,7 +1405,7 @@ absolute =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length -> ( String, String )
+border : Length -> Property class id namespace
 border =
     prop1 "border" lengthToString
 
@@ -1370,7 +1417,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length -> BorderStyle -> ( String, String )
+border2 : Length -> BorderStyle -> Property class id namespace
 border2 =
     prop2 "border" lengthToString borderStyleToString
 
@@ -1381,7 +1428,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length -> BorderStyle -> Color -> ( String, String )
+border3 : Length -> BorderStyle -> Color -> Property class id namespace
 border3 =
     prop3 "border" lengthToString borderStyleToString colorToString
 
@@ -1393,7 +1440,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length -> ( String, String )
+borderTop : Length -> Property class id namespace
 borderTop =
     prop1 "border-top" lengthToString
 
@@ -1405,7 +1452,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length -> BorderStyle -> ( String, String )
+borderTop2 : Length -> BorderStyle -> Property class id namespace
 borderTop2 =
     prop2 "border-top" lengthToString borderStyleToString
 
@@ -1417,7 +1464,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length -> BorderStyle -> Color -> ( String, String )
+borderTop3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderTop3 =
     prop3 "border-top" lengthToString borderStyleToString colorToString
 
@@ -1429,7 +1476,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length -> ( String, String )
+borderBottom : Length -> Property class id namespace
 borderBottom =
     prop1 "border-bottom" lengthToString
 
@@ -1441,7 +1488,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length -> BorderStyle -> ( String, String )
+borderBottom2 : Length -> BorderStyle -> Property class id namespace
 borderBottom2 =
     prop2 "border-bottom" lengthToString borderStyleToString
 
@@ -1453,7 +1500,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length -> BorderStyle -> Color -> ( String, String )
+borderBottom3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderBottom3 =
     prop3 "border-bottom" lengthToString borderStyleToString colorToString
 
@@ -1465,7 +1512,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length -> ( String, String )
+borderLeft : Length -> Property class id namespace
 borderLeft =
     prop1 "border-left" lengthToString
 
@@ -1477,7 +1524,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length -> BorderStyle -> ( String, String )
+borderLeft2 : Length -> BorderStyle -> Property class id namespace
 borderLeft2 =
     prop2 "border-left" lengthToString borderStyleToString
 
@@ -1489,7 +1536,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length -> BorderStyle -> Color -> ( String, String )
+borderLeft3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderLeft3 =
     prop3 "border-left" lengthToString borderStyleToString colorToString
 
@@ -1501,7 +1548,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length -> ( String, String )
+borderRight : Length -> Property class id namespace
 borderRight =
     prop1 "border-right" lengthToString
 
@@ -1513,7 +1560,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length -> BorderStyle -> ( String, String )
+borderRight2 : Length -> BorderStyle -> Property class id namespace
 borderRight2 =
     prop2 "border-right" lengthToString borderStyleToString
 
@@ -1525,7 +1572,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length -> BorderStyle -> Color -> ( String, String )
+borderRight3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderRight3 =
     prop3 "border-right" lengthToString borderStyleToString colorToString
 
@@ -1537,7 +1584,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length -> ( String, String )
+borderBlockStart : Length -> Property class id namespace
 borderBlockStart =
     prop1 "border-block-start" lengthToString
 
@@ -1549,7 +1596,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length -> BorderStyle -> ( String, String )
+borderBlockStart2 : Length -> BorderStyle -> Property class id namespace
 borderBlockStart2 =
     prop2 "border-block-start" lengthToString borderStyleToString
 
@@ -1561,7 +1608,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length -> BorderStyle -> Color -> ( String, String )
+borderBlockStart3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderBlockStart3 =
     prop3 "border-block-start" lengthToString borderStyleToString colorToString
 
@@ -1573,7 +1620,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length -> ( String, String )
+borderBlockEnd : Length -> Property class id namespace
 borderBlockEnd =
     prop1 "border-block-end" lengthToString
 
@@ -1585,7 +1632,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length -> BorderStyle -> ( String, String )
+borderBlockEnd2 : Length -> BorderStyle -> Property class id namespace
 borderBlockEnd2 =
     prop2 "border-block-end" lengthToString borderStyleToString
 
@@ -1597,7 +1644,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length -> BorderStyle -> Color -> ( String, String )
+borderBlockEnd3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderBlockEnd3 =
     prop3 "border-block-end" lengthToString borderStyleToString colorToString
 
@@ -1609,7 +1656,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length -> ( String, String )
+borderInlineStart : Length -> Property class id namespace
 borderInlineStart =
     prop1 "border-block-start" lengthToString
 
@@ -1621,7 +1668,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length -> BorderStyle -> ( String, String )
+borderInlineStart2 : Length -> BorderStyle -> Property class id namespace
 borderInlineStart2 =
     prop2 "border-block-start" lengthToString borderStyleToString
 
@@ -1633,7 +1680,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length -> BorderStyle -> Color -> ( String, String )
+borderInlineStart3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderInlineStart3 =
     prop3 "border-block-start" lengthToString borderStyleToString colorToString
 
@@ -1645,7 +1692,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length -> ( String, String )
+borderInlineEnd : Length -> Property class id namespace
 borderInlineEnd =
     prop1 "border-block-end" lengthToString
 
@@ -1657,7 +1704,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length -> BorderStyle -> ( String, String )
+borderInlineEnd2 : Length -> BorderStyle -> Property class id namespace
 borderInlineEnd2 =
     prop2 "border-block-end" lengthToString borderStyleToString
 
@@ -1669,7 +1716,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length -> BorderStyle -> Color -> ( String, String )
+borderInlineEnd3 : Length -> BorderStyle -> Color -> Property class id namespace
 borderInlineEnd3 =
     prop3 "border-block-end" lengthToString borderStyleToString colorToString
 
@@ -1682,7 +1729,7 @@ borderInlineEnd3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset : LengthOrNumber -> ( String, String )
+borderImageOutset : LengthOrNumber -> Property class id namespace
 borderImageOutset =
     prop1 "border-image-outset" lengthOrNumberToString
 
@@ -1695,7 +1742,7 @@ borderImageOutset =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset2 : LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageOutset2 : LengthOrNumber -> LengthOrNumber -> Property class id namespace
 borderImageOutset2 =
     prop2 "border-image-outset" lengthOrNumberToString lengthOrNumberToString
 
@@ -1708,7 +1755,7 @@ borderImageOutset2 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageOutset3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
 borderImageOutset3 =
     prop3 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1721,7 +1768,7 @@ borderImageOutset3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageOutset4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
 borderImageOutset4 =
     prop4 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1734,7 +1781,7 @@ borderImageOutset4 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth : LengthOrNumber -> ( String, String )
+borderImageWidth : LengthOrNumber -> Property class id namespace
 borderImageWidth =
     prop1 "border-image-width" lengthOrNumberToString
 
@@ -1747,7 +1794,7 @@ borderImageWidth =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth2 : LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageWidth2 : LengthOrNumber -> LengthOrNumber -> Property class id namespace
 borderImageWidth2 =
     prop2 "border-image-width" lengthOrNumberToString lengthOrNumberToString
 
@@ -1760,7 +1807,7 @@ borderImageWidth2 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageWidth3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
 borderImageWidth3 =
     prop3 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1773,7 +1820,7 @@ borderImageWidth3 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> ( String, String )
+borderImageWidth4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
 borderImageWidth4 =
     prop4 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1782,7 +1829,7 @@ borderImageWidth4 =
 
     borderBlockStartColor (rgb 101 202 0)
 -}
-borderBlockStartColor : Color -> ( String, String )
+borderBlockStartColor : Color -> Property class id namespace
 borderBlockStartColor =
     prop1 "border-block-start-color" colorToString
 
@@ -1791,7 +1838,7 @@ borderBlockStartColor =
 
     borderBottomColor (rgb 101 202 0)
 -}
-borderBottomColor : Color -> ( String, String )
+borderBottomColor : Color -> Property class id namespace
 borderBottomColor =
     prop1 "border-bottom-color" colorToString
 
@@ -1800,7 +1847,7 @@ borderBottomColor =
 
     borderInlineStartColor (rgb 101 202 0)
 -}
-borderInlineStartColor : Color -> ( String, String )
+borderInlineStartColor : Color -> Property class id namespace
 borderInlineStartColor =
     prop1 "border-inline-start-color" colorToString
 
@@ -1809,7 +1856,7 @@ borderInlineStartColor =
 
     borderInlineEndColor (rgb 101 202 0)
 -}
-borderInlineEndColor : Color -> ( String, String )
+borderInlineEndColor : Color -> Property class id namespace
 borderInlineEndColor =
     prop1 "border-inline-end-color" colorToString
 
@@ -1818,7 +1865,7 @@ borderInlineEndColor =
 
     borderLeftColor (rgb 101 202 0)
 -}
-borderLeftColor : Color -> ( String, String )
+borderLeftColor : Color -> Property class id namespace
 borderLeftColor =
     prop1 "border-left-color" colorToString
 
@@ -1827,7 +1874,7 @@ borderLeftColor =
 
     borderRightColor (rgb 101 202 0)
 -}
-borderRightColor : Color -> ( String, String )
+borderRightColor : Color -> Property class id namespace
 borderRightColor =
     prop1 "border-right-color" colorToString
 
@@ -1836,7 +1883,7 @@ borderRightColor =
 
     borderTopColor (rgb 101 202 0)
 -}
-borderTopColor : Color -> ( String, String )
+borderTopColor : Color -> Property class id namespace
 borderTopColor =
     prop1 "border-top-color" colorToString
 
@@ -1845,7 +1892,7 @@ borderTopColor =
 
     borderBlockEndColor (rgb 101 202 0)
 -}
-borderBlockEndColor : Color -> ( String, String )
+borderBlockEndColor : Color -> Property class id namespace
 borderBlockEndColor =
     prop1 "border-block-end-color" colorToString
 
@@ -1854,7 +1901,7 @@ borderBlockEndColor =
 
     borderBlockEndStyle dashed
 -}
-borderBlockEndStyle : BorderStyle -> ( String, String )
+borderBlockEndStyle : BorderStyle -> Property class id namespace
 borderBlockEndStyle =
     prop1 "border-block-end-style" borderStyleToString
 
@@ -1863,7 +1910,7 @@ borderBlockEndStyle =
 
     borderBlockStartStyle dashed
 -}
-borderBlockStartStyle : BorderStyle -> ( String, String )
+borderBlockStartStyle : BorderStyle -> Property class id namespace
 borderBlockStartStyle =
     prop1 "border-block-start-style" borderStyleToString
 
@@ -1872,7 +1919,7 @@ borderBlockStartStyle =
 
     borderInlineEndStyle dashed
 -}
-borderInlineEndStyle : BorderStyle -> ( String, String )
+borderInlineEndStyle : BorderStyle -> Property class id namespace
 borderInlineEndStyle =
     prop1 "border-inline-end-style" borderStyleToString
 
@@ -1881,7 +1928,7 @@ borderInlineEndStyle =
 
     borderBottomStyle dashed
 -}
-borderBottomStyle : BorderStyle -> ( String, String )
+borderBottomStyle : BorderStyle -> Property class id namespace
 borderBottomStyle =
     prop1 "border-bottom-style" borderStyleToString
 
@@ -1890,7 +1937,7 @@ borderBottomStyle =
 
     borderInlineStartStyle dashed
 -}
-borderInlineStartStyle : BorderStyle -> ( String, String )
+borderInlineStartStyle : BorderStyle -> Property class id namespace
 borderInlineStartStyle =
     prop1 "border-inline-start-style" borderStyleToString
 
@@ -1899,7 +1946,7 @@ borderInlineStartStyle =
 
     borderLeftStyle dashed
 -}
-borderLeftStyle : BorderStyle -> ( String, String )
+borderLeftStyle : BorderStyle -> Property class id namespace
 borderLeftStyle =
     prop1 "border-left-style" borderStyleToString
 
@@ -1908,7 +1955,7 @@ borderLeftStyle =
 
     borderRightStyle dashed
 -}
-borderRightStyle : BorderStyle -> ( String, String )
+borderRightStyle : BorderStyle -> Property class id namespace
 borderRightStyle =
     prop1 "border-right-style" borderStyleToString
 
@@ -1917,7 +1964,7 @@ borderRightStyle =
 
     borderTopStyle dashed
 -}
-borderTopStyle : BorderStyle -> ( String, String )
+borderTopStyle : BorderStyle -> Property class id namespace
 borderTopStyle =
     prop1 "border-top-style" borderStyleToString
 
@@ -1926,7 +1973,7 @@ borderTopStyle =
 
     borderStyle dashed
 -}
-borderStyle : BorderStyle -> ( String, String )
+borderStyle : BorderStyle -> Property class id namespace
 borderStyle =
     prop1 "border-style" borderStyleToString
 
@@ -1935,7 +1982,7 @@ borderStyle =
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length -> ( String, String )
+borderBottomWidth : Length -> Property class id namespace
 borderBottomWidth =
     prop1 "border-bottom-width" lengthToString
 
@@ -1944,7 +1991,7 @@ borderBottomWidth =
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length -> ( String, String )
+borderInlineEndWidth : Length -> Property class id namespace
 borderInlineEndWidth =
     prop1 "border-inline-end-width" lengthToString
 
@@ -1953,7 +2000,7 @@ borderInlineEndWidth =
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length -> ( String, String )
+borderLeftWidth : Length -> Property class id namespace
 borderLeftWidth =
     prop1 "border-left-width" lengthToString
 
@@ -1962,7 +2009,7 @@ borderLeftWidth =
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length -> ( String, String )
+borderRightWidth : Length -> Property class id namespace
 borderRightWidth =
     prop1 "border-right-width" lengthToString
 
@@ -1972,7 +2019,7 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length -> ( String, String )
+borderTopWidth : Length -> Property class id namespace
 borderTopWidth =
     prop1 "border-top-width" lengthToString
 
@@ -1982,7 +2029,7 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length -> Length -> ( String, String )
+borderTopWidth2 : Length -> Length -> Property class id namespace
 borderTopWidth2 =
     prop2 "border-top-width" lengthToString lengthToString
 
@@ -1992,7 +2039,7 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length -> ( String, String )
+borderBottomLeftRadius : Length -> Property class id namespace
 borderBottomLeftRadius =
     prop1 "border-bottom-left-radius" lengthToString
 
@@ -2002,7 +2049,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length -> Length -> ( String, String )
+borderBottomLeftRadius2 : Length -> Length -> Property class id namespace
 borderBottomLeftRadius2 =
     prop2 "border-bottom-left-radius" lengthToString lengthToString
 
@@ -2012,7 +2059,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length -> ( String, String )
+borderBottomRightRadius : Length -> Property class id namespace
 borderBottomRightRadius =
     prop1 "border-bottom-right-radius" lengthToString
 
@@ -2022,7 +2069,7 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length -> Length -> ( String, String )
+borderBottomRightRadius2 : Length -> Length -> Property class id namespace
 borderBottomRightRadius2 =
     prop2 "border-bottom-right-radius" lengthToString lengthToString
 
@@ -2032,7 +2079,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length -> ( String, String )
+borderTopLeftRadius : Length -> Property class id namespace
 borderTopLeftRadius =
     prop1 "border-top-left-radius" lengthToString
 
@@ -2042,7 +2089,7 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length -> Length -> ( String, String )
+borderTopLeftRadius2 : Length -> Length -> Property class id namespace
 borderTopLeftRadius2 =
     prop2 "border-top-left-radius" lengthToString lengthToString
 
@@ -2052,7 +2099,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length -> ( String, String )
+borderTopRightRadius : Length -> Property class id namespace
 borderTopRightRadius =
     prop1 "border-top-right-radius" lengthToString
 
@@ -2062,7 +2109,7 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length -> Length -> ( String, String )
+borderTopRightRadius2 : Length -> Length -> Property class id namespace
 borderTopRightRadius2 =
     prop2 "border-top-right-radius" lengthToString lengthToString
 
@@ -2074,7 +2121,7 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length -> ( String, String )
+borderRadius : Length -> Property class id namespace
 borderRadius =
     prop1 "border-radius" lengthToString
 
@@ -2086,7 +2133,7 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length -> Length -> ( String, String )
+borderRadius2 : Length -> Length -> Property class id namespace
 borderRadius2 =
     prop2 "border-radius" lengthToString lengthToString
 
@@ -2098,7 +2145,7 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length -> Length -> Length -> ( String, String )
+borderRadius3 : Length -> Length -> Length -> Property class id namespace
 borderRadius3 =
     prop3 "border-radius" lengthToString lengthToString lengthToString
 
@@ -2110,7 +2157,7 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length -> Length -> Length -> Length -> ( String, String )
+borderRadius4 : Length -> Length -> Length -> Length -> Property class id namespace
 borderRadius4 =
     prop4 "border-radius" lengthToString lengthToString lengthToString lengthToString
 
@@ -2120,7 +2167,7 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length -> ( String, String )
+borderSpacing : Length -> Property class id namespace
 borderSpacing =
     prop1 "border-spacing" lengthToString
 
@@ -2130,7 +2177,7 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length -> Length -> ( String, String )
+borderSpacing2 : Length -> Length -> Property class id namespace
 borderSpacing2 =
     prop2 "border-spacing" lengthToString lengthToString
 
@@ -2142,7 +2189,7 @@ borderSpacing2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor : Color -> ( String, String )
+borderColor : Color -> Property class id namespace
 borderColor =
     prop1 "border-color" colorToString
 
@@ -2154,7 +2201,7 @@ borderColor =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor2 : Color -> Color -> ( String, String )
+borderColor2 : Color -> Color -> Property class id namespace
 borderColor2 =
     prop2 "border-color" colorToString colorToString
 
@@ -2166,7 +2213,7 @@ borderColor2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor3 : Color -> Color -> Color -> ( String, String )
+borderColor3 : Color -> Color -> Color -> Property class id namespace
 borderColor3 =
     prop3 "border-color" colorToString colorToString colorToString
 
@@ -2178,37 +2225,37 @@ borderColor3 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor4 : Color -> Color -> Color -> Color -> ( String, String )
+borderColor4 : Color -> Color -> Color -> Color -> Property class id namespace
 borderColor4 =
     prop4 "border-color" colorToString colorToString colorToString colorToString
 
 
 {-| -}
-overflowX : Overflow -> ( String, String )
+overflowX : Overflow -> Property class id namespace
 overflowX =
     prop1 "overflow-x" overflowToString
 
 
 {-| -}
-overflowY : Overflow -> ( String, String )
+overflowY : Overflow -> Property class id namespace
 overflowY =
     prop1 "overflow-y" overflowToString
 
 
 {-| -}
-whiteSpace : WhiteSpace -> ( String, String )
+whiteSpace : WhiteSpace -> Property class id namespace
 whiteSpace =
     prop1 "white-space" whiteSpaceToString
 
 
 {-| -}
-backgroundColor : Color -> ( String, String )
+backgroundColor : Color -> Property class id namespace
 backgroundColor =
     prop1 "background-color" colorToString
 
 
 {-| -}
-color : Color -> ( String, String )
+color : Color -> Property class id namespace
 color =
     prop1 "color" colorToString
 
@@ -2220,7 +2267,7 @@ media value =
 
 
 {-| -}
-textShadow : TextShadow -> ( String, String )
+textShadow : TextShadow -> Property class id namespace
 textShadow =
     prop1 "text-shadow" textShadowToString
 
@@ -2237,7 +2284,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration : TextDecorationLine -> ( String, String )
+textDecoration : TextDecorationLine -> Property class id namespace
 textDecoration =
     prop1 "text-decoration" textDecorationLineToString
 
@@ -2254,7 +2301,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration2 : TextDecorationLine -> TextDecorationStyle -> ( String, String )
+textDecoration2 : TextDecorationLine -> TextDecorationStyle -> Property class id namespace
 textDecoration2 =
     prop2 "text-decoration" textDecorationLineToString textDecorationStyleToString
 
@@ -2271,7 +2318,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration3 : TextDecorationLine -> TextDecorationStyle -> Color -> ( String, String )
+textDecoration3 : TextDecorationLine -> TextDecorationStyle -> Color -> Property class id namespace
 textDecoration3 =
     prop3 "text-decoration" textDecorationLineToString textDecorationStyleToString colorToString
 
@@ -2282,7 +2329,7 @@ textDecoration3 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations : List TextDecorationLine -> ( String, String )
+textDecorations : List TextDecorationLine -> Property class id namespace
 textDecorations =
     prop1 "text-decoration" textDecorationLinesToString
 
@@ -2293,7 +2340,7 @@ textDecorations =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations2 : List TextDecorationLine -> TextDecorationStyle -> ( String, String )
+textDecorations2 : List TextDecorationLine -> TextDecorationStyle -> Property class id namespace
 textDecorations2 =
     prop2 "text-decoration" textDecorationLinesToString textDecorationStyleToString
 
@@ -2304,7 +2351,7 @@ textDecorations2 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations3 : List TextDecorationLine -> TextDecorationStyle -> Color -> ( String, String )
+textDecorations3 : List TextDecorationLine -> TextDecorationStyle -> Color -> Property class id namespace
 textDecorations3 =
     prop3 "text-decoration" textDecorationLinesToString textDecorationStyleToString colorToString
 
@@ -2317,7 +2364,7 @@ You can specify multiple line decorations with `textDecorationLines`.
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLine : TextDecorationLine -> ( String, String )
+textDecorationLine : TextDecorationLine -> Property class id namespace
 textDecorationLine =
     prop1 "text-decoration-line" textDecorationLineToString
 
@@ -2326,7 +2373,7 @@ textDecorationLine =
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLines : List TextDecorationLine -> ( String, String )
+textDecorationLines : List TextDecorationLine -> Property class id namespace
 textDecorationLines =
     prop1 "text-decoration-line" textDecorationLinesToString
 
@@ -2335,13 +2382,13 @@ textDecorationLines =
 
     ~ textDecorationStyle dotted
 -}
-textDecorationStyle : TextDecorationStyle -> ( String, String )
+textDecorationStyle : TextDecorationStyle -> Property class id namespace
 textDecorationStyle =
     prop1 "text-decoration-style" textDecorationStyleToString
 
 
 {-| -}
-outline : Float -> Length -> BorderStyle -> OpacityStyle -> ( String, String )
+outline : Float -> Length -> BorderStyle -> OpacityStyle -> Property class id namespace
 outline =
     prop4
         "outline"
@@ -2361,9 +2408,12 @@ names, or to set `animation-name: none;`
     ~ animationNames [ Foo, Bar ]
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationName : animation -> ( String, String )
-animationName identifier =
-    ( "animation-name", toCssIdentifier identifier )
+
+
+
+--animationName : animation -> Property class id namespace
+--animationName identifier =
+--    ( "animation-name", toCssIdentifier identifier )
 
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
@@ -2374,11 +2424,14 @@ Pass `[]` to set `animation-name: none;`
 
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationNames : List animation -> ( String, String )
-animationNames identifiers =
-    ( "animation-name"
-    , (String.join ", " (List.map toCssIdentifier identifiers))
-    )
+
+
+
+--animationNames : List animation -> Property class id namespace
+--animationNames identifiers =
+--    ( "animation-name"
+--    , (String.join ", " (List.map toCssIdentifier identifiers))
+--    )
 
 
 {-| An empty namespaced stylesheet. Use this as the foundation on which to build
@@ -2560,7 +2613,21 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             style
 
 
-{-| Inject the contents of a [`mixin`](#mixin).
+{-| A [property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
+
+    stylesheet "homepage"
+        $ body
+            ~ width 960 px
+            ~ color (rgb 7 7 7)
+
+To define a custom property, use [`custom`](#custom):
+
+    stylesheet "homepage"
+        $ body
+            ~ width 960 px
+            ~ (custom "-webkit-font-smoothing" "none")
+
+You can also use `~` to inject the contents of a [`mixin`](#mixin).
 
     underlineOnHover =
         mixin "underlineOnHover"
@@ -2571,9 +2638,9 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
 
     a . FancyLink
         ~ color (rgb 128 64 32)
-        ~= underlineOnHover
+        ~ underlineOnHover
 
-...has the same result as:
+...will have the same output as:
 
     a . FancyLink
         ~ color (rgb 128 64 32)
@@ -2582,14 +2649,14 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
         &: hover
             ~ textDecoration underline
 -}
-(~=) : Style class id namespace -> Style class id namespace -> Style class id namespace
-(~=) style mixinToApply =
+(~) : Style class id namespace -> Style class id namespace -> Style class id namespace
+(~) style mixinToApply =
     case mixinToApply of
         Mixin update ->
             update style
 
         NamespacedStyle name _ ->
-            InvalidStyle ("A stylesheet with namespace " ++ (toString name) ++ " is not a valid mixin.")
+            InvalidStyle ("A stylesheet with namespace " ++ (toString name) ++ " is not a valid property or mixin.")
 
         InvalidStyle _ ->
             style
@@ -2608,6 +2675,22 @@ lastSelectorToMulti selector otherSelectors =
 
         first :: rest ->
             first :: (lastSelectorToMulti selector rest)
+
+
+{-| Define a custom property.
+
+    $ body
+        ~ custom "-webkit-font-smoothing" "none"
+
+...outputs
+
+    body {
+        -webkit-font-smoothing: none;
+    }
+-}
+custom : String -> String -> Property class id namespace
+custom key value =
+    prop1 key identity value
 
 
 introduceSelector : Selector -> List Declaration -> List Declaration
@@ -2648,96 +2731,6 @@ introduceSelector selector declarations =
         {- We haven't reached the last declaration yet, so recurse. -}
         firstDeclaration :: otherDeclarations ->
             firstDeclaration :: (introduceSelector selector otherDeclarations)
-
-
-{-| A [property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
-
-    stylesheet "homepage"
-        $ body
-            ~ width 960 px
-            ~ color (rgb 7 7 7)
-
-You can also give `~` an arbitrary key-value pair:
-
-    stylesheet "homepage"
-        $ body
-            ~ width 960 px
-            ~ ("-webkit-font-smoothing", "none")
--}
-(~) : Style class id namespace -> ( String, String ) -> Style class id namespace
-(~) style tuple =
-    case style of
-        NamespacedStyle name declarations ->
-            case addProperty "~" (toProperty name tuple False) declarations of
-                Ok newDeclarations ->
-                    NamespacedStyle name newDeclarations
-
-                Err message ->
-                    InvalidStyle message
-
-        Mixin update ->
-            Mixin (\subject -> (update subject) ~ tuple)
-
-        InvalidStyle _ ->
-            style
-
-
-{-| Create a Property record, adding a namespace prefix for animation-frame
-if applicable.
--}
-toProperty : namespace -> ( String, String ) -> Bool -> Property
-toProperty name tuple important =
-    case tuple of
-        ( "animation-name" as key, "" ) ->
-            { key = key
-            , value = "none"
-            , important = important
-            }
-
-        ( "animation-name" as key, value ) ->
-            { key = key
-            , value = (toCssIdentifier name) ++ value
-            , important = important
-            }
-
-        ( key, value ) ->
-            { key = key
-            , value = value
-            , important = important
-            }
-
-
-{-| An [`!important`](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity#The_!important_exception)
-property.
-
-    stylesheet "homepage"
-        $ button
-            ~ color (rgb 7 7 7)
-            ! fontWeight normal
-
-You can also give `!` an arbitrary key-value pair:
-
-    stylesheet "homepage"
-        $ body
-            ~ width 960 px
-            ! ("-webkit-font-smoothing", "none")
--}
-(!) : Style class id namespace -> ( String, String ) -> Style class id namespace
-(!) style (( key, value ) as tuple) =
-    case style of
-        NamespacedStyle name declarations ->
-            case addProperty "!" (toProperty name tuple True) declarations of
-                Ok newDeclarations ->
-                    NamespacedStyle name newDeclarations
-
-                Err message ->
-                    InvalidStyle message
-
-        Mixin update ->
-            Mixin (\subject -> (update subject) ! tuple)
-
-        InvalidStyle _ ->
-            style
 
 
 {-|
@@ -2889,7 +2882,7 @@ extendTypeSelector operatorName update style =
             style
 
 
-extendLastMixinSelector : String -> (CompoundSelector -> CompoundSelector) -> List ( List CompoundSelector, List Property ) -> Result String (List ( List CompoundSelector, List Property ))
+extendLastMixinSelector : String -> (CompoundSelector -> CompoundSelector) -> List ( List CompoundSelector, List (Property class id namespace) ) -> Result String (List ( List CompoundSelector, List (Property class id namespace) ))
 extendLastMixinSelector operatorName update mixinStyles =
     case mixinStyles of
         [] ->
@@ -3355,11 +3348,11 @@ selectorToBlock selector =
     StyleBlock (SingleSelector selector) [] []
 
 
-addProperty : String -> Property -> List Declaration -> Result String (List Declaration)
-addProperty operatorName property declarations =
+addProperty : Declaration.Property -> List Declaration -> Result String (List Declaration)
+addProperty property declarations =
     case declarations of
         [] ->
-            Err (operatorName ++ " cannot be used as the first declaration.")
+            Err "`~` cannot be used as the first declaration."
 
         declaration :: [] ->
             case declaration of
@@ -3374,13 +3367,13 @@ addProperty operatorName property declarations =
                         Ok [ newDeclaration ]
 
                 ConditionalGroupRule _ _ ->
-                    Err (operatorName ++ " cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
+                    Err ("`~` cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
 
                 StandaloneAtRule _ _ ->
-                    Err (operatorName ++ " cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
+                    Err ("`~` cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
 
         first :: rest ->
-            case addProperty operatorName property rest of
+            case addProperty property rest of
                 Ok result ->
                     Ok (first :: result)
 

@@ -76,8 +76,8 @@ keyValue : Style CssClasses CssIds String
 keyValue =
     stylesheet { name = "multiSelector" }
         $ body
-            ~ ("-webkit-font-smoothing", "none")
-            ! ("-moz-font-smoothing", "none")
+            ~ custom "-webkit-font-smoothing" "none"
+            ~ important (custom "-moz-font-smoothing" "none")
 
 
 leftRightTopBottom : Style CssClasses CssIds String
@@ -129,7 +129,7 @@ dreamwriter =
                 ~ height (pct 100)
 
         . Hidden
-            ! display none
+            ~ important (display none)
 
         # Page
             ~ width (pct 100)
@@ -165,7 +165,7 @@ mixinGreenOnHoverStyle =
     stylesheet { name = "greenOnHoverStylesheet" }
         $ button
             ~ color (rgb 11 22 33)
-            ~= greenOnHover
+            ~ greenOnHover
 
 
 mixinUnderlineOnHoverStyle : Style CssClasses CssIds String
@@ -173,7 +173,7 @@ mixinUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
             --~ color (rgb 128 64 32)
-            ~= underlineOnHover
+            ~ underlineOnHover
 
 
 manualUnderlineOnHoverStyle : Style CssClasses CssIds String
