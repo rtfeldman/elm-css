@@ -375,9 +375,8 @@ type alias Length =
 in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
 we implement it as a property (for the `left: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
-that it will return the desired String in the first part of the tuple, and use
-that. (See `textAlignToString`. Note that `VerticalAlign follows a similar
-pattern.)
+that it will return the desired String as its key, and use that as our value.
+(See `getOverloadedProperty`. Note that `VerticalAlign` follows a similar pattern.)
 -}
 
 
@@ -390,9 +389,8 @@ type alias TextAlign class id namespace =
 in CSS (e.g. `top: 5px` with `position: absolute` and `vertical-align: top`),
 we implement it as a property (for the `top: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
-that it will return the desired String in the first part of the tuple, and use
-that. (See `verticalAlignToString`. Note that `TextAlign` follows a similar
-pattern.)
+that it will return the desired String as its key, and use that as our value.
+(See `getOverloadedProperty`. Note that `TextAlign` follows a similar pattern.)
 -}
 
 
