@@ -366,8 +366,12 @@ type alias OpacityStyle =
     PropertyValue (TransparentOr ExplicitOpacityStyle)
 
 
-type alias Length =
+type alias LengthOrAuto =
     PropertyValue (AutoOr ExplicitLength)
+
+
+type alias Length =
+    LengthOrAuto
 
 
 
@@ -1076,26 +1080,42 @@ opacity =
     prop1 "opacity" toString
 
 
-{-| -}
-width : Length -> Property namespace animation class id
+{-| Sets [`width`](https://developer.mozilla.org/en-US/docs/Web/CSS/width)
+
+    ~ width (px 960)
+
+-}
+width : LengthOrAuto -> Property namespace animation class id
 width =
     prop1 "width" lengthToString
 
 
-{-| -}
-minWidth : Length -> Property namespace animation class id
+{-| Sets [`min-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-width)
+
+    ~ minWidth (px 100)
+
+-}
+minWidth : LengthOrAuto -> Property namespace animation class id
 minWidth =
     prop1 "min-width" lengthToString
 
 
-{-| -}
-height : Length -> Property namespace animation class id
+{-| Sets [`height`](https://developer.mozilla.org/en-US/docs/Web/CSS/height)
+
+    ~ height (px 800)
+
+-}
+height : LengthOrAuto -> Property namespace animation class id
 height =
     prop1 "height" lengthToString
 
 
-{-| -}
-minHeight : Length -> Property namespace animation class id
+{-| Sets [`min-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height)
+
+    ~ minHeight (px 100)
+
+-}
+minHeight : LengthOrAuto -> Property namespace animation class id
 minHeight =
     prop1 "min-height" lengthToString
 
@@ -1162,7 +1182,7 @@ padding4 =
 
     paddingBlockStart (px 10)
 -}
-paddingBlockStart : Length -> Property namespace animation class id
+paddingBlockStart : LengthOrAuto -> Property namespace animation class id
 paddingBlockStart =
     prop1 "padding-block-start" lengthToString
 
@@ -1171,7 +1191,7 @@ paddingBlockStart =
 
     paddingBlockEnd (px 10)
 -}
-paddingBlockEnd : Length -> Property namespace animation class id
+paddingBlockEnd : LengthOrAuto -> Property namespace animation class id
 paddingBlockEnd =
     prop1 "padding-block-end" lengthToString
 
@@ -1180,7 +1200,7 @@ paddingBlockEnd =
 
     paddingInlineStart (px 10)
 -}
-paddingInlineStart : Length -> Property namespace animation class id
+paddingInlineStart : LengthOrAuto -> Property namespace animation class id
 paddingInlineStart =
     prop1 "padding-inline-start" lengthToString
 
@@ -1189,7 +1209,7 @@ paddingInlineStart =
 
     paddingInlineEnd (px 10)
 -}
-paddingInlineEnd : Length -> Property namespace animation class id
+paddingInlineEnd : LengthOrAuto -> Property namespace animation class id
 paddingInlineEnd =
     prop1 "padding-inline-end" lengthToString
 
@@ -1241,7 +1261,7 @@ paddingLeft =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin : Length -> Property namespace animation class id
+margin : LengthOrAuto -> Property namespace animation class id
 margin =
     prop1 "margin" lengthToString
 
@@ -1253,7 +1273,7 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : Length -> Length -> Property namespace animation class id
+margin2 : LengthOrAuto -> LengthOrAuto -> Property namespace animation class id
 margin2 =
     prop2 "margin" lengthToString lengthToString
 
@@ -1265,7 +1285,7 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : Length -> Length -> Length -> Property namespace animation class id
+margin3 : LengthOrAuto -> LengthOrAuto -> LengthOrAuto -> Property namespace animation class id
 margin3 =
     prop3 "margin" lengthToString lengthToString lengthToString
 
@@ -1277,7 +1297,7 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : Length -> Length -> Length -> Length -> Property namespace animation class id
+margin4 : LengthOrAuto -> LengthOrAuto -> LengthOrAuto -> LengthOrAuto -> Property namespace animation class id
 margin4 =
     prop4 "margin" lengthToString lengthToString lengthToString lengthToString
 
@@ -1286,7 +1306,7 @@ margin4 =
 
     marginTop (px 10)
 -}
-marginTop : Length -> Property namespace animation class id
+marginTop : LengthOrAuto -> Property namespace animation class id
 marginTop =
     prop1 "margin-top" lengthToString
 
@@ -1295,7 +1315,7 @@ marginTop =
 
     marginBottom (px 10)
 -}
-marginBottom : Length -> Property namespace animation class id
+marginBottom : LengthOrAuto -> Property namespace animation class id
 marginBottom =
     prop1 "margin-bottom" lengthToString
 
@@ -1304,7 +1324,7 @@ marginBottom =
 
     marginRight (px 10)
 -}
-marginRight : Length -> Property namespace animation class id
+marginRight : LengthOrAuto -> Property namespace animation class id
 marginRight =
     prop1 "margin-right" lengthToString
 
@@ -1313,7 +1333,7 @@ marginRight =
 
     marginLeft (px 10)
 -}
-marginLeft : Length -> Property namespace animation class id
+marginLeft : LengthOrAuto -> Property namespace animation class id
 marginLeft =
     prop1 "margin-left" lengthToString
 
@@ -1322,7 +1342,7 @@ marginLeft =
 
     marginBlockStart (px 10)
 -}
-marginBlockStart : Length -> Property namespace animation class id
+marginBlockStart : LengthOrAuto -> Property namespace animation class id
 marginBlockStart =
     prop1 "margin-block-start" lengthToString
 
@@ -1331,7 +1351,7 @@ marginBlockStart =
 
     marginBlockEnd (px 10)
 -}
-marginBlockEnd : Length -> Property namespace animation class id
+marginBlockEnd : LengthOrAuto -> Property namespace animation class id
 marginBlockEnd =
     prop1 "margin-block-end" lengthToString
 
@@ -1340,7 +1360,7 @@ marginBlockEnd =
 
     marginInlineStart (px 10)
 -}
-marginInlineStart : Length -> Property namespace animation class id
+marginInlineStart : LengthOrAuto -> Property namespace animation class id
 marginInlineStart =
     prop1 "margin-inline-start" lengthToString
 
@@ -1349,7 +1369,7 @@ marginInlineStart =
 
     marginInlineEnd (px 10)
 -}
-marginInlineEnd : Length -> Property namespace animation class id
+marginInlineEnd : LengthOrAuto -> Property namespace animation class id
 marginInlineEnd =
     prop1 "margin-inline-end" lengthToString
 
@@ -1363,7 +1383,7 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
 
     ~ verticalAlign top
 -}
-top : Length -> Property namespace animation class id
+top : LengthOrAuto -> Property namespace animation class id
 top =
     prop1 "top" lengthToString
 
@@ -1377,7 +1397,7 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
 
     ~ verticalAlign bottom
 -}
-bottom : Length -> Property namespace animation class id
+bottom : LengthOrAuto -> Property namespace animation class id
 bottom =
     prop1 "bottom" lengthToString
 
@@ -1391,7 +1411,7 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
     ~ textAlign left
 -}
-left : Length -> Property namespace animation class id
+left : LengthOrAuto -> Property namespace animation class id
 left =
     prop1 "left" lengthToString
 
@@ -1405,7 +1425,7 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
     ~ textAlign right
 -}
-right : Length -> Property namespace animation class id
+right : LengthOrAuto -> Property namespace animation class id
 right =
     prop1 "right" lengthToString
 
