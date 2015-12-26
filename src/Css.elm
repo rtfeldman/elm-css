@@ -897,22 +897,22 @@ prop1 key translate value =
 
 prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> ( String, String )
 prop2 key translateA translateB valueA valueB =
-    ( key, String.join " " [ translateA valueA, translateB valueB ] )
+    prop1 key (String.join " ") [ translateA valueA, translateB valueB ]
 
 
 prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> ( String, String )
 prop3 key translateA translateB translateC valueA valueB valueC =
-    ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC ] )
+    prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC ]
 
 
 prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> ( String, String )
 prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
-    ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ] )
+    prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ]
 
 
 prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> ( String, String )
 prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
-    ( key, String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ] )
+    prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ]
 
 
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
