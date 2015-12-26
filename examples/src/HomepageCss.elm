@@ -1,6 +1,7 @@
 module HomepageCss (css) where
 
 import Css exposing (..)
+import Css.Elements exposing (..)
 import SharedStyles exposing (..)
 
 
