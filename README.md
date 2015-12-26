@@ -97,11 +97,3 @@ ul.dreamwriterNavBar > li {
   color: #ccffaa;
 }
 ```
-
-## Development
-
-To get your environment working, just install the dependencies and head to [http://localhost:8000/app/index.html](http://localhost:8000/app/index.html).
-
-```console
-$ elm-package install
-```
