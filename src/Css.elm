@@ -140,19 +140,15 @@ positionToString =
         |> propertyValueToString
 
 
-verticalAlign : TextAlign class id namespace -> Property class id namespace
-verticalAlign fn =
-    case fn zero of
+getOverloadedProperty functionName key style =
+    case style of
         NamespacedStyle name _ ->
-            InvalidStyle ("`textAlign` must be given a mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
+            InvalidStyle ("`" ++ functionName ++ "` must be given a mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
 
         Mixin applyMixin ->
             let
                 newStyleFromDeclarations style name declarations =
                     let
-                        key =
-                            "vertical-align"
-
                         value =
                             getLastProperty declarations
                                 |> Maybe.map .key
@@ -161,7 +157,7 @@ verticalAlign fn =
                         update _ =
                             { key = key, value = value, important = False }
                     in
-                        case updateLastProperty "verticalAlign" update declarations of
+                        case updateLastProperty functionName update declarations of
                             Ok newDeclarations ->
                                 NamespacedStyle name newDeclarations
 
@@ -172,50 +168,6 @@ verticalAlign fn =
 
         (InvalidStyle _) as invalidStyle ->
             invalidStyle
-
-
-textAlign : TextAlign class id namespace -> Property class id namespace
-textAlign fn =
-    case fn zero of
-        NamespacedStyle name _ ->
-            InvalidStyle ("`textAlign` must be given a mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
-
-        Mixin applyMixin ->
-            let
-                newStyleFromDeclarations style name declarations =
-                    let
-                        key =
-                            "text-align"
-
-                        value =
-                            getLastProperty declarations
-                                |> Maybe.map .key
-                                |> Maybe.withDefault ""
-
-                        update _ =
-                            { key = key, value = value, important = False }
-                    in
-                        case updateLastProperty "textAlign" update declarations of
-                            Ok newDeclarations ->
-                                NamespacedStyle name newDeclarations
-
-                            Err message ->
-                                InvalidStyle message
-            in
-                Mixin (applyMixin >> (resolveMixin newStyleFromDeclarations))
-
-        (InvalidStyle _) as invalidStyle ->
-            invalidStyle
-
-
-textAlignToString : TextAlign class id namespace -> String
-textAlignToString fn =
-    lastPropertyKeyToString (fn zero)
-
-
-verticalAlignToString : VerticalAlign class id namespace -> String
-verticalAlignToString fn =
-    lastPropertyKeyToString (fn zero)
 
 
 lastPropertyKeyToString : Style class id namespace -> String
@@ -1074,28 +1026,22 @@ textDecorationColor =
     ~ ("text-align-last", "auto")
 -}
 textAlignLast : TextAlign class id namespace -> Property class id namespace
-textAlignLast =
-    prop1 "text-align-last" textAlignToString
+textAlignLast fn =
+    getOverloadedProperty "textAlignLast" "text-align-last" (fn zero)
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-
-
-
---textAlign : TextAlign class id namespace -> Property class id namespace
---textAlign =
---    prop1 "text-align" textAlignToString
+textAlign : TextAlign class id namespace -> Property class id namespace
+textAlign fn =
+    getOverloadedProperty "textAlign" "text-align" (fn zero)
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-
-
-
---verticalAlign : VerticalAlign class id namespace -> Property class id namespace
---verticalAlign =
---    prop1 "vertical-align" verticalAlignToString
+verticalAlign : VerticalAlign class id namespace -> Property class id namespace
+verticalAlign fn =
+    getOverloadedProperty "verticalAlign" "vertical-align" (fn zero)
 
 
 {-| -}
