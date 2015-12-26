@@ -151,7 +151,7 @@ dreamwriter =
               display: none !important;
             }
 
-            #Page {
+            #dreamwriterPage {
               width: 100%;
               height: 100%;
               box-sizing: border-box;
@@ -224,7 +224,7 @@ multiSelector =
             Fixtures.multiSelector
 
         output = """
-          div#Page.multiSelectorHidden {
+          div#multiSelectorPage.multiSelectorHidden {
             display: none;
             width: 100%;
             height: 100%;

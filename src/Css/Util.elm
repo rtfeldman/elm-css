@@ -1,9 +1,9 @@
-module Css.Util (toCssIdentifier, classToString) where
+module Css.Util (toCssIdentifier, identifierToString) where
 
 {-| Utility functions for elm-css. Exposed for the benefit of external
  helper modules.
 
-@docs toCssIdentifier, classToString
+@docs toCssIdentifier, identifierToString
 -}
 
 import Regex
@@ -23,9 +23,9 @@ toCssIdentifier identifier =
         |> Regex.replace Regex.All (Regex.regex "[^a-zA-Z0-9_-]") (\_ -> "")
 
 
-{-| Converts an arbitrary class value to a valid CSS identifier, then prepends
-the given namespace (if it is non-empty), along with an `_` character.
+{-| Converts an arbitrary identifier to a valid CSS identifier, then prepends
+the given namespace.
 -}
-classToString : a -> b -> String
-classToString name class =
-    (toCssIdentifier name) ++ (toCssIdentifier class)
+identifierToString : a -> b -> String
+identifierToString name identifier =
+    (toCssIdentifier name) ++ (toCssIdentifier identifier)

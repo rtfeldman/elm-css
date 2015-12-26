@@ -37,7 +37,7 @@ deprecated or discouraged.
 
 import Css.Declaration as Declaration exposing (..)
 import Css.Elements exposing (Tag, tagToString)
-import Css.Util exposing (toCssIdentifier, classToString)
+import Css.Util exposing (toCssIdentifier, identifierToString)
 import Style exposing (Style(..))
 import String
 
@@ -2435,21 +2435,17 @@ mixin =
 -}
 (#) : Style class id namespace -> id -> Style class id namespace
 (#) style id =
-    let
-        selector =
-            IdSelector (toCssIdentifier id)
-    in
-        case style of
-            NamespacedStyle name declarations ->
-                declarations
-                    |> introduceSelector selector
-                    |> NamespacedStyle name
+    case style of
+        NamespacedStyle name declarations ->
+            declarations
+                |> introduceSelector (IdSelector (identifierToString name id))
+                |> NamespacedStyle name
 
-            Mixin update ->
-                Mixin (\subject -> (update subject) # id)
+        Mixin update ->
+            Mixin (\subject -> (update subject) # id)
 
-            InvalidStyle _ ->
-                style
+        InvalidStyle _ ->
+            style
 
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
@@ -2469,7 +2465,7 @@ mixin =
     case style of
         NamespacedStyle name declarations ->
             declarations
-                |> introduceSelector (ClassSelector (classToString name class))
+                |> introduceSelector (ClassSelector (identifierToString name class))
                 |> NamespacedStyle name
 
         Mixin update ->
@@ -2743,7 +2739,7 @@ You can also give `!` an arbitrary key-value pair:
 (>.) style class =
     extendTypeSelector
         ">."
-        (\name -> (Child (SingleSelector (ClassSelector (classToString name class)))))
+        (\name -> (Child (SingleSelector (ClassSelector (identifierToString name class)))))
         style
 
 
@@ -2752,7 +2748,7 @@ You can also give `!` an arbitrary key-value pair:
 (>>.) style class =
     extendTypeSelector
         ">>."
-        (\name -> (Descendant (SingleSelector (ClassSelector (classToString name class)))))
+        (\name -> (Descendant (SingleSelector (ClassSelector (identifierToString name class)))))
         style
 
 
@@ -2761,7 +2757,7 @@ You can also give `!` an arbitrary key-value pair:
 (+.) style class =
     extendTypeSelector
         "+."
-        (\name -> (AdjacentSibling (SingleSelector (ClassSelector (classToString name class)))))
+        (\name -> (AdjacentSibling (SingleSelector (ClassSelector (identifierToString name class)))))
         style
 
 
@@ -2770,7 +2766,7 @@ You can also give `!` an arbitrary key-value pair:
 (~.) style class =
     extendTypeSelector
         "~."
-        (\name -> (GeneralSibling (SingleSelector (ClassSelector (classToString name class)))))
+        (\name -> (GeneralSibling (SingleSelector (ClassSelector (identifierToString name class)))))
         style
 
 
@@ -2779,7 +2775,7 @@ You can also give `!` an arbitrary key-value pair:
 (>#) style id =
     extendTypeSelector
         ">#"
-        (\_ -> (Child (SingleSelector (IdSelector (toCssIdentifier id)))))
+        (\name -> (Child (SingleSelector (IdSelector (identifierToString name id)))))
         style
 
 
@@ -2788,7 +2784,7 @@ You can also give `!` an arbitrary key-value pair:
 (>>#) style id =
     extendTypeSelector
         ">>#"
-        (\_ -> (Descendant (SingleSelector (IdSelector (toCssIdentifier id)))))
+        (\name -> (Descendant (SingleSelector (IdSelector (identifierToString name id)))))
         style
 
 
@@ -2797,7 +2793,7 @@ You can also give `!` an arbitrary key-value pair:
 (+#) style id =
     extendTypeSelector
         "+#"
-        (\_ -> (AdjacentSibling (SingleSelector (IdSelector (toCssIdentifier id)))))
+        (\name -> (AdjacentSibling (SingleSelector (IdSelector (identifierToString name id)))))
         style
 
 
@@ -2806,7 +2802,7 @@ You can also give `!` an arbitrary key-value pair:
 (~#) style id =
     extendTypeSelector
         "~#"
-        (\_ -> (GeneralSibling (SingleSelector (IdSelector (toCssIdentifier id)))))
+        (\name -> (GeneralSibling (SingleSelector (IdSelector (identifierToString name id)))))
         style
 
 
