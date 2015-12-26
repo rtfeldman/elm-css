@@ -262,7 +262,7 @@ keyValue =
         """
     in
         suite
-            "Arbitrary key-value properties"
+            "Custom key-value properties"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]

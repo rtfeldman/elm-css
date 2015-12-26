@@ -906,60 +906,27 @@ position =
 
 prop1 : String -> (a -> String) -> a -> Property class id namespace
 prop1 key translate value =
-    let
-        property =
-            { key = key, value = translate value, important = False }
-
-        update : Style class id namespace -> Style class id namespace
-        update style =
-            case style of
-                NamespacedStyle name declarations ->
-                    case addProperty property declarations of
-                        Ok newDeclarations ->
-                            NamespacedStyle name newDeclarations
-
-                        Err message ->
-                            InvalidStyle message
-
-                Mixin applyMixin ->
-                    let
-                        newUpdate subject =
-                            case applyMixin subject of
-                                (NamespacedStyle _ _) as newStyle ->
-                                    update newStyle
-
-                                Mixin subUpdate ->
-                                    Mixin (subUpdate >> newUpdate)
-
-                                (InvalidStyle _) as invalidStyle ->
-                                    invalidStyle
-                    in
-                        Mixin newUpdate
-
-                InvalidStyle _ ->
-                    style
-    in
-        Mixin update
+    custom key (translate value)
 
 
 prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> Property class id namespace
 prop2 key translateA translateB valueA valueB =
-    prop1 key (String.join " ") [ translateA valueA, translateB valueB ]
+    custom key (String.join " " [ translateA valueA, translateB valueB ])
 
 
 prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> Property class id namespace
 prop3 key translateA translateB translateC valueA valueB valueC =
-    prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC ]
+    custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC ])
 
 
 prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> Property class id namespace
 prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
-    prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ]
+    custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ])
 
 
 prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> Property class id namespace
 prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
-    prop1 key (String.join " ") [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ]
+    custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ])
 
 
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
@@ -2690,7 +2657,40 @@ lastSelectorToMulti selector otherSelectors =
 -}
 custom : String -> String -> Property class id namespace
 custom key value =
-    prop1 key identity value
+    let
+        property =
+            { key = key, value = value, important = False }
+
+        update : Style class id namespace -> Style class id namespace
+        update style =
+            case style of
+                NamespacedStyle name declarations ->
+                    case addProperty property declarations of
+                        Ok newDeclarations ->
+                            NamespacedStyle name newDeclarations
+
+                        Err message ->
+                            InvalidStyle message
+
+                Mixin applyMixin ->
+                    let
+                        newUpdate subject =
+                            case applyMixin subject of
+                                (NamespacedStyle _ _) as newStyle ->
+                                    update newStyle
+
+                                Mixin subUpdate ->
+                                    Mixin (subUpdate >> newUpdate)
+
+                                (InvalidStyle _) as invalidStyle ->
+                                    invalidStyle
+                    in
+                        Mixin newUpdate
+
+                InvalidStyle _ ->
+                    style
+    in
+        Mixin update
 
 
 introduceSelector : Selector -> List Declaration -> List Declaration
