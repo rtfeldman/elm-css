@@ -7,18 +7,19 @@ import Style exposing (Style(..))
 
 type CssClasses = Hidden
 type CssIds = Page
+type CssAnimations = Wobble
 
 pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
 
-unstyledDiv : Style a b String
+unstyledDiv : Style String a b c
 unstyledDiv =
     stylesheet { name = "" }
         $ div
 
 
-divWidthHeight : Style a b String
+divWidthHeight : Style String a b c
 divWidthHeight =
     stylesheet { name = "" }
         $ div
@@ -26,7 +27,7 @@ divWidthHeight =
             ~ height (px 50)
 
 
-multiDescendent : Style CssClasses CssIds String
+multiDescendent : Style String CssAnimations CssClasses CssIds
 multiDescendent =
     stylesheet { name = "" }
         $ html |$ body
@@ -56,7 +57,7 @@ multiDescendent =
                 ~ height (pct 2)
 
 
-multiSelector : Style CssClasses CssIds String
+multiSelector : Style String CssAnimations CssClasses CssIds
 multiSelector =
     stylesheet { name = "multiSelector" }
         $ div # Page . Hidden
@@ -72,15 +73,15 @@ multiSelector =
                 ~ width (px 1)
                 ~ height (pct 2)
 
-keyValue : Style CssClasses CssIds String
+keyValue : Style String CssAnimations CssClasses CssIds
 keyValue =
     stylesheet { name = "multiSelector" }
         $ body
-            ~ ("-webkit-font-smoothing", "none")
-            ! ("-moz-font-smoothing", "none")
+            ~ custom "-webkit-font-smoothing" "none"
+            ~ ((custom "-moz-font-smoothing" "none") |> important)
 
 
-leftRightTopBottom : Style CssClasses CssIds String
+leftRightTopBottom : Style String CssAnimations CssClasses CssIds
 leftRightTopBottom =
     stylesheet { name = "left-right-top-bottom" }
         $ div
@@ -98,7 +99,7 @@ leftRightTopBottom =
             ~ verticalAlign top
 
 
-borders : Style CssClasses CssIds String
+borders : Style String CssAnimations CssClasses CssIds
 borders =
     stylesheet { name = "border-test" }
         $ button
@@ -110,7 +111,7 @@ borders =
             ~ border2 (px 10) solid
 
 
-dreamwriter : Style CssClasses CssIds String
+dreamwriter : Style String CssAnimations CssClasses CssIds
 dreamwriter =
     stylesheet { name = "dreamwriter" }
         $ html |$ body
@@ -129,7 +130,7 @@ dreamwriter =
                 ~ height (pct 100)
 
         . Hidden
-            ! display none
+            ~ ((display none) |> important)
 
         # Page
             ~ width (pct 100)
@@ -142,7 +143,7 @@ dreamwriter =
             ~ color pageDefaultText
 
 
-underlineOnHover : Style CssClasses CssIds String
+underlineOnHover : Style String CssAnimations CssClasses CssIds
 underlineOnHover =
     mixin
         --~ textDecoration none
@@ -153,30 +154,30 @@ underlineOnHover =
             ~ color (rgb 23 24 25)
 
 
-greenOnHover : Style CssClasses CssIds String
+greenOnHover : Style String CssAnimations CssClasses CssIds
 greenOnHover =
     mixin
         &: hover
             ~ color (rgb 0 0 122)
 
 
-mixinGreenOnHoverStyle : Style CssClasses CssIds String
+mixinGreenOnHoverStyle : Style String CssAnimations CssClasses CssIds
 mixinGreenOnHoverStyle =
     stylesheet { name = "greenOnHoverStylesheet" }
         $ button
             ~ color (rgb 11 22 33)
-            ~= greenOnHover
+            ~ greenOnHover
 
 
-mixinUnderlineOnHoverStyle : Style CssClasses CssIds String
+mixinUnderlineOnHoverStyle : Style String CssAnimations CssClasses CssIds
 mixinUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
             --~ color (rgb 128 64 32)
-            ~= underlineOnHover
+            ~ underlineOnHover
 
 
-manualUnderlineOnHoverStyle : Style CssClasses CssIds String
+manualUnderlineOnHoverStyle : Style String CssAnimations CssClasses CssIds
 manualUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a

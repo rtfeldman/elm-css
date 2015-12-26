@@ -147,11 +147,11 @@ dreamwriter =
               height: 100%;
             }
 
-            .dreamwriter_Hidden {
+            .dreamwriterHidden {
               display: none !important;
             }
 
-            #Page {
+            #dreamwriterPage {
               width: 100%;
               height: 100%;
               box-sizing: border-box;
@@ -224,7 +224,7 @@ multiSelector =
             Fixtures.multiSelector
 
         output = """
-          div#Page.multiSelector_Hidden {
+          div#multiSelectorPage.multiSelectorHidden {
             display: none;
             width: 100%;
             height: 100%;
@@ -262,7 +262,7 @@ keyValue =
         """
     in
         suite
-            "Arbitrary key-value properties"
+            "Custom key-value properties"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
