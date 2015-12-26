@@ -2351,6 +2351,36 @@ outline =
         opacityStyleToString
 
 
+{-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
+
+    ~ animationName  Foo
+
+You can also use [`animationNames`](#animationNames) to set multiple animation
+names, or to set `animation-name: none;`
+
+    ~ animationNames [ Foo, Bar ]
+    ~ animationNames [] -- outputs "animation-name: none;"
+-}
+animationName : animation -> ( String, String )
+animationName identifier =
+    ( "animation-name", toCssIdentifier identifier )
+
+
+{-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
+
+    ~ animationNames [ Foo, Bar ]
+
+Pass `[]` to set `animation-name: none;`
+
+    ~ animationNames [] -- outputs "animation-name: none;"
+-}
+animationNames : List animation -> ( String, String )
+animationNames identifiers =
+    ( "animation-name"
+    , (String.join ", " (List.map toCssIdentifier identifiers))
+    )
+
+
 {-| An empty namespaced stylesheet. Use this as the foundation on which to build
 your stylesheet.
 
@@ -2635,25 +2665,46 @@ You can also give `~` an arbitrary key-value pair:
             ~ ("-webkit-font-smoothing", "none")
 -}
 (~) : Style class id namespace -> ( String, String ) -> Style class id namespace
-(~) style (( key, value ) as tuple) =
-    let
-        property =
-            { key = key, value = value, important = False }
-    in
-        case style of
-            NamespacedStyle name declarations ->
-                case addProperty "~" property declarations of
-                    Ok newDeclarations ->
-                        NamespacedStyle name newDeclarations
+(~) style tuple =
+    case style of
+        NamespacedStyle name declarations ->
+            case addProperty "~" (toProperty name tuple False) declarations of
+                Ok newDeclarations ->
+                    NamespacedStyle name newDeclarations
 
-                    Err message ->
-                        InvalidStyle message
+                Err message ->
+                    InvalidStyle message
 
-            Mixin update ->
-                Mixin (\subject -> (update subject) ~ tuple)
+        Mixin update ->
+            Mixin (\subject -> (update subject) ~ tuple)
 
-            InvalidStyle _ ->
-                style
+        InvalidStyle _ ->
+            style
+
+
+{-| Create a Property record, adding a namespace prefix for animation-frame
+if applicable.
+-}
+toProperty : namespace -> ( String, String ) -> Bool -> Property
+toProperty name tuple important =
+    case tuple of
+        ( "animation-name" as key, "" ) ->
+            { key = key
+            , value = "none"
+            , important = important
+            }
+
+        ( "animation-name" as key, value ) ->
+            { key = key
+            , value = (toCssIdentifier name) ++ value
+            , important = important
+            }
+
+        ( key, value ) ->
+            { key = key
+            , value = value
+            , important = important
+            }
 
 
 {-| An [`!important`](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity#The_!important_exception)
@@ -2673,24 +2724,20 @@ You can also give `!` an arbitrary key-value pair:
 -}
 (!) : Style class id namespace -> ( String, String ) -> Style class id namespace
 (!) style (( key, value ) as tuple) =
-    let
-        property =
-            { key = key, value = value, important = True }
-    in
-        case style of
-            NamespacedStyle name declarations ->
-                case addProperty "!" property declarations of
-                    Ok newDeclarations ->
-                        NamespacedStyle name newDeclarations
+    case style of
+        NamespacedStyle name declarations ->
+            case addProperty "!" (toProperty name tuple True) declarations of
+                Ok newDeclarations ->
+                    NamespacedStyle name newDeclarations
 
-                    Err message ->
-                        InvalidStyle message
+                Err message ->
+                    InvalidStyle message
 
-            Mixin update ->
-                Mixin (\subject -> (update subject) ! tuple)
+        Mixin update ->
+            Mixin (\subject -> (update subject) ! tuple)
 
-            InvalidStyle _ ->
-                style
+        InvalidStyle _ ->
+            style
 
 
 {-|
