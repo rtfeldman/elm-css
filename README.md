@@ -37,7 +37,7 @@ dreamwriter =
             ~ minWidth (px 1280)
 
         . Hidden
-            ! display none
+            ~ ((display none) |> important)
 
         # Page
             ~ backgroundColor (rgb 200 128 64)

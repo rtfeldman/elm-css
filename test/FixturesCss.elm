@@ -77,7 +77,7 @@ keyValue =
     stylesheet { name = "multiSelector" }
         $ body
             ~ custom "-webkit-font-smoothing" "none"
-            ~ important (custom "-moz-font-smoothing" "none")
+            ~ ((custom "-moz-font-smoothing" "none") |> important)
 
 
 leftRightTopBottom : Style CssClasses CssIds String
@@ -129,7 +129,7 @@ dreamwriter =
                 ~ height (pct 100)
 
         . Hidden
-            ~ important (display none)
+            ~ ((display none) |> important)
 
         # Page
             ~ width (pct 100)
