@@ -412,8 +412,28 @@ all =
 declaration.
 -}
 important : Property class id namespace -> Property class id namespace
-important =
-    identity
+important style =
+    case style of
+        NamespacedStyle name newDeclarations ->
+            InvalidStyle ("`important` must be given a property or mixin, not a stylesheet with namespace " ++ (toCssIdentifier name))
+
+        Mixin applyMixin ->
+            let
+                update property =
+                    { property | important = True }
+
+                newStyleFromDeclarations style name declarations =
+                    case updateLastProperty "important" update declarations of
+                        Ok newDeclarations ->
+                            NamespacedStyle name newDeclarations
+
+                        Err message ->
+                            InvalidStyle message
+            in
+                Mixin (applyMixin >> (resolveMixin newStyleFromDeclarations))
+
+        InvalidStyle _ ->
+            style
 
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
@@ -2661,36 +2681,40 @@ custom key value =
         property =
             { key = key, value = value, important = False }
 
-        update : Style class id namespace -> Style class id namespace
-        update style =
-            case style of
-                NamespacedStyle name declarations ->
-                    case addProperty property declarations of
-                        Ok newDeclarations ->
-                            NamespacedStyle name newDeclarations
+        newStyleFromDeclarations style name declarations =
+            case addProperty property declarations of
+                Ok newDeclarations ->
+                    NamespacedStyle name newDeclarations
 
-                        Err message ->
-                            InvalidStyle message
-
-                Mixin applyMixin ->
-                    let
-                        newUpdate subject =
-                            case applyMixin subject of
-                                (NamespacedStyle _ _) as newStyle ->
-                                    update newStyle
-
-                                Mixin subUpdate ->
-                                    Mixin (subUpdate >> newUpdate)
-
-                                (InvalidStyle _) as invalidStyle ->
-                                    invalidStyle
-                    in
-                        Mixin newUpdate
-
-                InvalidStyle _ ->
-                    style
+                Err message ->
+                    InvalidStyle message
     in
-        Mixin update
+        Mixin (resolveMixin newStyleFromDeclarations)
+
+
+resolveMixin : (Style class id namespace -> namespace -> List Declaration -> Style class id namespace) -> Style class id namespace -> Style class id namespace
+resolveMixin newStyleFromDeclarations style =
+    case style of
+        NamespacedStyle name declarations ->
+            newStyleFromDeclarations style name declarations
+
+        Mixin applyMixin ->
+            let
+                newUpdate subject =
+                    case applyMixin subject of
+                        (NamespacedStyle _ _) as newStyle ->
+                            resolveMixin newStyleFromDeclarations newStyle
+
+                        Mixin subUpdate ->
+                            Mixin (subUpdate >> newUpdate)
+
+                        (InvalidStyle _) as invalidStyle ->
+                            invalidStyle
+            in
+                Mixin newUpdate
+
+        InvalidStyle _ ->
+            style
 
 
 introduceSelector : Selector -> List Declaration -> List Declaration
@@ -3346,6 +3370,39 @@ type PseudoClass
 selectorToBlock : Selector -> Declaration
 selectorToBlock selector =
     StyleBlock (SingleSelector selector) [] []
+
+
+updateLastProperty : String -> (Declaration.Property -> Declaration.Property) -> List Declaration -> Result String (List Declaration)
+updateLastProperty functionName update declarations =
+    case declarations of
+        [] ->
+            Err ("`" ++ functionName ++ "` cannot update an empty list of declarations.")
+
+        declaration :: [] ->
+            case declaration of
+                StyleBlock firstSelector extraSelectors properties ->
+                    let
+                        newDeclaration =
+                            StyleBlock
+                                firstSelector
+                                extraSelectors
+                                (updateLast update properties)
+                    in
+                        Ok [ newDeclaration ]
+
+                ConditionalGroupRule _ _ ->
+                    Err ("`" ++ functionName ++ "` cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
+
+                StandaloneAtRule _ _ ->
+                    Err ("`" ++ functionName ++ "` cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
+
+        first :: rest ->
+            case updateLastProperty functionName update rest of
+                Ok result ->
+                    Ok (first :: result)
+
+                (Err _) as err ->
+                    err
 
 
 addProperty : Declaration.Property -> List Declaration -> Result String (List Declaration)
