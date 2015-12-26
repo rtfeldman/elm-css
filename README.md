@@ -37,7 +37,7 @@ dreamwriter =
             ~ minWidth (px 1280)
 
         . Hidden
-            ~ ((display none) |> important)
+            ~ display none
 
         # Page
             ~ backgroundColor (rgb 200 128 64)
@@ -54,7 +54,7 @@ dreamwriter =
             ~ padding zero
 
             >$ li
-                ~ display inlineBlock
+                ~ ((display inlineBlock) |> important)
                 ~ color primaryAccentColor
 
 primaryAccentColor =
@@ -74,7 +74,7 @@ body {
 }
 
 .dreamwriterHidden {
-  display: none !important;
+  display: none;
 }
 
 #dreamwriterPage {
@@ -93,7 +93,7 @@ ul.dreamwriterNavBar {
 }
 
 ul.dreamwriterNavBar > li {
-  display: inline-block;
+  display: inline-block !important;
   color: #ccffaa;
 }
 ```
