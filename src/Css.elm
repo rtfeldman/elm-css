@@ -140,10 +140,32 @@ positionToString =
         |> propertyValueToString
 
 
+{-| Caution: trickery ahead!
+
+This is for use with overloaded CSS properties like `left` that need to be keys
+in some places and values in othes. You give it a Mixin that evaluates to the
+relevant key, and then use that key as your value.
+
+For example, `left` is a Mixin that takes a Length and adds a property like
+"left: 3px". What this does is take `left`, pass it `zero` (to create a
+"left: 0" definition), then inspects that definition that it just created to
+extract the key (in this case the string "left"), then uses that key as the
+value for this property.
+
+In this way you can use this function to define textAlign, and allow textAlign
+to accept `left` as a value, in which case it will construct "text-align: left"
+as the end user expects.
+
+Other notes:
+
+`key` is the name of the property.
+`functionName` is just for better error messages.
+-}
+getOverloadedProperty : String -> String -> Style class id namespace -> Property class id namespace
 getOverloadedProperty functionName key style =
     case style of
         NamespacedStyle name _ ->
-            InvalidStyle ("`" ++ functionName ++ "` must be given a mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
+            InvalidStyle ("`" ++ functionName ++ "` must be given a property or mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
 
         Mixin applyMixin ->
             let
