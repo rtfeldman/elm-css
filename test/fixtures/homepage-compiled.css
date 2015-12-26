@@ -9,19 +9,19 @@ nav {
     padding-bottom: 12px;
 }
 
-.homepage_NavLink {
+.homepageNavLink {
     margin: 12px;
     color: rgb(255, 255, 255);
 }
 
-#ReactiveLogo {
+#homepageReactiveLogo {
     display: inline-block;
     margin-left: 150px;
     margin-right: 80px;
     vertical-align: middle;
 }
 
-#BuyTickets {
+#homepageBuyTickets {
     padding: 16px;
     padding-left: 24px;
     padding-right: 24px;
