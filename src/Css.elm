@@ -176,8 +176,8 @@ getOverloadedProperty functionName key style =
                                 |> Maybe.map .key
                                 |> Maybe.withDefault ""
 
-                        update _ =
-                            { key = key, value = value, important = False }
+                        update subject =
+                            { subject | key = key, value = value }
                     in
                         case updateLastProperty functionName update declarations of
                             Ok newDeclarations ->
