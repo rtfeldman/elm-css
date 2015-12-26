@@ -161,7 +161,7 @@ Other notes:
 `key` is the name of the property.
 `functionName` is just for better error messages.
 -}
-getOverloadedProperty : String -> String -> Style class id namespace -> Property class id namespace
+getOverloadedProperty : String -> String -> Style namespace animation class id -> Property namespace animation class id
 getOverloadedProperty functionName key style =
     case style of
         NamespacedStyle name _ ->
@@ -192,7 +192,7 @@ getOverloadedProperty functionName key style =
             invalidStyle
 
 
-lastPropertyKeyToString : Style class id namespace -> String
+lastPropertyKeyToString : Style namespace animation class id -> String
 lastPropertyKeyToString style =
     case style of
         NamespacedStyle _ declarations ->
@@ -380,8 +380,8 @@ that it will return the desired String as its key, and use that as our value.
 -}
 
 
-type alias TextAlign class id namespace =
-    Length -> Property class id namespace
+type alias TextAlign namespace animation class id =
+    Length -> Property namespace animation class id
 
 
 
@@ -394,12 +394,12 @@ that it will return the desired String as its key, and use that as our value.
 -}
 
 
-type alias VerticalAlign class id namespace =
-    Length -> Property class id namespace
+type alias VerticalAlign namespace animation class id =
+    Length -> Property namespace animation class id
 
 
-type alias Property class id namespace =
-    Style class id namespace
+type alias Property namespace animation class id =
+    Style namespace animation class id
 
 
 {-| Although not many propeties accept either a length or a number,
@@ -480,7 +480,7 @@ type ExplicitTextShadow
 
 {-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
 -}
-all : PropertyValue String -> Property class id namespace
+all : PropertyValue String -> Property namespace animation class id
 all =
     prop1 "all" (propertyValueToString (\_ -> ""))
 
@@ -488,7 +488,7 @@ all =
 {-| Transforms the given property by adding !important to the end of its
 declaration.
 -}
-important : Property class id namespace -> Property class id namespace
+important : Property namespace animation class id -> Property namespace animation class id
 important style =
     case style of
         NamespacedStyle name newDeclarations ->
@@ -639,49 +639,49 @@ outset =
 
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-center : TextAlign class id namespace
+center : TextAlign namespace animation class id
 center =
     prop1 "center" lengthToString
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : TextAlign class id namespace
+textJustify : TextAlign namespace animation class id
 textJustify =
     prop1 "text-justify" lengthToString
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : TextAlign class id namespace
+justifyAll : TextAlign namespace animation class id
 justifyAll =
     prop1 "justify-all" lengthToString
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : TextAlign class id namespace
+start : TextAlign namespace animation class id
 start =
     prop1 "start" lengthToString
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : TextAlign class id namespace
+end : TextAlign namespace animation class id
 end =
     prop1 "end" lengthToString
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : TextAlign class id namespace
+matchParent : TextAlign namespace animation class id
 matchParent =
     prop1 "match-parent" lengthToString
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : TextAlign class id namespace
+true : TextAlign namespace animation class id
 true =
     prop1 "true" lengthToString
 
@@ -940,7 +940,7 @@ noWrap =
 
     ~ verticalAlign middle
 -}
-middle : VerticalAlign class id namespace
+middle : VerticalAlign namespace animation class id
 middle =
     prop1 "middle" lengthToString
 
@@ -949,7 +949,7 @@ middle =
 
     ~ verticalAlign baseline
 -}
-baseline : VerticalAlign class id namespace
+baseline : VerticalAlign namespace animation class id
 baseline =
     prop1 "baseline" lengthToString
 
@@ -958,7 +958,7 @@ baseline =
 
     ~ verticalAlign sub
 -}
-sub : VerticalAlign class id namespace
+sub : VerticalAlign namespace animation class id
 sub =
     prop1 "sub" lengthToString
 
@@ -967,7 +967,7 @@ sub =
 
     ~ verticalAlign super
 -}
-super : VerticalAlign class id namespace
+super : VerticalAlign namespace animation class id
 super =
     prop1 "super" lengthToString
 
@@ -976,7 +976,7 @@ super =
 
     ~ verticalAlign textTop
 -}
-textTop : VerticalAlign class id namespace
+textTop : VerticalAlign namespace animation class id
 textTop =
     prop1 "text-top" lengthToString
 
@@ -985,14 +985,14 @@ textTop =
 
     ~ verticalAlign textBottom
 -}
-textBottom : VerticalAlign class id namespace
+textBottom : VerticalAlign namespace animation class id
 textBottom =
     prop1 "text-bottom" lengthToString
 
 
 {-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
 -}
-position : Position -> Property class id namespace
+position : Position -> Property namespace animation class id
 position =
     prop1 "position" positionToString
 
@@ -1001,27 +1001,27 @@ position =
 {- Properties -}
 
 
-prop1 : String -> (a -> String) -> a -> Property class id namespace
+prop1 : String -> (a -> String) -> a -> Property namespace animation class id
 prop1 key translate value =
     custom key (translate value)
 
 
-prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> Property class id namespace
+prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> Property namespace animation class id
 prop2 key translateA translateB valueA valueB =
     custom key (String.join " " [ translateA valueA, translateB valueB ])
 
 
-prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> Property class id namespace
+prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> Property namespace animation class id
 prop3 key translateA translateB translateC valueA valueB valueC =
     custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC ])
 
 
-prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> Property class id namespace
+prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> Property namespace animation class id
 prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
     custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ])
 
 
-prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> Property class id namespace
+prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> Property namespace animation class id
 prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
     custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ])
 
@@ -1030,7 +1030,7 @@ prop5 key translateA translateB translateC translateD translateE valueA valueB v
 
     textDecorationColor (rgb 12 11 10)
 -}
-textDecorationColor : Color -> Property class id namespace
+textDecorationColor : Color -> Property namespace animation class id
 textDecorationColor =
     prop1 "text-decoration-color" colorToString
 
@@ -1045,63 +1045,63 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : TextAlign class id namespace -> Property class id namespace
+textAlignLast : TextAlign namespace animation class id -> Property namespace animation class id
 textAlignLast fn =
     getOverloadedProperty "textAlignLast" "text-align-last" (fn zero)
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : TextAlign class id namespace -> Property class id namespace
+textAlign : TextAlign namespace animation class id -> Property namespace animation class id
 textAlign fn =
     getOverloadedProperty "textAlign" "text-align" (fn zero)
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : VerticalAlign class id namespace -> Property class id namespace
+verticalAlign : VerticalAlign namespace animation class id -> Property namespace animation class id
 verticalAlign fn =
     getOverloadedProperty "verticalAlign" "vertical-align" (fn zero)
 
 
 {-| -}
-display : Display -> Property class id namespace
+display : Display -> Property namespace animation class id
 display =
     prop1 "display" displayToString
 
 
 {-| -}
-opacity : OpacityStyle -> Property class id namespace
+opacity : OpacityStyle -> Property namespace animation class id
 opacity =
     prop1 "opacity" toString
 
 
 {-| -}
-width : Length -> Property class id namespace
+width : Length -> Property namespace animation class id
 width =
     prop1 "width" lengthToString
 
 
 {-| -}
-minWidth : Length -> Property class id namespace
+minWidth : Length -> Property namespace animation class id
 minWidth =
     prop1 "min-width" lengthToString
 
 
 {-| -}
-height : Length -> Property class id namespace
+height : Length -> Property namespace animation class id
 height =
     prop1 "height" lengthToString
 
 
 {-| -}
-minHeight : Length -> Property class id namespace
+minHeight : Length -> Property namespace animation class id
 minHeight =
     prop1 "min-height" lengthToString
 
 
 {-| -}
-boxSizing : BoxSizing -> Property class id namespace
+boxSizing : BoxSizing -> Property namespace animation class id
 boxSizing =
     prop1 "box-sizing" boxSizingToString
 
@@ -1117,7 +1117,7 @@ boxSizing =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length -> Property class id namespace
+padding : Length -> Property namespace animation class id
 padding =
     prop1 "padding" lengthToString
 
@@ -1129,7 +1129,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length -> Length -> Property class id namespace
+padding2 : Length -> Length -> Property namespace animation class id
 padding2 =
     prop2 "padding" lengthToString lengthToString
 
@@ -1141,7 +1141,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length -> Length -> Length -> Property class id namespace
+padding3 : Length -> Length -> Length -> Property namespace animation class id
 padding3 =
     prop3 "padding" lengthToString lengthToString lengthToString
 
@@ -1153,7 +1153,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length -> Length -> Length -> Length -> Property class id namespace
+padding4 : Length -> Length -> Length -> Length -> Property namespace animation class id
 padding4 =
     prop4 "padding" lengthToString lengthToString lengthToString lengthToString
 
@@ -1162,7 +1162,7 @@ padding4 =
 
     paddingBlockStart (px 10)
 -}
-paddingBlockStart : Length -> Property class id namespace
+paddingBlockStart : Length -> Property namespace animation class id
 paddingBlockStart =
     prop1 "padding-block-start" lengthToString
 
@@ -1171,7 +1171,7 @@ paddingBlockStart =
 
     paddingBlockEnd (px 10)
 -}
-paddingBlockEnd : Length -> Property class id namespace
+paddingBlockEnd : Length -> Property namespace animation class id
 paddingBlockEnd =
     prop1 "padding-block-end" lengthToString
 
@@ -1180,7 +1180,7 @@ paddingBlockEnd =
 
     paddingInlineStart (px 10)
 -}
-paddingInlineStart : Length -> Property class id namespace
+paddingInlineStart : Length -> Property namespace animation class id
 paddingInlineStart =
     prop1 "padding-inline-start" lengthToString
 
@@ -1189,7 +1189,7 @@ paddingInlineStart =
 
     paddingInlineEnd (px 10)
 -}
-paddingInlineEnd : Length -> Property class id namespace
+paddingInlineEnd : Length -> Property namespace animation class id
 paddingInlineEnd =
     prop1 "padding-inline-end" lengthToString
 
@@ -1198,7 +1198,7 @@ paddingInlineEnd =
 
     paddingTop (px 10)
 -}
-paddingTop : Length -> Property class id namespace
+paddingTop : Length -> Property namespace animation class id
 paddingTop =
     prop1 "padding-top" lengthToString
 
@@ -1207,7 +1207,7 @@ paddingTop =
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length -> Property class id namespace
+paddingBottom : Length -> Property namespace animation class id
 paddingBottom =
     prop1 "padding-bottom" lengthToString
 
@@ -1216,7 +1216,7 @@ paddingBottom =
 
     paddingRight (px 10)
 -}
-paddingRight : Length -> Property class id namespace
+paddingRight : Length -> Property namespace animation class id
 paddingRight =
     prop1 "padding-right" lengthToString
 
@@ -1225,7 +1225,7 @@ paddingRight =
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length -> Property class id namespace
+paddingLeft : Length -> Property namespace animation class id
 paddingLeft =
     prop1 "padding-left" lengthToString
 
@@ -1241,7 +1241,7 @@ paddingLeft =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin : Length -> Property class id namespace
+margin : Length -> Property namespace animation class id
 margin =
     prop1 "margin" lengthToString
 
@@ -1253,7 +1253,7 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : Length -> Length -> Property class id namespace
+margin2 : Length -> Length -> Property namespace animation class id
 margin2 =
     prop2 "margin" lengthToString lengthToString
 
@@ -1265,7 +1265,7 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : Length -> Length -> Length -> Property class id namespace
+margin3 : Length -> Length -> Length -> Property namespace animation class id
 margin3 =
     prop3 "margin" lengthToString lengthToString lengthToString
 
@@ -1277,7 +1277,7 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : Length -> Length -> Length -> Length -> Property class id namespace
+margin4 : Length -> Length -> Length -> Length -> Property namespace animation class id
 margin4 =
     prop4 "margin" lengthToString lengthToString lengthToString lengthToString
 
@@ -1286,7 +1286,7 @@ margin4 =
 
     marginTop (px 10)
 -}
-marginTop : Length -> Property class id namespace
+marginTop : Length -> Property namespace animation class id
 marginTop =
     prop1 "margin-top" lengthToString
 
@@ -1295,7 +1295,7 @@ marginTop =
 
     marginBottom (px 10)
 -}
-marginBottom : Length -> Property class id namespace
+marginBottom : Length -> Property namespace animation class id
 marginBottom =
     prop1 "margin-bottom" lengthToString
 
@@ -1304,7 +1304,7 @@ marginBottom =
 
     marginRight (px 10)
 -}
-marginRight : Length -> Property class id namespace
+marginRight : Length -> Property namespace animation class id
 marginRight =
     prop1 "margin-right" lengthToString
 
@@ -1313,7 +1313,7 @@ marginRight =
 
     marginLeft (px 10)
 -}
-marginLeft : Length -> Property class id namespace
+marginLeft : Length -> Property namespace animation class id
 marginLeft =
     prop1 "margin-left" lengthToString
 
@@ -1322,7 +1322,7 @@ marginLeft =
 
     marginBlockStart (px 10)
 -}
-marginBlockStart : Length -> Property class id namespace
+marginBlockStart : Length -> Property namespace animation class id
 marginBlockStart =
     prop1 "margin-block-start" lengthToString
 
@@ -1331,7 +1331,7 @@ marginBlockStart =
 
     marginBlockEnd (px 10)
 -}
-marginBlockEnd : Length -> Property class id namespace
+marginBlockEnd : Length -> Property namespace animation class id
 marginBlockEnd =
     prop1 "margin-block-end" lengthToString
 
@@ -1340,7 +1340,7 @@ marginBlockEnd =
 
     marginInlineStart (px 10)
 -}
-marginInlineStart : Length -> Property class id namespace
+marginInlineStart : Length -> Property namespace animation class id
 marginInlineStart =
     prop1 "margin-inline-start" lengthToString
 
@@ -1349,7 +1349,7 @@ marginInlineStart =
 
     marginInlineEnd (px 10)
 -}
-marginInlineEnd : Length -> Property class id namespace
+marginInlineEnd : Length -> Property namespace animation class id
 marginInlineEnd =
     prop1 "margin-inline-end" lengthToString
 
@@ -1363,7 +1363,7 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
 
     ~ verticalAlign top
 -}
-top : Length -> Property class id namespace
+top : Length -> Property namespace animation class id
 top =
     prop1 "top" lengthToString
 
@@ -1377,7 +1377,7 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
 
     ~ verticalAlign bottom
 -}
-bottom : Length -> Property class id namespace
+bottom : Length -> Property namespace animation class id
 bottom =
     prop1 "bottom" lengthToString
 
@@ -1391,7 +1391,7 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
     ~ textAlign left
 -}
-left : Length -> Property class id namespace
+left : Length -> Property namespace animation class id
 left =
     prop1 "left" lengthToString
 
@@ -1405,7 +1405,7 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
     ~ textAlign right
 -}
-right : Length -> Property class id namespace
+right : Length -> Property namespace animation class id
 right =
     prop1 "right" lengthToString
 
@@ -1469,7 +1469,7 @@ absolute =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length -> Property class id namespace
+border : Length -> Property namespace animation class id
 border =
     prop1 "border" lengthToString
 
@@ -1481,7 +1481,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length -> BorderStyle -> Property class id namespace
+border2 : Length -> BorderStyle -> Property namespace animation class id
 border2 =
     prop2 "border" lengthToString borderStyleToString
 
@@ -1492,7 +1492,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length -> BorderStyle -> Color -> Property class id namespace
+border3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 border3 =
     prop3 "border" lengthToString borderStyleToString colorToString
 
@@ -1504,7 +1504,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length -> Property class id namespace
+borderTop : Length -> Property namespace animation class id
 borderTop =
     prop1 "border-top" lengthToString
 
@@ -1516,7 +1516,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length -> BorderStyle -> Property class id namespace
+borderTop2 : Length -> BorderStyle -> Property namespace animation class id
 borderTop2 =
     prop2 "border-top" lengthToString borderStyleToString
 
@@ -1528,7 +1528,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderTop3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderTop3 =
     prop3 "border-top" lengthToString borderStyleToString colorToString
 
@@ -1540,7 +1540,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length -> Property class id namespace
+borderBottom : Length -> Property namespace animation class id
 borderBottom =
     prop1 "border-bottom" lengthToString
 
@@ -1552,7 +1552,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length -> BorderStyle -> Property class id namespace
+borderBottom2 : Length -> BorderStyle -> Property namespace animation class id
 borderBottom2 =
     prop2 "border-bottom" lengthToString borderStyleToString
 
@@ -1564,7 +1564,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderBottom3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderBottom3 =
     prop3 "border-bottom" lengthToString borderStyleToString colorToString
 
@@ -1576,7 +1576,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length -> Property class id namespace
+borderLeft : Length -> Property namespace animation class id
 borderLeft =
     prop1 "border-left" lengthToString
 
@@ -1588,7 +1588,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length -> BorderStyle -> Property class id namespace
+borderLeft2 : Length -> BorderStyle -> Property namespace animation class id
 borderLeft2 =
     prop2 "border-left" lengthToString borderStyleToString
 
@@ -1600,7 +1600,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderLeft3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderLeft3 =
     prop3 "border-left" lengthToString borderStyleToString colorToString
 
@@ -1612,7 +1612,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length -> Property class id namespace
+borderRight : Length -> Property namespace animation class id
 borderRight =
     prop1 "border-right" lengthToString
 
@@ -1624,7 +1624,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length -> BorderStyle -> Property class id namespace
+borderRight2 : Length -> BorderStyle -> Property namespace animation class id
 borderRight2 =
     prop2 "border-right" lengthToString borderStyleToString
 
@@ -1636,7 +1636,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderRight3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderRight3 =
     prop3 "border-right" lengthToString borderStyleToString colorToString
 
@@ -1648,7 +1648,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length -> Property class id namespace
+borderBlockStart : Length -> Property namespace animation class id
 borderBlockStart =
     prop1 "border-block-start" lengthToString
 
@@ -1660,7 +1660,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length -> BorderStyle -> Property class id namespace
+borderBlockStart2 : Length -> BorderStyle -> Property namespace animation class id
 borderBlockStart2 =
     prop2 "border-block-start" lengthToString borderStyleToString
 
@@ -1672,7 +1672,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderBlockStart3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderBlockStart3 =
     prop3 "border-block-start" lengthToString borderStyleToString colorToString
 
@@ -1684,7 +1684,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length -> Property class id namespace
+borderBlockEnd : Length -> Property namespace animation class id
 borderBlockEnd =
     prop1 "border-block-end" lengthToString
 
@@ -1696,7 +1696,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length -> BorderStyle -> Property class id namespace
+borderBlockEnd2 : Length -> BorderStyle -> Property namespace animation class id
 borderBlockEnd2 =
     prop2 "border-block-end" lengthToString borderStyleToString
 
@@ -1708,7 +1708,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderBlockEnd3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderBlockEnd3 =
     prop3 "border-block-end" lengthToString borderStyleToString colorToString
 
@@ -1720,7 +1720,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length -> Property class id namespace
+borderInlineStart : Length -> Property namespace animation class id
 borderInlineStart =
     prop1 "border-block-start" lengthToString
 
@@ -1732,7 +1732,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length -> BorderStyle -> Property class id namespace
+borderInlineStart2 : Length -> BorderStyle -> Property namespace animation class id
 borderInlineStart2 =
     prop2 "border-block-start" lengthToString borderStyleToString
 
@@ -1744,7 +1744,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderInlineStart3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderInlineStart3 =
     prop3 "border-block-start" lengthToString borderStyleToString colorToString
 
@@ -1756,7 +1756,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length -> Property class id namespace
+borderInlineEnd : Length -> Property namespace animation class id
 borderInlineEnd =
     prop1 "border-block-end" lengthToString
 
@@ -1768,7 +1768,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length -> BorderStyle -> Property class id namespace
+borderInlineEnd2 : Length -> BorderStyle -> Property namespace animation class id
 borderInlineEnd2 =
     prop2 "border-block-end" lengthToString borderStyleToString
 
@@ -1780,7 +1780,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length -> BorderStyle -> Color -> Property class id namespace
+borderInlineEnd3 : Length -> BorderStyle -> Color -> Property namespace animation class id
 borderInlineEnd3 =
     prop3 "border-block-end" lengthToString borderStyleToString colorToString
 
@@ -1793,7 +1793,7 @@ borderInlineEnd3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset : LengthOrNumber -> Property class id namespace
+borderImageOutset : LengthOrNumber -> Property namespace animation class id
 borderImageOutset =
     prop1 "border-image-outset" lengthOrNumberToString
 
@@ -1806,7 +1806,7 @@ borderImageOutset =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset2 : LengthOrNumber -> LengthOrNumber -> Property class id namespace
+borderImageOutset2 : LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
 borderImageOutset2 =
     prop2 "border-image-outset" lengthOrNumberToString lengthOrNumberToString
 
@@ -1819,7 +1819,7 @@ borderImageOutset2 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
+borderImageOutset3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
 borderImageOutset3 =
     prop3 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1832,7 +1832,7 @@ borderImageOutset3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
+borderImageOutset4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
 borderImageOutset4 =
     prop4 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1845,7 +1845,7 @@ borderImageOutset4 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth : LengthOrNumber -> Property class id namespace
+borderImageWidth : LengthOrNumber -> Property namespace animation class id
 borderImageWidth =
     prop1 "border-image-width" lengthOrNumberToString
 
@@ -1858,7 +1858,7 @@ borderImageWidth =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth2 : LengthOrNumber -> LengthOrNumber -> Property class id namespace
+borderImageWidth2 : LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
 borderImageWidth2 =
     prop2 "border-image-width" lengthOrNumberToString lengthOrNumberToString
 
@@ -1871,7 +1871,7 @@ borderImageWidth2 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
+borderImageWidth3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
 borderImageWidth3 =
     prop3 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1884,7 +1884,7 @@ borderImageWidth3 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property class id namespace
+borderImageWidth4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
 borderImageWidth4 =
     prop4 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
 
@@ -1893,7 +1893,7 @@ borderImageWidth4 =
 
     borderBlockStartColor (rgb 101 202 0)
 -}
-borderBlockStartColor : Color -> Property class id namespace
+borderBlockStartColor : Color -> Property namespace animation class id
 borderBlockStartColor =
     prop1 "border-block-start-color" colorToString
 
@@ -1902,7 +1902,7 @@ borderBlockStartColor =
 
     borderBottomColor (rgb 101 202 0)
 -}
-borderBottomColor : Color -> Property class id namespace
+borderBottomColor : Color -> Property namespace animation class id
 borderBottomColor =
     prop1 "border-bottom-color" colorToString
 
@@ -1911,7 +1911,7 @@ borderBottomColor =
 
     borderInlineStartColor (rgb 101 202 0)
 -}
-borderInlineStartColor : Color -> Property class id namespace
+borderInlineStartColor : Color -> Property namespace animation class id
 borderInlineStartColor =
     prop1 "border-inline-start-color" colorToString
 
@@ -1920,7 +1920,7 @@ borderInlineStartColor =
 
     borderInlineEndColor (rgb 101 202 0)
 -}
-borderInlineEndColor : Color -> Property class id namespace
+borderInlineEndColor : Color -> Property namespace animation class id
 borderInlineEndColor =
     prop1 "border-inline-end-color" colorToString
 
@@ -1929,7 +1929,7 @@ borderInlineEndColor =
 
     borderLeftColor (rgb 101 202 0)
 -}
-borderLeftColor : Color -> Property class id namespace
+borderLeftColor : Color -> Property namespace animation class id
 borderLeftColor =
     prop1 "border-left-color" colorToString
 
@@ -1938,7 +1938,7 @@ borderLeftColor =
 
     borderRightColor (rgb 101 202 0)
 -}
-borderRightColor : Color -> Property class id namespace
+borderRightColor : Color -> Property namespace animation class id
 borderRightColor =
     prop1 "border-right-color" colorToString
 
@@ -1947,7 +1947,7 @@ borderRightColor =
 
     borderTopColor (rgb 101 202 0)
 -}
-borderTopColor : Color -> Property class id namespace
+borderTopColor : Color -> Property namespace animation class id
 borderTopColor =
     prop1 "border-top-color" colorToString
 
@@ -1956,7 +1956,7 @@ borderTopColor =
 
     borderBlockEndColor (rgb 101 202 0)
 -}
-borderBlockEndColor : Color -> Property class id namespace
+borderBlockEndColor : Color -> Property namespace animation class id
 borderBlockEndColor =
     prop1 "border-block-end-color" colorToString
 
@@ -1965,7 +1965,7 @@ borderBlockEndColor =
 
     borderBlockEndStyle dashed
 -}
-borderBlockEndStyle : BorderStyle -> Property class id namespace
+borderBlockEndStyle : BorderStyle -> Property namespace animation class id
 borderBlockEndStyle =
     prop1 "border-block-end-style" borderStyleToString
 
@@ -1974,7 +1974,7 @@ borderBlockEndStyle =
 
     borderBlockStartStyle dashed
 -}
-borderBlockStartStyle : BorderStyle -> Property class id namespace
+borderBlockStartStyle : BorderStyle -> Property namespace animation class id
 borderBlockStartStyle =
     prop1 "border-block-start-style" borderStyleToString
 
@@ -1983,7 +1983,7 @@ borderBlockStartStyle =
 
     borderInlineEndStyle dashed
 -}
-borderInlineEndStyle : BorderStyle -> Property class id namespace
+borderInlineEndStyle : BorderStyle -> Property namespace animation class id
 borderInlineEndStyle =
     prop1 "border-inline-end-style" borderStyleToString
 
@@ -1992,7 +1992,7 @@ borderInlineEndStyle =
 
     borderBottomStyle dashed
 -}
-borderBottomStyle : BorderStyle -> Property class id namespace
+borderBottomStyle : BorderStyle -> Property namespace animation class id
 borderBottomStyle =
     prop1 "border-bottom-style" borderStyleToString
 
@@ -2001,7 +2001,7 @@ borderBottomStyle =
 
     borderInlineStartStyle dashed
 -}
-borderInlineStartStyle : BorderStyle -> Property class id namespace
+borderInlineStartStyle : BorderStyle -> Property namespace animation class id
 borderInlineStartStyle =
     prop1 "border-inline-start-style" borderStyleToString
 
@@ -2010,7 +2010,7 @@ borderInlineStartStyle =
 
     borderLeftStyle dashed
 -}
-borderLeftStyle : BorderStyle -> Property class id namespace
+borderLeftStyle : BorderStyle -> Property namespace animation class id
 borderLeftStyle =
     prop1 "border-left-style" borderStyleToString
 
@@ -2019,7 +2019,7 @@ borderLeftStyle =
 
     borderRightStyle dashed
 -}
-borderRightStyle : BorderStyle -> Property class id namespace
+borderRightStyle : BorderStyle -> Property namespace animation class id
 borderRightStyle =
     prop1 "border-right-style" borderStyleToString
 
@@ -2028,7 +2028,7 @@ borderRightStyle =
 
     borderTopStyle dashed
 -}
-borderTopStyle : BorderStyle -> Property class id namespace
+borderTopStyle : BorderStyle -> Property namespace animation class id
 borderTopStyle =
     prop1 "border-top-style" borderStyleToString
 
@@ -2037,7 +2037,7 @@ borderTopStyle =
 
     borderStyle dashed
 -}
-borderStyle : BorderStyle -> Property class id namespace
+borderStyle : BorderStyle -> Property namespace animation class id
 borderStyle =
     prop1 "border-style" borderStyleToString
 
@@ -2046,7 +2046,7 @@ borderStyle =
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length -> Property class id namespace
+borderBottomWidth : Length -> Property namespace animation class id
 borderBottomWidth =
     prop1 "border-bottom-width" lengthToString
 
@@ -2055,7 +2055,7 @@ borderBottomWidth =
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length -> Property class id namespace
+borderInlineEndWidth : Length -> Property namespace animation class id
 borderInlineEndWidth =
     prop1 "border-inline-end-width" lengthToString
 
@@ -2064,7 +2064,7 @@ borderInlineEndWidth =
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length -> Property class id namespace
+borderLeftWidth : Length -> Property namespace animation class id
 borderLeftWidth =
     prop1 "border-left-width" lengthToString
 
@@ -2073,7 +2073,7 @@ borderLeftWidth =
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length -> Property class id namespace
+borderRightWidth : Length -> Property namespace animation class id
 borderRightWidth =
     prop1 "border-right-width" lengthToString
 
@@ -2083,7 +2083,7 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length -> Property class id namespace
+borderTopWidth : Length -> Property namespace animation class id
 borderTopWidth =
     prop1 "border-top-width" lengthToString
 
@@ -2093,7 +2093,7 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length -> Length -> Property class id namespace
+borderTopWidth2 : Length -> Length -> Property namespace animation class id
 borderTopWidth2 =
     prop2 "border-top-width" lengthToString lengthToString
 
@@ -2103,7 +2103,7 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length -> Property class id namespace
+borderBottomLeftRadius : Length -> Property namespace animation class id
 borderBottomLeftRadius =
     prop1 "border-bottom-left-radius" lengthToString
 
@@ -2113,7 +2113,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length -> Length -> Property class id namespace
+borderBottomLeftRadius2 : Length -> Length -> Property namespace animation class id
 borderBottomLeftRadius2 =
     prop2 "border-bottom-left-radius" lengthToString lengthToString
 
@@ -2123,7 +2123,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length -> Property class id namespace
+borderBottomRightRadius : Length -> Property namespace animation class id
 borderBottomRightRadius =
     prop1 "border-bottom-right-radius" lengthToString
 
@@ -2133,7 +2133,7 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length -> Length -> Property class id namespace
+borderBottomRightRadius2 : Length -> Length -> Property namespace animation class id
 borderBottomRightRadius2 =
     prop2 "border-bottom-right-radius" lengthToString lengthToString
 
@@ -2143,7 +2143,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length -> Property class id namespace
+borderTopLeftRadius : Length -> Property namespace animation class id
 borderTopLeftRadius =
     prop1 "border-top-left-radius" lengthToString
 
@@ -2153,7 +2153,7 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length -> Length -> Property class id namespace
+borderTopLeftRadius2 : Length -> Length -> Property namespace animation class id
 borderTopLeftRadius2 =
     prop2 "border-top-left-radius" lengthToString lengthToString
 
@@ -2163,7 +2163,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length -> Property class id namespace
+borderTopRightRadius : Length -> Property namespace animation class id
 borderTopRightRadius =
     prop1 "border-top-right-radius" lengthToString
 
@@ -2173,7 +2173,7 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length -> Length -> Property class id namespace
+borderTopRightRadius2 : Length -> Length -> Property namespace animation class id
 borderTopRightRadius2 =
     prop2 "border-top-right-radius" lengthToString lengthToString
 
@@ -2185,7 +2185,7 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length -> Property class id namespace
+borderRadius : Length -> Property namespace animation class id
 borderRadius =
     prop1 "border-radius" lengthToString
 
@@ -2197,7 +2197,7 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length -> Length -> Property class id namespace
+borderRadius2 : Length -> Length -> Property namespace animation class id
 borderRadius2 =
     prop2 "border-radius" lengthToString lengthToString
 
@@ -2209,7 +2209,7 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length -> Length -> Length -> Property class id namespace
+borderRadius3 : Length -> Length -> Length -> Property namespace animation class id
 borderRadius3 =
     prop3 "border-radius" lengthToString lengthToString lengthToString
 
@@ -2221,7 +2221,7 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length -> Length -> Length -> Length -> Property class id namespace
+borderRadius4 : Length -> Length -> Length -> Length -> Property namespace animation class id
 borderRadius4 =
     prop4 "border-radius" lengthToString lengthToString lengthToString lengthToString
 
@@ -2231,7 +2231,7 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length -> Property class id namespace
+borderSpacing : Length -> Property namespace animation class id
 borderSpacing =
     prop1 "border-spacing" lengthToString
 
@@ -2241,7 +2241,7 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length -> Length -> Property class id namespace
+borderSpacing2 : Length -> Length -> Property namespace animation class id
 borderSpacing2 =
     prop2 "border-spacing" lengthToString lengthToString
 
@@ -2253,7 +2253,7 @@ borderSpacing2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor : Color -> Property class id namespace
+borderColor : Color -> Property namespace animation class id
 borderColor =
     prop1 "border-color" colorToString
 
@@ -2265,7 +2265,7 @@ borderColor =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor2 : Color -> Color -> Property class id namespace
+borderColor2 : Color -> Color -> Property namespace animation class id
 borderColor2 =
     prop2 "border-color" colorToString colorToString
 
@@ -2277,7 +2277,7 @@ borderColor2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor3 : Color -> Color -> Color -> Property class id namespace
+borderColor3 : Color -> Color -> Color -> Property namespace animation class id
 borderColor3 =
     prop3 "border-color" colorToString colorToString colorToString
 
@@ -2289,37 +2289,37 @@ borderColor3 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor4 : Color -> Color -> Color -> Color -> Property class id namespace
+borderColor4 : Color -> Color -> Color -> Color -> Property namespace animation class id
 borderColor4 =
     prop4 "border-color" colorToString colorToString colorToString colorToString
 
 
 {-| -}
-overflowX : Overflow -> Property class id namespace
+overflowX : Overflow -> Property namespace animation class id
 overflowX =
     prop1 "overflow-x" overflowToString
 
 
 {-| -}
-overflowY : Overflow -> Property class id namespace
+overflowY : Overflow -> Property namespace animation class id
 overflowY =
     prop1 "overflow-y" overflowToString
 
 
 {-| -}
-whiteSpace : WhiteSpace -> Property class id namespace
+whiteSpace : WhiteSpace -> Property namespace animation class id
 whiteSpace =
     prop1 "white-space" whiteSpaceToString
 
 
 {-| -}
-backgroundColor : Color -> Property class id namespace
+backgroundColor : Color -> Property namespace animation class id
 backgroundColor =
     prop1 "background-color" colorToString
 
 
 {-| -}
-color : Color -> Property class id namespace
+color : Color -> Property namespace animation class id
 color =
     prop1 "color" colorToString
 
@@ -2331,7 +2331,7 @@ media value =
 
 
 {-| -}
-textShadow : TextShadow -> Property class id namespace
+textShadow : TextShadow -> Property namespace animation class id
 textShadow =
     prop1 "text-shadow" textShadowToString
 
@@ -2348,7 +2348,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration : TextDecorationLine -> Property class id namespace
+textDecoration : TextDecorationLine -> Property namespace animation class id
 textDecoration =
     prop1 "text-decoration" textDecorationLineToString
 
@@ -2365,7 +2365,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration2 : TextDecorationLine -> TextDecorationStyle -> Property class id namespace
+textDecoration2 : TextDecorationLine -> TextDecorationStyle -> Property namespace animation class id
 textDecoration2 =
     prop2 "text-decoration" textDecorationLineToString textDecorationStyleToString
 
@@ -2382,7 +2382,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration3 : TextDecorationLine -> TextDecorationStyle -> Color -> Property class id namespace
+textDecoration3 : TextDecorationLine -> TextDecorationStyle -> Color -> Property namespace animation class id
 textDecoration3 =
     prop3 "text-decoration" textDecorationLineToString textDecorationStyleToString colorToString
 
@@ -2393,7 +2393,7 @@ textDecoration3 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations : List TextDecorationLine -> Property class id namespace
+textDecorations : List TextDecorationLine -> Property namespace animation class id
 textDecorations =
     prop1 "text-decoration" textDecorationLinesToString
 
@@ -2404,7 +2404,7 @@ textDecorations =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations2 : List TextDecorationLine -> TextDecorationStyle -> Property class id namespace
+textDecorations2 : List TextDecorationLine -> TextDecorationStyle -> Property namespace animation class id
 textDecorations2 =
     prop2 "text-decoration" textDecorationLinesToString textDecorationStyleToString
 
@@ -2415,7 +2415,7 @@ textDecorations2 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations3 : List TextDecorationLine -> TextDecorationStyle -> Color -> Property class id namespace
+textDecorations3 : List TextDecorationLine -> TextDecorationStyle -> Color -> Property namespace animation class id
 textDecorations3 =
     prop3 "text-decoration" textDecorationLinesToString textDecorationStyleToString colorToString
 
@@ -2428,7 +2428,7 @@ You can specify multiple line decorations with `textDecorationLines`.
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLine : TextDecorationLine -> Property class id namespace
+textDecorationLine : TextDecorationLine -> Property namespace animation class id
 textDecorationLine =
     prop1 "text-decoration-line" textDecorationLineToString
 
@@ -2437,7 +2437,7 @@ textDecorationLine =
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLines : List TextDecorationLine -> Property class id namespace
+textDecorationLines : List TextDecorationLine -> Property namespace animation class id
 textDecorationLines =
     prop1 "text-decoration-line" textDecorationLinesToString
 
@@ -2446,13 +2446,13 @@ textDecorationLines =
 
     ~ textDecorationStyle dotted
 -}
-textDecorationStyle : TextDecorationStyle -> Property class id namespace
+textDecorationStyle : TextDecorationStyle -> Property namespace animation class id
 textDecorationStyle =
     prop1 "text-decoration-style" textDecorationStyleToString
 
 
 {-| -}
-outline : Float -> Length -> BorderStyle -> OpacityStyle -> Property class id namespace
+outline : Float -> Length -> BorderStyle -> OpacityStyle -> Property namespace animation class id
 outline =
     prop4
         "outline"
@@ -2472,7 +2472,7 @@ names, or to set `animation-name: none;`
     ~ animationNames [ Foo, Bar ]
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationName : animation -> Property class id namespace
+animationName : animation -> Property namespace animation class id
 animationName identifier =
     animationNames [ identifier ]
 
@@ -2485,7 +2485,7 @@ Pass `[]` to set `animation-name: none;`
 
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationNames : List animation -> Property class id namespace
+animationNames : List animation -> Property namespace animation class id
 animationNames identifiers =
     let
         propertyFromDeclarations style name declarations =
@@ -2500,7 +2500,7 @@ animationNames identifiers =
         propertyMixin propertyFromDeclarations
 
 
-propertyMixin : (Style class id namespace -> namespace -> List Declaration -> Declaration.Property) -> Style class id namespace
+propertyMixin : (Style namespace animation class id -> namespace -> List Declaration -> Declaration.Property) -> Style namespace animation class id
 propertyMixin propertyFromDeclarations =
     let
         newStyleFromDeclarations style name declarations =
@@ -2526,7 +2526,7 @@ your stylesheet.
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-stylesheet : { a | name : namespace } -> Style class id namespace
+stylesheet : { a | name : namespace } -> Style namespace animation class id
 stylesheet { name } =
     NamespacedStyle name []
 
@@ -2555,7 +2555,7 @@ style.
         &: hover
             ~ textDecoration underline
 -}
-mixin : Style class id namespace
+mixin : Style namespace animation class id
 mixin =
     Mixin identity
 
@@ -2567,7 +2567,7 @@ mixin =
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-($) : Style class id namespace -> Tag -> Style class id namespace
+($) : Style namespace animation class id -> Tag -> Style namespace animation class id
 ($) style tag =
     let
         selector =
@@ -2600,7 +2600,7 @@ mixin =
         button # Cancel
             ~ backgroundColor (rgb 128 64 32)
 -}
-(#) : Style class id namespace -> id -> Style class id namespace
+(#) : Style namespace animation class id -> id -> Style namespace animation class id
 (#) style id =
     case style of
         NamespacedStyle name declarations ->
@@ -2627,7 +2627,7 @@ mixin =
             ~ fontWeight normal
             ~ color (rgb 128 64 32)
 -}
-(.) : Style class id namespace -> class -> Style class id namespace
+(.) : Style namespace animation class id -> class -> Style namespace animation class id
 (.) style class =
     case style of
         NamespacedStyle name declarations ->
@@ -2658,7 +2658,7 @@ mixin =
             $ body
                 ~ width (pct 100)
 -}
-(@) : Style class id namespace -> String -> Style class id namespace
+(@) : Style namespace animation class id -> String -> Style namespace animation class id
 (@) style rule =
     case style of
         NamespacedStyle name declarations ->
@@ -2682,7 +2682,7 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ~ textDecoration underline
             ~ color (rgb 7 7 7)
 -}
-($=) : Style class id namespace -> String -> Style class id namespace
+($=) : Style namespace animation class id -> String -> Style namespace animation class id
 ($=) style selectorStr =
     case style of
         NamespacedStyle name declarations ->
@@ -2733,7 +2733,7 @@ You can also use `~` to inject the contents of a [`mixin`](#mixin).
         &: hover
             ~ textDecoration underline
 -}
-(~) : Style class id namespace -> Style class id namespace -> Style class id namespace
+(~) : Style namespace animation class id -> Style namespace animation class id -> Style namespace animation class id
 (~) style mixinToApply =
     case mixinToApply of
         Mixin update ->
@@ -2772,12 +2772,12 @@ lastSelectorToMulti selector otherSelectors =
         -webkit-font-smoothing: none;
     }
 -}
-custom : String -> String -> Property class id namespace
+custom : String -> String -> Property namespace animation class id
 custom key value =
     propertyMixin (\_ _ _ -> { key = key, value = value, important = False })
 
 
-resolveMixin : (Style class id namespace -> namespace -> List Declaration -> Style class id namespace) -> Style class id namespace -> Style class id namespace
+resolveMixin : (Style namespace animation class id -> namespace -> List Declaration -> Style namespace animation class id) -> Style namespace animation class id -> Style namespace animation class id
 resolveMixin newStyleFromDeclarations style =
     case style of
         NamespacedStyle name declarations ->
@@ -2848,7 +2848,7 @@ introduceSelector selector declarations =
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-(>$) : Style class id namespace -> Tag -> Style class id namespace
+(>$) : Style namespace animation class id -> Tag -> Style namespace animation class id
 (>$) style tag =
     extendTypeSelector
         ">$"
@@ -2857,7 +2857,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(>>$) : Style class id namespace -> Tag -> Style class id namespace
+(>>$) : Style namespace animation class id -> Tag -> Style namespace animation class id
 (>>$) style tag =
     extendTypeSelector
         ">>$"
@@ -2866,7 +2866,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(+$) : Style class id namespace -> Tag -> Style class id namespace
+(+$) : Style namespace animation class id -> Tag -> Style namespace animation class id
 (+$) style tag =
     extendTypeSelector
         "+$"
@@ -2875,7 +2875,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(~$) : Style class id namespace -> Tag -> Style class id namespace
+(~$) : Style namespace animation class id -> Tag -> Style namespace animation class id
 (~$) style tag =
     extendTypeSelector
         "~$"
@@ -2884,7 +2884,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(>.) : Style class id namespace -> class -> Style class id namespace
+(>.) : Style namespace animation class id -> class -> Style namespace animation class id
 (>.) style class =
     extendTypeSelector
         ">."
@@ -2893,7 +2893,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(>>.) : Style class id namespace -> class -> Style class id namespace
+(>>.) : Style namespace animation class id -> class -> Style namespace animation class id
 (>>.) style class =
     extendTypeSelector
         ">>."
@@ -2902,7 +2902,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(+.) : Style class id namespace -> class -> Style class id namespace
+(+.) : Style namespace animation class id -> class -> Style namespace animation class id
 (+.) style class =
     extendTypeSelector
         "+."
@@ -2911,7 +2911,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(~.) : Style class id namespace -> class -> Style class id namespace
+(~.) : Style namespace animation class id -> class -> Style namespace animation class id
 (~.) style class =
     extendTypeSelector
         "~."
@@ -2920,7 +2920,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(>#) : Style class id namespace -> id -> Style class id namespace
+(>#) : Style namespace animation class id -> id -> Style namespace animation class id
 (>#) style id =
     extendTypeSelector
         ">#"
@@ -2929,7 +2929,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(>>#) : Style class id namespace -> id -> Style class id namespace
+(>>#) : Style namespace animation class id -> id -> Style namespace animation class id
 (>>#) style id =
     extendTypeSelector
         ">>#"
@@ -2938,7 +2938,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(+#) : Style class id namespace -> id -> Style class id namespace
+(+#) : Style namespace animation class id -> id -> Style namespace animation class id
 (+#) style id =
     extendTypeSelector
         "+#"
@@ -2947,7 +2947,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(~#) : Style class id namespace -> id -> Style class id namespace
+(~#) : Style namespace animation class id -> id -> Style namespace animation class id
 (~#) style id =
     extendTypeSelector
         "~#"
@@ -2956,7 +2956,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(&:) : Style class id namespace -> PseudoClass -> Style class id namespace
+(&:) : Style namespace animation class id -> PseudoClass -> Style namespace animation class id
 (&:) style pseudoClass =
     extendTypeSelector
         "&:"
@@ -2965,7 +2965,7 @@ introduceSelector selector declarations =
 
 
 {-| -}
-(&::) : Style class id namespace -> PseudoElement -> Style class id namespace
+(&::) : Style namespace animation class id -> PseudoElement -> Style namespace animation class id
 (&::) style pseudoElement =
     extendTypeSelector
         "&::"
@@ -2973,7 +2973,7 @@ introduceSelector selector declarations =
         style
 
 
-extendTypeSelector : String -> (namespace -> CompoundSelector -> CompoundSelector) -> Style class id namespace -> Style class id namespace
+extendTypeSelector : String -> (namespace -> CompoundSelector -> CompoundSelector) -> Style namespace animation class id -> Style namespace animation class id
 extendTypeSelector operatorName update style =
     case style of
         NamespacedStyle name declarations ->
@@ -2991,7 +2991,7 @@ extendTypeSelector operatorName update style =
             style
 
 
-extendLastMixinSelector : String -> (CompoundSelector -> CompoundSelector) -> List ( List CompoundSelector, List (Property class id namespace) ) -> Result String (List ( List CompoundSelector, List (Property class id namespace) ))
+extendLastMixinSelector : String -> (CompoundSelector -> CompoundSelector) -> List ( List CompoundSelector, List (Property namespace animation class id) ) -> Result String (List ( List CompoundSelector, List (Property namespace animation class id) ))
 extendLastMixinSelector operatorName update mixinStyles =
     case mixinStyles of
         [] ->
@@ -3428,7 +3428,7 @@ type PseudoClass
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-(|$) : Style class id namespace -> Tag -> Style class id namespace
+(|$) : Style namespace animation class id -> Tag -> Style namespace animation class id
 (|$) style tag =
     case style of
         NamespacedStyle name declarations ->
