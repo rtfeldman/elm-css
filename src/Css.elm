@@ -140,18 +140,123 @@ positionToString =
         |> propertyValueToString
 
 
+verticalAlign : TextAlign class id namespace -> Property class id namespace
+verticalAlign fn =
+    case fn zero of
+        NamespacedStyle name _ ->
+            InvalidStyle ("`textAlign` must be given a mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
+
+        Mixin applyMixin ->
+            let
+                newStyleFromDeclarations style name declarations =
+                    let
+                        key =
+                            "vertical-align"
+
+                        value =
+                            getLastProperty declarations
+                                |> Maybe.map .key
+                                |> Maybe.withDefault ""
+
+                        update _ =
+                            { key = key, value = value, important = False }
+                    in
+                        case updateLastProperty "verticalAlign" update declarations of
+                            Ok newDeclarations ->
+                                NamespacedStyle name newDeclarations
+
+                            Err message ->
+                                InvalidStyle message
+            in
+                Mixin (applyMixin >> (resolveMixin newStyleFromDeclarations))
+
+        (InvalidStyle _) as invalidStyle ->
+            invalidStyle
+
+
+textAlign : TextAlign class id namespace -> Property class id namespace
+textAlign fn =
+    case fn zero of
+        NamespacedStyle name _ ->
+            InvalidStyle ("`textAlign` must be given a mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
+
+        Mixin applyMixin ->
+            let
+                newStyleFromDeclarations style name declarations =
+                    let
+                        key =
+                            "text-align"
+
+                        value =
+                            getLastProperty declarations
+                                |> Maybe.map .key
+                                |> Maybe.withDefault ""
+
+                        update _ =
+                            { key = key, value = value, important = False }
+                    in
+                        case updateLastProperty "textAlign" update declarations of
+                            Ok newDeclarations ->
+                                NamespacedStyle name newDeclarations
+
+                            Err message ->
+                                InvalidStyle message
+            in
+                Mixin (applyMixin >> (resolveMixin newStyleFromDeclarations))
+
+        (InvalidStyle _) as invalidStyle ->
+            invalidStyle
+
+
 textAlignToString : TextAlign class id namespace -> String
 textAlignToString fn =
-    --fn zero
-    -- TODO look at the last declaration and pull it out of there. gross, but it'll work.
-    "TODO"
+    lastPropertyKeyToString (fn zero)
 
 
 verticalAlignToString : VerticalAlign class id namespace -> String
 verticalAlignToString fn =
-    --fn zero
-    -- TODO look at the last declaration and pull it out of there. gross, but it'll work.
-    "TODO"
+    lastPropertyKeyToString (fn zero)
+
+
+lastPropertyKeyToString : Style class id namespace -> String
+lastPropertyKeyToString style =
+    case style of
+        NamespacedStyle _ declarations ->
+            getLastProperty declarations
+                |> Maybe.map .key
+                |> Maybe.withDefault ""
+
+        Mixin applyMixin ->
+            (toString applyMixin)
+
+        InvalidStyle _ ->
+            ""
+
+
+getLastProperty : List Declaration -> Maybe Declaration.Property
+getLastProperty declarations =
+    case declarations of
+        [] ->
+            Nothing
+
+        (StyleBlock _ _ properties) :: [] ->
+            getLast properties
+
+        first :: rest ->
+            getLastProperty rest
+
+
+getLast : List a -> Maybe a
+getLast list =
+    case list of
+        [] ->
+            Nothing
+
+        elem :: [] ->
+            Just elem
+
+        first :: rest ->
+            getLast rest
 
 
 whiteSpaceToString : WhiteSpace -> String
@@ -975,16 +1080,22 @@ textAlignLast =
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : TextAlign class id namespace -> Property class id namespace
-textAlign =
-    prop1 "text-align" textAlignToString
+
+
+
+--textAlign : TextAlign class id namespace -> Property class id namespace
+--textAlign =
+--    prop1 "text-align" textAlignToString
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : VerticalAlign class id namespace -> Property class id namespace
-verticalAlign =
-    prop1 "vertical-align" verticalAlignToString
+
+
+
+--verticalAlign : VerticalAlign class id namespace -> Property class id namespace
+--verticalAlign =
+--    prop1 "vertical-align" verticalAlignToString
 
 
 {-| -}
