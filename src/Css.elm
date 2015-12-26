@@ -2472,12 +2472,9 @@ names, or to set `animation-name: none;`
     ~ animationNames [ Foo, Bar ]
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-
-
-
---animationName : animation -> Property class id namespace
---animationName identifier =
---    ( "animation-name", toCssIdentifier identifier )
+animationName : animation -> Property class id namespace
+animationName identifier =
+    animationNames [ identifier ]
 
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
@@ -2488,6 +2485,19 @@ Pass `[]` to set `animation-name: none;`
 
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
+animationNames : List animation -> Property class id namespace
+animationNames identifiers =
+    let
+        propertyFromDeclarations style name declarations =
+            let
+                value =
+                    identifiers
+                        |> List.map (identifierToString name)
+                        |> String.join ", "
+            in
+                { key = "animation-name", value = value, important = False }
+    in
+        propertyMixin propertyFromDeclarations
 
 
 propertyMixin : (Style class id namespace -> namespace -> List Declaration -> Declaration.Property) -> Style class id namespace
@@ -2502,11 +2512,10 @@ propertyMixin propertyFromDeclarations =
                     Ok newDeclarations ->
                         NamespacedStyle name newDeclarations
 
---animationNames : List animation -> Property class id namespace
---animationNames identifiers =
---    ( "animation-name"
---    , (String.join ", " (List.map toCssIdentifier identifiers))
---    )
+                    Err message ->
+                        InvalidStyle message
+    in
+        Mixin (resolveMixin newStyleFromDeclarations)
 
 
 {-| An empty namespaced stylesheet. Use this as the foundation on which to build
