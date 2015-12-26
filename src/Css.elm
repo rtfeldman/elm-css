@@ -1006,6 +1006,8 @@ textBottom =
     prop1 "text-bottom" lengthToString
 
 
+{-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
+-}
 position : Position -> ( String, String )
 position =
     prop1 "position" positionToString
