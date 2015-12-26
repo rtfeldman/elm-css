@@ -28,14 +28,4 @@ the given namespace (if it is non-empty), along with an `_` character.
 -}
 classToString : a -> b -> String
 classToString name class =
-    let
-        cleanedClass : String
-        cleanedClass =
-            toCssIdentifier class
-    in
-        case toCssIdentifier name of
-            "" ->
-                cleanedClass
-
-            prefix ->
-                prefix ++ "_" ++ cleanedClass
+    (toCssIdentifier name) ++ (toCssIdentifier class)

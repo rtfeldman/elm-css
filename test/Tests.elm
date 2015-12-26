@@ -147,7 +147,7 @@ dreamwriter =
               height: 100%;
             }
 
-            .dreamwriter_Hidden {
+            .dreamwriterHidden {
               display: none !important;
             }
 
@@ -224,7 +224,7 @@ multiSelector =
             Fixtures.multiSelector
 
         output = """
-          div#Page.multiSelector_Hidden {
+          div#Page.multiSelectorHidden {
             display: none;
             width: 100%;
             height: 100%;

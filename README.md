@@ -73,7 +73,7 @@ body {
   min-width: 1280px;
 }
 
-.dreamwriter_Hidden {
+.dreamwriterHidden {
   display: none !important;
 }
 
@@ -87,12 +87,12 @@ body {
   margin: 0;
 }
 
-ul.dreamwriter_NavBar {
+ul.dreamwriterNavBar {
   margin: 0;
   padding: 0;
 }
 
-ul.dreamwriter_NavBar > li {
+ul.dreamwriterNavBar > li {
   display: inline-block;
   color: #ccffaa;
 }
