@@ -2490,6 +2490,17 @@ Pass `[]` to set `animation-name: none;`
 -}
 
 
+propertyMixin : (Style class id namespace -> namespace -> List Declaration -> Declaration.Property) -> Style class id namespace
+propertyMixin propertyFromDeclarations =
+    let
+        newStyleFromDeclarations style name declarations =
+            let
+                property =
+                    propertyFromDeclarations style name declarations
+            in
+                case addProperty property declarations of
+                    Ok newDeclarations ->
+                        NamespacedStyle name newDeclarations
 
 --animationNames : List animation -> Property class id namespace
 --animationNames identifiers =
@@ -2754,19 +2765,7 @@ lastSelectorToMulti selector otherSelectors =
 -}
 custom : String -> String -> Property class id namespace
 custom key value =
-    let
-        property =
-            { key = key, value = value, important = False }
-
-        newStyleFromDeclarations style name declarations =
-            case addProperty property declarations of
-                Ok newDeclarations ->
-                    NamespacedStyle name newDeclarations
-
-                Err message ->
-                    InvalidStyle message
-    in
-        Mixin (resolveMixin newStyleFromDeclarations)
+    propertyMixin (\_ _ _ -> { key = key, value = value, important = False })
 
 
 resolveMixin : (Style class id namespace -> namespace -> List Declaration -> Style class id namespace) -> Style class id namespace -> Style class id namespace
