@@ -222,3 +222,4 @@ transformsStyle =
           , translate3d (px 1) (px 1) (px 1)
           ]
       ~ transformBox viewBox
+      ~ transformStyle preserve3d

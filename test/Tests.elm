@@ -367,6 +367,7 @@ transformsStyle =
                 transform: skew(90deg) skew(90deg, 90deg) skewX(90deg) skewY(90deg);
                 transform: translate(1px) translate(1px, 1px) translateX(1px) translateY(1px) translate3d(1px, 1px, 1px);
                 transform-box: view-box;
+                transform-style: preserve-3d;
             }
             """
     in
