@@ -188,45 +188,37 @@ transformsStyle : Style String CssAnimations CssClasses CssIds
 transformsStyle =
   stylesheet { name = "transformsStyle" }
     $ body
-      ~ transform
-          ( transforms
-              [ matrix 1 2 3 4 5 6
-              , matrix3d 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-              ]
-          )
-      ~ transform (transforms [ perspective 1 ])
-      ~ transform
-          ( transforms
-              [ rotate (deg 90)
-              , rotateX (rad 3.14)
-              , rotateY (grad 3.14)
-              , rotateZ (turn 1)
-              , rotate3d 1 1 1 (deg 90)
-              ]
-          )
-      ~ transform
-          ( transforms
-              [ scale 1
-              , scale2 1 1
-              , scaleX 1
-              , scaleY 1
-              , scale3d 1 1 1
-              ]
-          )
-      ~ transform
-          ( transforms
-              [ skew (deg 90)
-              , skew2 (deg 90) (deg 90)
-              , skewX (deg 90)
-              , skewY (deg 90)
-              ]
-          )
-      ~ transform
-          ( transforms
-              [ translate (px 1)
-              , translate2 (px 1) (px 1)
-              , translateX (px 1)
-              , translateY (px 1)
-              , translate3d (px 1) (px 1) (px 1)
-              ]
-          )
+      ~ transforms []
+      ~ transforms
+          [ matrix 1 2 3 4 5 6
+          , matrix3d 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+          ]
+      ~ transform (perspective 1)
+      ~ transforms
+          [ rotate (deg 90)
+          , rotateX (rad 3.14)
+          , rotateY (grad 3.14)
+          , rotateZ (turn 1)
+          , rotate3d 1 1 1 (deg 90)
+          ]
+      ~ transforms
+          [ scale 1
+          , scale2 1 1
+          , scaleX 1
+          , scaleY 1
+          , scale3d 1 1 1
+          ]
+      ~ transforms
+          [ skew (deg 90)
+          , skew2 (deg 90) (deg 90)
+          , skewX (deg 90)
+          , skewY (deg 90)
+          ]
+      ~ transforms
+          [ translate (px 1)
+          , translate2 (px 1) (px 1)
+          , translateX (px 1)
+          , translateY (px 1)
+          , translate3d (px 1) (px 1) (px 1)
+          ]
+      ~ transformBox viewBox

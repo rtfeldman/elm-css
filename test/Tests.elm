@@ -31,6 +31,7 @@ all =
         , underlineOnHoverMixin
         , underlineOnHoverManual
         , greenOnHoverMixin
+        , transformsStyle
         ]
 
 
@@ -365,6 +366,7 @@ transformsStyle =
                 transform: scale(1) scale(1, 1) scaleX(1) scaleY(1) scale3d(1, 1, 1);
                 transform: skew(90deg) skew(90deg, 90deg) skewX(90deg) skewY(90deg);
                 transform: translate(1px) translate(1px, 1px) translateX(1px) translateY(1px) translate3d(1px, 1px, 1px);
+                transform-box: view-box;
             }
             """
     in
