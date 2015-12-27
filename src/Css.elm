@@ -62,7 +62,6 @@ print =
 {- Length -}
 
 
-
 cssFunction : String -> (a -> String) -> List a -> String
 cssFunction funcName converter args =
     args
@@ -628,7 +627,7 @@ currentColor =
 -}
 rgb : number -> number -> number -> Color
 rgb r g b =
-    cssFunction "rgb" numberToString [r, g, b]
+    cssFunction "rgb" numberToString [ r, g, b ]
         |> ExplicitColor
         |> NotTransparent
         |> NotAuto
@@ -639,7 +638,7 @@ rgb r g b =
 -}
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
-    cssFunction "rgba" numberToString [r, g, b, a]
+    cssFunction "rgba" numberToString [ r, g, b, a ]
         |> ExplicitColor
         |> NotTransparent
         |> NotAuto
