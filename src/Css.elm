@@ -1638,6 +1638,12 @@ textRendering =
 
 
 {-| Sets [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow).
+
+    ~ textOverflow ellipsis
+
+To set `text-overflow` to an arbitrary String, use [`custom`](#custom) like so:
+
+    ~ custom "text-overflow" "my custom text-overflow value"
 -}
 textOverflow : TextOverflow -> Property namespace animation class id
 textOverflow =
