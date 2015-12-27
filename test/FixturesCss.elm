@@ -88,6 +88,7 @@ leftRightTopBottom =
             ~ left (px 5)
             ~ textAlign left
             ~ verticalAlign bottom
+
         $ a
             ~ position relative
             ~ right zero
@@ -103,6 +104,7 @@ borders =
             ~ borderLeft3 (px 5) dashed (rgb 11 14 17)
             ~ borderRight (px 7)
             ~ borderImageOutset2 (n 3) (em 4)
+
         $ a
             ~ border2 (px 10) solid
 
@@ -116,14 +118,18 @@ dreamwriter =
             ~ boxSizing borderBox
             ~ padding zero
             ~ margin zero
+
         $ body
             ~ minWidth (px 1280)
             ~ overflowX auto
+
             >$ div
                 ~ width (pct 100)
                 ~ height (pct 100)
+
         . Hidden
             ~ ((display none) |> important)
+
         # Page
             ~ width (pct 100)
             ~ height (pct 100)
