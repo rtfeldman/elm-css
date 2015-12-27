@@ -181,7 +181,7 @@ manualUnderlineOnHoverStyle : Style String CssAnimations CssClasses CssIds
 manualUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
-            ~ color (rgb 128 127 126
+            ~ color (rgb 128 127 126)
 
         &: hover
             ~ color (rgb 23 24 25)
