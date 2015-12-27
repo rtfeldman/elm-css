@@ -20,6 +20,26 @@ all =
             , ( boxSizing borderBox, "border-box" )
             ]
         , testProperty
+            "overflow"
+            [ ( overflow initial, "initial" )
+            , ( overflow unset, "unset" )
+            , ( overflow inherit, "inherit" )
+            , ( overflow auto, "auto" )
+            , ( overflow visible, "visible" )
+            , ( overflow hidden, "hidden" )
+            , ( overflow scroll, "scroll" )
+            ]
+        , testProperty
+            "text-rendering"
+            [ ( textRendering initial, "initial" )
+            , ( textRendering unset, "unset" )
+            , ( textRendering inherit, "inherit" )
+            , ( textRendering auto, "auto" )
+            , ( textRendering optimizeSpeed, "optimizeSpeed" )
+            , ( textRendering optimizeLegibility, "optimizeLegibility" )
+            , ( textRendering geometricPrecision, "geometricPrecision" )
+            ]
+        , testProperty
             "display"
             [ ( display initial, "initial" )
             , ( display unset, "unset" )
