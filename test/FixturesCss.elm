@@ -183,8 +183,8 @@ manualUnderlineOnHoverStyle =
         $ a
             ~ color (rgb 128 127 126)
 
-        &: hover
-            ~ color (rgb 23 24 25)
+            &: hover
+                ~ color (rgb 23 24 25)
 
 
 transformsStyle : Style String CssAnimations CssClasses CssIds
