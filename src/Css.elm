@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn) where
+module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn) where
 
 {-| Functions for building stylesheets.
 
@@ -12,7 +12,7 @@ module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$),
 @docs (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.)
 
 # Attributes
-@docs transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4, outline
+@docs transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
 
 # Values
 @docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d
@@ -45,6 +45,11 @@ import Style exposing (Style(..))
 import String
 
 
+type Compatible
+    = Compatible
+
+
+
 -- TODO these are just for @media - maybe improve type guarantees?
 
 
@@ -62,146 +67,12 @@ print =
 {- Length -}
 
 
-cssFunction : String -> (a -> String) -> List a -> String
-cssFunction funcName converter args =
-    args
-        |> List.map converter
-        |> String.join ", "
-        |> (++) (funcName ++ "(")
-        |> (flip (++)) ")"
-
-
-propertyValueToString : (a -> String) -> PropertyValue a -> String
-propertyValueToString translate value =
-    case value of
-        Inherit ->
-            "inherit"
-
-        Initial ->
-            "initial"
-
-        Unset ->
-            "unset"
-
-        ExplicitValue notInherit ->
-            translate notInherit
-
-
-autoToString : (a -> String) -> AutoOr a -> String
-autoToString translate value =
-    case value of
-        Auto ->
-            "auto"
-
-        NotAuto notAuto ->
-            translate notAuto
-
-
-noneToString : (a -> String) -> NoneOr a -> String
-noneToString translate value =
-    case value of
-        None ->
-            "none"
-
-        NotNone notNone ->
-            translate notNone
-
-
-absoluteNoneToString : None -> String
-absoluteNoneToString =
-    (\_ -> "")
-        |> noneToString
-        |> propertyValueToString
-
-
-lengthToString : Length -> String
-lengthToString =
-    (\(ExplicitLength str) -> str)
-        |> autoToString
-        |> propertyValueToString
-
-
-angleToString : Angle -> String
-angleToString =
-    (\(ExplicitAngle str) -> str)
-        |> propertyValueToString
-
-
-transformListToString : List Transform -> String
-transformListToString list =
-    case list of
-        [] ->
-            "none"
-
-        _ ->
-            list
-                |> List.map (\(Transform str) -> str)
-                |> String.join " "
-
-
-lengthOrNumberToString : LengthOrNumber -> String
-lengthOrNumberToString =
-    lengthToString
-
-
-borderStyleToString : BorderStyle -> String
-borderStyleToString =
-    (\(ExplicitBorderStyle str) -> str)
-        |> noneToString
-        |> propertyValueToString
-
-
-textRenderingToString : TextRendering -> String
-textRenderingToString =
-    (\(ExplicitTextRendering str) -> str)
-        |> autoToString
-        |> propertyValueToString
-
-
-textTransformToString : TextTransform -> String
-textTransformToString =
-    (\(ExplicitTextTransform str) -> str)
-        |> noneToString
-        |> propertyValueToString
-
-
-textOverflowToString : TextOverflow -> String
-textOverflowToString =
-    (\(ExplicitTextOverflow str) -> str)
-        |> propertyValueToString
-
-
-textIndentToString : TextIndent -> String
-textIndentToString =
-    (\(ExplicitTextIndent str) -> str)
-        |> propertyValueToString
-
-
-boxSizingToString : BoxSizing -> String
-boxSizingToString =
-    (\(ExplicitBoxSizing str) -> str)
-        |> borderBoxToString
-        |> propertyValueToString
-
-
-overflowToString : Overflow -> String
-overflowToString =
-    (\(ExplicitOverflow str) -> str)
-        |> autoToString
-        |> propertyValueToString
-
-
-displayToString : Display -> String
-displayToString =
-    (\(ExplicitDisplay str) -> str)
-        |> noneToString
-        |> propertyValueToString
-
-
-positionToString : Position -> String
-positionToString =
-    (\(ExplicitPosition str) -> str)
-        |> propertyValueToString
+cssFunction : String -> List String -> String
+cssFunction funcName args =
+    funcName
+        ++ "("
+        ++ (String.join ", " args)
+        ++ ")"
 
 
 {-| Caution: trickery ahead!
@@ -297,189 +168,144 @@ getLast list =
             getLast rest
 
 
-whiteSpaceToString : WhiteSpace -> String
-whiteSpaceToString =
-    (\(ExplicitWhiteSpace str) -> str)
-        |> autoToString
-        |> propertyValueToString
+type alias Value compatible =
+    { compatible | value : String }
 
 
-textDecorationStyleToString : TextDecorationStyle -> String
-textDecorationStyleToString =
-    borderStyleToString
+type alias All compatible =
+    { compatible | value : String, all : Compatible }
 
 
-textDecorationLinesToString : List TextDecorationLine -> String
-textDecorationLinesToString list =
-    list
-        |> List.map textDecorationLineToString
-        |> String.join " "
+type alias Number compatible =
+    { compatible | value : String, number : Compatible }
 
 
-textDecorationLineToString : TextDecorationLine -> String
-textDecorationLineToString =
-    (\(ExplicitTextDecorationLine str) -> str)
-        |> noneToString
-        |> propertyValueToString
+type alias None compatible =
+    { compatible | value : String, none : Compatible }
 
 
-colorToString : Color -> String
-colorToString =
-    (\(ExplicitColor str) -> str)
-        |> transparentToString
-        |> autoToString
-        |> propertyValueToString
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Values
+-}
+type alias TextDecorationLine compatible =
+    { compatible | value : String, textDecorationLine : Compatible }
 
 
-numberToString : number -> String
-numberToString num =
-    toString (num + 0)
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing#Values
+-}
+type alias BoxSizing compatible =
+    { compatible | value : String, boxSizing : Compatible }
 
 
-textShadowToString : TextShadow -> String
-textShadowToString =
-    explicitTextShadowToString
-        |> noneToString
-        |> propertyValueToString
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values
+-}
+type alias Overflow compatible =
+    { compatible | value : String, overflow : Compatible }
 
 
-explicitTextShadowToString : ExplicitTextShadow -> String
-explicitTextShadowToString value =
-    case value of
-        NoTextShadow ->
-            "TODO"
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values
+-}
+type alias Display compatible =
+    { compatible | value : String, display : Compatible }
 
 
-explicitOpacityStyleToString : ExplicitOpacityStyle -> String
-explicitOpacityStyleToString (ExplicitOpacityStyle str) =
-    str
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/white-space#Values
+-}
+type alias WhiteSpace compatible =
+    { compatible | value : String, whiteSpace : Compatible }
 
 
-transparentToString : (a -> String) -> TransparentOr a -> String
-transparentToString translate value =
-    case value of
-        Transparent ->
-            "transparent"
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values
+-}
+type alias Color compatible =
+    { compatible | value : String, color : Compatible }
 
-        NotTransparent notTransparent ->
-            translate notTransparent
 
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+-}
+type alias Length compatible =
+    { compatible | value : String, length : Compatible }
 
-transformBoxToString : TransformBox -> String
-transformBoxToString =
-    (\(ExplicitTransformBox str) -> str)
-        |> borderBoxToString
-        |> propertyValueToString
 
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+-}
+type alias LengthOrAuto compatible =
+    { compatible | value : String, lengthOrAuto : Compatible }
 
-transformStyleToString : TransformStyle -> String
-transformStyleToString =
-    (\(ExplicitTransformStyle str) -> str)
-        |> propertyValueToString
 
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+-}
+type alias LengthOrNumber compatible =
+    { compatible | value : String, lengthOrNumber : Compatible }
 
-borderBoxToString : (a -> String) -> BorderBoxOr a -> String
-borderBoxToString translate value =
-    case value of
-        BorderBox ->
-            "border-box"
 
-        NotBorderBox notBorderBox ->
-            translate notBorderBox
+type alias ExplicitLength =
+    LengthOrAuto (LengthOrNumber (Length (TextIndent {})))
 
 
-opacityStyleToString : OpacityStyle -> String
-opacityStyleToString =
-    explicitOpacityStyleToString
-        |> transparentToString
-        |> propertyValueToString
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform#Values
+-}
+type alias Transform compatible =
+    { compatible | value : String, transform : Compatible }
 
 
-type PropertyValue a
-    = Inherit
-    | Unset
-    | Initial
-    | ExplicitValue a
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/angle
+-}
+type alias Angle compatible =
+    { compatible | value : String, angle : Compatible }
 
 
-type TransparentOr a
-    = Transparent
-    | NotTransparent a
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values
+-}
+type alias TextDecorationStyle compatible =
+    { compatible | value : String, textDecorationStyle : Compatible }
 
 
-type AutoOr a
-    = Auto
-    | NotAuto a
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values
+-}
+type alias Position compatible =
+    { compatible | value : String, position : Compatible }
 
 
-type NoneOr a
-    = None
-    | NotNone a
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values
+-}
+type alias BorderStyle compatible =
+    { compatible | value : String, borderStyle : Compatible }
 
 
-type BorderBoxOr a
-    = BorderBox
-    | NotBorderBox a
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box#Values
+-}
+type alias TransformBox compatible =
+    { compatible | value : String, transformBox : Compatible }
 
 
-type UninhabitableType
-    = UninhabitableType UninhabitableType
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style#Values
+-}
+type alias TransformStyle compatible =
+    { compatible | value : String, transformStyle : Compatible }
 
 
-type alias None =
-    PropertyValue (NoneOr UninhabitableType)
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values
+-}
+type alias TextIndent compatible =
+    { compatible | value : String, textIndent : Compatible }
 
 
-type alias TextDecorationLine =
-    PropertyValue (NoneOr ExplicitTextDecorationLine)
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values
+-}
+type alias TextOverflow compatible =
+    { compatible | value : String, textOverflow : Compatible }
 
 
-type alias BoxSizing =
-    PropertyValue (BorderBoxOr ExplicitBoxSizing)
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values
+-}
+type alias TextTransform compatible =
+    { compatible | value : String, textTransform : Compatible }
 
 
-type alias Overflow =
-    PropertyValue (AutoOr ExplicitOverflow)
-
-
-type alias Display =
-    PropertyValue (NoneOr ExplicitDisplay)
-
-
-type alias WhiteSpace =
-    PropertyValue (AutoOr ExplicitWhiteSpace)
-
-
-type alias Color =
-    PropertyValue (AutoOr (TransparentOr ExplicitColor))
-
-
-type alias TextShadow =
-    PropertyValue (NoneOr ExplicitTextShadow)
-
-
-type alias Outline =
-    PropertyValue ExplicitOutline
-
-
-type alias OpacityStyle =
-    PropertyValue (TransparentOr ExplicitOpacityStyle)
-
-
-type alias LengthOrAuto =
-    PropertyValue (AutoOr ExplicitLength)
-
-
-type alias Length =
-    LengthOrAuto
-
-
-type Transform
-    = Transform String
-
-
-type alias Angle =
-    PropertyValue ExplicitAngle
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values
+-}
+type alias TextRendering compatible =
+    { compatible | value : String, textRendering : Compatible }
 
 
 
@@ -492,8 +318,8 @@ that it will return the desired String as its key, and use that as our value.
 -}
 
 
-type alias TextAlign namespace animation class id =
-    Length -> Property namespace animation class id
+type alias TextAlign namespace animation class id a =
+    Length a -> Property namespace animation class id
 
 
 
@@ -506,136 +332,12 @@ that it will return the desired String as its key, and use that as our value.
 -}
 
 
-type alias VerticalAlign namespace animation class id =
-    Length -> Property namespace animation class id
+type alias VerticalAlign namespace animation class id a =
+    Length a -> Property namespace animation class id
 
 
 type alias Property namespace animation class id =
     Style namespace animation class id
-
-
-{-| Although not many propeties accept either a length or a number,
-there's no way to type check them separately. Having a separate type
-alias is at least more self-documenting.
--}
-type alias LengthOrNumber =
-    Length
-
-
-type alias TextDecorationStyle =
-    BorderStyle
-
-
-type alias Position =
-    PropertyValue ExplicitPosition
-
-
-type alias BorderStyle =
-    PropertyValue (NoneOr ExplicitBorderStyle)
-
-
-type alias TransformBox =
-    PropertyValue (BorderBoxOr ExplicitTransformBox)
-
-
-type alias TransformStyle =
-    PropertyValue ExplicitTransformStyle
-
-
-type ExplicitTransformBox
-    = ExplicitTransformBox String
-
-
-type ExplicitTransformStyle
-    = ExplicitTransformStyle String
-
-
-type alias TextIndent =
-    PropertyValue ExplicitTextIndent
-
-
-type alias TextOverflow =
-    PropertyValue ExplicitTextOverflow
-
-
-type alias TextTransform =
-    PropertyValue (NoneOr ExplicitTextTransform)
-
-
-type alias TextRendering =
-    PropertyValue (AutoOr ExplicitTextRendering)
-
-
-type ExplicitTextIndent
-    = ExplicitTextIndent String
-
-
-type ExplicitTextOverflow
-    = ExplicitTextOverflow String
-
-
-type ExplicitTextRendering
-    = ExplicitTextRendering String
-
-
-type ExplicitTextTransform
-    = ExplicitTextTransform String
-
-
-type ExplicitPosition
-    = ExplicitPosition String
-
-
-type ExplicitTextDecorationLine
-    = ExplicitTextDecorationLine String
-
-
-type ExplicitLength
-    = ExplicitLength String
-
-
-type ExplicitBoxSizing
-    = ExplicitBoxSizing String
-
-
-type ExplicitOverflow
-    = ExplicitOverflow String
-
-
-type ExplicitDisplay
-    = ExplicitDisplay String
-
-
-type ExplicitWhiteSpace
-    = ExplicitWhiteSpace String
-
-
-type ExplicitColor
-    = ExplicitColor String
-
-
-type ExplicitBorderStyle
-    = ExplicitBorderStyle String
-
-
-type ExplicitVerticalAlign
-    = ExplicitVerticalAlign String
-
-
-type ExplicitOutline
-    = ExplicitOutline Float ExplicitLength BorderStyle OpacityStyle
-
-
-type ExplicitOpacityStyle
-    = ExplicitOpacityStyle String
-
-
-type ExplicitTextShadow
-    = NoTextShadow
-
-
-type ExplicitAngle
-    = ExplicitAngle String
 
 
 
@@ -644,9 +346,9 @@ type ExplicitAngle
 
 {-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
 -}
-all : PropertyValue String -> Property namespace animation class id
+all : All compatible -> Property namespace animation class id
 all =
-    prop1 "all" (propertyValueToString (\_ -> ""))
+    prop1 "all"
 
 
 {-| Transforms the given property by adding !important to the end of its
@@ -679,54 +381,135 @@ important style =
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
 -}
-transparent : OpacityStyle
+transparent : Color {}
 transparent =
-    Transparent |> ExplicitValue
+    { value = "transparent"
+    , color = Compatible
+    }
 
 
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
     value.
 -}
-currentColor : Color
+currentColor : Color {}
 currentColor =
-    ExplicitColor "currentColor"
-        |> NotTransparent
-        |> NotAuto
-        |> ExplicitValue
+    { value = "currentColor"
+    , color = Compatible
+    }
+
+
+{-| The `visible` value for the [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) property.
+-}
+visible : Overflow {}
+visible =
+    { value = "visible"
+    , overflow = Compatible
+    }
+
+
+{-| The `scroll` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
+-}
+scroll : Overflow {}
+scroll =
+    { value = "scroll"
+    , overflow = Compatible
+    }
+
+
+{-| `hidden` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
+
+This can also represent a `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+hidden : Overflow (BorderStyle {})
+hidden =
+    { value = "hidden"
+    , overflow = Compatible
+    , borderStyle = Compatible
+    }
+
+
+{-| The [`unset`](https://developer.mozilla.org/en-US/docs/Web/CSS/unset) value.
+Any CSS property can be set to this value.
+-}
+unset :
+    { all : Compatible
+    , boxSizing : Compatible
+    , display : Compatible
+    , none : Compatible
+    , overflow : Compatible
+    , textDecorationLine : Compatible
+    , value : String
+    }
+unset =
+    { initial | value = "unset" }
+
+
+{-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
+Any CSS property can be set to this value.
+-}
+inherit :
+    { all : Compatible
+    , boxSizing : Compatible
+    , display : Compatible
+    , none : Compatible
+    , overflow : Compatible
+    , textDecorationLine : Compatible
+    , value : String
+    }
+inherit =
+    { initial | value = "inherit" }
+
+
+{-| The [`initial`](https://developer.mozilla.org/en-US/docs/Web/CSS/initial) value.
+Any CSS property can be set to this value.
+-}
+initial :
+    { all : Compatible
+    , boxSizing : Compatible
+    , display : Compatible
+    , none : Compatible
+    , overflow : Compatible
+    , textDecorationLine : Compatible
+    , value : String
+    }
+initial =
+    { value = "initial"
+    , overflow = Compatible
+    , none = Compatible
+    , textDecorationLine = Compatible
+    , boxSizing = Compatible
+    , display = Compatible
+    , all = Compatible
+    }
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in functional notation.
 -}
-rgb : number -> number -> number -> Color
+rgb : number -> number -> number -> Color {}
 rgb r g b =
-    cssFunction "rgb" numberToString [ r, g, b ]
-        |> ExplicitColor
-        |> NotTransparent
-        |> NotAuto
-        |> ExplicitValue
+    { value = cssFunction "rgb" (List.map numberToString [ r, g, b ])
+    , color = Compatible
+    }
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
-rgba : number -> number -> number -> number -> Color
+rgba : number -> number -> number -> number -> Color {}
 rgba r g b a =
-    cssFunction "rgba" numberToString [ r, g, b, a ]
-        |> ExplicitColor
-        |> NotTransparent
-        |> NotAuto
-        |> ExplicitValue
+    { value = cssFunction "rgba" (List.map numberToString [ r, g, b, a ])
+    , color = Compatible
+    }
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in hexadecimal notation.
 -}
-hex : String -> Color
+hex : String -> Color {}
 hex str =
-    ExplicitColor ("#" ++ str)
-        |> NotTransparent
-        |> NotAuto
-        |> ExplicitValue
+    { value = "#" ++ str
+    , color = Compatible
+    }
 
 
 
@@ -735,29 +518,29 @@ hex str =
 
 {-| `optimizeSpeed` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
-optimizeSpeed : TextRendering
+optimizeSpeed : TextRendering {}
 optimizeSpeed =
-    ExplicitTextRendering "optimizeSpeed"
-        |> NotAuto
-        |> ExplicitValue
+    { value = "optimizeSpeed"
+    , textRendering = Compatible
+    }
 
 
 {-| `optimizeLegibility` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
-optimizeLegibility : TextRendering
+optimizeLegibility : TextRendering {}
 optimizeLegibility =
-    ExplicitTextRendering "optimizeLegibility"
-        |> NotAuto
-        |> ExplicitValue
+    { value = "optimizeLegibility"
+    , textRendering = Compatible
+    }
 
 
 {-| `geometricPrecision` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
-geometricPrecision : TextRendering
+geometricPrecision : TextRendering {}
 geometricPrecision =
-    ExplicitTextRendering "geometricPrecision"
-        |> NotAuto
-        |> ExplicitValue
+    { value = "geometricPrecision"
+    , textRendering = Compatible
+    }
 
 
 
@@ -766,18 +549,20 @@ geometricPrecision =
 
 {-| `hanging` [`hanging`](https://developer.mozilla.org/en-US/docs/Web/CSS/hanging#Values) value
 -}
-hanging : TextIndent
+hanging : TextIndent {}
 hanging =
-    ExplicitTextIndent "hanging"
-        |> ExplicitValue
+    { value = "hanging"
+    , textIndent = Compatible
+    }
 
 
 {-| `each-line` [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values) value
 -}
-eachLine : TextIndent
+eachLine : TextIndent {}
 eachLine =
-    ExplicitTextIndent "each-line"
-        |> ExplicitValue
+    { value = "each-line"
+    , textIndent = Compatible
+    }
 
 
 
@@ -786,128 +571,145 @@ eachLine =
 
 {-| `capitalize` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-capitalize : TextTransform
+capitalize : TextTransform {}
 capitalize =
-    ExplicitTextTransform "capitalize"
-        |> NotNone
-        |> ExplicitValue
+    { value = "capitalize"
+    , textTransform = Compatible
+    }
 
 
 {-| `uppercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-uppercase : TextTransform
+uppercase : TextTransform {}
 uppercase =
-    ExplicitTextTransform "uppercase"
-        |> NotNone
-        |> ExplicitValue
+    { value = "uppercase"
+    , textTransform = Compatible
+    }
 
 
 {-| `lowercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-lowercase : TextTransform
+lowercase : TextTransform {}
 lowercase =
-    ExplicitTextTransform "lowercase"
-        |> NotNone
-        |> ExplicitValue
+    { value = "lowercase"
+    , textTransform = Compatible
+    }
 
 
 {-| `full-width` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-fullWidth : TextTransform
+fullWidth : TextTransform {}
 fullWidth =
-    ExplicitTextTransform "fullWidth"
-        |> NotNone
-        |> ExplicitValue
+    { value = "full-width"
+    , textTransform = Compatible
+    }
 
 
 {-| `ellipsis` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
 -}
-ellipsis : TextOverflow
+ellipsis : TextOverflow {}
 ellipsis =
-    ExplicitTextOverflow "ellipsis"
-        |> ExplicitValue
+    { value = "ellipsis"
+    , textOverflow = Compatible
+    }
 
 
 {-| `clip` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
 -}
-clip : TextOverflow
+clip : TextOverflow {}
 clip =
-    ExplicitTextOverflow "clip"
-        |> ExplicitValue
+    { value = "clip"
+    , textOverflow = Compatible
+    }
 
 
 
 {- BORDER STYLE -}
 
 
-{-| A `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
--}
-hidden : BorderStyle
-hidden =
-    "hidden" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
-
-
 {-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
 -}
-wavy : TextDecorationStyle
+wavy : TextDecorationStyle {}
 wavy =
-    "wavy" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "wavy"
+    , textDecorationStyle = Compatible
+    }
 
 
 {-| A `dotted` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-dotted : BorderStyle
+dotted : BorderStyle (TextDecorationStyle {})
 dotted =
-    "dotted" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "dotted"
+    , borderStyle = Compatible
+    , textDecorationStyle = Compatible
+    }
 
 
 {-| A `dashed` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-dashed : BorderStyle
+dashed : BorderStyle (TextDecorationStyle {})
 dashed =
-    "dashed" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "dashed"
+    , borderStyle = Compatible
+    , textDecorationStyle = Compatible
+    }
 
 
 {-| A `solid` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-solid : BorderStyle
+solid : BorderStyle (TextDecorationStyle {})
 solid =
-    "solid" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "solid"
+    , borderStyle = Compatible
+    , textDecorationStyle = Compatible
+    }
 
 
 {-| A `double` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-double : BorderStyle
+double : BorderStyle (TextDecorationStyle {})
 double =
-    "double" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "double"
+    , borderStyle = Compatible
+    , textDecorationStyle = Compatible
+    }
 
 
 {-| A `groove` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-groove : BorderStyle
+groove : BorderStyle {}
 groove =
-    "groove" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "groove"
+    , borderStyle = Compatible
+    }
 
 
 {-| A `ridge` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-ridge : BorderStyle
+ridge : BorderStyle {}
 ridge =
-    "ridge" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "ridge"
+    , borderStyle = Compatible
+    }
 
 
 {-| An `inset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-inset : BorderStyle
+inset : BorderStyle {}
 inset =
-    "inset" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "inset"
+    , borderStyle = Compatible
+    }
 
 
 {-| An `outset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-outset : BorderStyle
+outset : BorderStyle {}
 outset =
-    "outset" |> ExplicitBorderStyle |> NotNone |> ExplicitValue
+    { value = "outset"
+    , borderStyle = Compatible
+    }
 
 
 
@@ -916,62 +718,65 @@ outset =
 
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-center : TextAlign namespace animation class id
+center : TextAlign namespace animation class id a
 center =
-    prop1 "center" lengthToString
+    prop1 "center"
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : TextAlign namespace animation class id
+textJustify : TextAlign namespace animation class id a
 textJustify =
-    prop1 "text-justify" lengthToString
+    prop1 "text-justify"
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : TextAlign namespace animation class id
+justifyAll : TextAlign namespace animation class id a
 justifyAll =
-    prop1 "justify-all" lengthToString
+    prop1 "justify-all"
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : TextAlign namespace animation class id
+start : TextAlign namespace animation class id a
 start =
-    prop1 "start" lengthToString
+    prop1 "start"
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : TextAlign namespace animation class id
+end : TextAlign namespace animation class id a
 end =
-    prop1 "end" lengthToString
+    prop1 "end"
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : TextAlign namespace animation class id
+matchParent : TextAlign namespace animation class id a
 matchParent =
-    prop1 "match-parent" lengthToString
+    prop1 "match-parent"
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : TextAlign namespace animation class id
+true : TextAlign namespace animation class id a
 true =
-    prop1 "true" lengthToString
+    prop1 "true"
 
 
 
 {- LENGTHS -}
 
 
-lengthConverter : String -> number -> Length
+lengthConverter : String -> number -> ExplicitLength
 lengthConverter suffix num =
-    ExplicitLength ((numberToString num) ++ suffix)
-        |> NotAuto
-        |> ExplicitValue
+    { value = (numberToString num) ++ suffix
+    , length = Compatible
+    , lengthOrAuto = Compatible
+    , lengthOrNumber = Compatible
+    , textIndent = Compatible
+    }
 
 
 {-| Convenience length value that compiles to 0 with no units.
@@ -985,91 +790,96 @@ lengthConverter suffix num =
         padding: 0;
     }
 -}
-zero : Length
+zero : Length (LengthOrNumber (LengthOrAuto (Number {})))
 zero =
-    "0" |> ExplicitLength |> NotAuto |> ExplicitValue
+    { value = "0"
+    , length = Compatible
+    , lengthOrNumber = Compatible
+    , lengthOrAuto = Compatible
+    , number = Compatible
+    }
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
-pct : number -> Length
+pct : number -> ExplicitLength
 pct =
     lengthConverter "%"
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
-em : number -> Length
+em : number -> ExplicitLength
 em =
     lengthConverter "em"
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
-ex : number -> Length
+ex : number -> ExplicitLength
 ex =
     lengthConverter "ex"
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
-ch : number -> Length
+ch : number -> ExplicitLength
 ch =
     lengthConverter "ch"
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
-rem : number -> Length
+rem : number -> ExplicitLength
 rem =
     lengthConverter "rem"
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
-vh : number -> Length
+vh : number -> ExplicitLength
 vh =
     lengthConverter "vh"
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
-vw : number -> Length
+vw : number -> ExplicitLength
 vw =
     lengthConverter "vw"
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
-vmin : number -> Length
+vmin : number -> ExplicitLength
 vmin =
     lengthConverter "vmin"
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
-vmax : number -> Length
+vmax : number -> ExplicitLength
 vmax =
     lengthConverter "vmax"
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
-px : number -> Length
+px : number -> ExplicitLength
 px =
     lengthConverter "px"
 
 
 {-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
-mm : number -> Length
+mm : number -> ExplicitLength
 mm =
     lengthConverter "mm"
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
-cm : number -> Length
+cm : number -> ExplicitLength
 cm =
     lengthConverter "cm"
 
@@ -1078,21 +888,21 @@ cm =
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 -}
-inches : number -> Length
+inches : number -> ExplicitLength
 inches =
     lengthConverter "in"
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
-pt : number -> Length
+pt : number -> ExplicitLength
 pt =
     lengthConverter "pt"
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
-pc : number -> Length
+pc : number -> ExplicitLength
 pc =
     lengthConverter "pc"
 
@@ -1100,46 +910,49 @@ pc =
 {-| A unitless number. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-n : number -> LengthOrNumber
-n =
-    lengthConverter ""
+n : number -> LengthOrNumber (Number {})
+n num =
+    { value = numberToString num
+    , lengthOrNumber = Compatible
+    , number = Compatible
+    }
 
 
 
 {- ANGLES -}
 
 
-angleConverter : String -> number -> Angle
+angleConverter : String -> number -> Angle {}
 angleConverter suffix num =
-    ((numberToString num) ++ suffix)
-        |> ExplicitAngle
-        |> ExplicitValue
+    { value = (numberToString num) ++ suffix
+    , angle = Compatible
+    }
 
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
 -}
-deg : number -> Angle
+deg : number -> Angle {}
 deg =
     angleConverter "deg"
 
 
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
-grad : number -> Angle
+grad : number -> Angle {}
 grad =
     angleConverter "grad"
 
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
-rad : number -> Angle
+rad : number -> Angle {}
 rad =
     angleConverter "rad"
 
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
-turn : number -> Angle
+turn : number -> Angle {}
 turn =
     angleConverter "turn"
 
@@ -1152,83 +965,92 @@ turn =
 
     ~ transform (matrix 0.5 1 1.5 2 2.5 3)
 -}
-matrix : number -> number -> number -> number -> number -> number -> Transform
+matrix : number -> number -> number -> number -> number -> number -> Transform {}
 matrix a b c d tx ty =
-    cssFunction "matrix" numberToString [ a, b, c, d, tx, ty ] |> Transform
+    { value = cssFunction "matrix" (List.map numberToString [ a, b, c, d, tx, ty ])
+    , transform = Compatible
+    }
 
 
 {-| The [`matrix3d()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix3d()) transform-function.
 
     ~ transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
 -}
-matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform
+matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-    cssFunction "matrix3d" numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ]
-        |> Transform
+    { value = cssFunction "matrix3d" (List.map numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
+    , transform = Compatible
+    }
 
 
 {-| The [`perspective()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#perspective()) transform-function.
 
      transform (perspective 0.5)
 -}
-perspective : number -> Transform
+perspective : number -> Transform {}
 perspective l =
-    cssFunction "perspective" numberToString [ l ] |> Transform
+    { value = cssFunction "perspective" [ numberToString l ]
+    , transform = Compatible
+    }
 
 
 {-| The [`rotate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate()) transform-function.
 
      transform (rotate (deg 90))
 -}
-rotate : Angle -> Transform
-rotate a =
-    cssFunction "rotate" angleToString [ a ] |> Transform
+rotate : Angle compatible -> Transform {}
+rotate { value } =
+    { value = cssFunction "rotate" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`rotateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateX()) transform-function.
 
      transform (rotateX (deg 90))
 -}
-rotateX : Angle -> Transform
-rotateX a =
-    cssFunction "rotateX" angleToString [ a ] |> Transform
+rotateX : Angle compatible -> Transform {}
+rotateX { value } =
+    { value = cssFunction "rotateX" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`rotateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateY()) transform-function.
 
      transform (rotateY (deg 90))
 -}
-rotateY : Angle -> Transform
-rotateY a =
-    cssFunction "rotateY" angleToString [ a ] |> Transform
+rotateY : Angle compatible -> Transform {}
+rotateY { value } =
+    { value = cssFunction "rotateY" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`rotateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateZ()) transform-function.
 
      transform (rotateZ (deg 90))
 -}
-rotateZ : Angle -> Transform
-rotateZ a =
-    cssFunction "rotateZ" angleToString [ a ] |> Transform
+rotateZ : Angle compatible -> Transform {}
+rotateZ { value } =
+    { value = cssFunction "rotateZ" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`rotate3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate3d()) transform-function.
 
      transform (rotate3d 1 1 1 (deg 90))
 -}
-rotate3d : number -> number -> number -> Angle -> Transform
-rotate3d x y z a =
+rotate3d : number -> number -> number -> Angle compatible -> Transform {}
+rotate3d x y z { value } =
     let
         coordsAsStrings =
             List.map numberToString [ x, y, z ]
-
-        angleAsString =
-            angleToString a
-
-        allValues =
-            coordsAsStrings ++ [ angleAsString ]
     in
-        cssFunction "rotate3d" identity allValues |> Transform
+        { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
+        , transform = Compatible
+        }
 
 
 {-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
@@ -1236,9 +1058,11 @@ rotate3d x y z a =
      transform (scale 0.5)
      transform (scale2 0.5 0.7)
 -}
-scale : number -> Transform
+scale : number -> Transform {}
 scale x =
-    cssFunction "scale" numberToString [ x ] |> Transform
+    { value = cssFunction "scale" [ numberToString x ]
+    , transform = Compatible
+    }
 
 
 {-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
@@ -1246,36 +1070,44 @@ scale x =
      transform (scale 0.5)
      transform (scale2 0.5 0.7)
 -}
-scale2 : number -> number -> Transform
+scale2 : number -> number -> Transform {}
 scale2 x y =
-    cssFunction "scale" numberToString [ x, y ] |> Transform
+    { value = cssFunction "scale" (List.map numberToString [ x, y ])
+    , transform = Compatible
+    }
 
 
 {-| The [`scaleX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleX()) transform-function.
 
      transform (scaleX 0.5)
 -}
-scaleX : number -> Transform
+scaleX : number -> Transform {}
 scaleX x =
-    cssFunction "scaleX" numberToString [ x ] |> Transform
+    { value = cssFunction "scaleX" [ numberToString x ]
+    , transform = Compatible
+    }
 
 
 {-| The [`scaleY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleY()) transform-function.
 
      transform (scaleY 0.5)
 -}
-scaleY : number -> Transform
+scaleY : number -> Transform {}
 scaleY y =
-    cssFunction "scaleY" numberToString [ y ] |> Transform
+    { value = cssFunction "scaleY" [ numberToString y ]
+    , transform = Compatible
+    }
 
 
 {-| The [`scale3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale3d()) transform-function.
 
      transform (scale3d 0.5 0.5 1)
 -}
-scale3d : number -> number -> number -> Transform
+scale3d : number -> number -> number -> Transform {}
 scale3d x y z =
-    cssFunction "scale3d" numberToString [ x, y, z ] |> Transform
+    { value = cssFunction "scale3d" (List.map numberToString [ x, y, z ])
+    , transform = Compatible
+    }
 
 
 {-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
@@ -1283,9 +1115,11 @@ scale3d x y z =
      transform (skew (deg 90))
      transform (skew2 (deg 90) (deg 45))
 -}
-skew : Angle -> Transform
-skew ax =
-    cssFunction "skew" angleToString [ ax ] |> Transform
+skew : Angle compatible -> Transform {}
+skew { value } =
+    { value = cssFunction "skew" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
@@ -1293,27 +1127,33 @@ skew ax =
      transform (skew (deg 90))
      transform (skew2 (deg 90) (deg 45))
 -}
-skew2 : Angle -> Angle -> Transform
+skew2 : Angle compatibleA -> Angle compatibleB -> Transform {}
 skew2 ax ay =
-    cssFunction "skew" angleToString [ ax, ay ] |> Transform
+    { value = cssFunction "skew" [ ax.value, ay.value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`skewX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewX()) transform-function.
 
      transform (skewX (deg 90))
 -}
-skewX : Angle -> Transform
-skewX a =
-    cssFunction "skewX" angleToString [ a ] |> Transform
+skewX : Angle compatible -> Transform {}
+skewX { value } =
+    { value = cssFunction "skewX" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`skewY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewY()) transform-function.
 
     transform (skewY (deg 90))
 -}
-skewY : Angle -> Transform
-skewY a =
-    cssFunction "skewY" angleToString [ a ] |> Transform
+skewY : Angle compatible -> Transform {}
+skewY { value } =
+    { value = cssFunction "skewY" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
@@ -1321,9 +1161,11 @@ skewY a =
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
 -}
-translate : Length -> Transform
-translate tx =
-    cssFunction "translate" lengthToString [ tx ] |> Transform
+translate : Length compatible -> Transform {}
+translate { value } =
+    { value = cssFunction "translate" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
@@ -1331,45 +1173,55 @@ translate tx =
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
 -}
-translate2 : Length -> Length -> Transform
+translate2 : Length compatible -> Length compatible -> Transform {}
 translate2 tx ty =
-    cssFunction "translate" lengthToString [ tx, ty ] |> Transform
+    { value = cssFunction "translate" [ tx.value, ty.value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
 
     transform (translateX (px 100))
 -}
-translateX : Length -> Transform
-translateX t =
-    cssFunction "translateX" lengthToString [ t ] |> Transform
+translateX : Length compatible -> Transform {}
+translateX { value } =
+    { value = cssFunction "translateX" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`translateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateY()) transform-function.
 
     transform (translateY (px 100))
 -}
-translateY : Length -> Transform
-translateY t =
-    cssFunction "translateY" lengthToString [ t ] |> Transform
+translateY : Length compatible -> Transform {}
+translateY { value } =
+    { value = cssFunction "translateY" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`translateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateZ()) transform-function.
 
     transform (translateZ (px 100))
 -}
-translateZ : Length -> Transform
-translateZ t =
-    cssFunction "translateZ" lengthToString [ t ] |> Transform
+translateZ : Length compatible -> Transform {}
+translateZ { value } =
+    { value = cssFunction "translateZ" [ value ]
+    , transform = Compatible
+    }
 
 
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
 
     transform (translate3d (px 100) (px 100) (px 100))
 -}
-translate3d : Length -> Length -> Length -> Transform
+translate3d : Length compatible -> Length compatible -> Length compatible -> Transform {}
 translate3d tx ty tz =
-    cssFunction "translate3d" lengthToString [ tx, ty, tz ] |> Transform
+    { value = cssFunction "translate3d" [ tx.value, ty.value, tz.value ]
+    , transform = Compatible
+    }
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
@@ -1390,9 +1242,9 @@ populated list:
 
     ~ transforms [ perspective 1, scale2 1 1.4 ]
 -}
-transforms : List Transform -> Property namespace animation class id
+transforms : List (Transform compatible) -> Property namespace animation class id
 transforms =
-    prop1 "transform" transformListToString
+    prop1 "transform" << valuesOrNone
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
@@ -1402,58 +1254,86 @@ property to `none`, use the `transforms` function with an empty list. See
 
     transform (scaleX 1.4)
 -}
-transform : Transform -> Property namespace animation class id
+transform : Transform compatible -> Property namespace animation class id
 transform only =
     transforms [ only ]
 
 
-{-|
--}
-borderBox : PropertyValue (BorderBoxOr a)
-borderBox =
-    BorderBox |> ExplicitValue
-
-
 {-| The `fill-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-fillBox : TransformBox
+fillBox : TransformBox {}
 fillBox =
-    "fill-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
+    { value = "fill-box"
+    , transformBox = Compatible
+    }
+
+
+{-| The `content-box` value for the [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property.
+-}
+contentBox : BoxSizing {}
+contentBox =
+    { value = "content-box"
+    , boxSizing = Compatible
+    }
+
+
+{-| The `border-box` value for the [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property.
+-}
+borderBox : BoxSizing {}
+borderBox =
+    { value = "border-box"
+    , boxSizing = Compatible
+    }
 
 
 {-| The `view-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-viewBox : TransformBox
+viewBox : TransformBox {}
 viewBox =
-    "view-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
+    { value = "view-box"
+    , transformBox = Compatible
+    }
 
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-transformBox : TransformBox -> Property namespace animation class id
+transformBox : TransformBox compatible -> Property namespace animation class id
 transformBox =
-    prop1 "transform-box" transformBoxToString
+    prop1 "transform-box"
+
+
+{-| Sets [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)
+
+    ~ boxSizing borderBox
+-}
+boxSizing : BoxSizing compatible -> Property namespace animation class id
+boxSizing =
+    prop1 "box-sizing"
 
 
 {-| The `preserve-3d` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-preserve3d : TransformStyle
+preserve3d : TransformStyle {}
 preserve3d =
-    "preserve-3d" |> ExplicitTransformStyle |> ExplicitValue
+    { value = "preserve-3d"
+    , transformStyle = Compatible
+    }
 
 
 {-| The `flat` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-flat : TransformStyle
+flat : TransformStyle {}
 flat =
-    "flat" |> ExplicitTransformStyle |> ExplicitValue
+    { value = "flat"
+    , transformStyle = Compatible
+    }
 
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-transformStyle : TransformStyle -> Property namespace animation class id
+transformStyle : TransformStyle compatible -> Property namespace animation class id
 transformStyle =
-    prop1 "transform-style" transformStyleToString
+    prop1 "transform-style"
 
 
 
@@ -1463,25 +1343,31 @@ transformStyle =
 {-| An [`underline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
 text decoration line.
 -}
-underline : TextDecorationLine
+underline : TextDecorationLine {}
 underline =
-    "underline" |> ExplicitTextDecorationLine |> NotNone |> ExplicitValue
+    { value = "underline"
+    , textDecorationLine = Compatible
+    }
 
 
 {-| An [`overline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
 text decoration line.
 -}
-overline : TextDecorationLine
+overline : TextDecorationLine {}
 overline =
-    "overline" |> ExplicitTextDecorationLine |> NotNone |> ExplicitValue
+    { value = "overline"
+    , textDecorationLine = Compatible
+    }
 
 
 {-| A [`line-through`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
 text decoration line.
 -}
-lineThrough : TextDecorationLine
+lineThrough : TextDecorationLine {}
 lineThrough =
-    "line-through" |> ExplicitTextDecorationLine |> NotNone |> ExplicitValue
+    { value = "line-through"
+    , textDecorationLine = Compatible
+    }
 
 
 
@@ -1489,69 +1375,69 @@ lineThrough =
 
 
 {-| -}
-visible : Display
-visible =
-    "visible" |> ExplicitDisplay |> NotNone |> ExplicitValue
-
-
-{-| -}
-block : Display
+block : Display {}
 block =
-    "block" |> ExplicitDisplay |> NotNone |> ExplicitValue
+    { value = "block"
+    , display = Compatible
+    }
 
 
 {-| -}
-inlineBlock : Display
+inlineBlock : Display {}
 inlineBlock =
-    "inline-block" |> ExplicitDisplay |> NotNone |> ExplicitValue
+    { value = "inline-block"
+    , display = Compatible
+    }
 
 
 {-| -}
-inline : Display
+inline : Display {}
 inline =
-    "inline" |> ExplicitDisplay |> NotNone |> ExplicitValue
+    { value = "inline"
+    , display = Compatible
+    }
 
 
 {-| -}
-none : PropertyValue (NoneOr a)
+none :
+    { borderStyle : Compatible
+    , display : Compatible
+    , none : Compatible
+    , textDecorationLine : Compatible
+    , transform : Compatible
+    , value : String
+    }
 none =
-    None |> ExplicitValue
+    { value = "none"
+    , none = Compatible
+    , textDecorationLine = Compatible
+    , display = Compatible
+    , transform = Compatible
+    , borderStyle = Compatible
+    }
 
 
 {-| -}
-auto : PropertyValue (AutoOr a)
+auto :
+    { lengthOrAuto : Compatible
+    , overflow : Compatible
+    , textRendering : Compatible
+    , value : String
+    }
 auto =
-    Auto |> ExplicitValue
-
-
-{-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
-Any CSS property can be set to this value.
--}
-inherit : PropertyValue a
-inherit =
-    Inherit
-
-
-{-| The [`unset`](https://developer.mozilla.org/en-US/docs/Web/CSS/unset) value.
-Any CSS property can be set to this value.
--}
-unset : PropertyValue a
-unset =
-    Unset
-
-
-{-| The [`initial`](https://developer.mozilla.org/en-US/docs/Web/CSS/initial) value.
-Any CSS property can be set to this value.
--}
-initial : PropertyValue a
-initial =
-    Initial
+    { value = "auto"
+    , overflow = Compatible
+    , textRendering = Compatible
+    , lengthOrAuto = Compatible
+    }
 
 
 {-| -}
-noWrap : WhiteSpace
+noWrap : WhiteSpace {}
 noWrap =
-    "no-wrap" |> ExplicitWhiteSpace |> NotAuto |> ExplicitValue
+    { value = "no-wrap"
+    , whiteSpace = Compatible
+    }
 
 
 
@@ -1562,99 +1448,94 @@ noWrap =
 
     ~ verticalAlign middle
 -}
-middle : VerticalAlign namespace animation class id
+middle : VerticalAlign namespace animation class id a
 middle =
-    prop1 "middle" lengthToString
+    prop1 "middle"
 
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     ~ verticalAlign baseline
 -}
-baseline : VerticalAlign namespace animation class id
+baseline : VerticalAlign namespace animation class id a
 baseline =
-    prop1 "baseline" lengthToString
+    prop1 "baseline"
 
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     ~ verticalAlign sub
 -}
-sub : VerticalAlign namespace animation class id
+sub : VerticalAlign namespace animation class id a
 sub =
-    prop1 "sub" lengthToString
+    prop1 "sub"
 
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     ~ verticalAlign super
 -}
-super : VerticalAlign namespace animation class id
+super : VerticalAlign namespace animation class id a
 super =
-    prop1 "super" lengthToString
+    prop1 "super"
 
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     ~ verticalAlign textTop
 -}
-textTop : VerticalAlign namespace animation class id
+textTop : VerticalAlign namespace animation class id a
 textTop =
-    prop1 "text-top" lengthToString
+    prop1 "text-top"
 
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     ~ verticalAlign textBottom
 -}
-textBottom : VerticalAlign namespace animation class id
+textBottom : VerticalAlign namespace animation class id a
 textBottom =
-    prop1 "text-bottom" lengthToString
+    prop1 "text-bottom"
 
 
 {-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
 -}
-position : Position -> Property namespace animation class id
+position : Position compatible -> Property namespace animation class id
 position =
-    prop1 "position" positionToString
+    prop1 "position"
 
 
 
 {- Properties -}
 
 
-prop1 : String -> (a -> String) -> a -> Property namespace animation class id
-prop1 key translate value =
-    custom key (translate value)
+prop1 : String -> Value a -> Property namespace animation class id
+prop1 key arg =
+    custom key arg.value
 
 
-prop2 : String -> (a -> String) -> (b -> String) -> a -> b -> Property namespace animation class id
-prop2 key translateA translateB valueA valueB =
-    custom key (String.join " " [ translateA valueA, translateB valueB ])
+prop2 : String -> Value a -> Value b -> Property namespace animation class id
+prop2 key argA argB =
+    custom key (String.join " " [ argA.value, argB.value ])
 
 
-prop3 : String -> (a -> String) -> (b -> String) -> (c -> String) -> a -> b -> c -> Property namespace animation class id
-prop3 key translateA translateB translateC valueA valueB valueC =
-    custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC ])
+prop3 : String -> Value a -> Value b -> Value c -> Property namespace animation class id
+prop3 key argA argB argC =
+    custom key (String.join " " [ argA.value, argB.value, argC.value ])
 
 
-prop4 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> a -> b -> c -> d -> Property namespace animation class id
-prop4 key translateA translateB translateC translateD valueA valueB valueC valueD =
-    custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD ])
-
-
-prop5 : String -> (a -> String) -> (b -> String) -> (c -> String) -> (d -> String) -> (e -> String) -> a -> b -> c -> d -> e -> Property namespace animation class id
-prop5 key translateA translateB translateC translateD translateE valueA valueB valueC valueD valueE =
-    custom key (String.join " " [ translateA valueA, translateB valueB, translateC valueC, translateD valueD, translateE valueE ])
+prop4 : String -> Value a -> Value b -> Value c -> Value d -> Property namespace animation class id
+prop4 key argA argB argC argD =
+    custom key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
 
 
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
 
     textDecorationColor (rgb 12 11 10)
 -}
-textDecorationColor : Color -> Property namespace animation class id
+textDecorationColor : Color compatible -> Property namespace animation class id
 textDecorationColor =
-    prop1 "text-decoration-color" colorToString
+    prop1 "text-decoration-color"
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
@@ -1667,23 +1548,23 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : TextAlign namespace animation class id -> Property namespace animation class id
+textAlignLast : (Length (LengthOrNumber (LengthOrAuto (Number {}))) -> Style a b c d) -> Property a b c d
 textAlignLast fn =
     getOverloadedProperty "textAlignLast" "text-align-last" (fn zero)
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : TextAlign namespace animation class id -> Property namespace animation class id
+textAlign : (Length (LengthOrNumber (LengthOrAuto (Number {}))) -> Style a b c d) -> Property a b c d
 textAlign fn =
     getOverloadedProperty "textAlign" "text-align" (fn zero)
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
 -}
-textRendering : TextRendering -> Property namespace animation class id
+textRendering : TextRendering a -> Property namespace animation class id
 textRendering =
-    prop1 "text-rendering" textRenderingToString
+    prop1 "text-rendering"
 
 
 {-| Sets [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow).
@@ -1694,9 +1575,9 @@ To set `text-overflow` to an arbitrary String, use [`custom`](#custom) like so:
 
     ~ custom "text-overflow" "my custom text-overflow value"
 -}
-textOverflow : TextOverflow -> Property namespace animation class id
+textOverflow : TextOverflow compatible -> Property namespace animation class id
 textOverflow =
-    prop1 "text-overflow" textOverflowToString
+    prop1 "text-overflow"
 
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
@@ -1707,9 +1588,9 @@ textOverflow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow : None -> Property namespace animation class id
+textShadow : None compatible -> Property namespace animation class id
 textShadow =
-    prop1 "text-shadow" absoluteNoneToString
+    prop1 "text-shadow"
 
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
@@ -1720,9 +1601,9 @@ textShadow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length -> Length -> Property namespace animation class id
+textShadow2 : Length compatible -> Length compatible -> Property namespace animation class id
 textShadow2 =
-    prop2 "text-shadow" lengthToString lengthToString
+    prop2 "text-shadow"
 
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
@@ -1733,9 +1614,9 @@ textShadow2 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length -> Length -> Color -> Property namespace animation class id
+textShadow3 : Length compatible -> Length compatible -> Color compatible -> Property namespace animation class id
 textShadow3 =
-    prop3 "text-shadow" lengthToString lengthToString colorToString
+    prop3 "text-shadow"
 
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
@@ -1746,9 +1627,9 @@ textShadow3 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length -> Length -> Length -> Color -> Property namespace animation class id
+textShadow4 : Length compatible -> Length compatible -> Length compatible -> Color compatible -> Property namespace animation class id
 textShadow4 =
-    prop4 "text-shadow" lengthToString lengthToString lengthToString colorToString
+    prop4 "text-shadow"
 
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
@@ -1757,9 +1638,9 @@ textShadow4 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent : Length -> Property namespace animation class id
+textIndent : Length compatible -> Property namespace animation class id
 textIndent =
-    prop1 "text-indent" lengthToString
+    prop1 "text-indent"
 
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
@@ -1768,9 +1649,9 @@ textIndent =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent2 : Length -> TextIndent -> Property namespace animation class id
+textIndent2 : Length compatible -> TextIndent compatible -> Property namespace animation class id
 textIndent2 =
-    prop2 "text-indent" lengthToString textIndentToString
+    prop2 "text-indent"
 
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
@@ -1779,35 +1660,35 @@ textIndent2 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent3 : Length -> TextIndent -> TextIndent -> Property namespace animation class id
+textIndent3 : Length compatible -> TextIndent compatible -> TextIndent compatible -> Property namespace animation class id
 textIndent3 =
-    prop3 "text-indent" lengthToString textIndentToString textIndentToString
+    prop3 "text-indent"
 
 
 {-| Sets [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 -}
-textTransform : TextTransform -> Property namespace animation class id
+textTransform : TextTransform compatible -> Property namespace animation class id
 textTransform =
-    prop1 "text-transform" textTransformToString
+    prop1 "text-transform"
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : VerticalAlign namespace animation class id -> Property namespace animation class id
+verticalAlign : (Length (LengthOrNumber (LengthOrAuto (Number {}))) -> Style a b c d) -> Property a b c d
 verticalAlign fn =
     getOverloadedProperty "verticalAlign" "vertical-align" (fn zero)
 
 
 {-| -}
-display : Display -> Property namespace animation class id
+display : Display compatible -> Property namespace animation class id
 display =
-    prop1 "display" displayToString
+    prop1 "display"
 
 
 {-| -}
-opacity : OpacityStyle -> Property namespace animation class id
-opacity =
-    prop1 "opacity" toString
+opacity : number -> Property namespace animation class id
+opacity num =
+    prop1 "opacity" { value = numberToString num }
 
 
 {-| Sets [`width`](https://developer.mozilla.org/en-US/docs/Web/CSS/width)
@@ -1815,9 +1696,9 @@ opacity =
     ~ width (px 960)
 
 -}
-width : LengthOrAuto -> Property namespace animation class id
+width : LengthOrAuto compatible -> Property namespace animation class id
 width =
-    prop1 "width" lengthToString
+    prop1 "width"
 
 
 {-| Sets [`min-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-width)
@@ -1825,9 +1706,9 @@ width =
     ~ minWidth (px 100)
 
 -}
-minWidth : LengthOrAuto -> Property namespace animation class id
+minWidth : LengthOrAuto compatible -> Property namespace animation class id
 minWidth =
-    prop1 "min-width" lengthToString
+    prop1 "min-width"
 
 
 {-| Sets [`height`](https://developer.mozilla.org/en-US/docs/Web/CSS/height)
@@ -1835,9 +1716,9 @@ minWidth =
     ~ height (px 800)
 
 -}
-height : LengthOrAuto -> Property namespace animation class id
+height : LengthOrAuto compatible -> Property namespace animation class id
 height =
-    prop1 "height" lengthToString
+    prop1 "height"
 
 
 {-| Sets [`min-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height)
@@ -1845,15 +1726,9 @@ height =
     ~ minHeight (px 100)
 
 -}
-minHeight : LengthOrAuto -> Property namespace animation class id
+minHeight : LengthOrAuto compatible -> Property namespace animation class id
 minHeight =
-    prop1 "min-height" lengthToString
-
-
-{-| -}
-boxSizing : BoxSizing -> Property namespace animation class id
-boxSizing =
-    prop1 "box-sizing" boxSizingToString
+    prop1 "min-height"
 
 
 
@@ -1867,9 +1742,9 @@ boxSizing =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length -> Property namespace animation class id
+padding : Length compatible -> Property namespace animation class id
 padding =
-    prop1 "padding" lengthToString
+    prop1 "padding"
 
 
 {-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
@@ -1879,9 +1754,9 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length -> Length -> Property namespace animation class id
+padding2 : Length compatible -> Length compatible -> Property namespace animation class id
 padding2 =
-    prop2 "padding" lengthToString lengthToString
+    prop2 "padding"
 
 
 {-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
@@ -1891,9 +1766,9 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length -> Length -> Length -> Property namespace animation class id
+padding3 : Length compatible -> Length compatible -> Length compatible -> Property namespace animation class id
 padding3 =
-    prop3 "padding" lengthToString lengthToString lengthToString
+    prop3 "padding"
 
 
 {-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
@@ -1903,81 +1778,81 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length -> Length -> Length -> Length -> Property namespace animation class id
+padding4 : Length compatible -> Length compatible -> Length compatible -> Length compatible -> Property namespace animation class id
 padding4 =
-    prop4 "padding" lengthToString lengthToString lengthToString lengthToString
+    prop4 "padding"
 
 
 {-| Sets [`padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-start)
 
     paddingBlockStart (px 10)
 -}
-paddingBlockStart : LengthOrAuto -> Property namespace animation class id
+paddingBlockStart : LengthOrAuto compatible -> Property namespace animation class id
 paddingBlockStart =
-    prop1 "padding-block-start" lengthToString
+    prop1 "padding-block-start"
 
 
 {-| Sets [`padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end)
 
     paddingBlockEnd (px 10)
 -}
-paddingBlockEnd : LengthOrAuto -> Property namespace animation class id
+paddingBlockEnd : LengthOrAuto compatible -> Property namespace animation class id
 paddingBlockEnd =
-    prop1 "padding-block-end" lengthToString
+    prop1 "padding-block-end"
 
 
 {-| Sets [`padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start)
 
     paddingInlineStart (px 10)
 -}
-paddingInlineStart : LengthOrAuto -> Property namespace animation class id
+paddingInlineStart : LengthOrAuto compatible -> Property namespace animation class id
 paddingInlineStart =
-    prop1 "padding-inline-start" lengthToString
+    prop1 "padding-inline-start"
 
 
 {-| Sets [`padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end)
 
     paddingInlineEnd (px 10)
 -}
-paddingInlineEnd : LengthOrAuto -> Property namespace animation class id
+paddingInlineEnd : LengthOrAuto compatible -> Property namespace animation class id
 paddingInlineEnd =
-    prop1 "padding-inline-end" lengthToString
+    prop1 "padding-inline-end"
 
 
 {-| Sets [`padding-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top)
 
     paddingTop (px 10)
 -}
-paddingTop : Length -> Property namespace animation class id
+paddingTop : Length compatible -> Property namespace animation class id
 paddingTop =
-    prop1 "padding-top" lengthToString
+    prop1 "padding-top"
 
 
 {-| Sets [`padding-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom)
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length -> Property namespace animation class id
+paddingBottom : Length compatible -> Property namespace animation class id
 paddingBottom =
-    prop1 "padding-bottom" lengthToString
+    prop1 "padding-bottom"
 
 
 {-| Sets [`padding-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right)
 
     paddingRight (px 10)
 -}
-paddingRight : Length -> Property namespace animation class id
+paddingRight : Length compatible -> Property namespace animation class id
 paddingRight =
-    prop1 "padding-right" lengthToString
+    prop1 "padding-right"
 
 
 {-| Sets [`padding-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left)
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length -> Property namespace animation class id
+paddingLeft : Length compatible -> Property namespace animation class id
 paddingLeft =
-    prop1 "padding-left" lengthToString
+    prop1 "padding-left"
 
 
 
@@ -1991,9 +1866,9 @@ paddingLeft =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin : LengthOrAuto -> Property namespace animation class id
+margin : LengthOrAuto compatible -> Property namespace animation class id
 margin =
-    prop1 "margin" lengthToString
+    prop1 "margin"
 
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
@@ -2003,9 +1878,9 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : LengthOrAuto -> LengthOrAuto -> Property namespace animation class id
+margin2 : LengthOrAuto compatible -> LengthOrAuto compatible -> Property namespace animation class id
 margin2 =
-    prop2 "margin" lengthToString lengthToString
+    prop2 "margin"
 
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
@@ -2015,9 +1890,9 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : LengthOrAuto -> LengthOrAuto -> LengthOrAuto -> Property namespace animation class id
+margin3 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Property namespace animation class id
 margin3 =
-    prop3 "margin" lengthToString lengthToString lengthToString
+    prop3 "margin"
 
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
@@ -2027,81 +1902,81 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : LengthOrAuto -> LengthOrAuto -> LengthOrAuto -> LengthOrAuto -> Property namespace animation class id
+margin4 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Property namespace animation class id
 margin4 =
-    prop4 "margin" lengthToString lengthToString lengthToString lengthToString
+    prop4 "margin"
 
 
 {-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top)
 
     marginTop (px 10)
 -}
-marginTop : LengthOrAuto -> Property namespace animation class id
+marginTop : LengthOrAuto compatible -> Property namespace animation class id
 marginTop =
-    prop1 "margin-top" lengthToString
+    prop1 "margin-top"
 
 
 {-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom)
 
     marginBottom (px 10)
 -}
-marginBottom : LengthOrAuto -> Property namespace animation class id
+marginBottom : LengthOrAuto compatible -> Property namespace animation class id
 marginBottom =
-    prop1 "margin-bottom" lengthToString
+    prop1 "margin-bottom"
 
 
 {-| Sets [`margin-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right)
 
     marginRight (px 10)
 -}
-marginRight : LengthOrAuto -> Property namespace animation class id
+marginRight : LengthOrAuto compatible -> Property namespace animation class id
 marginRight =
-    prop1 "margin-right" lengthToString
+    prop1 "margin-right"
 
 
 {-| Sets [`margin-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left)
 
     marginLeft (px 10)
 -}
-marginLeft : LengthOrAuto -> Property namespace animation class id
+marginLeft : LengthOrAuto compatible -> Property namespace animation class id
 marginLeft =
-    prop1 "margin-left" lengthToString
+    prop1 "margin-left"
 
 
 {-| Sets [`margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-start)
 
     marginBlockStart (px 10)
 -}
-marginBlockStart : LengthOrAuto -> Property namespace animation class id
+marginBlockStart : LengthOrAuto compatible -> Property namespace animation class id
 marginBlockStart =
-    prop1 "margin-block-start" lengthToString
+    prop1 "margin-block-start"
 
 
 {-| Sets [`margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-end)
 
     marginBlockEnd (px 10)
 -}
-marginBlockEnd : LengthOrAuto -> Property namespace animation class id
+marginBlockEnd : LengthOrAuto compatible -> Property namespace animation class id
 marginBlockEnd =
-    prop1 "margin-block-end" lengthToString
+    prop1 "margin-block-end"
 
 
 {-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start)
 
     marginInlineStart (px 10)
 -}
-marginInlineStart : LengthOrAuto -> Property namespace animation class id
+marginInlineStart : LengthOrAuto compatible -> Property namespace animation class id
 marginInlineStart =
-    prop1 "margin-inline-start" lengthToString
+    prop1 "margin-inline-start"
 
 
 {-| Sets [`margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end)
 
     marginInlineEnd (px 10)
 -}
-marginInlineEnd : LengthOrAuto -> Property namespace animation class id
+marginInlineEnd : LengthOrAuto compatible -> Property namespace animation class id
 marginInlineEnd =
-    prop1 "margin-inline-end" lengthToString
+    prop1 "margin-inline-end"
 
 
 {-| The [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/top) property.
@@ -2113,9 +1988,9 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
 
     ~ verticalAlign top
 -}
-top : LengthOrAuto -> Property namespace animation class id
+top : LengthOrAuto compatible -> Property namespace animation class id
 top =
-    prop1 "top" lengthToString
+    prop1 "top"
 
 
 {-| The [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom) property.
@@ -2127,9 +2002,9 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
 
     ~ verticalAlign bottom
 -}
-bottom : LengthOrAuto -> Property namespace animation class id
+bottom : LengthOrAuto compatible -> Property namespace animation class id
 bottom =
-    prop1 "bottom" lengthToString
+    prop1 "bottom"
 
 
 {-| The [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/left) property.
@@ -2141,9 +2016,9 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
     ~ textAlign left
 -}
-left : LengthOrAuto -> Property namespace animation class id
+left : LengthOrAuto compatible -> Property namespace animation class id
 left =
-    prop1 "left" lengthToString
+    prop1 "left"
 
 
 {-| Sets [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
@@ -2155,9 +2030,9 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
     ~ textAlign right
 -}
-right : LengthOrAuto -> Property namespace animation class id
+right : LengthOrAuto compatible -> Property namespace animation class id
 right =
-    prop1 "right" lengthToString
+    prop1 "right"
 
 
 
@@ -2168,45 +2043,55 @@ right =
 
     ~ position static
 -}
-static : Position
+static : Position {}
 static =
-    "static" |> ExplicitPosition |> ExplicitValue
+    { value = "static"
+    , position = Compatible
+    }
 
 
 {-| A `fixed` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     ~ position fixed
 -}
-fixed : Position
+fixed : Position {}
 fixed =
-    "fixed" |> ExplicitPosition |> ExplicitValue
+    { value = "fixed"
+    , position = Compatible
+    }
 
 
 {-| A `sticky` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     ~ position sticky
 -}
-sticky : Position
+sticky : Position {}
 sticky =
-    "sticky" |> ExplicitPosition |> ExplicitValue
+    { value = "sticky"
+    , position = Compatible
+    }
 
 
 {-| A `relative` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     ~ position relative
 -}
-relative : Position
+relative : Position {}
 relative =
-    "relative" |> ExplicitPosition |> ExplicitValue
+    { value = "relative"
+    , position = Compatible
+    }
 
 
 {-| An `absolute` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     ~ position absolute
 -}
-absolute : Position
+absolute : Position {}
 absolute =
-    "absolute" |> ExplicitPosition |> ExplicitValue
+    { value = "absolute"
+    , position = Compatible
+    }
 
 
 
@@ -2219,9 +2104,9 @@ absolute =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length -> Property namespace animation class id
+border : Length compatible -> Property namespace animation class id
 border =
-    prop1 "border" lengthToString
+    prop1 "border"
 
 
 {-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
@@ -2231,9 +2116,9 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length -> BorderStyle -> Property namespace animation class id
+border2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 border2 =
-    prop2 "border" lengthToString borderStyleToString
+    prop2 "border"
 
 
 {-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
@@ -2242,9 +2127,9 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+border3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 border3 =
-    prop3 "border" lengthToString borderStyleToString colorToString
+    prop3 "border"
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
@@ -2254,9 +2139,9 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length -> Property namespace animation class id
+borderTop : Length compatible -> Property namespace animation class id
 borderTop =
-    prop1 "border-top" lengthToString
+    prop1 "border-top"
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
@@ -2266,9 +2151,9 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length -> BorderStyle -> Property namespace animation class id
+borderTop2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderTop2 =
-    prop2 "border-top" lengthToString borderStyleToString
+    prop2 "border-top"
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
@@ -2278,9 +2163,9 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderTop3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderTop3 =
-    prop3 "border-top" lengthToString borderStyleToString colorToString
+    prop3 "border-top"
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
@@ -2290,9 +2175,9 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length -> Property namespace animation class id
+borderBottom : Length compatible -> Property namespace animation class id
 borderBottom =
-    prop1 "border-bottom" lengthToString
+    prop1 "border-bottom"
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
@@ -2302,9 +2187,9 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length -> BorderStyle -> Property namespace animation class id
+borderBottom2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderBottom2 =
-    prop2 "border-bottom" lengthToString borderStyleToString
+    prop2 "border-bottom"
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
@@ -2314,9 +2199,9 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderBottom3 =
-    prop3 "border-bottom" lengthToString borderStyleToString colorToString
+    prop3 "border-bottom"
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
@@ -2326,9 +2211,9 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length -> Property namespace animation class id
+borderLeft : Length compatible -> Property namespace animation class id
 borderLeft =
-    prop1 "border-left" lengthToString
+    prop1 "border-left"
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
@@ -2338,9 +2223,9 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length -> BorderStyle -> Property namespace animation class id
+borderLeft2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderLeft2 =
-    prop2 "border-left" lengthToString borderStyleToString
+    prop2 "border-left"
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
@@ -2350,9 +2235,9 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderLeft3 =
-    prop3 "border-left" lengthToString borderStyleToString colorToString
+    prop3 "border-left"
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
@@ -2362,9 +2247,9 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length -> Property namespace animation class id
+borderRight : Length compatible -> Property namespace animation class id
 borderRight =
-    prop1 "border-right" lengthToString
+    prop1 "border-right"
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
@@ -2374,9 +2259,9 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length -> BorderStyle -> Property namespace animation class id
+borderRight2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderRight2 =
-    prop2 "border-right" lengthToString borderStyleToString
+    prop2 "border-right"
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
@@ -2386,9 +2271,9 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderRight3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderRight3 =
-    prop3 "border-right" lengthToString borderStyleToString colorToString
+    prop3 "border-right"
 
 
 {-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
@@ -2398,9 +2283,9 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length -> Property namespace animation class id
+borderBlockStart : Length compatible -> Property namespace animation class id
 borderBlockStart =
-    prop1 "border-block-start" lengthToString
+    prop1 "border-block-start"
 
 
 {-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
@@ -2410,9 +2295,9 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length -> BorderStyle -> Property namespace animation class id
+borderBlockStart2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderBlockStart2 =
-    prop2 "border-block-start" lengthToString borderStyleToString
+    prop2 "border-block-start"
 
 
 {-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
@@ -2422,9 +2307,9 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderBlockStart3 =
-    prop3 "border-block-start" lengthToString borderStyleToString colorToString
+    prop3 "border-block-start"
 
 
 {-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
@@ -2434,9 +2319,9 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length -> Property namespace animation class id
+borderBlockEnd : Length compatible -> Property namespace animation class id
 borderBlockEnd =
-    prop1 "border-block-end" lengthToString
+    prop1 "border-block-end"
 
 
 {-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
@@ -2446,9 +2331,9 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length -> BorderStyle -> Property namespace animation class id
+borderBlockEnd2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderBlockEnd2 =
-    prop2 "border-block-end" lengthToString borderStyleToString
+    prop2 "border-block-end"
 
 
 {-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
@@ -2458,9 +2343,9 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderBlockEnd3 =
-    prop3 "border-block-end" lengthToString borderStyleToString colorToString
+    prop3 "border-block-end"
 
 
 {-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
@@ -2470,9 +2355,9 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length -> Property namespace animation class id
+borderInlineStart : Length compatible -> Property namespace animation class id
 borderInlineStart =
-    prop1 "border-block-start" lengthToString
+    prop1 "border-block-start"
 
 
 {-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
@@ -2482,9 +2367,9 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length -> BorderStyle -> Property namespace animation class id
+borderInlineStart2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderInlineStart2 =
-    prop2 "border-block-start" lengthToString borderStyleToString
+    prop2 "border-block-start"
 
 
 {-| Sets [`border-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start)
@@ -2494,9 +2379,9 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderInlineStart3 =
-    prop3 "border-block-start" lengthToString borderStyleToString colorToString
+    prop3 "border-block-start"
 
 
 {-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
@@ -2506,9 +2391,9 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length -> Property namespace animation class id
+borderInlineEnd : Length compatible -> Property namespace animation class id
 borderInlineEnd =
-    prop1 "border-block-end" lengthToString
+    prop1 "border-block-end"
 
 
 {-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
@@ -2518,9 +2403,9 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length -> BorderStyle -> Property namespace animation class id
+borderInlineEnd2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace animation class id
 borderInlineEnd2 =
-    prop2 "border-block-end" lengthToString borderStyleToString
+    prop2 "border-block-end"
 
 
 {-| Sets [`border-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end)
@@ -2530,9 +2415,9 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length -> BorderStyle -> Color -> Property namespace animation class id
+borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 borderInlineEnd3 =
-    prop3 "border-block-end" lengthToString borderStyleToString colorToString
+    prop3 "border-block-end"
 
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
@@ -2543,9 +2428,9 @@ borderInlineEnd3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset : LengthOrNumber -> Property namespace animation class id
+borderImageOutset : LengthOrNumber compatible -> Property namespace animation class id
 borderImageOutset =
-    prop1 "border-image-outset" lengthOrNumberToString
+    prop1 "border-image-outset"
 
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
@@ -2556,9 +2441,9 @@ borderImageOutset =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset2 : LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
+borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Property namespace animation class id
 borderImageOutset2 =
-    prop2 "border-image-outset" lengthOrNumberToString lengthOrNumberToString
+    prop2 "border-image-outset"
 
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
@@ -2569,9 +2454,9 @@ borderImageOutset2 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
+borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Property namespace animation class id
 borderImageOutset3 =
-    prop3 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+    prop3 "border-image-outset"
 
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
@@ -2582,9 +2467,9 @@ borderImageOutset3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
+borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Property namespace animation class id
 borderImageOutset4 =
-    prop4 "border-image-outset" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+    prop4 "border-image-outset"
 
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
@@ -2595,9 +2480,9 @@ borderImageOutset4 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth : LengthOrNumber -> Property namespace animation class id
+borderImageWidth : LengthOrNumber compatible -> Property namespace animation class id
 borderImageWidth =
-    prop1 "border-image-width" lengthOrNumberToString
+    prop1 "border-image-width"
 
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
@@ -2608,9 +2493,9 @@ borderImageWidth =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth2 : LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
+borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Property namespace animation class id
 borderImageWidth2 =
-    prop2 "border-image-width" lengthOrNumberToString lengthOrNumberToString
+    prop2 "border-image-width"
 
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
@@ -2621,9 +2506,9 @@ borderImageWidth2 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth3 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
+borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Property namespace animation class id
 borderImageWidth3 =
-    prop3 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+    prop3 "border-image-width"
 
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
@@ -2634,198 +2519,198 @@ borderImageWidth3 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth4 : LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> LengthOrNumber -> Property namespace animation class id
+borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Property namespace animation class id
 borderImageWidth4 =
-    prop4 "border-image-width" lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString lengthOrNumberToString
+    prop4 "border-image-width"
 
 
 {-| Sets [`border-block-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-color)
 
     borderBlockStartColor (rgb 101 202 0)
 -}
-borderBlockStartColor : Color -> Property namespace animation class id
+borderBlockStartColor : Color compatible -> Property namespace animation class id
 borderBlockStartColor =
-    prop1 "border-block-start-color" colorToString
+    prop1 "border-block-start-color"
 
 
 {-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
 
     borderBottomColor (rgb 101 202 0)
 -}
-borderBottomColor : Color -> Property namespace animation class id
+borderBottomColor : Color compatible -> Property namespace animation class id
 borderBottomColor =
-    prop1 "border-bottom-color" colorToString
+    prop1 "border-bottom-color"
 
 
 {-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color)
 
     borderInlineStartColor (rgb 101 202 0)
 -}
-borderInlineStartColor : Color -> Property namespace animation class id
+borderInlineStartColor : Color compatible -> Property namespace animation class id
 borderInlineStartColor =
-    prop1 "border-inline-start-color" colorToString
+    prop1 "border-inline-start-color"
 
 
 {-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color)
 
     borderInlineEndColor (rgb 101 202 0)
 -}
-borderInlineEndColor : Color -> Property namespace animation class id
+borderInlineEndColor : Color compatible -> Property namespace animation class id
 borderInlineEndColor =
-    prop1 "border-inline-end-color" colorToString
+    prop1 "border-inline-end-color"
 
 
 {-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
 
     borderLeftColor (rgb 101 202 0)
 -}
-borderLeftColor : Color -> Property namespace animation class id
+borderLeftColor : Color compatible -> Property namespace animation class id
 borderLeftColor =
-    prop1 "border-left-color" colorToString
+    prop1 "border-left-color"
 
 
 {-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
 
     borderRightColor (rgb 101 202 0)
 -}
-borderRightColor : Color -> Property namespace animation class id
+borderRightColor : Color compatible -> Property namespace animation class id
 borderRightColor =
-    prop1 "border-right-color" colorToString
+    prop1 "border-right-color"
 
 
 {-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
 
     borderTopColor (rgb 101 202 0)
 -}
-borderTopColor : Color -> Property namespace animation class id
+borderTopColor : Color compatible -> Property namespace animation class id
 borderTopColor =
-    prop1 "border-top-color" colorToString
+    prop1 "border-top-color"
 
 
 {-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color)
 
     borderBlockEndColor (rgb 101 202 0)
 -}
-borderBlockEndColor : Color -> Property namespace animation class id
+borderBlockEndColor : Color compatible -> Property namespace animation class id
 borderBlockEndColor =
-    prop1 "border-block-end-color" colorToString
+    prop1 "border-block-end-color"
 
 
 {-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style)
 
     borderBlockEndStyle dashed
 -}
-borderBlockEndStyle : BorderStyle -> Property namespace animation class id
+borderBlockEndStyle : BorderStyle compatible -> Property namespace animation class id
 borderBlockEndStyle =
-    prop1 "border-block-end-style" borderStyleToString
+    prop1 "border-block-end-style"
 
 
 {-| Sets [`border-block-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style)
 
     borderBlockStartStyle dashed
 -}
-borderBlockStartStyle : BorderStyle -> Property namespace animation class id
+borderBlockStartStyle : BorderStyle compatible -> Property namespace animation class id
 borderBlockStartStyle =
-    prop1 "border-block-start-style" borderStyleToString
+    prop1 "border-block-start-style"
 
 
 {-| Sets [`border-inline-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style)
 
     borderInlineEndStyle dashed
 -}
-borderInlineEndStyle : BorderStyle -> Property namespace animation class id
+borderInlineEndStyle : BorderStyle compatible -> Property namespace animation class id
 borderInlineEndStyle =
-    prop1 "border-inline-end-style" borderStyleToString
+    prop1 "border-inline-end-style"
 
 
 {-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style)
 
     borderBottomStyle dashed
 -}
-borderBottomStyle : BorderStyle -> Property namespace animation class id
+borderBottomStyle : BorderStyle compatible -> Property namespace animation class id
 borderBottomStyle =
-    prop1 "border-bottom-style" borderStyleToString
+    prop1 "border-bottom-style"
 
 
 {-| Sets [`border-inline-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style)
 
     borderInlineStartStyle dashed
 -}
-borderInlineStartStyle : BorderStyle -> Property namespace animation class id
+borderInlineStartStyle : BorderStyle compatible -> Property namespace animation class id
 borderInlineStartStyle =
-    prop1 "border-inline-start-style" borderStyleToString
+    prop1 "border-inline-start-style"
 
 
 {-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style)
 
     borderLeftStyle dashed
 -}
-borderLeftStyle : BorderStyle -> Property namespace animation class id
+borderLeftStyle : BorderStyle compatible -> Property namespace animation class id
 borderLeftStyle =
-    prop1 "border-left-style" borderStyleToString
+    prop1 "border-left-style"
 
 
 {-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style)
 
     borderRightStyle dashed
 -}
-borderRightStyle : BorderStyle -> Property namespace animation class id
+borderRightStyle : BorderStyle compatible -> Property namespace animation class id
 borderRightStyle =
-    prop1 "border-right-style" borderStyleToString
+    prop1 "border-right-style"
 
 
 {-| Sets [`border-top-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style)
 
     borderTopStyle dashed
 -}
-borderTopStyle : BorderStyle -> Property namespace animation class id
+borderTopStyle : BorderStyle compatible -> Property namespace animation class id
 borderTopStyle =
-    prop1 "border-top-style" borderStyleToString
+    prop1 "border-top-style"
 
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style)
 
     borderStyle dashed
 -}
-borderStyle : BorderStyle -> Property namespace animation class id
+borderStyle : BorderStyle compatible -> Property namespace animation class id
 borderStyle =
-    prop1 "border-style" borderStyleToString
+    prop1 "border-style"
 
 
 {-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length -> Property namespace animation class id
+borderBottomWidth : Length compatible -> Property namespace animation class id
 borderBottomWidth =
-    prop1 "border-bottom-width" lengthToString
+    prop1 "border-bottom-width"
 
 
 {-| Sets [`border-inline-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width)
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length -> Property namespace animation class id
+borderInlineEndWidth : Length compatible -> Property namespace animation class id
 borderInlineEndWidth =
-    prop1 "border-inline-end-width" lengthToString
+    prop1 "border-inline-end-width"
 
 
 {-| Sets [`border-left-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width)
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length -> Property namespace animation class id
+borderLeftWidth : Length compatible -> Property namespace animation class id
 borderLeftWidth =
-    prop1 "border-left-width" lengthToString
+    prop1 "border-left-width"
 
 
 {-| Sets [`border-right-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width)
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length -> Property namespace animation class id
+borderRightWidth : Length compatible -> Property namespace animation class id
 borderRightWidth =
-    prop1 "border-right-width" lengthToString
+    prop1 "border-right-width"
 
 
 {-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
@@ -2833,9 +2718,9 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length -> Property namespace animation class id
+borderTopWidth : Length compatible -> Property namespace animation class id
 borderTopWidth =
-    prop1 "border-top-width" lengthToString
+    prop1 "border-top-width"
 
 
 {-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
@@ -2843,9 +2728,9 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length -> Length -> Property namespace animation class id
+borderTopWidth2 : Length compatibleA -> Length compatibleB -> Property namespace animation class id
 borderTopWidth2 =
-    prop2 "border-top-width" lengthToString lengthToString
+    prop2 "border-top-width"
 
 
 {-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
@@ -2853,9 +2738,9 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length -> Property namespace animation class id
+borderBottomLeftRadius : Length compatible -> Property namespace animation class id
 borderBottomLeftRadius =
-    prop1 "border-bottom-left-radius" lengthToString
+    prop1 "border-bottom-left-radius"
 
 
 {-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
@@ -2863,9 +2748,9 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length -> Length -> Property namespace animation class id
+borderBottomLeftRadius2 : Length compatibleA -> Length compatibleB -> Property namespace animation class id
 borderBottomLeftRadius2 =
-    prop2 "border-bottom-left-radius" lengthToString lengthToString
+    prop2 "border-bottom-left-radius"
 
 
 {-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
@@ -2873,9 +2758,9 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length -> Property namespace animation class id
+borderBottomRightRadius : Length compatible -> Property namespace animation class id
 borderBottomRightRadius =
-    prop1 "border-bottom-right-radius" lengthToString
+    prop1 "border-bottom-right-radius"
 
 
 {-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
@@ -2883,9 +2768,9 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length -> Length -> Property namespace animation class id
+borderBottomRightRadius2 : Length compatibleA -> Length compatibleB -> Property namespace animation class id
 borderBottomRightRadius2 =
-    prop2 "border-bottom-right-radius" lengthToString lengthToString
+    prop2 "border-bottom-right-radius"
 
 
 {-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
@@ -2893,9 +2778,9 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length -> Property namespace animation class id
+borderTopLeftRadius : Length compatible -> Property namespace animation class id
 borderTopLeftRadius =
-    prop1 "border-top-left-radius" lengthToString
+    prop1 "border-top-left-radius"
 
 
 {-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
@@ -2903,9 +2788,9 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length -> Length -> Property namespace animation class id
+borderTopLeftRadius2 : Length compatibleA -> Length compatibleB -> Property namespace animation class id
 borderTopLeftRadius2 =
-    prop2 "border-top-left-radius" lengthToString lengthToString
+    prop2 "border-top-left-radius"
 
 
 {-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
@@ -2913,9 +2798,9 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length -> Property namespace animation class id
+borderTopRightRadius : Length compatible -> Property namespace animation class id
 borderTopRightRadius =
-    prop1 "border-top-right-radius" lengthToString
+    prop1 "border-top-right-radius"
 
 
 {-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
@@ -2923,9 +2808,9 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length -> Length -> Property namespace animation class id
+borderTopRightRadius2 : Length compatibleA -> Length compatibleB -> Property namespace animation class id
 borderTopRightRadius2 =
-    prop2 "border-top-right-radius" lengthToString lengthToString
+    prop2 "border-top-right-radius"
 
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
@@ -2935,9 +2820,9 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length -> Property namespace animation class id
+borderRadius : Length compatible -> Property namespace animation class id
 borderRadius =
-    prop1 "border-radius" lengthToString
+    prop1 "border-radius"
 
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
@@ -2947,9 +2832,9 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length -> Length -> Property namespace animation class id
+borderRadius2 : Length compatibleA -> Length compatibleB -> Property namespace animation class id
 borderRadius2 =
-    prop2 "border-radius" lengthToString lengthToString
+    prop2 "border-radius"
 
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
@@ -2959,9 +2844,9 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length -> Length -> Length -> Property namespace animation class id
+borderRadius3 : Length compatibleA -> Length compatibleB -> Length compatibleC -> Property namespace animation class id
 borderRadius3 =
-    prop3 "border-radius" lengthToString lengthToString lengthToString
+    prop3 "border-radius"
 
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
@@ -2971,9 +2856,9 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length -> Length -> Length -> Length -> Property namespace animation class id
+borderRadius4 : Length compatibleB -> Length compatibleB -> Length compatibleC -> Length compatibleD -> Property namespace animation class id
 borderRadius4 =
-    prop4 "border-radius" lengthToString lengthToString lengthToString lengthToString
+    prop4 "border-radius"
 
 
 {-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing)
@@ -2981,9 +2866,9 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length -> Property namespace animation class id
+borderSpacing : Length compatible -> Property namespace animation class id
 borderSpacing =
-    prop1 "border-spacing" lengthToString
+    prop1 "border-spacing"
 
 
 {-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing)
@@ -2991,9 +2876,9 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length -> Length -> Property namespace animation class id
+borderSpacing2 : Length compatibleA -> Length compatibleB -> Property namespace animation class id
 borderSpacing2 =
-    prop2 "border-spacing" lengthToString lengthToString
+    prop2 "border-spacing"
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -3003,9 +2888,9 @@ borderSpacing2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor : Color -> Property namespace animation class id
+borderColor : Color compatible -> Property namespace animation class id
 borderColor =
-    prop1 "border-color" colorToString
+    prop1 "border-color"
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -3015,9 +2900,9 @@ borderColor =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor2 : Color -> Color -> Property namespace animation class id
+borderColor2 : Color compatibleA -> Color compatibleB -> Property namespace animation class id
 borderColor2 =
-    prop2 "border-color" colorToString colorToString
+    prop2 "border-color"
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -3027,9 +2912,9 @@ borderColor2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor3 : Color -> Color -> Color -> Property namespace animation class id
+borderColor3 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Property namespace animation class id
 borderColor3 =
-    prop3 "border-color" colorToString colorToString colorToString
+    prop3 "border-color"
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -3039,39 +2924,39 @@ borderColor3 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor4 : Color -> Color -> Color -> Color -> Property namespace animation class id
+borderColor4 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Color compatibleD -> Property namespace animation class id
 borderColor4 =
-    prop4 "border-color" colorToString colorToString colorToString colorToString
+    prop4 "border-color"
 
 
 {-| -}
-overflowX : Overflow -> Property namespace animation class id
+overflowX : Overflow compatible -> Property namespace animation class id
 overflowX =
-    prop1 "overflow-x" overflowToString
+    prop1 "overflow-x"
 
 
 {-| -}
-overflowY : Overflow -> Property namespace animation class id
+overflowY : Overflow compatible -> Property namespace animation class id
 overflowY =
-    prop1 "overflow-y" overflowToString
+    prop1 "overflow-y"
 
 
 {-| -}
-whiteSpace : WhiteSpace -> Property namespace animation class id
+whiteSpace : WhiteSpace compatible -> Property namespace animation class id
 whiteSpace =
-    prop1 "white-space" whiteSpaceToString
+    prop1 "white-space"
 
 
 {-| -}
-backgroundColor : Color -> Property namespace animation class id
+backgroundColor : Color compatible -> Property namespace animation class id
 backgroundColor =
-    prop1 "background-color" colorToString
+    prop1 "background-color"
 
 
 {-| -}
-color : Color -> Property namespace animation class id
+color : Color compatible -> Property namespace animation class id
 color =
-    prop1 "color" colorToString
+    prop1 "color"
 
 
 {-| -}
@@ -3092,9 +2977,9 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration : TextDecorationLine -> Property namespace animation class id
+textDecoration : TextDecorationLine a -> Property namespace animation class id
 textDecoration =
-    prop1 "text-decoration" textDecorationLineToString
+    prop1 "text-decoration"
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
@@ -3109,9 +2994,9 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration2 : TextDecorationLine -> TextDecorationStyle -> Property namespace animation class id
+textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Property namespace animation class id
 textDecoration2 =
-    prop2 "text-decoration" textDecorationLineToString textDecorationStyleToString
+    prop2 "text-decoration"
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
@@ -3126,9 +3011,9 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration3 : TextDecorationLine -> TextDecorationStyle -> Color -> Property namespace animation class id
+textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 textDecoration3 =
-    prop3 "text-decoration" textDecorationLineToString textDecorationStyleToString colorToString
+    prop3 "text-decoration"
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
@@ -3137,9 +3022,9 @@ textDecoration3 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations : List TextDecorationLine -> Property namespace animation class id
+textDecorations : List (TextDecorationLine compatible) -> Property namespace animation class id
 textDecorations =
-    prop1 "text-decoration" textDecorationLinesToString
+    prop1 "text-decoration" << valuesOrNone
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
@@ -3148,9 +3033,9 @@ textDecorations =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations2 : List TextDecorationLine -> TextDecorationStyle -> Property namespace animation class id
+textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Property namespace animation class id
 textDecorations2 =
-    prop2 "text-decoration" textDecorationLinesToString textDecorationStyleToString
+    prop2 "text-decoration" << valuesOrNone
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
@@ -3159,9 +3044,9 @@ textDecorations2 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations3 : List TextDecorationLine -> TextDecorationStyle -> Color -> Property namespace animation class id
+textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Color compatibleC -> Property namespace animation class id
 textDecorations3 =
-    prop3 "text-decoration" textDecorationLinesToString textDecorationStyleToString colorToString
+    prop3 "text-decoration" << valuesOrNone
 
 
 {-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
@@ -3172,38 +3057,27 @@ You can specify multiple line decorations with `textDecorationLines`.
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLine : TextDecorationLine -> Property namespace animation class id
+textDecorationLine : TextDecorationLine compatible -> Property namespace animation class id
 textDecorationLine =
-    prop1 "text-decoration-line" textDecorationLineToString
+    prop1 "text-decoration-line"
 
 
 {-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLines : List TextDecorationLine -> Property namespace animation class id
+textDecorationLines : List (TextDecorationLine compatible) -> Property namespace animation class id
 textDecorationLines =
-    prop1 "text-decoration-line" textDecorationLinesToString
+    prop1 "text-decoration-line" << valuesOrNone
 
 
 {-| Sets [`text-decoration-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style)
 
     ~ textDecorationStyle dotted
 -}
-textDecorationStyle : TextDecorationStyle -> Property namespace animation class id
+textDecorationStyle : TextDecorationStyle compatible -> Property namespace animation class id
 textDecorationStyle =
-    prop1 "text-decoration-style" textDecorationStyleToString
-
-
-{-| -}
-outline : Float -> Length -> BorderStyle -> OpacityStyle -> Property namespace animation class id
-outline =
-    prop4
-        "outline"
-        toString
-        lengthToString
-        (\str -> " " ++ borderStyleToString str ++ " ")
-        opacityStyleToString
+    prop1 "text-decoration-style"
 
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
@@ -4351,3 +4225,16 @@ updateLast update list =
 
         first :: rest ->
             first :: updateLast update rest
+
+
+numberToString : number -> String
+numberToString num =
+    toString (num + 0)
+
+
+valuesOrNone : List (Value compatible) -> Value {}
+valuesOrNone list =
+    if List.isEmpty list then
+        { value = "none" }
+    else
+        { value = String.join " " (List.map .value list) }
