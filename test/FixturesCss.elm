@@ -5,16 +5,9 @@ import Css.Elements exposing (..)
 import Style exposing (Style(..))
 
 
-type CssClasses
-    = Hidden
-
-
-type CssIds
-    = Page
-
-
-type CssAnimations
-    = Wobble
+type CssClasses = Hidden
+type CssIds = Page
+type CssAnimations = Wobble
 
 
 unstyledDiv : Style String a b c
