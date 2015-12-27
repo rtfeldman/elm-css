@@ -62,6 +62,16 @@ print =
 {- Length -}
 
 
+
+cssFunction : String -> (a -> String) -> List a -> String
+cssFunction funcName converter args =
+    args
+        |> List.map converter
+        |> String.join ", "
+        |> (++) (funcName ++ "(")
+        |> (flip (++)) ")"
+
+
 propertyValueToString : (a -> String) -> PropertyValue a -> String
 propertyValueToString translate value =
     case value of
@@ -618,7 +628,8 @@ currentColor =
 -}
 rgb : number -> number -> number -> Color
 rgb r g b =
-    ExplicitColor ("rgb(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ")")
+    cssFunction "rgb" numberToString [r, g, b]
+        |> ExplicitColor
         |> NotTransparent
         |> NotAuto
         |> ExplicitValue
@@ -628,7 +639,8 @@ rgb r g b =
 -}
 rgba : number -> number -> number -> number -> Color
 rgba r g b a =
-    ExplicitColor ("rgba(" ++ (numberToString r) ++ ", " ++ (numberToString g) ++ ", " ++ (numberToString b) ++ ", " ++ (numberToString a) ++ ")")
+    cssFunction "rgba" numberToString [r, g, b, a]
+        |> ExplicitColor
         |> NotTransparent
         |> NotAuto
         |> ExplicitValue
@@ -951,15 +963,6 @@ turn =
 
 
 {- TRANSFORMS -}
-
-
-cssFunction : String -> (a -> String) -> List a -> String
-cssFunction funcName converter args =
-    args
-        |> List.map converter
-        |> String.join ", "
-        |> (++) (funcName ++ "(")
-        |> (flip (++)) ")"
 
 
 {-| The [`matrix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix()) transform-function.
