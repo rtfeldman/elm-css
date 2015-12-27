@@ -1192,7 +1192,7 @@ translate3d tx ty tz =
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 with a series of transform-functions. If an empty list is provided, the CSS
 output will be `none`, as if to state directly that the set of transforms
-applied to the current selector is the empty:
+applied to the current selector is empty:
 
     ~ transforms [] -- transform: none;
 
