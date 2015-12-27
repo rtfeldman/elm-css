@@ -12,6 +12,7 @@ type CssAnimations = Wobble
 pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
+
 unstyledDiv : Style String a b c
 unstyledDiv =
     stylesheet { name = "" }
