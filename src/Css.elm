@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, transform, transforms, matrix, matrix3d, perspective, rotate, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scaleX, scaleY, scale3d, skew, skew2, skewX, skewY, translate, translate2, translateX, translateY, translateZ, translate3d, deg, rad, grad, turn, transformBox, viewBox, fillBox, transformStyle, preserve3d, flat) where
+module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn) where
 
 {-| Functions for building stylesheets.
 
@@ -12,7 +12,7 @@ module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$),
 @docs (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.)
 
 # Attributes
-@docs transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
+@docs transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4, outline
 
 # Values
 @docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d
@@ -107,6 +107,13 @@ noneToString translate value =
             translate notNone
 
 
+absoluteNoneToString : None -> String
+absoluteNoneToString =
+    (\_ -> "")
+        |> noneToString
+        |> propertyValueToString
+
+
 lengthToString : Length -> String
 lengthToString =
     (\(ExplicitLength str) -> str)
@@ -141,6 +148,32 @@ borderStyleToString : BorderStyle -> String
 borderStyleToString =
     (\(ExplicitBorderStyle str) -> str)
         |> noneToString
+        |> propertyValueToString
+
+
+textRenderingToString : TextRendering -> String
+textRenderingToString =
+    (\(ExplicitTextRendering str) -> str)
+        |> autoToString
+        |> propertyValueToString
+
+
+textTransformToString : TextTransform -> String
+textTransformToString =
+    (\(ExplicitTextTransform str) -> str)
+        |> noneToString
+        |> propertyValueToString
+
+
+textOverflowToString : TextOverflow -> String
+textOverflowToString =
+    (\(ExplicitTextOverflow str) -> str)
+        |> propertyValueToString
+
+
+textIndentToString : TextIndent -> String
+textIndentToString =
+    (\(ExplicitTextIndent str) -> str)
         |> propertyValueToString
 
 
@@ -389,6 +422,14 @@ type BorderBoxOr a
     | NotBorderBox a
 
 
+type UninhabitableType
+    = UninhabitableType UninhabitableType
+
+
+type alias None =
+    PropertyValue (NoneOr UninhabitableType)
+
+
 type alias TextDecorationLine =
     PropertyValue (NoneOr ExplicitTextDecorationLine)
 
@@ -507,6 +548,38 @@ type ExplicitTransformBox
 
 type ExplicitTransformStyle
     = ExplicitTransformStyle String
+
+
+type alias TextIndent =
+    PropertyValue ExplicitTextIndent
+
+
+type alias TextOverflow =
+    PropertyValue ExplicitTextOverflow
+
+
+type alias TextTransform =
+    PropertyValue (NoneOr ExplicitTextTransform)
+
+
+type alias TextRendering =
+    PropertyValue (AutoOr ExplicitTextRendering)
+
+
+type ExplicitTextIndent
+    = ExplicitTextIndent String
+
+
+type ExplicitTextOverflow
+    = ExplicitTextOverflow String
+
+
+type ExplicitTextRendering
+    = ExplicitTextRendering String
+
+
+type ExplicitTextTransform
+    = ExplicitTextTransform String
 
 
 type ExplicitPosition
@@ -654,6 +727,117 @@ hex str =
         |> NotTransparent
         |> NotAuto
         |> ExplicitValue
+
+
+
+{- TEXT-RENDERING -}
+
+
+{-| `optimizeSpeed` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
+-}
+optimizeSpeed : TextRendering
+optimizeSpeed =
+    ExplicitTextRendering "optimizeSpeed"
+        |> NotAuto
+        |> ExplicitValue
+
+
+{-| `optimizeLegibility` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
+-}
+optimizeLegibility : TextRendering
+optimizeLegibility =
+    ExplicitTextRendering "optimizeLegibility"
+        |> NotAuto
+        |> ExplicitValue
+
+
+{-| `geometricPrecision` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
+-}
+geometricPrecision : TextRendering
+geometricPrecision =
+    ExplicitTextRendering "geometricPrecision"
+        |> NotAuto
+        |> ExplicitValue
+
+
+
+{- TEXT-INDENT -}
+
+
+{-| `hanging` [`hanging`](https://developer.mozilla.org/en-US/docs/Web/CSS/hanging#Values) value
+-}
+hanging : TextIndent
+hanging =
+    ExplicitTextIndent "hanging"
+        |> ExplicitValue
+
+
+{-| `each-line` [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values) value
+-}
+eachLine : TextIndent
+eachLine =
+    ExplicitTextIndent "each-line"
+        |> ExplicitValue
+
+
+
+{- TEXT-TRANSFORM -}
+
+
+{-| `capitalize` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
+-}
+capitalize : TextTransform
+capitalize =
+    ExplicitTextTransform "capitalize"
+        |> NotNone
+        |> ExplicitValue
+
+
+{-| `uppercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
+-}
+uppercase : TextTransform
+uppercase =
+    ExplicitTextTransform "uppercase"
+        |> NotNone
+        |> ExplicitValue
+
+
+{-| `lowercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
+-}
+lowercase : TextTransform
+lowercase =
+    ExplicitTextTransform "lowercase"
+        |> NotNone
+        |> ExplicitValue
+
+
+{-| `full-width` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
+-}
+fullWidth : TextTransform
+fullWidth =
+    ExplicitTextTransform "fullWidth"
+        |> NotNone
+        |> ExplicitValue
+
+
+{-| `ellipsis` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
+-}
+ellipsis : TextOverflow
+ellipsis =
+    ExplicitTextOverflow "ellipsis"
+        |> ExplicitValue
+
+
+{-| `clip` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
+-}
+clip : TextOverflow
+clip =
+    ExplicitTextOverflow "clip"
+        |> ExplicitValue
+
+
+
+{- BORDER STYLE -}
 
 
 {-| A `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
@@ -1493,6 +1677,118 @@ textAlignLast fn =
 textAlign : TextAlign namespace animation class id -> Property namespace animation class id
 textAlign fn =
     getOverloadedProperty "textAlign" "text-align" (fn zero)
+
+
+{-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
+-}
+textRendering : TextRendering -> Property namespace animation class id
+textRendering =
+    prop1 "text-rendering" textRenderingToString
+
+
+{-| Sets [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow).
+
+    ~ textOverflow ellipsis
+
+To set `text-overflow` to an arbitrary String, use [`custom`](#custom) like so:
+
+    ~ custom "text-overflow" "my custom text-overflow value"
+-}
+textOverflow : TextOverflow -> Property namespace animation class id
+textOverflow =
+    prop1 "text-overflow" textOverflowToString
+
+
+{-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
+
+    ~ textShadow  none
+    ~ textShadow2 (px 1) (px 2)
+    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
+-}
+textShadow : None -> Property namespace animation class id
+textShadow =
+    prop1 "text-shadow" absoluteNoneToString
+
+
+{-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
+
+    ~ textShadow  none
+    ~ textShadow2 (px 1) (px 2)
+    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
+-}
+textShadow2 : Length -> Length -> Property namespace animation class id
+textShadow2 =
+    prop2 "text-shadow" lengthToString lengthToString
+
+
+{-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
+
+    ~ textShadow  none
+    ~ textShadow2 (px 1) (px 2)
+    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
+-}
+textShadow3 : Length -> Length -> Color -> Property namespace animation class id
+textShadow3 =
+    prop3 "text-shadow" lengthToString lengthToString colorToString
+
+
+{-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
+
+    ~ textShadow  none
+    ~ textShadow2 (px 1) (px 2)
+    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
+-}
+textShadow4 : Length -> Length -> Length -> Color -> Property namespace animation class id
+textShadow4 =
+    prop4 "text-shadow" lengthToString lengthToString lengthToString colorToString
+
+
+{-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
+
+    ~ textIndent  (px 40)
+    ~ textIndent2 (px 40) hanging
+    ~ textIndent3 (px 40) hanging eachLine
+-}
+textIndent : Length -> Property namespace animation class id
+textIndent =
+    prop1 "text-indent" lengthToString
+
+
+{-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
+
+    ~ textIndent  (px 40)
+    ~ textIndent2 (px 40) hanging
+    ~ textIndent3 (px 40) hanging eachLine
+-}
+textIndent2 : Length -> TextIndent -> Property namespace animation class id
+textIndent2 =
+    prop2 "text-indent" lengthToString textIndentToString
+
+
+{-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
+
+    ~ textIndent  (px 40)
+    ~ textIndent2 (px 40) hanging
+    ~ textIndent3 (px 40) hanging eachLine
+-}
+textIndent3 : Length -> TextIndent -> TextIndent -> Property namespace animation class id
+textIndent3 =
+    prop3 "text-indent" lengthToString textIndentToString textIndentToString
+
+
+{-| Sets [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+-}
+textTransform : TextTransform -> Property namespace animation class id
+textTransform =
+    prop1 "text-transform" textTransformToString
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
@@ -2782,12 +3078,6 @@ color =
 media : a -> String
 media value =
     "media " ++ (toString value)
-
-
-{-| -}
-textShadow : TextShadow -> Property namespace animation class id
-textShadow =
-    prop1 "text-shadow" textShadowToString
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
