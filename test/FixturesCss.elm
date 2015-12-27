@@ -45,8 +45,8 @@ multiDescendent =
             ~ margin zero
             >$ h3
                 ~ width (pct 100)
-            >$ h4
-                ~ height (pct 100)
+                >$ h4
+                    ~ height (pct 100)
         $ span
             ~ padding (px 10)
             ~ margin (px 11)
