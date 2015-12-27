@@ -148,6 +148,7 @@ underlineOnHover =
     mixin
         --~ textDecoration none
         ~ color (rgb 128 127 126)
+
         &: hover
             --~ textDecoration underline
             ~ color (rgb 23 24 25)
@@ -173,14 +174,15 @@ mixinUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
             --~ color (rgb 128 64 32)
-        ~ underlineOnHover
+            ~ underlineOnHover
 
 
 manualUnderlineOnHoverStyle : Style String CssAnimations CssClasses CssIds
 manualUnderlineOnHoverStyle =
     stylesheet { name = "underlineOnHoverStylesheet" }
         $ a
-            ~ color (rgb 128 127 126)
+            ~ color (rgb 128 127 126
+
         &: hover
             ~ color (rgb 23 24 25)
 
