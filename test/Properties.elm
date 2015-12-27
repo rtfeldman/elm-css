@@ -19,6 +19,38 @@ all =
             , ( boxSizing contentBox, "content-box" )
             , ( boxSizing borderBox, "border-box" )
             ]
+        , testProperty
+            "display"
+            [ ( display initial, "initial" )
+            , ( display unset, "unset" )
+            , ( display inherit, "inherit" )
+            , ( display none, "none" )
+            , ( display inline, "inline" )
+            , ( display block, "block" )
+            , ( display inlineBlock, "inline-block" )
+              -- TODO display: contents;
+              -- TODO display: list-item;
+              -- TODO display: inline-list-item;
+              -- TODO display: table;
+              -- TODO display: inline-table;
+              -- TODO display: table-cell;
+              -- TODO display: table-column;
+              -- TODO display: table-column-group;
+              -- TODO display: table-footer-group;
+              -- TODO display: table-header-group;
+              -- TODO display: table-row;
+              -- TODO display: table-row-group;
+              -- TODO display: flex;
+              -- TODO display: inline-flex;
+              -- TODO display: grid;
+              -- TODO display: inline-grid;
+              -- TODO display: ruby;
+              -- TODO display: ruby-base;
+              -- TODO display: ruby-text;
+              -- TODO display: ruby-base-container;
+              -- TODO display: ruby-text-container ;
+              -- TODO display: run-in;
+            ]
         ]
 
 
