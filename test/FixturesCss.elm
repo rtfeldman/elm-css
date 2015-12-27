@@ -61,9 +61,11 @@ multiSelector =
             ~ display none
             ~ width (pct 100)
             ~ height (pct 100)
+
         $ span
             ~ padding (px 10)
             ~ margin (px 11)
+
             >$ h2 >$ h1
                 ~ width (px 1)
                 ~ height (pct 2)
