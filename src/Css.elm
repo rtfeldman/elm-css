@@ -114,12 +114,13 @@ angleToString =
 transformListToString : List Transform -> String
 transformListToString list =
     case list of
-      [] ->
-        "none"
-      _ ->
-        list
-          |> List.map (\(Transform str) -> str)
-          |> String.join " "
+        [] ->
+            "none"
+
+        _ ->
+            list
+                |> List.map (\(Transform str) -> str)
+                |> String.join " "
 
 
 lengthOrNumberToString : LengthOrNumber -> String
@@ -328,6 +329,7 @@ transformBoxToString =
         |> borderBoxToString
         |> propertyValueToString
 
+
 transformStyleToString : TransformStyle -> String
 transformStyleToString =
     (\(ExplicitTransformStyle str) -> str)
@@ -338,10 +340,10 @@ borderBoxToString : (a -> String) -> BorderBoxOr a -> String
 borderBoxToString translate value =
     case value of
         BorderBox ->
-          "border-box"
+            "border-box"
 
         NotBorderBox notBorderBox ->
-          translate notBorderBox
+            translate notBorderBox
 
 
 opacityStyleToString : OpacityStyle -> String
@@ -371,6 +373,7 @@ type AutoOr a
 type NoneOr a
     = None
     | NotNone a
+
 
 type BorderBoxOr a
     = BorderBox
@@ -421,12 +424,14 @@ type alias Length =
     LengthOrAuto
 
 
-type Transform =
-    Transform String
+type Transform
+    = Transform String
 
 
 type alias Angle =
     PropertyValue ExplicitAngle
+
+
 
 {- Because `left` and `right` are both common properties and common values
 in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
@@ -487,12 +492,12 @@ type alias TransformStyle =
     PropertyValue ExplicitTransformStyle
 
 
-type ExplicitTransformBox =
-    ExplicitTransformBox String
+type ExplicitTransformBox
+    = ExplicitTransformBox String
 
 
-type ExplicitTransformStyle =
-    ExplicitTransformStyle String
+type ExplicitTransformStyle
+    = ExplicitTransformStyle String
 
 
 type ExplicitPosition
@@ -549,6 +554,8 @@ type ExplicitTextShadow
 
 type ExplicitAngle
     = ExplicitAngle String
+
+
 
 -- Properties --
 
@@ -903,13 +910,15 @@ n =
     lengthConverter ""
 
 
+
 {- ANGLES -}
+
 
 angleConverter : String -> number -> Angle
 angleConverter suffix num =
     ((numberToString num) ++ suffix)
-      |> ExplicitAngle
-      |> ExplicitValue
+        |> ExplicitAngle
+        |> ExplicitValue
 
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
@@ -918,17 +927,20 @@ deg : number -> Angle
 deg =
     angleConverter "deg"
 
+
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
 grad : number -> Angle
 grad =
-  angleConverter "grad"
+    angleConverter "grad"
+
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
 rad : number -> Angle
 rad =
     angleConverter "rad"
+
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
@@ -939,6 +951,7 @@ turn =
 
 
 {- TRANSFORMS -}
+
 
 cssFunction : String -> (a -> String) -> List a -> String
 cssFunction funcName converter args =
@@ -955,7 +968,7 @@ cssFunction funcName converter args =
 -}
 matrix : number -> number -> number -> number -> number -> number -> Transform
 matrix a b c d tx ty =
-  cssFunction "matrix" numberToString [a, b, c, d, tx, ty] |> Transform
+    cssFunction "matrix" numberToString [ a, b, c, d, tx, ty ] |> Transform
 
 
 {-| The [`matrix3d()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix3d()) transform-function.
@@ -964,8 +977,8 @@ matrix a b c d tx ty =
 -}
 matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-  cssFunction "matrix3d" numberToString [a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4]
-    |> Transform
+    cssFunction "matrix3d" numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ]
+        |> Transform
 
 
 {-| The [`perspective()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#perspective()) transform-function.
@@ -974,7 +987,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 -}
 perspective : number -> Transform
 perspective l =
-  cssFunction "perspective" numberToString [l] |> Transform
+    cssFunction "perspective" numberToString [ l ] |> Transform
 
 
 {-| The [`rotate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate()) transform-function.
@@ -983,7 +996,7 @@ perspective l =
 -}
 rotate : Angle -> Transform
 rotate a =
-  cssFunction "rotate" angleToString [a] |> Transform
+    cssFunction "rotate" angleToString [ a ] |> Transform
 
 
 {-| The [`rotateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateX()) transform-function.
@@ -992,7 +1005,8 @@ rotate a =
 -}
 rotateX : Angle -> Transform
 rotateX a =
-  cssFunction "rotateX" angleToString [a] |> Transform
+    cssFunction "rotateX" angleToString [ a ] |> Transform
+
 
 {-| The [`rotateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateY()) transform-function.
 
@@ -1000,7 +1014,8 @@ rotateX a =
 -}
 rotateY : Angle -> Transform
 rotateY a =
-  cssFunction "rotateY" angleToString [a] |> Transform
+    cssFunction "rotateY" angleToString [ a ] |> Transform
+
 
 {-| The [`rotateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateZ()) transform-function.
 
@@ -1008,7 +1023,7 @@ rotateY a =
 -}
 rotateZ : Angle -> Transform
 rotateZ a =
-  cssFunction "rotateZ" angleToString [a] |> Transform
+    cssFunction "rotateZ" angleToString [ a ] |> Transform
 
 
 {-| The [`rotate3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate3d()) transform-function.
@@ -1017,15 +1032,18 @@ rotateZ a =
 -}
 rotate3d : number -> number -> number -> Angle -> Transform
 rotate3d x y z a =
-  let
-    coordsAsStrings =
-      List.map numberToString [x, y, z]
-    angleAsString =
-      angleToString a
-    allValues =
-      coordsAsStrings ++ [angleAsString]
-  in
-    cssFunction "rotate3d" identity allValues |> Transform
+    let
+        coordsAsStrings =
+            List.map numberToString [ x, y, z ]
+
+        angleAsString =
+            angleToString a
+
+        allValues =
+            coordsAsStrings ++ [ angleAsString ]
+    in
+        cssFunction "rotate3d" identity allValues |> Transform
+
 
 {-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
 
@@ -1034,7 +1052,7 @@ rotate3d x y z a =
 -}
 scale : number -> Transform
 scale x =
-    cssFunction "scale" numberToString [x] |> Transform
+    cssFunction "scale" numberToString [ x ] |> Transform
 
 
 {-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
@@ -1044,7 +1062,8 @@ scale x =
 -}
 scale2 : number -> number -> Transform
 scale2 x y =
-    cssFunction "scale" numberToString [x, y] |> Transform
+    cssFunction "scale" numberToString [ x, y ] |> Transform
+
 
 {-| The [`scaleX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleX()) transform-function.
 
@@ -1052,7 +1071,7 @@ scale2 x y =
 -}
 scaleX : number -> Transform
 scaleX x =
-    cssFunction "scaleX" numberToString [x] |> Transform
+    cssFunction "scaleX" numberToString [ x ] |> Transform
 
 
 {-| The [`scaleY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleY()) transform-function.
@@ -1061,7 +1080,7 @@ scaleX x =
 -}
 scaleY : number -> Transform
 scaleY y =
-    cssFunction "scaleY" numberToString [y] |> Transform
+    cssFunction "scaleY" numberToString [ y ] |> Transform
 
 
 {-| The [`scale3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale3d()) transform-function.
@@ -1070,7 +1089,7 @@ scaleY y =
 -}
 scale3d : number -> number -> number -> Transform
 scale3d x y z =
-    cssFunction "scale3d" numberToString [x, y, z] |> Transform
+    cssFunction "scale3d" numberToString [ x, y, z ] |> Transform
 
 
 {-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
@@ -1080,7 +1099,8 @@ scale3d x y z =
 -}
 skew : Angle -> Transform
 skew ax =
-  cssFunction "skew" angleToString [ax] |> Transform
+    cssFunction "skew" angleToString [ ax ] |> Transform
+
 
 {-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
 
@@ -1089,7 +1109,8 @@ skew ax =
 -}
 skew2 : Angle -> Angle -> Transform
 skew2 ax ay =
-  cssFunction "skew" angleToString [ax, ay] |> Transform
+    cssFunction "skew" angleToString [ ax, ay ] |> Transform
+
 
 {-| The [`skewX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewX()) transform-function.
 
@@ -1097,7 +1118,8 @@ skew2 ax ay =
 -}
 skewX : Angle -> Transform
 skewX a =
-  cssFunction "skewX" angleToString [a] |> Transform
+    cssFunction "skewX" angleToString [ a ] |> Transform
+
 
 {-| The [`skewY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewY()) transform-function.
 
@@ -1105,7 +1127,7 @@ skewX a =
 -}
 skewY : Angle -> Transform
 skewY a =
-  cssFunction "skewY" angleToString [a] |> Transform
+    cssFunction "skewY" angleToString [ a ] |> Transform
 
 
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
@@ -1115,7 +1137,8 @@ skewY a =
 -}
 translate : Length -> Transform
 translate tx =
-  cssFunction "translate" lengthToString [tx] |> Transform
+    cssFunction "translate" lengthToString [ tx ] |> Transform
+
 
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
 
@@ -1124,7 +1147,7 @@ translate tx =
 -}
 translate2 : Length -> Length -> Transform
 translate2 tx ty =
-  cssFunction "translate" lengthToString [tx, ty] |> Transform
+    cssFunction "translate" lengthToString [ tx, ty ] |> Transform
 
 
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
@@ -1133,7 +1156,7 @@ translate2 tx ty =
 -}
 translateX : Length -> Transform
 translateX t =
-  cssFunction "translateX" lengthToString [t] |> Transform
+    cssFunction "translateX" lengthToString [ t ] |> Transform
 
 
 {-| The [`translateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateY()) transform-function.
@@ -1142,7 +1165,7 @@ translateX t =
 -}
 translateY : Length -> Transform
 translateY t =
-  cssFunction "translateY" lengthToString [t] |> Transform
+    cssFunction "translateY" lengthToString [ t ] |> Transform
 
 
 {-| The [`translateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateZ()) transform-function.
@@ -1151,7 +1174,7 @@ translateY t =
 -}
 translateZ : Length -> Transform
 translateZ t =
-  cssFunction "translateZ" lengthToString [t] |> Transform
+    cssFunction "translateZ" lengthToString [ t ] |> Transform
 
 
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
@@ -1160,7 +1183,7 @@ translateZ t =
 -}
 translate3d : Length -> Length -> Length -> Transform
 translate3d tx ty tz =
-  cssFunction "translate3d" lengthToString [tx, ty, tz] |> Transform
+    cssFunction "translate3d" lengthToString [ tx, ty, tz ] |> Transform
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
@@ -1183,8 +1206,7 @@ populated list:
 -}
 transforms : List Transform -> Property namespace animation class id
 transforms =
-  prop1 "transform" transformListToString
-
+    prop1 "transform" transformListToString
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
@@ -1196,54 +1218,57 @@ property to `none`, use the `transforms` function with an empty list. See
 -}
 transform : Transform -> Property namespace animation class id
 transform only =
-    transforms [only]
+    transforms [ only ]
+
 
 {-|
 -}
 borderBox : PropertyValue (BorderBoxOr a)
 borderBox =
-  BorderBox |> ExplicitValue
+    BorderBox |> ExplicitValue
+
 
 {-| The `fill-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
 fillBox : TransformBox
 fillBox =
-  "fill-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
+    "fill-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
 
 
 {-| The `view-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
 viewBox : TransformBox
 viewBox =
-  "view-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
+    "view-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
 
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
 transformBox : TransformBox -> Property namespace animation class id
 transformBox =
-  prop1 "transform-box" transformBoxToString
+    prop1 "transform-box" transformBoxToString
 
 
 {-| The `preserve-3d` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
 preserve3d : TransformStyle
 preserve3d =
-  "preserve-3d" |> ExplicitTransformStyle |> ExplicitValue
+    "preserve-3d" |> ExplicitTransformStyle |> ExplicitValue
 
 
 {-| The `flat` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
 flat : TransformStyle
 flat =
-  "flat" |> ExplicitTransformStyle |> ExplicitValue
+    "flat" |> ExplicitTransformStyle |> ExplicitValue
 
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
 transformStyle : TransformStyle -> Property namespace animation class id
 transformStyle =
-  prop1 "transform-style" transformStyleToString
+    prop1 "transform-style" transformStyleToString
+
 
 
 {- TEXT DECORATION LINES -}
@@ -1275,6 +1300,7 @@ lineThrough =
 
 
 {- BORDERS -}
+
 
 {-| -}
 visible : Display
