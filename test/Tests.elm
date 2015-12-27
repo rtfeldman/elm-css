@@ -25,6 +25,7 @@ all =
         , underlineOnHoverManual
         , greenOnHoverMixin
         , transformsStyle
+        , Properties.all
         ]
 
 
