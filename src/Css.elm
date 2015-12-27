@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick) where
+module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, transform, transforms, matrix, matrix3d, perspective, rotate, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scaleX, scaleY, scale3d, skew, skew2, skewX, skewY, translate, translate2, translateX, translateY, translateZ, translate3d, deg, rad, grad, turn, transformBox, viewBox, fillBox) where
 
 {-| Functions for building stylesheets.
 
@@ -12,13 +12,16 @@ module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$),
 @docs (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.)
 
 # Attributes
-@docs currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
+@docs transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, width, minWidth, height, minHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, outline
 
 # Values
-@docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox
 
 # Length
 @docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
+
+# Angle
+@docs deg, rad, grad, turn
 
 # Pseudo-Classes
 @docs (&:), active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
@@ -102,6 +105,23 @@ lengthToString =
         |> propertyValueToString
 
 
+angleToString : Angle -> String
+angleToString =
+    (\(ExplicitAngle str) -> str)
+        |> propertyValueToString
+
+
+transformListToString : List Transform -> String
+transformListToString list =
+    case list of
+      [] ->
+        "none"
+      _ ->
+        list
+          |> List.map (\(Transform str) -> str)
+          |> String.join " "
+
+
 lengthOrNumberToString : LengthOrNumber -> String
 lengthOrNumberToString =
     lengthToString
@@ -117,6 +137,7 @@ borderStyleToString =
 boxSizingToString : BoxSizing -> String
 boxSizingToString =
     (\(ExplicitBoxSizing str) -> str)
+        |> borderBoxToString
         |> propertyValueToString
 
 
@@ -301,6 +322,23 @@ transparentToString translate value =
             translate notTransparent
 
 
+transformBoxToString : TransformBox -> String
+transformBoxToString =
+    (\(ExplicitTransformBox str) -> str)
+        |> borderBoxToString
+        |> propertyValueToString
+
+
+borderBoxToString : (a -> String) -> BorderBoxOr a -> String
+borderBoxToString translate value =
+    case value of
+        BorderBox ->
+          "border-box"
+
+        NotBorderBox notBorderBox ->
+          translate notBorderBox
+
+
 opacityStyleToString : OpacityStyle -> String
 opacityStyleToString =
     explicitOpacityStyleToString
@@ -329,13 +367,17 @@ type NoneOr a
     = None
     | NotNone a
 
+type BorderBoxOr a
+    = BorderBox
+    | NotBorderBox a
+
 
 type alias TextDecorationLine =
     PropertyValue (NoneOr ExplicitTextDecorationLine)
 
 
 type alias BoxSizing =
-    PropertyValue ExplicitBoxSizing
+    PropertyValue (BorderBoxOr ExplicitBoxSizing)
 
 
 type alias Overflow =
@@ -374,6 +416,12 @@ type alias Length =
     LengthOrAuto
 
 
+type Transform =
+    Transform String
+
+
+type alias Angle =
+    PropertyValue ExplicitAngle
 
 {- Because `left` and `right` are both common properties and common values
 in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
@@ -424,6 +472,14 @@ type alias Position =
 
 type alias BorderStyle =
     PropertyValue (NoneOr ExplicitBorderStyle)
+
+
+type alias TransformBox =
+    PropertyValue (BorderBoxOr ExplicitTransformBox)
+
+
+type ExplicitTransformBox =
+    ExplicitTransformBox String
 
 
 type ExplicitPosition
@@ -478,6 +534,8 @@ type ExplicitTextShadow
     = NoTextShadow
 
 
+type ExplicitAngle
+    = ExplicitAngle String
 
 -- Properties --
 
@@ -832,6 +890,327 @@ n =
     lengthConverter ""
 
 
+{- ANGLES -}
+
+angleConverter : String -> number -> Angle
+angleConverter suffix num =
+    ((numberToString num) ++ suffix)
+      |> ExplicitAngle
+      |> ExplicitValue
+
+
+{-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
+-}
+deg : number -> Angle
+deg =
+    angleConverter "deg"
+
+{-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
+-}
+grad : number -> Angle
+grad =
+  angleConverter "grad"
+
+{-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
+-}
+rad : number -> Angle
+rad =
+    angleConverter "rad"
+
+{-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
+-}
+turn : number -> Angle
+turn =
+    angleConverter "turn"
+
+
+
+{- TRANSFORMS -}
+
+cssFunction : String -> (a -> String) -> List a -> String
+cssFunction funcName converter args =
+    args
+        |> List.map converter
+        |> String.join ", "
+        |> (++) (funcName ++ "(")
+        |> (flip (++)) ")"
+
+
+{-| The [`matrix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix()) transform-function.
+
+    ~ transform (matrix a b c d tx ty)
+-}
+matrix : number -> number -> number -> number -> number -> number -> Transform
+matrix a b c d tx ty =
+  cssFunction "matrix" numberToString [a, b, c, d, tx, ty] |> Transform
+
+
+{-| The [`matrix3d()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix3d()) transform-function.
+
+    ~ transform (matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4)
+-}
+matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform
+matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
+  cssFunction "matrix3d" numberToString [a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4]
+    |> Transform
+
+
+{-| The [`perspective()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#perspective()) transform-function.
+
+     transform (perspective 0.5)
+-}
+perspective : number -> Transform
+perspective l =
+  cssFunction "perspective" numberToString [l] |> Transform
+
+
+{-| The [`rotate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate()) transform-function.
+
+     transform (rotate (deg 90))
+-}
+rotate : Angle -> Transform
+rotate a =
+  cssFunction "rotate" angleToString [a] |> Transform
+
+
+{-| The [`rotateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateX()) transform-function.
+
+     transform (rotateX (deg 90))
+-}
+rotateX : Angle -> Transform
+rotateX a =
+  cssFunction "rotateX" angleToString [a] |> Transform
+
+{-| The [`rotateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateY()) transform-function.
+
+     transform (rotateY (deg 90))
+-}
+rotateY : Angle -> Transform
+rotateY a =
+  cssFunction "rotateY" angleToString [a] |> Transform
+
+{-| The [`rotateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateZ()) transform-function.
+
+     transform (rotateZ (deg 90))
+-}
+rotateZ : Angle -> Transform
+rotateZ a =
+  cssFunction "rotateZ" angleToString [a] |> Transform
+
+
+{-| The [`rotate3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate3d()) transform-function.
+
+     transform (rotate3d 1 1 1 (deg 90))
+-}
+rotate3d : number -> number -> number -> Angle -> Transform
+rotate3d x y z a =
+  let
+    coordsAsStrings =
+      List.map numberToString [x, y, z]
+    angleAsString =
+      angleToString a
+    allValues =
+      coordsAsStrings ++ [angleAsString]
+  in
+    cssFunction "rotate3d" identity allValues |> Transform
+
+{-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
+
+     transform (scale 0.5)
+     transform (scale2 0.5 0.7)
+-}
+scale : number -> Transform
+scale x =
+    cssFunction "scale" numberToString [x] |> Transform
+
+
+{-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
+
+     transform (scale 0.5)
+     transform (scale2 0.5 0.7)
+-}
+scale2 : number -> number -> Transform
+scale2 x y =
+    cssFunction "scale" numberToString [x, y] |> Transform
+
+{-| The [`scaleX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleX()) transform-function.
+
+     transform (scaleX 0.5)
+-}
+scaleX : number -> Transform
+scaleX x =
+    cssFunction "scaleX" numberToString [x] |> Transform
+
+
+{-| The [`scaleY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleY()) transform-function.
+
+     transform (scaleY 0.5)
+-}
+scaleY : number -> Transform
+scaleY y =
+    cssFunction "scaleY" numberToString [y] |> Transform
+
+
+{-| The [`scale3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale3d()) transform-function.
+
+     transform (scale3d 0.5 0.5 1)
+-}
+scale3d : number -> number -> number -> Transform
+scale3d x y z =
+    cssFunction "scale3d" numberToString [x, y, z] |> Transform
+
+
+{-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
+
+     transform (skew (deg 90))
+     transform (skew2 (deg 90) (deg 45))
+-}
+skew : Angle -> Transform
+skew ax =
+  cssFunction "skew" angleToString [ax] |> Transform
+
+{-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
+
+     transform (skew (deg 90))
+     transform (skew2 (deg 90) (deg 45))
+-}
+skew2 : Angle -> Angle -> Transform
+skew2 ax ay =
+  cssFunction "skew" angleToString [ax, ay] |> Transform
+
+{-| The [`skewX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewX()) transform-function.
+
+     transform (skewX (deg 90))
+-}
+skewX : Angle -> Transform
+skewX a =
+  cssFunction "skewX" angleToString [a] |> Transform
+
+{-| The [`skewY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewY()) transform-function.
+
+    transform (skewY (deg 90))
+-}
+skewY : Angle -> Transform
+skewY a =
+  cssFunction "skewY" angleToString [a] |> Transform
+
+
+{-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
+
+    transform (translate (px 100))
+    transform (translate2 (px 100) (pct -45))
+-}
+translate : Length -> Transform
+translate tx =
+  cssFunction "translate" lengthToString [tx] |> Transform
+
+{-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
+
+    transform (translate (px 100))
+    transform (translate2 (px 100) (pct -45))
+-}
+translate2 : Length -> Length -> Transform
+translate2 tx ty =
+  cssFunction "translate" lengthToString [tx, ty] |> Transform
+
+
+{-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
+
+    transform (translateX (px 100))
+-}
+translateX : Length -> Transform
+translateX t =
+  cssFunction "translateX" lengthToString [t] |> Transform
+
+
+{-| The [`translateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateY()) transform-function.
+
+    transform (translateY (px 100))
+-}
+translateY : Length -> Transform
+translateY t =
+  cssFunction "translateY" lengthToString [t] |> Transform
+
+
+{-| The [`translateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateZ()) transform-function.
+
+    transform (translateZ (px 100))
+-}
+translateZ : Length -> Transform
+translateZ t =
+  cssFunction "translateZ" lengthToString [t] |> Transform
+
+
+{-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
+
+    transform (translate3d (px 100) (px 100) (px 100))
+-}
+translate3d : Length -> Length -> Length -> Transform
+translate3d tx ty tz =
+  cssFunction "translate3d" lengthToString [tx, ty, tz] |> Transform
+
+
+{-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+with a series of transform-functions. If an empty list is provided, the CSS
+output will be `none`, as if to state directly that the set of transforms
+applied to the current selector is the empty:
+
+    ~ transforms [] -- transform: none;
+
+In the case that only one transform is needed, the `transform` function may be
+used instead for convenience. `transform` expects exactly one transform-function
+and cannot be passed `none`:
+
+    ~ transform (matrix 1 2 3 4 5 6) -- transform: matrix(1, 2, 3, 4, 5, 6);
+
+If a collection of transforms is needed, use the `transforms` function with a
+populated list:
+
+    ~ transforms [ perspective 1, scale2 1 1.4 ]
+-}
+transforms : List Transform -> Property namespace animation class id
+transforms =
+  prop1 "transform" transformListToString
+
+
+
+{-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+with a single explicit transform value. If you need to set the transform
+property to `none`, use the `transforms` function with an empty list. See
+`transforms` for more details.
+
+    transform (scaleX 1.4)
+-}
+transform : Transform -> Property namespace animation class id
+transform only =
+    transforms [only]
+
+{-|
+-}
+borderBox : PropertyValue (BorderBoxOr a)
+borderBox =
+  BorderBox |> ExplicitValue
+
+{-| The `fill-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
+-}
+fillBox : TransformBox
+fillBox =
+  "fill-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
+
+
+{-| The `view-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
+-}
+viewBox : TransformBox
+viewBox =
+  "view-box" |> ExplicitTransformBox |> NotBorderBox |> ExplicitValue
+
+
+{-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
+-}
+transformBox : TransformBox -> Property namespace animation class id
+transformBox =
+  prop1 "transform-box" transformBoxToString
+
 
 {- TEXT DECORATION LINES -}
 
@@ -862,13 +1241,6 @@ lineThrough =
 
 
 {- BORDERS -}
-
-
-{-| -}
-borderBox : BoxSizing
-borderBox =
-    "border-box" |> ExplicitBoxSizing |> ExplicitValue
-
 
 {-| -}
 visible : Display
