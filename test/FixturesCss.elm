@@ -30,19 +30,25 @@ multiDescendent =
         $ html |$ body
             ~ boxSizing borderBox
             ~ display none
+
             >$ div
                 ~ width (pct 100)
                 ~ height (pct 100)
+
         $ h1 |$ h2
             ~ padding zero
             ~ margin zero
+
             >$ h3
                 ~ width (pct 100)
+
                 >$ h4
                     ~ height (pct 100)
+
         $ span
             ~ padding (px 10)
             ~ margin (px 11)
+
             >$ h2 >$ h1
                 ~ width (px 1)
                 ~ height (pct 2)
