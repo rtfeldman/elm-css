@@ -964,7 +964,7 @@ cssFunction funcName converter args =
 
 {-| The [`matrix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix()) transform-function.
 
-    ~ transform (matrix a b c d tx ty)
+    ~ transform (matrix 0.5 1 1.5 2 2.5 3)
 -}
 matrix : number -> number -> number -> number -> number -> number -> Transform
 matrix a b c d tx ty =
@@ -973,7 +973,7 @@ matrix a b c d tx ty =
 
 {-| The [`matrix3d()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix3d()) transform-function.
 
-    ~ transform (matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4)
+    ~ transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
 -}
 matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
