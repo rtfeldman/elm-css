@@ -9,6 +9,8 @@ type CssClasses = Hidden
 type CssIds = Page
 type CssAnimations = Wobble
 
+pageBackground = rgb 100 90 128
+pageDefaultText = rgb 40 35 76
 
 unstyledDiv : Style String a b c
 unstyledDiv =
@@ -136,8 +138,9 @@ dreamwriter =
             ~ boxSizing borderBox
             ~ margin zero
             ~ padding (px 8)
-            ~ backgroundColor (rgb 100 90 128)
-            ~ color (rgb 40 35 76)
+
+            ~ backgroundColor pageBackground
+            ~ color pageDefaultText
 
 
 underlineOnHover : Style String CssAnimations CssClasses CssIds
