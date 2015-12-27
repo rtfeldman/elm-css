@@ -20,6 +20,26 @@ all =
             , ( boxSizing borderBox, "border-box" )
             ]
         , testProperty
+            "overflow-x"
+            [ ( overflowX initial, "initial" )
+            , ( overflowX unset, "unset" )
+            , ( overflowX inherit, "inherit" )
+            , ( overflowX auto, "auto" )
+            , ( overflowX visible, "visible" )
+            , ( overflowX hidden, "hidden" )
+            , ( overflowX scroll, "scroll" )
+            ]
+        , testProperty
+            "overflow-y"
+            [ ( overflowY initial, "initial" )
+            , ( overflowY unset, "unset" )
+            , ( overflowY inherit, "inherit" )
+            , ( overflowY auto, "auto" )
+            , ( overflowY visible, "visible" )
+            , ( overflowY hidden, "hidden" )
+            , ( overflowY scroll, "scroll" )
+            ]
+        , testProperty
             "overflow"
             [ ( overflow initial, "initial" )
             , ( overflow unset, "unset" )
