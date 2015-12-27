@@ -73,7 +73,6 @@ multiSelector =
                 ~ width (px 1)
                 ~ height (pct 2)
 
-
 keyValue : Style String CssAnimations CssClasses CssIds
 keyValue =
     stylesheet { name = "multiSelector" }
