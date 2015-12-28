@@ -1557,16 +1557,16 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : (Length (LengthOrNumber (LengthOrNone (LengthOrAuto (Number {})))) -> Style a b c d) -> Property a b c d
+textAlignLast : (ExplicitLength -> Style a b c d) -> Property a b c d
 textAlignLast fn =
-    getOverloadedProperty "textAlignLast" "text-align-last" (fn zero)
+    getOverloadedProperty "textAlignLast" "text-align-last" (fn (pct 0))
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : (Length (LengthOrNumber (LengthOrNone (LengthOrAuto (Number {})))) -> Style a b c d) -> Property a b c d
+textAlign : (ExplicitLength -> Style a b c d) -> Property a b c d
 textAlign fn =
-    getOverloadedProperty "textAlign" "text-align" (fn zero)
+    getOverloadedProperty "textAlign" "text-align" (fn (pct 0))
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
@@ -1683,9 +1683,9 @@ textTransform =
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : (Length (LengthOrNumber (LengthOrNone (LengthOrAuto (Number {})))) -> Style a b c d) -> Property a b c d
+verticalAlign : (ExplicitLength -> Style a b c d) -> Property a b c d
 verticalAlign fn =
-    getOverloadedProperty "verticalAlign" "vertical-align" (fn zero)
+    getOverloadedProperty "verticalAlign" "vertical-align" (fn (pct 0))
 
 
 {-| -}
