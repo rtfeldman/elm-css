@@ -20,6 +20,22 @@ all =
             , ( boxSizing borderBox, "border-box" )
             ]
         , testProperty
+            "width"
+            [ ( width initial, "initial" )
+            , ( width unset, "unset" )
+            , ( width inherit, "inherit" )
+            , ( width auto, "auto" )
+            , ( width (pct 90), "90%" )
+            ]
+        , testProperty
+            "height"
+            [ ( height initial, "initial" )
+            , ( height unset, "unset" )
+            , ( height inherit, "inherit" )
+            , ( height auto, "auto" )
+            , ( height (mm 8), "8mm" )
+            ]
+        , testProperty
             "text-indent"
             [ ( textIndent initial, "initial" )
             , ( textIndent unset, "unset" )
