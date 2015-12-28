@@ -32,10 +32,10 @@ all =
             [ ( minWidth initial, "initial" )
             , ( minWidth unset, "unset" )
             , ( minWidth inherit, "inherit" )
-              --TODO , ( minWidth maxContent, "max-content" )
-              --TODO , ( minWidth minContent, "min-content" )
-              --TODO , ( minWidth fitContent, "fit-content" )
-              --TODO , ( minWidth fillAvailable, "fill-available" )
+            , ( minWidth maxContent, "max-content" )
+            , ( minWidth minContent, "min-content" )
+            , ( minWidth fitContent, "fit-content" )
+            , ( minWidth fillAvailable, "fill-available" )
             , ( minWidth (pc 9), "9pc" )
             ]
         , testProperty
@@ -44,10 +44,10 @@ all =
             , ( maxWidth unset, "unset" )
             , ( maxWidth inherit, "inherit" )
             , ( maxWidth none, "none" )
-              --TODO , ( maxWidth maxContent, "max-content" )
-              --TODO , ( maxWidth minContent, "min-content" )
-              --TODO , ( maxWidth fitContent, "fit-content" )
-              --TODO , ( maxWidth fillAvailable, "fill-available" )
+            , ( maxWidth maxContent, "max-content" )
+            , ( maxWidth minContent, "min-content" )
+            , ( maxWidth fitContent, "fit-content" )
+            , ( maxWidth fillAvailable, "fill-available" )
             , ( maxWidth (cm 17), "17cm" )
             ]
         , testProperty
@@ -63,10 +63,10 @@ all =
             [ ( minHeight initial, "initial" )
             , ( minHeight unset, "unset" )
             , ( minHeight inherit, "inherit" )
-              --TODO , ( minHeight maxContent, "max-content" )
-              --TODO , ( minHeight minContent, "min-content" )
-              --TODO , ( minHeight fitContent, "fit-content" )
-              --TODO , ( minHeight fillAvailable, "fill-available" )
+            , ( minHeight maxContent, "max-content" )
+            , ( minHeight minContent, "min-content" )
+            , ( minHeight fitContent, "fit-content" )
+            , ( minHeight fillAvailable, "fill-available" )
             , ( minHeight (pc 9), "9pc" )
             ]
         , testProperty
@@ -75,10 +75,10 @@ all =
             , ( maxHeight unset, "unset" )
             , ( maxHeight inherit, "inherit" )
             , ( maxHeight none, "none" )
-              --TODO , ( maxHeight maxContent, "max-content" )
-              --TODO , ( maxHeight minContent, "min-content" )
-              --TODO , ( maxHeight fitContent, "fit-content" )
-              --TODO , ( maxHeight fillAvailable, "fill-available" )
+            , ( maxHeight maxContent, "max-content" )
+            , ( maxHeight minContent, "min-content" )
+            , ( maxHeight fitContent, "fit-content" )
+            , ( maxHeight fillAvailable, "fill-available" )
             , ( maxHeight (cm 17), "17cm" )
             ]
         , testProperty
