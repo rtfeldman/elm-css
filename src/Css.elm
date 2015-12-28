@@ -1644,7 +1644,7 @@ textIndent =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent2 : Length compatible -> TextIndent compatible -> Property namespace animation class id
+textIndent2 : Length compatibleA -> TextIndent compatibleB -> Property namespace animation class id
 textIndent2 =
     prop2 "text-indent"
 
@@ -1655,7 +1655,7 @@ textIndent2 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent3 : Length compatible -> TextIndent compatible -> TextIndent compatible -> Property namespace animation class id
+textIndent3 : Length compatibleA -> TextIndent compatibleB -> TextIndent compatibleC -> Property namespace animation class id
 textIndent3 =
     prop3 "text-indent"
 
