@@ -473,6 +473,7 @@ type alias BasicProperty =
     , textDecorationLine : Compatible
     , textRendering : Compatible
     , textIndent : Compatible
+    , textDecorationStyle : Compatible
     , length : Compatible
     , lengthOrAuto : Compatible
     , lengthOrNone : Compatible
@@ -509,6 +510,7 @@ initial =
     , textDecorationLine = Compatible
     , textRendering = Compatible
     , textIndent = Compatible
+    , textDecorationStyle = Compatible
     , boxSizing = Compatible
     , display = Compatible
     , all = Compatible

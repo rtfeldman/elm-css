@@ -94,6 +94,32 @@ all =
             , ( textIndent2 (pc 2) eachLine, "2pc each-line" )
             ]
         , testProperty
+            "text-decoration"
+            [ ( textDecoration initial, "initial" )
+            , ( textDecoration unset, "unset" )
+            , ( textDecoration inherit, "inherit" )
+            , ( textDecoration none, "none" )
+            , ( textDecoration underline, "underline" )
+            , ( textDecoration overline, "overline" )
+            , ( textDecoration lineThrough, "line-through" )
+            , ( textDecoration2 initial wavy, "initial wavy" )
+            , ( textDecoration2 unset dotted, "unset dotted" )
+            , ( textDecoration2 inherit dashed, "inherit dashed" )
+            , ( textDecoration2 none solid, "none solid" )
+            , ( textDecoration2 underline double, "underline double" )
+            , ( textDecoration2 overline initial, "overline initial" )
+            , ( textDecoration2 lineThrough unset, "line-through unset" )
+            , ( textDecoration2 lineThrough inherit, "line-through inherit" )
+            , ( textDecoration3 initial wavy (rgb 11 12 13), "initial wavy rgb(11, 12, 13)" )
+            , ( textDecoration3 unset dotted (rgb 11 12 13), "unset dotted rgb(11, 12, 13)" )
+            , ( textDecoration3 inherit dashed (rgb 11 12 13), "inherit dashed rgb(11, 12, 13)" )
+            , ( textDecoration3 none solid (rgb 11 12 13), "none solid rgb(11, 12, 13)" )
+            , ( textDecoration3 underline double (rgb 11 12 13), "underline double rgb(11, 12, 13)" )
+            , ( textDecoration3 overline initial (rgb 11 12 13), "overline initial rgb(11, 12, 13)" )
+            , ( textDecoration3 lineThrough unset (rgb 11 12 13), "line-through unset rgb(11, 12, 13)" )
+            , ( textDecoration3 lineThrough inherit (rgb 11 12 13), "line-through inherit rgb(11, 12, 13)" )
+            ]
+        , testProperty
             "overflow-x"
             [ ( overflowX initial, "initial" )
             , ( overflowX unset, "unset" )
