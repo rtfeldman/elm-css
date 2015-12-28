@@ -141,6 +141,21 @@ all =
             , ( textDecorations3 [ underline, overline, lineThrough ] inherit (rgb 11 12 13), "underline overline line-through inherit rgb(11, 12, 13)" )
             ]
         , testProperty
+            "text-decoration-line"
+            [ ( textDecorationLine initial, "initial" )
+            , ( textDecorationLine unset, "unset" )
+            , ( textDecorationLine inherit, "inherit" )
+            , ( textDecorationLine none, "none" )
+            , ( textDecorationLine underline, "underline" )
+            , ( textDecorationLine overline, "overline" )
+            , ( textDecorationLine lineThrough, "line-through" )
+            , ( textDecorationLines [], "none" )
+            , ( textDecorationLines [ initial ], "initial" )
+            , ( textDecorationLines [ unset, inherit ], "unset inherit" )
+            , ( textDecorationLines [ none ], "none" )
+            , ( textDecorationLines [ underline, overline, lineThrough ], "underline overline line-through" )
+            ]
+        , testProperty
             "overflow-x"
             [ ( overflowX initial, "initial" )
             , ( overflowX unset, "unset" )
