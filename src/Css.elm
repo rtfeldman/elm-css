@@ -437,6 +437,7 @@ type alias BasicProperty =
     , overflow : Compatible
     , textDecorationLine : Compatible
     , textRendering : Compatible
+    , textIndent : Compatible
     , length : Compatible
     , lengthOrAuto : Compatible
     , lengthOrNumber : Compatible
@@ -469,6 +470,7 @@ initial =
     , none = Compatible
     , textDecorationLine = Compatible
     , textRendering = Compatible
+    , textIndent = Compatible
     , boxSizing = Compatible
     , display = Compatible
     , all = Compatible

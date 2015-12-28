@@ -20,6 +20,18 @@ all =
             , ( boxSizing borderBox, "border-box" )
             ]
         , testProperty
+            "text-indent"
+            [ ( textIndent initial, "initial" )
+            , ( textIndent unset, "unset" )
+            , ( textIndent inherit, "inherit" )
+            , ( textIndent (px 5), "5px" )
+            , ( textIndent2 initial initial, "initial initial" )
+            , ( textIndent2 unset unset, "unset unset" )
+            , ( textIndent2 inherit inherit, "inherit inherit" )
+            , ( textIndent2 (em 3) hanging, "3em hanging" )
+            , ( textIndent2 (pc 2) eachLine, "2pc each-line" )
+            ]
+        , testProperty
             "overflow-x"
             [ ( overflowX initial, "initial" )
             , ( overflowX unset, "unset" )
