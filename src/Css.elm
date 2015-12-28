@@ -429,14 +429,14 @@ hidden =
 
 
 type alias BasicProperty =
-    { all : Compatible
+    { value : String
+    , all : Compatible
     , boxSizing : Compatible
     , display : Compatible
     , none : Compatible
     , overflow : Compatible
     , textDecorationLine : Compatible
     , textRendering : Compatible
-    , value : String
     }
 
 
