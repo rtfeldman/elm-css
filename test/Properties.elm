@@ -28,12 +28,58 @@ all =
             , ( width (pct 90), "90%" )
             ]
         , testProperty
+            "min-width"
+            [ ( minWidth initial, "initial" )
+            , ( minWidth unset, "unset" )
+            , ( minWidth inherit, "inherit" )
+              --TODO , ( minWidth maxContent, "max-content" )
+              --TODO , ( minWidth minContent, "min-content" )
+              --TODO , ( minWidth fitContent, "fit-content" )
+              --TODO , ( minWidth fillAvailable, "fill-available" )
+            , ( minWidth (pc 9), "9pc" )
+            ]
+        , testProperty
+            "max-width"
+            [ ( maxWidth initial, "initial" )
+            , ( maxWidth unset, "unset" )
+            , ( maxWidth inherit, "inherit" )
+            , ( maxWidth none, "none" )
+              --TODO , ( maxWidth maxContent, "max-content" )
+              --TODO , ( maxWidth minContent, "min-content" )
+              --TODO , ( maxWidth fitContent, "fit-content" )
+              --TODO , ( maxWidth fillAvailable, "fill-available" )
+            , ( maxWidth (cm 17), "17cm" )
+            ]
+        , testProperty
             "height"
             [ ( height initial, "initial" )
             , ( height unset, "unset" )
             , ( height inherit, "inherit" )
             , ( height auto, "auto" )
             , ( height (mm 8), "8mm" )
+            ]
+        , testProperty
+            "min-height"
+            [ ( minHeight initial, "initial" )
+            , ( minHeight unset, "unset" )
+            , ( minHeight inherit, "inherit" )
+              --TODO , ( minHeight maxContent, "max-content" )
+              --TODO , ( minHeight minContent, "min-content" )
+              --TODO , ( minHeight fitContent, "fit-content" )
+              --TODO , ( minHeight fillAvailable, "fill-available" )
+            , ( minHeight (pc 9), "9pc" )
+            ]
+        , testProperty
+            "max-height"
+            [ ( maxHeight initial, "initial" )
+            , ( maxHeight unset, "unset" )
+            , ( maxHeight inherit, "inherit" )
+            , ( maxHeight none, "none" )
+              --TODO , ( maxHeight maxContent, "max-content" )
+              --TODO , ( maxHeight minContent, "min-content" )
+              --TODO , ( maxHeight fitContent, "fit-content" )
+              --TODO , ( maxHeight fillAvailable, "fill-available" )
+            , ( maxHeight (cm 17), "17cm" )
             ]
         , testProperty
             "text-indent"
