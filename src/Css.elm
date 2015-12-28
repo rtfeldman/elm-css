@@ -1725,7 +1725,7 @@ maxWidth =
     ~ minWidth (px 100)
 
 -}
-minWidth : LengthOrAuto compatible -> Property namespace animation class id
+minWidth : Length compatible -> Property namespace animation class id
 minWidth =
     prop1 "min-width"
 
@@ -1745,7 +1745,7 @@ height =
     ~ minHeight (px 100)
 
 -}
-minHeight : LengthOrAuto compatible -> Property namespace animation class id
+minHeight : Length compatible -> Property namespace animation class id
 minHeight =
     prop1 "min-height"
 
