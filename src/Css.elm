@@ -3722,24 +3722,6 @@ extendTypeSelector operatorName update style =
             style
 
 
-extendLastMixinSelector : String -> (CompoundSelector -> CompoundSelector) -> List ( List CompoundSelector, List (Property namespace animation class id) ) -> Result String (List ( List CompoundSelector, List (Property namespace animation class id) ))
-extendLastMixinSelector operatorName update mixinStyles =
-    case mixinStyles of
-        [] ->
-            Err (operatorName ++ " cannot be used as the first mixin style.")
-
-        ( selectors, properties ) :: [] ->
-            Ok [ ( List.map update selectors, properties ) ]
-
-        first :: rest ->
-            case extendLastMixinSelector operatorName update rest of
-                Ok result ->
-                    Ok (first :: result)
-
-                (Err _) as err ->
-                    err
-
-
 
 -- Pseudo-Classes --
 
