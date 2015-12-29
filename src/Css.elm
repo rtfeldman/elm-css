@@ -2118,21 +2118,45 @@ right =
 {- MIN-MAX DIMENSIONS -}
 
 
+{-| The `max-content` value for
+[`min-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-width#Values),
+[`max-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-width#Values),
+[`min-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
+[`max-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
+-}
 maxContent : MinMaxDimension {}
 maxContent =
     { fillAvailable | value = "max-content" }
 
 
+{-| The `min-content` value for
+[`min-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-width#Values),
+[`max-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-width#Values),
+[`min-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
+[`max-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
+-}
 minContent : MinMaxDimension {}
 minContent =
     { fillAvailable | value = "min-content" }
 
 
+{-| The `fit-content` value for
+[`min-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-width#Values),
+[`max-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-width#Values),
+[`min-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
+[`max-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
+-}
 fitContent : MinMaxDimension {}
 fitContent =
     { fillAvailable | value = "fit-content" }
 
 
+{-| The `fill-available` value for
+[`min-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-width#Values),
+[`max-width`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-width#Values),
+[`min-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
+[`max-height`]https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
+-}
 fillAvailable : MinMaxDimension {}
 fillAvailable =
     { value = "fill-available"
