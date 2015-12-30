@@ -127,47 +127,6 @@ getOverloadedProperty functionName key style =
             invalidStyle
 
 
-lastPropertyKeyToString : Style namespace animation class id -> String
-lastPropertyKeyToString style =
-    case style of
-        NamespacedStyle _ declarations ->
-            getLastProperty declarations
-                |> Maybe.map .key
-                |> Maybe.withDefault ""
-
-        Mixin applyMixin ->
-            (toString applyMixin)
-
-        InvalidStyle _ ->
-            ""
-
-
-getLastProperty : List Declaration -> Maybe Declaration.Property
-getLastProperty declarations =
-    case declarations of
-        [] ->
-            Nothing
-
-        (StyleBlock _ _ properties) :: [] ->
-            getLast properties
-
-        first :: rest ->
-            getLastProperty rest
-
-
-getLast : List a -> Maybe a
-getLast list =
-    case list of
-        [] ->
-            Nothing
-
-        elem :: [] ->
-            Just elem
-
-        first :: rest ->
-            getLast rest
-
-
 type alias Value compatible =
     { compatible | value : String }
 
