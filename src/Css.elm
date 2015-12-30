@@ -3222,7 +3222,7 @@ propertyMixin propertyFromDeclarations =
                 property =
                     propertyFromDeclarations style name declarations
             in
-                case addProperty property declarations of
+                case addProperty "~" property declarations of
                     Ok newDeclarations ->
                         NamespacedStyle name newDeclarations
 

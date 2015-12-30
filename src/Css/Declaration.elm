@@ -133,11 +133,11 @@ updateLastProperty functionName update declarations =
                     err
 
 
-addProperty : Property -> List Declaration -> Result String (List Declaration)
-addProperty property declarations =
+addProperty : String -> Property -> List Declaration -> Result String (List Declaration)
+addProperty functionName property declarations =
     case declarations of
         [] ->
-            Err "`~` cannot be used as the first declaration."
+            Err ("`" ++ functionName ++ "` cannot be used as the first declaration.")
 
         declaration :: [] ->
             case declaration of
@@ -158,7 +158,7 @@ addProperty property declarations =
                     Err ("`~` cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
 
         first :: rest ->
-            case addProperty property rest of
+            case addProperty functionName property rest of
                 Ok result ->
                     Ok (first :: result)
 
