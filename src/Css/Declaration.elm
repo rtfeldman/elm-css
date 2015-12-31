@@ -32,6 +32,10 @@ type Declaration
     | StandaloneAtRule String String
 
 
+type alias DeclarationTransform =
+    List Declaration -> Result String (List Declaration)
+
+
 introduceSelector : Selector -> List Declaration -> List Declaration
 introduceSelector selector declarations =
     case declarations of

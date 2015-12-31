@@ -1,12 +1,12 @@
-module Css.File (compile, toFileStructure, CssFileStructure) where
+module Css.File (toFileStructure, CssFileStructure) where
 
 {-| Functions for writing CSS files from elm-css.
 
 @docs compile, toFileStructure, CssFileStructure
 -}
 
-import Style exposing (Style(..))
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
+import Css.Declaration exposing (DeclarationTransform)
 
 
 {-| A description of CSS files that will be created by elm-css.
@@ -34,21 +34,3 @@ toFileStructure stylesheets =
                     { success = False, filename = filename, content = msg }
     in
         List.map asTuple stylesheets
-
-
-{-| Compiles the given stylesheet into either a string of css declarations
-that can be written directly to a CSS file, or an error message string.
--}
-compile : Style namespace animation class id -> Result String String
-compile style =
-    case style of
-        NamespacedStyle _ declarations ->
-            declarations
-                |> prettyPrintDeclarations
-                |> Ok
-
-        Mixin _ ->
-            Err ("Cannot translate mixin to CSS directly. Use `~=` to apply it to a stylesheet instead!")
-
-        InvalidStyle message ->
-            Err message

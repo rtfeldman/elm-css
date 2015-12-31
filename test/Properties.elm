@@ -4,7 +4,6 @@ import ElmTest exposing (..)
 import Css exposing (..)
 import Css.Elements exposing (p)
 import Css.File exposing (compile)
-import Style exposing (Style)
 
 
 all : Test

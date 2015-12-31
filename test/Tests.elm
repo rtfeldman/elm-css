@@ -6,7 +6,6 @@ import Css.File exposing (compile)
 import FixturesCss as Fixtures
 import Properties
 import String
-import Style exposing (Style)
 
 
 all : Test
