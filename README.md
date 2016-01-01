@@ -1,6 +1,6 @@
 # elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
 
-A CSS preprocessor where you write [Elm](http://elm-lang.org) code and get .css files. Inspired by the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), and [CSS Modules](http://glenmaddern.com/articles/css-modules) tools.
+A CSS preprocessor where you write [Elm](http://elm-lang.org) code and get .css files. Inspired by the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), and [CSS Modules](http://glenmaddern.com/articles/css-modules).
 
 Try it out! (make sure you already have [elm](http://elm-lang.org) installed, e.g. with `npm install -g elm`)
 

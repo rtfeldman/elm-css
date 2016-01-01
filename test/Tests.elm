@@ -1,25 +1,16 @@
 module Tests (all) where
 
 import ElmTest exposing (..)
-import Css
-import Css.File exposing (compile)
+import Css exposing (compile)
 import FixturesCss as Fixtures
+import Properties
 import String
-
-
-prettyPrint style =
-    case compile style of
-        Ok result ->
-            result
-
-        Err message ->
-            "Invalid Stylesheet: " ++ message
 
 
 all : Test
 all =
     suite
-        "elm-stylesheets"
+        "elm-css"
         [ unstyledDiv
         , keyValue
         , divWidthHeight
@@ -32,6 +23,7 @@ all =
         , underlineOnHoverManual
         , greenOnHoverMixin
         , transformsStyle
+        , Properties.all
         ]
 
 
@@ -282,7 +274,7 @@ underlineOnHoverMixin : Test
 underlineOnHoverMixin =
     let
         input =
-            Fixtures.mixinUnderlineOnHoverStyle
+            Fixtures.mixinUnderlineOnHoverStylesheet
 
         output =
             """
@@ -306,7 +298,7 @@ underlineOnHoverManual : Test
 underlineOnHoverManual =
     let
         input =
-            Fixtures.manualUnderlineOnHoverStyle
+            Fixtures.manualUnderlineOnHoverStylesheet
 
         output =
             """
@@ -330,7 +322,7 @@ greenOnHoverMixin : Test
 greenOnHoverMixin =
     let
         input =
-            Fixtures.mixinGreenOnHoverStyle
+            Fixtures.mixinGreenOnHoverStylesheet
 
         output =
             """
@@ -354,7 +346,7 @@ transformsStyle : Test
 transformsStyle =
     let
         input =
-            Fixtures.transformsStyle
+            Fixtures.transformsStylesheet
 
         output =
             """
@@ -376,3 +368,12 @@ transformsStyle =
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
+
+
+prettyPrint style =
+    case compile style of
+        Ok result ->
+            result
+
+        Err message ->
+            "Invalid Stylesheet: " ++ message
