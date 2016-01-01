@@ -3245,7 +3245,7 @@ style.
 -}
 mixin : StylesheetOrMixin namespace {}
 mixin =
-    { transform = \_ _ -> Ok [] }
+    { transform = \_ declarations -> Ok declarations }
 
 
 type StylesheetNamespace name animation class id
