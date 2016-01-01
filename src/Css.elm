@@ -1,4 +1,4 @@
-module Css (stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn) where
+module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn) where
 
 {-| Functions for building stylesheets.
 
@@ -39,6 +39,7 @@ deprecated or discouraged.
 -}
 
 import Css.Declaration as Declaration exposing (Declaration(..), Selector(..), CompoundSelector(..), introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector)
+import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Elements exposing (Tag, tagToString)
 import Css.Util exposing (toCssIdentifier, identifierToString)
 import String
@@ -56,11 +57,17 @@ type alias StylesheetOrMixin namespace base =
     { base | transform : DeclarationTransform namespace }
 
 
-applyTransformation : DeclarationTransform namespace -> StylesheetOrMixin a namespace -> StylesheetOrMixin a namespace
+type alias Mixin namespace =
+    StylesheetOrMixin namespace {}
+
+
 applyTransformation transformation mixinOrStylesheet =
     { mixinOrStylesheet
         | transform =
-            mixinOrStylesheet.transform >> (flip Result.andThen) transformation
+            (\name declarations ->
+                (mixinOrStylesheet.transform name declarations)
+                    |> (flip Result.andThen) (transformation name)
+            )
     }
 
 
@@ -111,7 +118,6 @@ Other notes:
 `key` is the name of the property.
 `functionName` is just for better error messages.
 -}
-getOverloadedProperty : String -> String -> Stylesheet base namespace animation class id -> Property namespace
 getOverloadedProperty functionName key style =
     style
 
@@ -346,7 +352,7 @@ type alias VerticalAlign a namespace =
 
 
 type alias Property namespace =
-    StylesheetOrMixin {} namespace
+    StylesheetOrMixin namespace {}
 
 
 
@@ -369,7 +375,7 @@ important =
         update property =
             { property | important = True }
     in
-        applyTransformation (updateLastProperty "important" update)
+        applyTransformation (\_ -> updateLastProperty "important" update)
 
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
@@ -1565,14 +1571,12 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : TextAlign a namespace -> Property namespace
 textAlignLast fn =
     getOverloadedProperty "textAlignLast" "text-align-last" (fn (pct 0))
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : TextAlign a namespace -> Property namespace
 textAlign fn =
     getOverloadedProperty "textAlign" "text-align" (fn (pct 0))
 
@@ -1691,7 +1695,6 @@ textTransform =
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : VerticalAlign a namespace -> Property namespace
 verticalAlign fn =
     getOverloadedProperty "verticalAlign" "vertical-align" (fn (pct 0))
 
@@ -3221,9 +3224,9 @@ your stylesheet.
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-stylesheet : { a | name : namespace } -> Stylesheet {} namespace animation class id
+stylesheet : { a | name : namespace } -> Stylesheet namespace animation class id
 stylesheet { name } =
-    { name = StylesheetNamespace name, transform = \_ -> Ok [] }
+    { name = StylesheetNamespace name, transform = \_ _ -> Ok [] }
 
 
 {-| A Mixin allowing you to modularly reuse common styles in other styles.
@@ -3259,16 +3262,15 @@ type StylesheetNamespace name animation class id
     = StylesheetNamespace name
 
 
-type alias Stylesheet base namespace animation class id =
-    { base
-        | name : StylesheetNamespace namespace animation class id
-        , transform : DeclarationTransform namespace
+type alias Stylesheet namespace animation class id =
+    { name : StylesheetNamespace namespace animation class id
+    , transform : DeclarationTransform namespace
     }
 
 
 addSelectorToStylesheet : Selector -> StylesheetOrMixin a namespace -> StylesheetOrMixin a namespace
 addSelectorToStylesheet selector =
-    applyTransformation ((introduceSelector selector) >> Ok)
+    applyTransformation (\_ -> (introduceSelector selector) >> Ok)
 
 
 {-| A [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors).
@@ -3278,7 +3280,7 @@ addSelectorToStylesheet selector =
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-($) : Stylesheet base namespace animation class id -> Tag -> Stylesheet base namespace animation class id
+($) : Stylesheet namespace animation class id -> Tag -> Stylesheet namespace animation class id
 ($) sheet tag =
     sheet
         |> addSelectorToStylesheet (TypeSelector (tagToString tag))
@@ -3295,7 +3297,7 @@ addSelectorToStylesheet selector =
         button # Cancel
             ~ backgroundColor (rgb 128 64 32)
 -}
-(#) : Stylesheet base namespace animation class id -> id -> Stylesheet base namespace animation class id
+(#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
 (#) sheet id =
     case sheet.name of
         StylesheetNamespace name ->
@@ -3315,7 +3317,7 @@ addSelectorToStylesheet selector =
             ~ fontWeight normal
             ~ color (rgb 128 64 32)
 -}
-(.) : Stylesheet base namespace animation class id -> class -> Stylesheet base namespace animation class id
+(.) : Stylesheet namespace animation class id -> class -> Stylesheet namespace animation class id
 (.) sheet class =
     case sheet.name of
         StylesheetNamespace name ->
@@ -3339,10 +3341,9 @@ addSelectorToStylesheet selector =
             $ body
                 ~ width (pct 100)
 -}
-(@) : Stylesheet base namespace animation class id -> AtRule -> Stylesheet base namespace animation class id
 (@) sheet rule =
     let
-        addRule declarations =
+        addRule _ declarations =
             Ok (declarations ++ [ ConditionalGroupRule rule [] ])
     in
         applyTransformation addRule sheet
@@ -3363,7 +3364,7 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ~ textDecoration underline
             ~ color (rgb 7 7 7)
 -}
-($=) : Stylesheet base namespace animation class id -> String -> Stylesheet base namespace animation class id
+($=) : Stylesheet namespace animation class id -> String -> Stylesheet namespace animation class id
 ($=) stylesheet selectorStr =
     stylesheet
         |> addSelectorToStylesheet (CustomSelector selectorStr)
@@ -3405,7 +3406,6 @@ You can also use `~` to inject the contents of a [`mixin`](#mixin).
         &: hover
             ~ textDecoration underline
 -}
-(~) : StylesheetOrMixin a namespace -> StylesheetOrMixin b namespace -> StylesheetOrMixin a namespace
 (~) stylesheet mixin =
     applyTransformation mixin.transform stylesheet
 
@@ -3481,7 +3481,7 @@ custom key value =
 
 
 {-| -}
-(>.) : Stylesheet base namespace animation class id -> class -> Stylesheet base namespace animation class id
+(>.) : Stylesheet namespace animation class id -> class -> Stylesheet namespace animation class id
 (>.) sheet class =
     applyTransformation
         (\name -> extendLastSelector ">." (Child (SingleSelector (ClassSelector (identifierToString name class)))))
@@ -3489,7 +3489,7 @@ custom key value =
 
 
 {-| -}
-(>>.) : Stylesheet base namespace animation class id -> class -> Stylesheet base namespace animation class id
+(>>.) : Stylesheet namespace animation class id -> class -> Stylesheet namespace animation class id
 (>>.) sheet class =
     applyTransformation
         (\name -> extendLastSelector ">>." (Descendant (SingleSelector (ClassSelector (identifierToString name class)))))
@@ -3497,7 +3497,7 @@ custom key value =
 
 
 {-| -}
-(+.) : Stylesheet base namespace animation class id -> class -> Stylesheet base namespace animation class id
+(+.) : Stylesheet namespace animation class id -> class -> Stylesheet namespace animation class id
 (+.) sheet class =
     applyTransformation
         (\name -> extendLastSelector "+." (AdjacentSibling (SingleSelector (ClassSelector (identifierToString name class)))))
@@ -3505,7 +3505,7 @@ custom key value =
 
 
 {-| -}
-(~.) : Stylesheet base namespace animation class id -> class -> Stylesheet base namespace animation class id
+(~.) : Stylesheet namespace animation class id -> class -> Stylesheet namespace animation class id
 (~.) sheet class =
     applyTransformation
         (\name -> extendLastSelector "~." (GeneralSibling (SingleSelector (ClassSelector (identifierToString name class)))))
@@ -3513,7 +3513,7 @@ custom key value =
 
 
 {-| -}
-(>#) : Stylesheet base namespace animation class id -> id -> Stylesheet base namespace animation class id
+(>#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
 (>#) sheet id =
     applyTransformation
         (\name -> extendLastSelector ">#" (Child (SingleSelector (IdSelector (identifierToString name id)))))
@@ -3521,7 +3521,7 @@ custom key value =
 
 
 {-| -}
-(>>#) : Stylesheet base namespace animation class id -> id -> Stylesheet base namespace animation class id
+(>>#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
 (>>#) sheet id =
     applyTransformation
         (\name -> extendLastSelector ">>#" (Descendant (SingleSelector (IdSelector (identifierToString name id)))))
@@ -3529,7 +3529,7 @@ custom key value =
 
 
 {-| -}
-(+#) : Stylesheet base namespace animation class id -> id -> Stylesheet base namespace animation class id
+(+#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
 (+#) sheet id =
     applyTransformation
         (\name -> extendLastSelector "+#" (AdjacentSibling (SingleSelector (IdSelector (identifierToString name id)))))
@@ -3537,7 +3537,7 @@ custom key value =
 
 
 {-| -}
-(~#) : Stylesheet base namespace animation class id -> id -> Stylesheet base namespace animation class id
+(~#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
 (~#) sheet id =
     applyTransformation
         (\name -> extendLastSelector "~#" (GeneralSibling (SingleSelector (IdSelector (identifierToString name id)))))
@@ -3979,13 +3979,9 @@ type PseudoClass
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-(|$) : Stylesheet base namespace animation class id -> Tag -> Stylesheet base namespace animation class id
+(|$) : Stylesheet namespace animation class id -> Tag -> Stylesheet namespace animation class id
 (|$) sheet tag =
-    let
-        newSelector =
-            (TypeSelector (tagToString tag))
-    in
-        addSelectorToStylesheet (SingleSelector newSelector) sheet
+    addSelectorToStylesheet (TypeSelector (tagToString tag)) sheet
 
 
 numberToString : number -> String
@@ -3999,3 +3995,11 @@ valuesOrNone list =
         { value = "none" }
     else
         { value = String.join " " (List.map .value list) }
+
+
+compile : Stylesheet namespace animation class id -> Result String String
+compile sheet =
+    case sheet.name of
+        StylesheetNamespace name ->
+            sheet.transform name []
+                |> Result.map prettyPrintDeclarations

@@ -12,13 +12,13 @@ pageBackground = rgb 100 90 128
 pageDefaultText = rgb 40 35 76
 
 
-unstyledDiv : Style String a b c
+unstyledDiv : Stylesheet String a b c
 unstyledDiv =
     stylesheet { name = "" }
         $ div
 
 
-divWidthHeight : Style String a b c
+divWidthHeight : Stylesheet String a b c
 divWidthHeight =
     stylesheet { name = "" }
         $ div
@@ -26,7 +26,7 @@ divWidthHeight =
             ~ height (px 50)
 
 
-multiDescendent : Style String CssAnimations CssClasses CssIds
+multiDescendent : Stylesheet String CssAnimations CssClasses CssIds
 multiDescendent =
     stylesheet { name = "" }
         $ html |$ body
@@ -56,7 +56,7 @@ multiDescendent =
                 ~ height (pct 2)
 
 
-multiSelector : Style String CssAnimations CssClasses CssIds
+multiSelector : Stylesheet String CssAnimations CssClasses CssIds
 multiSelector =
     stylesheet { name = "multiSelector" }
         $ div # Page . Hidden
@@ -72,7 +72,7 @@ multiSelector =
                 ~ width (px 1)
                 ~ height (pct 2)
 
-keyValue : Style String CssAnimations CssClasses CssIds
+keyValue : Stylesheet String CssAnimations CssClasses CssIds
 keyValue =
     stylesheet { name = "multiSelector" }
         $ body
@@ -80,7 +80,7 @@ keyValue =
             ~ ((custom "-moz-font-smoothing" "none") |> important)
 
 
-leftRightTopBottom : Style String CssAnimations CssClasses CssIds
+leftRightTopBottom : Stylesheet String CssAnimations CssClasses CssIds
 leftRightTopBottom =
     stylesheet { name = "left-right-top-bottom" }
         $ div
@@ -98,7 +98,7 @@ leftRightTopBottom =
             ~ verticalAlign top
 
 
-borders : Style String CssAnimations CssClasses CssIds
+borders : Stylesheet String CssAnimations CssClasses CssIds
 borders =
     stylesheet { name = "border-test" }
         $ button
@@ -110,7 +110,7 @@ borders =
             ~ border2 (px 10) solid
 
 
-dreamwriter : Style String CssAnimations CssClasses CssIds
+dreamwriter : Stylesheet String CssAnimations CssClasses CssIds
 dreamwriter =
     stylesheet { name = "dreamwriter" }
         $ html |$ body
@@ -142,7 +142,7 @@ dreamwriter =
             ~ color pageDefaultText
 
 
-underlineOnHover : Style String CssAnimations CssClasses CssIds
+underlineOnHover : Mixin a
 underlineOnHover =
     mixin
         --~ textDecoration none
@@ -153,32 +153,32 @@ underlineOnHover =
             ~ color (rgb 23 24 25)
 
 
-greenOnHover : Style String CssAnimations CssClasses CssIds
+greenOnHover : Mixin a
 greenOnHover =
     mixin
         &: hover
             ~ color (rgb 0 0 122)
 
 
-mixinGreenOnHoverStyle : Style String CssAnimations CssClasses CssIds
-mixinGreenOnHoverStyle =
-    stylesheet { name = "greenOnHoverStylesheet" }
+mixinGreenOnHoverStylesheet : Stylesheet String CssAnimations CssClasses CssIds
+mixinGreenOnHoverStylesheet =
+    stylesheet { name = "greenOnHoverStylesheetsheet" }
         $ button
             ~ color (rgb 11 22 33)
             ~ greenOnHover
 
 
-mixinUnderlineOnHoverStyle : Style String CssAnimations CssClasses CssIds
-mixinUnderlineOnHoverStyle =
-    stylesheet { name = "underlineOnHoverStylesheet" }
+mixinUnderlineOnHoverStylesheet : Stylesheet String CssAnimations CssClasses CssIds
+mixinUnderlineOnHoverStylesheet =
+    stylesheet { name = "underlineOnHoverStylesheetsheet" }
         $ a
             --~ color (rgb 128 64 32)
             ~ underlineOnHover
 
 
-manualUnderlineOnHoverStyle : Style String CssAnimations CssClasses CssIds
-manualUnderlineOnHoverStyle =
-    stylesheet { name = "underlineOnHoverStylesheet" }
+manualUnderlineOnHoverStylesheet : Stylesheet String CssAnimations CssClasses CssIds
+manualUnderlineOnHoverStylesheet =
+    stylesheet { name = "underlineOnHoverStylesheetsheet" }
         $ a
             ~ color (rgb 128 127 126)
 
@@ -186,9 +186,9 @@ manualUnderlineOnHoverStyle =
                 ~ color (rgb 23 24 25)
 
 
-transformsStyle : Style String CssAnimations CssClasses CssIds
-transformsStyle =
-    stylesheet { name = "transformsStyle" }
+transformsStylesheet : Stylesheet String CssAnimations CssClasses CssIds
+transformsStylesheet =
+    stylesheet { name = "transformsStylesheet" }
         $ body
             ~ transforms []
             ~ transforms

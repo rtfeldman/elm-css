@@ -1,8 +1,7 @@
 module Tests (all) where
 
 import ElmTest exposing (..)
-import Css
-import Css.File exposing (compile)
+import Css exposing (compile)
 import FixturesCss as Fixtures
 import Properties
 import String
@@ -275,7 +274,7 @@ underlineOnHoverMixin : Test
 underlineOnHoverMixin =
     let
         input =
-            Fixtures.mixinUnderlineOnHoverStyle
+            Fixtures.mixinUnderlineOnHoverStylesheet
 
         output =
             """
@@ -299,7 +298,7 @@ underlineOnHoverManual : Test
 underlineOnHoverManual =
     let
         input =
-            Fixtures.manualUnderlineOnHoverStyle
+            Fixtures.manualUnderlineOnHoverStylesheet
 
         output =
             """
@@ -323,7 +322,7 @@ greenOnHoverMixin : Test
 greenOnHoverMixin =
     let
         input =
-            Fixtures.mixinGreenOnHoverStyle
+            Fixtures.mixinGreenOnHoverStylesheet
 
         output =
             """
@@ -347,7 +346,7 @@ transformsStyle : Test
 transformsStyle =
     let
         input =
-            Fixtures.transformsStyle
+            Fixtures.transformsStylesheet
 
         output =
             """
@@ -371,7 +370,6 @@ transformsStyle =
             ]
 
 
-prettyPrint : Style a b c d -> String
 prettyPrint style =
     case compile style of
         Ok result ->

@@ -3,7 +3,7 @@ module Properties (all) where
 import ElmTest exposing (..)
 import Css exposing (..)
 import Css.Elements exposing (p)
-import Css.File exposing (compile)
+import Css.Declaration exposing (Declaration)
 
 
 all : Test
@@ -229,14 +229,14 @@ all =
         ]
 
 
-testProperty : String -> List ( Style String a b c, String ) -> Test
+testProperty : String -> List ( StylesheetOrMixin String a, String ) -> Test
 testProperty propertyName modifierPairs =
     suite
         (propertyName ++ " property")
         (List.map (assertPropertyWorks propertyName) modifierPairs)
 
 
-assertPropertyWorks : String -> ( Style String a b c, String ) -> Test
+assertPropertyWorks : String -> ( StylesheetOrMixin String a, String ) -> Test
 assertPropertyWorks propertyName ( input, expectedStr ) =
     test "pretty prints the expected output"
         <| assertEqual
@@ -244,11 +244,18 @@ assertPropertyWorks propertyName ( input, expectedStr ) =
             ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
 
 
-prettyPrint : Style a b c d -> String
-prettyPrint style =
-    case compile style of
+prettyPrint sheet =
+    case compile sheet of
         Ok result ->
             result
 
         Err message ->
             "Invalid Stylesheet: " ++ message
+
+
+type alias DeclarationTransform namespace =
+    namespace -> List Declaration -> Result String (List Declaration)
+
+
+type alias StylesheetOrMixin namespace base =
+    { base | transform : DeclarationTransform namespace }
