@@ -3510,7 +3510,7 @@ custom key value =
 
 
 {-| -}
-(>#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
+(>#) : StylesheetOrMixin a namespace -> id -> StylesheetOrMixin a namespace
 (>#) sheet id =
     applyTransformation
         (\name -> extendLastSelector ">#" (Child (SingleSelector (IdSelector (identifierToString name id)))))
@@ -3518,7 +3518,7 @@ custom key value =
 
 
 {-| -}
-(>>#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
+(>>#) : StylesheetOrMixin a namespace -> id -> StylesheetOrMixin a namespace
 (>>#) sheet id =
     applyTransformation
         (\name -> extendLastSelector ">>#" (Descendant (SingleSelector (IdSelector (identifierToString name id)))))
@@ -3526,7 +3526,7 @@ custom key value =
 
 
 {-| -}
-(+#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
+(+#) : StylesheetOrMixin a namespace -> id -> StylesheetOrMixin a namespace
 (+#) sheet id =
     applyTransformation
         (\name -> extendLastSelector "+#" (AdjacentSibling (SingleSelector (IdSelector (identifierToString name id)))))
@@ -3534,7 +3534,7 @@ custom key value =
 
 
 {-| -}
-(~#) : Stylesheet namespace animation class id -> id -> Stylesheet namespace animation class id
+(~#) : StylesheetOrMixin a namespace -> id -> StylesheetOrMixin a namespace
 (~#) sheet id =
     applyTransformation
         (\name -> extendLastSelector "~#" (GeneralSibling (SingleSelector (IdSelector (identifierToString name id)))))
