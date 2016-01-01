@@ -1,11 +1,11 @@
-module Css.File (toFileStructure, CssFileStructure) where
+module Css.File (compile, toFileStructure, CssFileStructure) where
 
 {-| Functions for writing CSS files from elm-css.
 
 @docs compile, toFileStructure, CssFileStructure
 -}
 
-import Css.Declaration.Output exposing (prettyPrintDeclarations)
+import Css exposing (Stylesheet)
 import Css.Declaration exposing (DeclarationTransform)
 
 
@@ -34,3 +34,8 @@ toFileStructure stylesheets =
                     { success = False, filename = filename, content = msg }
     in
         List.map asTuple stylesheets
+
+
+compile : Stylesheet namespace animation class id -> Result String String
+compile =
+    Css.compile

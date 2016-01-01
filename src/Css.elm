@@ -3274,6 +3274,9 @@ addSelectorToStylesheet selector =
 -}
 ($) : Stylesheet namespace animation class id -> Tag -> Stylesheet namespace animation class id
 ($) sheet tag =
+    -- TODO detect if the user tried to use two $ operators without
+    -- intervening properties (e.g. `$ button $ img`) and return
+    -- InvalidStyle if so; this will for sure emit invalid CSS!
     sheet
         |> addSelectorToStylesheet (TypeSelector (tagToString tag))
 
@@ -3975,7 +3978,15 @@ type PseudoClass
 -}
 (|$) : Stylesheet namespace animation class id -> Tag -> Stylesheet namespace animation class id
 (|$) sheet tag =
-    addSelectorToStylesheet (TypeSelector (tagToString tag)) sheet
+    let
+        addTagSelector _ =
+            tag
+                |> tagToString
+                |> TypeSelector
+                |> SingleSelector
+                |> addSelector "|$"
+    in
+        applyTransformation addTagSelector sheet
 
 
 numberToString : number -> String
