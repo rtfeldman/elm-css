@@ -36,6 +36,8 @@ toFileStructure stylesheets =
         List.map asTuple stylesheets
 
 
+{-| Convenience re-export of Css.compile
+-}
 compile : Stylesheet namespace animation class id -> Result String String
 compile =
     Css.compile
