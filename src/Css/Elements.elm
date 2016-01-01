@@ -8,9 +8,6 @@ module Css.Elements (Tag, tagToString, a, html, body, header, nav, div, span, im
 @docs a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input
 -}
 
-import Css.Declaration as Declaration exposing (..)
-
-
 {- Tags -}
 
 

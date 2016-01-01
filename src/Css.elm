@@ -3,7 +3,7 @@ module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, importan
 {-| Functions for building stylesheets.
 
 # Style
-@docs stylesheet, mixin
+@docs Stylesheet, stylesheet, Mixin, mixin, compile
 
 # Statements
 @docs ($), (#), (.), (@), ($=)
@@ -57,10 +57,13 @@ type alias StylesheetOrMixin namespace base =
     { base | transform : DeclarationTransform namespace }
 
 
+{-| A Mixin.
+-}
 type alias Mixin namespace =
     StylesheetOrMixin namespace {}
 
 
+applyTransformation : DeclarationTransform namespace -> StylesheetOrMixin namespace a -> StylesheetOrMixin namespace a
 applyTransformation transformation mixinOrStylesheet =
     { mixinOrStylesheet
         | transform =
@@ -72,7 +75,7 @@ applyTransformation transformation mixinOrStylesheet =
 
 
 
--- TODO these are just for @media - maybe improve type guarantees?
+-- TODO these are just for @media - maybe Declaratione improve type guarantees?
 
 
 screen : String
@@ -118,34 +121,22 @@ Other notes:
 `key` is the name of the property.
 `functionName` is just for better error messages.
 -}
-getOverloadedProperty functionName key style =
-    style
+getOverloadedProperty : String -> String -> Mixin namespace -> Mixin namespace
+getOverloadedProperty functionName key =
+    let
+        newTransform name declarations =
+            let
+                value =
+                    getLastProperty declarations
+                        |> Maybe.map .key
+                        |> Maybe.withDefault ""
 
-
-
---case style of
---    NamespacedStyle name _ ->
---        InvalidStyle ("`" ++ functionName ++ "` must be given a property or mixin, not a stylesheet with name \"" ++ (toCssIdentifier name) ++ "\"")
---    Mixin applyMixin ->
---        let
---            newStyleFromDeclarations style name declarations =
---                let
---                    value =
---                        getLastProperty declarations
---                            |> Maybe.map .key
---                            |> Maybe.withDefault ""
---                    update subject =
---                        { subject | key = key, value = value }
---                in
---                    case updateLastProperty functionName update declarations of
---                        Ok newDeclarations ->
---                            NamespacedStyle name newDeclarations
---                        Err message ->
---                            InvalidStyle message
---        in
---            Mixin (applyMixin >> (resolveMixin newStyleFromDeclarations))
---    (InvalidStyle _) as invalidStyle ->
---        invalidStyle
+                update subject =
+                    { subject | key = key, value = value }
+            in
+                updateLastProperty functionName update declarations
+    in
+        applyTransformation newTransform
 
 
 type alias Value compatible =
@@ -334,7 +325,7 @@ that it will return the desired String as its key, and use that as our value.
 
 
 type alias TextAlign a namespace =
-    Length a -> Property namespace
+    Length a -> Mixin namespace
 
 
 
@@ -348,11 +339,7 @@ that it will return the desired String as its key, and use that as our value.
 
 
 type alias VerticalAlign a namespace =
-    Length a -> Property namespace
-
-
-type alias Property namespace =
-    StylesheetOrMixin namespace {}
+    Length a -> Mixin namespace
 
 
 
@@ -361,7 +348,7 @@ type alias Property namespace =
 
 {-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
 -}
-all : All compatible -> Property namespace
+all : All compatible -> Mixin namespace
 all =
     prop1 "all"
 
@@ -369,7 +356,7 @@ all =
 {-| Transforms the given property by adding !important to the end of its
 declaration.
 -}
-important : Property namespace -> Property namespace
+important : Mixin namespace -> Mixin namespace
 important =
     let
         update property =
@@ -1261,7 +1248,7 @@ populated list:
 
     ~ transforms [ perspective 1, scale2 1 1.4 ]
 -}
-transforms : List (Transform compatible) -> Property namespace
+transforms : List (Transform compatible) -> Mixin namespace
 transforms =
     prop1 "transform" << valuesOrNone
 
@@ -1273,7 +1260,7 @@ property to `none`, use the `transforms` function with an empty list. See
 
     transform (scaleX 1.4)
 -}
-transform : Transform compatible -> Property namespace
+transform : Transform compatible -> Mixin namespace
 transform only =
     transforms [ only ]
 
@@ -1316,7 +1303,7 @@ viewBox =
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-transformBox : TransformBox compatible -> Property namespace
+transformBox : TransformBox compatible -> Mixin namespace
 transformBox =
     prop1 "transform-box"
 
@@ -1325,7 +1312,7 @@ transformBox =
 
     ~ boxSizing borderBox
 -}
-boxSizing : BoxSizing compatible -> Property namespace
+boxSizing : BoxSizing compatible -> Mixin namespace
 boxSizing =
     prop1 "box-sizing"
 
@@ -1350,7 +1337,7 @@ flat =
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-transformStyle : TransformStyle compatible -> Property namespace
+transformStyle : TransformStyle compatible -> Mixin namespace
 transformStyle =
     prop1 "transform-style"
 
@@ -1523,7 +1510,7 @@ textBottom =
 
 {-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
 -}
-position : Position compatible -> Property namespace
+position : Position compatible -> Mixin namespace
 position =
     prop1 "position"
 
@@ -1532,22 +1519,22 @@ position =
 {- Properties -}
 
 
-prop1 : String -> Value a -> Property namespace
+prop1 : String -> Value a -> Mixin namespace
 prop1 key arg =
     custom key arg.value
 
 
-prop2 : String -> Value a -> Value b -> Property namespace
+prop2 : String -> Value a -> Value b -> Mixin namespace
 prop2 key argA argB =
     custom key (String.join " " [ argA.value, argB.value ])
 
 
-prop3 : String -> Value a -> Value b -> Value c -> Property namespace
+prop3 : String -> Value a -> Value b -> Value c -> Mixin namespace
 prop3 key argA argB argC =
     custom key (String.join " " [ argA.value, argB.value, argC.value ])
 
 
-prop4 : String -> Value a -> Value b -> Value c -> Value d -> Property namespace
+prop4 : String -> Value a -> Value b -> Value c -> Value d -> Mixin namespace
 prop4 key argA argB argC argD =
     custom key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
 
@@ -1556,7 +1543,7 @@ prop4 key argA argB argC argD =
 
     textDecorationColor (rgb 12 11 10)
 -}
-textDecorationColor : Color compatible -> Property namespace
+textDecorationColor : Color compatible -> Mixin namespace
 textDecorationColor =
     prop1 "text-decoration-color"
 
@@ -1571,19 +1558,21 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
+textAlignLast : (ExplicitLength -> Mixin a) -> Mixin a
 textAlignLast fn =
     getOverloadedProperty "textAlignLast" "text-align-last" (fn (pct 0))
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
+textAlign : (ExplicitLength -> Mixin a) -> Mixin a
 textAlign fn =
     getOverloadedProperty "textAlign" "text-align" (fn (pct 0))
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
 -}
-textRendering : TextRendering a -> Property namespace
+textRendering : TextRendering a -> Mixin namespace
 textRendering =
     prop1 "text-rendering"
 
@@ -1596,7 +1585,7 @@ To set `text-overflow` to an arbitrary String, use [`custom`](#custom) like so:
 
     ~ custom "text-overflow" "my custom text-overflow value"
 -}
-textOverflow : TextOverflow compatible -> Property namespace
+textOverflow : TextOverflow compatible -> Mixin namespace
 textOverflow =
     prop1 "text-overflow"
 
@@ -1609,7 +1598,7 @@ textOverflow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow : None compatible -> Property namespace
+textShadow : None compatible -> Mixin namespace
 textShadow =
     prop1 "text-shadow"
 
@@ -1622,7 +1611,7 @@ textShadow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length compatible -> Length compatible -> Property namespace
+textShadow2 : Length compatible -> Length compatible -> Mixin namespace
 textShadow2 =
     prop2 "text-shadow"
 
@@ -1635,7 +1624,7 @@ textShadow2 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatible -> Length compatible -> Color compatible -> Property namespace
+textShadow3 : Length compatible -> Length compatible -> Color compatible -> Mixin namespace
 textShadow3 =
     prop3 "text-shadow"
 
@@ -1648,7 +1637,7 @@ textShadow3 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatible -> Length compatible -> Length compatible -> Color compatible -> Property namespace
+textShadow4 : Length compatible -> Length compatible -> Length compatible -> Color compatible -> Mixin namespace
 textShadow4 =
     prop4 "text-shadow"
 
@@ -1659,7 +1648,7 @@ textShadow4 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent : Length compatible -> Property namespace
+textIndent : Length compatible -> Mixin namespace
 textIndent =
     prop1 "text-indent"
 
@@ -1670,7 +1659,7 @@ textIndent =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent2 : Length compatibleA -> TextIndent compatibleB -> Property namespace
+textIndent2 : Length compatibleA -> TextIndent compatibleB -> Mixin namespace
 textIndent2 =
     prop2 "text-indent"
 
@@ -1681,32 +1670,33 @@ textIndent2 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent3 : Length compatibleA -> TextIndent compatibleB -> TextIndent compatibleC -> Property namespace
+textIndent3 : Length compatibleA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin namespace
 textIndent3 =
     prop3 "text-indent"
 
 
 {-| Sets [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 -}
-textTransform : TextTransform compatible -> Property namespace
+textTransform : TextTransform compatible -> Mixin namespace
 textTransform =
     prop1 "text-transform"
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
+verticalAlign : (ExplicitLength -> Mixin a) -> Mixin a
 verticalAlign fn =
     getOverloadedProperty "verticalAlign" "vertical-align" (fn (pct 0))
 
 
 {-| -}
-display : Display compatible -> Property namespace
+display : Display compatible -> Mixin namespace
 display =
     prop1 "display"
 
 
 {-| -}
-opacity : number -> Property namespace
+opacity : number -> Mixin namespace
 opacity num =
     prop1 "opacity" { value = numberToString num }
 
@@ -1716,7 +1706,7 @@ opacity num =
     ~ width (px 960)
 
 -}
-width : LengthOrAuto compatible -> Property namespace
+width : LengthOrAuto compatible -> Mixin namespace
 width =
     prop1 "width"
 
@@ -1726,7 +1716,7 @@ width =
     ~ maxWidth (px 960)
 
 -}
-maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Property namespace
+maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Mixin namespace
 maxWidth =
     prop1 "max-width"
 
@@ -1736,7 +1726,7 @@ maxWidth =
     ~ minWidth (px 100)
 
 -}
-minWidth : LengthOrMinMaxDimension compatible -> Property namespace
+minWidth : LengthOrMinMaxDimension compatible -> Mixin namespace
 minWidth =
     prop1 "min-width"
 
@@ -1746,7 +1736,7 @@ minWidth =
     ~ height (px 800)
 
 -}
-height : LengthOrAuto compatible -> Property namespace
+height : LengthOrAuto compatible -> Mixin namespace
 height =
     prop1 "height"
 
@@ -1756,7 +1746,7 @@ height =
     ~ minHeight (px 100)
 
 -}
-minHeight : LengthOrMinMaxDimension compatible -> Property namespace
+minHeight : LengthOrMinMaxDimension compatible -> Mixin namespace
 minHeight =
     prop1 "min-height"
 
@@ -1766,7 +1756,7 @@ minHeight =
     ~ maxHeight (px 1024)
 
 -}
-maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Property namespace
+maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Mixin namespace
 maxHeight =
     prop1 "max-height"
 
@@ -1782,7 +1772,7 @@ maxHeight =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length compatible -> Property namespace
+padding : Length compatible -> Mixin namespace
 padding =
     prop1 "padding"
 
@@ -1794,7 +1784,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length compatible -> Length compatible -> Property namespace
+padding2 : Length compatible -> Length compatible -> Mixin namespace
 padding2 =
     prop2 "padding"
 
@@ -1806,7 +1796,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length compatible -> Length compatible -> Length compatible -> Property namespace
+padding3 : Length compatible -> Length compatible -> Length compatible -> Mixin namespace
 padding3 =
     prop3 "padding"
 
@@ -1818,7 +1808,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length compatible -> Length compatible -> Length compatible -> Length compatible -> Property namespace
+padding4 : Length compatible -> Length compatible -> Length compatible -> Length compatible -> Mixin namespace
 padding4 =
     prop4 "padding"
 
@@ -1827,7 +1817,7 @@ padding4 =
 
     paddingBlockStart (px 10)
 -}
-paddingBlockStart : LengthOrAuto compatible -> Property namespace
+paddingBlockStart : LengthOrAuto compatible -> Mixin namespace
 paddingBlockStart =
     prop1 "padding-block-start"
 
@@ -1836,7 +1826,7 @@ paddingBlockStart =
 
     paddingBlockEnd (px 10)
 -}
-paddingBlockEnd : LengthOrAuto compatible -> Property namespace
+paddingBlockEnd : LengthOrAuto compatible -> Mixin namespace
 paddingBlockEnd =
     prop1 "padding-block-end"
 
@@ -1845,7 +1835,7 @@ paddingBlockEnd =
 
     paddingInlineStart (px 10)
 -}
-paddingInlineStart : LengthOrAuto compatible -> Property namespace
+paddingInlineStart : LengthOrAuto compatible -> Mixin namespace
 paddingInlineStart =
     prop1 "padding-inline-start"
 
@@ -1854,7 +1844,7 @@ paddingInlineStart =
 
     paddingInlineEnd (px 10)
 -}
-paddingInlineEnd : LengthOrAuto compatible -> Property namespace
+paddingInlineEnd : LengthOrAuto compatible -> Mixin namespace
 paddingInlineEnd =
     prop1 "padding-inline-end"
 
@@ -1863,7 +1853,7 @@ paddingInlineEnd =
 
     paddingTop (px 10)
 -}
-paddingTop : Length compatible -> Property namespace
+paddingTop : Length compatible -> Mixin namespace
 paddingTop =
     prop1 "padding-top"
 
@@ -1872,7 +1862,7 @@ paddingTop =
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length compatible -> Property namespace
+paddingBottom : Length compatible -> Mixin namespace
 paddingBottom =
     prop1 "padding-bottom"
 
@@ -1881,7 +1871,7 @@ paddingBottom =
 
     paddingRight (px 10)
 -}
-paddingRight : Length compatible -> Property namespace
+paddingRight : Length compatible -> Mixin namespace
 paddingRight =
     prop1 "padding-right"
 
@@ -1890,7 +1880,7 @@ paddingRight =
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length compatible -> Property namespace
+paddingLeft : Length compatible -> Mixin namespace
 paddingLeft =
     prop1 "padding-left"
 
@@ -1906,7 +1896,7 @@ paddingLeft =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin : LengthOrAuto compatible -> Property namespace
+margin : LengthOrAuto compatible -> Mixin namespace
 margin =
     prop1 "margin"
 
@@ -1918,7 +1908,7 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : LengthOrAuto compatible -> LengthOrAuto compatible -> Property namespace
+margin2 : LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin namespace
 margin2 =
     prop2 "margin"
 
@@ -1930,7 +1920,7 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Property namespace
+margin3 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin namespace
 margin3 =
     prop3 "margin"
 
@@ -1942,7 +1932,7 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Property namespace
+margin4 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin namespace
 margin4 =
     prop4 "margin"
 
@@ -1951,7 +1941,7 @@ margin4 =
 
     marginTop (px 10)
 -}
-marginTop : LengthOrAuto compatible -> Property namespace
+marginTop : LengthOrAuto compatible -> Mixin namespace
 marginTop =
     prop1 "margin-top"
 
@@ -1960,7 +1950,7 @@ marginTop =
 
     marginBottom (px 10)
 -}
-marginBottom : LengthOrAuto compatible -> Property namespace
+marginBottom : LengthOrAuto compatible -> Mixin namespace
 marginBottom =
     prop1 "margin-bottom"
 
@@ -1969,7 +1959,7 @@ marginBottom =
 
     marginRight (px 10)
 -}
-marginRight : LengthOrAuto compatible -> Property namespace
+marginRight : LengthOrAuto compatible -> Mixin namespace
 marginRight =
     prop1 "margin-right"
 
@@ -1978,7 +1968,7 @@ marginRight =
 
     marginLeft (px 10)
 -}
-marginLeft : LengthOrAuto compatible -> Property namespace
+marginLeft : LengthOrAuto compatible -> Mixin namespace
 marginLeft =
     prop1 "margin-left"
 
@@ -1987,7 +1977,7 @@ marginLeft =
 
     marginBlockStart (px 10)
 -}
-marginBlockStart : LengthOrAuto compatible -> Property namespace
+marginBlockStart : LengthOrAuto compatible -> Mixin namespace
 marginBlockStart =
     prop1 "margin-block-start"
 
@@ -1996,7 +1986,7 @@ marginBlockStart =
 
     marginBlockEnd (px 10)
 -}
-marginBlockEnd : LengthOrAuto compatible -> Property namespace
+marginBlockEnd : LengthOrAuto compatible -> Mixin namespace
 marginBlockEnd =
     prop1 "margin-block-end"
 
@@ -2005,7 +1995,7 @@ marginBlockEnd =
 
     marginInlineStart (px 10)
 -}
-marginInlineStart : LengthOrAuto compatible -> Property namespace
+marginInlineStart : LengthOrAuto compatible -> Mixin namespace
 marginInlineStart =
     prop1 "margin-inline-start"
 
@@ -2014,7 +2004,7 @@ marginInlineStart =
 
     marginInlineEnd (px 10)
 -}
-marginInlineEnd : LengthOrAuto compatible -> Property namespace
+marginInlineEnd : LengthOrAuto compatible -> Mixin namespace
 marginInlineEnd =
     prop1 "margin-inline-end"
 
@@ -2028,7 +2018,7 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
 
     ~ verticalAlign top
 -}
-top : LengthOrAuto compatible -> Property namespace
+top : LengthOrAuto compatible -> Mixin namespace
 top =
     prop1 "top"
 
@@ -2042,7 +2032,7 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
 
     ~ verticalAlign bottom
 -}
-bottom : LengthOrAuto compatible -> Property namespace
+bottom : LengthOrAuto compatible -> Mixin namespace
 bottom =
     prop1 "bottom"
 
@@ -2056,7 +2046,7 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
     ~ textAlign left
 -}
-left : LengthOrAuto compatible -> Property namespace
+left : LengthOrAuto compatible -> Mixin namespace
 left =
     prop1 "left"
 
@@ -2070,7 +2060,7 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
     ~ textAlign right
 -}
-right : LengthOrAuto compatible -> Property namespace
+right : LengthOrAuto compatible -> Mixin namespace
 right =
     prop1 "right"
 
@@ -2196,7 +2186,7 @@ absolute =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length compatible -> Property namespace
+border : Length compatible -> Mixin namespace
 border =
     prop1 "border"
 
@@ -2208,7 +2198,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+border2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 border2 =
     prop2 "border"
 
@@ -2219,7 +2209,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+border3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 border3 =
     prop3 "border"
 
@@ -2231,7 +2221,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length compatible -> Property namespace
+borderTop : Length compatible -> Mixin namespace
 borderTop =
     prop1 "border-top"
 
@@ -2243,7 +2233,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderTop2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderTop2 =
     prop2 "border-top"
 
@@ -2255,7 +2245,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderTop3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderTop3 =
     prop3 "border-top"
 
@@ -2267,7 +2257,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length compatible -> Property namespace
+borderBottom : Length compatible -> Mixin namespace
 borderBottom =
     prop1 "border-bottom"
 
@@ -2279,7 +2269,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderBottom2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderBottom2 =
     prop2 "border-bottom"
 
@@ -2291,7 +2281,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderBottom3 =
     prop3 "border-bottom"
 
@@ -2303,7 +2293,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length compatible -> Property namespace
+borderLeft : Length compatible -> Mixin namespace
 borderLeft =
     prop1 "border-left"
 
@@ -2315,7 +2305,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderLeft2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderLeft2 =
     prop2 "border-left"
 
@@ -2327,7 +2317,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderLeft3 =
     prop3 "border-left"
 
@@ -2339,7 +2329,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length compatible -> Property namespace
+borderRight : Length compatible -> Mixin namespace
 borderRight =
     prop1 "border-right"
 
@@ -2351,7 +2341,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderRight2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderRight2 =
     prop2 "border-right"
 
@@ -2363,7 +2353,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderRight3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderRight3 =
     prop3 "border-right"
 
@@ -2375,7 +2365,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length compatible -> Property namespace
+borderBlockStart : Length compatible -> Mixin namespace
 borderBlockStart =
     prop1 "border-block-start"
 
@@ -2387,7 +2377,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderBlockStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderBlockStart2 =
     prop2 "border-block-start"
 
@@ -2399,7 +2389,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderBlockStart3 =
     prop3 "border-block-start"
 
@@ -2411,7 +2401,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length compatible -> Property namespace
+borderBlockEnd : Length compatible -> Mixin namespace
 borderBlockEnd =
     prop1 "border-block-end"
 
@@ -2423,7 +2413,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderBlockEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderBlockEnd2 =
     prop2 "border-block-end"
 
@@ -2435,7 +2425,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderBlockEnd3 =
     prop3 "border-block-end"
 
@@ -2447,7 +2437,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length compatible -> Property namespace
+borderInlineStart : Length compatible -> Mixin namespace
 borderInlineStart =
     prop1 "border-block-start"
 
@@ -2459,7 +2449,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderInlineStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderInlineStart2 =
     prop2 "border-block-start"
 
@@ -2471,7 +2461,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderInlineStart3 =
     prop3 "border-block-start"
 
@@ -2483,7 +2473,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length compatible -> Property namespace
+borderInlineEnd : Length compatible -> Mixin namespace
 borderInlineEnd =
     prop1 "border-block-end"
 
@@ -2495,7 +2485,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length compatibleA -> BorderStyle compatibleB -> Property namespace
+borderInlineEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin namespace
 borderInlineEnd2 =
     prop2 "border-block-end"
 
@@ -2507,7 +2497,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Property namespace
+borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin namespace
 borderInlineEnd3 =
     prop3 "border-block-end"
 
@@ -2520,7 +2510,7 @@ borderInlineEnd3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset : LengthOrNumber compatible -> Property namespace
+borderImageOutset : LengthOrNumber compatible -> Mixin namespace
 borderImageOutset =
     prop1 "border-image-outset"
 
@@ -2533,7 +2523,7 @@ borderImageOutset =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Property namespace
+borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin namespace
 borderImageOutset2 =
     prop2 "border-image-outset"
 
@@ -2546,7 +2536,7 @@ borderImageOutset2 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Property namespace
+borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin namespace
 borderImageOutset3 =
     prop3 "border-image-outset"
 
@@ -2559,7 +2549,7 @@ borderImageOutset3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Property namespace
+borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin namespace
 borderImageOutset4 =
     prop4 "border-image-outset"
 
@@ -2572,7 +2562,7 @@ borderImageOutset4 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth : LengthOrNumber compatible -> Property namespace
+borderImageWidth : LengthOrNumber compatible -> Mixin namespace
 borderImageWidth =
     prop1 "border-image-width"
 
@@ -2585,7 +2575,7 @@ borderImageWidth =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Property namespace
+borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin namespace
 borderImageWidth2 =
     prop2 "border-image-width"
 
@@ -2598,7 +2588,7 @@ borderImageWidth2 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Property namespace
+borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin namespace
 borderImageWidth3 =
     prop3 "border-image-width"
 
@@ -2611,7 +2601,7 @@ borderImageWidth3 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Property namespace
+borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin namespace
 borderImageWidth4 =
     prop4 "border-image-width"
 
@@ -2620,7 +2610,7 @@ borderImageWidth4 =
 
     borderBlockStartColor (rgb 101 202 0)
 -}
-borderBlockStartColor : Color compatible -> Property namespace
+borderBlockStartColor : Color compatible -> Mixin namespace
 borderBlockStartColor =
     prop1 "border-block-start-color"
 
@@ -2629,7 +2619,7 @@ borderBlockStartColor =
 
     borderBottomColor (rgb 101 202 0)
 -}
-borderBottomColor : Color compatible -> Property namespace
+borderBottomColor : Color compatible -> Mixin namespace
 borderBottomColor =
     prop1 "border-bottom-color"
 
@@ -2638,7 +2628,7 @@ borderBottomColor =
 
     borderInlineStartColor (rgb 101 202 0)
 -}
-borderInlineStartColor : Color compatible -> Property namespace
+borderInlineStartColor : Color compatible -> Mixin namespace
 borderInlineStartColor =
     prop1 "border-inline-start-color"
 
@@ -2647,7 +2637,7 @@ borderInlineStartColor =
 
     borderInlineEndColor (rgb 101 202 0)
 -}
-borderInlineEndColor : Color compatible -> Property namespace
+borderInlineEndColor : Color compatible -> Mixin namespace
 borderInlineEndColor =
     prop1 "border-inline-end-color"
 
@@ -2656,7 +2646,7 @@ borderInlineEndColor =
 
     borderLeftColor (rgb 101 202 0)
 -}
-borderLeftColor : Color compatible -> Property namespace
+borderLeftColor : Color compatible -> Mixin namespace
 borderLeftColor =
     prop1 "border-left-color"
 
@@ -2665,7 +2655,7 @@ borderLeftColor =
 
     borderRightColor (rgb 101 202 0)
 -}
-borderRightColor : Color compatible -> Property namespace
+borderRightColor : Color compatible -> Mixin namespace
 borderRightColor =
     prop1 "border-right-color"
 
@@ -2674,7 +2664,7 @@ borderRightColor =
 
     borderTopColor (rgb 101 202 0)
 -}
-borderTopColor : Color compatible -> Property namespace
+borderTopColor : Color compatible -> Mixin namespace
 borderTopColor =
     prop1 "border-top-color"
 
@@ -2683,7 +2673,7 @@ borderTopColor =
 
     borderBlockEndColor (rgb 101 202 0)
 -}
-borderBlockEndColor : Color compatible -> Property namespace
+borderBlockEndColor : Color compatible -> Mixin namespace
 borderBlockEndColor =
     prop1 "border-block-end-color"
 
@@ -2692,7 +2682,7 @@ borderBlockEndColor =
 
     borderBlockEndStyle dashed
 -}
-borderBlockEndStyle : BorderStyle compatible -> Property namespace
+borderBlockEndStyle : BorderStyle compatible -> Mixin namespace
 borderBlockEndStyle =
     prop1 "border-block-end-style"
 
@@ -2701,7 +2691,7 @@ borderBlockEndStyle =
 
     borderBlockStartStyle dashed
 -}
-borderBlockStartStyle : BorderStyle compatible -> Property namespace
+borderBlockStartStyle : BorderStyle compatible -> Mixin namespace
 borderBlockStartStyle =
     prop1 "border-block-start-style"
 
@@ -2710,7 +2700,7 @@ borderBlockStartStyle =
 
     borderInlineEndStyle dashed
 -}
-borderInlineEndStyle : BorderStyle compatible -> Property namespace
+borderInlineEndStyle : BorderStyle compatible -> Mixin namespace
 borderInlineEndStyle =
     prop1 "border-inline-end-style"
 
@@ -2719,7 +2709,7 @@ borderInlineEndStyle =
 
     borderBottomStyle dashed
 -}
-borderBottomStyle : BorderStyle compatible -> Property namespace
+borderBottomStyle : BorderStyle compatible -> Mixin namespace
 borderBottomStyle =
     prop1 "border-bottom-style"
 
@@ -2728,7 +2718,7 @@ borderBottomStyle =
 
     borderInlineStartStyle dashed
 -}
-borderInlineStartStyle : BorderStyle compatible -> Property namespace
+borderInlineStartStyle : BorderStyle compatible -> Mixin namespace
 borderInlineStartStyle =
     prop1 "border-inline-start-style"
 
@@ -2737,7 +2727,7 @@ borderInlineStartStyle =
 
     borderLeftStyle dashed
 -}
-borderLeftStyle : BorderStyle compatible -> Property namespace
+borderLeftStyle : BorderStyle compatible -> Mixin namespace
 borderLeftStyle =
     prop1 "border-left-style"
 
@@ -2746,7 +2736,7 @@ borderLeftStyle =
 
     borderRightStyle dashed
 -}
-borderRightStyle : BorderStyle compatible -> Property namespace
+borderRightStyle : BorderStyle compatible -> Mixin namespace
 borderRightStyle =
     prop1 "border-right-style"
 
@@ -2755,7 +2745,7 @@ borderRightStyle =
 
     borderTopStyle dashed
 -}
-borderTopStyle : BorderStyle compatible -> Property namespace
+borderTopStyle : BorderStyle compatible -> Mixin namespace
 borderTopStyle =
     prop1 "border-top-style"
 
@@ -2764,7 +2754,7 @@ borderTopStyle =
 
     borderStyle dashed
 -}
-borderStyle : BorderStyle compatible -> Property namespace
+borderStyle : BorderStyle compatible -> Mixin namespace
 borderStyle =
     prop1 "border-style"
 
@@ -2773,7 +2763,7 @@ borderStyle =
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length compatible -> Property namespace
+borderBottomWidth : Length compatible -> Mixin namespace
 borderBottomWidth =
     prop1 "border-bottom-width"
 
@@ -2782,7 +2772,7 @@ borderBottomWidth =
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length compatible -> Property namespace
+borderInlineEndWidth : Length compatible -> Mixin namespace
 borderInlineEndWidth =
     prop1 "border-inline-end-width"
 
@@ -2791,7 +2781,7 @@ borderInlineEndWidth =
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length compatible -> Property namespace
+borderLeftWidth : Length compatible -> Mixin namespace
 borderLeftWidth =
     prop1 "border-left-width"
 
@@ -2800,7 +2790,7 @@ borderLeftWidth =
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length compatible -> Property namespace
+borderRightWidth : Length compatible -> Mixin namespace
 borderRightWidth =
     prop1 "border-right-width"
 
@@ -2810,7 +2800,7 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length compatible -> Property namespace
+borderTopWidth : Length compatible -> Mixin namespace
 borderTopWidth =
     prop1 "border-top-width"
 
@@ -2820,7 +2810,7 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length compatibleA -> Length compatibleB -> Property namespace
+borderTopWidth2 : Length compatibleA -> Length compatibleB -> Mixin namespace
 borderTopWidth2 =
     prop2 "border-top-width"
 
@@ -2830,7 +2820,7 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length compatible -> Property namespace
+borderBottomLeftRadius : Length compatible -> Mixin namespace
 borderBottomLeftRadius =
     prop1 "border-bottom-left-radius"
 
@@ -2840,7 +2830,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length compatibleA -> Length compatibleB -> Property namespace
+borderBottomLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin namespace
 borderBottomLeftRadius2 =
     prop2 "border-bottom-left-radius"
 
@@ -2850,7 +2840,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length compatible -> Property namespace
+borderBottomRightRadius : Length compatible -> Mixin namespace
 borderBottomRightRadius =
     prop1 "border-bottom-right-radius"
 
@@ -2860,7 +2850,7 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length compatibleA -> Length compatibleB -> Property namespace
+borderBottomRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin namespace
 borderBottomRightRadius2 =
     prop2 "border-bottom-right-radius"
 
@@ -2870,7 +2860,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length compatible -> Property namespace
+borderTopLeftRadius : Length compatible -> Mixin namespace
 borderTopLeftRadius =
     prop1 "border-top-left-radius"
 
@@ -2880,7 +2870,7 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length compatibleA -> Length compatibleB -> Property namespace
+borderTopLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin namespace
 borderTopLeftRadius2 =
     prop2 "border-top-left-radius"
 
@@ -2890,7 +2880,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length compatible -> Property namespace
+borderTopRightRadius : Length compatible -> Mixin namespace
 borderTopRightRadius =
     prop1 "border-top-right-radius"
 
@@ -2900,7 +2890,7 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length compatibleA -> Length compatibleB -> Property namespace
+borderTopRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin namespace
 borderTopRightRadius2 =
     prop2 "border-top-right-radius"
 
@@ -2912,7 +2902,7 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length compatible -> Property namespace
+borderRadius : Length compatible -> Mixin namespace
 borderRadius =
     prop1 "border-radius"
 
@@ -2924,7 +2914,7 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length compatibleA -> Length compatibleB -> Property namespace
+borderRadius2 : Length compatibleA -> Length compatibleB -> Mixin namespace
 borderRadius2 =
     prop2 "border-radius"
 
@@ -2936,7 +2926,7 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length compatibleA -> Length compatibleB -> Length compatibleC -> Property namespace
+borderRadius3 : Length compatibleA -> Length compatibleB -> Length compatibleC -> Mixin namespace
 borderRadius3 =
     prop3 "border-radius"
 
@@ -2948,7 +2938,7 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length compatibleB -> Length compatibleB -> Length compatibleC -> Length compatibleD -> Property namespace
+borderRadius4 : Length compatibleB -> Length compatibleB -> Length compatibleC -> Length compatibleD -> Mixin namespace
 borderRadius4 =
     prop4 "border-radius"
 
@@ -2958,7 +2948,7 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length compatible -> Property namespace
+borderSpacing : Length compatible -> Mixin namespace
 borderSpacing =
     prop1 "border-spacing"
 
@@ -2968,7 +2958,7 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length compatibleA -> Length compatibleB -> Property namespace
+borderSpacing2 : Length compatibleA -> Length compatibleB -> Mixin namespace
 borderSpacing2 =
     prop2 "border-spacing"
 
@@ -2980,7 +2970,7 @@ borderSpacing2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor : Color compatible -> Property namespace
+borderColor : Color compatible -> Mixin namespace
 borderColor =
     prop1 "border-color"
 
@@ -2992,7 +2982,7 @@ borderColor =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor2 : Color compatibleA -> Color compatibleB -> Property namespace
+borderColor2 : Color compatibleA -> Color compatibleB -> Mixin namespace
 borderColor2 =
     prop2 "border-color"
 
@@ -3004,7 +2994,7 @@ borderColor2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor3 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Property namespace
+borderColor3 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Mixin namespace
 borderColor3 =
     prop3 "border-color"
 
@@ -3016,43 +3006,43 @@ borderColor3 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor4 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Color compatibleD -> Property namespace
+borderColor4 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Color compatibleD -> Mixin namespace
 borderColor4 =
     prop4 "border-color"
 
 
 {-| -}
-overflow : Overflow compatible -> Property namespace
+overflow : Overflow compatible -> Mixin namespace
 overflow =
     prop1 "overflow"
 
 
 {-| -}
-overflowX : Overflow compatible -> Property namespace
+overflowX : Overflow compatible -> Mixin namespace
 overflowX =
     prop1 "overflow-x"
 
 
 {-| -}
-overflowY : Overflow compatible -> Property namespace
+overflowY : Overflow compatible -> Mixin namespace
 overflowY =
     prop1 "overflow-y"
 
 
 {-| -}
-whiteSpace : WhiteSpace compatible -> Property namespace
+whiteSpace : WhiteSpace compatible -> Mixin namespace
 whiteSpace =
     prop1 "white-space"
 
 
 {-| -}
-backgroundColor : Color compatible -> Property namespace
+backgroundColor : Color compatible -> Mixin namespace
 backgroundColor =
     prop1 "background-color"
 
 
 {-| -}
-color : Color compatible -> Property namespace
+color : Color compatible -> Mixin namespace
 color =
     prop1 "color"
 
@@ -3075,7 +3065,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration : TextDecorationLine a -> Property namespace
+textDecoration : TextDecorationLine a -> Mixin namespace
 textDecoration =
     prop1 "text-decoration"
 
@@ -3092,7 +3082,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Property namespace
+textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Mixin namespace
 textDecoration2 =
     prop2 "text-decoration"
 
@@ -3109,7 +3099,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Color compatibleC -> Property namespace
+textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Color compatibleC -> Mixin namespace
 textDecoration3 =
     prop3 "text-decoration"
 
@@ -3120,7 +3110,7 @@ textDecoration3 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations : List (TextDecorationLine compatible) -> Property namespace
+textDecorations : List (TextDecorationLine compatible) -> Mixin namespace
 textDecorations =
     prop1 "text-decoration" << valuesOrNone
 
@@ -3131,7 +3121,7 @@ textDecorations =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Property namespace
+textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Mixin namespace
 textDecorations2 =
     prop2 "text-decoration" << valuesOrNone
 
@@ -3142,7 +3132,7 @@ textDecorations2 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Color compatibleC -> Property namespace
+textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Color compatibleC -> Mixin namespace
 textDecorations3 =
     prop3 "text-decoration" << valuesOrNone
 
@@ -3155,7 +3145,7 @@ You can specify multiple line decorations with `textDecorationLines`.
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLine : TextDecorationLine compatible -> Property namespace
+textDecorationLine : TextDecorationLine compatible -> Mixin namespace
 textDecorationLine =
     prop1 "text-decoration-line"
 
@@ -3164,7 +3154,7 @@ textDecorationLine =
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLines : List (TextDecorationLine compatible) -> Property namespace
+textDecorationLines : List (TextDecorationLine compatible) -> Mixin namespace
 textDecorationLines =
     prop1 "text-decoration-line" << valuesOrNone
 
@@ -3173,7 +3163,7 @@ textDecorationLines =
 
     ~ textDecorationStyle dotted
 -}
-textDecorationStyle : TextDecorationStyle compatible -> Property namespace
+textDecorationStyle : TextDecorationStyle compatible -> Mixin namespace
 textDecorationStyle =
     prop1 "text-decoration-style"
 
@@ -3188,7 +3178,7 @@ names, or to set `animation-name: none;`
     ~ animationNames [ Foo, Bar ]
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationName : animation -> Property namespace
+animationName : animation -> Mixin namespace
 animationName identifier =
     animationNames [ identifier ]
 
@@ -3201,7 +3191,7 @@ Pass `[]` to set `animation-name: none;`
 
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationNames : List animation -> Property namespace
+animationNames : List animation -> Mixin namespace
 animationNames identifiers =
     let
         customTransform name =
@@ -3262,6 +3252,8 @@ type StylesheetNamespace name animation class id
     = StylesheetNamespace name
 
 
+{-| A Stylesheet.
+-}
 type alias Stylesheet namespace animation class id =
     { name : StylesheetNamespace namespace animation class id
     , transform : DeclarationTransform namespace
@@ -3341,6 +3333,7 @@ addSelectorToStylesheet selector =
             $ body
                 ~ width (pct 100)
 -}
+(@) : Stylesheet namespace animation class id -> AtRule -> Stylesheet namespace animation class id
 (@) sheet rule =
     let
         addRule _ declarations =
@@ -3406,6 +3399,7 @@ You can also use `~` to inject the contents of a [`mixin`](#mixin).
         &: hover
             ~ textDecoration underline
 -}
+(~) : StylesheetOrMixin namespace base -> Mixin namespace -> StylesheetOrMixin namespace base
 (~) stylesheet mixin =
     applyTransformation mixin.transform stylesheet
 
@@ -3436,7 +3430,7 @@ lastSelectorToMulti selector otherSelectors =
         -webkit-font-smoothing: none;
     }
 -}
-custom : String -> String -> Property namespace
+custom : String -> String -> Mixin namespace
 custom key value =
     { transform =
         \_ -> addProperty "~" { key = key, value = value, important = False }
@@ -3997,6 +3991,9 @@ valuesOrNone list =
         { value = String.join " " (List.map .value list) }
 
 
+{-| Compile the given stylesheet to a CSS string, or to an error
+message if it could not be compiled.
+-}
 compile : Stylesheet namespace animation class id -> Result String String
 compile sheet =
     case sheet.name of

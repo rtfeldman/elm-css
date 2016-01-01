@@ -229,14 +229,14 @@ all =
         ]
 
 
-testProperty : String -> List ( StylesheetOrMixin String a, String ) -> Test
+testProperty : String -> List ( Mixin String, String ) -> Test
 testProperty propertyName modifierPairs =
     suite
         (propertyName ++ " property")
         (List.map (assertPropertyWorks propertyName) modifierPairs)
 
 
-assertPropertyWorks : String -> ( StylesheetOrMixin String a, String ) -> Test
+assertPropertyWorks : String -> ( Mixin String, String ) -> Test
 assertPropertyWorks propertyName ( input, expectedStr ) =
     test "pretty prints the expected output"
         <| assertEqual
