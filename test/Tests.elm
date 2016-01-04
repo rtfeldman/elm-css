@@ -2,7 +2,7 @@ module Tests (all) where
 
 import ElmTest exposing (..)
 import Css exposing (compile)
-import FixturesCss as Fixtures
+import Fixtures
 import Properties
 import String
 

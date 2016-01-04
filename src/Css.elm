@@ -3272,13 +3272,19 @@ addSelectorToStylesheet selector =
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-($) : Stylesheet namespace animation class id -> Tag -> Stylesheet namespace animation class id
-($) sheet tag =
+($) : Stylesheet namespace animation class id -> Tag -> List (Mixin namespace) -> Stylesheet namespace animation class id
+($) sheet tag mixins =
     -- TODO detect if the user tried to use two $ operators without
     -- intervening properties (e.g. `$ button $ img`) and return
     -- InvalidStyle if so; this will for sure emit invalid CSS!
     sheet
         |> addSelectorToStylesheet (TypeSelector (tagToString tag))
+        |> applyMixins mixins
+
+
+applyMixins : List (Mixin namespace) -> Stylesheet namespace animation class id -> Stylesheet namespace animation class id
+applyMixins mixins sheet =
+    List.foldl (.transform >> applyTransformation) sheet mixins
 
 
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).

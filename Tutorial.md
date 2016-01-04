@@ -1,12 +1,14 @@
 # Tutorial
 
+## Selectors and Properties
+
 Let's start by defining a font for our menu items.
 
 ```elm
 snippet (context "homepage")
   . MenuItem
     [ fontFamily [ "Georga", "serif" ]
-    , fontWeight bold
+    , padding (px 5)
     ]
 ```
 
@@ -15,12 +17,17 @@ This will compile to the following CSS file:
 ```css
 .homepageMenuItem {
   font-family: "Georgia", "serif";
-  font-weight: bold;
+  padding: 5px;
 }
 ```
 
-There are a few things to note here. First, `. MenuItem` compiled to
-`.MenuItem`. Why?
+There are a few things to note here.
+
+First, note that `(px 5)` compiled to `5px`. This is because `px` is a function
+that applies `px` units to a number. Because it is a normal Elm function, you
+call it by placing it before the number in question.
+
+Next, notice that `. MenuItem` compiled to `.MenuItem`. Why?
 
 The `homepage` part of `.MenuItem` comes from the `context`
 provided as the first argument to `snippet`, which specifies that all
@@ -36,7 +43,7 @@ The `.` part of `.MenuItem` comes from the `.` operator. If we had used
 snippet (context "homepage")
   # MenuItem
     [ fontFamily [ "Georga", "serif" ]
-    , fontWeight bold
+    , padding (px 5)
     ]
 ```
 
@@ -45,7 +52,7 @@ snippet (context "homepage")
 ```css
 #homepageMenuItem {
   font-family: "Georgia", "serif";
-  font-weight: bold;
+  padding: 5px;
 }
 ```
 
@@ -71,7 +78,7 @@ shalt henceforth be green and without underlines.
 snippet (context "homepage")
   . MenuItem
     [ fontFamily [ "Georga", "serif" ]
-    , fontWeight bold
+    , padding (px 5)
     ]
   $ a
     [ color (rgb 0 0 128)
@@ -85,7 +92,7 @@ the following.
 ```css
 .homepageMenuItem {
   font-family: "Georgia", "serif";
-  font-weight: bold;
+  padding: 5px;
 }
 
 a {
@@ -97,14 +104,13 @@ a {
 Note that `rgb` is a normal Elm function, so we call it as `(rgb 0 0 128)`
 in order to get the output of `rgb(0, 0, 128)`.
 
-
 Next let's add a hover style to `a` that restores the underline.
 
 ```elm
 snippet (context "homepage")
   . MenuItem
     [ fontFamily [ "Georga", "serif" ]
-    , fontWeight bold
+    , padding (px 5)
     ]
   $ a
     [ color (rgb 0 0 128)
@@ -120,7 +126,7 @@ meaning this will create the following output.
 ```css
 .homepageMenuItem {
   font-family: "Georgia", "serif";
-  font-weight: bold;
+  padding: 5px;
 }
 
 a {
@@ -140,7 +146,7 @@ wanted to style only `a` tags with the class `NavLink`, we could do it like so:
 snippet (context "homepage")
   . MenuItem
     [ fontFamily [ "Georga", "serif" ]
-    , fontWeight bold
+    , padding (px 5)
     ]
   $ a
   &. NavLink
@@ -156,7 +162,7 @@ The above would compile to the following:
 ```css
 .homepageMenuItem {
   font-family: "Georgia", "serif";
-  font-weight: bold;
+  padding: 5px;
 }
 
 a.homepageNavLink {
@@ -178,7 +184,7 @@ unique class and write the stylesheet without the `a` selectors:
 snippet (context "homepage")
   . MenuItem
     [ fontFamily [ "Georga", "serif" ]
-    , fontWeight bold
+    , padding (px 5)
     ]
   . NavLink
     [ color (rgb 0 0 128)
@@ -187,4 +193,57 @@ snippet (context "homepage")
   &: hover
     [ textDecoration underline ]
 ```
+
+Finally, suppose that we want to define multiple selectors at once
+
+```elm
+snippet (context "homepage")
+  $ html
+  |+ (or $ body)
+  |+ (or $ ul)
+  |+ (or . NavLink)
+    [ padding zero
+    , margin2 (pct 10) auto
+    ]
+```
+
+This will compile to the following.
+
+```elm
+html, body, ul, .homepageNavLink {
+  padding: 0;
+  margin: 10% auto;
+}
+```
+
+Note that `(pct 10)` compiles to `10%`, and that `margin` accepts `auto` instead
+of a number with units associated. If you try to pass `auto` to `padding`,
+however, you will get a type error; `auto` is not a legal value for `padding`
+according to the CSS specification.
+
+Also note that `zero` compiles to `0` with no units. The `padding` function
+is ordinarily expecting a value with units associated, but `zero` works too.
+You could also have passed `(px 0)` to generate `padding: 0px;` instead of
+`padding: 0;`, but you could not have passed `0` because the `padding`
+function does not accept raw numbers; the compiler would have given a type error.
+
+Next note that we called `margin2`, not `margin`. This is the convention for
+handling CSS properties that accept different numbers of arguments. In addition
+to `margin2`, there is also `margin` (e.g. `margin (em 2)` would compile to
+`margin: 2em;`) as well as `margin3` and `margin4`.
+
+Finally note the syntax for combining multiple selectors:
+
+```elm
+$ html
+|+ (or $ body)
+|+ (or $ ul)
+|+ (or . NavLink)
+```
+
+`|+` and `or` together function like a comma in a CSS multiple selector.
+
+## Mixins
+
+## Sharing Contexts
 -}
