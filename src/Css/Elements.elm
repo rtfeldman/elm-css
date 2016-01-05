@@ -3,7 +3,7 @@ module Css.Elements
     , html, body
     , article, header, footer, h1, h2, h3, h4, nav, section
     , div, hr, li, main', ol, p, ul, pre
-    , a, code, em, small, span, strong
+    , a, code, small, span, strong
     , img, audio, video, canvas
     , caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
     , button, fieldset, form, input, label, legend, optgroup, option, progress, select
@@ -23,7 +23,7 @@ module Css.Elements
 @docs div, hr, li, main', ol, p, ul, pre
 
 # Inline text semantics
-@docs a, code, em, small, span, strong
+@docs a, code, small, span, strong
 
 # Image and multimedia
 @docs img, audio, video, canvas
@@ -205,13 +205,6 @@ a =
 code : Tag
 code =
     Tag "code"
-
-
-{-| Selector for an em element.
--}
-em : Tag
-em =
-    Tag "em"
 
 
 {-| Selector for a small element.
