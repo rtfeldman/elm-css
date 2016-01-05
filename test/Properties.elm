@@ -226,6 +226,15 @@ all =
               -- TODO display: ruby-text-container ;
               -- TODO display: run-in;
             ]
+          , testProperty
+              "flex-basis"
+              [ ( flexBasis initial, "initial" )
+              , ( flexBasis unset, "unset" )
+              , ( flexBasis inherit, "inherit" )
+              , ( flexBasis auto, "auto" )
+              , ( flexBasis (px 10), "10px")
+              , ( flexBasis (mm 8), "8mm" )
+              ]
         ]
 
 
