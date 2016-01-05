@@ -232,6 +232,7 @@ all =
               , ( flexBasis unset, "unset" )
               , ( flexBasis inherit, "inherit" )
               , ( flexBasis auto, "auto" )
+              , ( flexBasis content, "content")
               , ( flexBasis (px 10), "10px")
               , ( flexBasis (mm 8), "8mm" )
               ]
