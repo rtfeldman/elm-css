@@ -236,6 +236,12 @@ all =
               , ( flexBasis (px 10), "10px")
               , ( flexBasis (mm 8), "8mm" )
               ]
+          , testProperty
+              "flex-grow"
+              [ ( flexGrow 1, "1") ]
+          , testProperty
+              "opacity"
+              [ ( opacity 1, "1") ]
         ]
 
 
