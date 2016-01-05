@@ -41,41 +41,41 @@ divWidthHeight =
 
 multiDescendent : Stylesheet String CssAnimations CssClasses CssIds
 multiDescendent =
-    stylesheet { name = "" }
-        $ html
-        ~ (or $ h2)
-            [ boxSizing borderBox
-            , display none
-            , child
-                &$ div
-                    [ width (pct 100)
-                    , height (pct 100)
-                    ]
-            ]
-        $ h1
-        ~ (or $ h2)
-            [ padding zero
-            , margin zero
-            , child
-                &$ h3
-                    [ width (pct 100)
-                    , child
-                        &$ h4
-                            [ height (pct 100) ]
-                    ]
-            ]
-        $ span
-            [ padding (px 10)
-            , margin (px 11)
-            , child
-                &$ h2
-                    [ child
-                        &$ h1
-                            [ width (px 1)
-                            , height (pct 2)
-                            ]
-                    ]
-            ]
+    stylesheet
+        { name = "" }
+        [ html
+            ~ (or h2)
+            ~ boxSizing borderBox
+            ~ display none
+        , (>>%) div
+            ~ width (pct 100)
+            ~ height (pct 100)
+        , (.) NavBar
+            ~ display inlineBlock
+            ~ color (rgb 123 123 123)
+        , (#) Welcome
+            ~ display inlineBlock
+            ~ color (rgb 123 123 123)
+        , h1
+            ~ (or # h2)
+            ~ padding zero
+            ~ margin zero
+            >% h3
+            ~ width (pct 100)
+            &: hover
+            ~ width (pct 100)
+        , h4
+            ~ height (pct 100)
+        , span
+            ~ padding (px 10)
+            ~ margin (px 11)
+        , (h2 >% h1)
+            ~ width (px 1)
+            ~ height (pct 2)
+        , ((.) Foo ># Bar)
+            ~ width (px 1)
+            ~ height (pct 2)
+        ]
 
 
 multiSelector : Stylesheet String CssAnimations CssClasses CssIds
@@ -178,11 +178,11 @@ dreamwriter =
 underlineOnHover : Mixin a
 underlineOnHover =
     mixin
-        --~ textDecoration none
-        [ color (rgb 128 127 126) ]
+        ~ textDecoration none
+        ~ color (rgb 128 127 126)
         &: hover
-            --~ textDecoration underline
-            [ color (rgb 23 24 25) ]
+        ~ textDecoration underline
+        ~ color (rgb 23 24 25)
 
 
 greenOnHover : Mixin a

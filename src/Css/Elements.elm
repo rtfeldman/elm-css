@@ -1,143 +1,138 @@
-module Css.Elements (Tag, tagToString, a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input) where
+module Css.Elements (element, tagToString, a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input) where
 
 {-| Selectors for HTML elements.
 
-@docs Tag, tagToString
+@docs element, tagToString
 
 # Elements
 @docs a, html, body, header, nav, div, span, img, nowrap, button, h1, h2, h3, h4, p, ol, input
 -}
 
-{- Tags -}
+import Css.Declaration (..) where
+
+{- elements -}
+
+element : String -> DeclarationTransform
+element =
+    TypeSelector >> introduceSelector >> Ok
+
 
 
 {-| Selector for a html element.
 -}
-html : Tag
+html : DeclarationTransform
 html =
-    Tag "html"
+    element "html"
 
 
 {-| Selector for a body element.
 -}
-body : Tag
+body : DeclarationTransform
 body =
-    Tag "body"
+    element "body"
 
 
 {-| Selector for a header element.
 -}
-header : Tag
+header : DeclarationTransform
 header =
-    Tag "header"
+    element "header"
 
 
 {-| Selector for an `<a>` element.
 -}
-a : Tag
+a : DeclarationTransform
 a =
-    Tag "a"
+    element "a"
 
 
 {-| Selector for a nav element.
 -}
-nav : Tag
+nav : DeclarationTransform
 nav =
-    Tag "nav"
+    element "nav"
 
 
 {-| Selector for a div element.
 -}
-div : Tag
+div : DeclarationTransform
 div =
-    Tag "div"
+    element "div"
 
 
 {-| Selector for a span element.
 -}
-span : Tag
+span : DeclarationTransform
 span =
-    Tag "span"
+    element "span"
 
 
 {-| Selector for a img element.
 -}
-img : Tag
+img : DeclarationTransform
 img =
-    Tag "img"
+    element "img"
 
 
 {-| Selector for a nowrap element.
 -}
-nowrap : Tag
+nowrap : DeclarationTransform
 nowrap =
-    Tag "nowrap"
+    element "nowrap"
 
 
 {-| Selector for a button element.
 -}
-button : Tag
+button : DeclarationTransform
 button =
-    Tag "button"
+    element "button"
 
 
 {-| Selector for an h1 element.
 -}
-h1 : Tag
+h1 : DeclarationTransform
 h1 =
-    Tag "h1"
+    element "h1"
 
 
 {-| Selector for an h2 element.
 -}
-h2 : Tag
+h2 : DeclarationTransform
 h2 =
-    Tag "h2"
+    element "h2"
 
 
 {-| Selector for an h3 element.
 -}
-h3 : Tag
+h3 : DeclarationTransform
 h3 =
-    Tag "h3"
+    element "h3"
 
 
 {-| Selector for an h4 element.
 -}
-h4 : Tag
+h4 : DeclarationTransform
 h4 =
-    Tag "h4"
+    element "h4"
 
 
 {-| Selector for a p element.
 -}
-p : Tag
+p : DeclarationTransform
 p =
-    Tag "p"
+    element "p"
 
 
 {-| Selector for an ol element.
 -}
-ol : Tag
+ol : DeclarationTransform
 ol =
-    Tag "ol"
+    element "ol"
 
 
 {-| Selector for an input element.
 -}
-input : Tag
+input : DeclarationTransform
 input =
-    Tag "input"
+    element "input"
 
-
-{-| Selector for an HTML tag.
--}
-type Tag
-    = Tag String
-
-
-{-| Converts an HTML tag selector to its underlying String representation.
--}
-tagToString : Tag -> String
-tagToString (Tag str) =
-    str
