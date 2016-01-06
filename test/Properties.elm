@@ -247,7 +247,52 @@ all =
               ]
           , testProperty
               "flex-grow"
-              [ ( flexGrow 1, "1") ]
+              [ ( flexGrow 1, "1")
+              , ( flexGrow 0.2, "0.2")
+              ]
+          , testProperty
+              "flex-shrink"
+              [ ( flexShrink 1, "1")
+              , ( flexShrink 0.2, "0.2")
+              ]
+          , testProperty
+              "flex-direction"
+              [ ( flexDirection initial, "initial" )
+              , ( flexDirection unset, "unset" )
+              , ( flexDirection inherit, "inherit" )
+              , ( flexDirection row, "row" )
+              , ( flexDirection rowReverse, "row-reverse")
+              , ( flexDirection column, "column")
+              , ( flexDirection columnReverse, "column-reverse")
+              ]
+          {-, testProperty
+              "flex-flow"
+              [ ( flexFlow initial, "initial" )
+              , ( flexFlow unset, "unset" )
+              , ( flexFlow inherit, "inherit" )
+              , ( flexFlow row, "row" )
+              , ( flexFlow rowReverse, "row-reverse")
+              , ( flexFlow column, "column")
+              , ( flexFlow columnReverse, "column-reverse")
+              , ( flexFlow Nothing noWrap, "nowrap")
+              , ( flexFlow Nothing wrap, "wrap")
+              , ( flexFlow Nothing wrapReverse, "wrap-reverse")
+              , ( flexFlow row wrap, "row wrap")
+              , ( flexFlow row noWrap, "row nowrap")
+              , ( flexFlow row wrapReverse, "row wrap-reverse")
+              , ( flexFlow rowReverse wrap, "row-reverse wrap")
+              , ( flexFlow rowReverse noWrap, "row-reverse nowrap")
+              , ( flexFlow rowReverse wrapReverse, "row-reverse wrap-reverse")
+              , ( flexFlow column wrap, "column wrap")
+              , ( flexFlow column noWrap, "column noWrap")
+              , ( flexFlow column wrapReverse, "column wrap-reverse")
+              , ( flexFlow column noWrap, "column-reverse")
+              , ( flexFlow columnReverse wrap, "column-reverse wrap")
+              , ( flexFlow columnReverse noWrap, "column-reverse noWrap")
+              , ( flexFlow columnReverse wrapReverse, "column-reverse wrap-reverse")
+              , ( flexFlow columnReverse noWrap, "column-reverse-reverse")
+              ]
+            -}
           , testProperty
               "order"
               [ ( order 1, "1") ]
@@ -258,6 +303,14 @@ all =
               , ( alignItems center, "center")
               , (alignItems baseline, "baseline")
               , (alignItems stretch, "stretch")
+              ]
+          , testProperty
+              "align-self"
+              [ ( alignSelf flexStart, "flex-start")
+              , ( alignSelf flexEnd, "flex-end")
+              , ( alignSelf center, "center")
+              , ( alignSelf baseline, "baseline")
+              , ( alignSelf stretch, "stretch")
               ]
           , testProperty
               "opacity"
