@@ -237,8 +237,28 @@ all =
               , ( flexBasis (mm 8), "8mm" )
               ]
           , testProperty
+              "flex-wrap"
+              [ ( flexWrap initial, "initial" )
+              , ( flexWrap unset, "unset" )
+              , ( flexWrap inherit, "inherit" )
+              , ( flexWrap wrap, "wrap" )
+              , ( flexWrap noWrap, "nowrap")
+              , ( flexWrap wrapReverse, "wrap-reverse")
+              ]
+          , testProperty
               "flex-grow"
               [ ( flexGrow 1, "1") ]
+          , testProperty
+              "order"
+              [ ( order 1, "1") ]
+          , testProperty
+              "align-items"
+              [ ( alignItems flexStart, "flex-start")
+              , ( alignItems flexEnd, "flex-end")
+              , ( alignItems center, "center")
+              , (alignItems baseline, "baseline")
+              , (alignItems stretch, "stretch")
+              ]
           , testProperty
               "opacity"
               [ ( opacity 1, "1") ]
