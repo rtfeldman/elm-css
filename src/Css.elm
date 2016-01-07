@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
+module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
 
 {-| Functions for building stylesheets.
 
@@ -12,7 +12,7 @@ module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, importan
 @docs (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.)
 
 # Attributes
-@docs alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
+@docs flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
 
 # Values
 @docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse
@@ -181,6 +181,13 @@ type alias BoxSizing compatible =
 type alias Overflow compatible =
     { compatible | value : String, overflow : Compatible }
 
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex#Values
+-}
+
+type alias LengthOrNumberOrAutoOrNoneOrContent compatible =
+    { compatible | value : String, lengthOrNumberOrAutoOrNoneOrContent : Compatible }
+
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values
 -}
 type alias FlexBasis compatible =
@@ -273,6 +280,7 @@ type alias ExplicitLength =
     , lengthOrNoneOrMinMaxDimension : Compatible
     , textIndent : Compatible
     , flexBasis: Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     }
 
 
@@ -453,6 +461,7 @@ type alias BasicProperty =
     , flexDirection : Compatible
     , flexDirectionOrWrap : Compatible
     , none : Compatible
+    , number : Compatible
     , overflow : Compatible
     , textDecorationLine : Compatible
     , textRendering : Compatible
@@ -464,6 +473,7 @@ type alias BasicProperty =
     , lengthOrNumber : Compatible
     , lengthOrMinMaxDimension : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
 
     }
 
@@ -492,6 +502,7 @@ initial =
     { value = "initial"
     , overflow = Compatible
     , none = Compatible
+    , number = Compatible
     , textDecorationLine = Compatible
     , textRendering = Compatible
     , textIndent = Compatible
@@ -510,6 +521,7 @@ initial =
     , flexWrap = Compatible
     , flexDirection = Compatible
     , flexDirectionOrWrap = Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     }
 
 
@@ -811,6 +823,7 @@ lengthConverter suffix num =
     , lengthOrNoneOrMinMaxDimension = Compatible
     , textIndent = Compatible
     , flexBasis = Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     }
 
 
@@ -917,7 +930,7 @@ px =
     lengthConverter "px"
 
 
-{-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 mm : number -> ExplicitLength
 mm =
@@ -957,11 +970,12 @@ pc =
 {-| A unitless number. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-n : number -> LengthOrNumber (Number {})
+n : number -> (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number {})))
 n num =
     { value = numberToString num
     , lengthOrNumber = Compatible
     , number = Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     }
 
 
@@ -1386,7 +1400,48 @@ transformStyle =
 
 {- FLEX BOX -}
 
+{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
+
+flex1 (none | content | auto | (n 1) | (px 10))
+flex2 (n 1) ((n 1) | (px 10 ))
+flex3 (n 1) (n 1) ((n 1) | (px 10))
+
+-}
+
+flex1 : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin namespace
+flex1 =
+    prop1 "flex"
+
+{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
+
+flex1 (none | content | auto | (n 1) | (px 10))
+flex2 (n 1) ((n 1) | (px 10 ))
+flex3 (n 1) (n 1) ((n 1) | (px 10))
+
+-}
+
+flex2 : Number compatibleA -> LengthOrNumber compatibleB -> Mixin namespace
+flex2 =
+    prop2 "flex"
+
+{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
+
+flex1 (none | content | auto | (n 1) | (px 10))
+flex2 (n 1) ((n 1) | (px 10 ))
+flex3 (n 1) (n 1) ((n 1) | (px 10))
+
+-}
+
+flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Mixin namespace
+flex3 =
+    prop3 "flex"
+
 {-| Sets [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis) property.}
+
+flex1 (none | content | auto | (n 1) | (px 10))
+flex2 (n 1) ((n 1) | (px 10 ))
+flex3 (n 1) (n 1) ((n 1) | (px 10))
+
 -}
 
 flexBasis : FlexBasis compatible -> Mixin namespace
@@ -1396,16 +1451,16 @@ flexBasis =
 {-| Sets [`flex-grow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow) property.}
 -}
 
-flexGrow : number -> Mixin namespace
-flexGrow num =
-      prop1 "flex-grow" { value = numberToString num}
+flexGrow : Number compatible -> Mixin namespace
+flexGrow =
+      prop1 "flex-grow"
 
 {-| Sets [`flex-shrink`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink) property.}
 -}
 
-flexShrink : number -> Mixin namespace
-flexShrink num =
-      prop1 "flex-shrink" { value = numberToString num}
+flexShrink : Number compatible -> Mixin namespace
+flexShrink =
+      prop1 "flex-shrink"
 
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
 -}
@@ -1423,7 +1478,10 @@ flexDirection =
 
 {-| Sets [`flex-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow) property.}
 
-flex1 (wrap | wrapReverse | noWrap)
+flexFlow1 (wrap | wrapReverse | noWrap)
+flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnReverse)
+
+Or vice versa, order is not important for flex-flow
 -}
 
 flexFlow1 : FlexDirectionOrWrap compatible -> Mixin namespace
@@ -1431,6 +1489,11 @@ flexFlow1 =
   prop1 "flex-flow"
 
 {-| Sets [`flex-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow) property.}
+
+flexFlow1 (wrap | wrapReverse | noWrap)
+flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnReverse)
+
+Or vice versa, order is not important for flex-flow
 -}
 flexFlow2 : FlexDirectionOrWrap compatibleA -> FlexDirectionOrWrap compatibleB -> Mixin namespace
 flexFlow2 =
@@ -1458,19 +1521,20 @@ alignSelf fn =
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
 -}
 
-order : number -> Mixin namespace
-order num =
-  prop1 "order" { value = numberToString num }
+order : Number compatible -> Mixin namespace
+order =
+  prop1 "order"
 
 
 {-| The [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values) value for the
   flex-basis property.
   -}
 
-content : FlexBasis {}
+content : LengthOrNumberOrAutoOrNoneOrContent( FlexBasis {})
 content =
       { value = "content"
       , flexBasis = Compatible
+      , lengthOrNumberOrAutoOrNoneOrContent = Compatible
       }
 
 {-| The[`wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values) value for the
@@ -1615,6 +1679,7 @@ inline =
 none :
     { borderStyle : Compatible
     , display : Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , none : Compatible
     , lengthOrNone : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
@@ -1627,6 +1692,7 @@ none =
     , none = Compatible
     , lengthOrNone = Compatible
     , lengthOrNoneOrMinMaxDimension = Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , textDecorationLine = Compatible
     , display = Compatible
     , transform = Compatible
@@ -1640,6 +1706,7 @@ auto :
     , overflow : Compatible
     , textRendering : Compatible
     , flexBasis : Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , value : String
     }
 auto =
@@ -1648,6 +1715,7 @@ auto =
     , overflow = Compatible
     , textRendering = Compatible
     , lengthOrAuto = Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     }
 
 
@@ -1907,9 +1975,9 @@ display =
 
 
 {-| -}
-opacity : number -> Mixin namespace
-opacity num =
-    prop1 "opacity" { value = numberToString num }
+opacity : Number compatible -> Mixin namespace
+opacity =
+    prop1 "opacity"
 
 
 {-| Sets [`width`](https://developer.mozilla.org/en-US/docs/Web/CSS/width)

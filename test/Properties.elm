@@ -227,6 +227,20 @@ all =
               -- TODO display: run-in;
             ]
           , testProperty
+              "flex"
+              [ ( flex1 initial, "initial" )
+              , ( flex1 unset, "unset" )
+              , ( flex1 inherit, "inherit" )
+              , ( flex1 auto, "auto" )
+              , ( flex1 content, "content")
+              , ( flex1 none, "none")
+              , ( flex1 (n 2), "2")
+              , ( flex1 (mm 8), "8mm" )
+              , ( flex2 (n 1) (n 2), "1 2" )
+              , ( flex2 (n 1) (px 30), "1 30px" )
+              , ( flex3 (n 1) (n 2) (px 20), "1 2 20px" )
+              ]
+          , testProperty
               "flex-basis"
               [ ( flexBasis initial, "initial" )
               , ( flexBasis unset, "unset" )
@@ -247,13 +261,13 @@ all =
               ]
           , testProperty
               "flex-grow"
-              [ ( flexGrow 1, "1")
-              , ( flexGrow 0.2, "0.2")
+              [ ( flexGrow (n 1), "1")
+              , ( flexGrow (n 0.2), "0.2")
               ]
           , testProperty
               "flex-shrink"
-              [ ( flexShrink 1, "1")
-              , ( flexShrink 0.2, "0.2")
+              [ ( flexShrink (n 1), "1")
+              , ( flexShrink (n 0.2), "0.2")
               ]
           , testProperty
               "flex-direction"
@@ -293,7 +307,7 @@ all =
 
           , testProperty
               "order"
-              [ ( order 1, "1") ]
+              [ ( order (n 1), "1") ]
           , testProperty
               "align-items"
               [ ( alignItems flexStart, "flex-start")
@@ -312,7 +326,9 @@ all =
               ]
           , testProperty
               "opacity"
-              [ ( opacity 1, "1") ]
+              [ ( opacity inherit, "inherit")
+              , ( opacity (n 1), "1")
+              ]
         ]
 
 
