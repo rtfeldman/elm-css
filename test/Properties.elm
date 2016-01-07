@@ -265,34 +265,32 @@ all =
               , ( flexDirection column, "column")
               , ( flexDirection columnReverse, "column-reverse")
               ]
-          {-, testProperty
+           , testProperty
               "flex-flow"
-              [ ( flexFlow initial, "initial" )
-              , ( flexFlow unset, "unset" )
-              , ( flexFlow inherit, "inherit" )
-              , ( flexFlow row, "row" )
-              , ( flexFlow rowReverse, "row-reverse")
-              , ( flexFlow column, "column")
-              , ( flexFlow columnReverse, "column-reverse")
-              , ( flexFlow Nothing noWrap, "nowrap")
-              , ( flexFlow Nothing wrap, "wrap")
-              , ( flexFlow Nothing wrapReverse, "wrap-reverse")
-              , ( flexFlow row wrap, "row wrap")
-              , ( flexFlow row noWrap, "row nowrap")
-              , ( flexFlow row wrapReverse, "row wrap-reverse")
-              , ( flexFlow rowReverse wrap, "row-reverse wrap")
-              , ( flexFlow rowReverse noWrap, "row-reverse nowrap")
-              , ( flexFlow rowReverse wrapReverse, "row-reverse wrap-reverse")
-              , ( flexFlow column wrap, "column wrap")
-              , ( flexFlow column noWrap, "column noWrap")
-              , ( flexFlow column wrapReverse, "column wrap-reverse")
-              , ( flexFlow column noWrap, "column-reverse")
-              , ( flexFlow columnReverse wrap, "column-reverse wrap")
-              , ( flexFlow columnReverse noWrap, "column-reverse noWrap")
-              , ( flexFlow columnReverse wrapReverse, "column-reverse wrap-reverse")
-              , ( flexFlow columnReverse noWrap, "column-reverse-reverse")
+              [ ( flexFlow1 initial, "initial" )
+              , ( flexFlow1 unset, "unset" )
+              , ( flexFlow1 inherit, "inherit" )
+              , ( flexFlow1 row, "row" )
+              , ( flexFlow1 rowReverse, "row-reverse")
+              , ( flexFlow1 column, "column")
+              , ( flexFlow1 columnReverse, "column-reverse")
+              , ( flexFlow1 noWrap, "nowrap")
+              , ( flexFlow1 wrap, "wrap")
+              , ( flexFlow1 wrapReverse, "wrap-reverse")
+              , ( flexFlow2 row wrap, "row wrap")
+              , ( flexFlow2 row noWrap, "row nowrap")
+              , ( flexFlow2 row wrapReverse, "row wrap-reverse")
+              , ( flexFlow2 rowReverse wrap, "row-reverse wrap")
+              , ( flexFlow2 rowReverse noWrap, "row-reverse nowrap")
+              , ( flexFlow2 rowReverse wrapReverse, "row-reverse wrap-reverse")
+              , ( flexFlow2 column wrap, "column wrap")
+              , ( flexFlow2 column noWrap, "column nowrap")
+              , ( flexFlow2 column wrapReverse, "column wrap-reverse")
+              , ( flexFlow2 columnReverse wrap, "column-reverse wrap")
+              , ( flexFlow2 columnReverse noWrap, "column-reverse nowrap")
+              , ( flexFlow2 columnReverse wrapReverse, "column-reverse wrap-reverse")
               ]
-            -}
+
           , testProperty
               "order"
               [ ( order 1, "1") ]
