@@ -226,6 +226,109 @@ all =
               -- TODO display: ruby-text-container ;
               -- TODO display: run-in;
             ]
+          , testProperty
+              "flex"
+              [ ( flex1 initial, "initial" )
+              , ( flex1 unset, "unset" )
+              , ( flex1 inherit, "inherit" )
+              , ( flex1 auto, "auto" )
+              , ( flex1 content, "content")
+              , ( flex1 none, "none")
+              , ( flex1 (n 2), "2")
+              , ( flex1 (mm 8), "8mm" )
+              , ( flex2 (n 1) (n 2), "1 2" )
+              , ( flex2 (n 1) (px 30), "1 30px" )
+              , ( flex3 (n 1) (n 2) (px 20), "1 2 20px" )
+              ]
+          , testProperty
+              "flex-basis"
+              [ ( flexBasis initial, "initial" )
+              , ( flexBasis unset, "unset" )
+              , ( flexBasis inherit, "inherit" )
+              , ( flexBasis auto, "auto" )
+              , ( flexBasis content, "content")
+              , ( flexBasis (px 10), "10px")
+              , ( flexBasis (mm 8), "8mm" )
+              ]
+          , testProperty
+              "flex-wrap"
+              [ ( flexWrap initial, "initial" )
+              , ( flexWrap unset, "unset" )
+              , ( flexWrap inherit, "inherit" )
+              , ( flexWrap wrap, "wrap" )
+              , ( flexWrap noWrap, "nowrap")
+              , ( flexWrap wrapReverse, "wrap-reverse")
+              ]
+          , testProperty
+              "flex-grow"
+              [ ( flexGrow (n 1), "1")
+              , ( flexGrow (n 0.2), "0.2")
+              ]
+          , testProperty
+              "flex-shrink"
+              [ ( flexShrink (n 1), "1")
+              , ( flexShrink (n 0.2), "0.2")
+              ]
+          , testProperty
+              "flex-direction"
+              [ ( flexDirection initial, "initial" )
+              , ( flexDirection unset, "unset" )
+              , ( flexDirection inherit, "inherit" )
+              , ( flexDirection row, "row" )
+              , ( flexDirection rowReverse, "row-reverse")
+              , ( flexDirection column, "column")
+              , ( flexDirection columnReverse, "column-reverse")
+              ]
+           , testProperty
+              "flex-flow"
+              [ ( flexFlow1 initial, "initial" )
+              , ( flexFlow1 unset, "unset" )
+              , ( flexFlow1 inherit, "inherit" )
+              , ( flexFlow1 row, "row" )
+              , ( flexFlow1 rowReverse, "row-reverse")
+              , ( flexFlow1 column, "column")
+              , ( flexFlow1 columnReverse, "column-reverse")
+              , ( flexFlow1 noWrap, "nowrap")
+              , ( flexFlow1 wrap, "wrap")
+              , ( flexFlow1 wrapReverse, "wrap-reverse")
+              , ( flexFlow2 row wrap, "row wrap")
+              , ( flexFlow2 row noWrap, "row nowrap")
+              , ( flexFlow2 row wrapReverse, "row wrap-reverse")
+              , ( flexFlow2 rowReverse wrap, "row-reverse wrap")
+              , ( flexFlow2 rowReverse noWrap, "row-reverse nowrap")
+              , ( flexFlow2 rowReverse wrapReverse, "row-reverse wrap-reverse")
+              , ( flexFlow2 column wrap, "column wrap")
+              , ( flexFlow2 column noWrap, "column nowrap")
+              , ( flexFlow2 column wrapReverse, "column wrap-reverse")
+              , ( flexFlow2 columnReverse wrap, "column-reverse wrap")
+              , ( flexFlow2 columnReverse noWrap, "column-reverse nowrap")
+              , ( flexFlow2 columnReverse wrapReverse, "column-reverse wrap-reverse")
+              ]
+
+          , testProperty
+              "order"
+              [ ( order (n 1), "1") ]
+          , testProperty
+              "align-items"
+              [ ( alignItems flexStart, "flex-start")
+              , ( alignItems flexEnd, "flex-end")
+              , ( alignItems center, "center")
+              , (alignItems baseline, "baseline")
+              , (alignItems stretch, "stretch")
+              ]
+          , testProperty
+              "align-self"
+              [ ( alignSelf flexStart, "flex-start")
+              , ( alignSelf flexEnd, "flex-end")
+              , ( alignSelf center, "center")
+              , ( alignSelf baseline, "baseline")
+              , ( alignSelf stretch, "stretch")
+              ]
+          , testProperty
+              "opacity"
+              [ ( opacity inherit, "inherit")
+              , ( opacity (n 1), "1")
+              ]
         ]
 
 
