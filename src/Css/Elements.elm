@@ -1,17 +1,6 @@
-module Css.Elements
-    ( Tag, tagToString
-    , html, body
-    , article, header, footer, h1, h2, h3, h4, nav, section
-    , div, hr, li, main', ol, p, ul, pre
-    , a, code, small, span, strong
-    , img, audio, video, canvas
-    , caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
-    , button, fieldset, form, input, label, legend, optgroup, option, progress, select
-    ) where
+module Css.Elements (html, body, article, header, footer, h1, h2, h3, h4, nav, section, div, hr, li, main', ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select) where
 
 {-| Selectors for HTML elements.
-
-@docs Tag, tagToString
 
 # Basic elements
 @docs html, body
@@ -35,34 +24,37 @@ module Css.Elements
 @docs button, fieldset, form, input, label, legend, optgroup, option, progress, select
 -}
 
-
-{-| Selector for an HTML tag.
--}
-type Tag
-    = Tag String
+import Css.Declaration as Declaration exposing (Declaration, Selector(TypeSelector), introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector)
+import Css exposing (Snippet)
+import Css.Transforms exposing (SnippetTransformType, makeSnippetFromSelector)
 
 
-{-| Converts an HTML tag selector to its underlying String representation.
--}
-tagToString : Tag -> String
-tagToString (Tag str) =
-    str
+type alias Selector =
+  () -> Snippet
+
 
 
 {- BASIC ELEMENTS -}
 
+
+makeTypeSelector : String -> Selector
+makeTypeSelector str _ =
+  makeSnippetFromSelector (\_ -> TypeSelector str)
+
+
 {-| Selector for a html element.
 -}
-html : Tag
+html : Selector
 html =
-    Tag "html"
+  makeTypeSelector "html"
 
 
 {-| Selector for a body element.
 -}
-body : Tag
+body : Selector
 body =
-    Tag "body"
+  makeTypeSelector "body"
+
 
 
 {- CONTENT SECTIONING -}
@@ -70,65 +62,66 @@ body =
 
 {-| Selector for an article element.
 -}
-article : Tag
+article : Selector
 article =
-    Tag "article"
+  makeTypeSelector "article"
 
 
 {-| Selector for a header element.
 -}
-header : Tag
+header : Selector
 header =
-    Tag "header"
+  makeTypeSelector "header"
 
 
 {-| Selector for a footer element.
 -}
-footer : Tag
+footer : Selector
 footer =
-    Tag "footer"
+  makeTypeSelector "footer"
 
 
 {-| Selector for an h1 element.
 -}
-h1 : Tag
+h1 : Selector
 h1 =
-    Tag "h1"
+  makeTypeSelector "h1"
 
 
 {-| Selector for an h2 element.
 -}
-h2 : Tag
+h2 : Selector
 h2 =
-    Tag "h2"
+  makeTypeSelector "h2"
 
 
 {-| Selector for an h3 element.
 -}
-h3 : Tag
+h3 : Selector
 h3 =
-    Tag "h3"
+  makeTypeSelector "h3"
 
 
 {-| Selector for an h4 element.
 -}
-h4 : Tag
+h4 : Selector
 h4 =
-    Tag "h4"
+  makeTypeSelector "h4"
 
 
 {-| Selector for a nav element.
 -}
-nav : Tag
+nav : Selector
 nav =
-    Tag "nav"
+  makeTypeSelector "nav"
 
 
 {-| Selector for a section element.
 -}
-section : Tag
+section : Selector
 section =
-    Tag "section"
+  makeTypeSelector "section"
+
 
 
 {- TEXT CONTENT -}
@@ -136,127 +129,127 @@ section =
 
 {-| Selector for a div element.
 -}
-div : Tag
+div : Selector
 div =
-    Tag "div"
+  makeTypeSelector "div"
 
 
 {-| Selector for an hr element.
 -}
-hr : Tag
+hr : Selector
 hr =
-    Tag "hr"
+  makeTypeSelector "hr"
 
 
 {-| Selector for an li element.
 -}
-li : Tag
+li : Selector
 li =
-    Tag "li"
+  makeTypeSelector "li"
 
 
 {-| Selector for a main element.
 -}
-main' : Tag
+main' : Selector
 main' =
-    Tag "main"
+  makeTypeSelector "main"
 
 
 {-| Selector for an ol element.
 -}
-ol : Tag
+ol : Selector
 ol =
-    Tag "ol"
+  makeTypeSelector "ol"
 
 
 {-| Selector for a p element.
 -}
-p : Tag
+p : Selector
 p =
-    Tag "p"
+  makeTypeSelector "p"
 
 
 {-| Selector for a ul element.
 -}
-ul : Tag
+ul : Selector
 ul =
-    Tag "ul"
+  makeTypeSelector "ul"
 
 
 {-| Selector for a pre element.
 -}
-pre : Tag
+pre : Selector
 pre =
-    Tag "pre"
+  makeTypeSelector "pre"
+
+
 
 {- INLINE TEXT SEMANTICS -}
 
 
-
 {-| Selector for an `<a>` element.
 -}
-a : Tag
+a : Selector
 a =
-    Tag "a"
+  makeTypeSelector "a"
 
 
 {-| Selector for a code element.
 -}
-code : Tag
+code : Selector
 code =
-    Tag "code"
+  makeTypeSelector "code"
 
 
 {-| Selector for a small element.
 -}
-small : Tag
+small : Selector
 small =
-    Tag "small"
+  makeTypeSelector "small"
 
 
 {-| Selector for a span element.
 -}
-span : Tag
+span : Selector
 span =
-    Tag "span"
+  makeTypeSelector "span"
 
 
 {-| Selector for a strong element.
 -}
-strong : Tag
+strong : Selector
 strong =
-    Tag "strong"
+  makeTypeSelector "strong"
 
 
-{-| IMAGE AND MULTIMEDIA -}
-
-
+{-| IMAGE AND MULTIMEDIA
+-}
 {-| Selector for a img element.
 -}
-img : Tag
+img : Selector
 img =
-    Tag "img"
+  makeTypeSelector "img"
 
 
 {-| Selector for an audio element.
 -}
-audio : Tag
+audio : Selector
 audio =
-    Tag "audio"
+  makeTypeSelector "audio"
 
 
 {-| Selector for a video element.
 -}
-video : Tag
+video : Selector
 video =
-    Tag "video"
+  makeTypeSelector "video"
 
 
 {-| Selector for a canvas element.
 -}
-canvas : Tag
+canvas : Selector
 canvas =
-    Tag "canvas"
+  makeTypeSelector "canvas"
 
 
 
@@ -265,72 +258,73 @@ canvas =
 
 {-| Selector for a caption element.
 -}
-caption : Tag
+caption : Selector
 caption =
-    Tag "caption"
+  makeTypeSelector "caption"
 
 
 {-| Selector for a col element.
 -}
-col : Tag
+col : Selector
 col =
-    Tag "col"
+  makeTypeSelector "col"
 
 
 {-| Selector for a colgroup element.
 -}
-colgroup : Tag
+colgroup : Selector
 colgroup =
-    Tag "colgroup"
+  makeTypeSelector "colgroup"
 
 
 {-| Selector for a table element.
 -}
-table : Tag
+table : Selector
 table =
-    Tag "table"
+  makeTypeSelector "table"
 
 
 {-| Selector for a tbody element.
 -}
-tbody : Tag
+tbody : Selector
 tbody =
-    Tag "tbody"
+  makeTypeSelector "tbody"
 
 
 {-| Selector for a td element.
 -}
-td : Tag
+td : Selector
 td =
-    Tag "td"
+  makeTypeSelector "td"
 
 
 {-| Selector for a tfoot element.
 -}
-tfoot : Tag
+tfoot : Selector
 tfoot =
-    Tag "tfoot"
+  makeTypeSelector "tfoot"
 
 
 {-| Selector for a th element.
 -}
-th : Tag
+th : Selector
 th =
-    Tag "th"
+  makeTypeSelector "th"
 
 
 {-| Selector for a thead element.
 -}
-thead : Tag
+thead : Selector
 thead =
-    Tag "thead"
+  makeTypeSelector "thead"
 
 
 {-| Selector for a thead element.
 -}
-tr : Tag
+tr : Selector
 tr =
-    Tag "tr"
+  makeTypeSelector "tr"
+
 
 
 {- FORMS -}
@@ -338,69 +332,69 @@ tr =
 
 {-| Selector for a button element.
 -}
-button : Tag
+button : Selector
 button =
-    Tag "button"
+  makeTypeSelector "button"
 
 
 {-| Selector for a fieldset element.
 -}
-fieldset : Tag
+fieldset : Selector
 fieldset =
-    Tag "fieldset"
+  makeTypeSelector "fieldset"
 
 
 {-| Selector for a form element.
 -}
-form : Tag
+form : Selector
 form =
-    Tag "form"
+  makeTypeSelector "form"
 
 
 {-| Selector for an input element.
 -}
-input : Tag
+input : Selector
 input =
-    Tag "input"
+  makeTypeSelector "input"
 
 
 {-| Selector for a label element.
 -}
-label : Tag
+label : Selector
 label =
-    Tag "label"
+  makeTypeSelector "label"
 
 
 {-| Selector for a legend element.
 -}
-legend : Tag
+legend : Selector
 legend =
-    Tag "legend"
+  makeTypeSelector "legend"
 
 
 {-| Selector for an optgroup element.
 -}
-optgroup : Tag
+optgroup : Selector
 optgroup =
-    Tag "optgroup"
+  makeTypeSelector "optgroup"
 
 
 {-| Selector for an option element.
 -}
-option : Tag
+option : Selector
 option =
-    Tag "option"
+  makeTypeSelector "option"
 
 
 {-| Selector for a progress element.
 -}
-progress : Tag
+progress : Selector
 progress =
-    Tag "progress"
+  makeTypeSelector "progress"
 
 
 {-| Selector for a select element.
 -}
-select : Tag
+select : Selector
 select =
-    Tag "select"
+  makeTypeSelector "select"
