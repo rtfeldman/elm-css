@@ -8,7 +8,10 @@ type CssClasses = Hidden
 type CssIds = Page
 type CssAnimations = Wobble
 
+pageBackground : Color {}
 pageBackground = rgb 100 90 128
+
+pageDefaultText : Color {}
 pageDefaultText = rgb 40 35 76
 
 
