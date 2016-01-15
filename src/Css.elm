@@ -87,7 +87,8 @@ type alias StyleBlockDeclarations =
   Style { styleType : StyleBlockType }
 
 
-{-| A Mixin. -}
+{-| A Mixin.
+-}
 type alias Mixin =
   Style { styleType : MixinType }
 
@@ -3578,11 +3579,65 @@ stylesheet { name } =
   { name = StylesheetNamespace name, transform = \_ _ -> Ok [] }
 
 
-snippet : { a | name : String } -> List StyleBlockDeclarations -> Snippet
-snippet { name } declarations =
-  { transform = \_ _ -> Ok []
+snippet : List StyleBlockDeclarations -> Snippet
+snippet styles =
+  { transform = applyStyles styles
   , styleType = SnippetType
   }
+
+
+applyStyles : List (Style a) -> DeclarationTransform
+applyStyles styles name declarations =
+  List.foldl
+    (\{ transform } -> (flip Result.andThen) (transform name))
+    (Ok declarations)
+    styles
+
+
+(##) : id -> List Mixin -> StyleBlockDeclarations
+(##) id mixins =
+  selectorToStyleBlock mixins (\name -> IdSelector (identifierToString name id))
+
+
+stylesheet_ : { a | name : String } -> List StyleBlockDeclarations -> Result String (List Declaration)
+stylesheet_ { name } styles =
+  applyStyles styles name []
+
+
+snippets : List Snippet -> StyleBlockDeclarations
+snippets list =
+  { transform = applyStyles list
+  , styleType = StyleBlockType
+  }
+
+
+selectorToStyleBlock : List Mixin -> (String -> Declaration.Selector) -> StyleBlockDeclarations
+selectorToStyleBlock mixins makeSelector =
+  let
+    transform name =
+      transformWithStyles mixins (selectorDeclaration (makeSelector name)) name
+  in
+    { transform = transform
+    , styleType = StyleBlockType
+    }
+
+
+declareSelector : (String -> Declaration.Selector) -> String -> Declaration
+declareSelector selectorFromName name =
+  selectorDeclaration (selectorFromName name)
+
+
+transformWithStyles : List (Style a) -> Declaration -> DeclarationTransform
+transformWithStyles styles newDeclaration name declarations =
+  applyStyles styles name (declarations ++ [ newDeclaration ])
+
+
+selectorDeclaration : Declaration.Selector -> Declaration
+selectorDeclaration selector =
+  StyleBlock
+    (SingleSelector selector)
+    []
+    []
 
 
 {-| A Mixinllowing you to modularly reuse common styles in other styles.
