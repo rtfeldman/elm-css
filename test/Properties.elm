@@ -357,7 +357,7 @@ prettyPrint sheet =
 
 
 type alias DeclarationTransform namespace =
-    namespace -> List Declaration -> Result String (List Declaration)
+    namespace -> List Declaration -> List Declaration
 
 
 type alias StylesheetOrMixin namespace base =

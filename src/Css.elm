@@ -50,7 +50,7 @@ type Compatible
 
 
 type alias DeclarationTransform =
-  String -> List Declaration -> Result String (List Declaration)
+  String -> List Declaration -> List Declaration
 
 
 {-| TODO deprecated
@@ -99,11 +99,11 @@ type alias AtRuleDeclarations =
 
 
 --type alias AtRule a =
---  a -> String -> List Declaration -> Result String (List Declaration)
+--  a -> String -> List Declaration -> List Declaration
 --(#) : id -> List Mixin -> StyleBlockDeclarations
 --(#) id mixins =
 --  -- TODO implement transform
---  { transform = (\_ _ -> Ok [])
+--  { transform = (\_ _ -> [])
 --  , styleType = StyleBlockType
 --  }
 
@@ -121,7 +121,7 @@ type MediaQuery
 
 --importUrl : AtRule ( String, List String )
 --importUrl ( str, list ) _ _ =
---  Ok []
+--  []
 --(@) : AtRule a -> a -> AtRuleDeclarations
 --(@) applyRule arg =
 --  { transform = applyRule arg
@@ -138,7 +138,7 @@ applyTransformation transformation mixinOrStylesheet =
     | transform =
         (\name declarations ->
           (mixinOrStylesheet.transform name declarations)
-            |> (flip Result.andThen) (transformation name)
+            |> transformation name
         )
   }
 
@@ -3576,7 +3576,7 @@ your stylesheet.
 -}
 stylesheet : { a | name : String } -> Stylesheet animation class id
 stylesheet { name } =
-  { name = StylesheetNamespace name, transform = \_ _ -> Ok [] }
+  { name = StylesheetNamespace name, transform = \_ _ -> [] }
 
 
 snippet : List StyleBlockDeclarations -> Snippet
@@ -3588,18 +3588,10 @@ snippet styles =
 
 applyStyles : List (Style a) -> DeclarationTransform
 applyStyles styles name declarations =
-  List.foldl
-    (\{ transform } -> (flip Result.andThen) (transform name))
-    (Ok declarations)
-    styles
+  List.foldl (\{ transform } -> transform name) declarations styles
 
 
-(##) : id -> List Mixin -> StyleBlockDeclarations
-(##) id mixins =
-  selectorToStyleBlock mixins (\name -> IdSelector (identifierToString name id))
-
-
-stylesheet_ : { a | name : String } -> List StyleBlockDeclarations -> Result String (List Declaration)
+stylesheet_ : { a | name : String } -> List StyleBlockDeclarations -> List Declaration
 stylesheet_ { name } styles =
   applyStyles styles name []
 
@@ -3666,7 +3658,7 @@ style.
 -}
 mixin : Mixin
 mixin =
-  { transform = \_ declarations -> Ok declarations
+  { transform = \_ declarations -> declarations
   , styleType = MixinType
   }
 
@@ -3685,7 +3677,7 @@ type alias Stylesheet animation class id =
 
 addSelectorToStylesheet : Selector -> StylesheetOrMixin a -> StylesheetOrMixin a
 addSelectorToStylesheet selector =
-  applyTransformation (\_ -> (introduceSelector selector) >> Ok)
+  applyTransformation (\_ -> introduceSelector selector)
 
 
 {-| A [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors).
@@ -3763,7 +3755,7 @@ addSelectorToStylesheet selector =
 (@) sheet rule =
   let
     addRule _ declarations =
-      Ok (declarations ++ [ ConditionalGroupRule rule [] ])
+      declarations ++ [ ConditionalGroupRule rule [] ]
   in
     applyTransformation addRule sheet
 
@@ -4434,4 +4426,5 @@ compile sheet =
   case sheet.name of
     StylesheetNamespace name ->
       sheet.transform name []
-        |> Result.map prettyPrintDeclarations
+        |> prettyPrintDeclarations
+        |> Ok
