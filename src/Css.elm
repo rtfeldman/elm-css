@@ -62,13 +62,23 @@ type alias StylesheetOrMixin base =
 type alias Style a =
   { a | transform : DeclarationTransform }
 
+type alias Css style =
+  { style | transform : DeclarationTransform }
+
+type alias StyleBlockDeclarations =
+  Declarations { styleBlock : Compatible }
+
 
 type MixinType
   = MixinType
 
 
-type StyleBlockType
-  = StyleBlockType
+type DeclarationType
+  = DeclarationType
+
+
+type ConditionalGroupRuleType
+  = ConditionalGroupRuleType
 
 
 type AtRuleType
@@ -83,24 +93,33 @@ type alias Snippet =
   Style { styleType : SnippetType }
 
 
-type alias StyleBlockDeclarations =
-  Style { styleType : StyleBlockType }
-
-
-{-| A Mixin.
--}
-type alias Mixin =
-  Style { styleType : MixinType }
+type alias Declarations a =
+  { a
+    | transform : DeclarationTransform
+    , styleType : DeclarationType
+  }
 
 
 type alias AtRuleDeclarations =
   Style { styleType : AtRuleType }
 
 
+{-| A Css Mixin.
+-}
+type alias Mixin =
+  { styleType : MixinType }
+
+
+type alias AtRule =
+  { declaration : Declaration
+  , declarationType : AtRuleType
+  }
+
+
 
 --type alias AtRule a =
 --  a -> String -> List Declaration -> List Declaration
---(#) : id -> List Mixin -> StyleBlockDeclarations
+--(#) : id -> List (Css Mixin) -> Declarations a
 --(#) id mixins =
 --  -- TODO implement transform
 --  { transform = (\_ _ -> [])
@@ -172,10 +191,10 @@ cssFunction funcName args =
 {-| Caution: trickery ahead!
 
 This is for use with overloaded CSS properties like `left` that need to be keys
-in some places and values in othes. You give it a Mixin that evaluates to the
+in some places and values in othes. You give it a Css Mixin that evaluates to the
 relevant key, and then use that key as your value.
 
-For example, `left` is a Mixin that takes a Length and adds a property like
+For example, `left` is a Css Mixin that takes a Length and adds a property like
 "left: 3px". What this does is take `left`, pass it `zero` (to create a
 "left: 0" definition), then inspects that definition that it just created to
 extract the key (in this case the string "left"), then uses that key as the
@@ -190,7 +209,7 @@ Other notes:
 `key` is the name of the property.
 `functionName` is just for better error messages.
 -}
-getOverloadedProperty : String -> String -> Mixin -> Mixin
+getOverloadedProperty : String -> String -> Css Mixin -> Css Mixin
 getOverloadedProperty functionName key =
   let
     newTransform name declarations =
@@ -282,13 +301,13 @@ type alias FlexDirectionOrWrap compatible =
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values
 -}
 type alias AlignItems a =
-  Length a -> Mixin
+  Length a -> Css Mixin
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values
 -}
 type alias AlignSelf a =
-  Length a -> Mixin
+  Length a -> Css Mixin
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values
@@ -436,7 +455,7 @@ that it will return the desired String as its key, and use that as our value.
 
 
 type alias TextAlign a =
-  Length a -> Mixin
+  Length a -> Css Mixin
 
 
 
@@ -450,7 +469,7 @@ that it will return the desired String as its key, and use that as our value.
 
 
 type alias VerticalAlign a =
-  Length a -> Mixin
+  Length a -> Css Mixin
 
 
 
@@ -459,7 +478,7 @@ type alias VerticalAlign a =
 
 {-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
 -}
-all : All compatible -> Mixin
+all : All compatible -> Css Mixin
 all =
   prop1 "all"
 
@@ -467,7 +486,7 @@ all =
 {-| Transforms the given property by adding !important to the end of its
 declaration.
 -}
-important : Mixin -> Mixin
+important : Css Mixin -> Css Mixin
 important =
   let
     update property =
@@ -1377,7 +1396,7 @@ populated list:
 
     ~ transforms [ perspective 1, scale2 1 1.4 ]
 -}
-transforms : List (Transform compatible) -> Mixin
+transforms : List (Transform compatible) -> Css Mixin
 transforms =
   prop1 "transform" << valuesOrNone
 
@@ -1389,7 +1408,7 @@ property to `none`, use the `transforms` function with an empty list. See
 
     transform (scaleX 1.4)
 -}
-transform : Transform compatible -> Mixin
+transform : Transform compatible -> Css Mixin
 transform only =
   transforms [ only ]
 
@@ -1432,7 +1451,7 @@ viewBox =
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-transformBox : TransformBox compatible -> Mixin
+transformBox : TransformBox compatible -> Css Mixin
 transformBox =
   prop1 "transform-box"
 
@@ -1441,7 +1460,7 @@ transformBox =
 
     ~ boxSizing borderBox
 -}
-boxSizing : BoxSizing compatible -> Mixin
+boxSizing : BoxSizing compatible -> Css Mixin
 boxSizing =
   prop1 "box-sizing"
 
@@ -1466,7 +1485,7 @@ flat =
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-transformStyle : TransformStyle compatible -> Mixin
+transformStyle : TransformStyle compatible -> Css Mixin
 transformStyle =
   prop1 "transform-style"
 
@@ -1482,7 +1501,7 @@ flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
 -}
-flex1 : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin
+flex1 : LengthOrNumberOrAutoOrNoneOrContent compatible -> Css Mixin
 flex1 =
   prop1 "flex"
 
@@ -1494,7 +1513,7 @@ flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
 -}
-flex2 : Number compatibleA -> LengthOrNumber compatibleB -> Mixin
+flex2 : Number compatibleA -> LengthOrNumber compatibleB -> Css Mixin
 flex2 =
   prop2 "flex"
 
@@ -1506,7 +1525,7 @@ flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
 -}
-flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Mixin
+flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Css Mixin
 flex3 =
   prop3 "flex"
 
@@ -1518,35 +1537,35 @@ flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
 -}
-flexBasis : FlexBasis compatible -> Mixin
+flexBasis : FlexBasis compatible -> Css Mixin
 flexBasis =
   prop1 "flex-basis"
 
 
 {-| Sets [`flex-grow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow) property.}
 -}
-flexGrow : Number compatible -> Mixin
+flexGrow : Number compatible -> Css Mixin
 flexGrow =
   prop1 "flex-grow"
 
 
 {-| Sets [`flex-shrink`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink) property.}
 -}
-flexShrink : Number compatible -> Mixin
+flexShrink : Number compatible -> Css Mixin
 flexShrink =
   prop1 "flex-shrink"
 
 
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
 -}
-flexWrap : FlexWrap compatible -> Mixin
+flexWrap : FlexWrap compatible -> Css Mixin
 flexWrap =
   prop1 "flex-wrap"
 
 
 {-| Sets [`flex-direction`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction) property.}
 -}
-flexDirection : FlexDirection compatible -> Mixin
+flexDirection : FlexDirection compatible -> Css Mixin
 flexDirection =
   prop1 "flex-direction"
 
@@ -1558,7 +1577,7 @@ flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnRever
 
 Or vice versa, order is not important for flex-flow
 -}
-flexFlow1 : FlexDirectionOrWrap compatible -> Mixin
+flexFlow1 : FlexDirectionOrWrap compatible -> Css Mixin
 flexFlow1 =
   prop1 "flex-flow"
 
@@ -1570,14 +1589,14 @@ flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnRever
 
 Or vice versa, order is not important for flex-flow
 -}
-flexFlow2 : FlexDirectionOrWrap compatibleA -> FlexDirectionOrWrap compatibleB -> Mixin
+flexFlow2 : FlexDirectionOrWrap compatibleA -> FlexDirectionOrWrap compatibleB -> Css Mixin
 flexFlow2 =
   prop2 "flex-flow"
 
 
 {-| Sets [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items).
 -}
-alignItems : (ExplicitLength -> Mixin) -> Mixin
+alignItems : (ExplicitLength -> Css Mixin) -> Css Mixin
 alignItems fn =
   getOverloadedProperty "alignItems" "align-items" (fn (pct 0))
 
@@ -1591,14 +1610,14 @@ alignItems fn =
   ~ ("text-align-last", "auto")
 
 -}
-alignSelf : (ExplicitLength -> Mixin) -> Mixin
+alignSelf : (ExplicitLength -> Css Mixin) -> Css Mixin
 alignSelf fn =
   getOverloadedProperty "alignSelf" "align-self" (fn (pct 0))
 
 
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
 -}
-order : Number compatible -> Mixin
+order : Number compatible -> Css Mixin
 order =
   prop1 "order"
 
@@ -1868,7 +1887,7 @@ textBottom =
 
 {-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
 -}
-position : Position compatible -> Mixin
+position : Position compatible -> Css Mixin
 position =
   prop1 "position"
 
@@ -1877,22 +1896,22 @@ position =
 {- Properties -}
 
 
-prop1 : String -> Value a -> Mixin
+prop1 : String -> Value a -> Css Mixin
 prop1 key arg =
   custom key arg.value
 
 
-prop2 : String -> Value a -> Value b -> Mixin
+prop2 : String -> Value a -> Value b -> Css Mixin
 prop2 key argA argB =
   custom key (String.join " " [ argA.value, argB.value ])
 
 
-prop3 : String -> Value a -> Value b -> Value c -> Mixin
+prop3 : String -> Value a -> Value b -> Value c -> Css Mixin
 prop3 key argA argB argC =
   custom key (String.join " " [ argA.value, argB.value, argC.value ])
 
 
-prop4 : String -> Value a -> Value b -> Value c -> Value d -> Mixin
+prop4 : String -> Value a -> Value b -> Value c -> Value d -> Css Mixin
 prop4 key argA argB argC argD =
   custom key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
 
@@ -1901,7 +1920,7 @@ prop4 key argA argB argC argD =
 
     textDecorationColor (rgb 12 11 10)
 -}
-textDecorationColor : Color compatible -> Mixin
+textDecorationColor : Color compatible -> Css Mixin
 textDecorationColor =
   prop1 "text-decoration-color"
 
@@ -1916,21 +1935,21 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : (ExplicitLength -> Mixin) -> Mixin
+textAlignLast : (ExplicitLength -> Css Mixin) -> Css Mixin
 textAlignLast fn =
   getOverloadedProperty "textAlignLast" "text-align-last" (fn (pct 0))
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : (ExplicitLength -> Mixin) -> Mixin
+textAlign : (ExplicitLength -> Css Mixin) -> Css Mixin
 textAlign fn =
   getOverloadedProperty "textAlign" "text-align" (fn (pct 0))
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
 -}
-textRendering : TextRendering a -> Mixin
+textRendering : TextRendering a -> Css Mixin
 textRendering =
   prop1 "text-rendering"
 
@@ -1943,7 +1962,7 @@ To set `text-overflow` to an arbitrary String, use [`custom`](#custom) like so:
 
     ~ custom "text-overflow" "my custom text-overflow value"
 -}
-textOverflow : TextOverflow compatible -> Mixin
+textOverflow : TextOverflow compatible -> Css Mixin
 textOverflow =
   prop1 "text-overflow"
 
@@ -1956,7 +1975,7 @@ textOverflow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow : None compatible -> Mixin
+textShadow : None compatible -> Css Mixin
 textShadow =
   prop1 "text-shadow"
 
@@ -1969,7 +1988,7 @@ textShadow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length compatible -> Length compatible -> Mixin
+textShadow2 : Length compatible -> Length compatible -> Css Mixin
 textShadow2 =
   prop2 "text-shadow"
 
@@ -1982,7 +2001,7 @@ textShadow2 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatible -> Length compatible -> Color compatible -> Mixin
+textShadow3 : Length compatible -> Length compatible -> Color compatible -> Css Mixin
 textShadow3 =
   prop3 "text-shadow"
 
@@ -1995,7 +2014,7 @@ textShadow3 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatible -> Length compatible -> Length compatible -> Color compatible -> Mixin
+textShadow4 : Length compatible -> Length compatible -> Length compatible -> Color compatible -> Css Mixin
 textShadow4 =
   prop4 "text-shadow"
 
@@ -2006,7 +2025,7 @@ textShadow4 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent : Length compatible -> Mixin
+textIndent : Length compatible -> Css Mixin
 textIndent =
   prop1 "text-indent"
 
@@ -2017,7 +2036,7 @@ textIndent =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent2 : Length compatibleA -> TextIndent compatibleB -> Mixin
+textIndent2 : Length compatibleA -> TextIndent compatibleB -> Css Mixin
 textIndent2 =
   prop2 "text-indent"
 
@@ -2028,33 +2047,33 @@ textIndent2 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent3 : Length compatibleA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin
+textIndent3 : Length compatibleA -> TextIndent compatibleB -> TextIndent compatibleC -> Css Mixin
 textIndent3 =
   prop3 "text-indent"
 
 
 {-| Sets [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 -}
-textTransform : TextTransform compatible -> Mixin
+textTransform : TextTransform compatible -> Css Mixin
 textTransform =
   prop1 "text-transform"
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : (ExplicitLength -> Mixin) -> Mixin
+verticalAlign : (ExplicitLength -> Css Mixin) -> Css Mixin
 verticalAlign fn =
   getOverloadedProperty "verticalAlign" "vertical-align" (fn (pct 0))
 
 
 {-| -}
-display : Display compatible -> Mixin
+display : Display compatible -> Css Mixin
 display =
   prop1 "display"
 
 
 {-| -}
-opacity : Number compatible -> Mixin
+opacity : Number compatible -> Css Mixin
 opacity =
   prop1 "opacity"
 
@@ -2064,7 +2083,7 @@ opacity =
     ~ width (px 960)
 
 -}
-width : LengthOrAuto compatible -> Mixin
+width : LengthOrAuto compatible -> Css Mixin
 width =
   prop1 "width"
 
@@ -2074,7 +2093,7 @@ width =
     ~ maxWidth (px 960)
 
 -}
-maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Mixin
+maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Css Mixin
 maxWidth =
   prop1 "max-width"
 
@@ -2084,7 +2103,7 @@ maxWidth =
     ~ minWidth (px 100)
 
 -}
-minWidth : LengthOrMinMaxDimension compatible -> Mixin
+minWidth : LengthOrMinMaxDimension compatible -> Css Mixin
 minWidth =
   prop1 "min-width"
 
@@ -2094,7 +2113,7 @@ minWidth =
     ~ height (px 800)
 
 -}
-height : LengthOrAuto compatible -> Mixin
+height : LengthOrAuto compatible -> Css Mixin
 height =
   prop1 "height"
 
@@ -2104,7 +2123,7 @@ height =
     ~ minHeight (px 100)
 
 -}
-minHeight : LengthOrMinMaxDimension compatible -> Mixin
+minHeight : LengthOrMinMaxDimension compatible -> Css Mixin
 minHeight =
   prop1 "min-height"
 
@@ -2114,7 +2133,7 @@ minHeight =
     ~ maxHeight (px 1024)
 
 -}
-maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Mixin
+maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Css Mixin
 maxHeight =
   prop1 "max-height"
 
@@ -2130,7 +2149,7 @@ maxHeight =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length compatible -> Mixin
+padding : Length compatible -> Css Mixin
 padding =
   prop1 "padding"
 
@@ -2142,7 +2161,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length compatible -> Length compatible -> Mixin
+padding2 : Length compatible -> Length compatible -> Css Mixin
 padding2 =
   prop2 "padding"
 
@@ -2154,7 +2173,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length compatible -> Length compatible -> Length compatible -> Mixin
+padding3 : Length compatible -> Length compatible -> Length compatible -> Css Mixin
 padding3 =
   prop3 "padding"
 
@@ -2166,7 +2185,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length compatible -> Length compatible -> Length compatible -> Length compatible -> Mixin
+padding4 : Length compatible -> Length compatible -> Length compatible -> Length compatible -> Css Mixin
 padding4 =
   prop4 "padding"
 
@@ -2175,7 +2194,7 @@ padding4 =
 
     paddingBlockStart (px 10)
 -}
-paddingBlockStart : LengthOrAuto compatible -> Mixin
+paddingBlockStart : LengthOrAuto compatible -> Css Mixin
 paddingBlockStart =
   prop1 "padding-block-start"
 
@@ -2184,7 +2203,7 @@ paddingBlockStart =
 
     paddingBlockEnd (px 10)
 -}
-paddingBlockEnd : LengthOrAuto compatible -> Mixin
+paddingBlockEnd : LengthOrAuto compatible -> Css Mixin
 paddingBlockEnd =
   prop1 "padding-block-end"
 
@@ -2193,7 +2212,7 @@ paddingBlockEnd =
 
     paddingInlineStart (px 10)
 -}
-paddingInlineStart : LengthOrAuto compatible -> Mixin
+paddingInlineStart : LengthOrAuto compatible -> Css Mixin
 paddingInlineStart =
   prop1 "padding-inline-start"
 
@@ -2202,7 +2221,7 @@ paddingInlineStart =
 
     paddingInlineEnd (px 10)
 -}
-paddingInlineEnd : LengthOrAuto compatible -> Mixin
+paddingInlineEnd : LengthOrAuto compatible -> Css Mixin
 paddingInlineEnd =
   prop1 "padding-inline-end"
 
@@ -2211,7 +2230,7 @@ paddingInlineEnd =
 
     paddingTop (px 10)
 -}
-paddingTop : Length compatible -> Mixin
+paddingTop : Length compatible -> Css Mixin
 paddingTop =
   prop1 "padding-top"
 
@@ -2220,7 +2239,7 @@ paddingTop =
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length compatible -> Mixin
+paddingBottom : Length compatible -> Css Mixin
 paddingBottom =
   prop1 "padding-bottom"
 
@@ -2229,7 +2248,7 @@ paddingBottom =
 
     paddingRight (px 10)
 -}
-paddingRight : Length compatible -> Mixin
+paddingRight : Length compatible -> Css Mixin
 paddingRight =
   prop1 "padding-right"
 
@@ -2238,7 +2257,7 @@ paddingRight =
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length compatible -> Mixin
+paddingLeft : Length compatible -> Css Mixin
 paddingLeft =
   prop1 "padding-left"
 
@@ -2254,7 +2273,7 @@ paddingLeft =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin : LengthOrAuto compatible -> Mixin
+margin : LengthOrAuto compatible -> Css Mixin
 margin =
   prop1 "margin"
 
@@ -2266,7 +2285,7 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin
+margin2 : LengthOrAuto compatible -> LengthOrAuto compatible -> Css Mixin
 margin2 =
   prop2 "margin"
 
@@ -2278,7 +2297,7 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin
+margin3 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Css Mixin
 margin3 =
   prop3 "margin"
 
@@ -2290,7 +2309,7 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin
+margin4 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Css Mixin
 margin4 =
   prop4 "margin"
 
@@ -2299,7 +2318,7 @@ margin4 =
 
     marginTop (px 10)
 -}
-marginTop : LengthOrAuto compatible -> Mixin
+marginTop : LengthOrAuto compatible -> Css Mixin
 marginTop =
   prop1 "margin-top"
 
@@ -2308,7 +2327,7 @@ marginTop =
 
     marginBottom (px 10)
 -}
-marginBottom : LengthOrAuto compatible -> Mixin
+marginBottom : LengthOrAuto compatible -> Css Mixin
 marginBottom =
   prop1 "margin-bottom"
 
@@ -2317,7 +2336,7 @@ marginBottom =
 
     marginRight (px 10)
 -}
-marginRight : LengthOrAuto compatible -> Mixin
+marginRight : LengthOrAuto compatible -> Css Mixin
 marginRight =
   prop1 "margin-right"
 
@@ -2326,7 +2345,7 @@ marginRight =
 
     marginLeft (px 10)
 -}
-marginLeft : LengthOrAuto compatible -> Mixin
+marginLeft : LengthOrAuto compatible -> Css Mixin
 marginLeft =
   prop1 "margin-left"
 
@@ -2335,7 +2354,7 @@ marginLeft =
 
     marginBlockStart (px 10)
 -}
-marginBlockStart : LengthOrAuto compatible -> Mixin
+marginBlockStart : LengthOrAuto compatible -> Css Mixin
 marginBlockStart =
   prop1 "margin-block-start"
 
@@ -2344,7 +2363,7 @@ marginBlockStart =
 
     marginBlockEnd (px 10)
 -}
-marginBlockEnd : LengthOrAuto compatible -> Mixin
+marginBlockEnd : LengthOrAuto compatible -> Css Mixin
 marginBlockEnd =
   prop1 "margin-block-end"
 
@@ -2353,7 +2372,7 @@ marginBlockEnd =
 
     marginInlineStart (px 10)
 -}
-marginInlineStart : LengthOrAuto compatible -> Mixin
+marginInlineStart : LengthOrAuto compatible -> Css Mixin
 marginInlineStart =
   prop1 "margin-inline-start"
 
@@ -2362,7 +2381,7 @@ marginInlineStart =
 
     marginInlineEnd (px 10)
 -}
-marginInlineEnd : LengthOrAuto compatible -> Mixin
+marginInlineEnd : LengthOrAuto compatible -> Css Mixin
 marginInlineEnd =
   prop1 "margin-inline-end"
 
@@ -2376,7 +2395,7 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
 
     ~ verticalAlign top
 -}
-top : LengthOrAuto compatible -> Mixin
+top : LengthOrAuto compatible -> Css Mixin
 top =
   prop1 "top"
 
@@ -2390,7 +2409,7 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
 
     ~ verticalAlign bottom
 -}
-bottom : LengthOrAuto compatible -> Mixin
+bottom : LengthOrAuto compatible -> Css Mixin
 bottom =
   prop1 "bottom"
 
@@ -2404,7 +2423,7 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
     ~ textAlign left
 -}
-left : LengthOrAuto compatible -> Mixin
+left : LengthOrAuto compatible -> Css Mixin
 left =
   prop1 "left"
 
@@ -2418,7 +2437,7 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
     ~ textAlign right
 -}
-right : LengthOrAuto compatible -> Mixin
+right : LengthOrAuto compatible -> Css Mixin
 right =
   prop1 "right"
 
@@ -2544,7 +2563,7 @@ absolute =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length compatible -> Mixin
+border : Length compatible -> Css Mixin
 border =
   prop1 "border"
 
@@ -2556,7 +2575,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+border2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 border2 =
   prop2 "border"
 
@@ -2567,7 +2586,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+border3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 border3 =
   prop3 "border"
 
@@ -2579,7 +2598,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length compatible -> Mixin
+borderTop : Length compatible -> Css Mixin
 borderTop =
   prop1 "border-top"
 
@@ -2591,7 +2610,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderTop2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderTop2 =
   prop2 "border-top"
 
@@ -2603,7 +2622,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderTop3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderTop3 =
   prop3 "border-top"
 
@@ -2615,7 +2634,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length compatible -> Mixin
+borderBottom : Length compatible -> Css Mixin
 borderBottom =
   prop1 "border-bottom"
 
@@ -2627,7 +2646,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBottom2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderBottom2 =
   prop2 "border-bottom"
 
@@ -2639,7 +2658,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderBottom3 =
   prop3 "border-bottom"
 
@@ -2651,7 +2670,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length compatible -> Mixin
+borderLeft : Length compatible -> Css Mixin
 borderLeft =
   prop1 "border-left"
 
@@ -2663,7 +2682,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderLeft2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderLeft2 =
   prop2 "border-left"
 
@@ -2675,7 +2694,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderLeft3 =
   prop3 "border-left"
 
@@ -2687,7 +2706,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length compatible -> Mixin
+borderRight : Length compatible -> Css Mixin
 borderRight =
   prop1 "border-right"
 
@@ -2699,7 +2718,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderRight2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderRight2 =
   prop2 "border-right"
 
@@ -2711,7 +2730,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderRight3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderRight3 =
   prop3 "border-right"
 
@@ -2723,7 +2742,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length compatible -> Mixin
+borderBlockStart : Length compatible -> Css Mixin
 borderBlockStart =
   prop1 "border-block-start"
 
@@ -2735,7 +2754,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBlockStart2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderBlockStart2 =
   prop2 "border-block-start"
 
@@ -2747,7 +2766,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderBlockStart3 =
   prop3 "border-block-start"
 
@@ -2759,7 +2778,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length compatible -> Mixin
+borderBlockEnd : Length compatible -> Css Mixin
 borderBlockEnd =
   prop1 "border-block-end"
 
@@ -2771,7 +2790,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBlockEnd2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderBlockEnd2 =
   prop2 "border-block-end"
 
@@ -2783,7 +2802,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderBlockEnd3 =
   prop3 "border-block-end"
 
@@ -2795,7 +2814,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length compatible -> Mixin
+borderInlineStart : Length compatible -> Css Mixin
 borderInlineStart =
   prop1 "border-block-start"
 
@@ -2807,7 +2826,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderInlineStart2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderInlineStart2 =
   prop2 "border-block-start"
 
@@ -2819,7 +2838,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderInlineStart3 =
   prop3 "border-block-start"
 
@@ -2831,7 +2850,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length compatible -> Mixin
+borderInlineEnd : Length compatible -> Css Mixin
 borderInlineEnd =
   prop1 "border-block-end"
 
@@ -2843,7 +2862,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderInlineEnd2 : Length compatibleA -> BorderStyle compatibleB -> Css Mixin
 borderInlineEnd2 =
   prop2 "border-block-end"
 
@@ -2855,7 +2874,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Css Mixin
 borderInlineEnd3 =
   prop3 "border-block-end"
 
@@ -2868,7 +2887,7 @@ borderInlineEnd3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset : LengthOrNumber compatible -> Mixin
+borderImageOutset : LengthOrNumber compatible -> Css Mixin
 borderImageOutset =
   prop1 "border-image-outset"
 
@@ -2881,7 +2900,7 @@ borderImageOutset =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin
+borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Css Mixin
 borderImageOutset2 =
   prop2 "border-image-outset"
 
@@ -2894,7 +2913,7 @@ borderImageOutset2 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin
+borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Css Mixin
 borderImageOutset3 =
   prop3 "border-image-outset"
 
@@ -2907,7 +2926,7 @@ borderImageOutset3 =
     borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
 
 -}
-borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin
+borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Css Mixin
 borderImageOutset4 =
   prop4 "border-image-outset"
 
@@ -2920,7 +2939,7 @@ borderImageOutset4 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth : LengthOrNumber compatible -> Mixin
+borderImageWidth : LengthOrNumber compatible -> Css Mixin
 borderImageWidth =
   prop1 "border-image-width"
 
@@ -2933,7 +2952,7 @@ borderImageWidth =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin
+borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Css Mixin
 borderImageWidth2 =
   prop2 "border-image-width"
 
@@ -2946,7 +2965,7 @@ borderImageWidth2 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin
+borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Css Mixin
 borderImageWidth3 =
   prop3 "border-image-width"
 
@@ -2959,7 +2978,7 @@ borderImageWidth3 =
     borderImageWidth4 (n 3) (px 15) auto (n 2)
 
 -}
-borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin
+borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Css Mixin
 borderImageWidth4 =
   prop4 "border-image-width"
 
@@ -2968,7 +2987,7 @@ borderImageWidth4 =
 
     borderBlockStartColor (rgb 101 202 0)
 -}
-borderBlockStartColor : Color compatible -> Mixin
+borderBlockStartColor : Color compatible -> Css Mixin
 borderBlockStartColor =
   prop1 "border-block-start-color"
 
@@ -2977,7 +2996,7 @@ borderBlockStartColor =
 
     borderBottomColor (rgb 101 202 0)
 -}
-borderBottomColor : Color compatible -> Mixin
+borderBottomColor : Color compatible -> Css Mixin
 borderBottomColor =
   prop1 "border-bottom-color"
 
@@ -2986,7 +3005,7 @@ borderBottomColor =
 
     borderInlineStartColor (rgb 101 202 0)
 -}
-borderInlineStartColor : Color compatible -> Mixin
+borderInlineStartColor : Color compatible -> Css Mixin
 borderInlineStartColor =
   prop1 "border-inline-start-color"
 
@@ -2995,7 +3014,7 @@ borderInlineStartColor =
 
     borderInlineEndColor (rgb 101 202 0)
 -}
-borderInlineEndColor : Color compatible -> Mixin
+borderInlineEndColor : Color compatible -> Css Mixin
 borderInlineEndColor =
   prop1 "border-inline-end-color"
 
@@ -3004,7 +3023,7 @@ borderInlineEndColor =
 
     borderLeftColor (rgb 101 202 0)
 -}
-borderLeftColor : Color compatible -> Mixin
+borderLeftColor : Color compatible -> Css Mixin
 borderLeftColor =
   prop1 "border-left-color"
 
@@ -3013,7 +3032,7 @@ borderLeftColor =
 
     borderRightColor (rgb 101 202 0)
 -}
-borderRightColor : Color compatible -> Mixin
+borderRightColor : Color compatible -> Css Mixin
 borderRightColor =
   prop1 "border-right-color"
 
@@ -3022,7 +3041,7 @@ borderRightColor =
 
     borderTopColor (rgb 101 202 0)
 -}
-borderTopColor : Color compatible -> Mixin
+borderTopColor : Color compatible -> Css Mixin
 borderTopColor =
   prop1 "border-top-color"
 
@@ -3031,7 +3050,7 @@ borderTopColor =
 
     borderBlockEndColor (rgb 101 202 0)
 -}
-borderBlockEndColor : Color compatible -> Mixin
+borderBlockEndColor : Color compatible -> Css Mixin
 borderBlockEndColor =
   prop1 "border-block-end-color"
 
@@ -3040,7 +3059,7 @@ borderBlockEndColor =
 
     borderBlockEndStyle dashed
 -}
-borderBlockEndStyle : BorderStyle compatible -> Mixin
+borderBlockEndStyle : BorderStyle compatible -> Css Mixin
 borderBlockEndStyle =
   prop1 "border-block-end-style"
 
@@ -3049,7 +3068,7 @@ borderBlockEndStyle =
 
     borderBlockStartStyle dashed
 -}
-borderBlockStartStyle : BorderStyle compatible -> Mixin
+borderBlockStartStyle : BorderStyle compatible -> Css Mixin
 borderBlockStartStyle =
   prop1 "border-block-start-style"
 
@@ -3058,7 +3077,7 @@ borderBlockStartStyle =
 
     borderInlineEndStyle dashed
 -}
-borderInlineEndStyle : BorderStyle compatible -> Mixin
+borderInlineEndStyle : BorderStyle compatible -> Css Mixin
 borderInlineEndStyle =
   prop1 "border-inline-end-style"
 
@@ -3067,7 +3086,7 @@ borderInlineEndStyle =
 
     borderBottomStyle dashed
 -}
-borderBottomStyle : BorderStyle compatible -> Mixin
+borderBottomStyle : BorderStyle compatible -> Css Mixin
 borderBottomStyle =
   prop1 "border-bottom-style"
 
@@ -3076,7 +3095,7 @@ borderBottomStyle =
 
     borderInlineStartStyle dashed
 -}
-borderInlineStartStyle : BorderStyle compatible -> Mixin
+borderInlineStartStyle : BorderStyle compatible -> Css Mixin
 borderInlineStartStyle =
   prop1 "border-inline-start-style"
 
@@ -3085,7 +3104,7 @@ borderInlineStartStyle =
 
     borderLeftStyle dashed
 -}
-borderLeftStyle : BorderStyle compatible -> Mixin
+borderLeftStyle : BorderStyle compatible -> Css Mixin
 borderLeftStyle =
   prop1 "border-left-style"
 
@@ -3094,7 +3113,7 @@ borderLeftStyle =
 
     borderRightStyle dashed
 -}
-borderRightStyle : BorderStyle compatible -> Mixin
+borderRightStyle : BorderStyle compatible -> Css Mixin
 borderRightStyle =
   prop1 "border-right-style"
 
@@ -3103,7 +3122,7 @@ borderRightStyle =
 
     borderTopStyle dashed
 -}
-borderTopStyle : BorderStyle compatible -> Mixin
+borderTopStyle : BorderStyle compatible -> Css Mixin
 borderTopStyle =
   prop1 "border-top-style"
 
@@ -3112,7 +3131,7 @@ borderTopStyle =
 
     borderStyle dashed
 -}
-borderStyle : BorderStyle compatible -> Mixin
+borderStyle : BorderStyle compatible -> Css Mixin
 borderStyle =
   prop1 "border-style"
 
@@ -3121,7 +3140,7 @@ borderStyle =
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length compatible -> Mixin
+borderBottomWidth : Length compatible -> Css Mixin
 borderBottomWidth =
   prop1 "border-bottom-width"
 
@@ -3130,7 +3149,7 @@ borderBottomWidth =
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length compatible -> Mixin
+borderInlineEndWidth : Length compatible -> Css Mixin
 borderInlineEndWidth =
   prop1 "border-inline-end-width"
 
@@ -3139,7 +3158,7 @@ borderInlineEndWidth =
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length compatible -> Mixin
+borderLeftWidth : Length compatible -> Css Mixin
 borderLeftWidth =
   prop1 "border-left-width"
 
@@ -3148,7 +3167,7 @@ borderLeftWidth =
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length compatible -> Mixin
+borderRightWidth : Length compatible -> Css Mixin
 borderRightWidth =
   prop1 "border-right-width"
 
@@ -3158,7 +3177,7 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length compatible -> Mixin
+borderTopWidth : Length compatible -> Css Mixin
 borderTopWidth =
   prop1 "border-top-width"
 
@@ -3168,7 +3187,7 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopWidth2 : Length compatibleA -> Length compatibleB -> Css Mixin
 borderTopWidth2 =
   prop2 "border-top-width"
 
@@ -3178,7 +3197,7 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length compatible -> Mixin
+borderBottomLeftRadius : Length compatible -> Css Mixin
 borderBottomLeftRadius =
   prop1 "border-bottom-left-radius"
 
@@ -3188,7 +3207,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderBottomLeftRadius2 : Length compatibleA -> Length compatibleB -> Css Mixin
 borderBottomLeftRadius2 =
   prop2 "border-bottom-left-radius"
 
@@ -3198,7 +3217,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length compatible -> Mixin
+borderBottomRightRadius : Length compatible -> Css Mixin
 borderBottomRightRadius =
   prop1 "border-bottom-right-radius"
 
@@ -3208,7 +3227,7 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderBottomRightRadius2 : Length compatibleA -> Length compatibleB -> Css Mixin
 borderBottomRightRadius2 =
   prop2 "border-bottom-right-radius"
 
@@ -3218,7 +3237,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length compatible -> Mixin
+borderTopLeftRadius : Length compatible -> Css Mixin
 borderTopLeftRadius =
   prop1 "border-top-left-radius"
 
@@ -3228,7 +3247,7 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopLeftRadius2 : Length compatibleA -> Length compatibleB -> Css Mixin
 borderTopLeftRadius2 =
   prop2 "border-top-left-radius"
 
@@ -3238,7 +3257,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length compatible -> Mixin
+borderTopRightRadius : Length compatible -> Css Mixin
 borderTopRightRadius =
   prop1 "border-top-right-radius"
 
@@ -3248,7 +3267,7 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopRightRadius2 : Length compatibleA -> Length compatibleB -> Css Mixin
 borderTopRightRadius2 =
   prop2 "border-top-right-radius"
 
@@ -3260,7 +3279,7 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length compatible -> Mixin
+borderRadius : Length compatible -> Css Mixin
 borderRadius =
   prop1 "border-radius"
 
@@ -3272,7 +3291,7 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderRadius2 : Length compatibleA -> Length compatibleB -> Css Mixin
 borderRadius2 =
   prop2 "border-radius"
 
@@ -3284,7 +3303,7 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length compatibleA -> Length compatibleB -> Length compatibleC -> Mixin
+borderRadius3 : Length compatibleA -> Length compatibleB -> Length compatibleC -> Css Mixin
 borderRadius3 =
   prop3 "border-radius"
 
@@ -3296,7 +3315,7 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length compatibleB -> Length compatibleB -> Length compatibleC -> Length compatibleD -> Mixin
+borderRadius4 : Length compatibleB -> Length compatibleB -> Length compatibleC -> Length compatibleD -> Css Mixin
 borderRadius4 =
   prop4 "border-radius"
 
@@ -3306,7 +3325,7 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length compatible -> Mixin
+borderSpacing : Length compatible -> Css Mixin
 borderSpacing =
   prop1 "border-spacing"
 
@@ -3316,7 +3335,7 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length compatibleA -> Length compatibleB -> Mixin
+borderSpacing2 : Length compatibleA -> Length compatibleB -> Css Mixin
 borderSpacing2 =
   prop2 "border-spacing"
 
@@ -3328,7 +3347,7 @@ borderSpacing2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor : Color compatible -> Mixin
+borderColor : Color compatible -> Css Mixin
 borderColor =
   prop1 "border-color"
 
@@ -3340,7 +3359,7 @@ borderColor =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor2 : Color compatibleA -> Color compatibleB -> Mixin
+borderColor2 : Color compatibleA -> Color compatibleB -> Css Mixin
 borderColor2 =
   prop2 "border-color"
 
@@ -3352,7 +3371,7 @@ borderColor2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor3 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Mixin
+borderColor3 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Css Mixin
 borderColor3 =
   prop3 "border-color"
 
@@ -3364,43 +3383,43 @@ borderColor3 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor4 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Color compatibleD -> Mixin
+borderColor4 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Color compatibleD -> Css Mixin
 borderColor4 =
   prop4 "border-color"
 
 
 {-| -}
-overflow : Overflow compatible -> Mixin
+overflow : Overflow compatible -> Css Mixin
 overflow =
   prop1 "overflow"
 
 
 {-| -}
-overflowX : Overflow compatible -> Mixin
+overflowX : Overflow compatible -> Css Mixin
 overflowX =
   prop1 "overflow-x"
 
 
 {-| -}
-overflowY : Overflow compatible -> Mixin
+overflowY : Overflow compatible -> Css Mixin
 overflowY =
   prop1 "overflow-y"
 
 
 {-| -}
-whiteSpace : WhiteSpace compatible -> Mixin
+whiteSpace : WhiteSpace compatible -> Css Mixin
 whiteSpace =
   prop1 "white-space"
 
 
 {-| -}
-backgroundColor : Color compatible -> Mixin
+backgroundColor : Color compatible -> Css Mixin
 backgroundColor =
   prop1 "background-color"
 
 
 {-| -}
-color : Color compatible -> Mixin
+color : Color compatible -> Css Mixin
 color =
   prop1 "color"
 
@@ -3423,7 +3442,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration : TextDecorationLine a -> Mixin
+textDecoration : TextDecorationLine a -> Css Mixin
 textDecoration =
   prop1 "text-decoration"
 
@@ -3440,7 +3459,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Mixin
+textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Css Mixin
 textDecoration2 =
   prop2 "text-decoration"
 
@@ -3457,7 +3476,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Color compatibleC -> Mixin
+textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Color compatibleC -> Css Mixin
 textDecoration3 =
   prop3 "text-decoration"
 
@@ -3468,7 +3487,7 @@ textDecoration3 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations : List (TextDecorationLine compatible) -> Mixin
+textDecorations : List (TextDecorationLine compatible) -> Css Mixin
 textDecorations =
   prop1 "text-decoration" << valuesOrNone
 
@@ -3479,7 +3498,7 @@ textDecorations =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Mixin
+textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Css Mixin
 textDecorations2 =
   prop2 "text-decoration" << valuesOrNone
 
@@ -3490,7 +3509,7 @@ textDecorations2 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Color compatibleC -> Mixin
+textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Color compatibleC -> Css Mixin
 textDecorations3 =
   prop3 "text-decoration" << valuesOrNone
 
@@ -3503,7 +3522,7 @@ You can specify multiple line decorations with `textDecorationLines`.
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLine : TextDecorationLine compatible -> Mixin
+textDecorationLine : TextDecorationLine compatible -> Css Mixin
 textDecorationLine =
   prop1 "text-decoration-line"
 
@@ -3512,7 +3531,7 @@ textDecorationLine =
 
     ~ textDecorationLines  [ underline, overline ]
 -}
-textDecorationLines : List (TextDecorationLine compatible) -> Mixin
+textDecorationLines : List (TextDecorationLine compatible) -> Css Mixin
 textDecorationLines =
   prop1 "text-decoration-line" << valuesOrNone
 
@@ -3521,7 +3540,7 @@ textDecorationLines =
 
     ~ textDecorationStyle dotted
 -}
-textDecorationStyle : TextDecorationStyle compatible -> Mixin
+textDecorationStyle : TextDecorationStyle compatible -> Css Mixin
 textDecorationStyle =
   prop1 "text-decoration-style"
 
@@ -3536,7 +3555,7 @@ names, or to set `animation-name: none;`
     ~ animationNames [ Foo, Bar ]
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationName : animation -> Mixin
+animationName : animation -> Css Mixin
 animationName identifier =
   animationNames [ identifier ]
 
@@ -3549,7 +3568,7 @@ Pass `[]` to set `animation-name: none;`
 
     ~ animationNames [] -- outputs "animation-name: none;"
 -}
-animationNames : List animation -> Mixin
+animationNames : List animation -> Css Mixin
 animationNames identifiers =
   let
     customTransform name =
@@ -3579,7 +3598,7 @@ stylesheet { name } =
   { name = StylesheetNamespace name, transform = \_ _ -> [] }
 
 
-snippet : List StyleBlockDeclarations -> Snippet
+snippet : List (Declarations a) -> Snippet
 snippet styles =
   { transform = applyStyles styles
   , styleType = SnippetType
@@ -3591,26 +3610,28 @@ applyStyles styles name declarations =
   List.foldl (\{ transform } -> transform name) declarations styles
 
 
-stylesheet_ : { a | name : String } -> List StyleBlockDeclarations -> List Declaration
+stylesheet_ : { a | name : String } -> List (Declarations a) -> List Declaration
 stylesheet_ { name } styles =
   applyStyles styles name []
 
 
-snippets : List Snippet -> StyleBlockDeclarations
+snippets : List Snippet -> Declarations { snippet : Compatible }
 snippets list =
   { transform = applyStyles list
-  , styleType = StyleBlockType
+  , styleType = DeclarationType
+  , snippet = Compatible
   }
 
 
-selectorToStyleBlock : List Mixin -> (String -> Declaration.Selector) -> StyleBlockDeclarations
+selectorToStyleBlock : List (Css Mixin) -> (String -> Declaration.Selector) -> StyleBlockDeclarations
 selectorToStyleBlock mixins makeSelector =
   let
     transform name =
       transformWithStyles mixins (selectorDeclaration (makeSelector name)) name
   in
     { transform = transform
-    , styleType = StyleBlockType
+    , styleType = DeclarationType
+    , styleBlock = Compatible
     }
 
 
@@ -3632,7 +3653,7 @@ selectorDeclaration selector =
     []
 
 
-{-| A Mixinllowing you to modularly reuse common styles in other styles.
+{-| A Css Mixinllowing you to modularly reuse common styles in other styles.
 `mixin` declares the mixin, and `~=` adds the contents of a mixin to another
 style.
 
@@ -3656,7 +3677,7 @@ style.
         &: hover
             ~ textDecoration underline
 -}
-mixin : Mixin
+mixin : Css Mixin
 mixin =
   { transform = \_ declarations -> declarations
   , styleType = MixinType
@@ -3715,6 +3736,11 @@ addSelectorToStylesheet selector =
         |> addSelectorToStylesheet (IdSelector (identifierToString name id))
 
 
+($#) : id -> List (Css Mixin) -> StyleBlockDeclarations
+($#) id mixins =
+  selectorToStyleBlock mixins (\name -> IdSelector (identifierToString name id))
+
+
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
     stylesheet "homepage"
@@ -3735,6 +3761,11 @@ addSelectorToStylesheet selector =
         |> addSelectorToStylesheet (ClassSelector (identifierToString name class))
 
 
+($.) : class -> List (Css Mixin) -> StyleBlockDeclarations
+($.) class mixins =
+  selectorToStyleBlock mixins (\name -> ClassSelector (identifierToString name class))
+
+
 {-| An [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule).
 
     stylesheet "homepage"
@@ -3751,7 +3782,7 @@ addSelectorToStylesheet selector =
             $ body
                 ~ width (pct 100)
 -}
-(@) : Stylesheet animation class id -> AtRule -> Stylesheet animation class id
+(@) : Stylesheet animation class id -> String -> Stylesheet animation class id
 (@) sheet rule =
   let
     addRule _ declarations =
@@ -3760,10 +3791,62 @@ addSelectorToStylesheet selector =
     applyTransformation addRule sheet
 
 
-{-| TODO make this better
+($@) : AtRule -> Declarations { atRule : Compatible }
+($@) { declaration } =
+  { transform = \_ declarations -> declarations ++ [ declaration ]
+  , styleType = DeclarationType
+  , atRule = Compatible
+  }
+
+
+{-| An [`@charset`](https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
+[at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule).
+
+    stylesheet
+      { name = "homepage" }
+      [ ((@) charset "UTF-8")
+      , body
+          [ width (pct 100)
+          , height (pct 100)
+          ]
+      ]
 -}
-type alias AtRule =
-  String
+charset : String -> AtRule
+charset str =
+  { declaration = StandaloneAtRule "charset" ("\"" ++ str ++ "\"")
+  , declarationType = AtRuleType
+  }
+
+
+--foo =
+--  snippet
+--    [ (($@) (charset "UTF-8"))
+--    , (($#) "foo")
+--        [ width (pct 100)
+--        , height (pct 100)
+--        ]
+--    ]
+
+
+
+-- {-| A mixin that adds the [Clearfix for Modern Browsers](http://www.cssmojo.com/latest_new_clearfix_so_far/#clearfix-for-modern-browsers)
+-- implementation of [clearfix](http://www.cssmojo.com/clearfix_block-formatting-context_and_hasLayout/).
+--
+-- This works with Internet Explorer 8 and later; if you need
+-- to support older browsers, consider using the legacy [Micro Clearfix from 2011](http://nicolasgallagher.com/micro-clearfix-hack/)
+-- instead.
+-- -}
+--clearfix : Css Mixin
+--clearfix =
+--  mixin
+--    [ pseudoElements
+--        [ after
+--            [ content ""
+--            , display table
+--            , clear both
+--            ]
+--        ]
+--    ]
 
 
 {-| A custom selector. Use this for things like
@@ -3817,7 +3900,7 @@ You can also use `~` to inject the contents of a [`mixin`](#mixin).
         &: hover
             ~ textDecoration underline
 -}
-(~) : StylesheetOrMixin base -> Mixin -> StylesheetOrMixin base
+(~) : StylesheetOrMixin base -> Css Mixin -> StylesheetOrMixin base
 (~) stylesheet mixin =
   applyTransformation mixin.transform stylesheet
 
@@ -3848,7 +3931,7 @@ lastSelectorToMulti selector otherSelectors =
         -webkit-font-smoothing: none;
     }
 -}
-custom : String -> String -> Mixin
+custom : String -> String -> Css Mixin
 custom key value =
   { transform =
       \_ -> addProperty "~" { key = key, value = value, important = False }
