@@ -62,12 +62,6 @@ type alias StylesheetOrMixin base =
 type alias Style a =
   { a | transform : DeclarationTransform }
 
-type alias Css style =
-  { style | transform : DeclarationTransform }
-
-type alias StyleBlockDeclarations =
-  Declarations { styleBlock : Compatible }
-
 
 type MixinType
   = MixinType
@@ -85,24 +79,18 @@ type AtRuleType
   = AtRuleType
 
 
+type BlockType
+  = BlockType
+
 type SnippetType
   = SnippetType
 
 
+type alias Block =
+  { styleType : BlockType }
+
 type alias Snippet =
-  Style { styleType : SnippetType }
-
-
-type alias Declarations a =
-  { a
-    | transform : DeclarationTransform
-    , styleType : DeclarationType
-  }
-
-
-type alias AtRuleDeclarations =
-  Style { styleType : AtRuleType }
-
+  { styleType : SnippetType }
 
 {-| A Css Mixin.
 -}
@@ -110,10 +98,11 @@ type alias Mixin =
   { styleType : MixinType }
 
 
-type alias AtRule =
-  { declaration : Declaration
-  , declarationType : AtRuleType
-  }
+type alias AtRule a =
+  a
+  -> { declaration : Declaration
+     , declarationType : AtRuleType
+     }
 
 
 
@@ -3791,12 +3780,16 @@ addSelectorToStylesheet selector =
     applyTransformation addRule sheet
 
 
-($@) : AtRule -> Declarations { atRule : Compatible }
-($@) { declaration } =
-  { transform = \_ declarations -> declarations ++ [ declaration ]
-  , styleType = DeclarationType
-  , atRule = Compatible
-  }
+($@) : AtRule a -> a -> Declarations { atRule : Compatible }
+($@) getDeclaration arg =
+  let
+    { declaration } =
+      getDeclaration arg
+  in
+    { transform = \_ declarations -> declarations ++ [ declaration ]
+    , styleType = DeclarationType
+    , atRule = Compatible
+    }
 
 
 {-| An [`@charset`](https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
@@ -3811,23 +3804,11 @@ addSelectorToStylesheet selector =
           ]
       ]
 -}
-charset : String -> AtRule
+charset : AtRule String
 charset str =
   { declaration = StandaloneAtRule "charset" ("\"" ++ str ++ "\"")
   , declarationType = AtRuleType
   }
-
-
---foo =
---  snippet
---    [ (($@) (charset "UTF-8"))
---    , (($#) "foo")
---        [ width (pct 100)
---        , height (pct 100)
---        ]
---    ]
-
-
 
 -- {-| A mixin that adds the [Clearfix for Modern Browsers](http://www.cssmojo.com/latest_new_clearfix_so_far/#clearfix-for-modern-browsers)
 -- implementation of [clearfix](http://www.cssmojo.com/clearfix_block-formatting-context_and_hasLayout/).
