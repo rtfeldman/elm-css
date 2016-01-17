@@ -38,7 +38,7 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
-import Css.Declaration as Declaration exposing (Declaration, Selector, CompoundSelector, introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector)
+import Css.Declaration as Declaration exposing (Declaration, Selector, CompoundSelector, Property, introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import String
@@ -49,9 +49,11 @@ type Compatible
 
 
 {-| A stylesheet that can be passed to [`compile`](#compile) to get a String
-of a CSS file. -}
+of a CSS file.
+-}
 type alias Stylesheet =
   List Declaration
+
 
 type alias DeclarationTransform =
   String -> List Declaration -> List Declaration
@@ -3562,7 +3564,6 @@ selectorToStyleBlock mixins makeSelector =
     StyleBlock transform
 
 
-
 transformWithMixins : List Mixin -> Declaration -> DeclarationTransform
 transformWithMixins mixins newDeclaration name declarations =
   applyMixins mixins name (declarations ++ [ newDeclaration ])
@@ -4115,14 +4116,95 @@ type PseudoClass
 
 
 {-| -}
-children : List a -> Mixin
-children _ =
-  property "TODO" "TODO"
+children : List StyleBlock -> Mixin
+children =
+  applyStyleCombinator Declaration.Child
+
+
+
+{-
+
+combineSelectors = Child
+styles = [
+  ((.) Foo)
+    [ color Bar ]
+]
+
+declarations = [
+  div
+  div > span
+]
+
+
+html, body {
+  width: 100%;
+
+  > (div, span) {
+
+  }
+}
+
+-}
+
+
+applyStyleCombinator : (CompoundSelector -> CompoundSelector -> CompoundSelector) -> List StyleBlock -> Mixin
+applyStyleCombinator combineSelectors styleBlocks =
+  let
+    applySelectors : List CompoundSelector -> Declaration -> List Declaration
+    applySelectors selectors declaration =
+      case declaration of
+        Declaration.StyleBlock firstSelector otherSelectors properties ->
+          let
+            applySelector : CompoundSelector -> Declaration
+            applySelector selector =
+              Declaration.StyleBlock
+                (combineSelectors selector firstSelector)
+                (List.map (combineSelectors selector) otherSelectors)
+                properties
+          in
+            List.map applySelector selectors
+
+        Declaration.ConditionalGroupRule ruleStr _ ->
+          [ declaration ]
+
+        Declaration.StandaloneAtRule ruleStr _ ->
+          [ declaration ]
+
+    applyStyleBlockTo : String -> Declaration -> StyleBlock -> List Declaration
+    applyStyleBlockTo name declaration (StyleBlock transform) =
+      let
+        newDeclarations : List Declaration
+        newDeclarations =
+          case declaration of
+            Declaration.StyleBlock first others _ ->
+              -- Use the existing declaration's selectors (ignoring its
+              -- properties, which will be preserved since we return
+              -- the original declaration in its entirety), combined with the
+              -- selectors and properties of the given style block.
+              List.concatMap (applySelectors (first :: others)) (transform name [])
+
+            Declaration.ConditionalGroupRule ruleStr _ ->
+              Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) []
+
+            Declaration.StandaloneAtRule ruleStr _ ->
+              Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) []
+      in
+        -- Always at least return the existing declaration, including all of
+        -- its properties.
+        declaration :: newDeclarations
+
+    expandDeclaration : String -> Declaration -> List Declaration
+    expandDeclaration name declaration =
+      List.concatMap (applyStyleBlockTo name declaration) styleBlocks
+  in
+    Mixin (\name declarations -> List.concatMap (expandDeclaration name) declarations)
+
 
 {-| -}
 pseudoClasses : List a -> Mixin
 pseudoClasses _ =
   property "TODO" "TODO"
+
 
 {-| -}
 multi : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
