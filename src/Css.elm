@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, pseudoClasses, pseudoElements, multi, children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
+module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, pseudoClasses, pseudoElements, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
 
 {-| Functions for building stylesheets.
 
@@ -9,7 +9,7 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 @docs (#), (.), (@), selector
 
 # Combinators
-@docs children, descendants, adjacentSiblings, generalSiblings, multi, pseudoClasses, pseudoElements
+@docs children, descendants, adjacentSiblings, generalSiblings, each, (&.), (&#), pseudoClasses, pseudoElements
 
 # Properties
 @docs property, flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
@@ -3613,7 +3613,12 @@ mixin =
 -}
 (#) : id -> List (Mixin) -> StyleBlock
 (#) id mixins =
-  selectorToStyleBlock mixins (\name -> Declaration.IdSelector (identifierToString name id))
+  selectorToStyleBlock mixins (makeIdSelector id)
+
+
+makeIdSelector : id -> String -> Selector
+makeIdSelector id name =
+  Declaration.IdSelector (identifierToString name id)
 
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
@@ -3628,6 +3633,11 @@ mixin =
 (.) : class -> List (Mixin) -> StyleBlock
 (.) class mixins =
   selectorToStyleBlock mixins (\name -> Declaration.ClassSelector (identifierToString name class))
+
+
+makeClassSelector : class -> String -> Selector
+makeClassSelector class name =
+  Declaration.ClassSelector (identifierToString name class)
 
 
 {-| An [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule).
@@ -4136,6 +4146,7 @@ generalSiblings =
   applyStyleCombinator Declaration.GeneralSibling
 
 
+
 {-
 
 combineSelectors = Child
@@ -4219,6 +4230,7 @@ pseudoClasses : List a -> Mixin
 pseudoClasses _ =
   property "TODO" "TODO"
 
+
 {-| -}
 pseudoElements : List a -> Mixin
 pseudoElements _ =
@@ -4226,13 +4238,71 @@ pseudoElements _ =
 
 
 {-| -}
-multi : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
-multi _ =
-  selector "TODO"
+each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
+each selectors mixins =
+  StyleBlock (\_ _ -> [])
 
 
 
 -- TODO
+
+
+{-| -}
+(&#) : (List Mixin -> StyleBlock) -> id -> List Mixin -> StyleBlock
+(&#) selector id mixins =
+  applyMulti (selector [ identityMixin ]) (makeIdSelector id) mixins
+
+
+{-| -}
+(&.) : (List Mixin -> StyleBlock) -> class -> List Mixin -> StyleBlock
+(&.) selector class mixins =
+  applyMulti (selector [ identityMixin ]) (makeClassSelector class) mixins
+
+
+applyMulti : StyleBlock -> (String -> Selector) -> List Mixin -> StyleBlock
+applyMulti styleBlock makeSelector mixins =
+  let
+    newTransform name declarations =
+      styleBlock
+        |> (\(StyleBlock transform) -> transform name declarations)
+        |> List.map (multiSelector mixins makeSelector)
+        |> List.foldl (\(StyleBlock transform) -> transform name) declarations
+  in
+    StyleBlock newTransform
+
+
+multiSelector : List Mixin -> (String -> Declaration.Selector) -> Declaration -> StyleBlock
+multiSelector mixins makeSelector declaration =
+  case declaration of
+    Declaration.StyleBlock firstSelector otherSelectors _ ->
+      let
+        transform name =
+          let
+            makeMulti compoundSelector =
+              Declaration.MultiSelector compoundSelector (makeSelector name)
+
+            newStyleBlock =
+              Declaration.StyleBlock
+                (makeMulti firstSelector)
+                (List.map makeMulti otherSelectors)
+                []
+          in
+            transformWithMixins mixins newStyleBlock name
+      in
+        StyleBlock transform
+
+    Declaration.ConditionalGroupRule ruleStr _ ->
+      Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) (StyleBlock (\_ _ -> []))
+
+    Declaration.StandaloneAtRule ruleStr _ ->
+      Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) (StyleBlock (\_ _ -> []))
+
+
+{-| A mixin that returns whatever declarations you give it.
+-}
+identityMixin : Mixin
+identityMixin =
+  Mixin (\_ -> identity)
 
 
 numberToString : number -> String

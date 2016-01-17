@@ -48,7 +48,7 @@ multiDescendent : Stylesheet
 multiDescendent =
   stylesheet
     { name = "" }
-    [ (multi [ html, body ])
+    [ (each [ html, body ])
         [ boxSizing borderBox
         , display none
         , children
@@ -59,7 +59,7 @@ multiDescendent =
             ]
         ]
 
-    , (multi [ h1, h2 ])
+    , (each [ h1, h2 ])
         [ padding zero
         , margin zero
         , children
@@ -94,7 +94,7 @@ multiSelector : Stylesheet
 multiSelector =
   stylesheet
     { name = "multiSelector" }
-    [ (multi [ div, (#) Page, (.) Hidden ])
+    [ (div &# Page &. Hidden)
         [ display none
         , width (pct 100)
         , height (pct 100)
@@ -110,7 +110,7 @@ multiSelector =
 keyValue : Stylesheet
 keyValue =
   stylesheet
-    { name = "multiSelector" }
+    { name = "keyValue" }
     [ body
         [ property "-webkit-font-smoothing" "none"
         , (property "-moz-font-smoothing" "none") |> important
@@ -159,7 +159,7 @@ dreamwriter : Stylesheet
 dreamwriter =
   stylesheet
     { name = "dreamwriter" }
-    [ (multi [ html, body ])
+    [ (each [ html, body ])
         [ width (pct 100)
         , height (pct 100)
         , boxSizing borderBox

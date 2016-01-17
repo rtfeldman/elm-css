@@ -17,8 +17,8 @@ all =
         , leftRightTopBottom
         , borders
         , dreamwriter
-        , multiDescendent
         , multiSelector
+        , multiDescendent
         , underlineOnHoverMixin
         , underlineOnHoverManual
         , greenOnHoverMixin
@@ -230,7 +230,7 @@ multiSelector =
         """
     in
         suite
-            "Multi-descendent stylesheet"
+            "Multi-selector stylesheet"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
