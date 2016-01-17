@@ -227,11 +227,6 @@ multiSelector =
             padding: 10px;
             margin: 11px;
           }
-
-          span > h2 > h1 {
-            width: 1px;
-            height: 2%;
-          }
         """
     in
         suite

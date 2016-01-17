@@ -4,227 +4,282 @@ import Css exposing (..)
 import Css.Elements exposing (..)
 
 
-type CssClasses = Hidden
-type CssIds = Page
-type CssAnimations = Wobble
+type CssClasses
+  = Hidden
+
+
+type CssIds
+  = Page
+
+
+type CssAnimations
+  = Wobble
+
 
 pageBackground : Color {}
-pageBackground = rgb 100 90 128
+pageBackground =
+  rgb 100 90 128
+
 
 pageDefaultText : Color {}
-pageDefaultText = rgb 40 35 76
+pageDefaultText =
+  rgb 40 35 76
 
 
-unstyledDiv : Stylesheet a b c
+unstyledDiv : Stylesheet
 unstyledDiv =
-    stylesheet { name = "" }
-        $ div
+  stylesheet
+    { name = "" }
+    [ div [] ]
 
 
-divWidthHeight : Stylesheet a b c
+divWidthHeight : Stylesheet
 divWidthHeight =
-    stylesheet { name = "" }
-        $ div
-            ~ width (pct 32)
-            ~ height (px 50)
+  stylesheet
+    { name = "" }
+    [ div
+        [ width (pct 32)
+        , height (px 50)
+        ]
+    ]
 
 
-multiDescendent : Stylesheet CssAnimations CssClasses CssIds
+multiDescendent : Stylesheet
 multiDescendent =
-    stylesheet { name = "" }
-        $ html |$ body
-            ~ boxSizing borderBox
-            ~ display none
+  stylesheet
+    { name = "" }
+    [ (multi [ html, body ])
+        [ boxSizing borderBox
+        , display none
+        , children
+            [ div
+                [ width (pct 100)
+                , height (pct 100)
+                ]
+            ]
+        ]
 
-            >$ div
-                ~ width (pct 100)
-                ~ height (pct 100)
+    , (multi [ h1, h2 ])
+        [ padding zero
+        , margin zero
+        , children
+            [ h3
+                [ width (pct 100)
+                , children
+                    [ h4
+                        [ height (pct 100) ]
+                    ]
+                ]
+            ]
+        ]
 
-        $ h1 |$ h2
-            ~ padding zero
-            ~ margin zero
-
-            >$ h3
-                ~ width (pct 100)
-
-                >$ h4
-                    ~ height (pct 100)
-
-        $ span
-            ~ padding (px 10)
-            ~ margin (px 11)
-
-            >$ h2 >$ h1
-                ~ width (px 1)
-                ~ height (pct 2)
+    , span
+        [ padding (px 10)
+        , margin (px 11)
+        , children
+            [ h2
+                [ children
+                    [ h1
+                        [ width (px 1)
+                        , height (pct 2)
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
 
 
-multiSelector : Stylesheet CssAnimations CssClasses CssIds
+multiSelector : Stylesheet
 multiSelector =
-    stylesheet { name = "multiSelector" }
-        $ div # Page . Hidden
-            ~ display none
-            ~ width (pct 100)
-            ~ height (pct 100)
+  stylesheet
+    { name = "multiSelector" }
+    [ (multi [ div, (#) Page, (.) Hidden ])
+        [ display none
+        , width (pct 100)
+        , height (pct 100)
+        ]
 
-        $ span
-            ~ padding (px 10)
-            ~ margin (px 11)
+    , span
+        [ padding (px 10)
+        , margin (px 11)
+        ]
+    ]
 
-            >$ h2 >$ h1
-                ~ width (px 1)
-                ~ height (pct 2)
 
-keyValue : Stylesheet CssAnimations CssClasses CssIds
+keyValue : Stylesheet
 keyValue =
-    stylesheet { name = "multiSelector" }
-        $ body
-            ~ custom "-webkit-font-smoothing" "none"
-            ~ ((custom "-moz-font-smoothing" "none") |> important)
+  stylesheet
+    { name = "multiSelector" }
+    [ body
+        [ property "-webkit-font-smoothing" "none"
+        , (property "-moz-font-smoothing" "none") |> important
+        ]
+    ]
 
 
-leftRightTopBottom : Stylesheet CssAnimations CssClasses CssIds
+leftRightTopBottom : Stylesheet
 leftRightTopBottom =
-    stylesheet { name = "left-right-top-bottom" }
-        $ div
-            ~ position absolute
-            ~ top (em 2)
-            ~ left (px 5)
-            ~ textAlign left
-            ~ verticalAlign bottom
+  stylesheet
+    { name = "left-right-top-bottom" }
+    [ div
+        [ position absolute
+        , top (em 2)
+        , left (px 5)
+        , textAlign left
+        , verticalAlign bottom
+        ]
 
-        $ a
-            ~ position relative
-            ~ right zero
-            ~ textAlign right
-            ~ bottom (em 2)
-            ~ verticalAlign top
+    , a
+        [ position relative
+        , right zero
+        , textAlign right
+        , bottom (em 2)
+        , verticalAlign top
+        ]
+    ]
 
 
-borders : Stylesheet CssAnimations CssClasses CssIds
+borders : Stylesheet
 borders =
-    stylesheet { name = "border-test" }
-        $ button
-            ~ borderLeft3 (px 5) dashed (rgb 11 14 17)
-            ~ borderRight (px 7)
-            ~ borderImageOutset2 (n 3) (em 4)
+  stylesheet
+    { name = "border-test" }
+    [ button
+        [ borderLeft3 (px 5) dashed (rgb 11 14 17)
+        , borderRight (px 7)
+        , borderImageOutset2 (n 3) (em 4)
+        ]
 
-        $ a
-            ~ border2 (px 10) solid
+    , a
+        [ border2 (px 10) solid ]
+    ]
 
 
-dreamwriter : Stylesheet CssAnimations CssClasses CssIds
-dreamwriter =
-    stylesheet { name = "dreamwriter" }
-        $ html |$ body
-            ~ width (pct 100)
-            ~ height (pct 100)
-            ~ boxSizing borderBox
-            ~ padding zero
-            ~ margin zero
 
-        $ body
-            ~ minWidth (px 1280)
-            ~ overflowX auto
-
-            >$ div
-                ~ width (pct 100)
-                ~ height (pct 100)
-
-        . Hidden
-            ~ ((display none) |> important)
-
-        # Page
-            ~ width (pct 100)
-            ~ height (pct 100)
-            ~ boxSizing borderBox
-            ~ margin zero
-            ~ padding (px 8)
-
-            ~ backgroundColor pageBackground
-            ~ color pageDefaultText
+--dreamwriter : Stylesheet
+--dreamwriter =
+--    stylesheet { name = "dreamwriter" }
+--        $ html |$ body
+--            ~ width (pct 100)
+--            ~ height (pct 100)
+--            ~ boxSizing borderBox
+--            ~ padding zero
+--            ~ margin zero
+--        $ body
+--            ~ minWidth (px 1280)
+--            ~ overflowX auto
+--            >$ div
+--                ~ width (pct 100)
+--                ~ height (pct 100)
+--        . Hidden
+--            ~ ((display none) |> important)
+--        # Page
+--            ~ width (pct 100)
+--            ~ height (pct 100)
+--            ~ boxSizing borderBox
+--            ~ margin zero
+--            ~ padding (px 8)
+--            ~ backgroundColor pageBackground
+--            ~ color pageDefaultText
 
 
 underlineOnHover : Mixin
 underlineOnHover =
-    mixin
-        --~ textDecoration none
-        ~ color (rgb 128 127 126)
-
-        &: hover
-            --~ textDecoration underline
-            ~ color (rgb 23 24 25)
+  mixin
+    --~ textDecoration none
+    [ color (rgb 128 127 126)
+    , pseudoClasses
+        [ hover
+            --[ textDecoration underline ]
+            [ color (rgb 23 24 25) ]
+        ]
+    ]
 
 
 greenOnHover : Mixin
 greenOnHover =
-    mixin
-        &: hover
-            ~ color (rgb 0 0 122)
+  mixin
+    [ pseudoClasses
+        [ hover
+            [ color (rgb 0 0 122) ]
+        ]
+    ]
 
 
 mixinGreenOnHoverStylesheet : Stylesheet CssAnimations CssClasses CssIds
 mixinGreenOnHoverStylesheet =
-    stylesheet { name = "greenOnHoverStylesheetsheet" }
-        $ button
-            ~ color (rgb 11 22 33)
-            ~ greenOnHover
+  stylesheet
+    { name = "greenOnHoverStylesheetsheet" }
+    [ button
+        [ color (rgb 11 22 33)
+        , greenOnHover
+        ]
+    ]
 
 
 mixinUnderlineOnHoverStylesheet : Stylesheet CssAnimations CssClasses CssIds
 mixinUnderlineOnHoverStylesheet =
-    stylesheet { name = "underlineOnHoverStylesheetsheet" }
-        $ a
-            --~ color (rgb 128 64 32)
-            ~ underlineOnHover
+  stylesheet
+    { name = "underlineOnHoverStylesheetsheet" }
+    [ a
+        --[ color (rgb 128 64 32) ]
+        [ underlineOnHover ]
+    ]
 
 
 manualUnderlineOnHoverStylesheet : Stylesheet CssAnimations CssClasses CssIds
 manualUnderlineOnHoverStylesheet =
-    stylesheet { name = "underlineOnHoverStylesheetsheet" }
-        $ a
-            ~ color (rgb 128 127 126)
+  stylesheet
+    { name = "underlineOnHoverStylesheetsheet" }
+    [ a
+        [ color (rgb 128 127 126)
+        , pseudoClasses
+            [ hover
+                [ color (rgb 23 24 25) ]
+            ]
+        ]
+    ]
 
-            &: hover
-                ~ color (rgb 23 24 25)
 
-
-transformsStylesheet : Stylesheet CssAnimations CssClasses CssIds
+transformsStylesheet : Stylesheet
 transformsStylesheet =
-    stylesheet { name = "transformsStylesheet" }
-        $ body
-            ~ transforms []
-            ~ transforms
-                [ matrix 1 2 3 4 5 6
-                , matrix3d 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-                ]
-            ~ transform (perspective 1)
-            ~ transforms
-                [ rotate (deg 90)
-                , rotateX (rad 3.14)
-                , rotateY (grad 3.14)
-                , rotateZ (turn 1)
-                , rotate3d 1 1 1 (deg 90)
-                ]
-            ~ transforms
-                [ scale 1
-                , scale2 1 1
-                , scaleX 1
-                , scaleY 1
-                , scale3d 1 1 1
-                ]
-            ~ transforms
-                [ skew (deg 90)
-                , skew2 (deg 90) (deg 90)
-                , skewX (deg 90)
-                , skewY (deg 90)
-                ]
-            ~ transforms
-                [ translate (px 1)
-                , translate2 (px 1) (px 1)
-                , translateX (px 1)
-                , translateY (px 1)
-                , translate3d (px 1) (px 1) (px 1)
-                ]
-            ~ transformBox viewBox
-            ~ transformStyle preserve3d
+  stylesheet
+    { name = "transformsStylesheet" }
+    [ body
+        [ transforms []
+        , transforms
+            [ matrix 1 2 3 4 5 6
+            , matrix3d 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+            ]
+        , transform (perspective 1)
+        , transforms
+            [ rotate (deg 90)
+            , rotateX (rad 3.14)
+            , rotateY (grad 3.14)
+            , rotateZ (turn 1)
+            , rotate3d 1 1 1 (deg 90)
+            ]
+        , transforms
+            [ scale 1
+            , scale2 1 1
+            , scaleX 1
+            , scaleY 1
+            , scale3d 1 1 1
+            ]
+        , transforms
+            [ skew (deg 90)
+            , skew2 (deg 90) (deg 90)
+            , skewX (deg 90)
+            , skewY (deg 90)
+            ]
+        , transforms
+            [ translate (px 1)
+            , translate2 (px 1) (px 1)
+            , translateX (px 1)
+            , translateY (px 1)
+            , translate3d (px 1) (px 1) (px 1)
+            ]
+        , transformBox viewBox
+        , transformStyle preserve3d
+        ]
+    ]
