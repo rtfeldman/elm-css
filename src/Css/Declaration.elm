@@ -100,8 +100,21 @@ getLastProperty declarations =
       getLastProperty rest
 
 
-updateLastProperty : String -> (Property -> Property) -> List Declaration -> List Declaration
-updateLastProperty functionName update declarations =
+mapProperties : (Property -> Property) -> Declaration -> Declaration
+mapProperties update declaration =
+  case declaration of
+    StyleBlock firstSelector extraSelectors properties ->
+      StyleBlock firstSelector extraSelectors (List.map update properties)
+
+    ConditionalGroupRule _ _ ->
+      declaration
+
+    StandaloneAtRule _ _ ->
+      declaration
+
+
+updateLastProperty : (Property -> Property) -> List Declaration -> List Declaration
+updateLastProperty update declarations =
   case declarations of
     [] ->
       []
@@ -118,11 +131,14 @@ updateLastProperty functionName update declarations =
           in
             [ newDeclaration ]
 
-        _ ->
-          []
+        ConditionalGroupRule _ _ ->
+          [ declaration ]
+
+        StandaloneAtRule _ _ ->
+          [ declaration ]
 
     first :: rest ->
-      first :: updateLastProperty functionName update rest
+      first :: updateLastProperty update rest
 
 
 addProperty : String -> Property -> List Declaration -> List Declaration

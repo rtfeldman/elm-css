@@ -147,7 +147,7 @@ getOverloadedProperty functionName key (Mixin mixinTransform) =
         update subject =
           { subject | key = key, value = value }
       in
-        updateLastProperty functionName update declarations
+        updateLastProperty update declarations
 
     newMixinTransform name declarations =
       mixinTransform name declarations
@@ -420,11 +420,8 @@ important (Mixin transform) =
   let
     update property =
       { property | important = True }
-
-    newTransform =
-      (\_ -> updateLastProperty "important" update)
   in
-    Mixin newTransform
+    Mixin (\name decls -> (updateLastProperty update) (transform name decls))
 
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
