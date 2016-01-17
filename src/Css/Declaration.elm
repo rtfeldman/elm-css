@@ -15,8 +15,8 @@ type CompoundSelector
   | GeneralSibling CompoundSelector CompoundSelector
   | Child CompoundSelector CompoundSelector
   | Descendant CompoundSelector CompoundSelector
-  | PseudoClass String CompoundSelector
-  | PseudoElement String CompoundSelector
+  | PseudoClass String (Maybe CompoundSelector)
+  | PseudoElement String (Maybe CompoundSelector)
 
 
 type alias Property =
@@ -247,3 +247,75 @@ addSelector operatorName newSelector declarations =
 
     first :: rest ->
       first :: addSelector operatorName newSelector rest
+
+
+mapSelectors : List (CompoundSelector -> CompoundSelector) -> List Declaration -> List Declaration
+mapSelectors updates =
+  let
+    apply : Declaration -> (CompoundSelector -> CompoundSelector) -> List Declaration
+    apply declaration update =
+      case declaration of
+        StyleBlock firstSelector otherSelectors properties ->
+          let
+            newDeclaration =
+              StyleBlock
+                (update firstSelector)
+                (List.map update otherSelectors)
+                []
+          in
+            if List.isEmpty properties then
+              [ newDeclaration ]
+            else
+              declaration :: [ newDeclaration ]
+
+        ConditionalGroupRule rule declarations ->
+          [ ConditionalGroupRule rule (List.concatMap ((flip apply) update) declarations) ]
+
+        StandaloneAtRule _ _ ->
+          [ declaration ]
+  in
+    List.concatMap (\declaration -> List.concatMap (apply declaration) updates)
+
+
+extractSelectors : List Declaration -> List CompoundSelector
+extractSelectors declarations =
+  case declarations of
+    [] ->
+      []
+
+    StyleBlock firstSelector otherSelectors _ :: rest ->
+      (firstSelector :: otherSelectors) ++ (extractSelectors rest)
+
+    ConditionalGroupRule _ _ :: rest ->
+      extractSelectors rest
+
+    StandaloneAtRule _ _ :: rest ->
+      extractSelectors rest
+
+
+mergeSelectors : CompoundSelector -> CompoundSelector -> CompoundSelector
+mergeSelectors originalSelector newSelector =
+  case originalSelector of
+    SingleSelector _ ->
+      originalSelector
+
+    MultiSelector _ _ ->
+      originalSelector
+
+    AdjacentSibling _ _ ->
+      AdjacentSibling originalSelector newSelector
+
+    GeneralSibling _ _ ->
+      GeneralSibling originalSelector newSelector
+
+    Child _ _ ->
+      Child originalSelector newSelector
+
+    Descendant _ _ ->
+      Descendant originalSelector newSelector
+
+    PseudoClass str _ ->
+      PseudoClass str (Just newSelector)
+
+    PseudoElement str _ ->
+      PseudoElement str (Just newSelector)

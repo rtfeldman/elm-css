@@ -58,7 +58,6 @@ multiDescendent =
                 ]
             ]
         ]
-
     , (each [ h1, h2 ])
         [ padding zero
         , margin zero
@@ -72,7 +71,6 @@ multiDescendent =
                 ]
             ]
         ]
-
     , span
         [ padding (px 10)
         , margin (px 11)
@@ -99,7 +97,6 @@ multiSelector =
         , width (pct 100)
         , height (pct 100)
         ]
-
     , span
         [ padding (px 10)
         , margin (px 11)
@@ -129,7 +126,6 @@ leftRightTopBottom =
         , textAlign left
         , verticalAlign bottom
         ]
-
     , a
         [ position relative
         , right zero
@@ -149,7 +145,6 @@ borders =
         , borderRight (px 7)
         , borderImageOutset2 (n 3) (em 4)
         ]
-
     , a
         [ border2 (px 10) solid ]
     ]
@@ -166,7 +161,6 @@ dreamwriter =
         , padding zero
         , margin zero
         ]
-
     , body
         [ minWidth (px 1280)
         , overflowX auto
@@ -177,10 +171,8 @@ dreamwriter =
                 ]
             ]
         ]
-
     , ((.) Hidden)
         [ (display none) |> important ]
-
     , ((#) Page)
         [ width (pct 100)
         , height (pct 100)
@@ -198,21 +190,17 @@ underlineOnHover =
   mixin
     --~ textDecoration none
     [ color (rgb 128 127 126)
-    , pseudoClasses
-        [ hover
-            --[ textDecoration underline ]
-            [ color (rgb 23 24 25) ]
-        ]
+    , (with hover)
+        --[ textDecoration underline ]
+        [ color (rgb 23 24 25) ]
     ]
 
 
 greenOnHover : Mixin
 greenOnHover =
   mixin
-    [ pseudoClasses
-        [ hover
-            [ color (rgb 0 0 122) ]
-        ]
+    [ (with hover)
+        [ color (rgb 0 0 122) ]
     ]
 
 
@@ -243,10 +231,8 @@ manualUnderlineOnHoverStylesheet =
     { name = "underlineOnHoverStylesheetsheet" }
     [ a
         [ color (rgb 128 127 126)
-        , pseudoClasses
-            [ hover
-                [ color (rgb 23 24 25) ]
-            ]
+        , (with hover)
+            [ color (rgb 23 24 25) ]
         ]
     ]
 

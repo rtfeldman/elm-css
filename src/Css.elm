@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, pseudoClasses, pseudoElements, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
+module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, with, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
 
 {-| Functions for building stylesheets.
 
@@ -9,7 +9,7 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 @docs (#), (.), (@), selector
 
 # Combinators
-@docs children, descendants, adjacentSiblings, generalSiblings, each, (&.), (&#), pseudoClasses, pseudoElements
+@docs children, descendants, adjacentSiblings, generalSiblings, each, (&.), (&#), with
 
 # Properties
 @docs property, flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
@@ -38,7 +38,7 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
-import Css.Declaration as Declaration exposing (Declaration, Selector, CompoundSelector, Property, introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector)
+import Css.Declaration as Declaration exposing (Declaration, Selector, CompoundSelector, Property, introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mapSelectors, extractSelectors, mergeSelectors)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import String
@@ -48,11 +48,13 @@ type Compatible
   = Compatible
 
 
-type PseudoClass =
-  PseudoClass String (List Mixin)
+type PseudoClass
+  = PseudoClass String (List Mixin)
 
-type PseudoElement =
-  PseudoElement String (List Mixin)
+
+type PseudoElement
+  = PseudoElement String (List Mixin)
+
 
 {-| A stylesheet that can be passed to [`compile`](#compile) to get a String
 of a CSS file.
@@ -3734,268 +3736,280 @@ directionalityToString directionality =
       "rtl"
 
 
+pseudoToStyleBlock : (Maybe CompoundSelector -> CompoundSelector) -> List Mixin -> StyleBlock
+pseudoToStyleBlock makePseudo mixins =
+  let
+    transform name =
+      transformWithMixins
+        mixins
+        (Declaration.StyleBlock (makePseudo Nothing) [] [])
+        name
+  in
+    StyleBlock transform
+
+
 {-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-active : List Mixin -> PseudoClass
+active : List Mixin -> StyleBlock
 active =
-  PseudoClass "active"
+  pseudoToStyleBlock (Declaration.PseudoClass "active")
 
 
 {-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-any : String -> List Mixin -> PseudoClass
+any : String -> List Mixin -> StyleBlock
 any str =
-  PseudoClass ("any(" ++ str ++ ")")
+  pseudoToStyleBlock (Declaration.PseudoClass ("any(" ++ str ++ ")"))
 
 
 {-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-checked : List Mixin -> PseudoClass
+checked : List Mixin -> StyleBlock
 checked =
-  PseudoClass "checked"
+  pseudoToStyleBlock (Declaration.PseudoClass "checked")
 
 
 {-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-dir : Directionality -> List Mixin -> PseudoClass
+dir : Directionality -> List Mixin -> StyleBlock
 dir directionality =
-  PseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
+  pseudoToStyleBlock (Declaration.PseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")"))
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-disabled : List Mixin -> PseudoClass
+disabled : List Mixin -> StyleBlock
 disabled =
-  PseudoClass "disabled"
+  pseudoToStyleBlock (Declaration.PseudoClass "disabled")
 
 
 {-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-empty : List Mixin -> PseudoClass
+empty : List Mixin -> StyleBlock
 empty =
-  PseudoClass "empty"
+  pseudoToStyleBlock (Declaration.PseudoClass "empty")
 
 
 {-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-enabled : List Mixin -> PseudoClass
+enabled : List Mixin -> StyleBlock
 enabled =
-  PseudoClass "enabled"
+  pseudoToStyleBlock (Declaration.PseudoClass "enabled")
 
 
 {-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-first : List Mixin -> PseudoClass
+first : List Mixin -> StyleBlock
 first =
-  PseudoClass "first"
+  pseudoToStyleBlock (Declaration.PseudoClass "first")
 
 
 {-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstChild : List Mixin -> PseudoClass
+firstChild : List Mixin -> StyleBlock
 firstChild =
-  PseudoClass "first-child"
+  pseudoToStyleBlock (Declaration.PseudoClass "first-child")
 
 
 {-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstOfType : List Mixin -> PseudoClass
+firstOfType : List Mixin -> StyleBlock
 firstOfType =
-  PseudoClass "first-of-type"
+  pseudoToStyleBlock (Declaration.PseudoClass "first-of-type")
 
 
 {-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-fullscreen : List Mixin -> PseudoClass
+fullscreen : List Mixin -> StyleBlock
 fullscreen =
-  PseudoClass "fullscreen"
+  pseudoToStyleBlock (Declaration.PseudoClass "fullscreen")
 
 
 {-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-focus : List Mixin -> PseudoClass
+focus : List Mixin -> StyleBlock
 focus =
-  PseudoClass "focus"
+  pseudoToStyleBlock (Declaration.PseudoClass "focus")
 
 
 {-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-hover : List Mixin -> PseudoClass
+hover : List Mixin -> StyleBlock
 hover =
-  PseudoClass "hover"
+  pseudoToStyleBlock (Declaration.PseudoClass "hover")
 
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-indeterminate : List Mixin -> PseudoClass
+indeterminate : List Mixin -> StyleBlock
 indeterminate =
-  PseudoClass "indeterminate"
+  pseudoToStyleBlock (Declaration.PseudoClass "indeterminate")
 
 
 {-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-invalid : List Mixin -> PseudoClass
+invalid : List Mixin -> StyleBlock
 invalid =
-  PseudoClass "invalid"
+  pseudoToStyleBlock (Declaration.PseudoClass "invalid")
 
 
 {-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lang : String -> List Mixin -> PseudoClass
+lang : String -> List Mixin -> StyleBlock
 lang str =
-  PseudoClass ("lang(" ++ str ++ ")")
+  pseudoToStyleBlock (Declaration.PseudoClass ("lang(" ++ str ++ ")"))
 
 
 {-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastChild : List Mixin -> PseudoClass
+lastChild : List Mixin -> StyleBlock
 lastChild =
-  PseudoClass "last-child"
+  pseudoToStyleBlock (Declaration.PseudoClass "last-child")
 
 
 {-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastOfType : List Mixin -> PseudoClass
+lastOfType : List Mixin -> StyleBlock
 lastOfType =
-  PseudoClass "last-of-type"
+  pseudoToStyleBlock (Declaration.PseudoClass "last-of-type")
 
 
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-link : List Mixin -> PseudoClass
+link : List Mixin -> StyleBlock
 link =
-  PseudoClass "link"
+  pseudoToStyleBlock (Declaration.PseudoClass "link")
 
 
 {-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthChild : String -> List Mixin -> PseudoClass
+nthChild : String -> List Mixin -> StyleBlock
 nthChild str =
-  PseudoClass ("nth-child(" ++ str ++ ")")
+  pseudoToStyleBlock (Declaration.PseudoClass ("nth-child(" ++ str ++ ")"))
 
 
 {-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastChild : String -> List Mixin -> PseudoClass
+nthLastChild : String -> List Mixin -> StyleBlock
 nthLastChild str =
-  PseudoClass ("nth-last-child(" ++ str ++ ")")
+  pseudoToStyleBlock (Declaration.PseudoClass ("nth-last-child(" ++ str ++ ")"))
 
 
 {-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastOfType : String -> List Mixin -> PseudoClass
+nthLastOfType : String -> List Mixin -> StyleBlock
 nthLastOfType str =
-  PseudoClass ("nth-last-of-type(" ++ str ++ ")")
+  pseudoToStyleBlock (Declaration.PseudoClass ("nth-last-of-type(" ++ str ++ ")"))
 
 
 {-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthOfType : String -> List Mixin -> PseudoClass
+nthOfType : String -> List Mixin -> StyleBlock
 nthOfType str =
-  PseudoClass ("nth-of-type(" ++ str ++ ")")
+  pseudoToStyleBlock (Declaration.PseudoClass ("nth-of-type(" ++ str ++ ")"))
 
 
 {-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyChild : List Mixin -> PseudoClass
+onlyChild : List Mixin -> StyleBlock
 onlyChild =
-  PseudoClass "only-child"
+  pseudoToStyleBlock (Declaration.PseudoClass "only-child")
 
 
 {-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyOfType : List Mixin -> PseudoClass
+onlyOfType : List Mixin -> StyleBlock
 onlyOfType =
-  PseudoClass "only-of-type"
+  pseudoToStyleBlock (Declaration.PseudoClass "only-of-type")
 
 
 {-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-optional : List Mixin -> PseudoClass
+optional : List Mixin -> StyleBlock
 optional =
-  PseudoClass "optional"
+  pseudoToStyleBlock (Declaration.PseudoClass "optional")
 
 
 {-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-outOfRange : List Mixin -> PseudoClass
+outOfRange : List Mixin -> StyleBlock
 outOfRange =
-  PseudoClass "out-of-range"
+  pseudoToStyleBlock (Declaration.PseudoClass "out-of-range")
 
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-readWrite : List Mixin -> PseudoClass
+readWrite : List Mixin -> StyleBlock
 readWrite =
-  PseudoClass "read-write"
+  pseudoToStyleBlock (Declaration.PseudoClass "read-write")
 
 
 {-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-required : List Mixin -> PseudoClass
+required : List Mixin -> StyleBlock
 required =
-  PseudoClass "required"
+  pseudoToStyleBlock (Declaration.PseudoClass "required")
 
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-root : List Mixin -> PseudoClass
+root : List Mixin -> StyleBlock
 root =
-  PseudoClass "root"
+  pseudoToStyleBlock (Declaration.PseudoClass "root")
 
 
 {-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-scope : List Mixin -> PseudoClass
+scope : List Mixin -> StyleBlock
 scope =
-  PseudoClass "scope"
+  pseudoToStyleBlock (Declaration.PseudoClass "scope")
 
 
 {-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-target : List Mixin -> PseudoClass
+target : List Mixin -> StyleBlock
 target =
-  PseudoClass "target"
+  pseudoToStyleBlock (Declaration.PseudoClass "target")
 
 
 {-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-valid : List Mixin -> PseudoClass
+valid : List Mixin -> StyleBlock
 valid =
-  PseudoClass "valid"
+  pseudoToStyleBlock (Declaration.PseudoClass "valid")
 
 
 
@@ -4005,41 +4019,41 @@ valid =
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-after : List Mixin -> PseudoElement
+after : List Mixin -> StyleBlock
 after =
-  PseudoElement "after"
+  pseudoToStyleBlock (Declaration.PseudoElement "after")
 
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-before : List Mixin -> PseudoElement
+before : List Mixin -> StyleBlock
 before =
-  PseudoElement "before"
+  pseudoToStyleBlock (Declaration.PseudoElement "before")
 
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLetter : List Mixin -> PseudoElement
+firstLetter : List Mixin -> StyleBlock
 firstLetter =
-  PseudoElement "first-letter"
+  pseudoToStyleBlock (Declaration.PseudoElement "first-letter")
 
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLine : List Mixin -> PseudoElement
+firstLine : List Mixin -> StyleBlock
 firstLine =
-  PseudoElement "first-line"
+  pseudoToStyleBlock (Declaration.PseudoElement "first-line")
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-selection : List Mixin -> PseudoElement
+selection : List Mixin -> StyleBlock
 selection =
-  PseudoElement "selection"
+  pseudoToStyleBlock (Declaration.PseudoElement "selection")
 
 
 
@@ -4212,26 +4226,71 @@ applyStyleCombinator combineSelectors styleBlocks =
   in
     Mixin (\name declarations -> List.concatMap (expandDeclaration name) declarations)
 
-{-| -}
-pseudoClasses : List a -> Mixin
-pseudoClasses _ =
-  property "TODO" "TODO"
 
+{-| Nest styles within the current selector.
 
-{-| -}
-pseudoElements : List a -> Mixin
-pseudoElements _ =
-  property "TODO" "TODO"
+    stylesheet
+      { name = "homepage" }
+      [ button
+          [ textDecoration underline
+          , (with hover)
+              [ textDecoration none ]
+          ]
+      ]
+-}
+with : (List Mixin -> StyleBlock) -> List Mixin -> Mixin
+with makeStyleBlock mixins =
+  let
+    reviseTransform : DeclarationTransform -> DeclarationTransform
+    reviseTransform transform name declarations =
+      let
+        updates : List (CompoundSelector -> CompoundSelector)
+        updates =
+          extractSelectors (transform name [])
+            |> List.map mergeSelectors
+
+        expandDeclaration : Declaration -> List Declaration
+        expandDeclaration declaration =
+          case declaration of
+            Declaration.StyleBlock firstSelector otherSelectors properties ->
+              let
+                applyUpdate update =
+                  Declaration.StyleBlock
+                    (update firstSelector)
+                    (List.map update otherSelectors)
+                    []
+
+                newDeclarations =
+                  List.map applyUpdate updates
+                    |> applyMixins mixins name
+              in
+                if List.isEmpty properties then
+                  newDeclarations
+                else
+                  declaration :: newDeclarations
+
+            Declaration.ConditionalGroupRule ruleStr declarations ->
+              List.map
+                (expandDeclaration >> (Declaration.ConditionalGroupRule ruleStr))
+                declarations
+
+            Declaration.StandaloneAtRule _ _ ->
+              [ declaration ]
+
+        newDeclarations =
+          List.concatMap expandDeclaration declarations
+      in
+        newDeclarations
+  in
+    makeStyleBlock [ identityMixin ]
+      |> (\(StyleBlock transform) -> reviseTransform transform)
+      |> Mixin
 
 
 {-| -}
 each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
 each selectors mixins =
   StyleBlock (\_ _ -> [])
-
-
-
--- TODO
 
 
 {-| -}
