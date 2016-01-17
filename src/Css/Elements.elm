@@ -28,7 +28,7 @@ import Css exposing (Mixin(Mixin), StyleBlock(StyleBlock), DeclarationTransform)
 import Css.Declaration as Declaration exposing (Declaration)
 
 
-
+typeSelectorBlock : String -> Declaration
 typeSelectorBlock str =
   Declaration.StyleBlock (Declaration.SingleSelector (Declaration.TypeSelector str)) [] []
 
