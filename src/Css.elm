@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, Mixin, Color, stylesheet, mixin, all, custom, important, ($), (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
+module Css (compile, Stylesheet, Mixin, Color, stylesheet, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
 
 {-| Functions for building stylesheets.
 
@@ -6,13 +6,13 @@ module Css (compile, Stylesheet, Mixin, Color, stylesheet, mixin, all, custom, i
 @docs Stylesheet, stylesheet, Mixin, mixin, compile
 
 # Statements
-@docs ($), (#), (.), (@), ($=)
+@docs (#), (.), (@), selector
 
 # Combinators
 @docs children
 
-# Attributes
-@docs flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
+# Properties
+@docs property, flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
 
 # Values
 @docs Color all, important, custom, solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse
@@ -40,7 +40,6 @@ deprecated or discouraged.
 
 import Css.Declaration as Declaration exposing (Declaration, Selector, CompoundSelector, introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
-import Css.Elements exposing (Tag, tagToString)
 import Css.Util exposing (toCssIdentifier, identifierToString)
 import String
 
@@ -51,16 +50,6 @@ type Compatible
 
 type alias DeclarationTransform =
   String -> List Declaration -> List Declaration
-
-
-{-| TODO deprecated
--}
-type alias StylesheetOrMixin base =
-  Style base
-
-
-type alias Style a =
-  { a | transform : DeclarationTransform }
 
 
 type DeclarationType
@@ -89,53 +78,10 @@ type alias AtRule a =
   a -> List Declaration
 
 
-
---type alias AtRule a =
---  a -> String -> List Declaration -> List Declaration
---(#) : id -> List (Mixin) -> Declarations a
---(#) id mixins =
---  -- TODO implement transform
---  { transform = (\_ _ -> [])
---  , styleType = StyleBlockType
---  }
-
-
 type MediaQuery
   = Print
   | Projection
   | Tv
-
-
-{-| An [`@import`](https://developer.mozilla.org/en-US/docs/Web/CSS/@import) rule.
--}
-
-
-
---importUrl : AtRule ( String, List String )
---importUrl ( str, list ) _ _ =
---  []
---(@) : AtRule a -> a -> AtRuleDeclarations
---(@) applyRule arg =
---  { transform = applyRule arg
---  , styleType = AtRuleType
---  }
---atRuleDecl : AtRuleDeclarations
---atRuleDecl =
---  (@) importUrl ( "foo", [] )
-
-
-applyTransformation : DeclarationTransform -> StylesheetOrMixin a -> StylesheetOrMixin a
-applyTransformation transformation mixinOrStylesheet =
-  { mixinOrStylesheet
-    | transform =
-        (\name declarations ->
-          (mixinOrStylesheet.transform name declarations)
-            |> transformation name
-        )
-  }
-
-
--- TODO these are just for @media - maybe Declaratione improve type guarantees?
 
 
 screen : String
@@ -197,8 +143,8 @@ getOverloadedProperty functionName key (Mixin mixinTransform) =
         updateLastProperty functionName update declarations
 
     newMixinTransform name declarations =
-        mixinTransform name declarations
-          |> newTransform name
+      mixinTransform name declarations
+        |> newTransform name
   in
     Mixin newMixinTransform
 
@@ -472,7 +418,6 @@ important (Mixin transform) =
       (\_ -> updateLastProperty "important" update)
   in
     Mixin newTransform
-
 
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
@@ -1878,22 +1823,22 @@ position =
 
 prop1 : String -> Value a -> Mixin
 prop1 key arg =
-  custom key arg.value
+  property key arg.value
 
 
 prop2 : String -> Value a -> Value b -> Mixin
 prop2 key argA argB =
-  custom key (String.join " " [ argA.value, argB.value ])
+  property key (String.join " " [ argA.value, argB.value ])
 
 
 prop3 : String -> Value a -> Value b -> Value c -> Mixin
 prop3 key argA argB argC =
-  custom key (String.join " " [ argA.value, argB.value, argC.value ])
+  property key (String.join " " [ argA.value, argB.value, argC.value ])
 
 
 prop4 : String -> Value a -> Value b -> Value c -> Value d -> Mixin
 prop4 key argA argB argC argD =
-  custom key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
+  property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
 
 
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
@@ -3580,10 +3525,13 @@ snippet : List StyleBlock -> Snippet
 snippet styles =
   Snippet (applyStyleBlocks styles)
 
-{-| Copy the given snippets into the current style. -}
+
+{-| Copy the given snippets into the current style.
+-}
 snippets : List Snippet -> StyleBlock
 snippets snippets =
   StyleBlock (applySnippets snippets)
+
 
 applySnippets : List Snippet -> DeclarationTransform
 applySnippets snippets name declarations =
@@ -3594,6 +3542,7 @@ applyMixins : List Mixin -> DeclarationTransform
 applyMixins styles name declarations =
   List.foldl (\(Mixin transform) -> transform name) declarations styles
 
+
 applyStyleBlocks : List StyleBlock -> DeclarationTransform
 applyStyleBlocks styles name declarations =
   List.foldl (\(StyleBlock transform) -> transform name) declarations styles
@@ -3602,7 +3551,6 @@ applyStyleBlocks styles name declarations =
 stylesheet_ : { a | name : String } -> List StyleBlock -> List Declaration
 stylesheet_ { name } styleBlocks =
   applyStyleBlocks styleBlocks name []
-
 
 
 selectorToStyleBlock : List Mixin -> (String -> Declaration.Selector) -> StyleBlock
@@ -3673,27 +3621,6 @@ type alias Stylesheet animation class id =
   }
 
 
-addSelectorToStylesheet : Selector -> StylesheetOrMixin a -> StylesheetOrMixin a
-addSelectorToStylesheet selector =
-  applyTransformation (\_ -> introduceSelector selector)
-
-
-{-| A [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors).
-
-    stylesheet "homepage"
-        $ body
-            ~ width 960 px
-            ~ color (rgb 7 7 7)
--}
-($) : Stylesheet animation class id -> Tag -> Stylesheet animation class id
-($) sheet tag =
-  -- TODO detect if the user tried to use two $ operators without
-  -- intervening properties (e.g. `$ button $ img`) and return
-  -- InvalidStyle if so; this will for sure emit invalid CSS!
-  sheet
-    |> addSelectorToStylesheet (Declaration.TypeSelector (tagToString tag))
-
-
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
 
     stylesheet "homepage"
@@ -3705,16 +3632,8 @@ addSelectorToStylesheet selector =
         button # Cancel
             ~ backgroundColor (rgb 128 64 32)
 -}
-(#) : Stylesheet animation class id -> id -> Stylesheet animation class id
-(#) sheet id =
-  case sheet.name of
-    StylesheetNamespace name ->
-      sheet
-        |> addSelectorToStylesheet (Declaration.IdSelector (identifierToString name id))
-
-
-($#) : id -> List (Mixin) -> StyleBlock
-($#) id mixins =
+(#) : id -> List (Mixin) -> StyleBlock
+(#) id mixins =
   selectorToStyleBlock mixins (\name -> Declaration.IdSelector (identifierToString name id))
 
 
@@ -3727,16 +3646,8 @@ addSelectorToStylesheet selector =
             ~ fontWeight normal
             ~ color (rgb 128 64 32)
 -}
-(.) : Stylesheet animation class id -> class -> Stylesheet animation class id
-(.) sheet class =
-  case sheet.name of
-    StylesheetNamespace name ->
-      sheet
-        |> addSelectorToStylesheet (Declaration.ClassSelector (identifierToString name class))
-
-
-($.) : class -> List (Mixin) -> StyleBlock
-($.) class mixins =
+(.) : class -> List (Mixin) -> StyleBlock
+(.) class mixins =
   selectorToStyleBlock mixins (\name -> Declaration.ClassSelector (identifierToString name class))
 
 
@@ -3753,19 +3664,9 @@ addSelectorToStylesheet selector =
             $ body
                 ~ width (pct 100)
 -}
-(@) : Stylesheet animation class id -> String -> Stylesheet animation class id
-(@) sheet rule =
-  let
-    addRule _ declarations =
-      declarations ++ [ Declaration.ConditionalGroupRule rule [] ]
-  in
-    applyTransformation addRule sheet
-
-
-($@) : AtRule a -> a -> StyleBlock
-($@) getDeclarations arg =
+(@) : AtRule a -> a -> StyleBlock
+(@) getDeclarations arg =
   StyleBlock (\_ declarations -> declarations ++ (getDeclarations arg))
-
 
 
 
@@ -3798,24 +3699,9 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ~ textDecoration underline
             ~ color (rgb 7 7 7)
 -}
-($=) : Stylesheet animation class id -> String -> Stylesheet animation class id
-($=) stylesheet selectorStr =
-  stylesheet
-    |> addSelectorToStylesheet (Declaration.CustomSelector selectorStr)
-
-{-| Concatenate the given selector to the end of the last selector in the given list, e.g. ".foo#bar"
--}
-lastSelectorToMulti : Selector -> List CompoundSelector -> List CompoundSelector
-lastSelectorToMulti selector otherSelectors =
-  case otherSelectors of
-    [] ->
-      [ Declaration.SingleSelector selector ]
-
-    compoundSelector :: [] ->
-      [ Declaration.MultiSelector compoundSelector selector ]
-
-    first :: rest ->
-      first :: (lastSelectorToMulti selector rest)
+selector : String -> List Mixin -> StyleBlock
+selector selectorStr mixins =
+  selectorToStyleBlock mixins (\name -> Declaration.CustomSelector selectorStr)
 
 
 {-| Define a custom property.
@@ -3829,8 +3715,8 @@ lastSelectorToMulti selector otherSelectors =
         -webkit-font-smoothing: none;
     }
 -}
-custom : String -> String -> Mixin
-custom key value =
+property : String -> String -> Mixin
+property key value =
   Mixin (\_ -> addProperty "~" { key = key, value = value, important = False })
 
 
@@ -4246,27 +4132,13 @@ pseudoClassToString (ExplicitPseudoClass str) =
 type PseudoClass
   = ExplicitPseudoClass String
 
+
 children =
-  identity -- TODO
+  identity
 
 
-{-|
-    stylesheet "homepage"
-        $ html |$ body
-            ~ width 960 px
-            ~ color (rgb 7 7 7)
--}
-(|$) : Stylesheet animation class id -> Tag -> Stylesheet animation class id
-(|$) sheet tag =
-  let
-    addTagSelector _ =
-      tag
-        |> tagToString
-        |> Declaration.TypeSelector
-        |> Declaration.SingleSelector
-        |> addSelector "|$"
-  in
-    applyTransformation addTagSelector sheet
+
+-- TODO
 
 
 numberToString : number -> String
