@@ -40,7 +40,7 @@ deprecated or discouraged.
 
 import Css.Declaration as Declaration exposing (Declaration, Selector, CompoundSelector, introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
-import Css.Util exposing (toCssIdentifier, identifierToString)
+import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import String
 
 
