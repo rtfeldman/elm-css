@@ -38,7 +38,7 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
-import Css.Declaration as Declaration exposing (Declaration, Selector, CompoundSelector, Property, introduceSelector, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mapSelectors, extractSelectors, mergeSelectors)
+import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import String
@@ -3560,7 +3560,7 @@ applyStyleBlocks styles name declarations =
   List.foldl (\(StyleBlock transform) -> transform name) declarations styles
 
 
-selectorToStyleBlock : List Mixin -> (String -> Declaration.Selector) -> StyleBlock
+selectorToStyleBlock : List Mixin -> (String -> SimpleSelector) -> StyleBlock
 selectorToStyleBlock mixins makeSelector =
   let
     transform name =
@@ -3574,7 +3574,7 @@ transformWithMixins mixins newDeclaration name declarations =
   applyMixins mixins name (declarations ++ [ newDeclaration ])
 
 
-selectorDeclaration : Declaration.Selector -> Declaration
+selectorDeclaration : SimpleSelector -> Declaration
 selectorDeclaration selector =
   Declaration.StyleBlock (Declaration.SingleSelector selector) [] []
 
@@ -3624,7 +3624,7 @@ mixin =
   selectorToStyleBlock mixins (makeIdSelector id)
 
 
-makeIdSelector : id -> String -> Selector
+makeIdSelector : id -> String -> SimpleSelector
 makeIdSelector id name =
   Declaration.IdSelector (identifierToString name id)
 
@@ -3643,7 +3643,7 @@ makeIdSelector id name =
   selectorToStyleBlock mixins (\name -> Declaration.ClassSelector (identifierToString name class))
 
 
-makeClassSelector : class -> String -> Selector
+makeClassSelector : class -> String -> SimpleSelector
 makeClassSelector class name =
   Declaration.ClassSelector (identifierToString name class)
 
@@ -3736,7 +3736,7 @@ directionalityToString directionality =
       "rtl"
 
 
-pseudoToStyleBlock : (Maybe CompoundSelector -> CompoundSelector) -> List Mixin -> StyleBlock
+pseudoToStyleBlock : (Maybe SimpleSelector -> ComplexSelector) -> List Mixin -> StyleBlock
 pseudoToStyleBlock makePseudo mixins =
   let
     transform name =
@@ -4174,15 +4174,15 @@ html, body {
 -}
 
 
-applyStyleCombinator : (CompoundSelector -> CompoundSelector -> CompoundSelector) -> List StyleBlock -> Mixin
+applyStyleCombinator : (ComplexSelector -> ComplexSelector -> ComplexSelector) -> List StyleBlock -> Mixin
 applyStyleCombinator combineSelectors styleBlocks =
   let
-    applySelectors : List CompoundSelector -> Declaration -> List Declaration
+    applySelectors : List ComplexSelector -> Declaration -> List Declaration
     applySelectors selectors declaration =
       case declaration of
         Declaration.StyleBlock firstSelector otherSelectors properties ->
           let
-            applySelector : CompoundSelector -> Declaration
+            applySelector : ComplexSelector -> Declaration
             applySelector selector =
               Declaration.StyleBlock
                 (combineSelectors selector firstSelector)
@@ -4244,7 +4244,7 @@ with makeStyleBlock mixins =
     reviseTransform : DeclarationTransform -> DeclarationTransform
     reviseTransform transform name declarations =
       let
-        updates : List (CompoundSelector -> CompoundSelector)
+        updates : List (ComplexSelector -> ComplexSelector)
         updates =
           extractSelectors (transform name [])
             |> List.map mergeSelectors
@@ -4289,8 +4289,9 @@ with makeStyleBlock mixins =
 
 {-| -}
 each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
-each selectors mixins =
+each makeSelectors mixins =
   StyleBlock (\_ _ -> [])
+
 
 
 {-| -}
@@ -4305,7 +4306,7 @@ each selectors mixins =
   applyMulti (selector [ identityMixin ]) (makeClassSelector class) mixins
 
 
-applyMulti : StyleBlock -> (String -> Selector) -> List Mixin -> StyleBlock
+applyMulti : StyleBlock -> (String -> SimpleSelector) -> List Mixin -> StyleBlock
 applyMulti styleBlock makeSelector mixins =
   let
     newTransform name declarations =
@@ -4317,15 +4318,15 @@ applyMulti styleBlock makeSelector mixins =
     StyleBlock newTransform
 
 
-multiSelector : List Mixin -> (String -> Declaration.Selector) -> Declaration -> StyleBlock
+multiSelector : List Mixin -> (String -> SimpleSelector) -> Declaration -> StyleBlock
 multiSelector mixins makeSelector declaration =
   case declaration of
     Declaration.StyleBlock firstSelector otherSelectors _ ->
       let
         transform name =
           let
-            makeMulti compoundSelector =
-              Declaration.MultiSelector compoundSelector (makeSelector name)
+            makeMulti =
+              Declaration.mapSimples ((flip Declaration.MultiSelector) (makeSelector name))
 
             newStyleBlock =
               Declaration.StyleBlock

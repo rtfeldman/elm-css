@@ -1,22 +1,22 @@
 module Css.Declaration (..) where
 
 
-type Selector
+type SimpleSelector
   = TypeSelector String
   | ClassSelector String
   | IdSelector String
+  | MultiSelector SimpleSelector SimpleSelector
   | CustomSelector String
 
 
-type CompoundSelector
-  = SingleSelector Selector
-  | MultiSelector CompoundSelector Selector
-  | AdjacentSibling CompoundSelector CompoundSelector
-  | GeneralSibling CompoundSelector CompoundSelector
-  | Child CompoundSelector CompoundSelector
-  | Descendant CompoundSelector CompoundSelector
-  | PseudoClass String (Maybe CompoundSelector)
-  | PseudoElement String (Maybe CompoundSelector)
+type ComplexSelector
+  = SingleSelector SimpleSelector
+  | AdjacentSibling ComplexSelector ComplexSelector
+  | GeneralSibling ComplexSelector ComplexSelector
+  | Child ComplexSelector ComplexSelector
+  | Descendant ComplexSelector ComplexSelector
+  | PseudoClass String (Maybe SimpleSelector)
+  | PseudoElement String (Maybe SimpleSelector)
 
 
 type alias Property =
@@ -27,64 +27,9 @@ type alias Property =
 
 
 type Declaration
-  = StyleBlock CompoundSelector (List CompoundSelector) (List Property)
+  = StyleBlock ComplexSelector (List ComplexSelector) (List Property)
   | ConditionalGroupRule String (List Declaration)
   | StandaloneAtRule String String
-
-
-introduceSelector : Selector -> List Declaration -> List Declaration
-introduceSelector selector declarations =
-  case declarations of
-    [] ->
-      [ StyleBlock (SingleSelector selector) [] [] ]
-
-    -- If there are no properties declared, then we have a situation
-    --   like `Bar` in the following:
-    --       stylesheet "homepage"
-    --           . Foo . Bar
-    --               ~ fontWeight bold
-    -- ...as opposed to:
-    --       stylesheet "homepage"
-    --           . Foo
-    --               ~ fontWeight bold
-    -- In this case, we don't make a new declaration, but rather add
-    -- the new selector to the existing list of selectors.
-    (StyleBlock firstSelector otherSelectors []) :: [] ->
-      case lastSelectorToMulti selector (firstSelector :: otherSelectors) of
-        [] ->
-          [ StyleBlock (SingleSelector selector) [] [] ]
-
-        first :: rest ->
-          [ StyleBlock first rest [] ]
-
-    -- Here the most recent declaration had properties defined, meaning
-    -- this must be a new top-level declaration, like `Bar` in the following:
-    --    stylesheet "homepage"
-    --        . Foo
-    --            ~ fontWeight normal
-    --        . Bar
-    --            ~ fontWeight bold
-    lastDeclaration :: [] ->
-      lastDeclaration :: [ StyleBlock (SingleSelector selector) [] [] ]
-
-    {- We haven't reached the last declaration yet, so recurse. -}
-    firstDeclaration :: otherDeclarations ->
-      firstDeclaration :: (introduceSelector selector otherDeclarations)
-
-
-{-| Concatenate the given selector to the end of the last selector in the given list, e.g. ".foo#bar"
--}
-lastSelectorToMulti : Selector -> List CompoundSelector -> List CompoundSelector
-lastSelectorToMulti selector otherSelectors =
-  case otherSelectors of
-    [] ->
-      [ SingleSelector selector ]
-
-    compoundSelector :: [] ->
-      [ MultiSelector compoundSelector selector ]
-
-    first :: rest ->
-      first :: (lastSelectorToMulti selector rest)
 
 
 getLastProperty : List Declaration -> Maybe Property
@@ -103,8 +48,8 @@ getLastProperty declarations =
 mapProperties : (Property -> Property) -> Declaration -> Declaration
 mapProperties update declaration =
   case declaration of
-    StyleBlock firstSelector extraSelectors properties ->
-      StyleBlock firstSelector extraSelectors (List.map update properties)
+    StyleBlock firstSelector extraSimpleSelectors properties ->
+      StyleBlock firstSelector extraSimpleSelectors (List.map update properties)
 
     ConditionalGroupRule _ _ ->
       declaration
@@ -121,12 +66,12 @@ updateLastProperty update declarations =
 
     declaration :: [] ->
       case declaration of
-        StyleBlock firstSelector extraSelectors properties ->
+        StyleBlock firstSelector extraSimpleSelectors properties ->
           let
             newDeclaration =
               StyleBlock
                 firstSelector
-                extraSelectors
+                extraSimpleSelectors
                 (updateLast update properties)
           in
             [ newDeclaration ]
@@ -149,12 +94,12 @@ addProperty functionName property declarations =
 
     declaration :: [] ->
       case declaration of
-        StyleBlock firstSelector extraSelectors properties ->
+        StyleBlock firstSelector extraSimpleSelectors properties ->
           let
             newDeclaration =
               StyleBlock
                 firstSelector
-                extraSelectors
+                extraSimpleSelectors
                 (properties ++ [ property ])
           in
             [ newDeclaration ]
@@ -166,7 +111,7 @@ addProperty functionName property declarations =
       first :: addProperty functionName property rest
 
 
-extendLastSelector : String -> (CompoundSelector -> CompoundSelector) -> List Declaration -> List Declaration
+extendLastSelector : String -> (ComplexSelector -> ComplexSelector) -> List Declaration -> List Declaration
 extendLastSelector operatorName update declarations =
   case declarations of
     [] ->
@@ -174,12 +119,12 @@ extendLastSelector operatorName update declarations =
 
     declaration :: [] ->
       case declaration of
-        StyleBlock firstSelector extraSelectors properties ->
+        StyleBlock firstSelector extraSimpleSelectors properties ->
           let
             newDeclaration =
               StyleBlock
                 (update firstSelector)
-                (List.map update extraSelectors)
+                (List.map update extraSimpleSelectors)
                 []
 
             newDeclarations =
@@ -224,7 +169,7 @@ getLast list =
       getLast rest
 
 
-addSelector : String -> CompoundSelector -> List Declaration -> List Declaration
+addSelector : String -> ComplexSelector -> List Declaration -> List Declaration
 addSelector operatorName newSelector declarations =
   case declarations of
     [] ->
@@ -232,12 +177,12 @@ addSelector operatorName newSelector declarations =
 
     declaration :: [] ->
       case declaration of
-        StyleBlock firstSelector extraSelectors properties ->
+        StyleBlock firstSelector extraSimpleSelectors properties ->
           let
             newDeclaration =
               StyleBlock
                 firstSelector
-                (extraSelectors ++ [ newSelector ])
+                (extraSimpleSelectors ++ [ newSelector ])
                 properties
           in
             [ newDeclaration ]
@@ -249,18 +194,18 @@ addSelector operatorName newSelector declarations =
       first :: addSelector operatorName newSelector rest
 
 
-mapSelectors : List (CompoundSelector -> CompoundSelector) -> List Declaration -> List Declaration
+mapSelectors : List (ComplexSelector -> ComplexSelector) -> List Declaration -> List Declaration
 mapSelectors updates =
   let
-    apply : Declaration -> (CompoundSelector -> CompoundSelector) -> List Declaration
+    apply : Declaration -> (ComplexSelector -> ComplexSelector) -> List Declaration
     apply declaration update =
       case declaration of
-        StyleBlock firstSelector otherSelectors properties ->
+        StyleBlock firstSelector otherSimpleSelectors properties ->
           let
             newDeclaration =
               StyleBlock
                 (update firstSelector)
-                (List.map update otherSelectors)
+                (List.map update otherSimpleSelectors)
                 []
           in
             if List.isEmpty properties then
@@ -277,29 +222,26 @@ mapSelectors updates =
     List.concatMap (\declaration -> List.concatMap (apply declaration) updates)
 
 
-extractSelectors : List Declaration -> List CompoundSelector
+extractSelectors : List Declaration -> List ComplexSelector
 extractSelectors declarations =
   case declarations of
     [] ->
       []
 
-    StyleBlock firstSelector otherSelectors _ :: rest ->
-      (firstSelector :: otherSelectors) ++ (extractSelectors rest)
+    (StyleBlock firstSelector otherSimpleSelectors _) :: rest ->
+      (firstSelector :: otherSimpleSelectors) ++ (extractSelectors rest)
 
-    ConditionalGroupRule _ _ :: rest ->
+    (ConditionalGroupRule _ _) :: rest ->
       extractSelectors rest
 
-    StandaloneAtRule _ _ :: rest ->
+    (StandaloneAtRule _ _) :: rest ->
       extractSelectors rest
 
 
-mergeSelectors : CompoundSelector -> CompoundSelector -> CompoundSelector
+mergeSelectors : ComplexSelector -> ComplexSelector -> ComplexSelector
 mergeSelectors originalSelector newSelector =
   case originalSelector of
     SingleSelector _ ->
-      originalSelector
-
-    MultiSelector _ _ ->
       originalSelector
 
     AdjacentSibling _ _ ->
@@ -315,7 +257,48 @@ mergeSelectors originalSelector newSelector =
       Descendant originalSelector newSelector
 
     PseudoClass str _ ->
-      PseudoClass str (Just newSelector)
+      case newSelector of
+        SingleSelector simpleSelector ->
+          PseudoClass str (Just simpleSelector)
+
+        _ ->
+          originalSelector
 
     PseudoElement str _ ->
-      PseudoElement str (Just newSelector)
+      case newSelector of
+        SingleSelector simpleSelector ->
+          PseudoElement str (Just simpleSelector)
+
+        _ ->
+          originalSelector
+
+
+mapSimples : (SimpleSelector -> SimpleSelector) -> ComplexSelector -> ComplexSelector
+mapSimples update complexSelector =
+  case complexSelector of
+    SingleSelector simpleSelector ->
+      SingleSelector (update simpleSelector)
+
+    AdjacentSibling parent child ->
+      AdjacentSibling (mapSimples update parent) (mapSimples update child)
+
+    GeneralSibling parent child ->
+      GeneralSibling (mapSimples update parent) (mapSimples update child)
+
+    Child parent child ->
+      Child (mapSimples update parent) (mapSimples update child)
+
+    Descendant parent child ->
+      Descendant (mapSimples update parent) (mapSimples update child)
+
+    PseudoClass _ Nothing ->
+      complexSelector
+
+    PseudoElement _ Nothing ->
+      complexSelector
+
+    PseudoClass str (Just simpleSelector) ->
+      PseudoClass str (Just (update simpleSelector))
+
+    PseudoElement str (Just simpleSelector) ->
+      PseudoElement str (Just (update simpleSelector))

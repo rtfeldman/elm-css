@@ -11,8 +11,8 @@ prettyPrintDeclarations declarations =
     |> String.join "\n\n"
 
 
-selectorToString : Selector -> String
-selectorToString selector =
+simpleSelectorToString : SimpleSelector -> String
+simpleSelectorToString selector =
   case selector of
     TypeSelector str ->
       str
@@ -23,46 +23,45 @@ selectorToString selector =
     IdSelector str ->
       "#" ++ str
 
+    MultiSelector first second ->
+      (simpleSelectorToString first) ++ (simpleSelectorToString second)
+
     CustomSelector str ->
       str
 
 
-compoundSelectorToString : CompoundSelector -> String
-compoundSelectorToString compoundSelector =
-  case compoundSelector of
+complexSelectorToString : ComplexSelector -> String
+complexSelectorToString complexSelector =
+  case complexSelector of
     SingleSelector selector ->
-      selectorToString selector
-
-    MultiSelector compound single ->
-      (compoundSelectorToString compound)
-        ++ (selectorToString single)
+      simpleSelectorToString selector
 
     AdjacentSibling selectorA selectorB ->
-      (compoundSelectorToString selectorA)
+      (complexSelectorToString selectorA)
         ++ " + "
-        ++ (compoundSelectorToString selectorB)
+        ++ (complexSelectorToString selectorB)
 
     GeneralSibling selectorA selectorB ->
-      (compoundSelectorToString selectorA)
+      (complexSelectorToString selectorA)
         ++ " ~ "
-        ++ (compoundSelectorToString selectorB)
+        ++ (complexSelectorToString selectorB)
 
     Child selectorA selectorB ->
-      (compoundSelectorToString selectorA)
+      (complexSelectorToString selectorA)
         ++ " > "
-        ++ (compoundSelectorToString selectorB)
+        ++ (complexSelectorToString selectorB)
 
     Descendant selectorA selectorB ->
-      (compoundSelectorToString selectorA)
+      (complexSelectorToString selectorA)
         ++ " "
-        ++ (compoundSelectorToString selectorB)
+        ++ (complexSelectorToString selectorB)
 
     PseudoClass str maybeSelector ->
       let
         prefix =
           case maybeSelector of
             Just selector ->
-              compoundSelectorToString selector
+              simpleSelectorToString selector
 
             Nothing ->
               ""
@@ -74,7 +73,7 @@ compoundSelectorToString compoundSelector =
         prefix =
           case maybeSelector of
             Just selector ->
-              compoundSelectorToString selector
+              simpleSelectorToString selector
 
             Nothing ->
               ""
@@ -114,7 +113,7 @@ prettyPrintDeclaration declaration =
         selectorStr =
           firstSelector
             :: extraSelectors
-            |> List.map compoundSelectorToString
+            |> List.map complexSelectorToString
             |> String.join ", "
       in
         selectorStr
