@@ -48,6 +48,12 @@ type Compatible
   = Compatible
 
 
+type PseudoClass =
+  PseudoClass String (List Mixin)
+
+type PseudoElement =
+  PseudoElement String (List Mixin)
+
 {-| A stylesheet that can be passed to [`compile`](#compile) to get a String
 of a CSS file.
 -}
@@ -3731,265 +3737,265 @@ directionalityToString directionality =
 {-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-active : PseudoClass
+active : List Mixin -> PseudoClass
 active =
-  ExplicitPseudoClass "active"
+  PseudoClass "active"
 
 
 {-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-any : String -> PseudoClass
+any : String -> List Mixin -> PseudoClass
 any str =
-  ExplicitPseudoClass ("any(" ++ str ++ ")")
+  PseudoClass ("any(" ++ str ++ ")")
 
 
 {-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-checked : PseudoClass
+checked : List Mixin -> PseudoClass
 checked =
-  ExplicitPseudoClass "checked"
+  PseudoClass "checked"
 
 
 {-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-dir : Directionality -> PseudoClass
+dir : Directionality -> List Mixin -> PseudoClass
 dir directionality =
-  ExplicitPseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
+  PseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-disabled : PseudoClass
+disabled : List Mixin -> PseudoClass
 disabled =
-  ExplicitPseudoClass "disabled"
+  PseudoClass "disabled"
 
 
 {-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-empty : PseudoClass
+empty : List Mixin -> PseudoClass
 empty =
-  ExplicitPseudoClass "empty"
+  PseudoClass "empty"
 
 
 {-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-enabled : PseudoClass
+enabled : List Mixin -> PseudoClass
 enabled =
-  ExplicitPseudoClass "enabled"
+  PseudoClass "enabled"
 
 
 {-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-first : PseudoClass
+first : List Mixin -> PseudoClass
 first =
-  ExplicitPseudoClass "first"
+  PseudoClass "first"
 
 
 {-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstChild : PseudoClass
+firstChild : List Mixin -> PseudoClass
 firstChild =
-  ExplicitPseudoClass "first-child"
+  PseudoClass "first-child"
 
 
 {-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstOfType : PseudoClass
+firstOfType : List Mixin -> PseudoClass
 firstOfType =
-  ExplicitPseudoClass "first-of-type"
+  PseudoClass "first-of-type"
 
 
 {-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-fullscreen : PseudoClass
+fullscreen : List Mixin -> PseudoClass
 fullscreen =
-  ExplicitPseudoClass "fullscreen"
+  PseudoClass "fullscreen"
 
 
 {-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-focus : PseudoClass
+focus : List Mixin -> PseudoClass
 focus =
-  ExplicitPseudoClass "focus"
+  PseudoClass "focus"
 
 
 {-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
 hover : List Mixin -> PseudoClass
-hover _ =
-  ExplicitPseudoClass "hover"
+hover =
+  PseudoClass "hover"
 
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-indeterminate : PseudoClass
+indeterminate : List Mixin -> PseudoClass
 indeterminate =
-  ExplicitPseudoClass "indeterminate"
+  PseudoClass "indeterminate"
 
 
 {-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-invalid : PseudoClass
+invalid : List Mixin -> PseudoClass
 invalid =
-  ExplicitPseudoClass "invalid"
+  PseudoClass "invalid"
 
 
 {-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lang : String -> PseudoClass
+lang : String -> List Mixin -> PseudoClass
 lang str =
-  ExplicitPseudoClass ("lang(" ++ str ++ ")")
+  PseudoClass ("lang(" ++ str ++ ")")
 
 
 {-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastChild : PseudoClass
+lastChild : List Mixin -> PseudoClass
 lastChild =
-  ExplicitPseudoClass "last-child"
+  PseudoClass "last-child"
 
 
 {-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastOfType : PseudoClass
+lastOfType : List Mixin -> PseudoClass
 lastOfType =
-  ExplicitPseudoClass "last-of-type"
+  PseudoClass "last-of-type"
 
 
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-link : PseudoClass
+link : List Mixin -> PseudoClass
 link =
-  ExplicitPseudoClass "link"
+  PseudoClass "link"
 
 
 {-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthChild : String -> PseudoClass
+nthChild : String -> List Mixin -> PseudoClass
 nthChild str =
-  ExplicitPseudoClass ("nth-child(" ++ str ++ ")")
+  PseudoClass ("nth-child(" ++ str ++ ")")
 
 
 {-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastChild : String -> PseudoClass
+nthLastChild : String -> List Mixin -> PseudoClass
 nthLastChild str =
-  ExplicitPseudoClass ("nth-last-child(" ++ str ++ ")")
+  PseudoClass ("nth-last-child(" ++ str ++ ")")
 
 
 {-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastOfType : String -> PseudoClass
+nthLastOfType : String -> List Mixin -> PseudoClass
 nthLastOfType str =
-  ExplicitPseudoClass ("nth-last-of-type(" ++ str ++ ")")
+  PseudoClass ("nth-last-of-type(" ++ str ++ ")")
 
 
 {-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthOfType : String -> PseudoClass
+nthOfType : String -> List Mixin -> PseudoClass
 nthOfType str =
-  ExplicitPseudoClass ("nth-of-type(" ++ str ++ ")")
+  PseudoClass ("nth-of-type(" ++ str ++ ")")
 
 
 {-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyChild : PseudoClass
+onlyChild : List Mixin -> PseudoClass
 onlyChild =
-  ExplicitPseudoClass "only-child"
+  PseudoClass "only-child"
 
 
 {-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyOfType : PseudoClass
+onlyOfType : List Mixin -> PseudoClass
 onlyOfType =
-  ExplicitPseudoClass "only-of-type"
+  PseudoClass "only-of-type"
 
 
 {-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-optional : PseudoClass
+optional : List Mixin -> PseudoClass
 optional =
-  ExplicitPseudoClass "optional"
+  PseudoClass "optional"
 
 
 {-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-outOfRange : PseudoClass
+outOfRange : List Mixin -> PseudoClass
 outOfRange =
-  ExplicitPseudoClass "out-of-range"
+  PseudoClass "out-of-range"
 
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-readWrite : PseudoClass
+readWrite : List Mixin -> PseudoClass
 readWrite =
-  ExplicitPseudoClass "read-write"
+  PseudoClass "read-write"
 
 
 {-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-required : PseudoClass
+required : List Mixin -> PseudoClass
 required =
-  ExplicitPseudoClass "required"
+  PseudoClass "required"
 
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-root : PseudoClass
+root : List Mixin -> PseudoClass
 root =
-  ExplicitPseudoClass "root"
+  PseudoClass "root"
 
 
 {-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-scope : PseudoClass
+scope : List Mixin -> PseudoClass
 scope =
-  ExplicitPseudoClass "scope"
+  PseudoClass "scope"
 
 
 {-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-target : PseudoClass
+target : List Mixin -> PseudoClass
 target =
-  ExplicitPseudoClass "target"
+  PseudoClass "target"
 
 
 {-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-valid : PseudoClass
+valid : List Mixin -> PseudoClass
 valid =
-  ExplicitPseudoClass "valid"
+  PseudoClass "valid"
 
 
 
@@ -3999,41 +4005,41 @@ valid =
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-after : PseudoElement
+after : List Mixin -> PseudoElement
 after =
-  ExplicitPseudoElement "after"
+  PseudoElement "after"
 
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-before : PseudoElement
+before : List Mixin -> PseudoElement
 before =
-  ExplicitPseudoElement "before"
+  PseudoElement "before"
 
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLetter : PseudoElement
+firstLetter : List Mixin -> PseudoElement
 firstLetter =
-  ExplicitPseudoElement "first-letter"
+  PseudoElement "first-letter"
 
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLine : PseudoElement
+firstLine : List Mixin -> PseudoElement
 firstLine =
-  ExplicitPseudoElement "first-line"
+  PseudoElement "first-line"
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-selection : PseudoElement
+selection : List Mixin -> PseudoElement
 selection =
-  ExplicitPseudoElement "selection"
+  PseudoElement "selection"
 
 
 
@@ -4102,24 +4108,6 @@ from elm-css.
 blink : IntentionallyUnsupportedPleaseSeeDocs
 blink =
   IntentionallyUnsupportedPleaseSeeDocs
-
-
-pseudoElementToString : PseudoElement -> String
-pseudoElementToString (ExplicitPseudoElement str) =
-  str
-
-
-type PseudoElement
-  = ExplicitPseudoElement String
-
-
-pseudoClassToString : PseudoClass -> String
-pseudoClassToString (ExplicitPseudoClass str) =
-  str
-
-
-type PseudoClass
-  = ExplicitPseudoClass String
 
 
 {-| -}
@@ -4223,7 +4211,6 @@ applyStyleCombinator combineSelectors styleBlocks =
       List.concatMap (applyStyleBlockTo name declaration) styleBlocks
   in
     Mixin (\name declarations -> List.concatMap (expandDeclaration name) declarations)
-
 
 {-| -}
 pseudoClasses : List a -> Mixin
