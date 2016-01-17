@@ -155,32 +155,42 @@ borders =
     ]
 
 
+dreamwriter : Stylesheet
+dreamwriter =
+  stylesheet
+    { name = "dreamwriter" }
+    [ (multi [ html, body ])
+        [ width (pct 100)
+        , height (pct 100)
+        , boxSizing borderBox
+        , padding zero
+        , margin zero
+        ]
 
---dreamwriter : Stylesheet
---dreamwriter =
---    stylesheet { name = "dreamwriter" }
---        $ html |$ body
---            ~ width (pct 100)
---            ~ height (pct 100)
---            ~ boxSizing borderBox
---            ~ padding zero
---            ~ margin zero
---        $ body
---            ~ minWidth (px 1280)
---            ~ overflowX auto
---            >$ div
---                ~ width (pct 100)
---                ~ height (pct 100)
---        . Hidden
---            ~ ((display none) |> important)
---        # Page
---            ~ width (pct 100)
---            ~ height (pct 100)
---            ~ boxSizing borderBox
---            ~ margin zero
---            ~ padding (px 8)
---            ~ backgroundColor pageBackground
---            ~ color pageDefaultText
+    , body
+        [ minWidth (px 1280)
+        , overflowX auto
+        , children
+            [ div
+                [ width (pct 100)
+                , height (pct 100)
+                ]
+            ]
+        ]
+
+    , ((.) Hidden)
+        [ (display none) |> important ]
+
+    , ((#) Page)
+        [ width (pct 100)
+        , height (pct 100)
+        , boxSizing borderBox
+        , margin zero
+        , padding (px 8)
+        , backgroundColor pageBackground
+        , color pageDefaultText
+        ]
+    ]
 
 
 underlineOnHover : Mixin
@@ -206,7 +216,7 @@ greenOnHover =
     ]
 
 
-mixinGreenOnHoverStylesheet : Stylesheet CssAnimations CssClasses CssIds
+mixinGreenOnHoverStylesheet : Stylesheet
 mixinGreenOnHoverStylesheet =
   stylesheet
     { name = "greenOnHoverStylesheetsheet" }
@@ -217,7 +227,7 @@ mixinGreenOnHoverStylesheet =
     ]
 
 
-mixinUnderlineOnHoverStylesheet : Stylesheet CssAnimations CssClasses CssIds
+mixinUnderlineOnHoverStylesheet : Stylesheet
 mixinUnderlineOnHoverStylesheet =
   stylesheet
     { name = "underlineOnHoverStylesheetsheet" }
@@ -227,7 +237,7 @@ mixinUnderlineOnHoverStylesheet =
     ]
 
 
-manualUnderlineOnHoverStylesheet : Stylesheet CssAnimations CssClasses CssIds
+manualUnderlineOnHoverStylesheet : Stylesheet
 manualUnderlineOnHoverStylesheet =
   stylesheet
     { name = "underlineOnHoverStylesheetsheet" }
