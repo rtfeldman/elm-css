@@ -340,10 +340,10 @@ testProperty propertyName modifierPairs =
 
 
 assertPropertyWorks : String -> ( Mixin , String ) -> Test
-assertPropertyWorks propertyName ( input, expectedStr ) =
+assertPropertyWorks propertyName ( mixin, expectedStr ) =
     test "pretty prints the expected output"
         <| assertEqual
-            (prettyPrint (stylesheet { name = "test" } $ p ~ input))
+            (prettyPrint (stylesheet { name = "test" } [ p [ mixin ] ]))
             ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
 
 
