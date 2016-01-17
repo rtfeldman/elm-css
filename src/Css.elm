@@ -3530,12 +3530,12 @@ your stylesheet.
 -}
 stylesheet : { a | name : String } -> List StyleBlock -> Stylesheet
 stylesheet { name } styleBlocks =
-  applyStyleBlocks styleBlocks name []
+  concatStyleBlocks styleBlocks name []
 
 
 snippet : List StyleBlock -> Snippet
 snippet styles =
-  Snippet (applyStyleBlocks styles)
+  Snippet (concatStyleBlocks styles)
 
 
 {-| Copy the given snippets into the current style.
@@ -3555,9 +3555,9 @@ applyMixins mixins name declarations =
   List.foldl (\(Mixin transform) -> transform name) declarations mixins
 
 
-applyStyleBlocks : List StyleBlock -> DeclarationTransform
-applyStyleBlocks styles name declarations =
-  List.foldl (\(StyleBlock transform) -> transform name) declarations styles
+concatStyleBlocks : List StyleBlock -> DeclarationTransform
+concatStyleBlocks styles name declarations =
+  List.concatMap (\(StyleBlock transform) -> transform name declarations) styles
 
 
 selectorToStyleBlock : List Mixin -> (String -> SimpleSelector) -> StyleBlock
@@ -4289,9 +4289,28 @@ with makeStyleBlock mixins =
 
 {-| -}
 each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
-each makeSelectors mixins =
-  StyleBlock (\_ _ -> [])
+each styleBlockCreators mixins =
+  let
+    transform : DeclarationTransform
+    transform name declarations =
+      let
+        selectors =
+          List.map ((|>) [ identityMixin ]) styleBlockCreators
+            |> List.map (\(StyleBlock transform) -> transform)
+            |> List.concatMap (\transform -> extractSelectors (transform name []))
+      in
+        case selectors of
+          [] ->
+            declarations
 
+          firstSelector :: otherSelectors ->
+            let
+              newDeclaration =
+                Declaration.StyleBlock firstSelector otherSelectors []
+            in
+              transformWithMixins mixins newDeclaration name declarations
+  in
+    StyleBlock transform
 
 
 {-| -}
@@ -4326,7 +4345,8 @@ multiSelector mixins makeSelector declaration =
         transform name =
           let
             makeMulti =
-              Declaration.mapSimples ((flip Declaration.MultiSelector) (makeSelector name))
+              Declaration.mapSingleSelectors
+                ((flip Declaration.MultiSelector) (makeSelector name))
 
             newStyleBlock =
               Declaration.StyleBlock

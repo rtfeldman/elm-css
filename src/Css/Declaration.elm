@@ -273,23 +273,23 @@ mergeSelectors originalSelector newSelector =
           originalSelector
 
 
-mapSimples : (SimpleSelector -> SimpleSelector) -> ComplexSelector -> ComplexSelector
-mapSimples update complexSelector =
+mapSingleSelectors : (SimpleSelector -> SimpleSelector) -> ComplexSelector -> ComplexSelector
+mapSingleSelectors update complexSelector =
   case complexSelector of
     SingleSelector simpleSelector ->
       SingleSelector (update simpleSelector)
 
     AdjacentSibling parent child ->
-      AdjacentSibling (mapSimples update parent) (mapSimples update child)
+      AdjacentSibling (mapSingleSelectors update parent) (mapSingleSelectors update child)
 
     GeneralSibling parent child ->
-      GeneralSibling (mapSimples update parent) (mapSimples update child)
+      GeneralSibling (mapSingleSelectors update parent) (mapSingleSelectors update child)
 
     Child parent child ->
-      Child (mapSimples update parent) (mapSimples update child)
+      Child (mapSingleSelectors update parent) (mapSingleSelectors update child)
 
     Descendant parent child ->
-      Descendant (mapSimples update parent) (mapSimples update child)
+      Descendant (mapSingleSelectors update parent) (mapSingleSelectors update child)
 
     PseudoClass _ Nothing ->
       complexSelector
