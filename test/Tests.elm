@@ -1,22 +1,22 @@
 module Tests (all) where
 
 import ElmTest exposing (..)
+import TestUtil exposing (outdented)
 import Css exposing (compile)
+import Compile
 import Fixtures
 import Properties
-import String
 
 
 all : Test
 all =
   suite
     "elm-css"
-    [ unstyledDiv
+    [ Compile.all
     , keyValue
     , divWidthHeight
     , leftRightTopBottom
     , borders
-    , dreamwriter
     , multiSelector
     , multiDescendent
     , underlineOnHoverMixin
@@ -25,23 +25,6 @@ all =
     , transformsStyle
     , Properties.all
     ]
-
-
-unstyledDiv : Test
-unstyledDiv =
-  let
-    input =
-      Fixtures.unstyledDiv
-
-    output =
-      "div {\n\n}"
-  in
-    suite
-      "unstyled div"
-      [ test "pretty prints the expected output"
-          <| assertEqual output (prettyPrint input)
-      ]
-
 
 divWidthHeight : Test
 divWidthHeight =
@@ -117,54 +100,6 @@ borders =
       ]
 
 
-dreamwriter : Test
-dreamwriter =
-  let
-    input =
-      Fixtures.dreamwriter
-
-    output =
-      """
-            html, body {
-              width: 100%;
-              height: 100%;
-              box-sizing: border-box;
-              padding: 0;
-              margin: 0;
-            }
-
-            body {
-              min-width: 1280px;
-              overflow-x: auto;
-            }
-
-            body > div {
-              width: 100%;
-              height: 100%;
-            }
-
-            .dreamwriterHidden {
-              display: none !important;
-            }
-
-            #dreamwriterPage {
-              width: 100%;
-              height: 100%;
-              box-sizing: border-box;
-              margin: 0;
-              padding: 8px;
-              background-color: rgb(100, 90, 128);
-              color: rgb(40, 35, 76);
-            }
-        """
-  in
-    suite
-      "Sample stylesheet from Dreamwriter"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
-      ]
-
-
 multiDescendent : Test
 multiDescendent =
   let
@@ -199,10 +134,6 @@ multiDescendent =
             span {
               padding: 10px;
               margin: 11px;
-            }
-
-            span > h2 {
-
             }
 
             span > h2 > h1 {
@@ -264,15 +195,6 @@ keyValue =
       [ test "pretty prints the expected output"
           <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]
-
-
-outdented : String -> String
-outdented str =
-  str
-    |> String.split "\n"
-    |> List.map String.trim
-    |> String.join "\n"
-    |> String.trim
 
 
 underlineOnHoverMixin : Test

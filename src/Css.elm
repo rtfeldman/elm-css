@@ -39,8 +39,8 @@ deprecated or discouraged.
 -}
 
 import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors)
-import Css.Declaration.Output exposing (prettyPrintDeclarations)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
+import Css.Compile
 import String
 
 
@@ -4280,10 +4280,7 @@ with makeStyleBlock mixins =
                   List.map applyUpdate updates
                     |> applyMixins mixins name
               in
-                if List.isEmpty properties then
-                  newDeclarations
-                else
-                  declaration :: newDeclarations
+                declaration :: newDeclarations
 
             Declaration.ConditionalGroupRule ruleStr declarations ->
               List.map
@@ -4405,5 +4402,5 @@ valuesOrNone list =
 message if it could not be compiled.
 -}
 compile : List Declaration -> Result String String
-compile declarations =
-  Ok (prettyPrintDeclarations declarations)
+compile =
+  Css.Compile.compile
