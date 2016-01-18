@@ -586,7 +586,7 @@ rgba : number -> number -> number -> number -> Color
 rgba r g b a =
   let
     warnings =
-      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) then
+      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) || (a < 0) || (a > 1) then
         [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ") is not valid." ]
       else
         []
