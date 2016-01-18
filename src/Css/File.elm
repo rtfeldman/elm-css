@@ -6,6 +6,7 @@ module Css.File (compile, toFileStructure, CssFileStructure) where
 -}
 
 import Css exposing (Stylesheet)
+import String
 
 
 {-| A description of CSS files that will be created by elm-css.
@@ -39,4 +40,4 @@ toFileStructure stylesheets =
 -}
 compile : Stylesheet -> Result String String
 compile =
-  Css.compile
+  Css.compile >> Result.formatError (String.join "\n")

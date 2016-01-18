@@ -2,6 +2,7 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 
 {-| Functions for building stylesheets.
 
+
 # Style
 @docs Snippet, snippet, Mixin, mixin, stylesheet, compile
 
@@ -4179,7 +4180,6 @@ applyStyleCombinator combineSelectors styleBlocks =
   let
     -- first: html, others: [ body ]
     -- declaration: div { width: 100%, height: 100% }
-
     applySelectors : ComplexSelector -> List ComplexSelector -> Declaration -> List Declaration
     applySelectors first others declaration =
       case declaration of
@@ -4211,7 +4211,6 @@ applyStyleCombinator combineSelectors styleBlocks =
         Declaration.StandaloneAtRule ruleStr _ ->
           [ declaration ]
 
-
     applyStyleBlockTo : String -> Declaration -> StyleBlock -> List Declaration
     applyStyleBlockTo name declaration (StyleBlock transform) =
       case declaration of
@@ -4231,7 +4230,6 @@ applyStyleCombinator combineSelectors styleBlocks =
                 otherDeclarations
           in
             [ Declaration.ConditionalGroupRule ruleStr newDeclarations ]
-
 
         Declaration.StandaloneAtRule ruleStr _ ->
           [ declaration ]
@@ -4401,6 +4399,6 @@ valuesOrNone list =
 {-| Compile the given stylesheet to a CSS string, or to an error
 message if it could not be compiled.
 -}
-compile : List Declaration -> Result String String
+compile : List Declaration -> Result (List String) String
 compile =
   Css.Compile.compile

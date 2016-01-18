@@ -1,9 +1,9 @@
 module Compile (all) where
 
 import ElmTest exposing (..)
-import TestUtil exposing (outdented)
-import Css exposing (compile)
+import TestUtil exposing (outdented, prettyPrint)
 import CompileFixtures
+
 
 all : Test
 all =
@@ -76,13 +76,3 @@ dreamwriter =
       [ test "pretty prints the expected output"
           <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]
-
-
-
-prettyPrint style =
-  case compile style of
-    Ok result ->
-      result
-
-    Err message ->
-      "Invalid Stylesheet: " ++ message
