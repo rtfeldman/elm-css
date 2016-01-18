@@ -38,6 +38,6 @@ toFileStructure stylesheets =
 
 {-| Convenience re-export of Css.compile
 -}
-compile : Stylesheet namespace animation class id -> Result String String
+compile : Stylesheet animation class id -> Result String String
 compile =
     Css.compile
