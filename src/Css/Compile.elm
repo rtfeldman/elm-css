@@ -4,47 +4,34 @@ import Css.Declaration exposing (..)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
 
 
-compile : List Declaration -> Result (List String) String
+compile : List Declaration -> { warnings : List String, css : String }
 compile declarations =
   declarations
     |> dropEmpty
     |> prettyPrint
 
 
-prettyPrint : List Declaration -> Result (List String) String
+prettyPrint : List Declaration -> { warnings : List String, css : String }
 prettyPrint declarations =
-  case collectErrors declarations of
-    [] ->
-      Ok (prettyPrintDeclarations declarations)
-
-    errors ->
-      Err errors
+  { warnings = collectWarnings declarations
+  , css = prettyPrintDeclarations declarations
+  }
 
 
-collectErrors : List Declaration -> List String
-collectErrors declarations =
-  malformedColorErrors declarations
-
-
-malformedColorErrors : List Declaration -> List String
-malformedColorErrors declarations =
+collectWarnings : List Declaration -> List String
+collectWarnings declarations =
   case declarations of
     [] ->
       []
 
     (StyleBlock _ _ properties) :: rest ->
-      colorErrorsHelp properties ++ malformedColorErrors rest
+      (List.concatMap .warnings properties) ++ (collectWarnings rest)
 
     (ConditionalGroupRule _ ruleDeclarations) :: rest ->
-      malformedColorErrors ruleDeclarations
+      collectWarnings ruleDeclarations
 
     (StandaloneAtRule _ _) :: rest ->
-      malformedColorErrors rest
-
-
-colorErrorsHelp : List Property -> List String
-colorErrorsHelp properties =
-  []
+      collectWarnings rest
 
 
 dropEmpty : List Declaration -> List Declaration

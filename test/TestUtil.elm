@@ -16,9 +16,11 @@ outdented str =
 
 prettyPrint : List Declaration -> String
 prettyPrint style =
-  case Css.compile style of
-    Ok result ->
-      result
-
-    Err errors ->
-      "Invalid Stylesheet:\n" ++ (String.join "\n" errors)
+  let
+    { warnings, css } =
+      Css.compile style
+  in
+    if List.isEmpty warnings then
+      css
+    else
+      "Invalid Stylesheet:\n" ++ (String.join "\n" warnings)
