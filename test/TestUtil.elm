@@ -1,8 +1,12 @@
 module TestUtil (..) where
 
+import ElmTest exposing (..)
 import String
 import Css
 import Css.Declaration exposing (Declaration)
+import Check.Test
+import Check.Investigator as Investigator exposing (..)
+import Random exposing (Seed, Generator, initialSeed)
 
 
 outdented : String -> String
@@ -24,3 +28,18 @@ prettyPrint style =
       css
     else
       "Invalid Stylesheet:\n" ++ (String.join "\n" warnings)
+
+
+seed : Seed
+seed =
+  initialSeed 42
+
+
+runCount : Int
+runCount =
+  100
+
+
+it : String -> (a -> b) -> (a -> b) -> Investigator a -> Test
+it description expected actual investigator =
+  Check.Test.test description actual expected investigator runCount seed
