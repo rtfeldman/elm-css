@@ -4177,19 +4177,33 @@ html, body {
 applyStyleCombinator : (ComplexSelector -> ComplexSelector -> ComplexSelector) -> List StyleBlock -> Mixin
 applyStyleCombinator combineSelectors styleBlocks =
   let
-    applySelectors : List ComplexSelector -> Declaration -> List Declaration
-    applySelectors selectors declaration =
+    -- first: html, others: [ body ]
+    -- declaration: div { width: 100%, height: 100% }
+
+    applySelectors : ComplexSelector -> List ComplexSelector -> Declaration -> List Declaration
+    applySelectors first others declaration =
       case declaration of
-        Declaration.StyleBlock firstSelector otherSelectors properties ->
+        Declaration.StyleBlock selector otherSelectors properties ->
           let
-            applySelector : ComplexSelector -> Declaration
-            applySelector selector =
+            newDeclaration =
               Declaration.StyleBlock
-                (combineSelectors selector firstSelector)
-                (List.map (combineSelectors selector) otherSelectors)
+                (combineSelectors first selector)
+                (List.map ((flip combineSelectors) selector) others)
                 properties
           in
-            List.map applySelector selectors
+            case otherSelectors of
+              [] ->
+                [ newDeclaration ]
+
+              firstOther :: remainder ->
+                let
+                  remainderDeclaration =
+                    Declaration.StyleBlock
+                      firstOther
+                      remainder
+                      properties
+                in
+                  newDeclaration :: applySelectors first others remainderDeclaration
 
         Declaration.ConditionalGroupRule ruleStr _ ->
           [ declaration ]
@@ -4197,28 +4211,30 @@ applyStyleCombinator combineSelectors styleBlocks =
         Declaration.StandaloneAtRule ruleStr _ ->
           [ declaration ]
 
+
     applyStyleBlockTo : String -> Declaration -> StyleBlock -> List Declaration
     applyStyleBlockTo name declaration (StyleBlock transform) =
-      let
-        newDeclarations : List Declaration
-        newDeclarations =
-          case declaration of
-            Declaration.StyleBlock first others _ ->
-              -- Use the existing declaration's selectors (ignoring its
-              -- properties, which will be preserved since we return
-              -- the original declaration in its entirety), combined with the
-              -- selectors and properties of the given style block.
-              List.concatMap (applySelectors (first :: others)) (transform name [])
+      case declaration of
+        Declaration.StyleBlock first others _ ->
+          -- Use the existing declaration's selectors (ignoring its
+          -- properties, which will be preserved since we return
+          -- the original declaration in its entirety), combined with the
+          -- selectors and properties of the given style block.
+          declaration
+            :: List.concatMap (applySelectors first others) (transform name [])
 
-            Declaration.ConditionalGroupRule ruleStr _ ->
-              Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) []
+        Declaration.ConditionalGroupRule ruleStr otherDeclarations ->
+          let
+            newDeclarations =
+              List.concatMap
+                (\childDeclaration -> applyStyleBlockTo name childDeclaration (StyleBlock transform))
+                otherDeclarations
+          in
+            [ Declaration.ConditionalGroupRule ruleStr newDeclarations ]
 
-            Declaration.StandaloneAtRule ruleStr _ ->
-              Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) []
-      in
-        -- Always at least return the existing declaration, including all of
-        -- its properties.
-        declaration :: newDeclarations
+
+        Declaration.StandaloneAtRule ruleStr _ ->
+          [ declaration ]
 
     expandDeclaration : String -> Declaration -> List Declaration
     expandDeclaration name declaration =

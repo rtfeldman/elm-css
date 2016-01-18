@@ -201,6 +201,10 @@ multiDescendent =
               margin: 11px;
             }
 
+            span > h2 {
+
+            }
+
             span > h2 > h1 {
               width: 1px;
               height: 2%;
