@@ -1,17 +1,6 @@
-module Css.Elements
-    ( Tag, tagToString
-    , html, body
-    , article, header, footer, h1, h2, h3, h4, nav, section
-    , div, hr, li, main', ol, p, ul, pre
-    , a, code, small, span, strong
-    , img, audio, video, canvas
-    , caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
-    , button, fieldset, form, input, label, legend, optgroup, option, progress, select
-    ) where
+module Css.Elements (html, body, article, header, footer, h1, h2, h3, h4, nav, section, div, hr, li, main', ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select) where
 
 {-| Selectors for HTML elements.
-
-@docs Tag, tagToString
 
 # Basic elements
 @docs html, body
@@ -35,34 +24,51 @@ module Css.Elements
 @docs button, fieldset, form, input, label, legend, optgroup, option, progress, select
 -}
 
-
-{-| Selector for an HTML tag.
--}
-type Tag
-    = Tag String
+import Css exposing (Mixin(Mixin), StyleBlock(StyleBlock), DeclarationTransform)
+import Css.Declaration as Declaration exposing (Declaration)
 
 
-{-| Converts an HTML tag selector to its underlying String representation.
--}
-tagToString : Tag -> String
-tagToString (Tag str) =
-    str
+typeSelectorBlock : String -> Declaration
+typeSelectorBlock str =
+  Declaration.StyleBlock (Declaration.SingleSelector (Declaration.TypeSelector str)) [] []
+
+
+typeSelector : String -> List Mixin -> StyleBlock
+typeSelector selectorStr mixins =
+  let
+    transform name =
+      transformWithMixins mixins (typeSelectorBlock selectorStr) name
+  in
+    StyleBlock transform
+
+
+transformWithMixins : List Mixin -> Declaration -> DeclarationTransform
+transformWithMixins mixins newDeclaration name declarations =
+  applyMixins mixins name (declarations ++ [ newDeclaration ])
+
+
+applyMixins : List Mixin -> DeclarationTransform
+applyMixins mixins name declarations =
+  List.foldl (\(Mixin transform) -> transform name) declarations mixins
+
 
 
 {- BASIC ELEMENTS -}
 
+
 {-| Selector for a html element.
 -}
-html : Tag
+html : List Mixin -> StyleBlock
 html =
-    Tag "html"
+  typeSelector "html"
 
 
 {-| Selector for a body element.
 -}
-body : Tag
+body : List Mixin -> StyleBlock
 body =
-    Tag "body"
+  typeSelector "body"
+
 
 
 {- CONTENT SECTIONING -}
@@ -70,65 +76,66 @@ body =
 
 {-| Selector for an article element.
 -}
-article : Tag
+article : List Mixin -> StyleBlock
 article =
-    Tag "article"
+  typeSelector "article"
 
 
 {-| Selector for a header element.
 -}
-header : Tag
+header : List Mixin -> StyleBlock
 header =
-    Tag "header"
+  typeSelector "header"
 
 
 {-| Selector for a footer element.
 -}
-footer : Tag
+footer : List Mixin -> StyleBlock
 footer =
-    Tag "footer"
+  typeSelector "footer"
 
 
 {-| Selector for an h1 element.
 -}
-h1 : Tag
+h1 : List Mixin -> StyleBlock
 h1 =
-    Tag "h1"
+  typeSelector "h1"
 
 
 {-| Selector for an h2 element.
 -}
-h2 : Tag
+h2 : List Mixin -> StyleBlock
 h2 =
-    Tag "h2"
+  typeSelector "h2"
 
 
 {-| Selector for an h3 element.
 -}
-h3 : Tag
+h3 : List Mixin -> StyleBlock
 h3 =
-    Tag "h3"
+  typeSelector "h3"
 
 
 {-| Selector for an h4 element.
 -}
-h4 : Tag
+h4 : List Mixin -> StyleBlock
 h4 =
-    Tag "h4"
+  typeSelector "h4"
 
 
 {-| Selector for a nav element.
 -}
-nav : Tag
+nav : List Mixin -> StyleBlock
 nav =
-    Tag "nav"
+  typeSelector "nav"
 
 
 {-| Selector for a section element.
 -}
-section : Tag
+section : List Mixin -> StyleBlock
 section =
-    Tag "section"
+  typeSelector "section"
+
 
 
 {- TEXT CONTENT -}
@@ -136,127 +143,127 @@ section =
 
 {-| Selector for a div element.
 -}
-div : Tag
+div : List Mixin -> StyleBlock
 div =
-    Tag "div"
+  typeSelector "div"
 
 
 {-| Selector for an hr element.
 -}
-hr : Tag
+hr : List Mixin -> StyleBlock
 hr =
-    Tag "hr"
+  typeSelector "hr"
 
 
 {-| Selector for an li element.
 -}
-li : Tag
+li : List Mixin -> StyleBlock
 li =
-    Tag "li"
+  typeSelector "li"
 
 
 {-| Selector for a main element.
 -}
-main' : Tag
+main' : List Mixin -> StyleBlock
 main' =
-    Tag "main"
+  typeSelector "main"
 
 
 {-| Selector for an ol element.
 -}
-ol : Tag
+ol : List Mixin -> StyleBlock
 ol =
-    Tag "ol"
+  typeSelector "ol"
 
 
 {-| Selector for a p element.
 -}
-p : Tag
+p : List Mixin -> StyleBlock
 p =
-    Tag "p"
+  typeSelector "p"
 
 
 {-| Selector for a ul element.
 -}
-ul : Tag
+ul : List Mixin -> StyleBlock
 ul =
-    Tag "ul"
+  typeSelector "ul"
 
 
 {-| Selector for a pre element.
 -}
-pre : Tag
+pre : List Mixin -> StyleBlock
 pre =
-    Tag "pre"
+  typeSelector "pre"
+
+
 
 {- INLINE TEXT SEMANTICS -}
 
 
-
 {-| Selector for an `<a>` element.
 -}
-a : Tag
+a : List Mixin -> StyleBlock
 a =
-    Tag "a"
+  typeSelector "a"
 
 
 {-| Selector for a code element.
 -}
-code : Tag
+code : List Mixin -> StyleBlock
 code =
-    Tag "code"
+  typeSelector "code"
 
 
 {-| Selector for a small element.
 -}
-small : Tag
+small : List Mixin -> StyleBlock
 small =
-    Tag "small"
+  typeSelector "small"
 
 
 {-| Selector for a span element.
 -}
-span : Tag
+span : List Mixin -> StyleBlock
 span =
-    Tag "span"
+  typeSelector "span"
 
 
 {-| Selector for a strong element.
 -}
-strong : Tag
+strong : List Mixin -> StyleBlock
 strong =
-    Tag "strong"
+  typeSelector "strong"
 
 
-{-| IMAGE AND MULTIMEDIA -}
-
-
+{-| IMAGE AND MULTIMEDIA
+-}
 {-| Selector for a img element.
 -}
-img : Tag
+img : List Mixin -> StyleBlock
 img =
-    Tag "img"
+  typeSelector "img"
 
 
 {-| Selector for an audio element.
 -}
-audio : Tag
+audio : List Mixin -> StyleBlock
 audio =
-    Tag "audio"
+  typeSelector "audio"
 
 
 {-| Selector for a video element.
 -}
-video : Tag
+video : List Mixin -> StyleBlock
 video =
-    Tag "video"
+  typeSelector "video"
 
 
 {-| Selector for a canvas element.
 -}
-canvas : Tag
+canvas : List Mixin -> StyleBlock
 canvas =
-    Tag "canvas"
+  typeSelector "canvas"
 
 
 
@@ -265,72 +272,73 @@ canvas =
 
 {-| Selector for a caption element.
 -}
-caption : Tag
+caption : List Mixin -> StyleBlock
 caption =
-    Tag "caption"
+  typeSelector "caption"
 
 
 {-| Selector for a col element.
 -}
-col : Tag
+col : List Mixin -> StyleBlock
 col =
-    Tag "col"
+  typeSelector "col"
 
 
 {-| Selector for a colgroup element.
 -}
-colgroup : Tag
+colgroup : List Mixin -> StyleBlock
 colgroup =
-    Tag "colgroup"
+  typeSelector "colgroup"
 
 
 {-| Selector for a table element.
 -}
-table : Tag
+table : List Mixin -> StyleBlock
 table =
-    Tag "table"
+  typeSelector "table"
 
 
 {-| Selector for a tbody element.
 -}
-tbody : Tag
+tbody : List Mixin -> StyleBlock
 tbody =
-    Tag "tbody"
+  typeSelector "tbody"
 
 
 {-| Selector for a td element.
 -}
-td : Tag
+td : List Mixin -> StyleBlock
 td =
-    Tag "td"
+  typeSelector "td"
 
 
 {-| Selector for a tfoot element.
 -}
-tfoot : Tag
+tfoot : List Mixin -> StyleBlock
 tfoot =
-    Tag "tfoot"
+  typeSelector "tfoot"
 
 
 {-| Selector for a th element.
 -}
-th : Tag
+th : List Mixin -> StyleBlock
 th =
-    Tag "th"
+  typeSelector "th"
 
 
 {-| Selector for a thead element.
 -}
-thead : Tag
+thead : List Mixin -> StyleBlock
 thead =
-    Tag "thead"
+  typeSelector "thead"
 
 
 {-| Selector for a thead element.
 -}
-tr : Tag
+tr : List Mixin -> StyleBlock
 tr =
-    Tag "tr"
+  typeSelector "tr"
+
 
 
 {- FORMS -}
@@ -338,69 +346,69 @@ tr =
 
 {-| Selector for a button element.
 -}
-button : Tag
+button : List Mixin -> StyleBlock
 button =
-    Tag "button"
+  typeSelector "button"
 
 
 {-| Selector for a fieldset element.
 -}
-fieldset : Tag
+fieldset : List Mixin -> StyleBlock
 fieldset =
-    Tag "fieldset"
+  typeSelector "fieldset"
 
 
 {-| Selector for a form element.
 -}
-form : Tag
+form : List Mixin -> StyleBlock
 form =
-    Tag "form"
+  typeSelector "form"
 
 
 {-| Selector for an input element.
 -}
-input : Tag
+input : List Mixin -> StyleBlock
 input =
-    Tag "input"
+  typeSelector "input"
 
 
 {-| Selector for a label element.
 -}
-label : Tag
+label : List Mixin -> StyleBlock
 label =
-    Tag "label"
+  typeSelector "label"
 
 
 {-| Selector for a legend element.
 -}
-legend : Tag
+legend : List Mixin -> StyleBlock
 legend =
-    Tag "legend"
+  typeSelector "legend"
 
 
 {-| Selector for an optgroup element.
 -}
-optgroup : Tag
+optgroup : List Mixin -> StyleBlock
 optgroup =
-    Tag "optgroup"
+  typeSelector "optgroup"
 
 
 {-| Selector for an option element.
 -}
-option : Tag
+option : List Mixin -> StyleBlock
 option =
-    Tag "option"
+  typeSelector "option"
 
 
 {-| Selector for a progress element.
 -}
-progress : Tag
+progress : List Mixin -> StyleBlock
 progress =
-    Tag "progress"
+  typeSelector "progress"
 
 
 {-| Selector for a select element.
 -}
-select : Tag
+select : List Mixin -> StyleBlock
 select =
-    Tag "select"
+  typeSelector "select"

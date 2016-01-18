@@ -1,269 +1,304 @@
 module Css.Declaration (..) where
 
 
-type Selector
-    = TypeSelector String
-    | ClassSelector String
-    | IdSelector String
-    | CustomSelector String
+type SimpleSelector
+  = TypeSelector String
+  | ClassSelector String
+  | IdSelector String
+  | MultiSelector SimpleSelector SimpleSelector
+  | CustomSelector String
 
 
-type CompoundSelector
-    = SingleSelector Selector
-    | MultiSelector CompoundSelector Selector
-    | AdjacentSibling CompoundSelector CompoundSelector
-    | GeneralSibling CompoundSelector CompoundSelector
-    | Child CompoundSelector CompoundSelector
-    | Descendant CompoundSelector CompoundSelector
-    | PseudoClass String CompoundSelector
-    | PseudoElement String CompoundSelector
+type ComplexSelector
+  = SingleSelector SimpleSelector
+  | AdjacentSibling ComplexSelector ComplexSelector
+  | GeneralSibling ComplexSelector ComplexSelector
+  | Child ComplexSelector ComplexSelector
+  | Descendant ComplexSelector ComplexSelector
+  | PseudoClass String (Maybe SimpleSelector)
+  | PseudoElement String (Maybe SimpleSelector)
 
 
 type alias Property =
-    { important : Bool
-    , key : String
-    , value : String
-    }
+  { important : Bool
+  , key : String
+  , value : String
+  }
 
 
 type Declaration
-    = StyleBlock CompoundSelector (List CompoundSelector) (List Property)
-    | ConditionalGroupRule String (List Declaration)
-    | StandaloneAtRule String String
-
-
-type alias DeclarationTransform =
-    List Declaration -> Result String (List Declaration)
-
-
-introduceSelector : Selector -> List Declaration -> List Declaration
-introduceSelector selector declarations =
-    case declarations of
-        [] ->
-            [ StyleBlock (SingleSelector selector) [] [] ]
-
-        -- If there are no properties declared, then we have a situation
-        --   like `Bar` in the following:
-        --       stylesheet "homepage"
-        --           . Foo . Bar
-        --               ~ fontWeight bold
-        -- ...as opposed to:
-        --       stylesheet "homepage"
-        --           . Foo
-        --               ~ fontWeight bold
-        -- In this case, we don't make a new declaration, but rather add
-        -- the new selector to the existing list of selectors.
-        (StyleBlock firstSelector otherSelectors []) :: [] ->
-            case lastSelectorToMulti selector (firstSelector :: otherSelectors) of
-                [] ->
-                    [ StyleBlock (SingleSelector selector) [] [] ]
-
-                first :: rest ->
-                    [ StyleBlock first rest [] ]
-
-        -- Here the most recent declaration had properties defined, meaning
-        -- this must be a new top-level declaration, like `Bar` in the following:
-        --    stylesheet "homepage"
-        --        . Foo
-        --            ~ fontWeight normal
-        --        . Bar
-        --            ~ fontWeight bold
-        lastDeclaration :: [] ->
-            lastDeclaration :: [ StyleBlock (SingleSelector selector) [] [] ]
-
-        {- We haven't reached the last declaration yet, so recurse. -}
-        firstDeclaration :: otherDeclarations ->
-            firstDeclaration :: (introduceSelector selector otherDeclarations)
-
-
-{-| Concatenate the given selector to the end of the last selector in the given list, e.g. ".foo#bar"
--}
-lastSelectorToMulti : Selector -> List CompoundSelector -> List CompoundSelector
-lastSelectorToMulti selector otherSelectors =
-    case otherSelectors of
-        [] ->
-            [ SingleSelector selector ]
-
-        compoundSelector :: [] ->
-            [ MultiSelector compoundSelector selector ]
-
-        first :: rest ->
-            first :: (lastSelectorToMulti selector rest)
+  = StyleBlock ComplexSelector (List ComplexSelector) (List Property)
+  | ConditionalGroupRule String (List Declaration)
+  | StandaloneAtRule String String
 
 
 getLastProperty : List Declaration -> Maybe Property
 getLastProperty declarations =
-    case declarations of
-        [] ->
-            Nothing
+  case declarations of
+    [] ->
+      Nothing
 
-        (StyleBlock _ _ properties) :: [] ->
-            getLast properties
+    (StyleBlock _ _ properties) :: [] ->
+      getLast properties
 
-        first :: rest ->
-            getLastProperty rest
-
-
-updateLastProperty : String -> (Property -> Property) -> List Declaration -> Result String (List Declaration)
-updateLastProperty functionName update declarations =
-    case declarations of
-        [] ->
-            Err ("`" ++ functionName ++ "` cannot update an empty list of declarations.")
-
-        declaration :: [] ->
-            case declaration of
-                StyleBlock firstSelector extraSelectors properties ->
-                    let
-                        newDeclaration =
-                            StyleBlock
-                                firstSelector
-                                extraSelectors
-                                (updateLast update properties)
-                    in
-                        Ok [ newDeclaration ]
-
-                ConditionalGroupRule _ _ ->
-                    Err ("`" ++ functionName ++ "` cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
-
-                StandaloneAtRule _ _ ->
-                    Err ("`" ++ functionName ++ "` cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
-
-        first :: rest ->
-            case updateLastProperty functionName update rest of
-                Ok result ->
-                    Ok (first :: result)
-
-                (Err _) as err ->
-                    err
+    first :: rest ->
+      getLastProperty rest
 
 
-addProperty : String -> Property -> List Declaration -> Result String (List Declaration)
+mapProperties : (Property -> Property) -> Declaration -> Declaration
+mapProperties update declaration =
+  case declaration of
+    StyleBlock firstSelector extraSimpleSelectors properties ->
+      StyleBlock firstSelector extraSimpleSelectors (List.map update properties)
+
+    ConditionalGroupRule _ _ ->
+      declaration
+
+    StandaloneAtRule _ _ ->
+      declaration
+
+
+updateLastProperty : (Property -> Property) -> List Declaration -> List Declaration
+updateLastProperty update declarations =
+  case declarations of
+    [] ->
+      []
+
+    declaration :: [] ->
+      case declaration of
+        StyleBlock firstSelector extraSimpleSelectors properties ->
+          let
+            newDeclaration =
+              StyleBlock
+                firstSelector
+                extraSimpleSelectors
+                (updateLast update properties)
+          in
+            [ newDeclaration ]
+
+        ConditionalGroupRule _ _ ->
+          [ declaration ]
+
+        StandaloneAtRule _ _ ->
+          [ declaration ]
+
+    first :: rest ->
+      first :: updateLastProperty update rest
+
+
+addProperty : String -> Property -> List Declaration -> List Declaration
 addProperty functionName property declarations =
-    case declarations of
-        [] ->
-            Err ("`" ++ functionName ++ "` cannot be used as the first declaration.")
+  case declarations of
+    [] ->
+      []
 
-        declaration :: [] ->
-            case declaration of
-                StyleBlock firstSelector extraSelectors properties ->
-                    let
-                        newDeclaration =
-                            StyleBlock
-                                firstSelector
-                                extraSelectors
-                                (properties ++ [ property ])
-                    in
-                        Ok [ newDeclaration ]
+    declaration :: [] ->
+      case declaration of
+        StyleBlock firstSelector extraSimpleSelectors properties ->
+          let
+            newDeclaration =
+              StyleBlock
+                firstSelector
+                extraSimpleSelectors
+                (properties ++ [ property ])
+          in
+            [ newDeclaration ]
 
-                ConditionalGroupRule _ _ ->
-                    Err ("`~` cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
+        _ ->
+          []
 
-                StandaloneAtRule _ _ ->
-                    Err ("`~` cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
-
-        first :: rest ->
-            case addProperty functionName property rest of
-                Ok result ->
-                    Ok (first :: result)
-
-                (Err _) as err ->
-                    err
+    first :: rest ->
+      first :: addProperty functionName property rest
 
 
-extendLastSelector : String -> (CompoundSelector -> CompoundSelector) -> List Declaration -> Result String (List Declaration)
+extendLastSelector : String -> (ComplexSelector -> ComplexSelector) -> List Declaration -> List Declaration
 extendLastSelector operatorName update declarations =
-    case declarations of
-        [] ->
-            Err (operatorName ++ " cannot be used as the first declaration.")
+  case declarations of
+    [] ->
+      []
 
-        declaration :: [] ->
-            case declaration of
-                StyleBlock firstSelector extraSelectors properties ->
-                    let
-                        newDeclaration =
-                            StyleBlock
-                                (update firstSelector)
-                                (List.map update extraSelectors)
-                                []
+    declaration :: [] ->
+      case declaration of
+        StyleBlock firstSelector extraSimpleSelectors properties ->
+          let
+            newDeclaration =
+              StyleBlock
+                (update firstSelector)
+                (List.map update extraSimpleSelectors)
+                []
 
-                        newDeclarations =
-                            if List.isEmpty properties then
-                                -- Don't bother keeping empty declarations.
-                                [ newDeclaration ]
-                            else
-                                [ declaration, newDeclaration ]
-                    in
-                        Ok newDeclarations
+            newDeclarations =
+              if List.isEmpty properties then
+                -- Don't bother keeping empty declarations.
+                [ newDeclaration ]
+              else
+                [ declaration, newDeclaration ]
+          in
+            newDeclarations
 
-                ConditionalGroupRule _ _ ->
-                    Err (operatorName ++ " cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
+        _ ->
+          []
 
-                StandaloneAtRule _ _ ->
-                    Err (operatorName ++ " cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
-
-        first :: rest ->
-            case extendLastSelector operatorName update rest of
-                Ok result ->
-                    Ok (first :: result)
-
-                (Err _) as err ->
-                    err
+    first :: rest ->
+      first :: extendLastSelector operatorName update rest
 
 
 updateLast : (a -> a) -> List a -> List a
 updateLast update list =
-    case list of
-        [] ->
-            list
+  case list of
+    [] ->
+      list
 
-        singleton :: [] ->
-            [ update singleton ]
+    singleton :: [] ->
+      [ update singleton ]
 
-        first :: rest ->
-            first :: updateLast update rest
+    first :: rest ->
+      first :: updateLast update rest
 
 
 getLast : List a -> Maybe a
 getLast list =
-    case list of
-        [] ->
-            Nothing
+  case list of
+    [] ->
+      Nothing
 
-        elem :: [] ->
-            Just elem
+    elem :: [] ->
+      Just elem
 
-        first :: rest ->
-            getLast rest
+    first :: rest ->
+      getLast rest
 
 
-addSelector : String -> CompoundSelector -> List Declaration -> Result String (List Declaration)
+addSelector : String -> ComplexSelector -> List Declaration -> List Declaration
 addSelector operatorName newSelector declarations =
-    case declarations of
-        [] ->
-            Err (operatorName ++ " cannot be used as the first declaration.")
+  case declarations of
+    [] ->
+      []
 
-        declaration :: [] ->
-            case declaration of
-                StyleBlock firstSelector extraSelectors properties ->
-                    let
-                        newDeclaration =
-                            StyleBlock
-                                firstSelector
-                                (extraSelectors ++ [ newSelector ])
-                                properties
-                    in
-                        Ok [ newDeclaration ]
+    declaration :: [] ->
+      case declaration of
+        StyleBlock firstSelector extraSimpleSelectors properties ->
+          let
+            newDeclaration =
+              StyleBlock
+                firstSelector
+                (extraSimpleSelectors ++ [ newSelector ])
+                properties
+          in
+            [ newDeclaration ]
 
-                ConditionalGroupRule _ _ ->
-                    Err (operatorName ++ " cannot modify a conditional group rule (such as an at-rule). See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule#Conditional_Group_Rules for more information on conditional group rules.")
+        _ ->
+          []
 
-                StandaloneAtRule _ _ ->
-                    Err (operatorName ++ " cannot modify an at-rule. See https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule for more information on at-rules.")
+    first :: rest ->
+      first :: addSelector operatorName newSelector rest
 
-        first :: rest ->
-            case addSelector operatorName newSelector rest of
-                Ok result ->
-                    Ok (first :: result)
 
-                (Err _) as err ->
-                    err
+mapSelectors : List (ComplexSelector -> ComplexSelector) -> List Declaration -> List Declaration
+mapSelectors updates =
+  let
+    apply : Declaration -> (ComplexSelector -> ComplexSelector) -> List Declaration
+    apply declaration update =
+      case declaration of
+        StyleBlock firstSelector otherSimpleSelectors properties ->
+          let
+            newDeclaration =
+              StyleBlock
+                (update firstSelector)
+                (List.map update otherSimpleSelectors)
+                []
+          in
+            if List.isEmpty properties then
+              [ newDeclaration ]
+            else
+              declaration :: [ newDeclaration ]
+
+        ConditionalGroupRule rule declarations ->
+          [ ConditionalGroupRule rule (List.concatMap ((flip apply) update) declarations) ]
+
+        StandaloneAtRule _ _ ->
+          [ declaration ]
+  in
+    List.concatMap (\declaration -> List.concatMap (apply declaration) updates)
+
+
+extractSelectors : List Declaration -> List ComplexSelector
+extractSelectors declarations =
+  case declarations of
+    [] ->
+      []
+
+    (StyleBlock firstSelector otherSimpleSelectors _) :: rest ->
+      (firstSelector :: otherSimpleSelectors) ++ (extractSelectors rest)
+
+    (ConditionalGroupRule _ _) :: rest ->
+      extractSelectors rest
+
+    (StandaloneAtRule _ _) :: rest ->
+      extractSelectors rest
+
+
+mergeSelectors : ComplexSelector -> ComplexSelector -> ComplexSelector
+mergeSelectors originalSelector newSelector =
+  case originalSelector of
+    SingleSelector _ ->
+      originalSelector
+
+    AdjacentSibling _ _ ->
+      AdjacentSibling originalSelector newSelector
+
+    GeneralSibling _ _ ->
+      GeneralSibling originalSelector newSelector
+
+    Child _ _ ->
+      Child originalSelector newSelector
+
+    Descendant _ _ ->
+      Descendant originalSelector newSelector
+
+    PseudoClass str _ ->
+      case newSelector of
+        SingleSelector simpleSelector ->
+          PseudoClass str (Just simpleSelector)
+
+        _ ->
+          originalSelector
+
+    PseudoElement str _ ->
+      case newSelector of
+        SingleSelector simpleSelector ->
+          PseudoElement str (Just simpleSelector)
+
+        _ ->
+          originalSelector
+
+
+mapSingleSelectors : (SimpleSelector -> SimpleSelector) -> ComplexSelector -> ComplexSelector
+mapSingleSelectors update complexSelector =
+  case complexSelector of
+    SingleSelector simpleSelector ->
+      SingleSelector (update simpleSelector)
+
+    AdjacentSibling parent child ->
+      AdjacentSibling (mapSingleSelectors update parent) (mapSingleSelectors update child)
+
+    GeneralSibling parent child ->
+      GeneralSibling (mapSingleSelectors update parent) (mapSingleSelectors update child)
+
+    Child parent child ->
+      Child (mapSingleSelectors update parent) (mapSingleSelectors update child)
+
+    Descendant parent child ->
+      Descendant (mapSingleSelectors update parent) (mapSingleSelectors update child)
+
+    PseudoClass _ Nothing ->
+      complexSelector
+
+    PseudoElement _ Nothing ->
+      complexSelector
+
+    PseudoClass str (Just simpleSelector) ->
+      PseudoClass str (Just (update simpleSelector))
+
+    PseudoElement str (Just simpleSelector) ->
+      PseudoElement str (Just (update simpleSelector))
