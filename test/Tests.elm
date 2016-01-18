@@ -9,63 +9,64 @@ import String
 
 all : Test
 all =
-    suite
-        "elm-css"
-        [ unstyledDiv
-        , keyValue
-        , divWidthHeight
-        , leftRightTopBottom
-        , borders
-        , dreamwriter
-        , multiSelector
-        , multiDescendent
-        , underlineOnHoverMixin
-        , underlineOnHoverManual
-        , greenOnHoverMixin
-        , transformsStyle
-        , Properties.all
-        ]
+  suite
+    "elm-css"
+    [ unstyledDiv
+    , keyValue
+    , divWidthHeight
+    , leftRightTopBottom
+    , borders
+    , dreamwriter
+    , multiSelector
+    , multiDescendent
+    , underlineOnHoverMixin
+    , underlineOnHoverManual
+    , greenOnHoverMixin
+    , transformsStyle
+    , Properties.all
+    ]
 
 
 unstyledDiv : Test
 unstyledDiv =
-    let
-        input =
-            Fixtures.unstyledDiv
+  let
+    input =
+      Fixtures.unstyledDiv
 
-        output =
-            "div {\n\n}"
-    in
-        suite
-            "unstyled div"
-            [ test "pretty prints the expected output"
-                <| assertEqual output (prettyPrint input)
-            ]
+    output =
+      "div {\n\n}"
+  in
+    suite
+      "unstyled div"
+      [ test "pretty prints the expected output"
+          <| assertEqual output (prettyPrint input)
+      ]
 
 
 divWidthHeight : Test
 divWidthHeight =
-    let
-        input =
-            Fixtures.divWidthHeight
+  let
+    input =
+      Fixtures.divWidthHeight
 
-        output =
-            "div {\n    width: 32%;\n    height: 50px;\n}"
-    in
-        suite
-            "basic div with fixed width and height"
-            [ test "pretty prints the expected output"
-                <| assertEqual output (prettyPrint input)
-            ]
+    output =
+      "div {\n    width: 32%;\n    height: 50px;\n}"
+  in
+    suite
+      "basic div with fixed width and height"
+      [ test "pretty prints the expected output"
+          <| assertEqual output (prettyPrint input)
+      ]
 
 
 leftRightTopBottom : Test
 leftRightTopBottom =
-    let
-        input =
-            Fixtures.leftRightTopBottom
+  let
+    input =
+      Fixtures.leftRightTopBottom
 
-        output = """
+    output =
+      """
             div {
                 position: absolute;
                 top: 2em;
@@ -82,21 +83,22 @@ leftRightTopBottom =
                 vertical-align: top;
             }
         """
-    in
-        suite
-            "left & right, top & bottom property/value duality test"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "left & right, top & bottom property/value duality test"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 borders : Test
 borders =
-    let
-        input =
-            Fixtures.borders
+  let
+    input =
+      Fixtures.borders
 
-        output = """
+    output =
+      """
             button {
                 border-left: 5px dashed rgb(11, 14, 17);
                 border-right: 7px;
@@ -107,21 +109,22 @@ borders =
                 border: 10px solid;
             }
         """
-    in
-        suite
-            "Borders test"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "Borders test"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 dreamwriter : Test
 dreamwriter =
-    let
-        input =
-            Fixtures.dreamwriter
+  let
+    input =
+      Fixtures.dreamwriter
 
-        output = """
+    output =
+      """
             html, body {
               width: 100%;
               height: 100%;
@@ -154,21 +157,22 @@ dreamwriter =
               color: rgb(40, 35, 76);
             }
         """
-    in
-        suite
-            "Sample stylesheet from Dreamwriter"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "Sample stylesheet from Dreamwriter"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 multiDescendent : Test
 multiDescendent =
-    let
-        input =
-            Fixtures.multiDescendent
+  let
+    input =
+      Fixtures.multiDescendent
 
-        output = """
+    output =
+      """
             html, body {
               box-sizing: border-box;
               display: none;
@@ -202,21 +206,22 @@ multiDescendent =
               height: 2%;
             }
         """
-    in
-        suite
-            "Multi-descendent stylesheet"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "Multi-descendent stylesheet"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 multiSelector : Test
 multiSelector =
-    let
-        input =
-            Fixtures.multiSelector
+  let
+    input =
+      Fixtures.multiSelector
 
-        output = """
+    output =
+      """
           div#multiSelectorPage.multiSelectorHidden {
             display: none;
             width: 100%;
@@ -228,51 +233,52 @@ multiSelector =
             margin: 11px;
           }
         """
-    in
-        suite
-            "Multi-selector stylesheet"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "Multi-selector stylesheet"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 keyValue : Test
 keyValue =
-    let
-        input =
-            Fixtures.keyValue
+  let
+    input =
+      Fixtures.keyValue
 
-        output = """
+    output =
+      """
           body {
             -webkit-font-smoothing: none;
             -moz-font-smoothing: none !important;
           }
         """
-    in
-        suite
-            "Custom key-value properties"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "Custom key-value properties"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 outdented : String -> String
 outdented str =
-    str
-        |> String.split "\n"
-        |> List.map String.trim
-        |> String.join "\n"
-        |> String.trim
+  str
+    |> String.split "\n"
+    |> List.map String.trim
+    |> String.join "\n"
+    |> String.trim
 
 
 underlineOnHoverMixin : Test
 underlineOnHoverMixin =
-    let
-        input =
-            Fixtures.mixinUnderlineOnHoverStylesheet
+  let
+    input =
+      Fixtures.mixinUnderlineOnHoverStylesheet
 
-        output =
-            """
+    output =
+      """
             a {
                 color: rgb(128, 127, 126);
             }
@@ -281,22 +287,22 @@ underlineOnHoverMixin =
                 color: rgb(23, 24, 25);
             }
             """
-    in
-        suite
-            "underline on hover link (mixin)"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "underline on hover link (mixin)"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 underlineOnHoverManual : Test
 underlineOnHoverManual =
-    let
-        input =
-            Fixtures.manualUnderlineOnHoverStylesheet
+  let
+    input =
+      Fixtures.manualUnderlineOnHoverStylesheet
 
-        output =
-            """
+    output =
+      """
             a {
                 color: rgb(128, 127, 126);
             }
@@ -305,22 +311,22 @@ underlineOnHoverManual =
                 color: rgb(23, 24, 25);
             }
             """
-    in
-        suite
-            "underline on hover link (manual)"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "underline on hover link (manual)"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 greenOnHoverMixin : Test
 greenOnHoverMixin =
-    let
-        input =
-            Fixtures.mixinGreenOnHoverStylesheet
+  let
+    input =
+      Fixtures.mixinGreenOnHoverStylesheet
 
-        output =
-            """
+    output =
+      """
             button {
                 color: rgb(11, 22, 33);
             }
@@ -329,22 +335,22 @@ greenOnHoverMixin =
                 color: rgb(0, 0, 122);
             }
             """
-    in
-        suite
-            "green on hover (mixin)"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "green on hover (mixin)"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 transformsStyle : Test
 transformsStyle =
-    let
-        input =
-            Fixtures.transformsStylesheet
+  let
+    input =
+      Fixtures.transformsStylesheet
 
-        output =
-            """
+    output =
+      """
             body {
                 transform: none;
                 transform: matrix(1, 2, 3, 4, 5, 6) matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
@@ -357,18 +363,18 @@ transformsStyle =
                 transform-style: preserve-3d;
             }
             """
-    in
-        suite
-            "transforms"
-            [ test "pretty prints the expected output"
-                <| assertEqual (outdented output) (outdented (prettyPrint input))
-            ]
+  in
+    suite
+      "transforms"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
 
 
 prettyPrint style =
-    case compile style of
-        Ok result ->
-            result
+  case compile style of
+    Ok result ->
+      result
 
-        Err message ->
-            "Invalid Stylesheet: " ++ message
+    Err message ->
+      "Invalid Stylesheet: " ++ message
