@@ -3782,7 +3782,7 @@ import' { value } =
 
     lineHeight (px 10)
 -}
-lineHeight : Length compatible -> Mixin namespace
+lineHeight : Length compatible -> Mixin
 lineHeight =
     prop1 "line-height"
 
@@ -3813,12 +3813,12 @@ qt str =
   toString str
 
 
-fontFamily : FontFamily a -> Mixin namespace
+fontFamily : FontFamily a -> Mixin
 fontFamily =
     prop1 "font-family"
 
 
-fontFamilies : List String -> Mixin namespace
+fontFamilies : List String -> Mixin
 fontFamilies =
     prop1 "font-family" << stringsToValue
 
@@ -3828,7 +3828,7 @@ fontFamilies =
     ~ fontSize  xxSmall
     ~ fontSize  (px 12)
 -}
-fontSize : FontSize a -> Mixin namespace
+fontSize : FontSize a -> Mixin
 fontSize =
     prop1 "font-size"
 
@@ -3837,7 +3837,7 @@ fontSize =
 
     ~ fontStyle  italic
 -}
-fontStyle : FontStyle a -> Mixin namespace
+fontStyle : FontStyle a -> Mixin
 fontStyle =
     prop1 "font-style"
 
@@ -3847,7 +3847,7 @@ fontStyle =
     ~ fontWeight  bold
     ~ fontWeight  (w 300)
 -}
-fontWeight : FontWeight a -> Mixin namespace
+fontWeight : FontWeight a -> Mixin
 fontWeight =
     prop1 "font-weight"
 
@@ -3858,27 +3858,27 @@ fontWeight =
     ~ fontVariant2  commonLigatures smallCaps
     ~ fontVariant3  commonLigatures smallCaps slashedZero
 -}
-fontVariant : FontVariant a -> Mixin namespace
+fontVariant : FontVariant a -> Mixin
 fontVariant =
     prop1 "font-variant"
 
 
-fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Mixin namespace
+fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Mixin
 fontVariant2 =
     prop2 "font-variant"
 
 
-fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Mixin namespace
+fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Mixin
 fontVariant3 =
     prop3 "font-variant"
 
 
-fontVariantLigatures : FontVariantLigatures a -> Mixin namespace
+fontVariantLigatures : FontVariantLigatures a -> Mixin
 fontVariantLigatures =
     prop1 "font-variant-ligatures"
 
 
-fontVariantCaps : FontVariantCaps a -> Mixin namespace
+fontVariantCaps : FontVariantCaps a -> Mixin
 fontVariantCaps =
     prop1 "font-variant-caps"
 
@@ -3886,17 +3886,17 @@ fontVariantCaps =
     font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal slashedZero
 -}
 
-fontVariantNumeric : FontVariantNumeric a -> Mixin namespace
+fontVariantNumeric : FontVariantNumeric a -> Mixin
 fontVariantNumeric =
     prop1 "font-variant-numeric"
 
 
-fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Mixin namespace
+fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Mixin
 fontVariantNumeric2 =
     prop2 "font-variant-numeric"
 
 
-fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin namespace
+fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin
 fontVariantNumeric3 =
     prop3 "font-variant-numeric"
 
