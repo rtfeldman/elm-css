@@ -263,3 +263,24 @@ transformsStylesheet =
         , transformStyle preserve3d
         ]
     ]
+
+
+fontStylesheet : Stylesheet
+fontStylesheet =
+      stylesheet
+        { name = "fontStylesheet" }
+        [ body
+            [ lineHeight (px 14)
+            , fontFamily serif
+            , fontFamilies
+              [ qt "Gill Sans Extrabold"
+              , "Helvetica"
+              , .value sansSerif
+              ]
+            , fontSize xSmall
+            , fontStyle italic
+            , fontWeight (w 100)
+            , fontVariant smallCaps
+            , fontVariant2 commonLigatures slashedZero
+            ]
+          ]
