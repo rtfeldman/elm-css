@@ -66,10 +66,10 @@ down into three pieces: the selector `.`, the namespace `homepage`, and the
 class name `MenuItem`.
 
 1. The `(.)` represents a [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors),
-which is why we got a `.` at the start of `.homepageMenuItem`.
+which is where the `.` at the start of `.homepageMenuItem` came from.
 2. Passing `{ name = "homepage" }` to `stylesheet` specified that `"homepage"` will be prepended to all classes, IDs, and animation names in this stylesheet. This namespacing concept comes from
-[CSS Modules](https://github.com/css-modules/css-modules), and it makes your styles portable by guarding against naming collisions with other stylesheets on the page. Even if you have another stylesheet on the page with a `MenuItem` class, as long as it has a different namespace, their generated class names will not overlap.
-3. Finally, `MenuItem` represents the class selector itself. Note that we used a [union type](http://elm-lang.org/guide/model-the-problem) to represent the class instead of a string like `"MenuItem"`. Using a union type for class names guards against accidental misspellings and makes it easier to refactor stylesheet code that is shared with view code.
+[CSS Modules](https://github.com/css-modules/css-modules), and it makes your styles portable by guarding against naming collisions with other stylesheets. Even if you have another stylesheet on the page with a `MenuItem` class, as long as it has a different namespace, their generated class names will not overlap.
+3. Finally, `MenuItem` represents the class selector itself. Note that we used a [union type](http://elm-lang.org/guide/model-the-problem) to represent the class instead of a string like `"MenuItem"`. Using a union type for class names means accidental misspellings will result in compiler errors, and makes it easier to refactor stylesheet code that is shared with view code.
 
 Let’s add an [ID selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors) next.
 
@@ -117,10 +117,10 @@ body {
 
 As with `(.) MenuItem`, when you use `(#) Welcome`, `elm-css` calls `toString` on the union type `Welcome` before prepending `"homepage"` from the `namespace` and `"#"` from the `#` operator to arrive at `#homepageMenuItem`.
 
-Note that `rgb` is a normal Elm function, so we call it as `(rgb 0 0 128)`
-in order to get the output of `rgb(0, 0, 128)`.
+Note that `rgb` is a normal Elm function, so you call it as `(rgb 10 11 12)`
+in order to get the output of `rgb(10, 11, 12)`.
 
-Let’s add another style. This one will decree that all the links across the land shalt henceforth be underlined only on hover.
+Let’s add another style. This one declares that links have underlines only on hover.
 
 ```elm
 type CssClasses = MenuItem | Thumbnail | Sidebar
@@ -152,6 +152,31 @@ stylesheet { name = "homepage" }
 
 The `with hover` declaration means "copy the previous selector and add `:hover`",
 making it a handy way to expand upon a previous selector without writing it out again.
+
+```css
+body {
+    padding: 30px;
+    width: 100%;
+}
+
+.homepageMenuItem {
+    font-family: "Georgia", "serif";
+    font-weight: bold;
+}
+
+#homepageWelcome {
+    text-align: center;
+    color: rgb(10, 11, 12);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+```
 
 You can also use `with` to add classes and IDs. For example:
 
@@ -191,13 +216,15 @@ button#fancyButtonSignUp {
 }
 ```
 
-Note that although you can structure your code like this, it is generally a bad idea because it increases specificity. It’s best to [keep specificity as low as possible](https://css-tricks.com/strategies-keeping-css-specificity-low/), so that example would be easier to maintain if it did not mention `button` at all, and instead relied only on classes and IDs.
+Note that although you *can* structure your styles like this, it is generally a bad idea because it increases specificity.
 
-Let’s say we want several things to have underlines on hover only. Piece of cake!
+It’s best to [keep specificity as low as possible](https://css-tricks.com/strategies-keeping-css-specificity-low/); the above example would be easier to maintain if it did not mention `button` at all, and instead declared only class selectors and ID selectors.
+
+Now let’s say we want several things to have underlines on hover only. Piece of cake!
 
 ```elm
 stylesheet { name = "example" }
-  [ each [ a, button, (.) UnderlineOnHover ]
+  [ each [ a, button, (.) FancyThing ]
       [ textDecoration none
 
       , with hover
@@ -217,7 +244,7 @@ button {
     text-decoration: none;
 }
 
-.exampleUnderlineOnHover {
+.exampleFancyThing {
     text-decoration: none;
 }
 
@@ -229,7 +256,7 @@ button:hover {
     text-decoration: underline;
 }
 
-.exampleUnderlineOnHover:hover {
+.exampleFancyThing:hover {
     text-decoration: underline;
 }
 ```
