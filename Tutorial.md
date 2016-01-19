@@ -312,19 +312,18 @@ This demonstrates two different ways to do a media query. First, at the top leve
 
 This also introduces how to use selector combinators: in this case the [child combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors), represented in CSS as the `>` operator and in `elm-css` as the `children` function. (By design, there is no operator equivalent in `elm-css`) There is also a `descendants`  function, an `adjacentSiblings` function, and so on.
 
-Note that `margin` accepts `auto` instead of a number with units associated. If you try to pass `auto` to `padding`, however, you will get a type error; `auto` is not a legal value for `padding` according to the CSS specification.
-
-Also note that `zero` compiles to `0` with no units. The `padding` function
+Note that `zero` compiles to `0` with no units. The `padding` function
 is ordinarily expecting a value with units associated, but `zero` works too.
 You could also have passed `(px 0)` to generate `padding: 0px;` instead of
 `padding: 0;`, but you could not have passed `0` because the `padding`
 function does not accept raw numbers; the compiler would have given a type error.
 
-Finally note that we called `margin2`, not `margin`. This is the convention for
+Also note that we called `margin2`, not `margin`. This is the convention for
 handling CSS properties that accept different numbers of arguments. In addition
 to `margin2`, there is also `margin` (e.g. `margin (em 2)` would compile to
 `margin: 2em;`) as well as `margin3` and `margin4`.
 
+Finally, note that `margin` accepts `auto` instead of a number with units associated. If you try to pass `auto` to `padding`, however, you will get a type error; according to the CSS specification, `auto` is a legal value for `margin` but not for `padding`, and `elm-css` is aware of this.
 
 ## Mixins
 
