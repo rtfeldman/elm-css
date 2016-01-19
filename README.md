@@ -30,7 +30,7 @@ Wouldn't it be sweet if those problems went away?
 Here's an example:
 
 ```elm
-dreamwriter =
+css =
   stylesheet { name = "dreamwriter" }
     [ body
         [ overflowX auto
@@ -43,7 +43,6 @@ dreamwriter =
     , (#) Page
         [ backgroundColor (rgb 200 128 64)
         , color (hex "CCFFFF")
-
         , width (pct 100)
         , height (pct 100)
         , boxSizing borderBox
@@ -51,12 +50,12 @@ dreamwriter =
         , margin zero
         ]
 
-    , ul &. NavBar
+    , (ul &. NavBar)
         [ margin zero
         , padding zero
 
         , with li
-            [ ((display inlineBlock) |> important)
+            [ (display inlineBlock) |> important
             , color primaryAccentColor
             ]
         ]
