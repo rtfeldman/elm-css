@@ -2,6 +2,7 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 
 {-| Functions for building stylesheets.
 
+
 # Style
 @docs Snippet, snippet, Mixin, mixin, stylesheet, compile
 
@@ -261,8 +262,12 @@ type alias WhiteSpace compatible =
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values
 -}
-type alias Color compatible =
-  { compatible | value : String, color : Compatible }
+type alias ColorValue compatible =
+  { compatible | value : String, color : Compatible, warnings : List String }
+
+
+type alias Color =
+  ColorValue {}
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -434,20 +439,22 @@ important (Mixin transform) =
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
 -}
-transparent : Color {}
+transparent : Color
 transparent =
   { value = "transparent"
   , color = Compatible
+  , warnings = []
   }
 
 
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
     value.
 -}
-currentColor : Color {}
+currentColor : Color
 currentColor =
   { value = "currentColor"
   , color = Compatible
+  , warnings = []
   }
 
 
@@ -558,30 +565,51 @@ initial =
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in functional notation.
 -}
-rgb : number -> number -> number -> Color {}
+rgb : number -> number -> number -> Color
 rgb r g b =
-  { value = cssFunction "rgb" (List.map numberToString [ r, g, b ])
-  , color = Compatible
-  }
+  let
+    warnings =
+      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) then
+        [ "RGB color values must be between 0 and 255. rgb(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ") is not valid." ]
+      else
+        []
+  in
+    { value = cssFunction "rgb" (List.map numberToString [ r, g, b ])
+    , color = Compatible
+    , warnings = warnings
+    }
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
-rgba : number -> number -> number -> number -> Color {}
+rgba : number -> number -> number -> number -> Color
 rgba r g b a =
-  { value = cssFunction "rgba" (List.map numberToString [ r, g, b, a ])
-  , color = Compatible
-  }
+  let
+    warnings =
+      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) || (a < 0) || (a > 1) then
+        [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ") is not valid." ]
+      else
+        []
+  in
+    { value = cssFunction "rgba" (List.map numberToString [ r, g, b, a ])
+    , color = Compatible
+    , warnings = warnings
+    }
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in hexadecimal notation.
 -}
-hex : String -> Color {}
+hex : String -> Color
 hex str =
-  { value = "#" ++ str
-  , color = Compatible
-  }
+  let
+    warnings =
+      []
+  in
+    { value = "#" ++ str
+    , color = Compatible
+    , warnings = warnings
+    }
 
 
 
@@ -1857,7 +1885,7 @@ prop4 key argA argB argC argD =
 
     textDecorationColor (rgb 12 11 10)
 -}
-textDecorationColor : Color compatible -> Mixin
+textDecorationColor : ColorValue compatible -> Mixin
 textDecorationColor =
   prop1 "text-decoration-color"
 
@@ -1938,7 +1966,7 @@ textShadow2 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatible -> Length compatible -> Color compatible -> Mixin
+textShadow3 : Length compatible -> Length compatible -> ColorValue compatible -> Mixin
 textShadow3 =
   prop3 "text-shadow"
 
@@ -1951,7 +1979,7 @@ textShadow3 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatible -> Length compatible -> Length compatible -> Color compatible -> Mixin
+textShadow4 : Length compatible -> Length compatible -> Length compatible -> ColorValue compatible -> Mixin
 textShadow4 =
   prop4 "text-shadow"
 
@@ -2523,7 +2551,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+border3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 border3 =
   prop3 "border"
 
@@ -2559,7 +2587,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderTop3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderTop3 =
   prop3 "border-top"
 
@@ -2595,7 +2623,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBottom3 =
   prop3 "border-bottom"
 
@@ -2631,7 +2659,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderLeft3 =
   prop3 "border-left"
 
@@ -2667,7 +2695,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderRight3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderRight3 =
   prop3 "border-right"
 
@@ -2703,7 +2731,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBlockStart3 =
   prop3 "border-block-start"
 
@@ -2739,7 +2767,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBlockEnd3 =
   prop3 "border-block-end"
 
@@ -2775,7 +2803,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderInlineStart3 =
   prop3 "border-block-start"
 
@@ -2811,7 +2839,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> Color compatibleC -> Mixin
+borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderInlineEnd3 =
   prop3 "border-block-end"
 
@@ -2924,7 +2952,7 @@ borderImageWidth4 =
 
     borderBlockStartColor (rgb 101 202 0)
 -}
-borderBlockStartColor : Color compatible -> Mixin
+borderBlockStartColor : ColorValue compatible -> Mixin
 borderBlockStartColor =
   prop1 "border-block-start-color"
 
@@ -2933,7 +2961,7 @@ borderBlockStartColor =
 
     borderBottomColor (rgb 101 202 0)
 -}
-borderBottomColor : Color compatible -> Mixin
+borderBottomColor : ColorValue compatible -> Mixin
 borderBottomColor =
   prop1 "border-bottom-color"
 
@@ -2942,7 +2970,7 @@ borderBottomColor =
 
     borderInlineStartColor (rgb 101 202 0)
 -}
-borderInlineStartColor : Color compatible -> Mixin
+borderInlineStartColor : ColorValue compatible -> Mixin
 borderInlineStartColor =
   prop1 "border-inline-start-color"
 
@@ -2951,7 +2979,7 @@ borderInlineStartColor =
 
     borderInlineEndColor (rgb 101 202 0)
 -}
-borderInlineEndColor : Color compatible -> Mixin
+borderInlineEndColor : ColorValue compatible -> Mixin
 borderInlineEndColor =
   prop1 "border-inline-end-color"
 
@@ -2960,7 +2988,7 @@ borderInlineEndColor =
 
     borderLeftColor (rgb 101 202 0)
 -}
-borderLeftColor : Color compatible -> Mixin
+borderLeftColor : ColorValue compatible -> Mixin
 borderLeftColor =
   prop1 "border-left-color"
 
@@ -2969,7 +2997,7 @@ borderLeftColor =
 
     borderRightColor (rgb 101 202 0)
 -}
-borderRightColor : Color compatible -> Mixin
+borderRightColor : ColorValue compatible -> Mixin
 borderRightColor =
   prop1 "border-right-color"
 
@@ -2978,7 +3006,7 @@ borderRightColor =
 
     borderTopColor (rgb 101 202 0)
 -}
-borderTopColor : Color compatible -> Mixin
+borderTopColor : ColorValue compatible -> Mixin
 borderTopColor =
   prop1 "border-top-color"
 
@@ -2987,7 +3015,7 @@ borderTopColor =
 
     borderBlockEndColor (rgb 101 202 0)
 -}
-borderBlockEndColor : Color compatible -> Mixin
+borderBlockEndColor : ColorValue compatible -> Mixin
 borderBlockEndColor =
   prop1 "border-block-end-color"
 
@@ -3284,7 +3312,7 @@ borderSpacing2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor : Color compatible -> Mixin
+borderColor : ColorValue compatible -> Mixin
 borderColor =
   prop1 "border-color"
 
@@ -3296,7 +3324,7 @@ borderColor =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor2 : Color compatibleA -> Color compatibleB -> Mixin
+borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Mixin
 borderColor2 =
   prop2 "border-color"
 
@@ -3308,7 +3336,7 @@ borderColor2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor3 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Mixin
+borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Mixin
 borderColor3 =
   prop3 "border-color"
 
@@ -3320,7 +3348,7 @@ borderColor3 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor4 : Color compatibleA -> Color compatibleB -> Color compatibleC -> Color compatibleD -> Mixin
+borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Mixin
 borderColor4 =
   prop4 "border-color"
 
@@ -3350,13 +3378,13 @@ whiteSpace =
 
 
 {-| -}
-backgroundColor : Color compatible -> Mixin
+backgroundColor : ColorValue compatible -> Mixin
 backgroundColor =
   prop1 "background-color"
 
 
 {-| -}
-color : Color compatible -> Mixin
+color : ColorValue compatible -> Mixin
 color =
   prop1 "color"
 
@@ -3413,7 +3441,7 @@ You can specify multiple line decorations with `textDecorations`.
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Color compatibleC -> Mixin
+textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Mixin
 textDecoration3 =
   prop3 "text-decoration"
 
@@ -3446,7 +3474,7 @@ textDecorations2 =
     ~ textDecorations2 [ underline, overline ] wavy
     ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Color compatibleC -> Mixin
+textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Mixin
 textDecorations3 =
   prop3 "text-decoration" << valuesOrNone
 
@@ -3515,7 +3543,7 @@ animationNames identifiers =
             |> List.map (identifierToString name)
             |> String.join ", "
       in
-        addProperty "~" { key = "animation-name", value = value, important = False }
+        addProperty { key = "animation-name", value = value, important = False, warnings = [] }
   in
     Mixin customTransform
 
@@ -3714,7 +3742,7 @@ selector selectorStr mixins =
 -}
 property : String -> String -> Mixin
 property key value =
-  Mixin (\_ -> addProperty "~" { key = key, value = value, important = False })
+  Mixin (\_ -> addProperty { key = key, value = value, important = False, warnings = [] })
 
 
 
@@ -4179,7 +4207,6 @@ applyStyleCombinator combineSelectors styleBlocks =
   let
     -- first: html, others: [ body ]
     -- declaration: div { width: 100%, height: 100% }
-
     applySelectors : ComplexSelector -> List ComplexSelector -> Declaration -> List Declaration
     applySelectors first others declaration =
       case declaration of
@@ -4211,7 +4238,6 @@ applyStyleCombinator combineSelectors styleBlocks =
         Declaration.StandaloneAtRule ruleStr _ ->
           [ declaration ]
 
-
     applyStyleBlockTo : String -> Declaration -> StyleBlock -> List Declaration
     applyStyleBlockTo name declaration (StyleBlock transform) =
       case declaration of
@@ -4231,7 +4257,6 @@ applyStyleCombinator combineSelectors styleBlocks =
                 otherDeclarations
           in
             [ Declaration.ConditionalGroupRule ruleStr newDeclarations ]
-
 
         Declaration.StandaloneAtRule ruleStr _ ->
           [ declaration ]
@@ -4401,6 +4426,6 @@ valuesOrNone list =
 {-| Compile the given stylesheet to a CSS string, or to an error
 message if it could not be compiled.
 -}
-compile : List Declaration -> Result String String
+compile : List Declaration -> { css : String, warnings : List String }
 compile =
   Css.Compile.compile

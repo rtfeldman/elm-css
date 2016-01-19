@@ -4,15 +4,14 @@ import Css exposing (..)
 import Css.Elements exposing (..)
 
 
-pageBackground : Color {}
+pageBackground : Color
 pageBackground =
   rgb 100 90 128
 
 
-pageDefaultText : Color {}
+pageDefaultText : Color
 pageDefaultText =
   rgb 40 35 76
-
 
 
 type CssClasses
@@ -63,5 +62,3 @@ dreamwriter =
         , color pageDefaultText
         ]
     ]
-
-

@@ -1,6 +1,7 @@
 module Properties (all) where
 
 import ElmTest exposing (..)
+import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (p)
 import Css.Declaration exposing (Declaration)
@@ -344,15 +345,6 @@ assertPropertyWorks propertyName ( mixin, expectedStr ) =
     <| assertEqual
         (prettyPrint (stylesheet { name = "test" } [ p [ mixin ] ]))
         ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-
-
-prettyPrint sheet =
-  case compile sheet of
-    Ok result ->
-      result
-
-    Err message ->
-      "Invalid Stylesheet: " ++ message
 
 
 type alias DeclarationTransform namespace =

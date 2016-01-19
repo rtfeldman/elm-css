@@ -23,6 +23,7 @@ type alias Property =
   { important : Bool
   , key : String
   , value : String
+  , warnings : List String
   }
 
 
@@ -86,8 +87,8 @@ updateLastProperty update declarations =
       first :: updateLastProperty update rest
 
 
-addProperty : String -> Property -> List Declaration -> List Declaration
-addProperty functionName property declarations =
+addProperty : Property -> List Declaration -> List Declaration
+addProperty property declarations =
   case declarations of
     [] ->
       []
@@ -108,7 +109,7 @@ addProperty functionName property declarations =
           []
 
     first :: rest ->
-      first :: addProperty functionName property rest
+      first :: addProperty property rest
 
 
 extendLastSelector : String -> (ComplexSelector -> ComplexSelector) -> List Declaration -> List Declaration
