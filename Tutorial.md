@@ -261,3 +261,72 @@ button:hover {
 }
 ```
 
+Now let’s take things up a notch or two.
+
+```elm
+stylesheet { name = "homepage" }
+  [ (@) (media "print")
+      [ body
+          [ width (px 1280) ]
+      ]
+
+  , ul
+      [ padding zero
+
+      , with ((@) (media "print"))
+          [ margin2 (em 1) auto ]
+
+      , children
+          [ li
+              [ fontSize (pt 12) ]
+          ]
+      ]
+  ]
+```
+
+The above fanciness compiles to the following:
+
+```css
+@media "print" {
+    body {
+        width: 1280px;
+    }
+}
+
+ul {
+    padding: 0;
+}
+
+@media "print" {
+    ul {
+        margin: 1em auto;
+    }
+}
+
+ul > li {
+    font-size: 12pt;
+}
+```
+
+This demonstrates two different ways to do a media query. First, at the top level just like you would in CSS, with `(@) (media "print")` followed by a `body` selector and some styles. Second, using `with` to nest a media query within a `ul` selector. In either case, you end up with a top-level `@media` declaration in the compiled CSS.
+
+This also introduces how to use selector combinators: in this case the [child combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors), represented in CSS as the `>` operator and in `elm-css` as the `children` function. (By design, there is no operator equivalent in `elm-css`) There is also a `descendants`  function, an `adjacentSiblings` function, and so on.
+
+Note that `margin` accepts `auto` instead of a number with units associated. If you try to pass `auto` to `padding`, however, you will get a type error; `auto` is not a legal value for `padding` according to the CSS specification.
+
+Also note that `zero` compiles to `0` with no units. The `padding` function
+is ordinarily expecting a value with units associated, but `zero` works too.
+You could also have passed `(px 0)` to generate `padding: 0px;` instead of
+`padding: 0;`, but you could not have passed `0` because the `padding`
+function does not accept raw numbers; the compiler would have given a type error.
+
+Finally note that we called `margin2`, not `margin`. This is the convention for
+handling CSS properties that accept different numbers of arguments. In addition
+to `margin2`, there is also `margin` (e.g. `margin (em 2)` would compile to
+`margin: 2em;`) as well as `margin3` and `margin4`.
+
+
+## Mixins
+
+## Sharing Namespaces with the View
+-}
