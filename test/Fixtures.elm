@@ -15,6 +15,7 @@ type CssIds
 type CssAnimations
   = Wobble
 
+
 unstyledDiv : Stylesheet
 unstyledDiv =
   stylesheet
@@ -30,6 +31,16 @@ divWidthHeight =
         [ width (pct 32)
         , height (px 50)
         ]
+    ]
+
+
+atRule : Stylesheet
+atRule =
+  stylesheet
+    { name = "homepage" }
+    [ (@)
+        (media "print")
+        [ body [ margin (em 2) ] ]
     ]
 
 

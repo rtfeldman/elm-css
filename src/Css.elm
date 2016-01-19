@@ -90,8 +90,8 @@ type Mixin
   = Mixin DeclarationTransform
 
 
-type alias AtRule a =
-  a -> List Declaration
+type AtRule
+  = AtRule (List StyleBlock -> String -> List Declaration)
 
 
 type MediaQuery
@@ -3390,9 +3390,16 @@ color =
 
 
 {-| -}
-media : a -> String
+media : a -> AtRule
 media value =
-  "media " ++ (toString value)
+  let
+    getDeclarations styleBlocks name =
+      [ Declaration.ConditionalGroupRule
+          ("@media \"" ++ toCssIdentifier value ++ "\"")
+          (List.concatMap (\(StyleBlock transform) -> transform name) styleBlocks)
+      ]
+  in
+    AtRule getDeclarations
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
@@ -3689,9 +3696,9 @@ makeClassSelector class name =
             $ body
                 ~ width (pct 100)
 -}
-(@) : AtRule a -> a -> StyleBlock
-(@) getDeclarations arg =
-  StyleBlock (\_ -> getDeclarations arg)
+(@) : AtRule -> List StyleBlock -> StyleBlock
+(@) (AtRule getDeclarations) styleBlocks =
+  StyleBlock (getDeclarations styleBlocks)
 
 
 

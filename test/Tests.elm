@@ -16,6 +16,7 @@ all =
     , divWidthHeight
     , leftRightTopBottom
     , borders
+    , atRule
     , multiSelector
     , multiDescendent
     , underlineOnHoverMixin
@@ -69,6 +70,28 @@ leftRightTopBottom =
   in
     suite
       "left & right, top & bottom property/value duality test"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
+
+
+atRule : Test
+atRule =
+  let
+    input =
+      Fixtures.atRule
+
+    output =
+      """
+            @media "print" {
+                body {
+                    margin: 2em;
+                }
+            }
+        """
+  in
+    suite
+      "@media test"
       [ test "pretty prints the expected output"
           <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]
