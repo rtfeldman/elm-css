@@ -9,6 +9,9 @@
     ],
     "exposed-modules": [],
     "dependencies": {
+        "NoRedInk/elm-check": "2.0.0 <= v < 3.0.0",
+        "NoRedInk/elm-random-extra": "2.0.0 <= v < 3.0.0",
+        "NoRedInk/elm-shrink": "1.0.0 <= v < 2.0.0",
         "deadfoxygrandpa/elm-test": "3.0.1 <= v < 4.0.0",
         "elm-lang/core": "2.1.0 <= v < 3.0.0",
         "laszlopandy/elm-console": "1.0.3 <= v < 2.0.0"

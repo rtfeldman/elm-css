@@ -12,7 +12,7 @@ $ elm-css src/Stylesheets.elm
 $ less homepage.css
 ```
 
-Isn't it a pain when you want to rename a CSS class or ID, but can't be sure that the rename wouldn't break things?  
+Isn't it a pain when you want to rename a CSS class or ID, but can't be sure that the rename wouldn't break things?
 Or when it turns out the reason something wasn't displaying as expected was that you had a typo in the class name?
 How about when you load multiple stylesheets onto the same page and some of the
 class names overlap?
@@ -30,35 +30,39 @@ Wouldn't it be sweet if those problems went away?
 Here's an example:
 
 ```elm
-dreamwriter =
-    stylesheet { name = "dreamwriter" }
-        $ body
-            ~ overflowX auto
-            ~ minWidth (px 1280)
+css =
+  stylesheet { name = "dreamwriter" }
+    [ body
+        [ overflowX auto
+        , minWidth (px 1280)
+        ]
 
-        . Hidden
-            ~ display none
+    , (.) Hidden
+        [ display none ]
 
-        # Page
-            ~ backgroundColor (rgb 200 128 64)
-            ~ color (hex "CCFFFF")
+    , (#) Page
+        [ backgroundColor (rgb 200 128 64)
+        , color (hex "CCFFFF")
+        , width (pct 100)
+        , height (pct 100)
+        , boxSizing borderBox
+        , padding (px 8)
+        , margin zero
+        ]
 
-            ~ width (pct 100)
-            ~ height (pct 100)
-            ~ boxSizing borderBox
-            ~ padding (px 8)
-            ~ margin zero
+    , (ul &. NavBar)
+        [ margin zero
+        , padding zero
 
-        $ ul . NavBar
-            ~ margin zero
-            ~ padding zero
-
-            >$ li
-                ~ ((display inlineBlock) |> important)
-                ~ color primaryAccentColor
+        , with li
+            [ (display inlineBlock) |> important
+            , color primaryAccentColor
+            ]
+        ]
+    ]
 
 primaryAccentColor =
-    hex "ccffaa"
+  hex "ccffaa"
 ```
 
 The above is vanilla Elm code. `Hidden` and `Page` are backed by union types, so
@@ -69,31 +73,31 @@ The above `elm-css` stylesheet compiles to the following .css file:
 
 ```css
 body {
-  overflow-x: auto;
-  min-width: 1280px;
+    overflow-x: auto;
+    min-width: 1280px;
 }
 
 .dreamwriterHidden {
-  display: none;
+    display: none;
 }
 
 #dreamwriterPage {
-  background-color: rgb(200, 128, 64);
-  color: #CCFFFF;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 8px;
-  margin: 0;
+    background-color: rgb(200, 128, 64);
+    color: #CCFFFF;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    margin: 0;
 }
 
 ul.dreamwriterNavBar {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 ul.dreamwriterNavBar > li {
-  display: inline-block !important;
-  color: #ccffaa;
+    display: inline-block !important;
+    color: #ccffaa;
 }
 ```
