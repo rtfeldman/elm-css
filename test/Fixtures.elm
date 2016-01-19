@@ -38,7 +38,11 @@ atRule : Stylesheet
 atRule =
   stylesheet
     { name = "homepage" }
-    [ (@)
+    [ body
+        [ padding zero ]
+    , button
+        [ margin auto ]
+    , (@)
         (media "print")
         [ body [ margin (em 2) ] ]
     ]
