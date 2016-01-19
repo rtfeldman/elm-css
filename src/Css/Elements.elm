@@ -37,9 +37,20 @@ typeSelector : String -> List Mixin -> StyleBlock
 typeSelector selectorStr mixins =
   let
     transform name =
-      List.foldl (\(Mixin transform) -> transform name) [ typeSelectorBlock selectorStr ] mixins
+      transformWithMixins mixins (typeSelectorBlock selectorStr) name
   in
     StyleBlock transform
+
+
+transformWithMixins : List Mixin -> Declaration -> DeclarationTransform
+transformWithMixins mixins newDeclaration name declarations =
+  applyMixins mixins name (declarations ++ [ newDeclaration ])
+
+
+applyMixins : List Mixin -> DeclarationTransform
+applyMixins mixins name declarations =
+  List.foldl (\(Mixin transform) -> transform name) declarations mixins
+
 
 
 {- BASIC ELEMENTS -}

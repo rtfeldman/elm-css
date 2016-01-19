@@ -77,11 +77,11 @@ type ConditionalGroupRuleType
 
 
 type StyleBlock
-  = StyleBlock (String -> List Declaration)
+  = StyleBlock DeclarationTransform
 
 
 type Snippet
-  = Snippet (String -> List Declaration)
+  = Snippet DeclarationTransform
 
 
 {-| A Mixin.
@@ -3565,7 +3565,7 @@ your stylesheet.
 -}
 stylesheet : { a | name : String } -> List StyleBlock -> Stylesheet
 stylesheet { name } styleBlocks =
-  concatStyleBlocks styleBlocks name
+  concatStyleBlocks styleBlocks name []
 
 
 snippet : List StyleBlock -> Snippet
@@ -3580,9 +3580,9 @@ snippets snippets =
   StyleBlock (applySnippets snippets)
 
 
-applySnippets : List Snippet -> String -> List Declaration
-applySnippets snippets name =
-  List.concatMap (\(Snippet transform) -> transform name) snippets
+applySnippets : List Snippet -> DeclarationTransform
+applySnippets snippets name declarations =
+  List.foldl (\(Snippet transform) -> transform name) declarations snippets
 
 
 applyMixins : List Mixin -> DeclarationTransform
@@ -3590,9 +3590,9 @@ applyMixins mixins name declarations =
   List.foldl (\(Mixin transform) -> transform name) declarations mixins
 
 
-concatStyleBlocks : List StyleBlock -> String -> List Declaration
-concatStyleBlocks styles name =
-  List.concatMap (\(StyleBlock transform) -> transform name) styles
+concatStyleBlocks : List StyleBlock -> DeclarationTransform
+concatStyleBlocks styles name declarations =
+  List.concatMap (\(StyleBlock transform) -> transform name declarations) styles
 
 
 selectorToStyleBlock : List Mixin -> (String -> SimpleSelector) -> StyleBlock
@@ -3604,9 +3604,9 @@ selectorToStyleBlock mixins makeSelector =
     StyleBlock transform
 
 
-transformWithMixins : List Mixin -> Declaration -> String -> List Declaration
-transformWithMixins mixins declaration name =
-  List.foldl (\(Mixin transform) -> transform name) [ declaration ] mixins
+transformWithMixins : List Mixin -> Declaration -> DeclarationTransform
+transformWithMixins mixins newDeclaration name declarations =
+  applyMixins mixins name (declarations ++ [ newDeclaration ])
 
 
 selectorDeclaration : SimpleSelector -> Declaration
@@ -3698,7 +3698,7 @@ makeClassSelector class name =
 -}
 (@) : AtRule -> List StyleBlock -> StyleBlock
 (@) (AtRule getDeclarations) styleBlocks =
-  StyleBlock (getDeclarations styleBlocks)
+  StyleBlock (\name declarations -> getDeclarations styleBlocks name)
 
 
 
@@ -4254,7 +4254,7 @@ applyStyleCombinator combineSelectors styleBlocks =
           -- the original declaration in its entirety), combined with the
           -- selectors and properties of the given style block.
           declaration
-            :: List.concatMap (applySelectors first others) (transform name)
+            :: List.concatMap (applySelectors first others) (transform name [])
 
         Declaration.ConditionalGroupRule ruleStr otherDeclarations ->
           let
@@ -4289,12 +4289,12 @@ applyStyleCombinator combineSelectors styleBlocks =
 with : (List Mixin -> StyleBlock) -> List Mixin -> Mixin
 with makeStyleBlock mixins =
   let
-    toMixinTransform : (String -> List Declaration) -> DeclarationTransform
-    toMixinTransform styleBlockTransform name declarations =
+    reviseTransform : DeclarationTransform -> DeclarationTransform
+    reviseTransform transform name declarations =
       let
         updates : List (ComplexSelector -> ComplexSelector)
         updates =
-          extractSelectors (styleBlockTransform name)
+          extractSelectors (transform name [])
             |> List.map mergeSelectors
 
         expandDeclaration : Declaration -> List Declaration
@@ -4328,7 +4328,7 @@ with makeStyleBlock mixins =
         newDeclarations
   in
     makeStyleBlock [ identityMixin ]
-      |> (\(StyleBlock transform) -> toMixinTransform transform)
+      |> (\(StyleBlock transform) -> reviseTransform transform)
       |> Mixin
 
 
@@ -4336,24 +4336,24 @@ with makeStyleBlock mixins =
 each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
 each styleBlockCreators mixins =
   let
-    transform : String -> List Declaration
-    transform name =
+    transform : DeclarationTransform
+    transform name declarations =
       let
         selectors =
           List.map ((|>) [ identityMixin ]) styleBlockCreators
             |> List.map (\(StyleBlock transform) -> transform)
-            |> List.concatMap (\transform -> extractSelectors (transform name))
+            |> List.concatMap (\transform -> extractSelectors (transform name []))
       in
         case selectors of
           [] ->
-            []
+            declarations
 
           firstSelector :: otherSelectors ->
             let
               newDeclaration =
                 Declaration.StyleBlock firstSelector otherSelectors []
             in
-              transformWithMixins mixins newDeclaration name
+              transformWithMixins mixins newDeclaration name declarations
   in
     StyleBlock transform
 
@@ -4373,11 +4373,11 @@ each styleBlockCreators mixins =
 applyMulti : StyleBlock -> (String -> SimpleSelector) -> List Mixin -> StyleBlock
 applyMulti styleBlock makeSelector mixins =
   let
-    newTransform name =
+    newTransform name declarations =
       styleBlock
-        |> (\(StyleBlock transform) -> transform name)
+        |> (\(StyleBlock transform) -> transform name declarations)
         |> List.map (multiSelector mixins makeSelector)
-        |> List.concatMap (\(StyleBlock transform) -> transform name)
+        |> List.foldl (\(StyleBlock transform) -> transform name) declarations
   in
     StyleBlock newTransform
 
@@ -4404,10 +4404,10 @@ multiSelector mixins makeSelector declaration =
         StyleBlock transform
 
     Declaration.ConditionalGroupRule ruleStr _ ->
-      Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) (StyleBlock (\_ -> []))
+      Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) (StyleBlock (\_ _ -> []))
 
     Declaration.StandaloneAtRule ruleStr _ ->
-      Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) (StyleBlock (\_ -> []))
+      Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) (StyleBlock (\_ _ -> []))
 
 
 {-| A mixin that returns whatever declarations you give it.
