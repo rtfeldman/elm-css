@@ -39,7 +39,7 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
-import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors)
+import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors, extractRuleStrings, removeProperties)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Compile
 import String
@@ -4292,32 +4292,45 @@ with makeStyleBlock mixins =
     toMixinTransform : (String -> List Declaration) -> DeclarationTransform
     toMixinTransform styleBlockTransform name declarations =
       let
-        updates : List (ComplexSelector -> ComplexSelector)
-        updates =
-          extractSelectors (styleBlockTransform name)
-            |> List.map mergeSelectors
-
         expandDeclaration : Declaration -> List Declaration
         expandDeclaration declaration =
           case declaration of
             Declaration.StyleBlock firstSelector otherSelectors properties ->
               let
+                updates : List (ComplexSelector -> ComplexSelector)
+                updates =
+                  extractSelectors (styleBlockTransform name)
+                    |> List.map mergeSelectors
+
                 applyUpdate update =
                   Declaration.StyleBlock
                     (update firstSelector)
                     (List.map update otherSelectors)
                     []
 
-                newDeclarations =
+                newBlockDeclarations =
                   List.map applyUpdate updates
                     |> applyMixins mixins name
+
+                ruleStrings =
+                  extractRuleStrings (styleBlockTransform name)
+
+                applyRule ruleStr =
+                  declarations
+                    |> List.map removeProperties
+                    |> applyMixins mixins name
+                    |> Declaration.ConditionalGroupRule ruleStr
+
+                newRuleDeclarations =
+                  List.map applyRule ruleStrings
               in
-                declaration :: newDeclarations
+                declaration :: (newBlockDeclarations ++ newRuleDeclarations)
 
             Declaration.ConditionalGroupRule ruleStr declarations ->
-              List.map
-                (expandDeclaration >> (Declaration.ConditionalGroupRule ruleStr))
-                declarations
+              declaration
+                :: List.map
+                    (expandDeclaration >> (Declaration.ConditionalGroupRule ruleStr))
+                    declarations
 
             Declaration.StandaloneAtRule _ _ ->
               [ declaration ]

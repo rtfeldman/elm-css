@@ -48,6 +48,21 @@ atRule =
     ]
 
 
+nestedAtRule : Stylesheet
+nestedAtRule =
+  stylesheet
+    { name = "homepage" }
+    [ button [ padding zero ]
+    , body
+        [ margin auto
+        , with
+            ((@) (media "print"))
+            [ margin (em 2) ]
+        ]
+    , a [ textDecoration none ]
+    ]
+
+
 multiDescendent : Stylesheet
 multiDescendent =
   stylesheet

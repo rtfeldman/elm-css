@@ -17,6 +17,7 @@ all =
     , leftRightTopBottom
     , borders
     , atRule
+    , nestedAtRule
     , multiSelector
     , multiDescendent
     , underlineOnHoverMixin
@@ -100,6 +101,40 @@ atRule =
   in
     suite
       "@media test"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
+
+
+nestedAtRule : Test
+nestedAtRule =
+  let
+    input =
+      Fixtures.nestedAtRule
+
+    output =
+      """
+          button {
+              padding: 0;
+          }
+
+          body {
+              margin: auto;
+          }
+
+          @media "print" {
+              body {
+                  margin: 2em;
+              }
+          }
+
+          a {
+              text-decoration: none;
+          }
+      """
+  in
+    suite
+      "nested @media test"
       [ test "pretty prints the expected output"
           <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]

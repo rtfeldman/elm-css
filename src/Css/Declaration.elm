@@ -201,12 +201,12 @@ mapSelectors updates =
     apply : Declaration -> (ComplexSelector -> ComplexSelector) -> List Declaration
     apply declaration update =
       case declaration of
-        StyleBlock firstSelector otherSimpleSelectors properties ->
+        StyleBlock firstSelector otherSelectors properties ->
           let
             newDeclaration =
               StyleBlock
                 (update firstSelector)
-                (List.map update otherSimpleSelectors)
+                (List.map update otherSelectors)
                 []
           in
             if List.isEmpty properties then
@@ -229,14 +229,43 @@ extractSelectors declarations =
     [] ->
       []
 
-    (StyleBlock firstSelector otherSimpleSelectors _) :: rest ->
-      (firstSelector :: otherSimpleSelectors) ++ (extractSelectors rest)
+    (StyleBlock firstSelector otherSelectors _) :: rest ->
+      (firstSelector :: otherSelectors) ++ (extractSelectors rest)
 
     (ConditionalGroupRule _ _) :: rest ->
       extractSelectors rest
 
     (StandaloneAtRule _ _) :: rest ->
       extractSelectors rest
+
+
+extractRuleStrings : List Declaration -> List String
+extractRuleStrings declarations =
+  case declarations of
+    [] ->
+      []
+
+    (StyleBlock firstSelector otherSelectors _) :: rest ->
+      extractRuleStrings rest
+
+    (ConditionalGroupRule ruleStr _) :: rest ->
+      ruleStr :: extractRuleStrings rest
+
+    (StandaloneAtRule _ _) :: rest ->
+      extractRuleStrings rest
+
+
+removeProperties : Declaration -> Declaration
+removeProperties declaration =
+  case declaration of
+    StyleBlock firstSelector otherSelectors _ ->
+      StyleBlock firstSelector otherSelectors []
+
+    ConditionalGroupRule ruleStr declarations ->
+      ConditionalGroupRule ruleStr (List.map removeProperties declarations)
+
+    StandaloneAtRule _ _ ->
+      declaration
 
 
 mergeSelectors : ComplexSelector -> ComplexSelector -> ComplexSelector
