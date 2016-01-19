@@ -4340,7 +4340,7 @@ each styleBlockCreators mixins =
     transform name =
       let
         selectors =
-          List.map ((|>) [ identityMixin ]) styleBlockCreators
+          List.map ((|>) []) styleBlockCreators
             |> List.map (\(StyleBlock transform) -> transform)
             |> List.concatMap (\transform -> extractSelectors (transform name))
       in
@@ -4361,13 +4361,13 @@ each styleBlockCreators mixins =
 {-| -}
 (&#) : (List Mixin -> StyleBlock) -> id -> List Mixin -> StyleBlock
 (&#) selector id mixins =
-  applyMulti (selector [ identityMixin ]) (makeIdSelector id) mixins
+  applyMulti (selector []) (makeIdSelector id) mixins
 
 
 {-| -}
 (&.) : (List Mixin -> StyleBlock) -> class -> List Mixin -> StyleBlock
 (&.) selector class mixins =
-  applyMulti (selector [ identityMixin ]) (makeClassSelector class) mixins
+  applyMulti (selector []) (makeClassSelector class) mixins
 
 
 applyMulti : StyleBlock -> (String -> SimpleSelector) -> List Mixin -> StyleBlock
@@ -4408,13 +4408,6 @@ multiSelector mixins makeSelector declaration =
 
     Declaration.StandaloneAtRule ruleStr _ ->
       Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) (StyleBlock (\_ -> []))
-
-
-{-| A mixin that returns whatever declarations you give it.
--}
-identityMixin : Mixin
-identityMixin =
-  Mixin (\_ -> identity)
 
 
 numberToString : number -> String
