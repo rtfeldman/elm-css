@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
+module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, important, ($), (#), (.), (@), (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.), ($=), (~), (&::), (&:), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, charset, screen, print, projection, tv, url, src, w, qt, fontFamilies) where
 
 {-| Functions for building stylesheets.
 
@@ -12,13 +12,13 @@ module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, importan
 @docs (|$), (>$), (>>$), (+$), (~$), (>#), (>>#), (+#), (~#), (>.), (>>.), (+.), (~.)
 
 # Attributes
-@docs flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
+@docs flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, charset, fontFamilies
 
 # Values
-@docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse
+@docs all, important, custom, (~), solid, transparent, rgb, rgba, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero
 
 # Length
-@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
+@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero, w
 
 # Angle
 @docs deg, rad, grad, turn
@@ -28,6 +28,15 @@ module Css (compile, Stylesheet, Mixin, stylesheet, mixin, all, custom, importan
 
 # Pseudo-Elements
 @docs (&::), after, before, firstLetter, firstLine, selection
+
+# Media Queries
+@docs screen, print, tv, projection
+
+# Import and Source
+@docs url, src
+
+# Quoting
+@docs qt
 
 # Intentionally Unsupported
 
@@ -87,6 +96,15 @@ print : String
 print =
     "print"
 
+
+projection : String
+projection =
+    "projection"
+
+
+tv : String
+tv =
+    "tv"
 
 
 {- Length -}
@@ -162,6 +180,64 @@ type alias MinMaxDimension compatible =
         , lengthOrMinMaxDimension : Compatible
         , lengthOrNoneOrMinMaxDimension : Compatible
     }
+
+
+{- FONTS -}
+
+type alias ImportType compatible =
+  { compatible | value : String, import' : Compatible }
+
+
+type alias FontFace compatible =
+    { compatible | value : String, fontFace : Compatible }
+
+
+type alias FontFamily compatible =
+    { compatible | value : String, fontFamily : Compatible }
+
+
+type alias FontSize compatible =
+    { compatible
+      | value : String
+      , fontSize : Compatible }
+
+
+type alias FontStyle compatible =
+    { compatible | value : String, fontStyle : Compatible }
+
+
+type alias FontWeight compatible =
+    { compatible | value : String, fontWeight : Compatible }
+
+
+type alias NumberedWeight =
+    { value : String, fontWeight : Compatible }
+
+
+type alias FontVariant compatible =
+    { compatible | value : String, fontVariant : Compatible }
+
+
+type alias FontVariantLigatures compatible =
+    { compatible
+      | value : String
+      , fontVariant : Compatible
+      , fontVariantLigatures : Compatible }
+
+
+type alias FontVariantCaps compatible =
+    { compatible
+      | value : String
+      , fontVariant : Compatible
+      , fontVariantCaps : Compatible }
+
+
+type alias FontVariantNumeric compatible =
+    { compatible
+      | value : String
+      , fontVariant : Compatible
+      , fontVariantNumeric : Compatible }
+
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Values
@@ -269,6 +345,7 @@ type alias LengthOrNone compatible =
 -}
 type alias LengthOrNumber compatible =
     { compatible | value : String, lengthOrNumber : Compatible }
+
 
 type alias ExplicitLength =
     { value : String
@@ -979,6 +1056,22 @@ n num =
     }
 
 
+w : Int -> NumberedWeight
+w num =
+  let
+    validWeight nm = List.member nm <| List.map (\n -> n * 100) [1..9]
+  in
+    if validWeight num then
+      { value = numberToString num, fontWeight = Compatible }
+    else
+      if num < 100 then
+        { value = "100", fontWeight = Compatible }
+      else if num > 900 then
+        { value = "900", fontWeight = Compatible }
+      else
+        { value = numberToString <| round (num / 100) * 100
+        , fontWeight = Compatible }
+
 
 {- ANGLES -}
 
@@ -1645,7 +1738,6 @@ lineThrough =
     { value = "line-through"
     , textDecorationLine = Compatible
     }
-
 
 
 {- BORDERS -}
@@ -2344,7 +2436,6 @@ right =
     prop1 "right"
 
 
-
 {- MIN-MAX DIMENSIONS -}
 
 
@@ -2454,6 +2545,264 @@ absolute =
     , position = Compatible
     }
 
+
+{- FONT VALUES -}
+
+-- Families --
+serif : FontFamily {}
+serif =
+    { value = "serif", fontFamily = Compatible }
+
+
+sansSerif : FontFamily {}
+sansSerif =
+    { value = "sans-serif", fontFamily = Compatible }
+
+
+monospace : FontFamily {}
+monospace =
+    { value = "monospace", fontFamily = Compatible }
+
+
+cursive : FontFamily {}
+cursive =
+    { value = "cursive", fontFamily = Compatible }
+
+
+fantasy : FontFamily {}
+fantasy =
+    { value = "fantasy", fontFamily = Compatible }
+
+
+-- Size --
+-- smaller, larger,
+xxSmall : FontSize {}
+xxSmall =
+    { value = "xx-small", fontSize = Compatible }
+
+
+xSmall : FontSize {}
+xSmall =
+    { value = "x-small", fontSize = Compatible }
+
+
+small : FontSize {}
+small =
+    { value = "small", fontSize = Compatible }
+
+
+medium : FontSize {}
+medium =
+    { value = "medium", fontSize = Compatible }
+
+
+large : FontSize {}
+large =
+    { value = "large", fontSize = Compatible }
+
+
+xLarge : FontSize {}
+xLarge =
+    { value = "x-large", fontSize = Compatible }
+
+
+xxLarge : FontSize {}
+xxLarge =
+    { value = "xx-large", fontSize = Compatible }
+
+
+smaller : FontSize {}
+smaller =
+    { value = "smaller", fontSize = Compatible }
+
+
+larger : FontSize {}
+larger =
+    { value = "larger", fontSize = Compatible }
+
+
+-- Styles --
+
+normal : FontStyle {}
+normal =
+    { value = "normal", fontStyle = Compatible }
+
+
+italic : FontStyle {}
+italic =
+    { value = "italic", fontStyle = Compatible }
+
+
+oblique : FontStyle {}
+oblique =
+    { value = "oblique", fontStyle = Compatible }
+
+
+-- Weights --
+
+
+bold : FontWeight {}
+bold =
+    { value = "bold", fontWeight = Compatible }
+
+
+lighter : FontWeight {}
+lighter =
+    { value = "lighter", fontWeight = Compatible }
+
+
+bolder : FontWeight {}
+bolder =
+    { value = "bolder", fontWeight = Compatible }
+
+
+-- VARIANTS --
+-- CAPS --
+
+smallCaps : FontVariantCaps {}
+smallCaps =
+    { value = "small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+allSmallCaps : FontVariantCaps {}
+allSmallCaps =
+    { value = "all-small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+petiteCaps : FontVariantCaps {}
+petiteCaps =
+    { value = "petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+allPetiteCaps : FontVariantCaps {}
+allPetiteCaps =
+    { value = "all-petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+unicase : FontVariantCaps {}
+unicase =
+    { value = "unicase", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+titlingCaps : FontVariantCaps {}
+titlingCaps =
+    { value = "titling-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+-- LIGATURES --
+
+commonLigatures : FontVariantLigatures {}
+commonLigatures =
+    { value = "common-ligatures"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+noCommonLigatures : FontVariantLigatures {}
+noCommonLigatures =
+    { value = "no-common-ligatures"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+discretionaryLigatures : FontVariantLigatures {}
+discretionaryLigatures =
+    { value = "discretionary-ligatures"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+noDiscretionaryLigatures : FontVariantLigatures {}
+noDiscretionaryLigatures =
+    { value = "no-discretionary-ligatures"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+historicalLigatures : FontVariantLigatures {}
+historicalLigatures =
+    { value = "historical-ligatures"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+noHistoricalLigatures : FontVariantLigatures {}
+noHistoricalLigatures =
+    { value = "no-historical-ligatures"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+contextual : FontVariantLigatures {}
+contextual =
+    { value = "context"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+noContextual : FontVariantLigatures {}
+noContextual =
+    { value = "no-contextual"
+    , fontVariant = Compatible
+    , fontVariantLigatures = Compatible }
+
+
+-- NUMERIC --
+
+liningNums : FontVariantNumeric {}
+liningNums =
+    { value = "lining-nums"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
+
+
+oldstyleNums : FontVariantNumeric {}
+oldstyleNums =
+    { value = "oldstyle-nums"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
+
+
+proportionalNums : FontVariantNumeric {}
+proportionalNums =
+    { value = "proportional-nums"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
+
+
+tabularNums : FontVariantNumeric {}
+tabularNums =
+    { value = "tabular-nums"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
+
+
+diagonalFractions : FontVariantNumeric {}
+diagonalFractions =
+    { value = "diagonal-fractions"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
+
+
+stackedFractions : FontVariantNumeric {}
+stackedFractions =
+    { value = "stacked-fractions"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
+
+
+ordinal : FontVariantNumeric {}
+ordinal =
+    { value = "ordinal"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
+
+
+slashedZero : FontVariantNumeric {}
+slashedZero =
+    { value = "slashed-zero"
+    , fontVariant = Compatible
+    , fontVariantNumeric = Compatible }
 
 
 {- BORDER PROPERTIES -}
@@ -3332,6 +3681,156 @@ media value =
     "media " ++ (toString value)
 
 
+{- FONT PROPERTIES -}
+
+{-| Sets @charset (https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
+-}
+charset : a -> String
+charset value =
+    "charset " ++ (toString value)
+
+
+{-| Sets @import (https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
+
+Can't use import since it clashes with the Elm keyword.
+-}
+url : String -> ImportType {}
+url value =
+  { value = cssFunction "url" [ (toString value) ]
+  , import' = Compatible
+  }
+
+
+import' : ImportType compatible -> String
+import' { value } =
+    "import " ++ value
+
+
+{-| Sets [`line-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
+
+    lineHeight (px 10)
+-}
+lineHeight : Length compatible -> Mixin namespace
+lineHeight =
+    prop1 "line-height"
+
+
+{-| Sets [`font-face`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
+
+    @ fontFace
+        ~ font-family "Bitstream Vera Serif Bold"
+        ~ src url("https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf")
+-}
+src : ImportType compatible -> String
+src value =
+  toString value.value
+
+
+fontFace : String -> String
+fontFace value =
+    "font-face " ++ value
+
+
+{-| Sets [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
+
+    ~ fontFamily    serif
+    ~ fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", sansSerif]
+-}
+qt : String -> String
+qt str =
+  toString str
+
+
+fontFamily : FontFamily a -> Mixin namespace
+fontFamily =
+    prop1 "font-family"
+
+
+fontFamilies : List String -> Mixin namespace
+fontFamilies =
+    prop1 "font-family" << stringsToValue
+
+
+{-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
+
+    ~ fontSize  xxSmall
+    ~ fontSize  (px 12)
+-}
+fontSize : FontSize a -> Mixin namespace
+fontSize =
+    prop1 "font-size"
+
+
+{-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
+
+    ~ fontStyle  italic
+-}
+fontStyle : FontStyle a -> Mixin namespace
+fontStyle =
+    prop1 "font-style"
+
+
+{-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
+
+    ~ fontWeight  bold
+    ~ fontWeight  (w 300)
+-}
+fontWeight : FontWeight a -> Mixin namespace
+fontWeight =
+    prop1 "font-weight"
+
+
+{-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
+
+    ~ fontVariant   smallCaps
+    ~ fontVariant2  commonLigatures smallCaps
+    ~ fontVariant3  commonLigatures smallCaps slashedZero
+-}
+fontVariant : FontVariant a -> Mixin namespace
+fontVariant =
+    prop1 "font-variant"
+
+
+fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Mixin namespace
+fontVariant2 =
+    prop2 "font-variant"
+
+
+fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Mixin namespace
+fontVariant3 =
+    prop3 "font-variant"
+
+
+fontVariantLigatures : FontVariantLigatures a -> Mixin namespace
+fontVariantLigatures =
+    prop1 "font-variant-ligatures"
+
+
+fontVariantCaps : FontVariantCaps a -> Mixin namespace
+fontVariantCaps =
+    prop1 "font-variant-caps"
+
+{- TODO Handle
+    font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal slashedZero
+-}
+
+fontVariantNumeric : FontVariantNumeric a -> Mixin namespace
+fontVariantNumeric =
+    prop1 "font-variant-numeric"
+
+
+fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Mixin namespace
+fontVariantNumeric2 =
+    prop2 "font-variant-numeric"
+
+
+fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin namespace
+fontVariantNumeric3 =
+    prop3 "font-variant-numeric"
+
+
+{- TEXT DECORATION PROPERTIES -}
+
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
     ~ textDecoration  underline
@@ -3602,6 +4101,8 @@ addSelectorToStylesheet selector =
 {-| An [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule).
 
     stylesheet "homepage"
+        @ import' url("fineprint.css") print
+
         @ charset "utf-8"
 
         $ html
@@ -4200,9 +4701,9 @@ fall back on something like this:
         $ button
             ~ ( "border-left", "thin" )
 -}
-medium : IntentionallyUnsupportedPleaseSeeDocs
-medium =
-    IntentionallyUnsupportedPleaseSeeDocs
+-- medium : IntentionallyUnsupportedPleaseSeeDocs
+-- medium =
+--     IntentionallyUnsupportedPleaseSeeDocs
 
 
 {-| The
@@ -4279,6 +4780,14 @@ valuesOrNone list =
         { value = "none" }
     else
         { value = String.join " " (List.map .value list) }
+
+
+stringsToValue : List String -> Value {}
+stringsToValue list =
+    if List.isEmpty list then
+        { value = "none" }
+    else
+        { value = String.join ", " (List.map (\s -> s) list) }
 
 
 {-| Compile the given stylesheet to a CSS string, or to an error
