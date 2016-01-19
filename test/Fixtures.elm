@@ -40,11 +40,11 @@ atRule =
     { name = "homepage" }
     [ body
         [ padding zero ]
-    , button
-        [ margin auto ]
     , (@)
         (media "print")
         [ body [ margin (em 2) ] ]
+    , button
+        [ margin auto ]
     ]
 
 

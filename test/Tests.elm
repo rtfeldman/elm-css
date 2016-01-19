@@ -83,12 +83,20 @@ atRule =
 
     output =
       """
-            @media "print" {
-                body {
-                    margin: 2em;
-                }
-            }
-        """
+          body {
+              padding: 0;
+          }
+
+          @media "print" {
+              body {
+                  margin: 2em;
+              }
+          }
+
+          button {
+              margin: auto;
+          }
+      """
   in
     suite
       "@media test"
