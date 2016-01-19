@@ -225,3 +225,24 @@ transformsStylesheet =
                 ]
             ~ transformBox viewBox
             ~ transformStyle preserve3d
+
+
+fontStylesheet : Stylesheet String CssAnimations CssClasses CssIds
+fontStylesheet =
+      stylesheet { name = "fontStylesheet" }
+        -- @ import' (url "fineprint.css")
+        -- @ fontFace
+        --   ~ src (url "https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf")
+        $ body
+            ~ lineHeight (px 14)
+            ~ fontFamily serif
+            ~ fontFamilies
+              [ qt "Gill Sans Extrabold"
+              , "Helvetica"
+              , .value sansSerif
+              ]
+            ~ fontSize xSmall
+            ~ fontStyle italic
+            ~ fontWeight (w 100)
+            ~ fontVariant smallCaps
+            ~ fontVariant2 commonLigatures slashedZero

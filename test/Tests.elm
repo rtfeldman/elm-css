@@ -23,6 +23,7 @@ all =
         , underlineOnHoverManual
         , greenOnHoverMixin
         , transformsStyle
+        , fonts
         , Properties.all
         ]
 
@@ -365,6 +366,33 @@ transformsStyle =
     in
         suite
             "transforms"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+fonts : Test
+fonts =
+    let
+        input =
+            Fixtures.fontStylesheet
+
+        output =
+            """
+            body {
+                line-height: 14px;
+                font-family: serif;
+                font-family: "Gill Sans Extrabold", Helvetica, sans-serif;
+                font-size: x-small;
+                font-style: italic;
+                font-weight: 100;
+                font-variant: small-caps;
+                font-variant: common-ligatures slashed-zero;
+            }
+            """
+    in
+        suite
+            "fonts"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]
