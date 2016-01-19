@@ -4286,7 +4286,7 @@ applyStyleCombinator combineSelectors styleBlocks =
           ]
       ]
 -}
-with : (List Mixin -> StyleBlock) -> List Mixin -> Mixin
+with : (List a -> StyleBlock) -> List Mixin -> Mixin
 with makeStyleBlock mixins =
   let
     toMixinTransform : (String -> List Declaration) -> DeclarationTransform
@@ -4327,7 +4327,7 @@ with makeStyleBlock mixins =
       in
         newDeclarations
   in
-    makeStyleBlock [ identityMixin ]
+    makeStyleBlock []
       |> (\(StyleBlock transform) -> toMixinTransform transform)
       |> Mixin
 
