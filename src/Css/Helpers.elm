@@ -1,4 +1,4 @@
-module Css.Util (toCssIdentifier, identifierToString) where
+module Css.Helpers (toCssIdentifier, identifierToString) where
 
 {-| Utility functions for elm-css. Exposed for the benefit of external
  helper modules.
