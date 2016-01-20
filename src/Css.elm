@@ -225,9 +225,7 @@ type alias FontFamily compatible =
 
 
 type alias FontSize compatible =
-    { compatible
-      | value : String
-      , fontSize : Compatible }
+    { compatible | value : String, fontSize : Compatible}
 
 
 type alias FontStyle compatible =
@@ -396,6 +394,7 @@ type alias ExplicitLength =
   , textIndent : Compatible
   , flexBasis : Compatible
   , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+  , fontSize : Compatible
   }
 
 
@@ -591,6 +590,11 @@ type alias BasicProperty =
   , lengthOrMinMaxDimension : Compatible
   , lengthOrNoneOrMinMaxDimension : Compatible
   , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+  , fontFamily : Compatible
+  , fontSize : Compatible
+  , fontStyle : Compatible
+  , fontWeight : Compatible
+  , fontVariant : Compatible
   }
 
 
@@ -638,6 +642,11 @@ initial =
   , flexDirection = Compatible
   , flexDirectionOrWrap = Compatible
   , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , fontFamily = Compatible
+  , fontSize = Compatible
+  , fontStyle = Compatible
+  , fontWeight = Compatible
+  , fontVariant = Compatible
   }
 
 
@@ -961,6 +970,7 @@ lengthConverter suffix num =
   , textIndent = Compatible
   , flexBasis = Compatible
   , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , fontSize = Compatible
   }
 
 
@@ -2640,7 +2650,7 @@ fantasy =
 
 
 -- Size --
--- smaller, larger,
+
 xxSmall : FontSize {}
 xxSmall =
     { value = "xx-small", fontSize = Compatible }
@@ -3757,9 +3767,13 @@ media value =
 
 {-| Sets @charset (https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
 -}
-charset : a -> String
+charset : String -> AtRule
 charset value =
-    "charset " ++ (toString value)
+  let
+    getDeclarations _ name =
+      [ Declaration.StandaloneAtRule "@charset" (qt value) ]
+    in
+      AtRule getDeclarations
 
 
 {-| Sets @import (https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
@@ -3768,14 +3782,18 @@ Can't use import since it clashes with the Elm keyword.
 -}
 url : String -> ImportType {}
 url value =
-  { value = cssFunction "url" [ (toString value) ]
+  { value = cssFunction "url" [ (qt value) ]
   , import' = Compatible
   }
 
 
-import' : ImportType compatible -> String
+import' : ImportType compatible -> AtRule
 import' { value } =
-    "import " ++ value
+  let
+    getDeclarations _ name =
+      [ Declaration.StandaloneAtRule "@import" value ]
+    in
+      AtRule getDeclarations
 
 
 {-| Sets [`line-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
@@ -3806,7 +3824,7 @@ fontFace value =
 {-| Sets [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
 
     ~ fontFamily    serif
-    ~ fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", sansSerif]
+    ~ fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
 -}
 qt : String -> String
 qt str =
