@@ -24,6 +24,7 @@ all =
     , underlineOnHoverManual
     , greenOnHoverMixin
     , transformsStyle
+    , standaloneAt
     , fonts
     , Properties.all
     ]
@@ -359,6 +360,26 @@ transformsStyle =
     in
         suite
             "transforms"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+standaloneAt : Test
+standaloneAt =
+    let
+        input =
+            Fixtures.standaloneAt
+
+        output =
+            """
+            @charset "utf-8"
+
+            @import url("fineprint.css")
+            """
+    in
+        suite
+            "standaloneAt"
             [ test "pretty prints the expected output"
                 <| assertEqual (outdented output) (outdented (prettyPrint input))
             ]

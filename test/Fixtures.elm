@@ -265,6 +265,15 @@ transformsStylesheet =
     ]
 
 
+standaloneAt : Stylesheet
+standaloneAt =
+      stylesheet
+        { name = "standaloneAt" }
+        [ (@) (charset "utf-8") []
+        , (@) (import' (url "fineprint.css")) []
+        ]
+
+
 fontStylesheet : Stylesheet
 fontStylesheet =
       stylesheet
@@ -283,4 +292,4 @@ fontStylesheet =
             , fontVariant smallCaps
             , fontVariant2 commonLigatures slashedZero
             ]
-          ]
+        ]
