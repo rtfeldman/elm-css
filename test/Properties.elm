@@ -329,6 +329,11 @@ all =
         [ ( opacity inherit, "inherit" )
         , ( opacity (n 1), "1" )
         ]
+    , testProperty
+        "color"
+        [ ( color (hsl 120 0.5 0.5), "hsl(120, 50%, 50%)" )
+        , ( color (hsla 120 0.5 0.5 0.5), "hsla(120, 50%, 50%, 0.5)" )
+        ]
     ]
 
 
