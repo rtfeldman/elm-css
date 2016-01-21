@@ -267,7 +267,7 @@ type alias ColorValue compatible =
 
 
 type alias Color =
-  ColorValue {}
+  ColorValue { r : Float, g : Float, b : Float, a : Float }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -444,6 +444,10 @@ transparent =
   { value = "transparent"
   , color = Compatible
   , warnings = []
+  , r = 0
+  , g = 0
+  , b = 0
+  , a = 0
   }
 
 
@@ -455,6 +459,10 @@ currentColor =
   { value = "currentColor"
   , color = Compatible
   , warnings = []
+  , r = 0
+  , g = 0
+  , b = 0
+  , a = 0
   }
 
 
@@ -577,6 +585,10 @@ rgb r g b =
     { value = cssFunction "rgb" (List.map numberToString [ r, g, b ])
     , color = Compatible
     , warnings = warnings
+    , r = r
+    , g = g
+    , b = b
+    , a = 1
     }
 
 
@@ -594,6 +606,10 @@ rgba r g b a =
     { value = cssFunction "rgba" (List.map numberToString [ r, g, b, a ])
     , color = Compatible
     , warnings = warnings
+    , r = r
+    , g = g
+    , b = b
+    , a = 1
     }
 
 
@@ -605,11 +621,28 @@ hex str =
   let
     warnings =
       []
+
+    { r, g, b, a } =
+      rgbaFromHex str
   in
     { value = "#" ++ str
     , color = Compatible
     , warnings = warnings
+    , r = r
+    , g = g
+    , b = b
+    , a = a
     }
+
+
+rgbaFromHex : String -> { r : Float, g : Float, b : Float, a : Float }
+rgbaFromHex str =
+  -- TODO
+  { r = 0
+  , g = 0
+  , b = 0
+  , a = 1
+  }
 
 
 
