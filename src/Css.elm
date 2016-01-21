@@ -619,10 +619,7 @@ rgba r g b a =
 hex : String -> Color
 hex str =
   let
-    warnings =
-      []
-
-    { r, g, b, a } =
+    { r, g, b, a, warnings } =
       rgbaFromHex str
   in
     { value = "#" ++ str
@@ -635,13 +632,14 @@ hex str =
     }
 
 
-rgbaFromHex : String -> { r : Float, g : Float, b : Float, a : Float }
+rgbaFromHex : String -> { r : Float, g : Float, b : Float, a : Float, warnings : List String }
 rgbaFromHex str =
   -- TODO
   { r = 0
   , g = 0
   , b = 0
   , a = 1
+  , warnings = []
   }
 
 
