@@ -267,7 +267,7 @@ type alias ColorValue compatible =
 
 
 type alias Color =
-  ColorValue { r : Float, g : Float, b : Float, a : Float }
+  ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -437,32 +437,31 @@ important (Mixin transform) =
     Mixin (\name decls -> (updateLastProperty update) (transform name decls))
 
 
+{-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
+values.
+-}
+type alias NonMixable =
+  {}
+
+
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
 -}
-transparent : Color
+transparent : ColorValue NonMixable
 transparent =
   { value = "transparent"
   , color = Compatible
   , warnings = []
-  , r = 0
-  , g = 0
-  , b = 0
-  , a = 0
   }
 
 
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
     value.
 -}
-currentColor : Color
+currentColor : ColorValue NonMixable
 currentColor =
   { value = "currentColor"
   , color = Compatible
   , warnings = []
-  , r = 0
-  , g = 0
-  , b = 0
-  , a = 0
   }
 
 
@@ -573,43 +572,75 @@ initial =
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in functional notation.
 -}
-rgb : number -> number -> number -> Color
-rgb r g b =
+rgb : Int -> Int -> Int -> Color
+rgb red green blue =
   let
     warnings =
-      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) then
-        [ "RGB color values must be between 0 and 255. rgb(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ") is not valid." ]
+      if
+        (red < 0)
+          || (red > 255)
+          || (green < 0)
+          || (green > 255)
+          || (blue < 0)
+          || (blue > 255)
+      then
+        [ "RGB color values must be between 0 and 255. rgb("
+            ++ (toString red)
+            ++ ", "
+            ++ (toString green)
+            ++ ", "
+            ++ (toString blue)
+            ++ ") is not valid."
+        ]
       else
         []
   in
-    { value = cssFunction "rgb" (List.map numberToString [ r, g, b ])
+    { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
     , color = Compatible
     , warnings = warnings
-    , r = r
-    , g = g
-    , b = b
-    , a = 1
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = 1
     }
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
-rgba : number -> number -> number -> number -> Color
-rgba r g b a =
+rgba : Int -> Int -> Int -> Float -> Color
+rgba red green blue alpha =
   let
     warnings =
-      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) || (a < 0) || (a > 1) then
-        [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ") is not valid." ]
+      if
+        (red < 0)
+          || (red > 255)
+          || (green < 0)
+          || (green > 255)
+          || (blue < 0)
+          || (blue > 255)
+          || (alpha < 0)
+          || (alpha > 1)
+      then
+        [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba("
+            ++ (toString red)
+            ++ ", "
+            ++ (toString green)
+            ++ ", "
+            ++ (toString blue)
+            ++ ", "
+            ++ (toString alpha)
+            ++ ") is not valid."
+        ]
       else
         []
   in
-    { value = cssFunction "rgba" (List.map numberToString [ r, g, b, a ])
+    { value = cssFunction "rgba" (List.map numberToString [ red, green, blue, alpha ])
     , color = Compatible
     , warnings = warnings
-    , r = r
-    , g = g
-    , b = b
-    , a = 1
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = 1
     }
 
 
@@ -618,27 +649,31 @@ rgba r g b a =
 to the appropriate percentage at compile-time
 -}
 hsl : number -> number -> number -> Color
-hsl h s l =
+hsl hue saturation lightness =
   let
     valuesList =
-      [ numberToString h
-      , numericalPercentageToString s
-      , numericalPercentageToString l
+      [ numberToString hue
+      , numericalPercentageToString saturation
+      , numericalPercentageToString lightness
       ]
 
     value =
       cssFunction "hsl" valuesList
 
     warnings =
-      if (h > 360) || (h < 0) || (s > 1) || (s < 0) || (l > 1) || (l < 0) then
+      if
+        (hue > 360)
+          || (hue < 0)
+          || (saturation > 1)
+          || (saturation < 0)
+          || (lightness > 1)
+          || (lightness < 0)
+      then
         [ "HSL color values must have an H value between 0 and 360 (as in degrees) and S and L values between 0 and 1. " ++ value ++ " is not valid." ]
       else
         []
   in
-    { value = value
-    , color = Compatible
-    , warnings = warnings
-    }
+    hslaToRgba value warnings hue saturation lightness 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -646,57 +681,71 @@ hsl h s l =
 to the appropriate percentage at compile-time
 -}
 hsla : number -> number -> number -> number -> Color
-hsla h s l a =
+hsla hue saturation lightness alpha =
   let
     valuesList =
-      [ numberToString h
-      , numericalPercentageToString s
-      , numericalPercentageToString l
-      , numberToString a
+      [ numberToString hue
+      , numericalPercentageToString saturation
+      , numericalPercentageToString lightness
+      , numberToString alpha
       ]
 
     value =
       cssFunction "hsla" valuesList
 
     warnings =
-      if (h > 360) || (h < 0) || (s > 1) || (s < 0) || (l > 1) || (l < 0) || (a > 1) || (a < 0) then
+      if
+        (hue > 360)
+          || (hue < 0)
+          || (saturation > 1)
+          || (saturation < 0)
+          || (lightness > 1)
+          || (lightness < 0)
+          || (alpha > 1)
+          || (alpha < 0)
+      then
         [ "HSLA color values must have an H value between 0 and 360 (as in degrees) and S, L, and A values between 0 and 1. " ++ value ++ " is not valid." ]
       else
         []
   in
-    { value = value
-    , color = Compatible
-    , warnings = warnings
-    }
+    hslaToRgba value warnings hue saturation lightness alpha
+
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in hexadecimal notation.
 -}
 hex : String -> Color
 hex str =
-  let
-    { r, g, b, a, warnings } =
-      rgbaFromHex str
-  in
-    { value = "#" ++ str
-    , color = Compatible
-    , warnings = warnings
-    , r = r
-    , g = g
-    , b = b
-    , a = a
-    }
-
-
-rgbaFromHex : String -> { r : Float, g : Float, b : Float, a : Float, warnings : List String }
-rgbaFromHex str =
   -- TODO
-  { r = 0
-  , g = 0
-  , b = 0
-  , a = 1
+  { value = "#" ++ str
+  , color = Compatible
+  , red = 0
+  , green = 0
+  , blue = 0
+  , alpha = 1
   , warnings = []
   }
+
+
+hslaToRgba value warnings hue saturation lightness alpha =
+  let
+    red =
+      0
+
+    green =
+      0
+
+    blue =
+      0
+  in
+    { value = value
+    , color = Compatible
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = alpha
+    , warnings = warnings
+    }
 
 
 
