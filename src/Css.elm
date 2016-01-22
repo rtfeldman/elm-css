@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, with, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, charset, screen, print, projection, tv, url, src, w, qt, fontFamilies) where
+module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, with, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, charset, screen, print, projection, tv, url, src, qt, fontFamilies, fontVariantNumerics) where
 
 {-| Functions for building stylesheets.
 
@@ -13,7 +13,7 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 @docs children, descendants, adjacentSiblings, generalSiblings, each, (&.), (&#), with
 
 # Properties
-@docs property, flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, charset, fontFamilies
+@docs property, flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, charset, fontFamilies, fontVariantNumerics
 
 
 # Values
@@ -21,7 +21,7 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 
 
 # Length
-@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero, w
+@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
 
 # Angle
 @docs deg, rad, grad, turn
@@ -232,8 +232,11 @@ type alias FontStyle compatible =
     { compatible | value : String, fontStyle : Compatible }
 
 
-type alias FontWeight compatible =
-    { compatible | value : String, fontWeight : Compatible }
+-- type alias FontWeight compatible =
+--     { compatible
+--       | value : String
+--       , lengthOrNumber : Compatible
+--       , fontWeight : Compatible }
 
 
 type alias NumberedWeight =
@@ -2716,19 +2719,46 @@ oblique =
 -- Weights --
 
 
-bold : FontWeight {}
+-- bold : FontWeight {}
+-- bold =
+--     { value = "bold"
+--     , lengthOrNumber = Compatible
+--     , fontWeight = Compatible }
+
+
+-- lighter : FontWeight {}
+-- lighter =
+--     { value = "lighter"
+--     , lengthOrNumber = Compatible
+--     , fontWeight = Compatible }
+
+
+-- bolder : FontWeight {}
+-- bolder =
+--     { value = "bolder"
+--     , lengthOrNumber = Compatible
+--     , fontWeight = Compatible }
+
+
+bold : LengthOrNumberOrAutoOrNoneOrContent {}
 bold =
-    { value = "bold", fontWeight = Compatible }
+    { value = "bold"
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    }
 
 
-lighter : FontWeight {}
+lighter : LengthOrNumberOrAutoOrNoneOrContent {}
 lighter =
-    { value = "lighter", fontWeight = Compatible }
+    { value = "lighter"
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    }
 
 
-bolder : FontWeight {}
+bolder : LengthOrNumberOrAutoOrNoneOrContent {}
 bolder =
-    { value = "bolder", fontWeight = Compatible }
+    { value = "bolder"
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    }
 
 
 -- VARIANTS --
@@ -3771,7 +3801,7 @@ charset : String -> AtRule
 charset value =
   let
     getDeclarations _ name =
-      [ Declaration.StandaloneAtRule "@charset" (qt value) ]
+      [ Declaration.StandaloneAtRule "@charset" ((qt value) ++ ";") ]
     in
       AtRule getDeclarations
 
@@ -3782,7 +3812,7 @@ Can't use import since it clashes with the Elm keyword.
 -}
 url : String -> ImportType {}
 url value =
-  { value = cssFunction "url" [ (qt value) ]
+  { value = cssFunction "url" [ qt value ]
   , import' = Compatible
   }
 
@@ -3791,7 +3821,7 @@ import' : ImportType compatible -> AtRule
 import' { value } =
   let
     getDeclarations _ name =
-      [ Declaration.StandaloneAtRule "@import" value ]
+      [ Declaration.StandaloneAtRule "@import" (value ++ ";") ]
     in
       AtRule getDeclarations
 
@@ -3863,11 +3893,34 @@ fontStyle =
 {-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 
     ~ fontWeight  bold
-    ~ fontWeight  (w 300)
+    ~ fontWeight  (n 300)
 -}
-fontWeight : FontWeight a -> Mixin
-fontWeight =
-    prop1 "font-weight"
+
+
+fontWeight : LengthOrNumberOrAutoOrNoneOrContent a -> Mixin
+fontWeight { value } =
+  let
+    validWeight nm =
+      let validWeights = List.member nm <| List.map (\n -> n * 100) [1..9]
+      in
+        -- This means it was one of the keywords, bold, ...
+        if nm == 0 && value /= "0" then
+          True
+        else
+          validWeights
+  in
+    if validWeight <| stringToInt value then
+      Mixin (\_ -> addProperty { key = "font-weight"
+                               , value = value
+                               , important = False
+                               , warnings = []
+                               })
+    else
+      Mixin (\_ -> addProperty { key = "font-weight"
+                               , value = value
+                               , important = False
+                               , warnings = [ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
+                               })
 
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -3875,6 +3928,7 @@ fontWeight =
     ~ fontVariant   smallCaps
     ~ fontVariant2  commonLigatures smallCaps
     ~ fontVariant3  commonLigatures smallCaps slashedZero
+    ~ fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
 -}
 fontVariant : FontVariant a -> Mixin
 fontVariant =
@@ -3900,9 +3954,6 @@ fontVariantCaps : FontVariantCaps a -> Mixin
 fontVariantCaps =
     prop1 "font-variant-caps"
 
-{- TODO Handle
-    font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal slashedZero
--}
 
 fontVariantNumeric : FontVariantNumeric a -> Mixin
 fontVariantNumeric =
@@ -3917,6 +3968,11 @@ fontVariantNumeric2 =
 fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin
 fontVariantNumeric3 =
     prop3 "font-variant-numeric"
+
+
+fontVariantNumerics : List (FontVariantNumeric compatible) -> Mixin
+fontVariantNumerics =
+    prop1 "font-variant-numeric" << valuesOrNone
 
 
 {- TEXT DECORATION PROPERTIES -}
@@ -4133,7 +4189,7 @@ selectorDeclaration selector =
   Declaration.StyleBlock (Declaration.SingleSelector selector) [] []
 
 
-{-| A Mixinllowing you to modularly reuse common styles in other styles.
+{-| A Mixin allowing you to modularly reuse common styles in other styles.
 `mixin` declares the mixin, and `~=` adds the contents of a mixin to another
 style.
 
@@ -4647,23 +4703,6 @@ fall back on something like this:
         $ button
             ~ ( "border-left", "thin" )
 -}
--- medium : IntentionallyUnsupportedPleaseSeeDocs
--- medium =
---     IntentionallyUnsupportedPleaseSeeDocs
-
-
-{-| The
-[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
-of `thin`, `medium`, and `thick` have unspecified behavior according to the
-CSS specification, and as such are intentionally unsupported.
-
-Using them is a bad idea, but if the fate of the world depends on it, you can
-fall back on something like this:
-
-    stylesheet { name = "badIdeas" }
-        $ button
-            ~ ( "border-left", "thin" )
--}
 thick : IntentionallyUnsupportedPleaseSeeDocs
 thick =
   IntentionallyUnsupportedPleaseSeeDocs
@@ -4945,6 +4984,11 @@ multiSelector mixins makeSelector declaration =
 numberToString : number -> String
 numberToString num =
   toString (num + 0)
+
+
+stringToInt : String -> Int
+stringToInt str =
+  Result.withDefault 0 <| String.toInt str
 
 
 valuesOrNone : List (Value compatible) -> Value {}
