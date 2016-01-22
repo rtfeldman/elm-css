@@ -1,6 +1,6 @@
 {
   "name": "elm-css",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
   "bin": {
