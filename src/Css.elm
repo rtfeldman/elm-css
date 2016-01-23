@@ -3928,13 +3928,13 @@ media value styleBlocks =
 
 {-| Sets @charset (https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
 -}
-charset : String -> AtRule
+charset : String -> StyleBlock
 charset value =
   let
-    getDeclarations _ name =
+    getDeclarations name =
       [ Declaration.StandaloneAtRule "@charset" ((qt value) ++ ";") ]
     in
-      AtRule getDeclarations
+      StyleBlock getDeclarations
 
 
 {-| Sets @import (https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
@@ -3948,13 +3948,13 @@ url value =
   }
 
 
-import' : ImportType compatible -> AtRule
+import' : ImportType compatible -> StyleBlock
 import' { value } =
   let
-    getDeclarations _ name =
+    getDeclarations name =
       [ Declaration.StandaloneAtRule "@import" (value ++ ";") ]
     in
-      AtRule getDeclarations
+      StyleBlock getDeclarations
 
 
 {-| Sets [`line-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)

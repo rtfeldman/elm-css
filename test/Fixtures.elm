@@ -268,8 +268,8 @@ standaloneAt : Stylesheet
 standaloneAt =
       stylesheet
         { name = "standaloneAt" }
-        [ (@) (charset "utf-8") []
-        , (@) (import' (url "fineprint.css")) []
+        [ (charset "utf-8")
+        , (import' (url "fineprint.css"))
         ]
 
 
