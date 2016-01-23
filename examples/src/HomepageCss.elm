@@ -7,7 +7,7 @@ import SharedStyles exposing (..)
 
 css =
   stylesheet
-    { name = "homepage" }
+    homepageNamespace
     [ header
         [ backgroundColor (rgb 90 90 90)
         , boxSizing borderBox

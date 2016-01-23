@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, with, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, charset, screen, print, projection, tv, url, src, qt, fontFamilies, fontVariantNumerics) where
+module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, with, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, charset, screen, print, projection, tv, url, src, qt, fontFamilies, fontVariantNumerics) where
 
 {-| Functions for building stylesheets.
 
@@ -98,10 +98,6 @@ type Snippet
 -}
 type Mixin
   = Mixin DeclarationTransform
-
-
-type AtRule
-  = AtRule (List StyleBlock -> String -> List Declaration)
 
 
 type MediaQuery
@@ -345,7 +341,7 @@ type alias ColorValue compatible =
 
 
 type alias Color =
-  ColorValue { r : Float, g : Float, b : Float, a : Float }
+  ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -517,32 +513,31 @@ important (Mixin transform) =
     Mixin (\name decls -> (updateLastProperty update) (transform name decls))
 
 
+{-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
+values.
+-}
+type alias NonMixable =
+  {}
+
+
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
 -}
-transparent : Color
+transparent : ColorValue NonMixable
 transparent =
   { value = "transparent"
   , color = Compatible
   , warnings = []
-  , r = 0
-  , g = 0
-  , b = 0
-  , a = 0
   }
 
 
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
     value.
 -}
-currentColor : Color
+currentColor : ColorValue NonMixable
 currentColor =
   { value = "currentColor"
   , color = Compatible
   , warnings = []
-  , r = 0
-  , g = 0
-  , b = 0
-  , a = 0
   }
 
 
@@ -663,43 +658,75 @@ initial =
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in functional notation.
 -}
-rgb : number -> number -> number -> Color
-rgb r g b =
+rgb : Int -> Int -> Int -> Color
+rgb red green blue =
   let
     warnings =
-      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) then
-        [ "RGB color values must be between 0 and 255. rgb(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ") is not valid." ]
+      if
+        (red < 0)
+          || (red > 255)
+          || (green < 0)
+          || (green > 255)
+          || (blue < 0)
+          || (blue > 255)
+      then
+        [ "RGB color values must be between 0 and 255. rgb("
+            ++ (toString red)
+            ++ ", "
+            ++ (toString green)
+            ++ ", "
+            ++ (toString blue)
+            ++ ") is not valid."
+        ]
       else
         []
   in
-    { value = cssFunction "rgb" (List.map numberToString [ r, g, b ])
+    { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
     , color = Compatible
     , warnings = warnings
-    , r = r
-    , g = g
-    , b = b
-    , a = 1
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = 1
     }
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
-rgba : number -> number -> number -> number -> Color
-rgba r g b a =
+rgba : Int -> Int -> Int -> Float -> Color
+rgba red green blue alpha =
   let
     warnings =
-      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) || (a < 0) || (a > 1) then
-        [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ") is not valid." ]
+      if
+        (red < 0)
+          || (red > 255)
+          || (green < 0)
+          || (green > 255)
+          || (blue < 0)
+          || (blue > 255)
+          || (alpha < 0)
+          || (alpha > 1)
+      then
+        [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba("
+            ++ (toString red)
+            ++ ", "
+            ++ (toString green)
+            ++ ", "
+            ++ (toString blue)
+            ++ ", "
+            ++ (toString alpha)
+            ++ ") is not valid."
+        ]
       else
         []
   in
-    { value = cssFunction "rgba" (List.map numberToString [ r, g, b, a ])
+    { value = cssFunction "rgba" (List.map numberToString [ red, green, blue, alpha ])
     , color = Compatible
     , warnings = warnings
-    , r = r
-    , g = g
-    , b = b
-    , a = 1
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = 1
     }
 
 
@@ -708,27 +735,31 @@ rgba r g b a =
 to the appropriate percentage at compile-time
 -}
 hsl : number -> number -> number -> Color
-hsl h s l =
+hsl hue saturation lightness =
   let
     valuesList =
-      [ numberToString h
-      , numericalPercentageToString s
-      , numericalPercentageToString l
+      [ numberToString hue
+      , numericalPercentageToString saturation
+      , numericalPercentageToString lightness
       ]
 
     value =
       cssFunction "hsl" valuesList
 
     warnings =
-      if (h > 360) || (h < 0) || (s > 1) || (s < 0) || (l > 1) || (l < 0) then
+      if
+        (hue > 360)
+          || (hue < 0)
+          || (saturation > 1)
+          || (saturation < 0)
+          || (lightness > 1)
+          || (lightness < 0)
+      then
         [ "HSL color values must have an H value between 0 and 360 (as in degrees) and S and L values between 0 and 1. " ++ value ++ " is not valid." ]
       else
         []
   in
-    { value = value
-    , color = Compatible
-    , warnings = warnings
-    }
+    hslaToRgba value warnings hue saturation lightness 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -736,57 +767,71 @@ hsl h s l =
 to the appropriate percentage at compile-time
 -}
 hsla : number -> number -> number -> number -> Color
-hsla h s l a =
+hsla hue saturation lightness alpha =
   let
     valuesList =
-      [ numberToString h
-      , numericalPercentageToString s
-      , numericalPercentageToString l
-      , numberToString a
+      [ numberToString hue
+      , numericalPercentageToString saturation
+      , numericalPercentageToString lightness
+      , numberToString alpha
       ]
 
     value =
       cssFunction "hsla" valuesList
 
     warnings =
-      if (h > 360) || (h < 0) || (s > 1) || (s < 0) || (l > 1) || (l < 0) || (a > 1) || (a < 0) then
+      if
+        (hue > 360)
+          || (hue < 0)
+          || (saturation > 1)
+          || (saturation < 0)
+          || (lightness > 1)
+          || (lightness < 0)
+          || (alpha > 1)
+          || (alpha < 0)
+      then
         [ "HSLA color values must have an H value between 0 and 360 (as in degrees) and S, L, and A values between 0 and 1. " ++ value ++ " is not valid." ]
       else
         []
   in
-    { value = value
-    , color = Compatible
-    , warnings = warnings
-    }
+    hslaToRgba value warnings hue saturation lightness alpha
+
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in hexadecimal notation.
 -}
 hex : String -> Color
 hex str =
-  let
-    { r, g, b, a, warnings } =
-      rgbaFromHex str
-  in
-    { value = "#" ++ str
-    , color = Compatible
-    , warnings = warnings
-    , r = r
-    , g = g
-    , b = b
-    , a = a
-    }
-
-
-rgbaFromHex : String -> { r : Float, g : Float, b : Float, a : Float, warnings : List String }
-rgbaFromHex str =
   -- TODO
-  { r = 0
-  , g = 0
-  , b = 0
-  , a = 1
+  { value = "#" ++ str
+  , color = Compatible
+  , red = 0
+  , green = 0
+  , blue = 0
+  , alpha = 1
   , warnings = []
   }
+
+
+hslaToRgba value warnings hue saturation lightness alpha =
+  let
+    red =
+      0
+
+    green =
+      0
+
+    blue =
+      0
+  in
+    { value = value
+    , color = Compatible
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = alpha
+    , warnings = warnings
+    }
 
 
 
@@ -3867,16 +3912,16 @@ color =
 
 
 {-| -}
-media : a -> AtRule
-media value =
+media : a -> List StyleBlock -> StyleBlock
+media value styleBlocks =
   let
-    getDeclarations styleBlocks name =
+    getDeclarations name =
       [ Declaration.ConditionalGroupRule
           ("@media \"" ++ toCssIdentifier value ++ "\"")
           (List.concatMap (\(StyleBlock transform) -> transform name) styleBlocks)
       ]
   in
-    AtRule getDeclarations
+    StyleBlock getDeclarations
 
 
 {- FONT PROPERTIES -}
@@ -4342,24 +4387,6 @@ makeIdSelector id name =
 makeClassSelector : class -> String -> SimpleSelector
 makeClassSelector class name =
   Declaration.ClassSelector (identifierToString name class)
-
-
-{-| An [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule).
-    StyleBlock transform
-        $ html
-            ~ width (pct 100)
-
-        @ media screen
-            $ body
-                ~ width (px 960)
-
-        @ media print
-            $ body
-                ~ width (pct 100)
--}
-(@) : AtRule -> List StyleBlock -> StyleBlock
-(@) (AtRule getDeclarations) styleBlocks =
-  StyleBlock (getDeclarations styleBlocks)
 
 
 

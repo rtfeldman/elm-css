@@ -40,8 +40,7 @@ atRule =
     { name = "homepage" }
     [ body
         [ padding zero ]
-    , (@)
-        (media "print")
+    , (media "print")
         [ body [ margin (em 2) ] ]
     , button
         [ margin auto ]
@@ -56,7 +55,7 @@ nestedAtRule =
     , body
         [ margin auto
         , with
-            ((@) (media "print"))
+            (media "print")
             [ margin (em 2) ]
         ]
     , a [ textDecoration none ]

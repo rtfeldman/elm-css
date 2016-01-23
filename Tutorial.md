@@ -265,7 +265,7 @@ Now let’s take things up a notch or two.
 
 ```elm
 stylesheet { name = "homepage" }
-  [ (@) (media "print")
+  [ media "print"
       [ body
           [ width (px 1280) ]
       ]
@@ -273,7 +273,7 @@ stylesheet { name = "homepage" }
   , ul
       [ padding zero
 
-      , with ((@) (media "print"))
+      , with (media "print")
           [ margin2 (em 1) auto ]
 
       , children
@@ -308,7 +308,7 @@ ul > li {
 }
 ```
 
-This demonstrates two different ways to do a media query. First, at the top level just like you would in CSS, with `(@) (media "print")` followed by a `body` selector and some styles. Second, using `with` to nest a media query within a `ul` selector. In either case, you end up with a top-level `@media` declaration in the compiled CSS.
+This demonstrates two different ways to do a media query. First, at the top level just like you would in CSS, with `media "print"` followed by a `body` selector and some styles. Second, using `with` to nest a media query within a `ul` selector. In either case, you end up with a top-level `@media` declaration in the compiled CSS.
 
 This also introduces how to use selector combinators: in this case the [child combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors), represented in CSS as the `>` operator and in `elm-css` as the `children` function. (By design, there is no operator equivalent in `elm-css`) There is also a `descendants`  function, an `adjacentSiblings` function, and so on.
 
