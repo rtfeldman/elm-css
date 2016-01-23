@@ -1750,7 +1750,7 @@ wrapReverse =
 
 
 {-| The[`flex-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-itmems property.
+  align-items property.
 -}
 flexStart : AlignItems a
 flexStart =
@@ -1758,7 +1758,7 @@ flexStart =
 
 
 {-| The[`flex-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-itmems property.
+  align-items property.
 -}
 flexEnd : AlignItems a
 flexEnd =
@@ -1766,7 +1766,7 @@ flexEnd =
 
 
 {-| The[`stretch`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-itmems property.
+  align-items property.
 -}
 stretch : AlignItems a
 stretch =
