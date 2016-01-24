@@ -165,6 +165,35 @@ type alias Stylesheet =
   }
 
 
+mapLastProperty : (Structure.Property -> Structure.Property) -> Mixin -> Mixin
+mapLastProperty update mixin =
+  case mixin of
+    AppendProperty property ->
+      AppendProperty (update property)
+
+    ExtendSelector selector mixins ->
+      ExtendSelector selector (mapAllLastProperty update mixins)
+
+    NestSnippet _ _ ->
+      mixin
+
+    WithMedia _ _ ->
+      mixin
+
+
+mapAllLastProperty : (Structure.Property -> Structure.Property) -> List Mixin -> List Mixin
+mapAllLastProperty update mixins =
+  case mixins of
+    [] ->
+      mixins
+
+    only :: [] ->
+      [ mapLastProperty update only ]
+
+    first :: rest ->
+      first :: mapAllLastProperty update rest
+
+
 type Mixin
   = AppendProperty Property
   | ExtendSelector Structure.RepeatableSimpleSelector (List Mixin)
