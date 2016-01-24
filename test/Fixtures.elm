@@ -262,3 +262,48 @@ transformsStylesheet =
         , transformStyle preserve3d
         ]
     ]
+
+
+standaloneAt : Stylesheet
+standaloneAt =
+      stylesheet
+        { name = "standaloneAt" }
+        [ (charset "utf-8")
+        , (import' (url "fineprint.css"))
+        ]
+
+
+fontStylesheet : Stylesheet
+fontStylesheet =
+      stylesheet
+        { name = "fontStylesheet" }
+        [ body
+            [ lineHeight (px 14)
+            , fontFamily serif
+            , fontFamilies
+              [ qt "Gill Sans Extrabold"
+              , "Helvetica"
+              , .value sansSerif
+              ]
+            , fontSize xSmall
+            , fontStyle italic
+            , fontWeight bold
+            , fontWeight (n 100)
+            , fontVariant smallCaps
+            , fontVariant2 commonLigatures slashedZero
+            , fontVariantNumerics
+              [ oldstyleNums
+              , tabularNums
+              , stackedFractions
+              , ordinal
+              , slashedZero
+              ]
+            ]
+        ]
+
+
+fontWeightWarning : Stylesheet
+fontWeightWarning =
+      stylesheet
+        { name = "fontWeightWarning" }
+        [ body [ fontWeight (n 22) ]]

@@ -24,6 +24,9 @@ all =
     , underlineOnHoverManual
     , greenOnHoverMixin
     , transformsStyle
+    , standaloneAt
+    , fonts
+    , weightWarning
     , Properties.all
     ]
 
@@ -355,9 +358,76 @@ transformsStyle =
                 transform-style: preserve-3d;
             }
             """
-  in
-    suite
-      "transforms"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
-      ]
+    in
+        suite
+            "transforms"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+standaloneAt : Test
+standaloneAt =
+    let
+        input =
+            Fixtures.standaloneAt
+
+        output =
+            """
+            @charset "utf-8";
+
+            @import url("fineprint.css");
+            """
+    in
+        suite
+            "standaloneAt"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+fonts : Test
+fonts =
+    let
+        input =
+            Fixtures.fontStylesheet
+
+        output =
+            """
+            body {
+                line-height: 14px;
+                font-family: serif;
+                font-family: "Gill Sans Extrabold", Helvetica, sans-serif;
+                font-size: x-small;
+                font-style: italic;
+                font-weight: bold;
+                font-weight: 100;
+                font-variant: small-caps;
+                font-variant: common-ligatures slashed-zero;
+                font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal slashed-zero;
+            }
+            """
+    in
+        suite
+            "fonts"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
+
+
+weightWarning : Test
+weightWarning =
+    let
+        input =
+            Fixtures.fontWeightWarning
+
+        output =
+            """
+            Invalid Stylesheet:
+            22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
+    in
+        suite
+            "fontWeightWarning"
+            [ test "pretty prints the expected output"
+                <| assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
