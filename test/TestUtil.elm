@@ -17,11 +17,11 @@ outdented str =
     |> String.trim
 
 
-prettyPrint : List Snippet -> String
-prettyPrint style =
+prettyPrint : Css.Stylesheet -> String
+prettyPrint sheet =
   let
     { warnings, css } =
-      Css.compile style
+      Css.compile sheet
   in
     if List.isEmpty warnings then
       css

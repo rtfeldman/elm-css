@@ -4,6 +4,7 @@ import ElmTest exposing (..)
 import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (p)
+import Css.Namespace exposing (namespace)
 
 
 all : Test
@@ -228,14 +229,14 @@ all =
         ]
     , testProperty
         "flex"
-        [ ( flex1 initial, "initial" )
-        , ( flex1 unset, "unset" )
-        , ( flex1 inherit, "inherit" )
-        , ( flex1 auto, "auto" )
-        , ( flex1 content, "content" )
-        , ( flex1 none, "none" )
-        , ( flex1 (n 2), "2" )
-        , ( flex1 (mm 8), "8mm" )
+        [ ( flex initial, "initial" )
+        , ( flex unset, "unset" )
+        , ( flex inherit, "inherit" )
+        , ( flex auto, "auto" )
+        , ( flex content, "content" )
+        , ( flex none, "none" )
+        , ( flex (n 2), "2" )
+        , ( flex (mm 8), "8mm" )
         , ( flex2 (n 1) (n 2), "1 2" )
         , ( flex2 (n 1) (px 30), "1 30px" )
         , ( flex3 (n 1) (n 2) (px 20), "1 2 20px" )
@@ -347,5 +348,5 @@ assertPropertyWorks : String -> ( Mixin, String ) -> Test
 assertPropertyWorks propertyName ( mixin, expectedStr ) =
   test "pretty prints the expected output"
     <| assertEqual
-        (prettyPrint (stylesheet { name = "test" } [ p [ mixin ] ]))
+        (prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ]))
         ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")

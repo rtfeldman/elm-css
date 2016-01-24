@@ -12,14 +12,14 @@ import String
 
 
 type alias Helpers class id =
-  { class : class -> Attribute
+  { class : List class -> Attribute
   , classList : List ( class, Bool ) -> Attribute
   , id : id -> Attribute
   }
 
 
 type alias Namespace name class id =
-  { class : class -> Attribute
+  { class : List class -> Attribute
   , classList : List ( class, Bool ) -> Attribute
   , id : id -> Attribute
   , name : name
@@ -55,7 +55,7 @@ namespace name =
   }
 
 
-helpers : Helpers
+helpers : Helpers class id
 helpers =
   { class = class
   , classList = classList
@@ -83,8 +83,10 @@ namespacedClass : name -> List class -> Attribute
 namespacedClass name list =
   list
     |> List.map (identifierToString name)
+    |> String.join " "
+    |> Attr.class
 
 
 class : List class -> Attribute
 class =
-  String.join " " >> Attr.class
+  namespacedClass ""

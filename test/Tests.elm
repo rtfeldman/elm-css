@@ -24,7 +24,6 @@ all =
     , underlineOnHoverManual
     , greenOnHoverMixin
     , transformsStyle
-    , standaloneAt
     , fonts
     , weightWarning
     , Properties.all
