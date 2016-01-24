@@ -348,5 +348,5 @@ assertPropertyWorks : String -> ( Mixin, String ) -> Test
 assertPropertyWorks propertyName ( mixin, expectedStr ) =
   test "pretty prints the expected output"
     <| assertEqual
-        (prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ]))
         ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
+        (prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ]))
