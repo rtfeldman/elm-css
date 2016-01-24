@@ -1,19 +1,24 @@
-module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, with, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, charset, screen, print, projection, tv, url, src, qt, fontFamilies, fontVariantNumerics) where
+module Css (compile, Stylesheet, Snippet, Mixin, Color, stylesheet, media, children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), transformStyle, eachLine, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, screen, print, projection, tv, src, qt, fontFamilies, fontVariantNumerics) where
 
 {-| Functions for building stylesheets.
 
+# Misc
+@docs Stylesheet, absolute, all, allPetiteCaps, allSmallCaps, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inset, italic, large, larger, lighter, liningNums, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall
 
 # Style
-@docs Snippet, snippet, Mixin, mixin, stylesheet, compile
+@docs Snippet, Mixin, mixin, stylesheet, compile
 
 # Statements
-@docs (#), (.), (@), selector
+@docs (#), (.), selector
 
 # Combinators
-@docs children, descendants, adjacentSiblings, generalSiblings, each, (&.), (&#), with
+@docs children, descendants, adjacentSiblings, generalSiblings
+
+# Media Queries
+@docs screen, tv, projection, print
 
 # Properties
-@docs property, flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4, import', lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, charset, fontFamilies, fontVariantNumerics
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4, lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics
 
 
 # Values
@@ -34,8 +39,8 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 # Media Queries
 @docs screen, print, tv, projection
 
-# Import and Source
-@docs url, src
+# Source
+@docs src
 
 # Quoting
 @docs qt
@@ -52,7 +57,24 @@ deprecated or discouraged.
 import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors, extractRuleStrings, removeProperties)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Compile
+import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
+import Css.Structure as Structure
 import String
+
+
+{-| -}
+type alias Stylesheet =
+  Preprocess.Stylesheet
+
+
+{-| -}
+type alias Snippet =
+  Preprocess.Snippet
+
+
+{-| -}
+type alias Mixin =
+  Preprocess.Mixin
 
 
 type Compatible
@@ -67,60 +89,31 @@ type PseudoElement
   = PseudoElement String (List Mixin)
 
 
-{-| A stylesheet that can be passed to [`compile`](#compile) to get a String
-of a CSS file.
--}
-type alias Stylesheet =
-  List Declaration
-
-
-type alias DeclarationTransform =
-  String -> List Declaration -> List Declaration
-
-
-type DeclarationType
-  = DeclarationType
-
-
-type ConditionalGroupRuleType
-  = ConditionalGroupRuleType
-
-
-type StyleBlock
-  = StyleBlock (String -> List Declaration)
-
-
-type Snippet
-  = Snippet (String -> List Declaration)
-
-
-{-| A Mixin.
--}
-type Mixin
-  = Mixin DeclarationTransform
-
-
 type MediaQuery
   = Print
   | Projection
   | Tv
 
 
+{-| -}
 screen : String
 screen =
   "screen"
 
 
+{-| -}
 print : String
 print =
   "print"
 
 
+{-| -}
 projection : String
 projection =
   "projection"
 
 
+{-| -}
 tv : String
 tv =
   "tv"
@@ -156,29 +149,36 @@ as the end user expects.
 
 Other notes:
 
-`key` is the name of the property.
+`desiredKey` is the key of the property.
 `functionName` is just for better error messages.
 -}
 getOverloadedProperty : String -> String -> Mixin -> Mixin
-getOverloadedProperty functionName key (Mixin mixinTransform) =
-  let
-    newTransform name declarations =
-      let
-        value =
-          getLastProperty declarations
-            |> Maybe.map .key
-            |> Maybe.withDefault ""
+getOverloadedProperty functionName desiredKey mixin =
+  case mixin of
+    Preprocess.AppendProperty { key } ->
+      -- Use the given mixin's Key as the resulting property's value.
+      property desiredKey key
 
-        update subject =
-          { subject | key = key, value = value }
-      in
-        updateLastProperty update declarations
+    Preprocess.ExtendSelector selector _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for selector " ++ toString selector ] desiredKey ""
 
-    newMixinTransform name declarations =
-      mixinTransform name declarations
-        |> newTransform name
-  in
-    Mixin newMixinTransform
+    Preprocess.NestSnippet combinator _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for combinator " ++ toString combinator ] desiredKey ""
+
+    Preprocess.WithPseudoElement pseudoElement _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for pseudo-element setter " ++ toString pseudoElement ] desiredKey ""
+
+    Preprocess.WithMedia mediaQuery _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for media query " ++ toString mediaQuery ] desiredKey ""
+
+    Preprocess.ApplyMixins [] ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty mixin. " ] desiredKey ""
+
+    Preprocess.ApplyMixins (only :: []) ->
+      getOverloadedProperty functionName desiredKey only
+
+    Preprocess.ApplyMixins (first :: rest) ->
+      getOverloadedProperty functionName desiredKey (Preprocess.ApplyMixins rest)
 
 
 type alias Value compatible =
@@ -346,6 +346,7 @@ type alias ColorValue compatible =
   { compatible | value : String, color : Compatible, warnings : List String }
 
 
+{-| -}
 type alias Color =
   ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
 
@@ -467,30 +468,24 @@ type alias TextRendering compatible =
   { compatible | value : String, textRendering : Compatible }
 
 
-
-{- Because `left` and `right` are both common properties and common values
+{-| Because `left` and `right` are both common properties and common values
 in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
 we implement it as a property (for the `left: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `VerticalAlign` follows a similar pattern.)
 -}
-
-
 type alias TextAlign a =
   Length a -> Mixin
 
 
-
-{- Because `top` and `bottom` are both common properties and common values
+{-| Because `top` and `bottom` are both common properties and common values
 in CSS (e.g. `top: 5px` with `position: absolute` and `vertical-align: top`),
 we implement it as a property (for the `top: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `TextAlign` follows a similar pattern.)
 -}
-
-
 type alias VerticalAlign a =
   Length a -> Mixin
 
@@ -814,6 +809,7 @@ hex str =
   }
 
 
+hslaToRgba : String -> List String -> Float -> Float -> Float -> Float -> Color
 hslaToRgba value warnings hue saturation lightness alpha =
   let
     red =
@@ -1703,19 +1699,19 @@ transformStyle =
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
 -}
-flex1 : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin
-flex1 =
+flex : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin
+flex =
   prop1 "flex"
 
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
@@ -1727,7 +1723,7 @@ flex2 =
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
@@ -1739,7 +1735,7 @@ flex3 =
 
 {-| Sets [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
@@ -2765,26 +2761,31 @@ absolute =
 -- Families --
 
 
+{-| -}
 serif : FontFamily {}
 serif =
   { value = "serif", fontFamily = Compatible }
 
 
+{-| -}
 sansSerif : FontFamily {}
 sansSerif =
   { value = "sans-serif", fontFamily = Compatible }
 
 
+{-| -}
 monospace : FontFamily {}
 monospace =
   { value = "monospace", fontFamily = Compatible }
 
 
+{-| -}
 cursive : FontFamily {}
 cursive =
   { value = "cursive", fontFamily = Compatible }
 
 
+{-| -}
 fantasy : FontFamily {}
 fantasy =
   { value = "fantasy", fontFamily = Compatible }
@@ -2794,46 +2795,55 @@ fantasy =
 -- Size --
 
 
+{-| -}
 xxSmall : FontSize {}
 xxSmall =
   { value = "xx-small", fontSize = Compatible }
 
 
+{-| -}
 xSmall : FontSize {}
 xSmall =
   { value = "x-small", fontSize = Compatible }
 
 
+{-| -}
 small : FontSize {}
 small =
   { value = "small", fontSize = Compatible }
 
 
+{-| -}
 medium : FontSize {}
 medium =
   { value = "medium", fontSize = Compatible }
 
 
+{-| -}
 large : FontSize {}
 large =
   { value = "large", fontSize = Compatible }
 
 
+{-| -}
 xLarge : FontSize {}
 xLarge =
   { value = "x-large", fontSize = Compatible }
 
 
+{-| -}
 xxLarge : FontSize {}
 xxLarge =
   { value = "xx-large", fontSize = Compatible }
 
 
+{-| -}
 smaller : FontSize {}
 smaller =
   { value = "smaller", fontSize = Compatible }
 
 
+{-| -}
 larger : FontSize {}
 larger =
   { value = "larger", fontSize = Compatible }
@@ -2843,16 +2853,19 @@ larger =
 -- Styles --
 
 
+{-| -}
 normal : FontStyle {}
 normal =
   { value = "normal", fontStyle = Compatible }
 
 
+{-| -}
 italic : FontStyle {}
 italic =
   { value = "italic", fontStyle = Compatible }
 
 
+{-| -}
 oblique : FontStyle {}
 oblique =
   { value = "oblique", fontStyle = Compatible }
@@ -2877,6 +2890,7 @@ oblique =
 --     , fontWeight = Compatible }
 
 
+{-| -}
 bold : LengthOrNumberOrAutoOrNoneOrContent {}
 bold =
   { value = "bold"
@@ -2884,6 +2898,7 @@ bold =
   }
 
 
+{-| -}
 lighter : LengthOrNumberOrAutoOrNoneOrContent {}
 lighter =
   { value = "lighter"
@@ -2891,6 +2906,7 @@ lighter =
   }
 
 
+{-| -}
 bolder : LengthOrNumberOrAutoOrNoneOrContent {}
 bolder =
   { value = "bolder"
@@ -2903,31 +2919,37 @@ bolder =
 -- CAPS --
 
 
+{-| -}
 smallCaps : FontVariantCaps {}
 smallCaps =
   { value = "small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
+{-| -}
 allSmallCaps : FontVariantCaps {}
 allSmallCaps =
   { value = "all-small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
+{-| -}
 petiteCaps : FontVariantCaps {}
 petiteCaps =
   { value = "petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
+{-| -}
 allPetiteCaps : FontVariantCaps {}
 allPetiteCaps =
   { value = "all-petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
+{-| -}
 unicase : FontVariantCaps {}
 unicase =
   { value = "unicase", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
+{-| -}
 titlingCaps : FontVariantCaps {}
 titlingCaps =
   { value = "titling-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
@@ -2937,6 +2959,7 @@ titlingCaps =
 -- LIGATURES --
 
 
+{-| -}
 commonLigatures : FontVariantLigatures {}
 commonLigatures =
   { value = "common-ligatures"
@@ -2945,6 +2968,7 @@ commonLigatures =
   }
 
 
+{-| -}
 noCommonLigatures : FontVariantLigatures {}
 noCommonLigatures =
   { value = "no-common-ligatures"
@@ -2953,6 +2977,7 @@ noCommonLigatures =
   }
 
 
+{-| -}
 discretionaryLigatures : FontVariantLigatures {}
 discretionaryLigatures =
   { value = "discretionary-ligatures"
@@ -2961,6 +2986,7 @@ discretionaryLigatures =
   }
 
 
+{-| -}
 noDiscretionaryLigatures : FontVariantLigatures {}
 noDiscretionaryLigatures =
   { value = "no-discretionary-ligatures"
@@ -2969,6 +2995,7 @@ noDiscretionaryLigatures =
   }
 
 
+{-| -}
 historicalLigatures : FontVariantLigatures {}
 historicalLigatures =
   { value = "historical-ligatures"
@@ -2977,6 +3004,7 @@ historicalLigatures =
   }
 
 
+{-| -}
 noHistoricalLigatures : FontVariantLigatures {}
 noHistoricalLigatures =
   { value = "no-historical-ligatures"
@@ -2985,6 +3013,7 @@ noHistoricalLigatures =
   }
 
 
+{-| -}
 contextual : FontVariantLigatures {}
 contextual =
   { value = "context"
@@ -2993,6 +3022,7 @@ contextual =
   }
 
 
+{-| -}
 noContextual : FontVariantLigatures {}
 noContextual =
   { value = "no-contextual"
@@ -3005,6 +3035,7 @@ noContextual =
 -- NUMERIC --
 
 
+{-| -}
 liningNums : FontVariantNumeric {}
 liningNums =
   { value = "lining-nums"
@@ -3013,6 +3044,7 @@ liningNums =
   }
 
 
+{-| -}
 oldstyleNums : FontVariantNumeric {}
 oldstyleNums =
   { value = "oldstyle-nums"
@@ -3021,6 +3053,7 @@ oldstyleNums =
   }
 
 
+{-| -}
 proportionalNums : FontVariantNumeric {}
 proportionalNums =
   { value = "proportional-nums"
@@ -3029,6 +3062,7 @@ proportionalNums =
   }
 
 
+{-| -}
 tabularNums : FontVariantNumeric {}
 tabularNums =
   { value = "tabular-nums"
@@ -3037,6 +3071,7 @@ tabularNums =
   }
 
 
+{-| -}
 diagonalFractions : FontVariantNumeric {}
 diagonalFractions =
   { value = "diagonal-fractions"
@@ -3045,6 +3080,7 @@ diagonalFractions =
   }
 
 
+{-| -}
 stackedFractions : FontVariantNumeric {}
 stackedFractions =
   { value = "stacked-fractions"
@@ -3053,6 +3089,7 @@ stackedFractions =
   }
 
 
+{-| -}
 ordinal : FontVariantNumeric {}
 ordinal =
   { value = "ordinal"
@@ -3061,6 +3098,7 @@ ordinal =
   }
 
 
+{-| -}
 slashedZero : FontVariantNumeric {}
 slashedZero =
   { value = "slashed-zero"
@@ -3941,51 +3979,61 @@ color =
 
 
 {-| -}
-media : a -> List StyleBlock -> StyleBlock
-media value styleBlocks =
+media : List Structure.MediaQuery -> List Snippet -> Snippet
+media mediaQueries snippets =
   let
-    getDeclarations name =
-      [ Declaration.ConditionalGroupRule
-          ("@media \"" ++ toCssIdentifier value ++ "\"")
-          (List.concatMap (\(StyleBlock transform) -> transform name) styleBlocks)
-      ]
+    snippetDeclarations : List Preprocess.SnippetDeclaration
+    snippetDeclarations =
+      List.concatMap unwrapSnippet snippets
+
+    extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
+    extractStyleBlocks declarations =
+      case declarations of
+        [] ->
+          []
+
+        (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
+          styleBlock :: extractStyleBlocks rest
+
+        first :: rest ->
+          extractStyleBlocks rest
+
+    mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
+    mediaRuleFromStyleBlocks =
+      Preprocess.MediaRule
+        mediaQueries
+        (extractStyleBlocks snippetDeclarations)
+
+    nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
+    nestedMediaRules declarations =
+      case declarations of
+        [] ->
+          []
+
+        (Preprocess.StyleBlockDeclaration _) :: rest ->
+          -- These will already have been handled previously, with appropriate
+          -- bundling, so don't create duplicates here.
+          nestedMediaRules rest
+
+        (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
+          -- nest the media queries
+          (Preprocess.MediaRule (mediaQueries ++ nestedMediaQueries) styleBlocks)
+            :: nestedMediaRules rest
+
+        first :: rest ->
+          first :: nestedMediaRules rest
   in
-    StyleBlock getDeclarations
+    Preprocess.Snippet (mediaRuleFromStyleBlocks :: (nestedMediaRules snippetDeclarations))
+
+
+{-| -}
+withMedia : List Structure.MediaQuery -> List Mixin -> Mixin
+withMedia =
+  Preprocess.WithMedia
 
 
 
 {- FONT PROPERTIES -}
-
-
-{-| Sets @charset (https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
--}
-charset : String -> StyleBlock
-charset value =
-  let
-    getDeclarations name =
-      [ Declaration.StandaloneAtRule "@charset" ((qt value) ++ ";") ]
-  in
-    StyleBlock getDeclarations
-
-
-{-| Sets @import (https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
-
-Can't use import since it clashes with the Elm keyword.
--}
-url : String -> ImportType {}
-url value =
-  { value = cssFunction "url" [ qt value ]
-  , import' = Compatible
-  }
-
-
-import' : ImportType compatible -> StyleBlock
-import' { value } =
-  let
-    getDeclarations name =
-      [ Declaration.StandaloneAtRule "@import" (value ++ ";") ]
-  in
-    StyleBlock getDeclarations
 
 
 {-| Sets [`line-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
@@ -4008,6 +4056,7 @@ src value =
   toString value.value
 
 
+{-| -}
 fontFace : String -> String
 fontFace value =
   "font-face " ++ value
@@ -4023,11 +4072,13 @@ qt str =
   toString str
 
 
+{-| -}
 fontFamily : FontFamily a -> Mixin
 fontFamily =
   prop1 "font-family"
 
 
+{-| -}
 fontFamilies : List String -> Mixin
 fontFamilies =
   prop1 "font-family" << stringsToValue
@@ -4070,27 +4121,14 @@ fontWeight { value } =
           True
         else
           validWeights
+
+    warnings =
+      if validWeight (stringToInt value) then
+        [ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
+      else
+        []
   in
-    if validWeight <| stringToInt value then
-      Mixin
-        (\_ ->
-          addProperty
-            { key = "font-weight"
-            , value = value
-            , important = False
-            , warnings = []
-            }
-        )
-    else
-      Mixin
-        (\_ ->
-          addProperty
-            { key = "font-weight"
-            , value = value
-            , important = False
-            , warnings = [ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
-            }
-        )
+    propertyWithWarnings warnings "font-weight" value
 
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -4105,41 +4143,49 @@ fontVariant =
   prop1 "font-variant"
 
 
+{-| -}
 fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Mixin
 fontVariant2 =
   prop2 "font-variant"
 
 
+{-| -}
 fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Mixin
 fontVariant3 =
   prop3 "font-variant"
 
 
+{-| -}
 fontVariantLigatures : FontVariantLigatures a -> Mixin
 fontVariantLigatures =
   prop1 "font-variant-ligatures"
 
 
+{-| -}
 fontVariantCaps : FontVariantCaps a -> Mixin
 fontVariantCaps =
   prop1 "font-variant-caps"
 
 
+{-| -}
 fontVariantNumeric : FontVariantNumeric a -> Mixin
 fontVariantNumeric =
   prop1 "font-variant-numeric"
 
 
+{-| -}
 fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Mixin
 fontVariantNumeric2 =
   prop2 "font-variant-numeric"
 
 
+{-| -}
 fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin
 fontVariantNumeric3 =
   prop3 "font-variant-numeric"
 
 
+{-| -}
 fontVariantNumerics : List (FontVariantNumeric compatible) -> Mixin
 fontVariantNumerics =
   prop1 "font-variant-numeric" << valuesOrNone
@@ -4290,16 +4336,12 @@ Pass `[]` to set `animation-name: none;`
 animationNames : List animation -> Mixin
 animationNames identifiers =
   let
-    customTransform name =
-      let
-        value =
-          identifiers
-            |> List.map (identifierToString name)
-            |> String.join ", "
-      in
-        addProperty { key = "animation-name", value = value, important = False, warnings = [] }
+    value =
+      identifiers
+        |> List.map (identifierToString "")
+        |> String.join ", "
   in
-    Mixin customTransform
+    property "animation-name" value
 
 
 {-| An empty namespaced stylesheet. Use this as the foundation on which to build
@@ -4310,55 +4352,9 @@ your stylesheet.
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-stylesheet : { a | name : String } -> List StyleBlock -> Stylesheet
-stylesheet { name } styleBlocks =
-  concatStyleBlocks styleBlocks name
-
-
-snippet : List StyleBlock -> Snippet
-snippet styles =
-  Snippet (concatStyleBlocks styles)
-
-
-{-| Copy the given snippets into the current style.
--}
-snippets : List Snippet -> StyleBlock
-snippets snippets =
-  StyleBlock (applySnippets snippets)
-
-
-applySnippets : List Snippet -> String -> List Declaration
-applySnippets snippets name =
-  List.concatMap (\(Snippet transform) -> transform name) snippets
-
-
-applyMixins : List Mixin -> DeclarationTransform
-applyMixins mixins name declarations =
-  List.foldl (\(Mixin transform) -> transform name) declarations mixins
-
-
-concatStyleBlocks : List StyleBlock -> String -> List Declaration
-concatStyleBlocks styles name =
-  List.concatMap (\(StyleBlock transform) -> transform name) styles
-
-
-selectorToStyleBlock : List Mixin -> (String -> SimpleSelector) -> StyleBlock
-selectorToStyleBlock mixins makeSelector =
-  let
-    transform name =
-      transformWithMixins mixins (selectorDeclaration (makeSelector name)) name
-  in
-    StyleBlock transform
-
-
-transformWithMixins : List Mixin -> Declaration -> String -> List Declaration
-transformWithMixins mixins declaration name =
-  List.foldl (\(Mixin transform) -> transform name) [ declaration ] mixins
-
-
-selectorDeclaration : SimpleSelector -> Declaration
-selectorDeclaration selector =
-  Declaration.StyleBlock (Declaration.SingleSelector selector) [] []
+stylesheet : List Snippet -> Stylesheet
+stylesheet =
+  Preprocess.stylesheet
 
 
 {-| A Mixin allowing you to modularly reuse common styles in other styles.
@@ -4387,7 +4383,7 @@ style.
 -}
 mixin : List Mixin -> Mixin
 mixin =
-  applyMixins >> Mixin
+  Preprocess.ApplyMixins
 
 
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
@@ -4401,14 +4397,21 @@ mixin =
         button # Cancel
             ~ backgroundColor (rgb 128 64 32)
 -}
-(#) : id -> List (Mixin) -> StyleBlock
+(#) : id -> List Mixin -> Snippet
 (#) id mixins =
-  selectorToStyleBlock mixins (makeIdSelector id)
+  [ Structure.IdSelector (identifierToString "" id) ]
+    |> Structure.UniversalSelectorSequence
+    |> makeSnippet mixins
 
 
-makeIdSelector : id -> String -> SimpleSelector
-makeIdSelector id name =
-  Declaration.IdSelector (identifierToString name id)
+makeSnippet : List Mixin -> Structure.SimpleSelectorSequence -> Snippet
+makeSnippet mixins sequence =
+  let
+    selector =
+      Structure.Selector sequence [] Nothing
+  in
+    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] mixins) ]
+      |> Preprocess.Snippet
 
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
@@ -4420,14 +4423,11 @@ makeIdSelector id name =
             ~ fontWeight normal
             ~ color (rgb 128 64 32)
 -}
-(.) : class -> List (Mixin) -> StyleBlock
+(.) : class -> List Mixin -> Snippet
 (.) class mixins =
-  selectorToStyleBlock mixins (\name -> Declaration.ClassSelector (identifierToString name class))
-
-
-makeClassSelector : class -> String -> SimpleSelector
-makeClassSelector class name =
-  Declaration.ClassSelector (identifierToString name class)
+  [ Structure.ClassSelector (identifierToString "" class) ]
+    |> Structure.UniversalSelectorSequence
+    |> makeSnippet mixins
 
 
 
@@ -4441,12 +4441,10 @@ makeClassSelector class name =
 --clearfix : Mixin
 --clearfix =
 --  mixin
---    [ pseudoElements
---        [ after
---            [ content ""
---            , display table
---            , clear both
---            ]
+--    [ after
+--        [ content ""
+--        , display table
+--        , clear both
 --        ]
 --    ]
 
@@ -4460,9 +4458,10 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ~ textDecoration underline
             ~ color (rgb 7 7 7)
 -}
-selector : String -> List Mixin -> StyleBlock
+selector : String -> List Mixin -> Snippet
 selector selectorStr mixins =
-  selectorToStyleBlock mixins (\name -> Declaration.CustomSelector selectorStr)
+  Structure.CustomSelector selectorStr []
+    |> makeSnippet mixins
 
 
 {-| Define a custom property.
@@ -4477,8 +4476,14 @@ selector selectorStr mixins =
     }
 -}
 property : String -> String -> Mixin
-property key value =
-  Mixin (\_ -> addProperty { key = key, value = value, important = False, warnings = [] })
+property =
+  propertyWithWarnings []
+
+
+propertyWithWarnings : List String -> String -> String -> Mixin
+propertyWithWarnings warnings key value =
+  { key = key, value = value, important = False, warnings = warnings }
+    |> Preprocess.AppendProperty
 
 
 
@@ -4500,280 +4505,268 @@ directionalityToString directionality =
       "rtl"
 
 
-pseudoToStyleBlock : (Maybe SimpleSelector -> ComplexSelector) -> List Mixin -> StyleBlock
-pseudoToStyleBlock makePseudo mixins =
-  let
-    transform name =
-      transformWithMixins
-        mixins
-        (Declaration.StyleBlock (makePseudo Nothing) [] [])
-        name
-  in
-    StyleBlock transform
-
-
 {-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-active : List Mixin -> StyleBlock
+active : List Mixin -> Mixin
 active =
-  pseudoToStyleBlock (Declaration.PseudoClass "active")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "active")
 
 
 {-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-any : String -> List Mixin -> StyleBlock
+any : String -> List Mixin -> Mixin
 any str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("any(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("any(" ++ str ++ ")"))
 
 
 {-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-checked : List Mixin -> StyleBlock
+checked : List Mixin -> Mixin
 checked =
-  pseudoToStyleBlock (Declaration.PseudoClass "checked")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "checked")
 
 
 {-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-dir : Directionality -> List Mixin -> StyleBlock
+dir : Directionality -> List Mixin -> Mixin
 dir directionality =
-  pseudoToStyleBlock (Declaration.PseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("dir(" ++ (directionalityToString directionality) ++ ")"))
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-disabled : List Mixin -> StyleBlock
+disabled : List Mixin -> Mixin
 disabled =
-  pseudoToStyleBlock (Declaration.PseudoClass "disabled")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "disabled")
 
 
 {-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-empty : List Mixin -> StyleBlock
+empty : List Mixin -> Mixin
 empty =
-  pseudoToStyleBlock (Declaration.PseudoClass "empty")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "empty")
 
 
 {-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-enabled : List Mixin -> StyleBlock
+enabled : List Mixin -> Mixin
 enabled =
-  pseudoToStyleBlock (Declaration.PseudoClass "enabled")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "enabled")
 
 
 {-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-first : List Mixin -> StyleBlock
+first : List Mixin -> Mixin
 first =
-  pseudoToStyleBlock (Declaration.PseudoClass "first")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "first")
 
 
 {-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstChild : List Mixin -> StyleBlock
+firstChild : List Mixin -> Mixin
 firstChild =
-  pseudoToStyleBlock (Declaration.PseudoClass "first-child")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-child")
 
 
 {-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstOfType : List Mixin -> StyleBlock
+firstOfType : List Mixin -> Mixin
 firstOfType =
-  pseudoToStyleBlock (Declaration.PseudoClass "first-of-type")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-of-type")
 
 
 {-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-fullscreen : List Mixin -> StyleBlock
+fullscreen : List Mixin -> Mixin
 fullscreen =
-  pseudoToStyleBlock (Declaration.PseudoClass "fullscreen")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "fullscreen")
 
 
 {-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-focus : List Mixin -> StyleBlock
+focus : List Mixin -> Mixin
 focus =
-  pseudoToStyleBlock (Declaration.PseudoClass "focus")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "focus")
 
 
 {-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-hover : List Mixin -> StyleBlock
+hover : List Mixin -> Mixin
 hover =
-  pseudoToStyleBlock (Declaration.PseudoClass "hover")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "hover")
 
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-indeterminate : List Mixin -> StyleBlock
+indeterminate : List Mixin -> Mixin
 indeterminate =
-  pseudoToStyleBlock (Declaration.PseudoClass "indeterminate")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "indeterminate")
 
 
 {-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-invalid : List Mixin -> StyleBlock
+invalid : List Mixin -> Mixin
 invalid =
-  pseudoToStyleBlock (Declaration.PseudoClass "invalid")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "invalid")
 
 
 {-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lang : String -> List Mixin -> StyleBlock
+lang : String -> List Mixin -> Mixin
 lang str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("lang(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("lang(" ++ str ++ ")"))
 
 
 {-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastChild : List Mixin -> StyleBlock
+lastChild : List Mixin -> Mixin
 lastChild =
-  pseudoToStyleBlock (Declaration.PseudoClass "last-child")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-child")
 
 
 {-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastOfType : List Mixin -> StyleBlock
+lastOfType : List Mixin -> Mixin
 lastOfType =
-  pseudoToStyleBlock (Declaration.PseudoClass "last-of-type")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-of-type")
 
 
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-link : List Mixin -> StyleBlock
+link : List Mixin -> Mixin
 link =
-  pseudoToStyleBlock (Declaration.PseudoClass "link")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "link")
 
 
 {-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthChild : String -> List Mixin -> StyleBlock
+nthChild : String -> List Mixin -> Mixin
 nthChild str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-child(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-child(" ++ str ++ ")"))
 
 
 {-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastChild : String -> List Mixin -> StyleBlock
+nthLastChild : String -> List Mixin -> Mixin
 nthLastChild str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-last-child(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-child(" ++ str ++ ")"))
 
 
 {-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastOfType : String -> List Mixin -> StyleBlock
+nthLastOfType : String -> List Mixin -> Mixin
 nthLastOfType str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-last-of-type(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-of-type(" ++ str ++ ")"))
 
 
 {-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthOfType : String -> List Mixin -> StyleBlock
+nthOfType : String -> List Mixin -> Mixin
 nthOfType str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-of-type(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-of-type(" ++ str ++ ")"))
 
 
 {-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyChild : List Mixin -> StyleBlock
+onlyChild : List Mixin -> Mixin
 onlyChild =
-  pseudoToStyleBlock (Declaration.PseudoClass "only-child")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-child")
 
 
 {-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyOfType : List Mixin -> StyleBlock
+onlyOfType : List Mixin -> Mixin
 onlyOfType =
-  pseudoToStyleBlock (Declaration.PseudoClass "only-of-type")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-of-type")
 
 
 {-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-optional : List Mixin -> StyleBlock
+optional : List Mixin -> Mixin
 optional =
-  pseudoToStyleBlock (Declaration.PseudoClass "optional")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "optional")
 
 
 {-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-outOfRange : List Mixin -> StyleBlock
+outOfRange : List Mixin -> Mixin
 outOfRange =
-  pseudoToStyleBlock (Declaration.PseudoClass "out-of-range")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "out-of-range")
 
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-readWrite : List Mixin -> StyleBlock
+readWrite : List Mixin -> Mixin
 readWrite =
-  pseudoToStyleBlock (Declaration.PseudoClass "read-write")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "read-write")
 
 
 {-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-required : List Mixin -> StyleBlock
+required : List Mixin -> Mixin
 required =
-  pseudoToStyleBlock (Declaration.PseudoClass "required")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "required")
 
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-root : List Mixin -> StyleBlock
+root : List Mixin -> Mixin
 root =
-  pseudoToStyleBlock (Declaration.PseudoClass "root")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "root")
 
 
 {-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-scope : List Mixin -> StyleBlock
+scope : List Mixin -> Mixin
 scope =
-  pseudoToStyleBlock (Declaration.PseudoClass "scope")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "scope")
 
 
 {-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-target : List Mixin -> StyleBlock
+target : List Mixin -> Mixin
 target =
-  pseudoToStyleBlock (Declaration.PseudoClass "target")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "target")
 
 
 {-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-valid : List Mixin -> StyleBlock
+valid : List Mixin -> Mixin
 valid =
-  pseudoToStyleBlock (Declaration.PseudoClass "valid")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "valid")
 
 
 
@@ -4783,41 +4776,41 @@ valid =
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-after : List Mixin -> StyleBlock
+after : List Mixin -> Mixin
 after =
-  pseudoToStyleBlock (Declaration.PseudoElement "after")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "after")
 
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-before : List Mixin -> StyleBlock
+before : List Mixin -> Mixin
 before =
-  pseudoToStyleBlock (Declaration.PseudoElement "before")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "before")
 
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLetter : List Mixin -> StyleBlock
+firstLetter : List Mixin -> Mixin
 firstLetter =
-  pseudoToStyleBlock (Declaration.PseudoElement "first-letter")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "first-letter")
 
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLine : List Mixin -> StyleBlock
+firstLine : List Mixin -> Mixin
 firstLine =
-  pseudoToStyleBlock (Declaration.PseudoElement "first-line")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "first-line")
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-selection : List Mixin -> StyleBlock
+selection : List Mixin -> Mixin
 selection =
-  pseudoToStyleBlock (Declaration.PseudoElement "selection")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "selection")
 
 
 
@@ -4872,27 +4865,27 @@ blink =
 
 
 {-| -}
-children : List StyleBlock -> Mixin
+children : List Snippet -> Mixin
 children =
-  applyStyleCombinator Declaration.Child
+  Preprocess.NestSnippet Structure.Child
 
 
 {-| -}
-descendants : List StyleBlock -> Mixin
+descendants : List Snippet -> Mixin
 descendants =
-  applyStyleCombinator Declaration.Descendant
+  Preprocess.NestSnippet Structure.Descendant
 
 
 {-| -}
-adjacentSiblings : List StyleBlock -> Mixin
+adjacentSiblings : List Snippet -> Mixin
 adjacentSiblings =
-  applyStyleCombinator Declaration.AdjacentSibling
+  Preprocess.NestSnippet Structure.AdjacentSibling
 
 
 {-| -}
-generalSiblings : List StyleBlock -> Mixin
+generalSiblings : List Snippet -> Mixin
 generalSiblings =
-  applyStyleCombinator Declaration.GeneralSibling
+  Preprocess.NestSnippet Structure.GeneralSibling
 
 
 
@@ -4919,72 +4912,63 @@ html, body {
 }
 
 -}
-
-
-applyStyleCombinator : (ComplexSelector -> ComplexSelector -> ComplexSelector) -> List StyleBlock -> Mixin
-applyStyleCombinator combineSelectors styleBlocks =
-  let
-    -- first: html, others: [ body ]
-    -- declaration: div { width: 100%, height: 100% }
-    applySelectors : ComplexSelector -> List ComplexSelector -> Declaration -> List Declaration
-    applySelectors first others declaration =
-      case declaration of
-        Declaration.StyleBlock selector otherSelectors properties ->
-          let
-            newDeclaration =
-              Declaration.StyleBlock
-                (combineSelectors first selector)
-                (List.map ((flip combineSelectors) selector) others)
-                properties
-          in
-            case otherSelectors of
-              [] ->
-                [ newDeclaration ]
-
-              firstOther :: remainder ->
-                let
-                  remainderDeclaration =
-                    Declaration.StyleBlock
-                      firstOther
-                      remainder
-                      properties
-                in
-                  newDeclaration :: applySelectors first others remainderDeclaration
-
-        Declaration.ConditionalGroupRule ruleStr _ ->
-          [ declaration ]
-
-        Declaration.StandaloneAtRule ruleStr _ ->
-          [ declaration ]
-
-    applyStyleBlockTo : String -> Declaration -> StyleBlock -> List Declaration
-    applyStyleBlockTo name declaration (StyleBlock transform) =
-      case declaration of
-        Declaration.StyleBlock first others _ ->
-          -- Use the existing declaration's selectors (ignoring its
-          -- properties, which will be preserved since we return
-          -- the original declaration in its entirety), combined with the
-          -- selectors and properties of the given style block.
-          declaration
-            :: List.concatMap (applySelectors first others) (transform name)
-
-        Declaration.ConditionalGroupRule ruleStr otherDeclarations ->
-          let
-            newDeclarations =
-              List.concatMap
-                (\childDeclaration -> applyStyleBlockTo name childDeclaration (StyleBlock transform))
-                otherDeclarations
-          in
-            [ Declaration.ConditionalGroupRule ruleStr newDeclarations ]
-
-        Declaration.StandaloneAtRule ruleStr _ ->
-          [ declaration ]
-
-    expandDeclaration : String -> Declaration -> List Declaration
-    expandDeclaration name declaration =
-      List.concatMap (applyStyleBlockTo name declaration) styleBlocks
-  in
-    Mixin (\name declarations -> List.concatMap (expandDeclaration name) declarations)
+--applyStyleCombinator : (ComplexSelector -> ComplexSelector -> ComplexSelector) -> List StyleBlock -> Mixin
+--applyStyleCombinator combineSelectors styleBlocks =
+--  let
+--    -- first: html, others: [ body ]
+--    -- declaration: div { width: 100%, height: 100% }
+--    applySelectors : ComplexSelector -> List ComplexSelector -> Declaration -> List Declaration
+--    applySelectors first others declaration =
+--      case declaration of
+--        Declaration.StyleBlock selector otherSelectors properties ->
+--          let
+--            newDeclaration =
+--              Declaration.StyleBlock
+--                (combineSelectors first selector)
+--                (List.map ((flip combineSelectors) selector) others)
+--                properties
+--          in
+--            case otherSelectors of
+--              [] ->
+--                [ newDeclaration ]
+--              firstOther :: remainder ->
+--                let
+--                  remainderDeclaration =
+--                    Declaration.StyleBlock
+--                      firstOther
+--                      remainder
+--                      properties
+--                in
+--                  newDeclaration :: applySelectors first others remainderDeclaration
+--        Declaration.ConditionalGroupRule ruleStr _ ->
+--          [ declaration ]
+--        Declaration.StandaloneAtRule ruleStr _ ->
+--          [ declaration ]
+--    applyStyleBlockTo : String -> Declaration -> StyleBlock -> List Declaration
+--    applyStyleBlockTo name declaration (StyleBlock transform) =
+--      case declaration of
+--        Declaration.StyleBlock first others _ ->
+--          -- Use the existing declaration's selectors (ignoring its
+--          -- properties, which will be preserved since we return
+--          -- the original declaration in its entirety), combined with the
+--          -- selectors and properties of the given style block.
+--          declaration
+--            :: List.concatMap (applySelectors first others) (transform name)
+--        Declaration.ConditionalGroupRule ruleStr otherDeclarations ->
+--          let
+--            newDeclarations =
+--              List.concatMap
+--                (\childDeclaration -> applyStyleBlockTo name childDeclaration (StyleBlock transform))
+--                otherDeclarations
+--          in
+--            [ Declaration.ConditionalGroupRule ruleStr newDeclarations ]
+--        Declaration.StandaloneAtRule ruleStr _ ->
+--          [ declaration ]
+--    expandDeclaration : String -> Declaration -> List Declaration
+--    expandDeclaration name declaration =
+--      List.concatMap (applyStyleBlockTo name declaration) styleBlocks
+--  in
+--    Mixin (\name declarations -> List.concatMap (expandDeclaration name) declarations)
 
 
 {-| Nest styles within the current selector.
@@ -4998,141 +4982,109 @@ applyStyleCombinator combineSelectors styleBlocks =
           ]
       ]
 -}
-with : (List a -> StyleBlock) -> List Mixin -> Mixin
-with makeStyleBlock mixins =
-  let
-    toMixinTransform : (String -> List Declaration) -> DeclarationTransform
-    toMixinTransform styleBlockTransform name declarations =
-      let
-        expandDeclaration : Declaration -> List Declaration
-        expandDeclaration declaration =
-          case declaration of
-            Declaration.StyleBlock firstSelector otherSelectors properties ->
-              let
-                updates : List (ComplexSelector -> ComplexSelector)
-                updates =
-                  extractSelectors (styleBlockTransform name)
-                    |> List.map mergeSelectors
 
-                applyUpdate update =
-                  Declaration.StyleBlock
-                    (update firstSelector)
-                    (List.map update otherSelectors)
-                    []
 
-                newBlockDeclarations =
-                  List.map applyUpdate updates
-                    |> applyMixins mixins name
 
-                ruleStrings =
-                  extractRuleStrings (styleBlockTransform name)
-
-                applyRule ruleStr =
-                  declarations
-                    |> List.map removeProperties
-                    |> applyMixins mixins name
-                    |> Declaration.ConditionalGroupRule ruleStr
-
-                newRuleDeclarations =
-                  List.map applyRule ruleStrings
-              in
-                declaration :: (newBlockDeclarations ++ newRuleDeclarations)
-
-            Declaration.ConditionalGroupRule ruleStr declarations ->
-              declaration
-                :: List.map
-                    (expandDeclaration >> (Declaration.ConditionalGroupRule ruleStr))
-                    declarations
-
-            Declaration.StandaloneAtRule _ _ ->
-              [ declaration ]
-
-        newDeclarations =
-          List.concatMap expandDeclaration declarations
-      in
-        newDeclarations
-  in
-    makeStyleBlock []
-      |> (\(StyleBlock transform) -> toMixinTransform transform)
-      |> Mixin
+--with : (List a -> StyleBlock) -> List Mixin -> Mixin
+--with makeStyleBlock mixins =
+--  let
+--    toMixinTransform : (String -> List Declaration) -> DeclarationTransform
+--    toMixinTransform styleBlockTransform name declarations =
+--      let
+--        expandDeclaration : Declaration -> List Declaration
+--        expandDeclaration declaration =
+--          case declaration of
+--            Declaration.StyleBlock firstSelector otherSelectors properties ->
+--              let
+--                updates : List (ComplexSelector -> ComplexSelector)
+--                updates =
+--                  extractSelectors (styleBlockTransform name)
+--                    |> List.map mergeSelectors
+--                applyUpdate update =
+--                  Declaration.StyleBlock
+--                    (update firstSelector)
+--                    (List.map update otherSelectors)
+--                    []
+--                newBlockDeclarations =
+--                  List.map applyUpdate updates
+--                    |> applyMixins mixins name
+--                ruleStrings =
+--                  extractRuleStrings (styleBlockTransform name)
+--                applyRule ruleStr =
+--                  declarations
+--                    |> List.map removeProperties
+--                    |> applyMixins mixins name
+--                    |> Declaration.ConditionalGroupRule ruleStr
+--                newRuleDeclarations =
+--                  List.map applyRule ruleStrings
+--              in
+--                declaration :: (newBlockDeclarations ++ newRuleDeclarations)
+--            Declaration.ConditionalGroupRule ruleStr declarations ->
+--              declaration
+--                :: List.map
+--                    (expandDeclaration >> (Declaration.ConditionalGroupRule ruleStr))
+--                    declarations
+--            Declaration.StandaloneAtRule _ _ ->
+--              [ declaration ]
+--        newDeclarations =
+--          List.concatMap expandDeclaration declarations
+--      in
+--        newDeclarations
+--  in
+--    makeStyleBlock []
+--      |> (\(StyleBlock transform) -> toMixinTransform transform)
+--      |> Mixin
 
 
 {-| -}
-each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
-each styleBlockCreators mixins =
-  let
-    transform : String -> List Declaration
-    transform name =
-      let
-        selectors =
-          List.map ((|>) []) styleBlockCreators
-            |> List.map (\(StyleBlock transform) -> transform)
-            |> List.concatMap (\transform -> extractSelectors (transform name))
-      in
-        case selectors of
-          [] ->
-            []
-
-          firstSelector :: otherSelectors ->
-            let
-              newDeclaration =
-                Declaration.StyleBlock firstSelector otherSelectors []
-            in
-              transformWithMixins mixins newDeclaration name
-  in
-    StyleBlock transform
 
 
-{-| -}
-(&#) : (List Mixin -> StyleBlock) -> id -> List Mixin -> StyleBlock
-(&#) selector id mixins =
-  applyMulti (selector []) (makeIdSelector id) mixins
 
-
-{-| -}
-(&.) : (List Mixin -> StyleBlock) -> class -> List Mixin -> StyleBlock
-(&.) selector class mixins =
-  applyMulti (selector []) (makeClassSelector class) mixins
-
-
-applyMulti : StyleBlock -> (String -> SimpleSelector) -> List Mixin -> StyleBlock
-applyMulti styleBlock makeSelector mixins =
-  let
-    newTransform name =
-      styleBlock
-        |> (\(StyleBlock transform) -> transform name)
-        |> List.map (multiSelector mixins makeSelector)
-        |> List.concatMap (\(StyleBlock transform) -> transform name)
-  in
-    StyleBlock newTransform
-
-
-multiSelector : List Mixin -> (String -> SimpleSelector) -> Declaration -> StyleBlock
-multiSelector mixins makeSelector declaration =
-  case declaration of
-    Declaration.StyleBlock firstSelector otherSelectors _ ->
-      let
-        transform name =
-          let
-            makeMulti =
-              Declaration.mapSingleSelectors
-                ((flip Declaration.MultiSelector) (makeSelector name))
-
-            newStyleBlock =
-              Declaration.StyleBlock
-                (makeMulti firstSelector)
-                (List.map makeMulti otherSelectors)
-                []
-          in
-            transformWithMixins mixins newStyleBlock name
-      in
-        StyleBlock transform
-
-    Declaration.ConditionalGroupRule ruleStr _ ->
-      Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) (StyleBlock (\_ -> []))
-
-    Declaration.StandaloneAtRule ruleStr _ ->
-      Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) (StyleBlock (\_ -> []))
+--each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
+--each styleBlockCreators mixins =
+--  let
+--    transform : String -> List Declaration
+--    transform name =
+--      let
+--        selectors =
+--          List.map ((|>) []) styleBlockCreators
+--            |> List.map (\(StyleBlock transform) -> transform)
+--            |> List.concatMap (\transform -> extractSelectors (transform name))
+--      in
+--        case selectors of
+--          [] ->
+--            []
+--          firstSelector :: otherSelectors ->
+--            let
+--              newDeclaration =
+--                Declaration.StyleBlock firstSelector otherSelectors []
+--            in
+--              transformWithMixins mixins newDeclaration name
+--  in
+--    StyleBlock transform
+--multiSelector : List Mixin -> (String -> SimpleSelector) -> Declaration -> StyleBlock
+--multiSelector mixins makeSelector declaration =
+--  case declaration of
+--    Declaration.StyleBlock firstSelector otherSelectors _ ->
+--      let
+--        transform name =
+--          let
+--            makeMulti =
+--              Declaration.mapSingleSelectors
+--                ((flip Declaration.MultiSelector) (makeSelector name))
+--            newStyleBlock =
+--              Declaration.StyleBlock
+--                (makeMulti firstSelector)
+--                (List.map makeMulti otherSelectors)
+--                []
+--          in
+--            transformWithMixins mixins newStyleBlock name
+--      in
+--        StyleBlock transform
+--    Declaration.ConditionalGroupRule ruleStr _ ->
+--      Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) (StyleBlock (\_ -> []))
+--    Declaration.StandaloneAtRule ruleStr _ ->
+--      Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) (StyleBlock (\_ -> []))
 
 
 numberToString : number -> String

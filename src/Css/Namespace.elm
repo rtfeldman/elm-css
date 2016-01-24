@@ -10,12 +10,12 @@ test =
     []
 
 
-namespace : a -> List Declaration -> List Declaration
-namespace rawIdentifier declarations =
-  List.map (applyNamespace (toCssIdentifier rawIdentifier)) declarations
+namespace : a -> List Snippet -> List Snippet
+namespace rawIdentifier snippets =
+  List.map (applyNamespace (toCssIdentifier rawIdentifier)) snippets
 
 
-applyNamespace : String -> Declaration -> Declaration
+applyNamespace : String -> Snippet -> Snippet
 applyNamespace str declaration =
   case declaration of
     _ ->

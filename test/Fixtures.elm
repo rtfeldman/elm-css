@@ -54,8 +54,7 @@ nestedAtRule =
     [ button [ padding zero ]
     , body
         [ margin auto
-        , with
-            (media "print")
+        , (withMedia "print")
             [ margin (em 2) ]
         ]
     , a [ textDecoration none ]
@@ -173,7 +172,7 @@ underlineOnHover =
   mixin
     --~ textDecoration none
     [ color (rgb 128 127 126)
-    , (with hover)
+    , hover
         --[ textDecoration underline ]
         [ color (rgb 23 24 25) ]
     ]
@@ -182,7 +181,7 @@ underlineOnHover =
 greenOnHover : Mixin
 greenOnHover =
   mixin
-    [ (with hover)
+    [ hover
         [ color (rgb 0 0 122) ]
     ]
 
@@ -214,7 +213,7 @@ manualUnderlineOnHoverStylesheet =
     { name = "underlineOnHoverStylesheetsheet" }
     [ a
         [ color (rgb 128 127 126)
-        , (with hover)
+        , hover
             [ color (rgb 23 24 25) ]
         ]
     ]
@@ -266,44 +265,44 @@ transformsStylesheet =
 
 standaloneAt : Stylesheet
 standaloneAt =
-      stylesheet
-        { name = "standaloneAt" }
-        [ (charset "utf-8")
-        , (import' (url "fineprint.css"))
-        ]
+  stylesheet
+    { name = "standaloneAt" }
+    [ (charset "utf-8")
+    , (import' (url "fineprint.css"))
+    ]
 
 
 fontStylesheet : Stylesheet
 fontStylesheet =
-      stylesheet
-        { name = "fontStylesheet" }
-        [ body
-            [ lineHeight (px 14)
-            , fontFamily serif
-            , fontFamilies
-              [ qt "Gill Sans Extrabold"
-              , "Helvetica"
-              , .value sansSerif
-              ]
-            , fontSize xSmall
-            , fontStyle italic
-            , fontWeight bold
-            , fontWeight (n 100)
-            , fontVariant smallCaps
-            , fontVariant2 commonLigatures slashedZero
-            , fontVariantNumerics
-              [ oldstyleNums
-              , tabularNums
-              , stackedFractions
-              , ordinal
-              , slashedZero
-              ]
+  stylesheet
+    { name = "fontStylesheet" }
+    [ body
+        [ lineHeight (px 14)
+        , fontFamily serif
+        , fontFamilies
+            [ qt "Gill Sans Extrabold"
+            , "Helvetica"
+            , .value sansSerif
+            ]
+        , fontSize xSmall
+        , fontStyle italic
+        , fontWeight bold
+        , fontWeight (n 100)
+        , fontVariant smallCaps
+        , fontVariant2 commonLigatures slashedZero
+        , fontVariantNumerics
+            [ oldstyleNums
+            , tabularNums
+            , stackedFractions
+            , ordinal
+            , slashedZero
             ]
         ]
+    ]
 
 
 fontWeightWarning : Stylesheet
 fontWeightWarning =
-      stylesheet
-        { name = "fontWeightWarning" }
-        [ body [ fontWeight (n 22) ]]
+  stylesheet
+    { name = "fontWeightWarning" }
+    [ body [ fontWeight (n 22) ] ]

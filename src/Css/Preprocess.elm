@@ -7,12 +7,12 @@ the data structures found in this module.
 import Css.Structure as Structure exposing (mapLast, concatMapLast)
 
 
-stylesheet : List Declaration -> Stylesheet
-stylesheet declarations =
+stylesheet : List Snippet -> Stylesheet
+stylesheet snippets =
   { charset = Nothing
   , imports = []
   , namespaces = []
-  , declarations = declarations
+  , snippets = snippets
   }
 
 
@@ -21,8 +21,13 @@ toStructure stylesheet =
   { charset = stylesheet.charset
   , imports = stylesheet.imports
   , namespaces = stylesheet.namespaces
-  , declarations = List.concatMap toStructureDeclarations stylesheet.declarations
+  , declarations = List.concatMap snippetToDeclarations stylesheet.snippets
   }
+
+
+snippetToDeclarations : Snippet -> List Structure.Declaration
+snippetToDeclarations (Snippet snippetDeclarations) =
+  List.concatMap toDeclarations snippetDeclarations
 
 
 toMediaRule : List Structure.MediaQuery -> Structure.Declaration -> Structure.Declaration
@@ -71,17 +76,19 @@ toDocumentRule str1 str2 str3 str4 declaration =
       declaration
 
 
-toStructureDeclarations : Declaration -> List Structure.Declaration
-toStructureDeclarations declaration =
-  case declaration of
+toDeclarations : SnippetDeclaration -> List Structure.Declaration
+toDeclarations snippetDeclaration =
+  case snippetDeclaration of
     StyleBlockDeclaration styleBlock ->
       expandStyleBlock styleBlock
 
-    MediaRule mediaQueries styleBlock ->
-      List.map (toMediaRule mediaQueries) (expandStyleBlock styleBlock)
+    MediaRule mediaQueries styleBlocks ->
+      List.concatMap
+        (\styleBlock -> List.map (toMediaRule mediaQueries) (expandStyleBlock styleBlock))
+        styleBlocks
 
     SupportsRule str declarations ->
-      [ Structure.SupportsRule str (List.concatMap toStructureDeclarations declarations) ]
+      [ Structure.SupportsRule str (List.concatMap snippetToDeclarations declarations) ]
 
     -- TODO give these more descriptive names
     DocumentRule str1 str2 str3 str4 styleBlock ->
@@ -138,14 +145,24 @@ applyMixins mixins declarations =
         |> concatMapLast (\declaration -> applyMixins nestedMixins [ declaration ])
         |> applyMixins rest
 
-    (NestSnippet selectorCombinator (Snippet firstDeclaration otherDeclarations)) :: rest ->
+    (NestSnippet selectorCombinator snippets) :: rest ->
       -- TODO
       declarations
         |> applyMixins rest
 
-    (WithMedia mediaQuery (Snippet firstDeclaration otherDeclarations)) :: rest ->
+    (WithPseudoElement pseudoElement nestedMixins) :: rest ->
       -- TODO
       declarations
+        |> applyMixins rest
+
+    (WithMedia mediaQuery snippets) :: rest ->
+      -- TODO
+      declarations
+        |> applyMixins rest
+
+    (ApplyMixins otherMixins) :: rest ->
+      declarations
+        |> applyMixins otherMixins
         |> applyMixins rest
 
 
@@ -161,7 +178,7 @@ type alias Stylesheet =
   { charset : Maybe String
   , imports : List ( String, List Structure.MediaQuery )
   , namespaces : List ( String, String )
-  , declarations : List Declaration
+  , snippets : List Snippet
   }
 
 
@@ -177,8 +194,14 @@ mapLastProperty update mixin =
     NestSnippet _ _ ->
       mixin
 
+    WithPseudoElement _ _ ->
+      mixin
+
     WithMedia _ _ ->
       mixin
+
+    ApplyMixins otherMixins ->
+      ApplyMixins (mapLast (mapLastProperty update) otherMixins)
 
 
 mapAllLastProperty : (Structure.Property -> Structure.Property) -> List Mixin -> List Mixin
@@ -197,20 +220,25 @@ mapAllLastProperty update mixins =
 type Mixin
   = AppendProperty Property
   | ExtendSelector Structure.RepeatableSimpleSelector (List Mixin)
-  | NestSnippet Structure.SelectorCombinator Snippet
-  | WithMedia Structure.MediaQuery Snippet
+  | NestSnippet Structure.SelectorCombinator (List Snippet)
+  | WithPseudoElement Structure.PseudoElement (List Mixin)
+  | WithMedia (List Structure.MediaQuery) (List Mixin)
+  | ApplyMixins (List Mixin)
 
 
-{-| One or more top-level CSS declarations.
--}
 type Snippet
-  = Snippet Declaration (List Declaration)
+  = Snippet (List SnippetDeclaration)
 
 
-type Declaration
+unwrapSnippet : Snippet -> List SnippetDeclaration
+unwrapSnippet (Snippet declarations) =
+  declarations
+
+
+type SnippetDeclaration
   = StyleBlockDeclaration StyleBlock
-  | MediaRule (List Structure.MediaQuery) StyleBlock
-  | SupportsRule String (List Declaration)
+  | MediaRule (List Structure.MediaQuery) (List StyleBlock)
+  | SupportsRule String (List Snippet)
   | DocumentRule String String String String StyleBlock
   | PageRule String (List Property)
   | FontFace (List Property)
