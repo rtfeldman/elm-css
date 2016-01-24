@@ -51,7 +51,7 @@ deprecated or discouraged.
 
 import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors, extractRuleStrings, removeProperties)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Compile
+import Css.Preprocess.Compile
 import String
 
 
@@ -5171,4 +5171,4 @@ message if it could not be compiled.
 -}
 compile : List Declaration -> { css : String, warnings : List String }
 compile =
-  Css.Compile.compile
+  Css.Preprocess.Compile.compile

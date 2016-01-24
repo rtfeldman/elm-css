@@ -1,4 +1,4 @@
-module Css.Compile (..) where
+module Css.Preprocess.Compile (..) where
 
 import Css.Declaration exposing (..)
 import Css.Declaration.Output exposing (prettyPrintDeclarations)
