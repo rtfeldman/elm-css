@@ -118,12 +118,13 @@ print =
 
 projection : String
 projection =
-    "projection"
+  "projection"
 
 
 tv : String
 tv =
-    "tv"
+  "tv"
+
 
 
 {- Length -}
@@ -205,26 +206,29 @@ type alias MinMaxDimension compatible =
   }
 
 
+
 {- FONTS -}
+
 
 type alias ImportType compatible =
   { compatible | value : String, import' : Compatible }
 
 
 type alias FontFace compatible =
-    { compatible | value : String, fontFace : Compatible }
+  { compatible | value : String, fontFace : Compatible }
 
 
 type alias FontFamily compatible =
-    { compatible | value : String, fontFamily : Compatible }
+  { compatible | value : String, fontFamily : Compatible }
 
 
 type alias FontSize compatible =
-    { compatible | value : String, fontSize : Compatible}
+  { compatible | value : String, fontSize : Compatible }
 
 
 type alias FontStyle compatible =
-    { compatible | value : String, fontStyle : Compatible }
+  { compatible | value : String, fontStyle : Compatible }
+
 
 
 -- type alias FontWeight compatible =
@@ -235,33 +239,35 @@ type alias FontStyle compatible =
 
 
 type alias NumberedWeight =
-    { value : String, fontWeight : Compatible }
+  { value : String, fontWeight : Compatible }
 
 
 type alias FontVariant compatible =
-    { compatible | value : String, fontVariant : Compatible }
+  { compatible | value : String, fontVariant : Compatible }
 
 
 type alias FontVariantLigatures compatible =
-    { compatible
-      | value : String
-      , fontVariant : Compatible
-      , fontVariantLigatures : Compatible }
+  { compatible
+    | value : String
+    , fontVariant : Compatible
+    , fontVariantLigatures : Compatible
+  }
 
 
 type alias FontVariantCaps compatible =
-    { compatible
-      | value : String
-      , fontVariant : Compatible
-      , fontVariantCaps : Compatible }
+  { compatible
+    | value : String
+    , fontVariant : Compatible
+    , fontVariantCaps : Compatible
+  }
 
 
 type alias FontVariantNumeric compatible =
-    { compatible
-      | value : String
-      , fontVariant : Compatible
-      , fontVariantNumeric : Compatible }
-
+  { compatible
+    | value : String
+    , fontVariant : Compatible
+    , fontVariantNumeric : Compatible
+  }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Values
@@ -378,7 +384,6 @@ type alias LengthOrNone compatible =
 -}
 type alias LengthOrNumber compatible =
   { compatible | value : String, lengthOrNumber : Compatible }
-
 
 
 type alias ExplicitLength =
@@ -505,12 +510,8 @@ all =
 declaration.
 -}
 important : Mixin -> Mixin
-important (Mixin transform) =
-  let
-    update property =
-      { property | important = True }
-  in
-    Mixin (\name decls -> (updateLastProperty update) (transform name decls))
+important =
+  Preprocess.mapLastProperty (\property -> { property | important = True })
 
 
 {-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
@@ -1263,18 +1264,20 @@ n num =
 w : Int -> NumberedWeight
 w num =
   let
-    validWeight nm = List.member nm <| List.map (\n -> n * 100) [1..9]
+    validWeight nm =
+      List.member nm <| List.map (\n -> n * 100) [1..9]
   in
     if validWeight num then
       { value = numberToString num, fontWeight = Compatible }
+    else if num < 100 then
+      { value = "100", fontWeight = Compatible }
+    else if num > 900 then
+      { value = "900", fontWeight = Compatible }
     else
-      if num < 100 then
-        { value = "100", fontWeight = Compatible }
-      else if num > 900 then
-        { value = "900", fontWeight = Compatible }
-      else
-        { value = numberToString <| round (num / 100) * 100
-        , fontWeight = Compatible }
+      { value = numberToString <| round (num / 100) * 100
+      , fontWeight = Compatible
+      }
+
 
 
 {- ANGLES -}
@@ -1947,6 +1950,7 @@ lineThrough =
   { value = "line-through"
   , textDecorationLine = Compatible
   }
+
 
 
 {- BORDERS -}
@@ -2645,6 +2649,7 @@ right =
   prop1 "right"
 
 
+
 {- MIN-MAX DIMENSIONS -}
 
 
@@ -2755,115 +2760,116 @@ absolute =
   }
 
 
-{- FONT VALUES -}
 
+{- FONT VALUES -}
 -- Families --
+
+
 serif : FontFamily {}
 serif =
-    { value = "serif", fontFamily = Compatible }
+  { value = "serif", fontFamily = Compatible }
 
 
 sansSerif : FontFamily {}
 sansSerif =
-    { value = "sans-serif", fontFamily = Compatible }
+  { value = "sans-serif", fontFamily = Compatible }
 
 
 monospace : FontFamily {}
 monospace =
-    { value = "monospace", fontFamily = Compatible }
+  { value = "monospace", fontFamily = Compatible }
 
 
 cursive : FontFamily {}
 cursive =
-    { value = "cursive", fontFamily = Compatible }
+  { value = "cursive", fontFamily = Compatible }
 
 
 fantasy : FontFamily {}
 fantasy =
-    { value = "fantasy", fontFamily = Compatible }
+  { value = "fantasy", fontFamily = Compatible }
+
 
 
 -- Size --
 
+
 xxSmall : FontSize {}
 xxSmall =
-    { value = "xx-small", fontSize = Compatible }
+  { value = "xx-small", fontSize = Compatible }
 
 
 xSmall : FontSize {}
 xSmall =
-    { value = "x-small", fontSize = Compatible }
+  { value = "x-small", fontSize = Compatible }
 
 
 small : FontSize {}
 small =
-    { value = "small", fontSize = Compatible }
+  { value = "small", fontSize = Compatible }
 
 
 medium : FontSize {}
 medium =
-    { value = "medium", fontSize = Compatible }
+  { value = "medium", fontSize = Compatible }
 
 
 large : FontSize {}
 large =
-    { value = "large", fontSize = Compatible }
+  { value = "large", fontSize = Compatible }
 
 
 xLarge : FontSize {}
 xLarge =
-    { value = "x-large", fontSize = Compatible }
+  { value = "x-large", fontSize = Compatible }
 
 
 xxLarge : FontSize {}
 xxLarge =
-    { value = "xx-large", fontSize = Compatible }
+  { value = "xx-large", fontSize = Compatible }
 
 
 smaller : FontSize {}
 smaller =
-    { value = "smaller", fontSize = Compatible }
+  { value = "smaller", fontSize = Compatible }
 
 
 larger : FontSize {}
 larger =
-    { value = "larger", fontSize = Compatible }
+  { value = "larger", fontSize = Compatible }
+
 
 
 -- Styles --
 
+
 normal : FontStyle {}
 normal =
-    { value = "normal", fontStyle = Compatible }
+  { value = "normal", fontStyle = Compatible }
 
 
 italic : FontStyle {}
 italic =
-    { value = "italic", fontStyle = Compatible }
+  { value = "italic", fontStyle = Compatible }
 
 
 oblique : FontStyle {}
 oblique =
-    { value = "oblique", fontStyle = Compatible }
+  { value = "oblique", fontStyle = Compatible }
+
 
 
 -- Weights --
-
-
 -- bold : FontWeight {}
 -- bold =
 --     { value = "bold"
 --     , lengthOrNumber = Compatible
 --     , fontWeight = Compatible }
-
-
 -- lighter : FontWeight {}
 -- lighter =
 --     { value = "lighter"
 --     , lengthOrNumber = Compatible
 --     , fontWeight = Compatible }
-
-
 -- bolder : FontWeight {}
 -- bolder =
 --     { value = "bolder"
@@ -2873,172 +2879,195 @@ oblique =
 
 bold : LengthOrNumberOrAutoOrNoneOrContent {}
 bold =
-    { value = "bold"
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    }
+  { value = "bold"
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  }
 
 
 lighter : LengthOrNumberOrAutoOrNoneOrContent {}
 lighter =
-    { value = "lighter"
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    }
+  { value = "lighter"
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  }
 
 
 bolder : LengthOrNumberOrAutoOrNoneOrContent {}
 bolder =
-    { value = "bolder"
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    }
+  { value = "bolder"
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  }
+
 
 
 -- VARIANTS --
 -- CAPS --
 
+
 smallCaps : FontVariantCaps {}
 smallCaps =
-    { value = "small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+  { value = "small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 allSmallCaps : FontVariantCaps {}
 allSmallCaps =
-    { value = "all-small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+  { value = "all-small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 petiteCaps : FontVariantCaps {}
 petiteCaps =
-    { value = "petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+  { value = "petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 allPetiteCaps : FontVariantCaps {}
 allPetiteCaps =
-    { value = "all-petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+  { value = "all-petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 unicase : FontVariantCaps {}
 unicase =
-    { value = "unicase", fontVariant = Compatible, fontVariantCaps = Compatible }
+  { value = "unicase", fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 titlingCaps : FontVariantCaps {}
 titlingCaps =
-    { value = "titling-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+  { value = "titling-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
 
 
 -- LIGATURES --
 
+
 commonLigatures : FontVariantLigatures {}
 commonLigatures =
-    { value = "common-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "common-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
 
 
 noCommonLigatures : FontVariantLigatures {}
 noCommonLigatures =
-    { value = "no-common-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "no-common-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
 
 
 discretionaryLigatures : FontVariantLigatures {}
 discretionaryLigatures =
-    { value = "discretionary-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "discretionary-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
 
 
 noDiscretionaryLigatures : FontVariantLigatures {}
 noDiscretionaryLigatures =
-    { value = "no-discretionary-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "no-discretionary-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
 
 
 historicalLigatures : FontVariantLigatures {}
 historicalLigatures =
-    { value = "historical-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "historical-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
 
 
 noHistoricalLigatures : FontVariantLigatures {}
 noHistoricalLigatures =
-    { value = "no-historical-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "no-historical-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
 
 
 contextual : FontVariantLigatures {}
 contextual =
-    { value = "context"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "context"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
 
 
 noContextual : FontVariantLigatures {}
 noContextual =
-    { value = "no-contextual"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible }
+  { value = "no-contextual"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
 
 
 -- NUMERIC --
 
+
 liningNums : FontVariantNumeric {}
 liningNums =
-    { value = "lining-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "lining-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
 
 
 oldstyleNums : FontVariantNumeric {}
 oldstyleNums =
-    { value = "oldstyle-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "oldstyle-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
 
 
 proportionalNums : FontVariantNumeric {}
 proportionalNums =
-    { value = "proportional-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "proportional-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
 
 
 tabularNums : FontVariantNumeric {}
 tabularNums =
-    { value = "tabular-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "tabular-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
 
 
 diagonalFractions : FontVariantNumeric {}
 diagonalFractions =
-    { value = "diagonal-fractions"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "diagonal-fractions"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
 
 
 stackedFractions : FontVariantNumeric {}
 stackedFractions =
-    { value = "stacked-fractions"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "stacked-fractions"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
 
 
 ordinal : FontVariantNumeric {}
 ordinal =
-    { value = "ordinal"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "ordinal"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
 
 
 slashedZero : FontVariantNumeric {}
 slashedZero =
-    { value = "slashed-zero"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible }
+  { value = "slashed-zero"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
 
 
 {- BORDER PROPERTIES -}
@@ -3924,7 +3953,9 @@ media value styleBlocks =
     StyleBlock getDeclarations
 
 
+
 {- FONT PROPERTIES -}
+
 
 {-| Sets @charset (https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
 -}
@@ -3933,8 +3964,8 @@ charset value =
   let
     getDeclarations name =
       [ Declaration.StandaloneAtRule "@charset" ((qt value) ++ ";") ]
-    in
-      StyleBlock getDeclarations
+  in
+    StyleBlock getDeclarations
 
 
 {-| Sets @import (https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
@@ -3953,8 +3984,8 @@ import' { value } =
   let
     getDeclarations name =
       [ Declaration.StandaloneAtRule "@import" (value ++ ";") ]
-    in
-      StyleBlock getDeclarations
+  in
+    StyleBlock getDeclarations
 
 
 {-| Sets [`line-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
@@ -3963,7 +3994,7 @@ import' { value } =
 -}
 lineHeight : Length compatible -> Mixin
 lineHeight =
-    prop1 "line-height"
+  prop1 "line-height"
 
 
 {-| Sets [`font-face`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
@@ -3979,7 +4010,7 @@ src value =
 
 fontFace : String -> String
 fontFace value =
-    "font-face " ++ value
+  "font-face " ++ value
 
 
 {-| Sets [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
@@ -3994,12 +4025,12 @@ qt str =
 
 fontFamily : FontFamily a -> Mixin
 fontFamily =
-    prop1 "font-family"
+  prop1 "font-family"
 
 
 fontFamilies : List String -> Mixin
 fontFamilies =
-    prop1 "font-family" << stringsToValue
+  prop1 "font-family" << stringsToValue
 
 
 {-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
@@ -4009,7 +4040,7 @@ fontFamilies =
 -}
 fontSize : FontSize a -> Mixin
 fontSize =
-    prop1 "font-size"
+  prop1 "font-size"
 
 
 {-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
@@ -4018,7 +4049,7 @@ fontSize =
 -}
 fontStyle : FontStyle a -> Mixin
 fontStyle =
-    prop1 "font-style"
+  prop1 "font-style"
 
 
 {-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
@@ -4026,13 +4057,13 @@ fontStyle =
     ~ fontWeight  bold
     ~ fontWeight  (n 300)
 -}
-
-
 fontWeight : LengthOrNumberOrAutoOrNoneOrContent a -> Mixin
 fontWeight { value } =
   let
     validWeight nm =
-      let validWeights = List.member nm <| List.map (\n -> n * 100) [1..9]
+      let
+        validWeights =
+          List.member nm <| List.map (\n -> n * 100) [1..9]
       in
         -- This means it was one of the keywords, bold, ...
         if nm == 0 && value /= "0" then
@@ -4041,17 +4072,25 @@ fontWeight { value } =
           validWeights
   in
     if validWeight <| stringToInt value then
-      Mixin (\_ -> addProperty { key = "font-weight"
-                               , value = value
-                               , important = False
-                               , warnings = []
-                               })
+      Mixin
+        (\_ ->
+          addProperty
+            { key = "font-weight"
+            , value = value
+            , important = False
+            , warnings = []
+            }
+        )
     else
-      Mixin (\_ -> addProperty { key = "font-weight"
-                               , value = value
-                               , important = False
-                               , warnings = [ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
-                               })
+      Mixin
+        (\_ ->
+          addProperty
+            { key = "font-weight"
+            , value = value
+            , important = False
+            , warnings = [ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
+            }
+        )
 
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -4063,50 +4102,52 @@ fontWeight { value } =
 -}
 fontVariant : FontVariant a -> Mixin
 fontVariant =
-    prop1 "font-variant"
+  prop1 "font-variant"
 
 
 fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Mixin
 fontVariant2 =
-    prop2 "font-variant"
+  prop2 "font-variant"
 
 
 fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Mixin
 fontVariant3 =
-    prop3 "font-variant"
+  prop3 "font-variant"
 
 
 fontVariantLigatures : FontVariantLigatures a -> Mixin
 fontVariantLigatures =
-    prop1 "font-variant-ligatures"
+  prop1 "font-variant-ligatures"
 
 
 fontVariantCaps : FontVariantCaps a -> Mixin
 fontVariantCaps =
-    prop1 "font-variant-caps"
+  prop1 "font-variant-caps"
 
 
 fontVariantNumeric : FontVariantNumeric a -> Mixin
 fontVariantNumeric =
-    prop1 "font-variant-numeric"
+  prop1 "font-variant-numeric"
 
 
 fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Mixin
 fontVariantNumeric2 =
-    prop2 "font-variant-numeric"
+  prop2 "font-variant-numeric"
 
 
 fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin
 fontVariantNumeric3 =
-    prop3 "font-variant-numeric"
+  prop3 "font-variant-numeric"
 
 
 fontVariantNumerics : List (FontVariantNumeric compatible) -> Mixin
 fontVariantNumerics =
-    prop1 "font-variant-numeric" << valuesOrNone
+  prop1 "font-variant-numeric" << valuesOrNone
+
 
 
 {- TEXT DECORATION PROPERTIES -}
+
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
@@ -5119,10 +5160,10 @@ valuesOrNone list =
 
 stringsToValue : List String -> Value {}
 stringsToValue list =
-    if List.isEmpty list then
-        { value = "none" }
-    else
-        { value = String.join ", " (List.map (\s -> s) list) }
+  if List.isEmpty list then
+    { value = "none" }
+  else
+    { value = String.join ", " (List.map (\s -> s) list) }
 
 
 {-| Compile the given stylesheet to a CSS string, or to an error
