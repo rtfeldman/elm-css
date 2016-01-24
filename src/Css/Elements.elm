@@ -24,22 +24,21 @@ module Css.Elements (html, body, article, header, footer, h1, h2, h3, h4, nav, s
 @docs button, fieldset, form, input, label, legend, optgroup, option, progress, select
 -}
 
-import Css exposing (Mixin(Mixin), StyleBlock(StyleBlock), DeclarationTransform)
-import Css.Declaration as Declaration exposing (Declaration)
-
-
-typeSelectorBlock : String -> Declaration
-typeSelectorBlock str =
-  Declaration.StyleBlock (Declaration.SingleSelector (Declaration.TypeSelector str)) [] []
+import Css.Preprocess exposing (Mixin, StyleBlock(StyleBlock))
+import Css.Structure as Structure
 
 
 typeSelector : String -> List Mixin -> StyleBlock
 typeSelector selectorStr mixins =
   let
-    transform name =
-      List.foldl (\(Mixin transform) -> transform name) [ typeSelectorBlock selectorStr ] mixins
+    sequence =
+      Structure.TypeSelectorSequence (Structure.TypeSelector selectorStr) []
+
+    selector =
+      Structure.Selector sequence [] Nothing
   in
-    StyleBlock transform
+    StyleBlock selector [] []
+
 
 
 {- BASIC ELEMENTS -}
