@@ -27,14 +27,11 @@ importToString ( name, mediaQueries ) =
   "@import \"" ++ name ++ toString mediaQueries ++ "\""
 
 
-namespaceToString : ( Bool, String ) -> String
-namespaceToString ( isPrefix, str ) =
+namespaceToString : ( String, String ) -> String
+namespaceToString ( prefix, str ) =
   "@namespace "
-    ++ (if isPrefix then
-          "prefix \""
-        else
-          "\""
-       )
+    ++ prefix
+    ++ "\""
     ++ str
     ++ "\""
 

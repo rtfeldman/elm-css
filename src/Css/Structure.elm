@@ -13,7 +13,6 @@ type alias Property =
   { important : Bool
   , key : String
   , value : String
-  , warnings : List String
   }
 
 
@@ -49,7 +48,7 @@ enumerated as follows.
 -}
 type Declaration
   = StyleBlockDeclaration StyleBlock
-  | MediaRule (List MediaQuery) StyleBlock
+  | MediaRule (List MediaQuery) (List StyleBlock)
   | SupportsRule String (List Declaration)
   | DocumentRule String String String String StyleBlock
   | PageRule String (List Property)
@@ -149,14 +148,14 @@ extendLastSelector selector declarations =
       in
         [ StyleBlockDeclaration (StyleBlock first newRest properties) ]
 
-    (MediaRule mediaQueries (StyleBlock only [] properties)) :: [] ->
+    (MediaRule mediaQueries ((StyleBlock only [] properties) :: [])) :: [] ->
       let
         newStyleBlock =
           StyleBlock (appendRepeatableSelector selector only) [] properties
       in
-        [ MediaRule mediaQueries newStyleBlock ]
+        [ MediaRule mediaQueries [ newStyleBlock ] ]
 
-    (MediaRule mediaQueries (StyleBlock first rest properties)) :: [] ->
+    (MediaRule mediaQueries ((StyleBlock first rest properties) :: [])) :: [] ->
       let
         newRest =
           mapLast (appendRepeatableSelector selector) rest
@@ -164,7 +163,15 @@ extendLastSelector selector declarations =
         newStyleBlock =
           StyleBlock first newRest properties
       in
-        [ MediaRule mediaQueries newStyleBlock ]
+        [ MediaRule mediaQueries [ newStyleBlock ] ]
+
+    (MediaRule mediaQueries (first :: rest)) :: [] ->
+      case extendLastSelector selector [ MediaRule mediaQueries rest ] of
+        (MediaRule newMediaQueries newStyleBlocks) :: [] ->
+          [ MediaRule newMediaQueries (first :: newStyleBlocks) ]
+
+        _ as declarations ->
+          declarations
 
     (SupportsRule str nestedDeclarations) :: [] ->
       [ SupportsRule str (extendLastSelector selector nestedDeclarations) ]
@@ -231,8 +238,16 @@ mapLastStyleBlock update declarations =
     (StyleBlockDeclaration styleBlock) :: [] ->
       [ StyleBlockDeclaration (update styleBlock) ]
 
-    (MediaRule mediaQueries styleBlock) :: [] ->
-      [ MediaRule mediaQueries (update styleBlock) ]
+    (MediaRule mediaQueries (styleBlock :: [])) :: [] ->
+      [ MediaRule mediaQueries [ update styleBlock ] ]
+
+    (MediaRule mediaQueries (first :: rest)) :: [] ->
+      case mapLastStyleBlock update [ MediaRule mediaQueries rest ] of
+        (MediaRule newMediaQueries newStyleBlocks) :: [] ->
+          [ MediaRule newMediaQueries (first :: newStyleBlocks) ]
+
+        _ as declarations ->
+          declarations
 
     (SupportsRule str nestedDeclarations) :: [] ->
       [ SupportsRule str (mapLastStyleBlock update nestedDeclarations) ]
@@ -323,3 +338,76 @@ concatMapLast update list =
 
     first :: rest ->
       first :: concatMapLast update rest
+
+
+dropEmpty : Stylesheet -> Stylesheet
+dropEmpty { charset, imports, namespaces, declarations } =
+  { charset = charset
+  , imports = imports
+  , namespaces = namespaces
+  , declarations = dropEmptyDeclarations declarations
+  }
+
+
+dropEmptyDeclarations : List Declaration -> List Declaration
+dropEmptyDeclarations declarations =
+  case declarations of
+    [] ->
+      []
+
+    ((StyleBlockDeclaration (StyleBlock _ _ properties)) as declaration) :: rest ->
+      if List.isEmpty properties then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((MediaRule _ styleBlocks) as declaration) :: rest ->
+      if List.all (\(StyleBlock _ _ properties) -> List.isEmpty properties) styleBlocks then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((SupportsRule _ otherDeclarations) as declaration) :: rest ->
+      if List.isEmpty otherDeclarations then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((DocumentRule _ _ _ _ _) as declaration) :: rest ->
+      declaration :: (dropEmptyDeclarations rest)
+
+    ((PageRule _ properties) as declaration) :: rest ->
+      if List.isEmpty properties then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((FontFace properties) as declaration) :: rest ->
+      if List.isEmpty properties then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((Keyframes _ properties) as declaration) :: rest ->
+      if List.isEmpty properties then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((Viewport properties) as declaration) :: rest ->
+      if List.isEmpty properties then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((CounterStyle properties) as declaration) :: rest ->
+      if List.isEmpty properties then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)
+
+    ((FontFeatureValues tuples) as declaration) :: rest ->
+      if List.all (\( _, properties ) -> List.isEmpty properties) tuples then
+        dropEmptyDeclarations rest
+      else
+        declaration :: (dropEmptyDeclarations rest)

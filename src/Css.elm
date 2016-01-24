@@ -54,7 +54,6 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
-import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors, extractRuleStrings, removeProperties)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Compile
 import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
@@ -5121,6 +5120,6 @@ stringsToValue list =
 {-| Compile the given stylesheet to a CSS string, or to an error
 message if it could not be compiled.
 -}
-compile : List Declaration -> { css : String, warnings : List String }
+compile : Stylesheet -> { css : String, warnings : List String }
 compile =
   Css.Preprocess.Compile.compile

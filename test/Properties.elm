@@ -4,7 +4,6 @@ import ElmTest exposing (..)
 import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (p)
-import Css.Declaration exposing (Declaration)
 
 
 all : Test
@@ -350,11 +349,3 @@ assertPropertyWorks propertyName ( mixin, expectedStr ) =
     <| assertEqual
         (prettyPrint (stylesheet { name = "test" } [ p [ mixin ] ]))
         ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-
-
-type alias DeclarationTransform namespace =
-  namespace -> List Declaration -> List Declaration
-
-
-type alias StylesheetOrMixin namespace base =
-  { base | transform : DeclarationTransform namespace }

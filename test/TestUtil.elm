@@ -2,8 +2,7 @@ module TestUtil (..) where
 
 import ElmTest exposing (..)
 import String
-import Css
-import Css.Declaration exposing (Declaration)
+import Css exposing (Snippet)
 import Check.Test
 import Check.Investigator as Investigator exposing (..)
 import Random exposing (Seed, Generator, initialSeed)
@@ -18,7 +17,7 @@ outdented str =
     |> String.trim
 
 
-prettyPrint : List Declaration -> String
+prettyPrint : List Snippet -> String
 prettyPrint style =
   let
     { warnings, css } =
