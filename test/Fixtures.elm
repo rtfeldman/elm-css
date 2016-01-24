@@ -2,6 +2,7 @@ module Fixtures (..) where
 
 import Css exposing (..)
 import Css.Elements exposing (..)
+import Css.Namespace exposing (namespace)
 
 
 type CssClasses
@@ -19,14 +20,12 @@ type CssAnimations
 unstyledDiv : Stylesheet
 unstyledDiv =
   stylesheet
-    { name = "" }
     [ div [] ]
 
 
 divWidthHeight : Stylesheet
 divWidthHeight =
   stylesheet
-    { name = "" }
     [ div
         [ width (pct 32)
         , height (px 50)
@@ -36,11 +35,10 @@ divWidthHeight =
 
 atRule : Stylesheet
 atRule =
-  stylesheet
-    { name = "homepage" }
+  (stylesheet << namespace "homepage")
     [ body
         [ padding zero ]
-    , (media "print")
+    , (media [ print ])
         [ body [ margin (em 2) ] ]
     , button
         [ margin auto ]
@@ -49,12 +47,11 @@ atRule =
 
 nestedAtRule : Stylesheet
 nestedAtRule =
-  stylesheet
-    { name = "homepage" }
+  (stylesheet << namespace "homepage")
     [ button [ padding zero ]
     , body
         [ margin auto
-        , (withMedia "print")
+        , (withMedia [ print ])
             [ margin (em 2) ]
         ]
     , a [ textDecoration none ]
@@ -64,7 +61,6 @@ nestedAtRule =
 multiDescendent : Stylesheet
 multiDescendent =
   stylesheet
-    { name = "" }
     [ (each [ html, body ])
         [ boxSizing borderBox
         , display none
@@ -107,12 +103,15 @@ multiDescendent =
 
 multiSelector : Stylesheet
 multiSelector =
-  stylesheet
-    { name = "multiSelector" }
-    [ (div &# Page &. Hidden)
-        [ display none
-        , width (pct 100)
-        , height (pct 100)
+  (stylesheet << namespace "multiSelector")
+    [ div
+        [ (withClass Page)
+            [ (withClass Hidden)
+                [ display none
+                , width (pct 100)
+                , height (pct 100)
+                ]
+            ]
         ]
     , span
         [ padding (px 10)
@@ -123,8 +122,7 @@ multiSelector =
 
 keyValue : Stylesheet
 keyValue =
-  stylesheet
-    { name = "keyValue" }
+  (stylesheet << namespace "keyValue")
     [ body
         [ property "-webkit-font-smoothing" "none"
         , (property "-moz-font-smoothing" "none") |> important
@@ -134,8 +132,7 @@ keyValue =
 
 leftRightTopBottom : Stylesheet
 leftRightTopBottom =
-  stylesheet
-    { name = "left-right-top-bottom" }
+  (stylesheet << namespace "left-right-top-bottom")
     [ div
         [ position absolute
         , top (em 2)
@@ -155,8 +152,7 @@ leftRightTopBottom =
 
 borders : Stylesheet
 borders =
-  stylesheet
-    { name = "border-test" }
+  (stylesheet << namespace "border-test")
     [ button
         [ borderLeft3 (px 5) dashed (rgb 11 14 17)
         , borderRight (px 7)
@@ -188,8 +184,7 @@ greenOnHover =
 
 mixinGreenOnHoverStylesheet : Stylesheet
 mixinGreenOnHoverStylesheet =
-  stylesheet
-    { name = "greenOnHoverStylesheetsheet" }
+  (stylesheet << namespace "greenOnHoverStylesheetsheet")
     [ button
         [ color (rgb 11 22 33)
         , greenOnHover
@@ -199,8 +194,7 @@ mixinGreenOnHoverStylesheet =
 
 mixinUnderlineOnHoverStylesheet : Stylesheet
 mixinUnderlineOnHoverStylesheet =
-  stylesheet
-    { name = "underlineOnHoverStylesheetsheet" }
+  (stylesheet << namespace "underlineOnHoverStylesheetsheet")
     [ a
         --[ color (rgb 128 64 32) ]
         [ underlineOnHover ]
@@ -209,8 +203,7 @@ mixinUnderlineOnHoverStylesheet =
 
 manualUnderlineOnHoverStylesheet : Stylesheet
 manualUnderlineOnHoverStylesheet =
-  stylesheet
-    { name = "underlineOnHoverStylesheetsheet" }
+  (stylesheet << namespace "underlineOnHoverStylesheetsheet")
     [ a
         [ color (rgb 128 127 126)
         , hover
@@ -221,8 +214,7 @@ manualUnderlineOnHoverStylesheet =
 
 transformsStylesheet : Stylesheet
 transformsStylesheet =
-  stylesheet
-    { name = "transformsStylesheet" }
+  (stylesheet << namespace "transformsStylesheet")
     [ body
         [ transforms []
         , transforms
@@ -263,19 +255,9 @@ transformsStylesheet =
     ]
 
 
-standaloneAt : Stylesheet
-standaloneAt =
-  stylesheet
-    { name = "standaloneAt" }
-    [ (charset "utf-8")
-    , (import' (url "fineprint.css"))
-    ]
-
-
 fontStylesheet : Stylesheet
 fontStylesheet =
-  stylesheet
-    { name = "fontStylesheet" }
+  (stylesheet << namespace "fontStylesheet")
     [ body
         [ lineHeight (px 14)
         , fontFamily serif
@@ -303,6 +285,5 @@ fontStylesheet =
 
 fontWeightWarning : Stylesheet
 fontWeightWarning =
-  stylesheet
-    { name = "fontWeightWarning" }
+  (stylesheet << namespace "fontWeightWarning")
     [ body [ fontWeight (n 22) ] ]
