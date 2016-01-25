@@ -3004,21 +3004,6 @@ oblique =
 
 
 -- Weights --
--- bold : FontWeight {}
--- bold =
---     { value = "bold"
---     , lengthOrNumber = Compatible
---     , fontWeight = Compatible }
--- lighter : FontWeight {}
--- lighter =
---     { value = "lighter"
---     , lengthOrNumber = Compatible
---     , fontWeight = Compatible }
--- bolder : FontWeight {}
--- bolder =
---     { value = "bolder"
---     , lengthOrNumber = Compatible
---     , fontWeight = Compatible }
 
 
 {-| -}
