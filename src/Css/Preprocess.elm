@@ -266,7 +266,7 @@ applyMixins mixins declarations =
 
         initialResult =
           declarations
-            |> Structure.mapLastStyleBlock (Structure.appendToLastSelector selector)
+            |> Structure.concatMapLastStyleBlock (Structure.appendToLastSelector selector)
             |> List.map (\declaration -> { declarations = [ declaration ], warnings = [] })
             |> mapLast handleInitial
             |> concatDeclarationsAndWarnings

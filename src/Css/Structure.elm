@@ -238,34 +238,39 @@ extendLastSelector selector declarations =
       first :: extendLastSelector selector rest
 
 
-appendToLastSelector : RepeatableSimpleSelector -> StyleBlock -> StyleBlock
+appendToLastSelector : RepeatableSimpleSelector -> StyleBlock -> List StyleBlock
 appendToLastSelector selector styleBlock =
   case styleBlock of
     StyleBlock only [] properties ->
-      StyleBlock (appendRepeatableSelector selector only) [] properties
+      [ StyleBlock only [] properties
+      , StyleBlock (appendRepeatableSelector selector only) [] []
+      ]
 
     StyleBlock first rest properties ->
       let
         newRest =
           mapLast (appendRepeatableSelector selector) rest
       in
-        StyleBlock first newRest properties
+        [ StyleBlock first rest properties
+        , StyleBlock first newRest []
+        ]
 
 
-mapLastStyleBlock : (StyleBlock -> StyleBlock) -> List Declaration -> List Declaration
-mapLastStyleBlock update declarations =
+concatMapLastStyleBlock : (StyleBlock -> List StyleBlock) -> List Declaration -> List Declaration
+concatMapLastStyleBlock update declarations =
   case declarations of
     [] ->
       declarations
 
     (StyleBlockDeclaration styleBlock) :: [] ->
-      [ StyleBlockDeclaration (update styleBlock) ]
+      update styleBlock
+        |> List.map StyleBlockDeclaration
 
     (MediaRule mediaQueries (styleBlock :: [])) :: [] ->
-      [ MediaRule mediaQueries [ update styleBlock ] ]
+      [ MediaRule mediaQueries (update styleBlock) ]
 
     (MediaRule mediaQueries (first :: rest)) :: [] ->
-      case mapLastStyleBlock update [ MediaRule mediaQueries rest ] of
+      case concatMapLastStyleBlock update [ MediaRule mediaQueries rest ] of
         (MediaRule newMediaQueries newStyleBlocks) :: [] ->
           [ MediaRule newMediaQueries (first :: newStyleBlocks) ]
 
@@ -273,11 +278,12 @@ mapLastStyleBlock update declarations =
           declarations
 
     (SupportsRule str nestedDeclarations) :: [] ->
-      [ SupportsRule str (mapLastStyleBlock update nestedDeclarations) ]
+      [ SupportsRule str (concatMapLastStyleBlock update nestedDeclarations) ]
 
     -- TODO give these more descritpive names
     (DocumentRule str1 str2 str3 str4 styleBlock) :: [] ->
-      [ DocumentRule str1 str2 str3 str4 (update styleBlock) ]
+      update styleBlock
+        |> List.map (DocumentRule str1 str2 str3 str4)
 
     (PageRule _ _) :: [] ->
       declarations
@@ -298,7 +304,7 @@ mapLastStyleBlock update declarations =
       declarations
 
     first :: rest ->
-      first :: mapLastStyleBlock update rest
+      first :: concatMapLastStyleBlock update rest
 
 
 appendRepeatableSelector : RepeatableSimpleSelector -> Selector -> Selector
