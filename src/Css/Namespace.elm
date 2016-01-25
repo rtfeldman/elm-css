@@ -1,8 +1,8 @@
 module Css.Namespace (..) where
 
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Preprocess exposing (Snippet(Snippet), StyleBlock(..), SnippetDeclaration(..), Property, unwrapSnippet, Mixin(..))
-import Css.Structure exposing (Selector(..), RepeatableSimpleSelector(..), SimpleSelectorSequence(..))
+import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Structure as Structure exposing (mapLast, SimpleSelectorSequence(UniversalSelectorSequence, TypeSelectorSequence, CustomSelector), RepeatableSimpleSelector(IdSelector, ClassSelector, PseudoClassSelector))
 
 
 namespace : a -> List Snippet -> List Snippet
@@ -37,13 +37,13 @@ applyNamespaceToSequence name sequence =
       CustomSelector str (List.map (applyNamespaceToRepeatable name) repeatables)
 
 
-applyNamespaceToSelector : String -> Selector -> Selector
-applyNamespaceToSelector name (Selector sequence chain pseudoElement) =
+applyNamespaceToSelector : String -> Structure.Selector -> Structure.Selector
+applyNamespaceToSelector name (Structure.Selector sequence chain pseudoElement) =
   let
     apply =
       applyNamespaceToSequence name
   in
-    Selector
+    Structure.Selector
       (apply sequence)
       (List.map (\( combinator, next ) -> ( combinator, apply next )) chain)
       pseudoElement
@@ -52,32 +52,32 @@ applyNamespaceToSelector name (Selector sequence chain pseudoElement) =
 applyNamespaceToMixin : String -> Mixin -> Mixin
 applyNamespaceToMixin name mixin =
   case mixin of
-    AppendProperty property ->
+    Preprocess.AppendProperty property ->
       applyNamespaceToProperty name property
-        |> AppendProperty
+        |> Preprocess.AppendProperty
 
-    ExtendSelector selector mixins ->
+    Preprocess.ExtendSelector selector mixins ->
       List.map (applyNamespaceToMixin name) mixins
-        |> ExtendSelector (applyNamespaceToRepeatable name selector)
+        |> Preprocess.ExtendSelector (applyNamespaceToRepeatable name selector)
 
-    NestSnippet combinator snippets ->
+    Preprocess.NestSnippet combinator snippets ->
       List.map (applyNamespaceToSnippet name) snippets
-        |> NestSnippet combinator
+        |> Preprocess.NestSnippet combinator
 
-    WithPseudoElement pseudoElement mixins ->
+    Preprocess.WithPseudoElement pseudoElement mixins ->
       List.map (applyNamespaceToMixin name) mixins
-        |> WithPseudoElement pseudoElement
+        |> Preprocess.WithPseudoElement pseudoElement
 
-    WithMedia mediaQueries mixins ->
+    Preprocess.WithMedia mediaQueries mixins ->
       List.map (applyNamespaceToMixin name) mixins
-        |> WithMedia mediaQueries
+        |> Preprocess.WithMedia mediaQueries
 
-    ApplyMixins mixins ->
+    Preprocess.ApplyMixins mixins ->
       List.map (applyNamespaceToMixin name) mixins
-        |> ApplyMixins
+        |> Preprocess.ApplyMixins
 
 
-applyNamespaceToProperty : String -> Property -> Property
+applyNamespaceToProperty : String -> Preprocess.Property -> Preprocess.Property
 applyNamespaceToProperty name property =
   case property.key of
     "animation-name" ->
@@ -87,9 +87,9 @@ applyNamespaceToProperty name property =
       property
 
 
-applyNamespaceToStyleBlock : String -> StyleBlock -> StyleBlock
-applyNamespaceToStyleBlock name (StyleBlock firstSelector otherSelectors mixins) =
-  StyleBlock
+applyNamespaceToStyleBlock : String -> Preprocess.StyleBlock -> Preprocess.StyleBlock
+applyNamespaceToStyleBlock name (Preprocess.StyleBlock firstSelector otherSelectors mixins) =
+  Preprocess.StyleBlock
     (applyNamespaceToSelector name firstSelector)
     (List.map (applyNamespaceToSelector name) otherSelectors)
     (List.map (applyNamespaceToMixin name) mixins)
@@ -104,41 +104,41 @@ applyNamespaceToSnippet name (Snippet declarations) =
 applyNamespaceToDeclaration : String -> SnippetDeclaration -> SnippetDeclaration
 applyNamespaceToDeclaration name declaration =
   case declaration of
-    StyleBlockDeclaration styleBlock ->
+    Preprocess.StyleBlockDeclaration styleBlock ->
       applyNamespaceToStyleBlock name styleBlock
-        |> StyleBlockDeclaration
+        |> Preprocess.StyleBlockDeclaration
 
-    MediaRule mediaQueries styleBlocks ->
+    Preprocess.MediaRule mediaQueries styleBlocks ->
       styleBlocks
         |> List.map (applyNamespaceToStyleBlock name)
-        |> MediaRule mediaQueries
+        |> Preprocess.MediaRule mediaQueries
 
-    SupportsRule str snippets ->
+    Preprocess.SupportsRule str snippets ->
       snippets
         |> List.concatMap unwrapSnippet
         |> List.map (applyNamespaceToDeclaration name)
         |> (\declarations -> [ Snippet declarations ])
-        |> SupportsRule str
+        |> Preprocess.SupportsRule str
 
     -- TODO give these more descritpive names
-    DocumentRule str1 str2 str3 str4 styleBlock ->
+    Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
       applyNamespaceToStyleBlock name styleBlock
-        |> DocumentRule str1 str2 str3 str4
+        |> Preprocess.DocumentRule str1 str2 str3 str4
 
-    PageRule _ _ ->
+    Preprocess.PageRule _ _ ->
       declaration
 
-    FontFace _ ->
+    Preprocess.FontFace _ ->
       declaration
 
-    Keyframes str properties ->
-      Keyframes (name ++ str) properties
+    Preprocess.Keyframes str properties ->
+      Preprocess.Keyframes (name ++ str) properties
 
-    Viewport _ ->
+    Preprocess.Viewport _ ->
       declaration
 
-    CounterStyle _ ->
+    Preprocess.CounterStyle _ ->
       declaration
 
-    FontFeatureValues _ ->
+    Preprocess.FontFeatureValues _ ->
       declaration
