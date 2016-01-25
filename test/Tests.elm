@@ -446,7 +446,7 @@ weightWarning =
     output =
       """
             Invalid Stylesheet:
-            22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
+            fontWeight 22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
   in
     suite
       "fontWeightWarning"
