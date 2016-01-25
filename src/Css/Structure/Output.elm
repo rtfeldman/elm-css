@@ -63,11 +63,11 @@ prettyPrintDeclaration declaration =
           (List.map (indent << prettyPrintStyleBlock) styleBlocks)
             |> String.join "\n\n"
 
-        rule =
-          (List.map (\(MediaQuery str) -> str) mediaQueries)
+        query =
+          (List.map (\(MediaQuery str) -> "\"" ++ str ++ "\"") mediaQueries)
             |> String.join " "
       in
-        rule ++ " {\n" ++ indent blocks ++ "\n}"
+        "@media " ++ query ++ " {\n" ++ indent blocks ++ "\n}"
 
     _ ->
       Debug.crash "not yet implemented :x"
