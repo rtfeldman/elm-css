@@ -286,6 +286,7 @@ fontStylesheet =
             ]
         , fontSize xSmall
         , fontStyle italic
+        , fontWeight bold
         , fontWeight (int 100)
         , fontVariant smallCaps
         , fontVariant2 commonLigatures slashedZero
