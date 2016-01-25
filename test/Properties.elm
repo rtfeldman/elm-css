@@ -309,6 +309,19 @@ all =
         "order"
         [ ( order (n 1), "1" ) ]
     , testProperty
+        "font-weight"
+        [ ( fontWeight bold, "bold" )
+        , ( fontWeight (n 100), "100" )
+        , ( fontWeight (n 200), "200" )
+        , ( fontWeight (n 300), "300" )
+        , ( fontWeight (n 400), "400" )
+        , ( fontWeight (n 500), "500" )
+        , ( fontWeight (n 600), "600" )
+        , ( fontWeight (n 700), "700" )
+        , ( fontWeight (n 800), "800" )
+        , ( fontWeight (n 900), "900" )
+        ]
+    , testProperty
         "align-items"
         [ ( alignItems flexStart, "flex-start" )
         , ( alignItems flexEnd, "flex-end" )

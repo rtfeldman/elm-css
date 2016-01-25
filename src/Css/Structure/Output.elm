@@ -6,12 +6,13 @@ import String
 
 prettyPrint : Stylesheet -> String
 prettyPrint { charset, imports, namespaces, declarations } =
-  (String.join "\n\n")
-    [ charsetToString charset
-    , String.join "\n" (List.map importToString imports)
-    , String.join "\n" (List.map namespaceToString namespaces)
-    , prettyPrintDeclarations declarations
-    ]
+  [ charsetToString charset
+  , String.join "\n" (List.map importToString imports)
+  , String.join "\n" (List.map namespaceToString namespaces)
+  , String.join "\n\n" (List.map prettyPrintDeclaration declarations)
+  ]
+    |> List.filter (not << String.isEmpty)
+    |> String.join "\n\n"
 
 
 charsetToString : Maybe String -> String
@@ -36,108 +37,135 @@ namespaceToString ( prefix, str ) =
     ++ "\""
 
 
-prettyPrintDeclarations : List Declaration -> String
-prettyPrintDeclarations declarations =
-  declarations
-    |>
-      List.map toString
-    -- prettyPrintDeclaration
-    |>
-      String.join "\n\n"
+prettyPrintStyleBlock : StyleBlock -> String
+prettyPrintStyleBlock (StyleBlock firstSelector otherSelectors properties) =
+  let
+    selectorStr =
+      (firstSelector :: otherSelectors)
+        |> List.map selectorToString
+        |> String.join ", "
+  in
+    selectorStr
+      ++ " {\n"
+      ++ (prettyPrintProperties properties)
+      ++ "\n}"
 
 
+prettyPrintDeclaration : Declaration -> String
+prettyPrintDeclaration declaration =
+  case declaration of
+    StyleBlockDeclaration styleBlock ->
+      prettyPrintStyleBlock styleBlock
 
---simpleSelectorToString : SimpleSelector -> String
---simpleSelectorToString selector =
---  case selector of
---    TypeSelector str ->
---      str
---    ClassSelector str ->
---      "." ++ str
---    IdSelector str ->
---      "#" ++ str
---    MultiSelector first second ->
---      (simpleSelectorToString first) ++ (simpleSelectorToString second)
---    CustomSelector str ->
---      str
---complexSelectorToString : ComplexSelector -> String
---complexSelectorToString complexSelector =
---  case complexSelector of
---    SingleSelector selector ->
---      simpleSelectorToString selector
---    AdjacentSibling selectorA selectorB ->
---      (complexSelectorToString selectorA)
---        ++ " + "
---        ++ (complexSelectorToString selectorB)
---    GeneralSibling selectorA selectorB ->
---      (complexSelectorToString selectorA)
---        ++ " ~ "
---        ++ (complexSelectorToString selectorB)
---    Child selectorA selectorB ->
---      (complexSelectorToString selectorA)
---        ++ " > "
---        ++ (complexSelectorToString selectorB)
---    Descendant selectorA selectorB ->
---      (complexSelectorToString selectorA)
---        ++ " "
---        ++ (complexSelectorToString selectorB)
---    PseudoClass str maybeSelector ->
---      let
---        prefix =
---          case maybeSelector of
---            Just selector ->
---              simpleSelectorToString selector
---            Nothing ->
---              ""
---      in
---        prefix ++ ":" ++ str
---    PseudoElement str maybeSelector ->
---      let
---        prefix =
---          case maybeSelector of
---            Just selector ->
---              simpleSelectorToString selector
---            Nothing ->
---              ""
---      in
---        prefix ++ "::" ++ str
---prettyPrintProperty : Property -> String
---prettyPrintProperty { key, value, important } =
---  let
---    suffix =
---      if important then
---        " !important;"
---      else
---        ";"
---  in
---    key ++ ": " ++ value ++ suffix
---indent : String -> String
---indent str =
---  "    " ++ str
---prettyPrintProperties : List Property -> String
---prettyPrintProperties properties =
---  properties
---    |> List.map (indent << prettyPrintProperty)
---    |> String.join "\n"
---prettyPrintDeclaration : Declaration -> String
---prettyPrintDeclaration declaration =
---  case declaration of
---    StyleBlock firstSelector extraSelectors properties ->
---      let
---        selectorStr =
---          firstSelector
---            :: extraSelectors
---            |> List.map complexSelectorToString
---            |> String.join ", "
---      in
---        selectorStr
---          ++ " {\n"
---          ++ (prettyPrintProperties properties)
---          ++ "\n}"
---    ConditionalGroupRule rule declarations ->
---      rule
---        ++ " {\n"
---        ++ indent (prettyPrintDeclarations declarations)
---        ++ "\n}"
---    StandaloneAtRule rule value ->
---      rule ++ " " ++ value
+    MediaRule mediaQueries styleBlocks ->
+      let
+        blocks =
+          (List.map (indent << prettyPrintStyleBlock) styleBlocks)
+            |> String.join "\n\n"
+
+        rule =
+          (List.map (\(MediaQuery str) -> str) mediaQueries)
+            |> String.join " "
+      in
+        rule ++ " {\n" ++ indent blocks ++ "\n}"
+
+    _ ->
+      Debug.crash "not yet implemented :x"
+
+
+simpleSelectorSequenceToString : SimpleSelectorSequence -> String
+simpleSelectorSequenceToString simpleSelectorSequence =
+  case simpleSelectorSequence of
+    TypeSelectorSequence (TypeSelector str) repeatableSimpleSelectors ->
+      (str :: (List.map repeatableSimpleSelectorToString repeatableSimpleSelectors))
+        |> String.join ""
+
+    UniversalSelectorSequence repeatableSimpleSelectors ->
+      if List.isEmpty repeatableSimpleSelectors then
+        "*"
+      else
+        List.map repeatableSimpleSelectorToString repeatableSimpleSelectors
+          |> String.join ""
+
+    CustomSelector str repeatableSimpleSelectors ->
+      (str :: (List.map repeatableSimpleSelectorToString repeatableSimpleSelectors))
+        |> String.join ""
+
+
+repeatableSimpleSelectorToString : RepeatableSimpleSelector -> String
+repeatableSimpleSelectorToString repeatableSimpleSelector =
+  case repeatableSimpleSelector of
+    ClassSelector str ->
+      "." ++ str
+
+    IdSelector str ->
+      "#" ++ str
+
+    PseudoClassSelector str ->
+      ":" ++ str
+
+
+selectorChainToString : ( SelectorCombinator, SimpleSelectorSequence ) -> String
+selectorChainToString ( combinator, sequence ) =
+  [ combinatorToString combinator
+  , simpleSelectorSequenceToString sequence
+  ]
+    |> String.join " "
+
+
+pseudoElementToString : PseudoElement -> String
+pseudoElementToString (PseudoElement str) =
+  "::" ++ str
+
+
+selectorToString : Selector -> String
+selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
+  let
+    segments =
+      [ simpleSelectorSequenceToString simpleSelectorSequence ]
+        ++ List.map selectorChainToString chain
+        ++ [ Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement) ]
+  in
+    segments
+      |> List.filter (not << String.isEmpty)
+      |> String.join " "
+
+
+combinatorToString : SelectorCombinator -> String
+combinatorToString combinator =
+  case combinator of
+    AdjacentSibling ->
+      "+"
+
+    GeneralSibling ->
+      "~"
+
+    Child ->
+      ">"
+
+    Descendant ->
+      ""
+
+
+prettyPrintProperty : Property -> String
+prettyPrintProperty { key, value, important } =
+  let
+    suffix =
+      if important then
+        " !important;"
+      else
+        ";"
+  in
+    key ++ ": " ++ value ++ suffix
+
+
+indent : String -> String
+indent str =
+  "    " ++ str
+
+
+prettyPrintProperties : List Property -> String
+prettyPrintProperties properties =
+  properties
+    |> List.map (indent << prettyPrintProperty)
+    |> String.join "\n"

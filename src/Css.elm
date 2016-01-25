@@ -1250,24 +1250,6 @@ n num =
   }
 
 
-w : Int -> NumberedWeight
-w num =
-  let
-    validWeight nm =
-      List.member nm <| List.map (\n -> n * 100) [1..9]
-  in
-    if validWeight num then
-      { value = numberToString num, fontWeight = Compatible }
-    else if num < 100 then
-      { value = "100", fontWeight = Compatible }
-    else if num > 900 then
-      { value = "900", fontWeight = Compatible }
-    else
-      { value = numberToString <| round (num / 100) * 100
-      , fontWeight = Compatible
-      }
-
-
 
 {- ANGLES -}
 
@@ -4104,22 +4086,20 @@ fontStyle =
 fontWeight : LengthOrNumberOrAutoOrNoneOrContent a -> Mixin
 fontWeight { value } =
   let
-    validWeight nm =
-      let
-        validWeights =
-          List.member nm <| List.map (\n -> n * 100) [1..9]
-      in
-        -- This means it was one of the keywords, bold, ...
-        if nm == 0 && value /= "0" then
-          True
-        else
-          validWeights
+    validWeight weight =
+      if value /= toString weight then
+        -- This means it was one of the string keywords, e.g. "bold"
+        True
+      else
+        [1..9]
+          |> List.map ((*) 100)
+          |> List.member weight
 
     warnings =
       if validWeight (stringToInt value) then
-        [ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
-      else
         []
+      else
+        [ "fontWeight " ++ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
   in
     propertyWithWarnings warnings "font-weight" value
 

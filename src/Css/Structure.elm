@@ -129,7 +129,30 @@ type alias KeyframeProperty =
 -}
 appendProperty : Property -> List Declaration -> List Declaration
 appendProperty property declarations =
-  declarations
+  case declarations of
+    [] ->
+      declarations
+
+    (StyleBlockDeclaration (StyleBlock firstSelector otherSelectors properties)) :: [] ->
+      [ StyleBlockDeclaration
+          (StyleBlock firstSelector otherSelectors (properties ++ [ property ]))
+      ]
+
+    -- TODO
+    _ :: [] ->
+      declarations
+
+    --| MediaRule (List MediaQuery) (List StyleBlock)
+    --| SupportsRule String (List Declaration)
+    --| DocumentRule String String String String StyleBlock
+    --| PageRule String (List Property)
+    --| FontFace (List Property)
+    --| Keyframes String (List KeyframeProperty)
+    --| Viewport (List Property)
+    --| CounterStyle (List Property)
+    --| FontFeatureValues (List ( String, List Property ))
+    first :: rest ->
+      first :: appendProperty property rest
 
 
 extendLastSelector : RepeatableSimpleSelector -> List Declaration -> List Declaration

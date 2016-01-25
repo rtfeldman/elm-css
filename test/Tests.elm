@@ -12,6 +12,7 @@ all =
   suite
     "elm-css"
     [ Compile.all
+    , unstyledDiv
     , keyValue
     , divWidthHeight
     , leftRightTopBottom
@@ -28,6 +29,22 @@ all =
     , weightWarning
     , Properties.all
     ]
+
+
+unstyledDiv : Test
+unstyledDiv =
+  let
+    input =
+      Fixtures.unstyledDiv
+
+    output =
+      ""
+  in
+    suite
+      "unstyled div"
+      [ test "pretty prints nothing, because the stylesheet had no properties."
+          <| assertEqual output (prettyPrint input)
+      ]
 
 
 divWidthHeight : Test

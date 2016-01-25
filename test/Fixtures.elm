@@ -122,7 +122,7 @@ multiSelector =
 
 keyValue : Stylesheet
 keyValue =
-  (stylesheet << namespace "keyValue")
+  stylesheet
     [ body
         [ property "-webkit-font-smoothing" "none"
         , (property "-moz-font-smoothing" "none") |> important
@@ -268,7 +268,6 @@ fontStylesheet =
             ]
         , fontSize xSmall
         , fontStyle italic
-        , fontWeight bold
         , fontWeight (n 100)
         , fontVariant smallCaps
         , fontVariant2 commonLigatures slashedZero

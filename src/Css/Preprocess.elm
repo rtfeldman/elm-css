@@ -237,7 +237,7 @@ applyMixins : List Mixin -> List Structure.Declaration -> DeclarationsAndWarning
 applyMixins mixins declarations =
   case mixins of
     [] ->
-      { declarations = [], warnings = [] }
+      { declarations = declarations, warnings = [] }
 
     (AppendProperty propertyToAppend) :: rest ->
       let
