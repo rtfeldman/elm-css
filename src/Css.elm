@@ -5027,19 +5027,6 @@ each snippetCreators mixins =
       |> selectorsToSnippet
 
 
-collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
-collectSelectors declarations =
-  case declarations of
-    [] ->
-      []
-
-    (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
-      (firstSelector :: otherSelectors) ++ (collectSelectors rest)
-
-    _ :: rest ->
-      collectSelectors rest
-
-
 numberToString : number -> String
 numberToString num =
   toString (num + 0)
@@ -5077,3 +5064,16 @@ message if it could not be compiled.
 compile : Stylesheet -> { css : String, warnings : List String }
 compile =
   Resolve.compile
+
+
+collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
+collectSelectors declarations =
+  case declarations of
+    [] ->
+      []
+
+    (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
+      (firstSelector :: otherSelectors) ++ (collectSelectors rest)
+
+    _ :: rest ->
+      collectSelectors rest

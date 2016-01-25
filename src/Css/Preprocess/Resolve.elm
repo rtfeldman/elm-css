@@ -309,63 +309,30 @@ applyMixins mixins declarations =
             (originalTuples ++ (( selectorCombinator, newSequence ) :: newTuples))
             (Maybe.oneOf [ newPseudoElement, originalPseudoElement ])
 
-        applySelectors : List Structure.Selector -> Structure.Declaration -> List Structure.Declaration
-        applySelectors newSelectors originalDeclaration =
-          case originalDeclaration of
-            Structure.StyleBlockDeclaration (Structure.StyleBlock firstSelector otherSelectors properties) ->
-              let
-                newSelectors =
-                  (firstSelector :: otherSelectors)
-                    |> List.concatMap
-                        (\originalSelector -> List.map (chain originalSelector) newSelectors)
-              in
-                case newSelectors of
-                  [] ->
-                    []
-
-                  firstNewSelector :: otherNewSelectors ->
-                    [ Structure.StyleBlockDeclaration
-                        (Structure.StyleBlock
-                          firstNewSelector
-                          otherNewSelectors
-                          properties
-                        )
-                    ]
-
-            Structure.MediaRule _ _ ->
-              [ originalDeclaration ]
-
-            Structure.SupportsRule _ _ ->
-              [ originalDeclaration ]
-
-            Structure.DocumentRule _ _ _ _ _ ->
-              [ originalDeclaration ]
-
-            Structure.PageRule _ _ ->
-              [ originalDeclaration ]
-
-            Structure.FontFace _ ->
-              [ originalDeclaration ]
-
-            Structure.Keyframes _ _ ->
-              [ originalDeclaration ]
-
-            Structure.Viewport _ ->
-              [ originalDeclaration ]
-
-            Structure.CounterStyle _ ->
-              [ originalDeclaration ]
-
-            Structure.FontFeatureValues _ ->
-              [ originalDeclaration ]
-
         expandDeclaration : SnippetDeclaration -> DeclarationsAndWarnings
         expandDeclaration declaration =
           case declaration of
             Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors nestedMixins) ->
-              declarations
-                |> List.concatMap (applySelectors (firstSelector :: otherSelectors))
-                |> applyMixins nestedMixins
+              let
+                newSelectors =
+                  (collectSelectors declarations)
+                    |> List.concatMap
+                        (\originalSelector -> List.map (chain originalSelector) (firstSelector :: otherSelectors))
+
+                newDeclarations =
+                  case newSelectors of
+                    [] ->
+                      []
+
+                    first :: rest ->
+                      [ Structure.StyleBlockDeclaration
+                          (Structure.StyleBlock first rest [])
+                      ]
+              in
+                [ { declarations = declarations, warnings = [] }
+                , applyMixins nestedMixins newDeclarations
+                ]
+                  |> concatDeclarationsAndWarnings
 
             Preprocess.MediaRule mediaQueries styleBlocks ->
               resolveMediaRule mediaQueries styleBlocks
@@ -459,3 +426,16 @@ extractWarnings properties =
 extractWarning : Preprocess.Property -> ( List String, Structure.Property )
 extractWarning { warnings, key, value, important } =
   ( warnings, { key = key, value = value, important = important } )
+
+
+collectSelectors : List Structure.Declaration -> List Structure.Selector
+collectSelectors declarations =
+  case declarations of
+    [] ->
+      []
+
+    (Structure.StyleBlockDeclaration (Structure.StyleBlock firstSelector otherSelectors _)) :: rest ->
+      (firstSelector :: otherSelectors) ++ (collectSelectors rest)
+
+    _ :: rest ->
+      collectSelectors rest

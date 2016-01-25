@@ -144,17 +144,21 @@ dreamwriter =
               padding: 0;
               margin: 0;
             }
+
             body {
               min-width: 1280px;
               overflow-x: auto;
             }
+
             body > div {
               width: 100%;
               height: 100%;
             }
+
             .dreamwriterHidden {
               display: none !important;
             }
+
             #dreamwriterPage {
               width: 100%;
               height: 100%;

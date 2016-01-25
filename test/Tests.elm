@@ -229,24 +229,30 @@ multiDescendent =
               box-sizing: border-box;
               display: none;
             }
+
             html > div, body > div {
               width: 100%;
               height: 100%;
             }
+
             h1, h2 {
               padding: 0;
               margin: 0;
             }
+
             h1 > h3, h2 > h3 {
               width: 100%;
             }
+
             h1 > h3 > h4, h2 > h3 > h4 {
               height: 100%;
             }
+
             span {
               padding: 10px;
               margin: 11px;
             }
+
             span > h2 > h1 {
               width: 1px;
               height: 2%;
