@@ -58,6 +58,24 @@ nestedAtRule =
     ]
 
 
+simpleEach : Stylesheet
+simpleEach =
+  stylesheet
+    [ span
+        [ width (px 30)
+        , height (em 2)
+        ]
+    , (each [ html, body ])
+        [ boxSizing borderBox
+        , display none
+        ]
+    , button
+        [ color (rgb 22 23 24)
+        , padding zero
+        ]
+    ]
+
+
 multiDescendent : Stylesheet
 multiDescendent =
   stylesheet

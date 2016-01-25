@@ -14,6 +14,7 @@ all =
     [ Compile.all
     , unstyledDiv
     , keyValue
+    , simpleEach
     , divWidthHeight
     , leftRightTopBottom
     , borders
@@ -58,6 +59,34 @@ divWidthHeight =
   in
     suite
       "basic div with fixed width and height"
+      [ test "pretty prints the expected output"
+          <| assertEqual output (prettyPrint input)
+      ]
+
+
+simpleEach : Test
+simpleEach =
+  let
+    input =
+      Fixtures.simpleEach
+
+    output =
+      """span {
+            width: 30px;
+            height: 2em;
+        }
+        html, body {
+            box-sizing: border-box;
+            display: none;
+        }
+        button {
+            color: rgb(22, 23, 24);
+            padding: 0
+        }
+      """
+  in
+    suite
+      "simple each function test"
       [ test "pretty prints the expected output"
           <| assertEqual output (prettyPrint input)
       ]
