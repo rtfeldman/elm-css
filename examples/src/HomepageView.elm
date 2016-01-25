@@ -1,7 +1,7 @@
 module HomepageView (..) where
 
 import Html exposing (..)
-import Helpers exposing (..)
+import Html.CssHelpers exposing (..)
 import Html.Attributes exposing (..)
 import HomepageCss exposing (..)
 import Json.Encode as Encode
@@ -34,4 +34,4 @@ main =
 
 navElems =
   [ "SPEAKERS", "SCHEDULE", "WORKSHOPS", "VENUE", "BLOG", "CONTACT" ]
-    |> List.map (\name -> span [ class NavLink ] [ text name ])
+    |> List.map (\name -> span [ class [ NavLink ] ] [ text name ])

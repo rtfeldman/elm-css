@@ -4,7 +4,7 @@ import ElmTest exposing (..)
 import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (p)
-import Css.Declaration exposing (Declaration)
+import Css.Namespace exposing (namespace)
 
 
 all : Test
@@ -229,17 +229,17 @@ all =
         ]
     , testProperty
         "flex"
-        [ ( flex1 initial, "initial" )
-        , ( flex1 unset, "unset" )
-        , ( flex1 inherit, "inherit" )
-        , ( flex1 auto, "auto" )
-        , ( flex1 content, "content" )
-        , ( flex1 none, "none" )
-        , ( flex1 (n 2), "2" )
-        , ( flex1 (mm 8), "8mm" )
-        , ( flex2 (n 1) (n 2), "1 2" )
-        , ( flex2 (n 1) (px 30), "1 30px" )
-        , ( flex3 (n 1) (n 2) (px 20), "1 2 20px" )
+        [ ( flex initial, "initial" )
+        , ( flex unset, "unset" )
+        , ( flex inherit, "inherit" )
+        , ( flex auto, "auto" )
+        , ( flex content, "content" )
+        , ( flex none, "none" )
+        , ( flex (int 2), "2" )
+        , ( flex (mm 8), "8mm" )
+        , ( flex2 (int 1) (int 2), "1 2" )
+        , ( flex2 (int 1) (px 30), "1 30px" )
+        , ( flex3 (int 1) (int 2) (px 20), "1 2 20px" )
         ]
     , testProperty
         "flex-basis"
@@ -262,13 +262,13 @@ all =
         ]
     , testProperty
         "flex-grow"
-        [ ( flexGrow (n 1), "1" )
-        , ( flexGrow (n 0.2), "0.2" )
+        [ ( flexGrow (int 1), "1" )
+        , ( flexGrow (float 0.2), "0.2" )
         ]
     , testProperty
         "flex-shrink"
-        [ ( flexShrink (n 1), "1" )
-        , ( flexShrink (n 0.2), "0.2" )
+        [ ( flexShrink (int 1), "1" )
+        , ( flexShrink (float 0.2), "0.2" )
         ]
     , testProperty
         "flex-direction"
@@ -307,7 +307,20 @@ all =
         ]
     , testProperty
         "order"
-        [ ( order (n 1), "1" ) ]
+        [ ( order (int 1), "1" ) ]
+    , testProperty
+        "font-weight"
+        [ ( fontWeight bold, "bold" )
+        , ( fontWeight (int 100), "100" )
+        , ( fontWeight (int 200), "200" )
+        , ( fontWeight (int 300), "300" )
+        , ( fontWeight (int 400), "400" )
+        , ( fontWeight (int 500), "500" )
+        , ( fontWeight (int 600), "600" )
+        , ( fontWeight (int 700), "700" )
+        , ( fontWeight (int 800), "800" )
+        , ( fontWeight (int 900), "900" )
+        ]
     , testProperty
         "align-items"
         [ ( alignItems flexStart, "flex-start" )
@@ -327,7 +340,7 @@ all =
     , testProperty
         "opacity"
         [ ( opacity inherit, "inherit" )
-        , ( opacity (n 1), "1" )
+        , ( opacity (int 1), "1" )
         ]
     , testProperty
         "color"
@@ -348,13 +361,5 @@ assertPropertyWorks : String -> ( Mixin, String ) -> Test
 assertPropertyWorks propertyName ( mixin, expectedStr ) =
   test "pretty prints the expected output"
     <| assertEqual
-        (prettyPrint (stylesheet { name = "test" } [ p [ mixin ] ]))
         ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-
-
-type alias DeclarationTransform namespace =
-  namespace -> List Declaration -> List Declaration
-
-
-type alias StylesheetOrMixin namespace base =
-  { base | transform : DeclarationTransform namespace }
+        (prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ]))

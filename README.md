@@ -31,7 +31,7 @@ Here's an example:
 
 ```elm
 css =
-  stylesheet { name = "dreamwriter" }
+  (stylesheet << namespace "dreamwriter")
     [ body
         [ overflowX auto
         , minWidth (px 1280)
