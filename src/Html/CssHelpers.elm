@@ -1,4 +1,4 @@
-module Helpers (namespace) where
+module Html.CssHelpers (namespace) where
 
 {-| Helper functions for using elm-css with elm-html.
 

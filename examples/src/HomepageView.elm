@@ -1,7 +1,7 @@
 module HomepageView (..) where
 
 import Html exposing (..)
-import Helpers exposing (..)
+import Html.CssHelpers exposing (..)
 import Html.Attributes exposing (..)
 import HomepageCss exposing (..)
 import Json.Encode as Encode
