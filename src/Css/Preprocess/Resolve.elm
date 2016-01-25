@@ -47,6 +47,30 @@ resolveMediaRule mediaQueries styleBlocks =
     }
 
 
+resolveSupportsRule : String -> List Snippet -> DeclarationsAndWarnings
+resolveSupportsRule str snippets =
+  let
+    { declarations, warnings } =
+      extract (List.concatMap unwrapSnippet snippets)
+  in
+    { declarations = [ Structure.SupportsRule str declarations ]
+    , warnings = warnings
+    }
+
+
+resolveDocumentRule : String -> String -> String -> String -> Preprocess.StyleBlock -> DeclarationsAndWarnings
+resolveDocumentRule str1 str2 str3 str4 styleBlock =
+  -- TODO give these more descriptive names
+  let
+    { declarations, warnings } =
+      expandStyleBlock styleBlock
+  in
+    { declarations =
+        List.map (toDocumentRule str1 str2 str3 str4) declarations
+    , warnings = warnings
+    }
+
+
 toMediaRule : List Structure.MediaQuery -> Structure.Declaration -> Structure.Declaration
 toMediaRule mediaQueries declaration =
   case declaration of
@@ -82,6 +106,83 @@ toMediaRule mediaQueries declaration =
       declaration
 
 
+resolvePageRule : String -> List Preprocess.Property -> DeclarationsAndWarnings
+resolvePageRule str pageRuleProperties =
+  let
+    ( warnings, properties ) =
+      extractWarnings pageRuleProperties
+  in
+    { declarations = [ Structure.PageRule str properties ]
+    , warnings = warnings
+    }
+
+
+resolveFontFace : List Preprocess.Property -> DeclarationsAndWarnings
+resolveFontFace fontFaceProperties =
+  let
+    ( warnings, properties ) =
+      extractWarnings fontFaceProperties
+  in
+    { declarations = [ Structure.FontFace properties ]
+    , warnings = warnings
+    }
+
+
+resolveKeyframes : String -> List Structure.KeyframeProperty -> DeclarationsAndWarnings
+resolveKeyframes str properties =
+  { declarations = [ Structure.Keyframes str properties ]
+  , warnings = []
+  }
+
+
+resolveViewport : List Preprocess.Property -> DeclarationsAndWarnings
+resolveViewport viewportProperties =
+  let
+    ( warnings, properties ) =
+      extractWarnings viewportProperties
+  in
+    { declarations = [ Structure.Viewport properties ]
+    , warnings = warnings
+    }
+
+
+resolveCounterStyle : List Preprocess.Property -> DeclarationsAndWarnings
+resolveCounterStyle counterStyleProperties =
+  let
+    ( warnings, properties ) =
+      extractWarnings counterStyleProperties
+  in
+    { declarations = [ Structure.Viewport properties ]
+    , warnings = warnings
+    }
+
+
+resolveFontFeatureValues : List ( String, List Preprocess.Property ) -> DeclarationsAndWarnings
+resolveFontFeatureValues tuples =
+  let
+    expandTuples tuplesToExpand =
+      case tuplesToExpand of
+        [] ->
+          ( [], [] )
+
+        ( str, tupleProperties ) :: rest ->
+          let
+            ( warnings, properties ) =
+              extractWarnings tupleProperties
+
+            ( nextWarnings, nextTuples ) =
+              expandTuples rest
+          in
+            ( warnings ++ nextWarnings, ( str, properties ) :: nextTuples )
+
+    ( warnings, newTuples ) =
+      expandTuples tuples
+  in
+    { declarations = [ Structure.FontFeatureValues newTuples ]
+    , warnings = warnings
+    }
+
+
 toDeclarations : SnippetDeclaration -> DeclarationsAndWarnings
 toDeclarations snippetDeclaration =
   case snippetDeclaration of
@@ -92,89 +193,29 @@ toDeclarations snippetDeclaration =
       resolveMediaRule mediaQueries styleBlocks
 
     Preprocess.SupportsRule str snippets ->
-      let
-        { declarations, warnings } =
-          extract (List.concatMap unwrapSnippet snippets)
-      in
-        { declarations = [ Structure.SupportsRule str declarations ]
-        , warnings = warnings
-        }
+      resolveSupportsRule str snippets
 
     -- TODO give these more descriptive names
     Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
-      let
-        { declarations, warnings } =
-          expandStyleBlock styleBlock
-      in
-        { declarations =
-            List.map (toDocumentRule str1 str2 str3 str4) declarations
-        , warnings = warnings
-        }
+      resolveDocumentRule str1 str2 str3 str4 styleBlock
 
     Preprocess.PageRule str pageRuleProperties ->
-      let
-        ( warnings, properties ) =
-          extractWarnings pageRuleProperties
-      in
-        { declarations = [ Structure.PageRule str properties ]
-        , warnings = warnings
-        }
+      resolvePageRule str pageRuleProperties
 
     Preprocess.FontFace fontFaceProperties ->
-      let
-        ( warnings, properties ) =
-          extractWarnings fontFaceProperties
-      in
-        { declarations = [ Structure.FontFace properties ]
-        , warnings = warnings
-        }
+      resolveFontFace fontFaceProperties
 
     Preprocess.Keyframes str properties ->
-      { declarations = [ Structure.Keyframes str properties ]
-      , warnings = []
-      }
+      resolveKeyframes str properties
 
     Preprocess.Viewport viewportProperties ->
-      let
-        ( warnings, properties ) =
-          extractWarnings viewportProperties
-      in
-        { declarations = [ Structure.Viewport properties ]
-        , warnings = warnings
-        }
+      resolveViewport viewportProperties
 
     Preprocess.CounterStyle counterStyleProperties ->
-      let
-        ( warnings, properties ) =
-          extractWarnings counterStyleProperties
-      in
-        { declarations = [ Structure.Viewport properties ]
-        , warnings = warnings
-        }
+      resolveCounterStyle counterStyleProperties
 
     Preprocess.FontFeatureValues tuples ->
-      let
-        expandTuples tuplesToExpand =
-          case tuplesToExpand of
-            [] ->
-              ( [], [] )
-
-            ( str, tupleProperties ) :: rest ->
-              let
-                ( warnings, properties ) =
-                  extractWarnings tupleProperties
-
-                ( nextWarnings, nextTuples ) =
-                  expandTuples rest
-              in
-                ( warnings ++ nextWarnings, ( str, properties ) :: nextTuples )
-
-        ( warnings, newTuples ) =
-          expandTuples tuples
-      in
-        { declarations = [ Structure.FontFeatureValues newTuples ]
-        , warnings = warnings
-        }
+      resolveFontFeatureValues tuples
 
 
 concatDeclarationsAndWarnings : List DeclarationsAndWarnings -> DeclarationsAndWarnings
@@ -330,89 +371,29 @@ applyMixins mixins declarations =
               resolveMediaRule mediaQueries styleBlocks
 
             Preprocess.SupportsRule str snippets ->
-              let
-                { declarations, warnings } =
-                  extract (List.concatMap unwrapSnippet snippets)
-              in
-                { declarations = [ Structure.SupportsRule str declarations ]
-                , warnings = warnings
-                }
+              resolveSupportsRule str snippets
 
             -- TODO give these more descriptive names
             Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
-              let
-                { declarations, warnings } =
-                  expandStyleBlock styleBlock
-              in
-                { declarations =
-                    List.map (toDocumentRule str1 str2 str3 str4) declarations
-                , warnings = warnings
-                }
+              resolveDocumentRule str1 str2 str3 str4 styleBlock
 
             Preprocess.PageRule str pageRuleProperties ->
-              let
-                ( warnings, properties ) =
-                  extractWarnings pageRuleProperties
-              in
-                { declarations = [ Structure.PageRule str properties ]
-                , warnings = warnings
-                }
+              resolvePageRule str pageRuleProperties
 
             Preprocess.FontFace fontFaceProperties ->
-              let
-                ( warnings, properties ) =
-                  extractWarnings fontFaceProperties
-              in
-                { declarations = [ Structure.FontFace properties ]
-                , warnings = warnings
-                }
+              resolveFontFace fontFaceProperties
 
             Preprocess.Keyframes str properties ->
-              { declarations = [ Structure.Keyframes str properties ]
-              , warnings = []
-              }
+              resolveKeyframes str properties
 
             Preprocess.Viewport viewportProperties ->
-              let
-                ( warnings, properties ) =
-                  extractWarnings viewportProperties
-              in
-                { declarations = [ Structure.Viewport properties ]
-                , warnings = warnings
-                }
+              resolveViewport viewportProperties
 
             Preprocess.CounterStyle counterStyleProperties ->
-              let
-                ( warnings, properties ) =
-                  extractWarnings counterStyleProperties
-              in
-                { declarations = [ Structure.Viewport properties ]
-                , warnings = warnings
-                }
+              resolveCounterStyle counterStyleProperties
 
             Preprocess.FontFeatureValues tuples ->
-              let
-                expandTuples tuplesToExpand =
-                  case tuplesToExpand of
-                    [] ->
-                      ( [], [] )
-
-                    ( str, tupleProperties ) :: rest ->
-                      let
-                        ( warnings, properties ) =
-                          extractWarnings tupleProperties
-
-                        ( nextWarnings, nextTuples ) =
-                          expandTuples rest
-                      in
-                        ( warnings ++ nextWarnings, ( str, properties ) :: nextTuples )
-
-                ( warnings, newTuples ) =
-                  expandTuples tuples
-              in
-                { declarations = [ Structure.FontFeatureValues newTuples ]
-                , warnings = warnings
-                }
+              resolveFontFeatureValues tuples
       in
         snippets
           |> List.concatMap unwrapSnippet
