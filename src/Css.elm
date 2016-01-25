@@ -5026,9 +5026,33 @@ generalSiblings =
 {-| -}
 each : List (List Mixin -> Snippet) -> List Mixin -> Snippet
 each snippetCreators mixins =
-  List.map ((|>) []) snippetCreators
-    |> List.concatMap unwrapSnippet
-    |> Preprocess.Snippet
+  let
+    selectorsToSnippet selectors =
+      case selectors of
+        [] ->
+          Preprocess.Snippet []
+
+        first :: rest ->
+          [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest mixins) ]
+            |> Preprocess.Snippet
+  in
+    List.map ((|>) []) snippetCreators
+      |> List.concatMap unwrapSnippet
+      |> collectSelectors
+      |> selectorsToSnippet
+
+
+collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
+collectSelectors declarations =
+  case declarations of
+    [] ->
+      []
+
+    (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
+      (firstSelector :: otherSelectors) ++ (collectSelectors rest)
+
+    _ :: rest ->
+      collectSelectors rest
 
 
 numberToString : number -> String
