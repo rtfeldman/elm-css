@@ -1,4 +1,4 @@
-module Css (compile, Stylesheet, Snippet, Mixin, Color, stylesheet, each, media, withMedia, withClass, children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), transformStyle, eachLine, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, screen, print, projection, tv, src, qt, fontFamilies, fontVariantNumerics) where
+module Css (compile, Stylesheet, Snippet, Mixin, Color, stylesheet, each, media, withMedia, withClass, children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), transformStyle, eachLine, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, screen, print, projection, tv, src, qt, fontFamilies, fontVariantNumerics) where
 
 {-| Functions for building stylesheets.
 
@@ -25,7 +25,7 @@ module Css (compile, Stylesheet, Snippet, Mixin, Color, stylesheet, each, media,
 @docs Color all, important, custom, solid, transparent, rgb, rgba, hsl, hsla, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero
 
 # Length
-@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
+@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, zero
 
 # Angle
 @docs deg, rad, grad, turn
@@ -311,14 +311,14 @@ type alias FlexDirectionOrWrap compatible =
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values
 -}
-type alias AlignItems a =
-  Length a -> Mixin
+type alias AlignItems a b =
+  Length a b -> Mixin
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values
 -}
-type alias AlignSelf a =
-  Length a -> Mixin
+type alias AlignSelf a b =
+  Length a b -> Mixin
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values
@@ -346,8 +346,14 @@ type alias Color =
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
 -}
-type alias Length compatible =
-  { compatible | value : String, length : Compatible }
+type alias Length compatible units =
+  { compatible
+    | value : String
+    , length : Compatible
+    , numericValue : Float
+    , units : units
+    , unitLabel : String
+  }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -380,8 +386,11 @@ type alias LengthOrNumber compatible =
   { compatible | value : String, lengthOrNumber : Compatible }
 
 
-type alias ExplicitLength =
+type alias ExplicitLength units =
   { value : String
+  , numericValue : Float
+  , units : units
+  , unitLabel : String
   , length : Compatible
   , lengthOrAuto : Compatible
   , lengthOrNumber : Compatible
@@ -468,8 +477,8 @@ be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `VerticalAlign` follows a similar pattern.)
 -}
-type alias TextAlign a =
-  Length a -> Mixin
+type alias TextAlign a b =
+  Length a b -> Mixin
 
 
 {-| Because `top` and `bottom` are both common properties and common values
@@ -479,8 +488,8 @@ be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `TextAlign` follows a similar pattern.)
 -}
-type alias VerticalAlign a =
-  Length a -> Mixin
+type alias VerticalAlign a b =
+  Length a b -> Mixin
 
 
 
@@ -589,6 +598,9 @@ type alias BasicProperty =
   , fontStyle : Compatible
   , fontWeight : Compatible
   , fontVariant : Compatible
+  , units : IncompatibleUnits
+  , numericValue : Float
+  , unitLabel : String
   }
 
 
@@ -641,6 +653,9 @@ initial =
   , fontStyle = Compatible
   , fontWeight = Compatible
   , fontVariant = Compatible
+  , units = IncompatibleUnits
+  , numericValue = 0
+  , unitLabel = ""
   }
 
 
@@ -1031,49 +1046,49 @@ outset =
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 Can also be used with flex-box's align-items property to apply the value of center
 -}
-center : TextAlign a
+center : TextAlign a b
 center =
   prop1 "center"
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : TextAlign a
+textJustify : TextAlign a b
 textJustify =
   prop1 "text-justify"
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : TextAlign a
+justifyAll : TextAlign a b
 justifyAll =
   prop1 "justify-all"
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : TextAlign a
+start : TextAlign a b
 start =
   prop1 "start"
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : TextAlign a
+end : TextAlign a b
 end =
   prop1 "end"
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : TextAlign a
+matchParent : TextAlign a b
 matchParent =
   prop1 "match-parent"
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : TextAlign a
+true : TextAlign a b
 true =
   prop1 "true"
 
@@ -1082,9 +1097,12 @@ true =
 {- LENGTHS -}
 
 
-lengthConverter : String -> number -> ExplicitLength
-lengthConverter suffix num =
-  { value = (numberToString num) ++ suffix
+lengthConverter : units -> String -> Float -> ExplicitLength units
+lengthConverter units unitLabel num =
+  { value = (numberToString num) ++ unitLabel
+  , numericValue = num
+  , units = units
+  , unitLabel = unitLabel
   , length = Compatible
   , lengthOrAuto = Compatible
   , lengthOrNumber = Compatible
@@ -1118,6 +1136,9 @@ zero :
   , lengthOrMinMaxDimension : Compatible
   , lengthOrNoneOrMinMaxDimension : Compatible
   , number : Compatible
+  , units : UnitlessInteger
+  , unitLabel : String
+  , numericValue : Float
   }
 zero =
   { value = "0"
@@ -1128,126 +1149,224 @@ zero =
   , lengthOrMinMaxDimension = Compatible
   , lengthOrNoneOrMinMaxDimension = Compatible
   , number = Compatible
+  , units = UnitlessInteger
+  , unitLabel = ""
+  , numericValue = 0
   }
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
-pct : number -> ExplicitLength
+pct : Float -> ExplicitLength PercentageUnits
 pct =
-  lengthConverter "%"
+  lengthConverter PercentageUnits "%"
+
+
+type PercentageUnits
+  = PercentageUnits
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
-em : number -> ExplicitLength
+em : Float -> ExplicitLength EmUnits
 em =
-  lengthConverter "em"
+  lengthConverter EmUnits "em"
+
+
+type EmUnits
+  = EmUnits
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
-ex : number -> ExplicitLength
+ex : Float -> ExplicitLength ExUnits
 ex =
-  lengthConverter "ex"
+  lengthConverter ExUnits "ex"
+
+
+type ExUnits
+  = ExUnits
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
-ch : number -> ExplicitLength
+ch : Float -> ExplicitLength ChUnits
 ch =
-  lengthConverter "ch"
+  lengthConverter ChUnits "ch"
+
+
+type ChUnits
+  = ChUnits
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
-rem : number -> ExplicitLength
+rem : Float -> ExplicitLength RemUnits
 rem =
-  lengthConverter "rem"
+  lengthConverter RemUnits "rem"
+
+
+type RemUnits
+  = RemUnits
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
-vh : number -> ExplicitLength
+vh : Float -> ExplicitLength VhUnits
 vh =
-  lengthConverter "vh"
+  lengthConverter VhUnits "vh"
+
+
+type VhUnits
+  = VhUnits
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
-vw : number -> ExplicitLength
+vw : Float -> ExplicitLength VwUnits
 vw =
-  lengthConverter "vw"
+  lengthConverter VwUnits "vw"
+
+
+type VwUnits
+  = VwUnits
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
-vmin : number -> ExplicitLength
+vmin : Float -> ExplicitLength VMinUnits
 vmin =
-  lengthConverter "vmin"
+  lengthConverter VMinUnits "vmin"
+
+
+type VMinUnits
+  = VMinUnits
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
-vmax : number -> ExplicitLength
+vmax : Float -> ExplicitLength VMaxUnits
 vmax =
-  lengthConverter "vmax"
+  lengthConverter VMaxUnits "vmax"
+
+
+type VMaxUnits
+  = VMaxUnits
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
-px : number -> ExplicitLength
+px : Float -> ExplicitLength PxUnits
 px =
-  lengthConverter "px"
+  lengthConverter PxUnits "px"
+
+
+type PxUnits
+  = PxUnits
 
 
 {-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
-mm : number -> ExplicitLength
+mm : Float -> ExplicitLength MMUnits
 mm =
-  lengthConverter "mm"
+  lengthConverter MMUnits "mm"
+
+
+type MMUnits
+  = MMUnits
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
-cm : number -> ExplicitLength
+cm : Float -> ExplicitLength CMUnits
 cm =
-  lengthConverter "cm"
+  lengthConverter CMUnits "cm"
+
+
+type CMUnits
+  = CMUnits
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 -}
-inches : number -> ExplicitLength
+inches : Float -> ExplicitLength InchUnits
 inches =
-  lengthConverter "in"
+  lengthConverter InchUnits "in"
+
+
+type InchUnits
+  = InchUnits
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
-pt : number -> ExplicitLength
+pt : Float -> ExplicitLength PtUnits
 pt =
-  lengthConverter "pt"
+  lengthConverter PtUnits "pt"
+
+
+type PtUnits
+  = PtUnits
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
-pc : number -> ExplicitLength
+pc : Float -> ExplicitLength PcUnits
 pc =
-  lengthConverter "pc"
+  lengthConverter PcUnits "pc"
 
 
-{-| A unitless number. Useful with properties like [`borderImageOutset`](#borderImageOutset)
+type PcUnits
+  = PcUnits
+
+
+{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-n : number -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number {}))
-n num =
-  { value = numberToString num
+int : Int -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))
+int val =
+  { value = numberToString val
   , lengthOrNumber = Compatible
   , number = Compatible
   , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , numericValue = toFloat val
+  , unitLabel = ""
+  , units = UnitlessInteger
   }
+
+
+type UnitlessInteger
+  = UnitlessInteger
+
+
+{-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
+which accept unitless numbers.
+-}
+float : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
+float val =
+  { value = numberToString val
+  , lengthOrNumber = Compatible
+  , number = Compatible
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , numericValue = val
+  , unitLabel = ""
+  , units = UnitlessFloat
+  }
+
+
+type UnitlessFloat
+  = UnitlessFloat
+
+
+lengthForOverloadedProperty : ExplicitLength IncompatibleUnits
+lengthForOverloadedProperty =
+  lengthConverter IncompatibleUnits "" 0
+
+
+type IncompatibleUnits
+  = IncompatibleUnits
 
 
 
@@ -1493,7 +1612,7 @@ skewY { value } =
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
 -}
-translate : Length compatible -> Transform {}
+translate : Length compatible units -> Transform {}
 translate { value } =
   { value = cssFunction "translate" [ value ]
   , transform = Compatible
@@ -1505,7 +1624,7 @@ translate { value } =
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
 -}
-translate2 : Length compatible -> Length compatible -> Transform {}
+translate2 : Length compatible units -> Length compatible units -> Transform {}
 translate2 tx ty =
   { value = cssFunction "translate" [ tx.value, ty.value ]
   , transform = Compatible
@@ -1516,7 +1635,7 @@ translate2 tx ty =
 
     transform (translateX (px 100))
 -}
-translateX : Length compatible -> Transform {}
+translateX : Length compatible units -> Transform {}
 translateX { value } =
   { value = cssFunction "translateX" [ value ]
   , transform = Compatible
@@ -1527,7 +1646,7 @@ translateX { value } =
 
     transform (translateY (px 100))
 -}
-translateY : Length compatible -> Transform {}
+translateY : Length compatible units -> Transform {}
 translateY { value } =
   { value = cssFunction "translateY" [ value ]
   , transform = Compatible
@@ -1538,7 +1657,7 @@ translateY { value } =
 
     transform (translateZ (px 100))
 -}
-translateZ : Length compatible -> Transform {}
+translateZ : Length compatible units -> Transform {}
 translateZ { value } =
   { value = cssFunction "translateZ" [ value ]
   , transform = Compatible
@@ -1549,7 +1668,7 @@ translateZ { value } =
 
     transform (translate3d (px 100) (px 100) (px 100))
 -}
-translate3d : Length compatible -> Length compatible -> Length compatible -> Transform {}
+translate3d : Length compatible units -> Length compatible units -> Length compatible units -> Transform {}
 translate3d tx ty tz =
   { value = cssFunction "translate3d" [ tx.value, ty.value, tz.value ]
   , transform = Compatible
@@ -1774,9 +1893,9 @@ flexFlow2 =
 
 {-| Sets [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items).
 -}
-alignItems : (ExplicitLength -> Mixin) -> Mixin
+alignItems : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 alignItems fn =
-  getOverloadedProperty "alignItems" "align-items" (fn (pct 0))
+  getOverloadedProperty "alignItems" "align-items" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`align-self`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-self).
@@ -1788,9 +1907,9 @@ alignItems fn =
   ~ ("text-align-last", "auto")
 
 -}
-alignSelf : (ExplicitLength -> Mixin) -> Mixin
+alignSelf : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 alignSelf fn =
-  getOverloadedProperty "alignSelf" "align-self" (fn (pct 0))
+  getOverloadedProperty "alignSelf" "align-self" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
@@ -1833,7 +1952,7 @@ wrapReverse =
 {-| The[`flex-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
   align-items property.
 -}
-flexStart : AlignItems a
+flexStart : AlignItems a b
 flexStart =
   prop1 "flex-start"
 
@@ -1841,7 +1960,7 @@ flexStart =
 {-| The[`flex-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
   align-items property.
 -}
-flexEnd : AlignItems a
+flexEnd : AlignItems a b
 flexEnd =
   prop1 "flex-end"
 
@@ -1849,7 +1968,7 @@ flexEnd =
 {-| The[`stretch`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
   align-items property.
 -}
-stretch : AlignItems a
+stretch : AlignItems a b
 stretch =
   prop1 "stretch"
 
@@ -2013,7 +2132,7 @@ noWrap =
 
     ~ verticalAlign middle
 -}
-middle : VerticalAlign a
+middle : VerticalAlign a b
 middle =
   prop1 "middle"
 
@@ -2022,7 +2141,7 @@ middle =
 
     ~ verticalAlign baseline
 -}
-baseline : VerticalAlign a
+baseline : VerticalAlign a b
 baseline =
   prop1 "baseline"
 
@@ -2031,7 +2150,7 @@ baseline =
 
     ~ verticalAlign sub
 -}
-sub : VerticalAlign a
+sub : VerticalAlign a b
 sub =
   prop1 "sub"
 
@@ -2040,7 +2159,7 @@ sub =
 
     ~ verticalAlign super
 -}
-super : VerticalAlign a
+super : VerticalAlign a b
 super =
   prop1 "super"
 
@@ -2049,7 +2168,7 @@ super =
 
     ~ verticalAlign textTop
 -}
-textTop : VerticalAlign a
+textTop : VerticalAlign a b
 textTop =
   prop1 "text-top"
 
@@ -2058,7 +2177,7 @@ textTop =
 
     ~ verticalAlign textBottom
 -}
-textBottom : VerticalAlign a
+textBottom : VerticalAlign a b
 textBottom =
   prop1 "text-bottom"
 
@@ -2113,16 +2232,16 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : (ExplicitLength -> Mixin) -> Mixin
+textAlignLast : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 textAlignLast fn =
-  getOverloadedProperty "textAlignLast" "text-align-last" (fn (pct 0))
+  getOverloadedProperty "textAlignLast" "text-align-last" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : (ExplicitLength -> Mixin) -> Mixin
+textAlign : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 textAlign fn =
-  getOverloadedProperty "textAlign" "text-align" (fn (pct 0))
+  getOverloadedProperty "textAlign" "text-align" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
@@ -2166,7 +2285,7 @@ textShadow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length compatible -> Length compatible -> Mixin
+textShadow2 : Length compatible units -> Length compatible units -> Mixin
 textShadow2 =
   prop2 "text-shadow"
 
@@ -2179,7 +2298,7 @@ textShadow2 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatible -> Length compatible -> ColorValue compatible -> Mixin
+textShadow3 : Length compatible units -> Length compatible units -> ColorValue compatible -> Mixin
 textShadow3 =
   prop3 "text-shadow"
 
@@ -2192,7 +2311,7 @@ textShadow3 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatible -> Length compatible -> Length compatible -> ColorValue compatible -> Mixin
+textShadow4 : Length compatible units -> Length compatible units -> Length compatible units -> ColorValue compatible -> Mixin
 textShadow4 =
   prop4 "text-shadow"
 
@@ -2203,7 +2322,7 @@ textShadow4 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent : Length compatible -> Mixin
+textIndent : Length compatible units -> Mixin
 textIndent =
   prop1 "text-indent"
 
@@ -2214,7 +2333,7 @@ textIndent =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent2 : Length compatibleA -> TextIndent compatibleB -> Mixin
+textIndent2 : Length compatibleA unitsA -> TextIndent compatibleB -> Mixin
 textIndent2 =
   prop2 "text-indent"
 
@@ -2225,7 +2344,7 @@ textIndent2 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent3 : Length compatibleA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin
+textIndent3 : Length compatibleA unitsA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin
 textIndent3 =
   prop3 "text-indent"
 
@@ -2239,9 +2358,9 @@ textTransform =
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : (ExplicitLength -> Mixin) -> Mixin
+verticalAlign : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 verticalAlign fn =
-  getOverloadedProperty "verticalAlign" "vertical-align" (fn (pct 0))
+  getOverloadedProperty "verticalAlign" "vertical-align" (fn lengthForOverloadedProperty)
 
 
 {-| -}
@@ -2327,7 +2446,7 @@ maxHeight =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length compatible -> Mixin
+padding : Length compatible units -> Mixin
 padding =
   prop1 "padding"
 
@@ -2339,7 +2458,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length compatible -> Length compatible -> Mixin
+padding2 : Length compatible units -> Length compatible units -> Mixin
 padding2 =
   prop2 "padding"
 
@@ -2351,7 +2470,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length compatible -> Length compatible -> Length compatible -> Mixin
+padding3 : Length compatible units -> Length compatible units -> Length compatible units -> Mixin
 padding3 =
   prop3 "padding"
 
@@ -2363,7 +2482,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length compatible -> Length compatible -> Length compatible -> Length compatible -> Mixin
+padding4 : Length compatible units -> Length compatible units -> Length compatible units -> Length compatible units -> Mixin
 padding4 =
   prop4 "padding"
 
@@ -2408,7 +2527,7 @@ paddingInlineEnd =
 
     paddingTop (px 10)
 -}
-paddingTop : Length compatible -> Mixin
+paddingTop : Length compatible units -> Mixin
 paddingTop =
   prop1 "padding-top"
 
@@ -2417,7 +2536,7 @@ paddingTop =
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length compatible -> Mixin
+paddingBottom : Length compatible units -> Mixin
 paddingBottom =
   prop1 "padding-bottom"
 
@@ -2426,7 +2545,7 @@ paddingBottom =
 
     paddingRight (px 10)
 -}
-paddingRight : Length compatible -> Mixin
+paddingRight : Length compatible units -> Mixin
 paddingRight =
   prop1 "padding-right"
 
@@ -2435,7 +2554,7 @@ paddingRight =
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length compatible -> Mixin
+paddingLeft : Length compatible units -> Mixin
 paddingLeft =
   prop1 "padding-left"
 
@@ -3092,7 +3211,7 @@ slashedZero =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length compatible -> Mixin
+border : Length compatible units -> Mixin
 border =
   prop1 "border"
 
@@ -3104,7 +3223,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+border2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 border2 =
   prop2 "border"
 
@@ -3115,7 +3234,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 border3 =
   prop3 "border"
 
@@ -3127,7 +3246,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length compatible -> Mixin
+borderTop : Length compatible units -> Mixin
 borderTop =
   prop1 "border-top"
 
@@ -3139,7 +3258,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderTop2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderTop2 =
   prop2 "border-top"
 
@@ -3151,7 +3270,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderTop3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderTop3 =
   prop3 "border-top"
 
@@ -3163,7 +3282,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length compatible -> Mixin
+borderBottom : Length compatible units -> Mixin
 borderBottom =
   prop1 "border-bottom"
 
@@ -3175,7 +3294,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBottom2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderBottom2 =
   prop2 "border-bottom"
 
@@ -3187,7 +3306,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBottom3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBottom3 =
   prop3 "border-bottom"
 
@@ -3199,7 +3318,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length compatible -> Mixin
+borderLeft : Length compatible units -> Mixin
 borderLeft =
   prop1 "border-left"
 
@@ -3211,7 +3330,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderLeft2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderLeft2 =
   prop2 "border-left"
 
@@ -3223,7 +3342,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderLeft3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderLeft3 =
   prop3 "border-left"
 
@@ -3235,7 +3354,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length compatible -> Mixin
+borderRight : Length compatible units -> Mixin
 borderRight =
   prop1 "border-right"
 
@@ -3247,7 +3366,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderRight2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderRight2 =
   prop2 "border-right"
 
@@ -3259,7 +3378,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderRight3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderRight3 =
   prop3 "border-right"
 
@@ -3271,7 +3390,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length compatible -> Mixin
+borderBlockStart : Length compatible units -> Mixin
 borderBlockStart =
   prop1 "border-block-start"
 
@@ -3283,7 +3402,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBlockStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderBlockStart2 =
   prop2 "border-block-start"
 
@@ -3295,7 +3414,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBlockStart3 : Length compatibleA units -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBlockStart3 =
   prop3 "border-block-start"
 
@@ -3307,7 +3426,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length compatible -> Mixin
+borderBlockEnd : Length compatible units -> Mixin
 borderBlockEnd =
   prop1 "border-block-end"
 
@@ -3319,7 +3438,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBlockEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderBlockEnd2 =
   prop2 "border-block-end"
 
@@ -3331,7 +3450,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBlockEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBlockEnd3 =
   prop3 "border-block-end"
 
@@ -3343,7 +3462,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length compatible -> Mixin
+borderInlineStart : Length compatible units -> Mixin
 borderInlineStart =
   prop1 "border-block-start"
 
@@ -3355,7 +3474,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderInlineStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderInlineStart2 =
   prop2 "border-block-start"
 
@@ -3367,7 +3486,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderInlineStart3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderInlineStart3 =
   prop3 "border-block-start"
 
@@ -3379,7 +3498,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length compatible -> Mixin
+borderInlineEnd : Length compatible units -> Mixin
 borderInlineEnd =
   prop1 "border-block-end"
 
@@ -3391,7 +3510,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderInlineEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderInlineEnd2 =
   prop2 "border-block-end"
 
@@ -3403,7 +3522,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderInlineEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderInlineEnd3 =
   prop3 "border-block-end"
 
@@ -3669,7 +3788,7 @@ borderStyle =
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length compatible -> Mixin
+borderBottomWidth : Length compatible units -> Mixin
 borderBottomWidth =
   prop1 "border-bottom-width"
 
@@ -3678,7 +3797,7 @@ borderBottomWidth =
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length compatible -> Mixin
+borderInlineEndWidth : Length compatible units -> Mixin
 borderInlineEndWidth =
   prop1 "border-inline-end-width"
 
@@ -3687,7 +3806,7 @@ borderInlineEndWidth =
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length compatible -> Mixin
+borderLeftWidth : Length compatible units -> Mixin
 borderLeftWidth =
   prop1 "border-left-width"
 
@@ -3696,7 +3815,7 @@ borderLeftWidth =
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length compatible -> Mixin
+borderRightWidth : Length compatible units -> Mixin
 borderRightWidth =
   prop1 "border-right-width"
 
@@ -3706,7 +3825,7 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length compatible -> Mixin
+borderTopWidth : Length compatible units -> Mixin
 borderTopWidth =
   prop1 "border-top-width"
 
@@ -3716,7 +3835,7 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderTopWidth2 =
   prop2 "border-top-width"
 
@@ -3726,7 +3845,7 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length compatible -> Mixin
+borderBottomLeftRadius : Length compatible units -> Mixin
 borderBottomLeftRadius =
   prop1 "border-bottom-left-radius"
 
@@ -3736,7 +3855,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderBottomLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderBottomLeftRadius2 =
   prop2 "border-bottom-left-radius"
 
@@ -3746,7 +3865,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length compatible -> Mixin
+borderBottomRightRadius : Length compatible units -> Mixin
 borderBottomRightRadius =
   prop1 "border-bottom-right-radius"
 
@@ -3756,7 +3875,7 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderBottomRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderBottomRightRadius2 =
   prop2 "border-bottom-right-radius"
 
@@ -3766,7 +3885,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length compatible -> Mixin
+borderTopLeftRadius : Length compatible units -> Mixin
 borderTopLeftRadius =
   prop1 "border-top-left-radius"
 
@@ -3776,7 +3895,7 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderTopLeftRadius2 =
   prop2 "border-top-left-radius"
 
@@ -3786,7 +3905,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length compatible -> Mixin
+borderTopRightRadius : Length compatible units -> Mixin
 borderTopRightRadius =
   prop1 "border-top-right-radius"
 
@@ -3796,7 +3915,7 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderTopRightRadius2 =
   prop2 "border-top-right-radius"
 
@@ -3808,7 +3927,7 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length compatible -> Mixin
+borderRadius : Length compatible units -> Mixin
 borderRadius =
   prop1 "border-radius"
 
@@ -3820,7 +3939,7 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderRadius2 =
   prop2 "border-radius"
 
@@ -3832,7 +3951,7 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length compatibleA -> Length compatibleB -> Length compatibleC -> Mixin
+borderRadius3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Mixin
 borderRadius3 =
   prop3 "border-radius"
 
@@ -3844,7 +3963,7 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length compatibleB -> Length compatibleB -> Length compatibleC -> Length compatibleD -> Mixin
+borderRadius4 : Length compatibleB unitsB -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Mixin
 borderRadius4 =
   prop4 "border-radius"
 
@@ -3854,7 +3973,7 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length compatible -> Mixin
+borderSpacing : Length compatible units -> Mixin
 borderSpacing =
   prop1 "border-spacing"
 
@@ -3864,7 +3983,7 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length compatibleA -> Length compatibleB -> Mixin
+borderSpacing2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderSpacing2 =
   prop2 "border-spacing"
 
@@ -4015,7 +4134,7 @@ withMedia =
 
     lineHeight (px 10)
 -}
-lineHeight : Length compatible -> Mixin
+lineHeight : Length compatible units -> Mixin
 lineHeight =
   prop1 "line-height"
 

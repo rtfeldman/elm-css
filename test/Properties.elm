@@ -235,11 +235,11 @@ all =
         , ( flex auto, "auto" )
         , ( flex content, "content" )
         , ( flex none, "none" )
-        , ( flex (n 2), "2" )
+        , ( flex (int 2), "2" )
         , ( flex (mm 8), "8mm" )
-        , ( flex2 (n 1) (n 2), "1 2" )
-        , ( flex2 (n 1) (px 30), "1 30px" )
-        , ( flex3 (n 1) (n 2) (px 20), "1 2 20px" )
+        , ( flex2 (int 1) (int 2), "1 2" )
+        , ( flex2 (int 1) (px 30), "1 30px" )
+        , ( flex3 (int 1) (int 2) (px 20), "1 2 20px" )
         ]
     , testProperty
         "flex-basis"
@@ -262,13 +262,13 @@ all =
         ]
     , testProperty
         "flex-grow"
-        [ ( flexGrow (n 1), "1" )
-        , ( flexGrow (n 0.2), "0.2" )
+        [ ( flexGrow (int 1), "1" )
+        , ( flexGrow (float 0.2), "0.2" )
         ]
     , testProperty
         "flex-shrink"
-        [ ( flexShrink (n 1), "1" )
-        , ( flexShrink (n 0.2), "0.2" )
+        [ ( flexShrink (int 1), "1" )
+        , ( flexShrink (float 0.2), "0.2" )
         ]
     , testProperty
         "flex-direction"
@@ -307,19 +307,19 @@ all =
         ]
     , testProperty
         "order"
-        [ ( order (n 1), "1" ) ]
+        [ ( order (int 1), "1" ) ]
     , testProperty
         "font-weight"
         [ ( fontWeight bold, "bold" )
-        , ( fontWeight (n 100), "100" )
-        , ( fontWeight (n 200), "200" )
-        , ( fontWeight (n 300), "300" )
-        , ( fontWeight (n 400), "400" )
-        , ( fontWeight (n 500), "500" )
-        , ( fontWeight (n 600), "600" )
-        , ( fontWeight (n 700), "700" )
-        , ( fontWeight (n 800), "800" )
-        , ( fontWeight (n 900), "900" )
+        , ( fontWeight (int 100), "100" )
+        , ( fontWeight (int 200), "200" )
+        , ( fontWeight (int 300), "300" )
+        , ( fontWeight (int 400), "400" )
+        , ( fontWeight (int 500), "500" )
+        , ( fontWeight (int 600), "600" )
+        , ( fontWeight (int 700), "700" )
+        , ( fontWeight (int 800), "800" )
+        , ( fontWeight (int 900), "900" )
         ]
     , testProperty
         "align-items"
@@ -340,7 +340,7 @@ all =
     , testProperty
         "opacity"
         [ ( opacity inherit, "inherit" )
-        , ( opacity (n 1), "1" )
+        , ( opacity (int 1), "1" )
         ]
     , testProperty
         "color"

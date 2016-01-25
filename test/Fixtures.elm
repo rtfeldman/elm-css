@@ -156,7 +156,7 @@ borders =
     [ button
         [ borderLeft3 (px 5) dashed (rgb 11 14 17)
         , borderRight (px 7)
-        , borderImageOutset2 (n 3) (em 4)
+        , borderImageOutset2 (int 3) (em 4)
         ]
     , a
         [ border2 (px 10) solid ]
@@ -268,7 +268,7 @@ fontStylesheet =
             ]
         , fontSize xSmall
         , fontStyle italic
-        , fontWeight (n 100)
+        , fontWeight (int 100)
         , fontVariant smallCaps
         , fontVariant2 commonLigatures slashedZero
         , fontVariantNumerics
@@ -285,4 +285,4 @@ fontStylesheet =
 fontWeightWarning : Stylesheet
 fontWeightWarning =
   (stylesheet << namespace "fontWeightWarning")
-    [ body [ fontWeight (n 22) ] ]
+    [ body [ fontWeight (int 22) ] ]
