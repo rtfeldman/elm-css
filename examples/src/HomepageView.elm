@@ -34,4 +34,4 @@ main =
 
 navElems =
   [ "SPEAKERS", "SCHEDULE", "WORKSHOPS", "VENUE", "BLOG", "CONTACT" ]
-    |> List.map (\name -> span [ class NavLink ] [ text name ])
+    |> List.map (\name -> span [ class [ NavLink ] ] [ text name ])
