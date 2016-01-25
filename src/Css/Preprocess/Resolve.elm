@@ -372,10 +372,22 @@ applyMixins mixins declarations =
       declarations
         |> applyMixins rest
 
-    (Preprocess.WithMedia mediaQuery snippets) :: rest ->
-      -- TODO
-      declarations
-        |> applyMixins rest
+    (Preprocess.WithMedia mediaQueries nestedMixins) :: rest ->
+      let
+        newDeclarations =
+          case collectSelectors declarations of
+            [] ->
+              []
+
+            firstSelector :: otherSelectors ->
+              [ [ Structure.StyleBlock firstSelector otherSelectors [] ]
+                  |> Structure.MediaRule mediaQueries
+              ]
+      in
+        [ applyMixins rest declarations
+        , applyMixins nestedMixins newDeclarations
+        ]
+          |> concatDeclarationsAndWarnings
 
     (Preprocess.ApplyMixins otherMixins) :: rest ->
       declarations

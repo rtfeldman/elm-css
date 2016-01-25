@@ -133,16 +133,19 @@ appendProperty property declarations =
     [] ->
       declarations
 
-    (StyleBlockDeclaration (StyleBlock firstSelector otherSelectors properties)) :: [] ->
-      [ StyleBlockDeclaration
-          (StyleBlock firstSelector otherSelectors (properties ++ [ property ]))
+    (StyleBlockDeclaration styleBlock) :: [] ->
+      [ StyleBlockDeclaration (withPropertyAppended property styleBlock) ]
+
+    (MediaRule mediaQueries styleBlocks) :: [] ->
+      [ MediaRule
+          mediaQueries
+          (mapLast (withPropertyAppended property) styleBlocks)
       ]
 
     -- TODO
     _ :: [] ->
       declarations
 
-    --| MediaRule (List MediaQuery) (List StyleBlock)
     --| SupportsRule String (List Declaration)
     --| DocumentRule String String String String StyleBlock
     --| PageRule String (List Property)
@@ -153,6 +156,11 @@ appendProperty property declarations =
     --| FontFeatureValues (List ( String, List Property ))
     first :: rest ->
       first :: appendProperty property rest
+
+
+withPropertyAppended : Property -> StyleBlock -> StyleBlock
+withPropertyAppended property (StyleBlock firstSelector otherSelectors properties) =
+  StyleBlock firstSelector otherSelectors (properties ++ [ property ])
 
 
 extendLastSelector : RepeatableSimpleSelector -> List Declaration -> List Declaration
