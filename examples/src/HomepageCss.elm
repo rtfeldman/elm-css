@@ -2,12 +2,12 @@ module HomepageCss (css) where
 
 import Css exposing (..)
 import Css.Elements exposing (..)
+import Css.Namespace exposing (namespace)
 import SharedStyles exposing (..)
 
 
 css =
-  stylesheet
-    { name = "homepage" }
+  (stylesheet << namespace homepageNamespace.name)
     [ header
         [ backgroundColor (rgb 90 90 90)
         , boxSizing borderBox

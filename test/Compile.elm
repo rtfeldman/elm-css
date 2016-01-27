@@ -20,9 +20,9 @@ all =
     ]
 
 
-validRgbValue : Investigator Float
+validRgbValue : Investigator Int
 validRgbValue =
-  investigator (Random.float 0 255) Shrink.float
+  investigator (Random.int 0 255) Shrink.int
 
 
 validAlphaValue : Investigator Float
@@ -30,17 +30,17 @@ validAlphaValue =
   investigator (Random.float 0 1) Shrink.float
 
 
-invalidRgbValue : Investigator Float
+invalidRgbValue : Investigator Int
 invalidRgbValue =
   let
     generator =
       Random.Extra.frequency
-        [ ( 1, Random.float -300 -1.0e-3 )
-        , ( 1, Random.float 255.001 300 )
+        [ ( 1, Random.int -300 -1 )
+        , ( 1, Random.int 256 300 )
         ]
-        (Random.float 256 300)
+        (Random.int 256 300)
   in
-    investigator generator Shrink.float
+    investigator generator Shrink.int
 
 
 invalidAlphaValue : Investigator Float
@@ -56,14 +56,14 @@ invalidAlphaValue =
     investigator generator Shrink.float
 
 
-getRgbaWarnings : ( number, number, number, number ) -> Int
-getRgbaWarnings ( r, g, b, a ) =
-  rgba r g b a |> .warnings |> List.length
+getRgbaWarnings : ( Int, Int, Int, Float ) -> Int
+getRgbaWarnings ( red, green, blue, alpha ) =
+  rgba red green blue alpha |> .warnings |> List.length
 
 
-getRgbWarnings : ( number, number, number ) -> Int
-getRgbWarnings ( r, g, b ) =
-  rgb r g b |> .warnings |> List.length
+getRgbWarnings : ( Int, Int, Int ) -> Int
+getRgbWarnings ( red, green, blue ) =
+  rgb red green blue |> .warnings |> List.length
 
 
 colorWarnings : Test

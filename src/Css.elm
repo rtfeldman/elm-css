@@ -1,25 +1,31 @@
-module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(StyleBlock), Mixin(Mixin), Color, stylesheet, with, each, (&#), (&.), children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (@), transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex1, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse) where
+module Css (compile, Stylesheet, Snippet, Mixin, Color, stylesheet, each, media, withMedia, withClass, children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (|*|), (|+|), (|-|), (|/|), transformStyle, eachLine, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, flex, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, screen, print, projection, tv, src, qt, fontFamilies, fontVariantNumerics) where
 
 {-| Functions for building stylesheets.
 
+# Misc
+@docs Stylesheet, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inset, italic, large, larger, lighter, liningNums, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall
 
 # Style
-@docs Snippet, snippet, Mixin, mixin, stylesheet, compile
+@docs Snippet, Mixin, mixin, stylesheet, compile
 
 # Statements
-@docs (#), (.), (@), selector
+@docs (#), (.), selector
 
 # Combinators
-@docs children, descendants, adjacentSiblings, generalSiblings, each, (&.), (&#), with
+@docs children, descendants, adjacentSiblings, generalSiblings
+
+# Media Queries
+@docs screen, tv, projection, print
 
 # Properties
-@docs property, flex1, flex2, flex3, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, media, textShadow, textShadow2, textShadow3, textShadow4
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, textShadow, textShadow2, textShadow3, textShadow4, lineHeight, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics
+
 
 # Values
-@docs Color all, important, custom, solid, transparent, rgb, rgba, hsl, hsla, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse
+@docs Color all, important, custom, solid, transparent, rgb, rgba, hsl, hsla, hex, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero
 
 # Length
-@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, n, zero
+@docs pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, zero, (|+|), (|-|), (|*|), (|/|)
 
 # Angle
 @docs deg, rad, grad, turn
@@ -30,6 +36,15 @@ module Css (compile, Stylesheet, DeclarationTransform, Snippet, StyleBlock(Style
 # Pseudo-Elements
 @docs after, before, firstLetter, firstLine, selection
 
+# Media Queries
+@docs screen, print, tv, projection
+
+# Source
+@docs src
+
+# Quoting
+@docs qt
+
 # Intentionally Unsupported
 
 These are features you might expect to be in elm-css (because they are in the
@@ -39,10 +54,26 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
-import Css.Declaration as Declaration exposing (Declaration, SimpleSelector, ComplexSelector, Property, getLastProperty, updateLastProperty, extendLastSelector, addProperty, addSelector, mergeSelectors, extractSelectors, extractRuleStrings, removeProperties)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Compile
+import Css.Preprocess.Resolve as Resolve
+import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
+import Css.Structure as Structure exposing (MediaQuery(MediaQuery))
 import String
+
+
+{-| -}
+type alias Stylesheet =
+  Preprocess.Stylesheet
+
+
+{-| -}
+type alias Snippet =
+  Preprocess.Snippet
+
+
+{-| -}
+type alias Mixin =
+  Preprocess.Mixin
 
 
 type Compatible
@@ -57,57 +88,28 @@ type PseudoElement
   = PseudoElement String (List Mixin)
 
 
-{-| A stylesheet that can be passed to [`compile`](#compile) to get a String
-of a CSS file.
--}
-type alias Stylesheet =
-  List Declaration
-
-
-type alias DeclarationTransform =
-  String -> List Declaration -> List Declaration
-
-
-type DeclarationType
-  = DeclarationType
-
-
-type ConditionalGroupRuleType
-  = ConditionalGroupRuleType
-
-
-type StyleBlock
-  = StyleBlock (String -> List Declaration)
-
-
-type Snippet
-  = Snippet (String -> List Declaration)
-
-
-{-| A Mixin.
--}
-type Mixin
-  = Mixin DeclarationTransform
-
-
-type AtRule
-  = AtRule (List StyleBlock -> String -> List Declaration)
-
-
-type MediaQuery
-  = Print
-  | Projection
-  | Tv
-
-
-screen : String
+{-| -}
+screen : MediaQuery
 screen =
-  "screen"
+  MediaQuery "screen"
 
 
-print : String
+{-| -}
+print : MediaQuery
 print =
-  "print"
+  MediaQuery "print"
+
+
+{-| -}
+projection : MediaQuery
+projection =
+  MediaQuery "projection"
+
+
+{-| -}
+tv : MediaQuery
+tv =
+  MediaQuery "tv"
 
 
 
@@ -140,29 +142,36 @@ as the end user expects.
 
 Other notes:
 
-`key` is the name of the property.
+`desiredKey` is the key of the property.
 `functionName` is just for better error messages.
 -}
 getOverloadedProperty : String -> String -> Mixin -> Mixin
-getOverloadedProperty functionName key (Mixin mixinTransform) =
-  let
-    newTransform name declarations =
-      let
-        value =
-          getLastProperty declarations
-            |> Maybe.map .key
-            |> Maybe.withDefault ""
+getOverloadedProperty functionName desiredKey mixin =
+  case mixin of
+    Preprocess.AppendProperty { key } ->
+      -- Use the given mixin's Key as the resulting property's value.
+      property desiredKey key
 
-        update subject =
-          { subject | key = key, value = value }
-      in
-        updateLastProperty update declarations
+    Preprocess.ExtendSelector selector _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for selector " ++ toString selector ] desiredKey ""
 
-    newMixinTransform name declarations =
-      mixinTransform name declarations
-        |> newTransform name
-  in
-    Mixin newMixinTransform
+    Preprocess.NestSnippet combinator _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for combinator " ++ toString combinator ] desiredKey ""
+
+    Preprocess.WithPseudoElement pseudoElement _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for pseudo-element setter " ++ toString pseudoElement ] desiredKey ""
+
+    Preprocess.WithMedia mediaQuery _ ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for media query " ++ toString mediaQuery ] desiredKey ""
+
+    Preprocess.ApplyMixins [] ->
+      propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty mixin. " ] desiredKey ""
+
+    Preprocess.ApplyMixins (only :: []) ->
+      getOverloadedProperty functionName desiredKey only
+
+    Preprocess.ApplyMixins (first :: rest) ->
+      getOverloadedProperty functionName desiredKey (Preprocess.ApplyMixins rest)
 
 
 type alias Value compatible =
@@ -187,6 +196,70 @@ type alias MinMaxDimension compatible =
     , minMaxDimension : Compatible
     , lengthOrMinMaxDimension : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
+  }
+
+
+
+{- FONTS -}
+
+
+type alias ImportType compatible =
+  { compatible | value : String, import' : Compatible }
+
+
+type alias FontFace compatible =
+  { compatible | value : String, fontFace : Compatible }
+
+
+type alias FontFamily compatible =
+  { compatible | value : String, fontFamily : Compatible }
+
+
+type alias FontSize compatible =
+  { compatible | value : String, fontSize : Compatible }
+
+
+type alias FontStyle compatible =
+  { compatible | value : String, fontStyle : Compatible }
+
+
+
+-- type alias FontWeight compatible =
+--     { compatible
+--       | value : String
+--       , lengthOrNumber : Compatible
+--       , fontWeight : Compatible }
+
+
+type alias NumberedWeight =
+  { value : String, fontWeight : Compatible }
+
+
+type alias FontVariant compatible =
+  { compatible | value : String, fontVariant : Compatible }
+
+
+type alias FontVariantLigatures compatible =
+  { compatible
+    | value : String
+    , fontVariant : Compatible
+    , fontVariantLigatures : Compatible
+  }
+
+
+type alias FontVariantCaps compatible =
+  { compatible
+    | value : String
+    , fontVariant : Compatible
+    , fontVariantCaps : Compatible
+  }
+
+
+type alias FontVariantNumeric compatible =
+  { compatible
+    | value : String
+    , fontVariant : Compatible
+    , fontVariantNumeric : Compatible
   }
 
 
@@ -238,14 +311,14 @@ type alias FlexDirectionOrWrap compatible =
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values
 -}
-type alias AlignItems a =
-  Length a -> Mixin
+type alias AlignItems a b =
+  Length a b -> Mixin
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values
 -}
-type alias AlignSelf a =
-  Length a -> Mixin
+type alias AlignSelf a b =
+  Length a b -> Mixin
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values
@@ -266,14 +339,58 @@ type alias ColorValue compatible =
   { compatible | value : String, color : Compatible, warnings : List String }
 
 
+{-| -}
 type alias Color =
-  ColorValue {}
+  ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
 -}
-type alias Length compatible =
-  { compatible | value : String, length : Compatible }
+type alias Length compatible units =
+  { compatible
+    | value : String
+    , length : Compatible
+    , numericValue : Float
+    , units : units
+    , unitLabel : String
+  }
+
+
+{-| -}
+(|+|) : Length compatible units -> Length compatible units -> Length compatible units
+(|+|) =
+  combineLengths (+)
+
+
+{-| -}
+(|-|) : Length compatible units -> Length compatible units -> Length compatible units
+(|-|) =
+  combineLengths (-)
+
+
+{-| -}
+(|/|) : Length compatible units -> Length compatible units -> Length compatible units
+(|/|) =
+  combineLengths (/)
+
+
+{-| -}
+(|*|) : Length compatible units -> Length compatible units -> Length compatible units
+(|*|) =
+  combineLengths (*)
+
+
+combineLengths : (a -> b -> c) -> { e | numericValue : a, unitLabel : String, value : d } -> { f | numericValue : b } -> { e | numericValue : a, unitLabel : String, value : String }
+combineLengths operation first second =
+  let
+    value =
+      [ toString (operation first.numericValue second.numericValue)
+      , first.unitLabel
+      ]
+        |> List.filter (not << String.isEmpty)
+        |> String.join " "
+  in
+    { first | value = value }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -306,8 +423,11 @@ type alias LengthOrNumber compatible =
   { compatible | value : String, lengthOrNumber : Compatible }
 
 
-type alias ExplicitLength =
+type alias ExplicitLength units =
   { value : String
+  , numericValue : Float
+  , units : units
+  , unitLabel : String
   , length : Compatible
   , lengthOrAuto : Compatible
   , lengthOrNumber : Compatible
@@ -317,6 +437,7 @@ type alias ExplicitLength =
   , textIndent : Compatible
   , flexBasis : Compatible
   , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+  , fontSize : Compatible
   }
 
 
@@ -386,32 +507,26 @@ type alias TextRendering compatible =
   { compatible | value : String, textRendering : Compatible }
 
 
-
-{- Because `left` and `right` are both common properties and common values
+{-| Because `left` and `right` are both common properties and common values
 in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
 we implement it as a property (for the `left: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `VerticalAlign` follows a similar pattern.)
 -}
+type alias TextAlign a b =
+  Length a b -> Mixin
 
 
-type alias TextAlign a =
-  Length a -> Mixin
-
-
-
-{- Because `top` and `bottom` are both common properties and common values
+{-| Because `top` and `bottom` are both common properties and common values
 in CSS (e.g. `top: 5px` with `position: absolute` and `vertical-align: top`),
 we implement it as a property (for the `top: 5px` case) and allow it to
 be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `TextAlign` follows a similar pattern.)
 -}
-
-
-type alias VerticalAlign a =
-  Length a -> Mixin
+type alias VerticalAlign a b =
+  Length a b -> Mixin
 
 
 
@@ -429,17 +544,20 @@ all =
 declaration.
 -}
 important : Mixin -> Mixin
-important (Mixin transform) =
-  let
-    update property =
-      { property | important = True }
-  in
-    Mixin (\name decls -> (updateLastProperty update) (transform name decls))
+important =
+  Preprocess.mapLastProperty (\property -> { property | important = True })
+
+
+{-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
+values.
+-}
+type alias NonMixable =
+  {}
 
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
 -}
-transparent : Color
+transparent : ColorValue NonMixable
 transparent =
   { value = "transparent"
   , color = Compatible
@@ -450,7 +568,7 @@ transparent =
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
     value.
 -}
-currentColor : Color
+currentColor : ColorValue NonMixable
 currentColor =
   { value = "currentColor"
   , color = Compatible
@@ -512,6 +630,14 @@ type alias BasicProperty =
   , lengthOrMinMaxDimension : Compatible
   , lengthOrNoneOrMinMaxDimension : Compatible
   , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+  , fontFamily : Compatible
+  , fontSize : Compatible
+  , fontStyle : Compatible
+  , fontWeight : Compatible
+  , fontVariant : Compatible
+  , units : IncompatibleUnits
+  , numericValue : Float
+  , unitLabel : String
   }
 
 
@@ -559,41 +685,89 @@ initial =
   , flexDirection = Compatible
   , flexDirectionOrWrap = Compatible
   , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , fontFamily = Compatible
+  , fontSize = Compatible
+  , fontStyle = Compatible
+  , fontWeight = Compatible
+  , fontVariant = Compatible
+  , units = IncompatibleUnits
+  , numericValue = 0
+  , unitLabel = ""
   }
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in functional notation.
 -}
-rgb : number -> number -> number -> Color
-rgb r g b =
+rgb : Int -> Int -> Int -> Color
+rgb red green blue =
   let
     warnings =
-      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) then
-        [ "RGB color values must be between 0 and 255. rgb(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ") is not valid." ]
+      if
+        (red < 0)
+          || (red > 255)
+          || (green < 0)
+          || (green > 255)
+          || (blue < 0)
+          || (blue > 255)
+      then
+        [ "RGB color values must be between 0 and 255. rgb("
+            ++ (toString red)
+            ++ ", "
+            ++ (toString green)
+            ++ ", "
+            ++ (toString blue)
+            ++ ") is not valid."
+        ]
       else
         []
   in
-    { value = cssFunction "rgb" (List.map numberToString [ r, g, b ])
+    { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
     , color = Compatible
     , warnings = warnings
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = 1
     }
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
-rgba : number -> number -> number -> number -> Color
-rgba r g b a =
+rgba : Int -> Int -> Int -> Float -> Color
+rgba red green blue alpha =
   let
     warnings =
-      if (r < 0) || (r > 255) || (g < 0) || (g > 255) || (b < 0) || (b > 255) || (a < 0) || (a > 1) then
-        [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba(" ++ (toString r) ++ ", " ++ (toString g) ++ ", " ++ (toString b) ++ ", " ++ (toString a) ++ ") is not valid." ]
+      if
+        (red < 0)
+          || (red > 255)
+          || (green < 0)
+          || (green > 255)
+          || (blue < 0)
+          || (blue > 255)
+          || (alpha < 0)
+          || (alpha > 1)
+      then
+        [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba("
+            ++ (toString red)
+            ++ ", "
+            ++ (toString green)
+            ++ ", "
+            ++ (toString blue)
+            ++ ", "
+            ++ (toString alpha)
+            ++ ") is not valid."
+        ]
       else
         []
   in
-    { value = cssFunction "rgba" (List.map numberToString [ r, g, b, a ])
+    { value = cssFunction "rgba" (List.map numberToString [ red, green, blue, alpha ])
     , color = Compatible
     , warnings = warnings
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = 1
     }
 
 
@@ -602,27 +776,31 @@ rgba r g b a =
 to the appropriate percentage at compile-time
 -}
 hsl : number -> number -> number -> Color
-hsl h s l =
+hsl hue saturation lightness =
   let
     valuesList =
-      [ numberToString h
-      , numericalPercentageToString s
-      , numericalPercentageToString l
+      [ numberToString hue
+      , numericalPercentageToString saturation
+      , numericalPercentageToString lightness
       ]
 
     value =
       cssFunction "hsl" valuesList
 
     warnings =
-      if (h > 360) || (h < 0) || (s > 1) || (s < 0) || (l > 1) || (l < 0) then
+      if
+        (hue > 360)
+          || (hue < 0)
+          || (saturation > 1)
+          || (saturation < 0)
+          || (lightness > 1)
+          || (lightness < 0)
+      then
         [ "HSL color values must have an H value between 0 and 360 (as in degrees) and S and L values between 0 and 1. " ++ value ++ " is not valid." ]
       else
         []
   in
-    { value = value
-    , color = Compatible
-    , warnings = warnings
-    }
+    hslaToRgba value warnings hue saturation lightness 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -630,40 +808,70 @@ hsl h s l =
 to the appropriate percentage at compile-time
 -}
 hsla : number -> number -> number -> number -> Color
-hsla h s l a =
+hsla hue saturation lightness alpha =
   let
     valuesList =
-      [ numberToString h
-      , numericalPercentageToString s
-      , numericalPercentageToString l
-      , numberToString a
+      [ numberToString hue
+      , numericalPercentageToString saturation
+      , numericalPercentageToString lightness
+      , numberToString alpha
       ]
 
     value =
       cssFunction "hsla" valuesList
 
     warnings =
-      if (h > 360) || (h < 0) || (s > 1) || (s < 0) || (l > 1) || (l < 0) || (a > 1) || (a < 0) then
+      if
+        (hue > 360)
+          || (hue < 0)
+          || (saturation > 1)
+          || (saturation < 0)
+          || (lightness > 1)
+          || (lightness < 0)
+          || (alpha > 1)
+          || (alpha < 0)
+      then
         [ "HSLA color values must have an H value between 0 and 360 (as in degrees) and S, L, and A values between 0 and 1. " ++ value ++ " is not valid." ]
       else
         []
   in
-    { value = value
-    , color = Compatible
-    , warnings = warnings
-    }
+    hslaToRgba value warnings hue saturation lightness alpha
+
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
     in hexadecimal notation.
 -}
 hex : String -> Color
 hex str =
+  -- TODO
+  { value = "#" ++ str
+  , color = Compatible
+  , red = 0
+  , green = 0
+  , blue = 0
+  , alpha = 1
+  , warnings = []
+  }
+
+
+hslaToRgba : String -> List String -> Float -> Float -> Float -> Float -> Color
+hslaToRgba value warnings hue saturation lightness alpha =
   let
-    warnings =
-      []
+    red =
+      0
+
+    green =
+      0
+
+    blue =
+      0
   in
-    { value = "#" ++ str
+    { value = value
     , color = Compatible
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = alpha
     , warnings = warnings
     }
 
@@ -875,49 +1083,49 @@ outset =
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 Can also be used with flex-box's align-items property to apply the value of center
 -}
-center : TextAlign a
+center : TextAlign a b
 center =
   prop1 "center"
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : TextAlign a
+textJustify : TextAlign a b
 textJustify =
   prop1 "text-justify"
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : TextAlign a
+justifyAll : TextAlign a b
 justifyAll =
   prop1 "justify-all"
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : TextAlign a
+start : TextAlign a b
 start =
   prop1 "start"
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : TextAlign a
+end : TextAlign a b
 end =
   prop1 "end"
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : TextAlign a
+matchParent : TextAlign a b
 matchParent =
   prop1 "match-parent"
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : TextAlign a
+true : TextAlign a b
 true =
   prop1 "true"
 
@@ -926,9 +1134,12 @@ true =
 {- LENGTHS -}
 
 
-lengthConverter : String -> number -> ExplicitLength
-lengthConverter suffix num =
-  { value = (numberToString num) ++ suffix
+lengthConverter : units -> String -> Float -> ExplicitLength units
+lengthConverter units unitLabel num =
+  { value = (numberToString num) ++ unitLabel
+  , numericValue = num
+  , units = units
+  , unitLabel = unitLabel
   , length = Compatible
   , lengthOrAuto = Compatible
   , lengthOrNumber = Compatible
@@ -938,6 +1149,7 @@ lengthConverter suffix num =
   , textIndent = Compatible
   , flexBasis = Compatible
   , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , fontSize = Compatible
   }
 
 
@@ -961,6 +1173,9 @@ zero :
   , lengthOrMinMaxDimension : Compatible
   , lengthOrNoneOrMinMaxDimension : Compatible
   , number : Compatible
+  , units : UnitlessInteger
+  , unitLabel : String
+  , numericValue : Float
   }
 zero =
   { value = "0"
@@ -971,126 +1186,224 @@ zero =
   , lengthOrMinMaxDimension = Compatible
   , lengthOrNoneOrMinMaxDimension = Compatible
   , number = Compatible
+  , units = UnitlessInteger
+  , unitLabel = ""
+  , numericValue = 0
   }
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
-pct : number -> ExplicitLength
+pct : Float -> ExplicitLength PercentageUnits
 pct =
-  lengthConverter "%"
+  lengthConverter PercentageUnits "%"
+
+
+type PercentageUnits
+  = PercentageUnits
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
-em : number -> ExplicitLength
+em : Float -> ExplicitLength EmUnits
 em =
-  lengthConverter "em"
+  lengthConverter EmUnits "em"
+
+
+type EmUnits
+  = EmUnits
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
-ex : number -> ExplicitLength
+ex : Float -> ExplicitLength ExUnits
 ex =
-  lengthConverter "ex"
+  lengthConverter ExUnits "ex"
+
+
+type ExUnits
+  = ExUnits
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
-ch : number -> ExplicitLength
+ch : Float -> ExplicitLength ChUnits
 ch =
-  lengthConverter "ch"
+  lengthConverter ChUnits "ch"
+
+
+type ChUnits
+  = ChUnits
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
-rem : number -> ExplicitLength
+rem : Float -> ExplicitLength RemUnits
 rem =
-  lengthConverter "rem"
+  lengthConverter RemUnits "rem"
+
+
+type RemUnits
+  = RemUnits
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
-vh : number -> ExplicitLength
+vh : Float -> ExplicitLength VhUnits
 vh =
-  lengthConverter "vh"
+  lengthConverter VhUnits "vh"
+
+
+type VhUnits
+  = VhUnits
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
-vw : number -> ExplicitLength
+vw : Float -> ExplicitLength VwUnits
 vw =
-  lengthConverter "vw"
+  lengthConverter VwUnits "vw"
+
+
+type VwUnits
+  = VwUnits
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
-vmin : number -> ExplicitLength
+vmin : Float -> ExplicitLength VMinUnits
 vmin =
-  lengthConverter "vmin"
+  lengthConverter VMinUnits "vmin"
+
+
+type VMinUnits
+  = VMinUnits
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
-vmax : number -> ExplicitLength
+vmax : Float -> ExplicitLength VMaxUnits
 vmax =
-  lengthConverter "vmax"
+  lengthConverter VMaxUnits "vmax"
+
+
+type VMaxUnits
+  = VMaxUnits
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
-px : number -> ExplicitLength
+px : Float -> ExplicitLength PxUnits
 px =
-  lengthConverter "px"
+  lengthConverter PxUnits "px"
+
+
+type PxUnits
+  = PxUnits
 
 
 {-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
-mm : number -> ExplicitLength
+mm : Float -> ExplicitLength MMUnits
 mm =
-  lengthConverter "mm"
+  lengthConverter MMUnits "mm"
+
+
+type MMUnits
+  = MMUnits
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
-cm : number -> ExplicitLength
+cm : Float -> ExplicitLength CMUnits
 cm =
-  lengthConverter "cm"
+  lengthConverter CMUnits "cm"
+
+
+type CMUnits
+  = CMUnits
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 -}
-inches : number -> ExplicitLength
+inches : Float -> ExplicitLength InchUnits
 inches =
-  lengthConverter "in"
+  lengthConverter InchUnits "in"
+
+
+type InchUnits
+  = InchUnits
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
-pt : number -> ExplicitLength
+pt : Float -> ExplicitLength PtUnits
 pt =
-  lengthConverter "pt"
+  lengthConverter PtUnits "pt"
+
+
+type PtUnits
+  = PtUnits
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
-pc : number -> ExplicitLength
+pc : Float -> ExplicitLength PcUnits
 pc =
-  lengthConverter "pc"
+  lengthConverter PcUnits "pc"
 
 
-{-| A unitless number. Useful with properties like [`borderImageOutset`](#borderImageOutset)
+type PcUnits
+  = PcUnits
+
+
+{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-n : number -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number {}))
-n num =
-  { value = numberToString num
+int : Int -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))
+int val =
+  { value = numberToString val
   , lengthOrNumber = Compatible
   , number = Compatible
   , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , numericValue = toFloat val
+  , unitLabel = ""
+  , units = UnitlessInteger
   }
+
+
+type UnitlessInteger
+  = UnitlessInteger
+
+
+{-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
+which accept unitless numbers.
+-}
+float : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
+float val =
+  { value = numberToString val
+  , lengthOrNumber = Compatible
+  , number = Compatible
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , numericValue = val
+  , unitLabel = ""
+  , units = UnitlessFloat
+  }
+
+
+type UnitlessFloat
+  = UnitlessFloat
+
+
+lengthForOverloadedProperty : ExplicitLength IncompatibleUnits
+lengthForOverloadedProperty =
+  lengthConverter IncompatibleUnits "" 0
+
+
+type IncompatibleUnits
+  = IncompatibleUnits
 
 
 
@@ -1336,7 +1649,7 @@ skewY { value } =
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
 -}
-translate : Length compatible -> Transform {}
+translate : Length compatible units -> Transform {}
 translate { value } =
   { value = cssFunction "translate" [ value ]
   , transform = Compatible
@@ -1348,7 +1661,7 @@ translate { value } =
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
 -}
-translate2 : Length compatible -> Length compatible -> Transform {}
+translate2 : Length compatible units -> Length compatible units -> Transform {}
 translate2 tx ty =
   { value = cssFunction "translate" [ tx.value, ty.value ]
   , transform = Compatible
@@ -1359,7 +1672,7 @@ translate2 tx ty =
 
     transform (translateX (px 100))
 -}
-translateX : Length compatible -> Transform {}
+translateX : Length compatible units -> Transform {}
 translateX { value } =
   { value = cssFunction "translateX" [ value ]
   , transform = Compatible
@@ -1370,7 +1683,7 @@ translateX { value } =
 
     transform (translateY (px 100))
 -}
-translateY : Length compatible -> Transform {}
+translateY : Length compatible units -> Transform {}
 translateY { value } =
   { value = cssFunction "translateY" [ value ]
   , transform = Compatible
@@ -1381,7 +1694,7 @@ translateY { value } =
 
     transform (translateZ (px 100))
 -}
-translateZ : Length compatible -> Transform {}
+translateZ : Length compatible units -> Transform {}
 translateZ { value } =
   { value = cssFunction "translateZ" [ value ]
   , transform = Compatible
@@ -1392,7 +1705,7 @@ translateZ { value } =
 
     transform (translate3d (px 100) (px 100) (px 100))
 -}
-translate3d : Length compatible -> Length compatible -> Length compatible -> Transform {}
+translate3d : Length compatible units -> Length compatible units -> Length compatible units -> Transform {}
 translate3d tx ty tz =
   { value = cssFunction "translate3d" [ tx.value, ty.value, tz.value ]
   , transform = Compatible
@@ -1517,19 +1830,19 @@ transformStyle =
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
 -}
-flex1 : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin
-flex1 =
+flex : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin
+flex =
   prop1 "flex"
 
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
@@ -1541,7 +1854,7 @@ flex2 =
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
@@ -1553,7 +1866,7 @@ flex3 =
 
 {-| Sets [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis) property.}
 
-flex1 (none | content | auto | (n 1) | (px 10))
+flex (none | content | auto | (n 1) | (px 10))
 flex2 (n 1) ((n 1) | (px 10 ))
 flex3 (n 1) (n 1) ((n 1) | (px 10))
 
@@ -1617,9 +1930,9 @@ flexFlow2 =
 
 {-| Sets [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items).
 -}
-alignItems : (ExplicitLength -> Mixin) -> Mixin
+alignItems : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 alignItems fn =
-  getOverloadedProperty "alignItems" "align-items" (fn (pct 0))
+  getOverloadedProperty "alignItems" "align-items" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`align-self`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-self).
@@ -1631,9 +1944,9 @@ alignItems fn =
   ~ ("text-align-last", "auto")
 
 -}
-alignSelf : (ExplicitLength -> Mixin) -> Mixin
+alignSelf : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 alignSelf fn =
-  getOverloadedProperty "alignSelf" "align-self" (fn (pct 0))
+  getOverloadedProperty "alignSelf" "align-self" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
@@ -1674,25 +1987,25 @@ wrapReverse =
 
 
 {-| The[`flex-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-itmems property.
+  align-items property.
 -}
-flexStart : AlignItems a
+flexStart : AlignItems a b
 flexStart =
   prop1 "flex-start"
 
 
 {-| The[`flex-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-itmems property.
+  align-items property.
 -}
-flexEnd : AlignItems a
+flexEnd : AlignItems a b
 flexEnd =
   prop1 "flex-end"
 
 
 {-| The[`stretch`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-itmems property.
+  align-items property.
 -}
-stretch : AlignItems a
+stretch : AlignItems a b
 stretch =
   prop1 "stretch"
 
@@ -1856,7 +2169,7 @@ noWrap =
 
     ~ verticalAlign middle
 -}
-middle : VerticalAlign a
+middle : VerticalAlign a b
 middle =
   prop1 "middle"
 
@@ -1865,7 +2178,7 @@ middle =
 
     ~ verticalAlign baseline
 -}
-baseline : VerticalAlign a
+baseline : VerticalAlign a b
 baseline =
   prop1 "baseline"
 
@@ -1874,7 +2187,7 @@ baseline =
 
     ~ verticalAlign sub
 -}
-sub : VerticalAlign a
+sub : VerticalAlign a b
 sub =
   prop1 "sub"
 
@@ -1883,7 +2196,7 @@ sub =
 
     ~ verticalAlign super
 -}
-super : VerticalAlign a
+super : VerticalAlign a b
 super =
   prop1 "super"
 
@@ -1892,7 +2205,7 @@ super =
 
     ~ verticalAlign textTop
 -}
-textTop : VerticalAlign a
+textTop : VerticalAlign a b
 textTop =
   prop1 "text-top"
 
@@ -1901,7 +2214,7 @@ textTop =
 
     ~ verticalAlign textBottom
 -}
-textBottom : VerticalAlign a
+textBottom : VerticalAlign a b
 textBottom =
   prop1 "text-bottom"
 
@@ -1956,16 +2269,16 @@ textDecorationColor =
 
     ~ ("text-align-last", "auto")
 -}
-textAlignLast : (ExplicitLength -> Mixin) -> Mixin
+textAlignLast : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 textAlignLast fn =
-  getOverloadedProperty "textAlignLast" "text-align-last" (fn (pct 0))
+  getOverloadedProperty "textAlignLast" "text-align-last" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : (ExplicitLength -> Mixin) -> Mixin
+textAlign : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 textAlign fn =
-  getOverloadedProperty "textAlign" "text-align" (fn (pct 0))
+  getOverloadedProperty "textAlign" "text-align" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
@@ -2009,7 +2322,7 @@ textShadow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length compatible -> Length compatible -> Mixin
+textShadow2 : Length compatible units -> Length compatible units -> Mixin
 textShadow2 =
   prop2 "text-shadow"
 
@@ -2022,7 +2335,7 @@ textShadow2 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatible -> Length compatible -> ColorValue compatible -> Mixin
+textShadow3 : Length compatible units -> Length compatible units -> ColorValue compatible -> Mixin
 textShadow3 =
   prop3 "text-shadow"
 
@@ -2035,7 +2348,7 @@ textShadow3 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatible -> Length compatible -> Length compatible -> ColorValue compatible -> Mixin
+textShadow4 : Length compatible units -> Length compatible units -> Length compatible units -> ColorValue compatible -> Mixin
 textShadow4 =
   prop4 "text-shadow"
 
@@ -2046,7 +2359,7 @@ textShadow4 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent : Length compatible -> Mixin
+textIndent : Length compatible units -> Mixin
 textIndent =
   prop1 "text-indent"
 
@@ -2057,7 +2370,7 @@ textIndent =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent2 : Length compatibleA -> TextIndent compatibleB -> Mixin
+textIndent2 : Length compatibleA unitsA -> TextIndent compatibleB -> Mixin
 textIndent2 =
   prop2 "text-indent"
 
@@ -2068,7 +2381,7 @@ textIndent2 =
     ~ textIndent2 (px 40) hanging
     ~ textIndent3 (px 40) hanging eachLine
 -}
-textIndent3 : Length compatibleA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin
+textIndent3 : Length compatibleA unitsA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin
 textIndent3 =
   prop3 "text-indent"
 
@@ -2082,9 +2395,9 @@ textTransform =
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : (ExplicitLength -> Mixin) -> Mixin
+verticalAlign : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 verticalAlign fn =
-  getOverloadedProperty "verticalAlign" "vertical-align" (fn (pct 0))
+  getOverloadedProperty "verticalAlign" "vertical-align" (fn lengthForOverloadedProperty)
 
 
 {-| -}
@@ -2170,7 +2483,7 @@ maxHeight =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length compatible -> Mixin
+padding : Length compatible units -> Mixin
 padding =
   prop1 "padding"
 
@@ -2182,7 +2495,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length compatible -> Length compatible -> Mixin
+padding2 : Length compatible units -> Length compatible units -> Mixin
 padding2 =
   prop2 "padding"
 
@@ -2194,7 +2507,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length compatible -> Length compatible -> Length compatible -> Mixin
+padding3 : Length compatible units -> Length compatible units -> Length compatible units -> Mixin
 padding3 =
   prop3 "padding"
 
@@ -2206,7 +2519,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length compatible -> Length compatible -> Length compatible -> Length compatible -> Mixin
+padding4 : Length compatible units -> Length compatible units -> Length compatible units -> Length compatible units -> Mixin
 padding4 =
   prop4 "padding"
 
@@ -2251,7 +2564,7 @@ paddingInlineEnd =
 
     paddingTop (px 10)
 -}
-paddingTop : Length compatible -> Mixin
+paddingTop : Length compatible units -> Mixin
 paddingTop =
   prop1 "padding-top"
 
@@ -2260,7 +2573,7 @@ paddingTop =
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length compatible -> Mixin
+paddingBottom : Length compatible units -> Mixin
 paddingBottom =
   prop1 "padding-bottom"
 
@@ -2269,7 +2582,7 @@ paddingBottom =
 
     paddingRight (px 10)
 -}
-paddingRight : Length compatible -> Mixin
+paddingRight : Length compatible units -> Mixin
 paddingRight =
   prop1 "padding-right"
 
@@ -2278,7 +2591,7 @@ paddingRight =
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length compatible -> Mixin
+paddingLeft : Length compatible units -> Mixin
 paddingLeft =
   prop1 "padding-left"
 
@@ -2575,6 +2888,342 @@ absolute =
 
 
 
+{- FONT VALUES -}
+-- Families --
+
+
+{-| -}
+serif : FontFamily {}
+serif =
+  { value = "serif", fontFamily = Compatible }
+
+
+{-| -}
+sansSerif : FontFamily {}
+sansSerif =
+  { value = "sans-serif", fontFamily = Compatible }
+
+
+{-| -}
+monospace : FontFamily {}
+monospace =
+  { value = "monospace", fontFamily = Compatible }
+
+
+{-| -}
+cursive : FontFamily {}
+cursive =
+  { value = "cursive", fontFamily = Compatible }
+
+
+{-| -}
+fantasy : FontFamily {}
+fantasy =
+  { value = "fantasy", fontFamily = Compatible }
+
+
+
+-- Size --
+
+
+{-| -}
+xxSmall : FontSize {}
+xxSmall =
+  { value = "xx-small", fontSize = Compatible }
+
+
+{-| -}
+xSmall : FontSize {}
+xSmall =
+  { value = "x-small", fontSize = Compatible }
+
+
+{-| -}
+small : FontSize {}
+small =
+  { value = "small", fontSize = Compatible }
+
+
+{-| -}
+medium : FontSize {}
+medium =
+  { value = "medium", fontSize = Compatible }
+
+
+{-| -}
+large : FontSize {}
+large =
+  { value = "large", fontSize = Compatible }
+
+
+{-| -}
+xLarge : FontSize {}
+xLarge =
+  { value = "x-large", fontSize = Compatible }
+
+
+{-| -}
+xxLarge : FontSize {}
+xxLarge =
+  { value = "xx-large", fontSize = Compatible }
+
+
+{-| -}
+smaller : FontSize {}
+smaller =
+  { value = "smaller", fontSize = Compatible }
+
+
+{-| -}
+larger : FontSize {}
+larger =
+  { value = "larger", fontSize = Compatible }
+
+
+
+-- Styles --
+
+
+{-| -}
+normal : FontStyle {}
+normal =
+  { value = "normal", fontStyle = Compatible }
+
+
+{-| -}
+italic : FontStyle {}
+italic =
+  { value = "italic", fontStyle = Compatible }
+
+
+{-| -}
+oblique : FontStyle {}
+oblique =
+  { value = "oblique", fontStyle = Compatible }
+
+
+
+-- Weights --
+
+
+{-| -}
+bold : LengthOrNumberOrAutoOrNoneOrContent {}
+bold =
+  { value = "bold"
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  }
+
+
+{-| -}
+lighter : LengthOrNumberOrAutoOrNoneOrContent {}
+lighter =
+  { value = "lighter"
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  }
+
+
+{-| -}
+bolder : LengthOrNumberOrAutoOrNoneOrContent {}
+bolder =
+  { value = "bolder"
+  , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  }
+
+
+
+-- VARIANTS --
+-- CAPS --
+
+
+{-| -}
+smallCaps : FontVariantCaps {}
+smallCaps =
+  { value = "small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+{-| -}
+allSmallCaps : FontVariantCaps {}
+allSmallCaps =
+  { value = "all-small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+{-| -}
+petiteCaps : FontVariantCaps {}
+petiteCaps =
+  { value = "petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+{-| -}
+allPetiteCaps : FontVariantCaps {}
+allPetiteCaps =
+  { value = "all-petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+{-| -}
+unicase : FontVariantCaps {}
+unicase =
+  { value = "unicase", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+{-| -}
+titlingCaps : FontVariantCaps {}
+titlingCaps =
+  { value = "titling-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+
+
+
+-- LIGATURES --
+
+
+{-| -}
+commonLigatures : FontVariantLigatures {}
+commonLigatures =
+  { value = "common-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+{-| -}
+noCommonLigatures : FontVariantLigatures {}
+noCommonLigatures =
+  { value = "no-common-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+{-| -}
+discretionaryLigatures : FontVariantLigatures {}
+discretionaryLigatures =
+  { value = "discretionary-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+{-| -}
+noDiscretionaryLigatures : FontVariantLigatures {}
+noDiscretionaryLigatures =
+  { value = "no-discretionary-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+{-| -}
+historicalLigatures : FontVariantLigatures {}
+historicalLigatures =
+  { value = "historical-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+{-| -}
+noHistoricalLigatures : FontVariantLigatures {}
+noHistoricalLigatures =
+  { value = "no-historical-ligatures"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+{-| -}
+contextual : FontVariantLigatures {}
+contextual =
+  { value = "context"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+{-| -}
+noContextual : FontVariantLigatures {}
+noContextual =
+  { value = "no-contextual"
+  , fontVariant = Compatible
+  , fontVariantLigatures = Compatible
+  }
+
+
+
+-- NUMERIC --
+
+
+{-| -}
+liningNums : FontVariantNumeric {}
+liningNums =
+  { value = "lining-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+{-| -}
+oldstyleNums : FontVariantNumeric {}
+oldstyleNums =
+  { value = "oldstyle-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+{-| -}
+proportionalNums : FontVariantNumeric {}
+proportionalNums =
+  { value = "proportional-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+{-| -}
+tabularNums : FontVariantNumeric {}
+tabularNums =
+  { value = "tabular-nums"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+{-| -}
+diagonalFractions : FontVariantNumeric {}
+diagonalFractions =
+  { value = "diagonal-fractions"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+{-| -}
+stackedFractions : FontVariantNumeric {}
+stackedFractions =
+  { value = "stacked-fractions"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+{-| -}
+ordinal : FontVariantNumeric {}
+ordinal =
+  { value = "ordinal"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+{-| -}
+slashedZero : FontVariantNumeric {}
+slashedZero =
+  { value = "slashed-zero"
+  , fontVariant = Compatible
+  , fontVariantNumeric = Compatible
+  }
+
+
+
 {- BORDER PROPERTIES -}
 
 
@@ -2584,7 +3233,7 @@ absolute =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length compatible -> Mixin
+border : Length compatible units -> Mixin
 border =
   prop1 "border"
 
@@ -2596,7 +3245,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+border2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 border2 =
   prop2 "border"
 
@@ -2607,7 +3256,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 border3 =
   prop3 "border"
 
@@ -2619,7 +3268,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length compatible -> Mixin
+borderTop : Length compatible units -> Mixin
 borderTop =
   prop1 "border-top"
 
@@ -2631,7 +3280,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderTop2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderTop2 =
   prop2 "border-top"
 
@@ -2643,7 +3292,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderTop3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderTop3 =
   prop3 "border-top"
 
@@ -2655,7 +3304,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length compatible -> Mixin
+borderBottom : Length compatible units -> Mixin
 borderBottom =
   prop1 "border-bottom"
 
@@ -2667,7 +3316,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBottom2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderBottom2 =
   prop2 "border-bottom"
 
@@ -2679,7 +3328,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBottom3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBottom3 =
   prop3 "border-bottom"
 
@@ -2691,7 +3340,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length compatible -> Mixin
+borderLeft : Length compatible units -> Mixin
 borderLeft =
   prop1 "border-left"
 
@@ -2703,7 +3352,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderLeft2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderLeft2 =
   prop2 "border-left"
 
@@ -2715,7 +3364,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderLeft3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderLeft3 =
   prop3 "border-left"
 
@@ -2727,7 +3376,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length compatible -> Mixin
+borderRight : Length compatible units -> Mixin
 borderRight =
   prop1 "border-right"
 
@@ -2739,7 +3388,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderRight2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderRight2 =
   prop2 "border-right"
 
@@ -2751,7 +3400,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderRight3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderRight3 =
   prop3 "border-right"
 
@@ -2763,7 +3412,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length compatible -> Mixin
+borderBlockStart : Length compatible units -> Mixin
 borderBlockStart =
   prop1 "border-block-start"
 
@@ -2775,7 +3424,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBlockStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderBlockStart2 =
   prop2 "border-block-start"
 
@@ -2787,7 +3436,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBlockStart3 : Length compatibleA units -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBlockStart3 =
   prop3 "border-block-start"
 
@@ -2799,7 +3448,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length compatible -> Mixin
+borderBlockEnd : Length compatible units -> Mixin
 borderBlockEnd =
   prop1 "border-block-end"
 
@@ -2811,7 +3460,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderBlockEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderBlockEnd2 =
   prop2 "border-block-end"
 
@@ -2823,7 +3472,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBlockEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderBlockEnd3 =
   prop3 "border-block-end"
 
@@ -2835,7 +3484,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length compatible -> Mixin
+borderInlineStart : Length compatible units -> Mixin
 borderInlineStart =
   prop1 "border-block-start"
 
@@ -2847,7 +3496,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderInlineStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderInlineStart2 =
   prop2 "border-block-start"
 
@@ -2859,7 +3508,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderInlineStart3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderInlineStart3 =
   prop3 "border-block-start"
 
@@ -2871,7 +3520,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length compatible -> Mixin
+borderInlineEnd : Length compatible units -> Mixin
 borderInlineEnd =
   prop1 "border-block-end"
 
@@ -2883,7 +3532,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length compatibleA -> BorderStyle compatibleB -> Mixin
+borderInlineEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
 borderInlineEnd2 =
   prop2 "border-block-end"
 
@@ -2895,7 +3544,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderInlineEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
 borderInlineEnd3 =
   prop3 "border-block-end"
 
@@ -3161,7 +3810,7 @@ borderStyle =
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length compatible -> Mixin
+borderBottomWidth : Length compatible units -> Mixin
 borderBottomWidth =
   prop1 "border-bottom-width"
 
@@ -3170,7 +3819,7 @@ borderBottomWidth =
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length compatible -> Mixin
+borderInlineEndWidth : Length compatible units -> Mixin
 borderInlineEndWidth =
   prop1 "border-inline-end-width"
 
@@ -3179,7 +3828,7 @@ borderInlineEndWidth =
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length compatible -> Mixin
+borderLeftWidth : Length compatible units -> Mixin
 borderLeftWidth =
   prop1 "border-left-width"
 
@@ -3188,7 +3837,7 @@ borderLeftWidth =
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length compatible -> Mixin
+borderRightWidth : Length compatible units -> Mixin
 borderRightWidth =
   prop1 "border-right-width"
 
@@ -3198,7 +3847,7 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length compatible -> Mixin
+borderTopWidth : Length compatible units -> Mixin
 borderTopWidth =
   prop1 "border-top-width"
 
@@ -3208,7 +3857,7 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderTopWidth2 =
   prop2 "border-top-width"
 
@@ -3218,7 +3867,7 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length compatible -> Mixin
+borderBottomLeftRadius : Length compatible units -> Mixin
 borderBottomLeftRadius =
   prop1 "border-bottom-left-radius"
 
@@ -3228,7 +3877,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderBottomLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderBottomLeftRadius2 =
   prop2 "border-bottom-left-radius"
 
@@ -3238,7 +3887,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length compatible -> Mixin
+borderBottomRightRadius : Length compatible units -> Mixin
 borderBottomRightRadius =
   prop1 "border-bottom-right-radius"
 
@@ -3248,7 +3897,7 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderBottomRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderBottomRightRadius2 =
   prop2 "border-bottom-right-radius"
 
@@ -3258,7 +3907,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length compatible -> Mixin
+borderTopLeftRadius : Length compatible units -> Mixin
 borderTopLeftRadius =
   prop1 "border-top-left-radius"
 
@@ -3268,7 +3917,7 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderTopLeftRadius2 =
   prop2 "border-top-left-radius"
 
@@ -3278,7 +3927,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length compatible -> Mixin
+borderTopRightRadius : Length compatible units -> Mixin
 borderTopRightRadius =
   prop1 "border-top-right-radius"
 
@@ -3288,7 +3937,7 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderTopRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderTopRightRadius2 =
   prop2 "border-top-right-radius"
 
@@ -3300,7 +3949,7 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length compatible -> Mixin
+borderRadius : Length compatible units -> Mixin
 borderRadius =
   prop1 "border-radius"
 
@@ -3312,7 +3961,7 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length compatibleA -> Length compatibleB -> Mixin
+borderRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderRadius2 =
   prop2 "border-radius"
 
@@ -3324,7 +3973,7 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length compatibleA -> Length compatibleB -> Length compatibleC -> Mixin
+borderRadius3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Mixin
 borderRadius3 =
   prop3 "border-radius"
 
@@ -3336,7 +3985,7 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length compatibleB -> Length compatibleB -> Length compatibleC -> Length compatibleD -> Mixin
+borderRadius4 : Length compatibleB unitsB -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Mixin
 borderRadius4 =
   prop4 "border-radius"
 
@@ -3346,7 +3995,7 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length compatible -> Mixin
+borderSpacing : Length compatible units -> Mixin
 borderSpacing =
   prop1 "border-spacing"
 
@@ -3356,7 +4005,7 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length compatibleA -> Length compatibleB -> Mixin
+borderSpacing2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 borderSpacing2 =
   prop2 "border-spacing"
 
@@ -3446,16 +4095,218 @@ color =
 
 
 {-| -}
-media : a -> AtRule
-media value =
+media : List Structure.MediaQuery -> List Snippet -> Snippet
+media mediaQueries snippets =
   let
-    getDeclarations styleBlocks name =
-      [ Declaration.ConditionalGroupRule
-          ("@media \"" ++ toCssIdentifier value ++ "\"")
-          (List.concatMap (\(StyleBlock transform) -> transform name) styleBlocks)
-      ]
+    snippetDeclarations : List Preprocess.SnippetDeclaration
+    snippetDeclarations =
+      List.concatMap unwrapSnippet snippets
+
+    extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
+    extractStyleBlocks declarations =
+      case declarations of
+        [] ->
+          []
+
+        (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
+          styleBlock :: extractStyleBlocks rest
+
+        first :: rest ->
+          extractStyleBlocks rest
+
+    mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
+    mediaRuleFromStyleBlocks =
+      Preprocess.MediaRule
+        mediaQueries
+        (extractStyleBlocks snippetDeclarations)
+
+    nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
+    nestedMediaRules declarations =
+      case declarations of
+        [] ->
+          []
+
+        (Preprocess.StyleBlockDeclaration _) :: rest ->
+          -- These will already have been handled previously, with appropriate
+          -- bundling, so don't create duplicates here.
+          nestedMediaRules rest
+
+        (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
+          -- nest the media queries
+          (Preprocess.MediaRule (mediaQueries ++ nestedMediaQueries) styleBlocks)
+            :: nestedMediaRules rest
+
+        first :: rest ->
+          first :: nestedMediaRules rest
   in
-    AtRule getDeclarations
+    Preprocess.Snippet (mediaRuleFromStyleBlocks :: (nestedMediaRules snippetDeclarations))
+
+
+{-| -}
+withMedia : List Structure.MediaQuery -> List Mixin -> Mixin
+withMedia =
+  Preprocess.WithMedia
+
+
+
+{- FONT PROPERTIES -}
+
+
+{-| Sets [`line-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
+
+    lineHeight (px 10)
+-}
+lineHeight : Length compatible units -> Mixin
+lineHeight =
+  prop1 "line-height"
+
+
+{-| Sets [`font-face`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
+
+    @ fontFace
+        ~ font-family "Bitstream Vera Serif Bold"
+        ~ src url("https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf")
+-}
+src : ImportType compatible -> String
+src value =
+  toString value.value
+
+
+{-| -}
+fontFace : String -> String
+fontFace value =
+  "font-face " ++ value
+
+
+{-| Sets [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
+
+    ~ fontFamily    serif
+    ~ fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
+-}
+qt : String -> String
+qt str =
+  toString str
+
+
+{-| -}
+fontFamily : FontFamily a -> Mixin
+fontFamily =
+  prop1 "font-family"
+
+
+{-| -}
+fontFamilies : List String -> Mixin
+fontFamilies =
+  prop1 "font-family" << stringsToValue
+
+
+{-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
+
+    ~ fontSize  xxSmall
+    ~ fontSize  (px 12)
+-}
+fontSize : FontSize a -> Mixin
+fontSize =
+  prop1 "font-size"
+
+
+{-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
+
+    ~ fontStyle  italic
+-}
+fontStyle : FontStyle a -> Mixin
+fontStyle =
+  prop1 "font-style"
+
+
+{-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
+
+    ~ fontWeight  bold
+    ~ fontWeight  (n 300)
+-}
+fontWeight : LengthOrNumberOrAutoOrNoneOrContent a -> Mixin
+fontWeight { value } =
+  let
+    validWeight weight =
+      if value /= toString weight then
+        -- This means it was one of the string keywords, e.g. "bold"
+        True
+      else
+        [1..9]
+          |> List.map ((*) 100)
+          |> List.member weight
+
+    warnings =
+      if validWeight (stringToInt value) then
+        []
+      else
+        [ "fontWeight " ++ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
+  in
+    propertyWithWarnings warnings "font-weight" value
+
+
+{-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
+
+    ~ fontVariant   smallCaps
+    ~ fontVariant2  commonLigatures smallCaps
+    ~ fontVariant3  commonLigatures smallCaps slashedZero
+    ~ fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
+-}
+fontVariant : FontVariant a -> Mixin
+fontVariant =
+  prop1 "font-variant"
+
+
+{-| -}
+fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Mixin
+fontVariant2 =
+  prop2 "font-variant"
+
+
+{-| -}
+fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Mixin
+fontVariant3 =
+  prop3 "font-variant"
+
+
+{-| -}
+fontVariantLigatures : FontVariantLigatures a -> Mixin
+fontVariantLigatures =
+  prop1 "font-variant-ligatures"
+
+
+{-| -}
+fontVariantCaps : FontVariantCaps a -> Mixin
+fontVariantCaps =
+  prop1 "font-variant-caps"
+
+
+{-| -}
+fontVariantNumeric : FontVariantNumeric a -> Mixin
+fontVariantNumeric =
+  prop1 "font-variant-numeric"
+
+
+{-| -}
+fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Mixin
+fontVariantNumeric2 =
+  prop2 "font-variant-numeric"
+
+
+{-| -}
+fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin
+fontVariantNumeric3 =
+  prop3 "font-variant-numeric"
+
+
+{-| -}
+fontVariantNumerics : List (FontVariantNumeric compatible) -> Mixin
+fontVariantNumerics =
+  prop1 "font-variant-numeric" << valuesOrNone
+
+
+
+{- TEXT DECORATION PROPERTIES -}
 
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
@@ -3599,16 +4450,12 @@ Pass `[]` to set `animation-name: none;`
 animationNames : List animation -> Mixin
 animationNames identifiers =
   let
-    customTransform name =
-      let
-        value =
-          identifiers
-            |> List.map (identifierToString name)
-            |> String.join ", "
-      in
-        addProperty { key = "animation-name", value = value, important = False, warnings = [] }
+    value =
+      identifiers
+        |> List.map (identifierToString "")
+        |> String.join ", "
   in
-    Mixin customTransform
+    property "animation-name" value
 
 
 {-| An empty namespaced stylesheet. Use this as the foundation on which to build
@@ -3619,58 +4466,12 @@ your stylesheet.
             ~ width 960 px
             ~ color (rgb 7 7 7)
 -}
-stylesheet : { a | name : String } -> List StyleBlock -> Stylesheet
-stylesheet { name } styleBlocks =
-  concatStyleBlocks styleBlocks name
+stylesheet : List Snippet -> Stylesheet
+stylesheet =
+  Preprocess.stylesheet
 
 
-snippet : List StyleBlock -> Snippet
-snippet styles =
-  Snippet (concatStyleBlocks styles)
-
-
-{-| Copy the given snippets into the current style.
--}
-snippets : List Snippet -> StyleBlock
-snippets snippets =
-  StyleBlock (applySnippets snippets)
-
-
-applySnippets : List Snippet -> String -> List Declaration
-applySnippets snippets name =
-  List.concatMap (\(Snippet transform) -> transform name) snippets
-
-
-applyMixins : List Mixin -> DeclarationTransform
-applyMixins mixins name declarations =
-  List.foldl (\(Mixin transform) -> transform name) declarations mixins
-
-
-concatStyleBlocks : List StyleBlock -> String -> List Declaration
-concatStyleBlocks styles name =
-  List.concatMap (\(StyleBlock transform) -> transform name) styles
-
-
-selectorToStyleBlock : List Mixin -> (String -> SimpleSelector) -> StyleBlock
-selectorToStyleBlock mixins makeSelector =
-  let
-    transform name =
-      transformWithMixins mixins (selectorDeclaration (makeSelector name)) name
-  in
-    StyleBlock transform
-
-
-transformWithMixins : List Mixin -> Declaration -> String -> List Declaration
-transformWithMixins mixins declaration name =
-  List.foldl (\(Mixin transform) -> transform name) [ declaration ] mixins
-
-
-selectorDeclaration : SimpleSelector -> Declaration
-selectorDeclaration selector =
-  Declaration.StyleBlock (Declaration.SingleSelector selector) [] []
-
-
-{-| A Mixinllowing you to modularly reuse common styles in other styles.
+{-| A Mixin allowing you to modularly reuse common styles in other styles.
 `mixin` declares the mixin, and `~=` adds the contents of a mixin to another
 style.
 
@@ -3696,7 +4497,7 @@ style.
 -}
 mixin : List Mixin -> Mixin
 mixin =
-  applyMixins >> Mixin
+  Preprocess.ApplyMixins
 
 
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
@@ -3710,14 +4511,21 @@ mixin =
         button # Cancel
             ~ backgroundColor (rgb 128 64 32)
 -}
-(#) : id -> List (Mixin) -> StyleBlock
+(#) : id -> List Mixin -> Snippet
 (#) id mixins =
-  selectorToStyleBlock mixins (makeIdSelector id)
+  [ Structure.IdSelector (identifierToString "" id) ]
+    |> Structure.UniversalSelectorSequence
+    |> makeSnippet mixins
 
 
-makeIdSelector : id -> String -> SimpleSelector
-makeIdSelector id name =
-  Declaration.IdSelector (identifierToString name id)
+makeSnippet : List Mixin -> Structure.SimpleSelectorSequence -> Snippet
+makeSnippet mixins sequence =
+  let
+    selector =
+      Structure.Selector sequence [] Nothing
+  in
+    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] mixins) ]
+      |> Preprocess.Snippet
 
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
@@ -3729,32 +4537,11 @@ makeIdSelector id name =
             ~ fontWeight normal
             ~ color (rgb 128 64 32)
 -}
-(.) : class -> List (Mixin) -> StyleBlock
+(.) : class -> List Mixin -> Snippet
 (.) class mixins =
-  selectorToStyleBlock mixins (\name -> Declaration.ClassSelector (identifierToString name class))
-
-
-makeClassSelector : class -> String -> SimpleSelector
-makeClassSelector class name =
-  Declaration.ClassSelector (identifierToString name class)
-
-
-{-| An [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule).
-    StyleBlock transform
-        $ html
-            ~ width (pct 100)
-
-        @ media screen
-            $ body
-                ~ width (px 960)
-
-        @ media print
-            $ body
-                ~ width (pct 100)
--}
-(@) : AtRule -> List StyleBlock -> StyleBlock
-(@) (AtRule getDeclarations) styleBlocks =
-  StyleBlock (getDeclarations styleBlocks)
+  [ Structure.ClassSelector (identifierToString "" class) ]
+    |> Structure.UniversalSelectorSequence
+    |> makeSnippet mixins
 
 
 
@@ -3768,12 +4555,10 @@ makeClassSelector class name =
 --clearfix : Mixin
 --clearfix =
 --  mixin
---    [ pseudoElements
---        [ after
---            [ content ""
---            , display table
---            , clear both
---            ]
+--    [ after
+--        [ content ""
+--        , display table
+--        , clear both
 --        ]
 --    ]
 
@@ -3787,9 +4572,10 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ~ textDecoration underline
             ~ color (rgb 7 7 7)
 -}
-selector : String -> List Mixin -> StyleBlock
+selector : String -> List Mixin -> Snippet
 selector selectorStr mixins =
-  selectorToStyleBlock mixins (\name -> Declaration.CustomSelector selectorStr)
+  Structure.CustomSelector selectorStr []
+    |> makeSnippet mixins
 
 
 {-| Define a custom property.
@@ -3804,8 +4590,14 @@ selector selectorStr mixins =
     }
 -}
 property : String -> String -> Mixin
-property key value =
-  Mixin (\_ -> addProperty { key = key, value = value, important = False, warnings = [] })
+property =
+  propertyWithWarnings []
+
+
+propertyWithWarnings : List String -> String -> String -> Mixin
+propertyWithWarnings warnings key value =
+  { key = key, value = value, important = False, warnings = warnings }
+    |> Preprocess.AppendProperty
 
 
 
@@ -3827,280 +4619,268 @@ directionalityToString directionality =
       "rtl"
 
 
-pseudoToStyleBlock : (Maybe SimpleSelector -> ComplexSelector) -> List Mixin -> StyleBlock
-pseudoToStyleBlock makePseudo mixins =
-  let
-    transform name =
-      transformWithMixins
-        mixins
-        (Declaration.StyleBlock (makePseudo Nothing) [] [])
-        name
-  in
-    StyleBlock transform
-
-
 {-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-active : List Mixin -> StyleBlock
+active : List Mixin -> Mixin
 active =
-  pseudoToStyleBlock (Declaration.PseudoClass "active")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "active")
 
 
 {-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-any : String -> List Mixin -> StyleBlock
+any : String -> List Mixin -> Mixin
 any str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("any(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("any(" ++ str ++ ")"))
 
 
 {-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-checked : List Mixin -> StyleBlock
+checked : List Mixin -> Mixin
 checked =
-  pseudoToStyleBlock (Declaration.PseudoClass "checked")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "checked")
 
 
 {-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-dir : Directionality -> List Mixin -> StyleBlock
+dir : Directionality -> List Mixin -> Mixin
 dir directionality =
-  pseudoToStyleBlock (Declaration.PseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("dir(" ++ (directionalityToString directionality) ++ ")"))
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-disabled : List Mixin -> StyleBlock
+disabled : List Mixin -> Mixin
 disabled =
-  pseudoToStyleBlock (Declaration.PseudoClass "disabled")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "disabled")
 
 
 {-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-empty : List Mixin -> StyleBlock
+empty : List Mixin -> Mixin
 empty =
-  pseudoToStyleBlock (Declaration.PseudoClass "empty")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "empty")
 
 
 {-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-enabled : List Mixin -> StyleBlock
+enabled : List Mixin -> Mixin
 enabled =
-  pseudoToStyleBlock (Declaration.PseudoClass "enabled")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "enabled")
 
 
 {-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-first : List Mixin -> StyleBlock
+first : List Mixin -> Mixin
 first =
-  pseudoToStyleBlock (Declaration.PseudoClass "first")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "first")
 
 
 {-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstChild : List Mixin -> StyleBlock
+firstChild : List Mixin -> Mixin
 firstChild =
-  pseudoToStyleBlock (Declaration.PseudoClass "first-child")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-child")
 
 
 {-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstOfType : List Mixin -> StyleBlock
+firstOfType : List Mixin -> Mixin
 firstOfType =
-  pseudoToStyleBlock (Declaration.PseudoClass "first-of-type")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-of-type")
 
 
 {-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-fullscreen : List Mixin -> StyleBlock
+fullscreen : List Mixin -> Mixin
 fullscreen =
-  pseudoToStyleBlock (Declaration.PseudoClass "fullscreen")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "fullscreen")
 
 
 {-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-focus : List Mixin -> StyleBlock
+focus : List Mixin -> Mixin
 focus =
-  pseudoToStyleBlock (Declaration.PseudoClass "focus")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "focus")
 
 
 {-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-hover : List Mixin -> StyleBlock
+hover : List Mixin -> Mixin
 hover =
-  pseudoToStyleBlock (Declaration.PseudoClass "hover")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "hover")
 
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-indeterminate : List Mixin -> StyleBlock
+indeterminate : List Mixin -> Mixin
 indeterminate =
-  pseudoToStyleBlock (Declaration.PseudoClass "indeterminate")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "indeterminate")
 
 
 {-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-invalid : List Mixin -> StyleBlock
+invalid : List Mixin -> Mixin
 invalid =
-  pseudoToStyleBlock (Declaration.PseudoClass "invalid")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "invalid")
 
 
 {-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lang : String -> List Mixin -> StyleBlock
+lang : String -> List Mixin -> Mixin
 lang str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("lang(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("lang(" ++ str ++ ")"))
 
 
 {-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastChild : List Mixin -> StyleBlock
+lastChild : List Mixin -> Mixin
 lastChild =
-  pseudoToStyleBlock (Declaration.PseudoClass "last-child")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-child")
 
 
 {-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastOfType : List Mixin -> StyleBlock
+lastOfType : List Mixin -> Mixin
 lastOfType =
-  pseudoToStyleBlock (Declaration.PseudoClass "last-of-type")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-of-type")
 
 
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-link : List Mixin -> StyleBlock
+link : List Mixin -> Mixin
 link =
-  pseudoToStyleBlock (Declaration.PseudoClass "link")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "link")
 
 
 {-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthChild : String -> List Mixin -> StyleBlock
+nthChild : String -> List Mixin -> Mixin
 nthChild str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-child(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-child(" ++ str ++ ")"))
 
 
 {-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastChild : String -> List Mixin -> StyleBlock
+nthLastChild : String -> List Mixin -> Mixin
 nthLastChild str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-last-child(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-child(" ++ str ++ ")"))
 
 
 {-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastOfType : String -> List Mixin -> StyleBlock
+nthLastOfType : String -> List Mixin -> Mixin
 nthLastOfType str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-last-of-type(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-of-type(" ++ str ++ ")"))
 
 
 {-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthOfType : String -> List Mixin -> StyleBlock
+nthOfType : String -> List Mixin -> Mixin
 nthOfType str =
-  pseudoToStyleBlock (Declaration.PseudoClass ("nth-of-type(" ++ str ++ ")"))
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-of-type(" ++ str ++ ")"))
 
 
 {-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyChild : List Mixin -> StyleBlock
+onlyChild : List Mixin -> Mixin
 onlyChild =
-  pseudoToStyleBlock (Declaration.PseudoClass "only-child")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-child")
 
 
 {-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyOfType : List Mixin -> StyleBlock
+onlyOfType : List Mixin -> Mixin
 onlyOfType =
-  pseudoToStyleBlock (Declaration.PseudoClass "only-of-type")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-of-type")
 
 
 {-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-optional : List Mixin -> StyleBlock
+optional : List Mixin -> Mixin
 optional =
-  pseudoToStyleBlock (Declaration.PseudoClass "optional")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "optional")
 
 
 {-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-outOfRange : List Mixin -> StyleBlock
+outOfRange : List Mixin -> Mixin
 outOfRange =
-  pseudoToStyleBlock (Declaration.PseudoClass "out-of-range")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "out-of-range")
 
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-readWrite : List Mixin -> StyleBlock
+readWrite : List Mixin -> Mixin
 readWrite =
-  pseudoToStyleBlock (Declaration.PseudoClass "read-write")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "read-write")
 
 
 {-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-required : List Mixin -> StyleBlock
+required : List Mixin -> Mixin
 required =
-  pseudoToStyleBlock (Declaration.PseudoClass "required")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "required")
 
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-root : List Mixin -> StyleBlock
+root : List Mixin -> Mixin
 root =
-  pseudoToStyleBlock (Declaration.PseudoClass "root")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "root")
 
 
 {-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-scope : List Mixin -> StyleBlock
+scope : List Mixin -> Mixin
 scope =
-  pseudoToStyleBlock (Declaration.PseudoClass "scope")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "scope")
 
 
 {-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-target : List Mixin -> StyleBlock
+target : List Mixin -> Mixin
 target =
-  pseudoToStyleBlock (Declaration.PseudoClass "target")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "target")
 
 
 {-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-valid : List Mixin -> StyleBlock
+valid : List Mixin -> Mixin
 valid =
-  pseudoToStyleBlock (Declaration.PseudoClass "valid")
+  Preprocess.ExtendSelector (Structure.PseudoClassSelector "valid")
 
 
 
@@ -4110,41 +4890,41 @@ valid =
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-after : List Mixin -> StyleBlock
+after : List Mixin -> Mixin
 after =
-  pseudoToStyleBlock (Declaration.PseudoElement "after")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "after")
 
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-before : List Mixin -> StyleBlock
+before : List Mixin -> Mixin
 before =
-  pseudoToStyleBlock (Declaration.PseudoElement "before")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "before")
 
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLetter : List Mixin -> StyleBlock
+firstLetter : List Mixin -> Mixin
 firstLetter =
-  pseudoToStyleBlock (Declaration.PseudoElement "first-letter")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "first-letter")
 
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLine : List Mixin -> StyleBlock
+firstLine : List Mixin -> Mixin
 firstLine =
-  pseudoToStyleBlock (Declaration.PseudoElement "first-line")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "first-line")
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-selection : List Mixin -> StyleBlock
+selection : List Mixin -> Mixin
 selection =
-  pseudoToStyleBlock (Declaration.PseudoElement "selection")
+  Preprocess.WithPseudoElement (Structure.PseudoElement "selection")
 
 
 
@@ -4184,23 +4964,6 @@ fall back on something like this:
         $ button
             ~ ( "border-left", "thin" )
 -}
-medium : IntentionallyUnsupportedPleaseSeeDocs
-medium =
-  IntentionallyUnsupportedPleaseSeeDocs
-
-
-{-| The
-[border width values](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
-of `thin`, `medium`, and `thick` have unspecified behavior according to the
-CSS specification, and as such are intentionally unsupported.
-
-Using them is a bad idea, but if the fate of the world depends on it, you can
-fall back on something like this:
-
-    stylesheet { name = "badIdeas" }
-        $ button
-            ~ ( "border-left", "thin" )
--}
 thick : IntentionallyUnsupportedPleaseSeeDocs
 thick =
   IntentionallyUnsupportedPleaseSeeDocs
@@ -4216,272 +4979,62 @@ blink =
 
 
 {-| -}
-children : List StyleBlock -> Mixin
+children : List Snippet -> Mixin
 children =
-  applyStyleCombinator Declaration.Child
+  Preprocess.NestSnippet Structure.Child
 
 
 {-| -}
-descendants : List StyleBlock -> Mixin
+withClass : class -> List Mixin -> Mixin
+withClass class =
+  Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
+
+
+{-| -}
+descendants : List Snippet -> Mixin
 descendants =
-  applyStyleCombinator Declaration.Descendant
+  Preprocess.NestSnippet Structure.Descendant
 
 
 {-| -}
-adjacentSiblings : List StyleBlock -> Mixin
+adjacentSiblings : List Snippet -> Mixin
 adjacentSiblings =
-  applyStyleCombinator Declaration.AdjacentSibling
+  Preprocess.NestSnippet Structure.AdjacentSibling
 
 
 {-| -}
-generalSiblings : List StyleBlock -> Mixin
+generalSiblings : List Snippet -> Mixin
 generalSiblings =
-  applyStyleCombinator Declaration.GeneralSibling
-
-
-
-{-
-
-combineSelectors = Child
-styles = [
-  ((.) Foo)
-    [ color Bar ]
-]
-
-declarations = [
-  div
-  div > span
-]
-
-
-html, body {
-  width: 100%;
-
-  > (div, span) {
-
-  }
-}
-
--}
-
-
-applyStyleCombinator : (ComplexSelector -> ComplexSelector -> ComplexSelector) -> List StyleBlock -> Mixin
-applyStyleCombinator combineSelectors styleBlocks =
-  let
-    -- first: html, others: [ body ]
-    -- declaration: div { width: 100%, height: 100% }
-    applySelectors : ComplexSelector -> List ComplexSelector -> Declaration -> List Declaration
-    applySelectors first others declaration =
-      case declaration of
-        Declaration.StyleBlock selector otherSelectors properties ->
-          let
-            newDeclaration =
-              Declaration.StyleBlock
-                (combineSelectors first selector)
-                (List.map ((flip combineSelectors) selector) others)
-                properties
-          in
-            case otherSelectors of
-              [] ->
-                [ newDeclaration ]
-
-              firstOther :: remainder ->
-                let
-                  remainderDeclaration =
-                    Declaration.StyleBlock
-                      firstOther
-                      remainder
-                      properties
-                in
-                  newDeclaration :: applySelectors first others remainderDeclaration
-
-        Declaration.ConditionalGroupRule ruleStr _ ->
-          [ declaration ]
-
-        Declaration.StandaloneAtRule ruleStr _ ->
-          [ declaration ]
-
-    applyStyleBlockTo : String -> Declaration -> StyleBlock -> List Declaration
-    applyStyleBlockTo name declaration (StyleBlock transform) =
-      case declaration of
-        Declaration.StyleBlock first others _ ->
-          -- Use the existing declaration's selectors (ignoring its
-          -- properties, which will be preserved since we return
-          -- the original declaration in its entirety), combined with the
-          -- selectors and properties of the given style block.
-          declaration
-            :: List.concatMap (applySelectors first others) (transform name)
-
-        Declaration.ConditionalGroupRule ruleStr otherDeclarations ->
-          let
-            newDeclarations =
-              List.concatMap
-                (\childDeclaration -> applyStyleBlockTo name childDeclaration (StyleBlock transform))
-                otherDeclarations
-          in
-            [ Declaration.ConditionalGroupRule ruleStr newDeclarations ]
-
-        Declaration.StandaloneAtRule ruleStr _ ->
-          [ declaration ]
-
-    expandDeclaration : String -> Declaration -> List Declaration
-    expandDeclaration name declaration =
-      List.concatMap (applyStyleBlockTo name declaration) styleBlocks
-  in
-    Mixin (\name declarations -> List.concatMap (expandDeclaration name) declarations)
-
-
-{-| Nest styles within the current selector.
-
-    stylesheet
-      { name = "homepage" }
-      [ button
-          [ textDecoration underline
-          , (with hover)
-              [ textDecoration none ]
-          ]
-      ]
--}
-with : (List a -> StyleBlock) -> List Mixin -> Mixin
-with makeStyleBlock mixins =
-  let
-    toMixinTransform : (String -> List Declaration) -> DeclarationTransform
-    toMixinTransform styleBlockTransform name declarations =
-      let
-        expandDeclaration : Declaration -> List Declaration
-        expandDeclaration declaration =
-          case declaration of
-            Declaration.StyleBlock firstSelector otherSelectors properties ->
-              let
-                updates : List (ComplexSelector -> ComplexSelector)
-                updates =
-                  extractSelectors (styleBlockTransform name)
-                    |> List.map mergeSelectors
-
-                applyUpdate update =
-                  Declaration.StyleBlock
-                    (update firstSelector)
-                    (List.map update otherSelectors)
-                    []
-
-                newBlockDeclarations =
-                  List.map applyUpdate updates
-                    |> applyMixins mixins name
-
-                ruleStrings =
-                  extractRuleStrings (styleBlockTransform name)
-
-                applyRule ruleStr =
-                  declarations
-                    |> List.map removeProperties
-                    |> applyMixins mixins name
-                    |> Declaration.ConditionalGroupRule ruleStr
-
-                newRuleDeclarations =
-                  List.map applyRule ruleStrings
-              in
-                declaration :: (newBlockDeclarations ++ newRuleDeclarations)
-
-            Declaration.ConditionalGroupRule ruleStr declarations ->
-              declaration
-                :: List.map
-                    (expandDeclaration >> (Declaration.ConditionalGroupRule ruleStr))
-                    declarations
-
-            Declaration.StandaloneAtRule _ _ ->
-              [ declaration ]
-
-        newDeclarations =
-          List.concatMap expandDeclaration declarations
-      in
-        newDeclarations
-  in
-    makeStyleBlock []
-      |> (\(StyleBlock transform) -> toMixinTransform transform)
-      |> Mixin
+  Preprocess.NestSnippet Structure.GeneralSibling
 
 
 {-| -}
-each : List (List Mixin -> StyleBlock) -> List Mixin -> StyleBlock
-each styleBlockCreators mixins =
+each : List (List Mixin -> Snippet) -> List Mixin -> Snippet
+each snippetCreators mixins =
   let
-    transform : String -> List Declaration
-    transform name =
-      let
-        selectors =
-          List.map ((|>) []) styleBlockCreators
-            |> List.map (\(StyleBlock transform) -> transform)
-            |> List.concatMap (\transform -> extractSelectors (transform name))
-      in
-        case selectors of
-          [] ->
-            []
+    selectorsToSnippet selectors =
+      case selectors of
+        [] ->
+          Preprocess.Snippet []
 
-          firstSelector :: otherSelectors ->
-            let
-              newDeclaration =
-                Declaration.StyleBlock firstSelector otherSelectors []
-            in
-              transformWithMixins mixins newDeclaration name
+        first :: rest ->
+          [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest mixins) ]
+            |> Preprocess.Snippet
   in
-    StyleBlock transform
-
-
-{-| -}
-(&#) : (List Mixin -> StyleBlock) -> id -> List Mixin -> StyleBlock
-(&#) selector id mixins =
-  applyMulti (selector []) (makeIdSelector id) mixins
-
-
-{-| -}
-(&.) : (List Mixin -> StyleBlock) -> class -> List Mixin -> StyleBlock
-(&.) selector class mixins =
-  applyMulti (selector []) (makeClassSelector class) mixins
-
-
-applyMulti : StyleBlock -> (String -> SimpleSelector) -> List Mixin -> StyleBlock
-applyMulti styleBlock makeSelector mixins =
-  let
-    newTransform name =
-      styleBlock
-        |> (\(StyleBlock transform) -> transform name)
-        |> List.map (multiSelector mixins makeSelector)
-        |> List.concatMap (\(StyleBlock transform) -> transform name)
-  in
-    StyleBlock newTransform
-
-
-multiSelector : List Mixin -> (String -> SimpleSelector) -> Declaration -> StyleBlock
-multiSelector mixins makeSelector declaration =
-  case declaration of
-    Declaration.StyleBlock firstSelector otherSelectors _ ->
-      let
-        transform name =
-          let
-            makeMulti =
-              Declaration.mapSingleSelectors
-                ((flip Declaration.MultiSelector) (makeSelector name))
-
-            newStyleBlock =
-              Declaration.StyleBlock
-                (makeMulti firstSelector)
-                (List.map makeMulti otherSelectors)
-                []
-          in
-            transformWithMixins mixins newStyleBlock name
-      in
-        StyleBlock transform
-
-    Declaration.ConditionalGroupRule ruleStr _ ->
-      Debug.log ("*WARNING*: Trying to apply style combinator to ConditionalGroupRule " ++ ruleStr) (StyleBlock (\_ -> []))
-
-    Declaration.StandaloneAtRule ruleStr _ ->
-      Debug.log ("*WARNING*: Trying to apply style combinator to StandaloneAtRule " ++ ruleStr) (StyleBlock (\_ -> []))
+    List.map ((|>) []) snippetCreators
+      |> List.concatMap unwrapSnippet
+      |> collectSelectors
+      |> selectorsToSnippet
 
 
 numberToString : number -> String
 numberToString num =
   toString (num + 0)
+
+
+stringToInt : String -> Int
+stringToInt str =
+  Result.withDefault 0 <| String.toInt str
 
 
 numericalPercentageToString : number -> String
@@ -4497,9 +5050,30 @@ valuesOrNone list =
     { value = String.join " " (List.map .value list) }
 
 
+stringsToValue : List String -> Value {}
+stringsToValue list =
+  if List.isEmpty list then
+    { value = "none" }
+  else
+    { value = String.join ", " (List.map (\s -> s) list) }
+
+
 {-| Compile the given stylesheet to a CSS string, or to an error
 message if it could not be compiled.
 -}
-compile : List Declaration -> { css : String, warnings : List String }
+compile : Stylesheet -> { css : String, warnings : List String }
 compile =
-  Css.Compile.compile
+  Resolve.compile
+
+
+collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
+collectSelectors declarations =
+  case declarations of
+    [] ->
+      []
+
+    (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
+      (firstSelector :: otherSelectors) ++ (collectSelectors rest)
+
+    _ :: rest ->
+      collectSelectors rest

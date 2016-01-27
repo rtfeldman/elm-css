@@ -12,7 +12,9 @@ all =
   suite
     "elm-css"
     [ Compile.all
+    , unstyledDiv
     , keyValue
+    , simpleEach
     , divWidthHeight
     , leftRightTopBottom
     , borders
@@ -24,8 +26,26 @@ all =
     , underlineOnHoverManual
     , greenOnHoverMixin
     , transformsStyle
+    , fonts
+    , weightWarning
     , Properties.all
     ]
+
+
+unstyledDiv : Test
+unstyledDiv =
+  let
+    input =
+      Fixtures.unstyledDiv
+
+    output =
+      ""
+  in
+    suite
+      "unstyled div"
+      [ test "pretty prints nothing, because the stylesheet had no properties."
+          <| assertEqual output (prettyPrint input)
+      ]
 
 
 divWidthHeight : Test
@@ -41,6 +61,37 @@ divWidthHeight =
       "basic div with fixed width and height"
       [ test "pretty prints the expected output"
           <| assertEqual output (prettyPrint input)
+      ]
+
+
+simpleEach : Test
+simpleEach =
+  let
+    input =
+      Fixtures.simpleEach
+
+    output =
+      """
+            span {
+                width: 30px;
+                height: 2em;
+            }
+
+            html, body {
+                box-sizing: border-box;
+                display: none;
+            }
+
+            button {
+                color: rgb(22, 23, 24);
+                padding: 0;
+            }
+      """
+  in
+    suite
+      "simple each function test"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]
 
 
@@ -223,7 +274,7 @@ multiSelector =
 
     output =
       """
-          div#multiSelectorPage.multiSelectorHidden {
+          div.multiSelectorPage.multiSelectorHidden {
             display: none;
             width: 100%;
             height: 100%;
@@ -358,6 +409,53 @@ transformsStyle =
   in
     suite
       "transforms"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
+
+
+fonts : Test
+fonts =
+  let
+    input =
+      Fixtures.fontStylesheet
+
+    output =
+      """
+            body {
+                line-height: 14px;
+                font-family: serif;
+                font-family: "Gill Sans Extrabold", Helvetica, sans-serif;
+                font-size: x-small;
+                font-style: italic;
+                font-weight: bold;
+                font-weight: 100;
+                font-variant: small-caps;
+                font-variant: common-ligatures slashed-zero;
+                font-variant-numeric: oldstyle-nums tabular-nums stacked-fractions ordinal slashed-zero;
+            }
+            """
+  in
+    suite
+      "fonts"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
+
+
+weightWarning : Test
+weightWarning =
+  let
+    input =
+      Fixtures.fontWeightWarning
+
+    output =
+      """
+            Invalid Stylesheet:
+            fontWeight 22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
+  in
+    suite
+      "fontWeightWarning"
       [ test "pretty prints the expected output"
           <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]

@@ -2,8 +2,7 @@ module TestUtil (..) where
 
 import ElmTest exposing (..)
 import String
-import Css
-import Css.Declaration exposing (Declaration)
+import Css exposing (Snippet)
 import Check.Test
 import Check.Investigator as Investigator exposing (..)
 import Random exposing (Seed, Generator, initialSeed)
@@ -18,11 +17,11 @@ outdented str =
     |> String.trim
 
 
-prettyPrint : List Declaration -> String
-prettyPrint style =
+prettyPrint : Css.Stylesheet -> String
+prettyPrint sheet =
   let
     { warnings, css } =
-      Css.compile style
+      Css.compile sheet
   in
     if List.isEmpty warnings then
       css

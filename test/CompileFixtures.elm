@@ -2,6 +2,7 @@ module CompileFixtures (..) where
 
 import Css exposing (..)
 import Css.Elements exposing (..)
+import Css.Namespace exposing (namespace)
 
 
 pageBackground : Color
@@ -25,14 +26,12 @@ type CssIds
 unstyledDiv : Stylesheet
 unstyledDiv =
   stylesheet
-    { name = "" }
     [ div [] ]
 
 
 dreamwriter : Stylesheet
 dreamwriter =
-  stylesheet
-    { name = "dreamwriter" }
+  (stylesheet << namespace "dreamwriter")
     [ (each [ html, body ])
         [ width (pct 100)
         , height (pct 100)
