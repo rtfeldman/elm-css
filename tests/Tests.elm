@@ -37,6 +37,7 @@ all =
         , pseudoElements
         , Properties.all
         , Selectors.all
+        , backgrounds
         ]
 
 
@@ -674,6 +675,62 @@ pseudoClasses =
             """
     in
         describe "pseudo classes"
+            [ test "pretty prints the expected output" <|
+                \_ ->
+                    outdented (prettyPrint input)
+                        |> Expect.equal (outdented output)
+            ]
+
+
+backgrounds : Test
+backgrounds =
+    let
+        input =
+            Fixtures.backgrounds
+
+        output =
+            """
+            div {
+                background-color: rgb(128, 127, 126);
+                background-repeat: repeat-x;
+                background-repeat: repeat-y;
+                background-repeat: repeat no-repeat;
+                background-repeat: space round;
+                background-attachment: local;
+                background-attachment: scroll;
+                background-attachment: fixed;
+                background-blend-mode: color;
+                background-blend-mode: screen;
+                background-blend-mode: multiply;
+                background-blend-mode: overlay;
+                background-blend-mode: darken;
+                background-blend-mode: lighten;
+                background-blend-mode: color-dodge;
+                background-blend-mode: color-burn;
+                background-blend-mode: hard-light;
+                background-blend-mode: soft-light;
+                background-blend-mode: difference;
+                background-blend-mode: exclusion;
+                background-blend-mode: hue;
+                background-blend-mode: saturation;
+                background-blend-mode: luminosity;
+                background-clip: border-box;
+                background-clip: padding-box;
+                background-clip: content-box;
+                background-image: url(http://example.com/elm.png);
+                background-origin: border-box;
+                background-origin: padding-box;
+                background-origin: content-box;
+                background-size: cover;
+                background-size: contain;
+                background-size: 50px;
+                background-size: auto 20px;
+                background-position: center;
+                background-position: 10% 0;
+            }
+        """
+    in
+        describe "borders"
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)

@@ -529,12 +529,48 @@ module Css
         , listStyle
         , listStyle2
         , listStyle3
+        , backgroundRepeat
+        , backgroundRepeat2
+        , repeatX
+        , repeatY
+        , repeat
+        , space
+        , round
+        , noRepeat
+        , backgroundAttachment
+        , local
+        , backgroundBlendMode
+        , multiply
+        , overlay
+        , darken
+        , lighten
+        , colorDodge
+        , colorBurn
+        , hardLight
+        , softLight
+        , difference
+        , exclusion
+        , hue
+        , saturation
+        , luminosity
+        , screenBlendMode
+        , backgroundClip
+        , paddingBox
+        , backgroundImage
+        , url
+        , backgroundPosition
+        , backgroundPosition2
+        , backgroundOrigin
+        , backgroundSize
+        , backgroundSize2
+        , cover
+        , contain
         )
 
 {-| Functions for building stylesheets.
 
 # Misc
-@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall
+@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
@@ -919,9 +955,71 @@ type alias ColorValue compatible =
     { compatible | value : String, color : Compatible, warnings : List String }
 
 
+colorValueForOverloadedProperty : ColorValue NonMixable
+colorValueForOverloadedProperty =
+    transparent
+
+
 {-| -}
 type alias Color =
     ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#repeat-style
+-}
+type alias BackgroundRepeat compatible =
+    { compatible | value : String, backgroundRepeat : Compatible, backgroundRepeatShorthand : Compatible }
+
+
+type alias BackgroundRepeatShorthand compatible =
+    { compatible | value : String, backgroundRepeatShorthand : Compatible }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment
+-}
+type alias BackgroundAttachment compatible =
+    { compatible | value : String, backgroundAttachment : Compatible }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
+-}
+type alias BackgroundPosition compatible =
+    { compatible | value : String, backgroundPosition : Compatible }
+
+
+{-| Because `color` is both a common propertie and common value
+in CSS (e.g. `color: red` with and `background-blend-mode: color`),
+we implement it as a property (for the `color: red` case) and allow it to
+be used as a value as well. When being used as a value, we call it, expect
+that it will return the desired String as its key, and use that as our value.
+(See `getOverloadedProperty`. Note that `VerticalAlign`.)
+-}
+type alias BackgroundBlendMode a =
+    ColorValue a -> Mixin
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
+-}
+type alias BackgroundClip compatible =
+    { compatible | value : String, backgroundClip : Compatible }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin
+-}
+type alias BackgroundOrigin compatible =
+    BackgroundClip compatible
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-image
+-}
+type alias BackgroundImage compatible =
+    { compatible | value : String, backgroundImage : Compatible }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-size
+-}
+type alias LengthOrAutoOrCoverOrContain compatible =
+    { compatible | value : String, lengthOrAutoOrCoverOrContain : Compatible }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -1018,6 +1116,7 @@ type alias ExplicitLength units =
     , flexBasis : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , fontSize : Compatible
+    , lengthOrAutoOrCoverOrContain : Compatible
     }
 
 
@@ -1037,8 +1136,8 @@ type alias Angle compatible =
 -}
 type alias TextDecorationStyle compatible =
     { compatible | value : String, textDecorationStyle : Compatible }
-    
-        
+
+
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color#Values
 -}
 type alias TextEmphasisColor compatible =
@@ -1049,7 +1148,7 @@ type alias TextEmphasisColor compatible =
 -}
 type alias Position compatible =
     { compatible | value : String, position : Compatible }
-    
+
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values
 -}
@@ -1067,8 +1166,8 @@ type alias BorderCollapse compatible =
 -}
 type alias TransformBox compatible =
     { compatible | value : String, transformBox : Compatible }
-    
-    
+
+
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values
 -}
 type alias TextOrientation compatible =
@@ -1202,11 +1301,153 @@ visible =
 
 
 {-| The `scroll` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
+This can also represent a `scroll` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
 -}
-scroll : Overflow {}
+scroll : Overflow (BackgroundAttachment {})
 scroll =
     { value = "scroll"
     , overflow = Compatible
+    , backgroundAttachment = Compatible
+    }
+
+
+{-| The `multiply` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#multiply).
+-}
+multiply : BackgroundBlendMode compatible
+multiply =
+    prop1 "multiply"
+
+
+{-| The `screen` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#screen).
+-}
+screenBlendMode : BackgroundBlendMode compatible
+screenBlendMode =
+    prop1 "screen"
+
+
+{-| The `overlay` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#overlay).
+-}
+overlay : BackgroundBlendMode compatible
+overlay =
+    prop1 "overlay"
+
+
+{-| The `darken` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#darken).
+-}
+darken : BackgroundBlendMode compatible
+darken =
+    prop1 "darken"
+
+
+{-| The `lighten` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#lighten).
+-}
+lighten : BackgroundBlendMode compatible
+lighten =
+    prop1 "lighten"
+
+
+{-| The `color-dodge` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#color-dodge).
+-}
+colorDodge : BackgroundBlendMode compatible
+colorDodge =
+    prop1 "color-dodge"
+
+
+{-| The `color-burn` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#color-burn).
+-}
+colorBurn : BackgroundBlendMode compatible
+colorBurn =
+    prop1 "color-burn"
+
+
+{-| The `hard-light` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#hard-light).
+-}
+hardLight : BackgroundBlendMode compatible
+hardLight =
+    prop1 "hard-light"
+
+
+{-| The `soft-light` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#soft-light).
+-}
+softLight : BackgroundBlendMode compatible
+softLight =
+    prop1 "soft-light"
+
+
+{-| The `difference` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#difference).
+-}
+difference : BackgroundBlendMode compatible
+difference =
+    prop1 "difference"
+
+
+{-| The `exclusion` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#exclusion).
+-}
+exclusion : BackgroundBlendMode compatible
+exclusion =
+    prop1 "exclusion"
+
+
+{-| The `hue` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#hue).
+-}
+hue : BackgroundBlendMode compatible
+hue =
+    prop1 "hue"
+
+
+{-| The `saturation` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#saturation).
+-}
+saturation : BackgroundBlendMode compatible
+saturation =
+    prop1 "saturation"
+
+
+{-| The `luminosity` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#luminosity).
+-}
+luminosity : BackgroundBlendMode compatible
+luminosity =
+    prop1 "luminosity"
+
+
+{-| The `padding-box` [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip) value.
+-}
+paddingBox : BackgroundClip {}
+paddingBox =
+    { value = "padding-box"
+    , backgroundClip = Compatible
+    }
+
+
+{-| The `url` [`background-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image) value.
+-}
+url : String -> BackgroundImage {}
+url urlValue =
+    { value = "url(" ++ urlValue ++ ")"
+    , backgroundImage = Compatible
+    }
+
+
+{-| The `cover` [`background-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size) value.
+-}
+cover :
+    { value : String
+    , lengthOrAutoOrCoverOrContain : Compatible
+    }
+cover =
+    { value = "cover"
+    , lengthOrAutoOrCoverOrContain = Compatible
+    }
+
+
+{-| The `contain` [`background-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size) value.
+-}
+contain :
+    { value : String
+    , lengthOrAutoOrCoverOrContain : Compatible
+    }
+contain =
+    { value = "contain"
+    , lengthOrAutoOrCoverOrContain = Compatible
     }
 
 
@@ -1262,6 +1503,13 @@ type alias BasicProperty =
     , numericValue : Float
     , unitLabel : String
     , warnings : List String
+    , backgroundRepeat : Compatible
+    , backgroundRepeatShorthand : Compatible
+    , backgroundAttachment : Compatible
+    , backgroundBlendMode : Compatible
+    , backgroundOrigin : Compatible
+    , backgroundImage : Compatible
+    , lengthOrAutoOrCoverOrContain : Compatible
     }
 
 
@@ -1325,6 +1573,13 @@ initial =
     , numericValue = 0
     , unitLabel = ""
     , warnings = []
+    , backgroundRepeat = Compatible
+    , backgroundRepeatShorthand = Compatible
+    , backgroundAttachment = Compatible
+    , backgroundBlendMode = Compatible
+    , backgroundOrigin = Compatible
+    , backgroundImage = Compatible
+    , lengthOrAutoOrCoverOrContain = Compatible
     }
 
 
@@ -1579,9 +1834,9 @@ eachLine =
     { value = "each-line"
     , textIndent = Compatible
     }
-    
-    
-    
+
+
+
 {- TEXT-ORIENTATION -}
 
 
@@ -1757,9 +2012,9 @@ outset =
     { value = "outset"
     , borderStyle = Compatible
     }
-    
-    
-        
+
+
+
 {- BORDER COLLAPSE -}
 
 
@@ -1855,6 +2110,7 @@ lengthConverter units unitLabel num =
     , flexBasis = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , fontSize = Compatible
+    , lengthOrAutoOrCoverOrContain = Compatible
     }
 
 
@@ -1884,6 +2140,7 @@ zero :
     , units : UnitlessInteger
     , unitLabel : String
     , numericValue : Float
+    , lengthOrAutoOrCoverOrContain : Compatible
     }
 zero =
     { value = "0"
@@ -1898,6 +2155,7 @@ zero =
     , units = UnitlessInteger
     , unitLabel = ""
     , numericValue = 0
+    , lengthOrAutoOrCoverOrContain = Compatible
     }
 
 
@@ -2556,20 +2814,24 @@ fillBox =
 
 
 {-| The `content-box` value for the [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property.
+Can also be used as `content-box` value for the [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip) property.
 -}
-contentBox : BoxSizing {}
+contentBox : BoxSizing (BackgroundClip {})
 contentBox =
     { value = "content-box"
     , boxSizing = Compatible
+    , backgroundClip = Compatible
     }
 
 
 {-| The `border-box` value for the [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property.
+Can also be used as `border-box` value for the [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip) property.
 -}
-borderBox : BoxSizing {}
+borderBox : BoxSizing (BackgroundClip {})
 borderBox =
     { value = "border-box"
     , boxSizing = Compatible
+    , backgroundClip = Compatible
     }
 
 
@@ -3223,6 +3485,77 @@ lineThrough =
 
 
 
+{- BACKGROUND -}
+
+
+{-| The `repeat-x` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
+-}
+repeatX : BackgroundRepeatShorthand {}
+repeatX =
+    { value = "repeat-x"
+    , backgroundRepeatShorthand = Compatible
+    }
+
+
+{-| The `repeat-y` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
+-}
+repeatY : BackgroundRepeatShorthand {}
+repeatY =
+    { value = "repeat-y"
+    , backgroundRepeatShorthand = Compatible
+    }
+
+
+{-| The `repeat` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
+-}
+repeat : BackgroundRepeat {}
+repeat =
+    { value = "repeat"
+    , backgroundRepeat = Compatible
+    , backgroundRepeatShorthand = Compatible
+    }
+
+
+{-| The `space` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
+-}
+space : BackgroundRepeat {}
+space =
+    { value = "space"
+    , backgroundRepeat = Compatible
+    , backgroundRepeatShorthand = Compatible
+    }
+
+
+{-| The `round` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
+-}
+round : BackgroundRepeat {}
+round =
+    { value = "round"
+    , backgroundRepeat = Compatible
+    , backgroundRepeatShorthand = Compatible
+    }
+
+
+{-| The `no-repeat` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
+-}
+noRepeat : BackgroundRepeat {}
+noRepeat =
+    { value = "no-repeat"
+    , backgroundRepeat = Compatible
+    , backgroundRepeatShorthand = Compatible
+    }
+
+
+{-| The `local` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
+-}
+local : BackgroundAttachment {}
+local =
+    { value = "local"
+    , backgroundAttachment = Compatible
+    }
+
+
+
 {- BORDERS -}
 
 
@@ -3250,7 +3583,8 @@ inline =
     }
 
 
-{-| Sets the display style to [`table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values) -}
+{-| Sets the display style to [`table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
 table : Display {}
 table =
     { value = "table"
@@ -3258,7 +3592,8 @@ table =
     }
 
 
-{-| Sets the display style to [`tableRow`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values) -}
+{-| Sets the display style to [`tableRow`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
 tableRow : Display {}
 tableRow =
     { value = "table-row"
@@ -3266,7 +3601,8 @@ tableRow =
     }
 
 
-{-| Sets the display style to [`tableCell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values) -}
+{-| Sets the display style to [`tableCell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
 tableCell : Display {}
 tableCell =
     { value = "table-cell"
@@ -3333,6 +3669,7 @@ auto :
     , alignItemsOrAuto : Compatible
     , cursor : Compatible
     , value : String
+    , lengthOrAutoOrCoverOrContain : Compatible
     }
 auto =
     { value = "auto"
@@ -3343,6 +3680,7 @@ auto =
     , lengthOrAuto = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , alignItemsOrAuto = Compatible
+    , lengthOrAutoOrCoverOrContain = Compatible
     }
 
 
@@ -3443,8 +3781,8 @@ prop3 key argA argB argC =
 prop4 : String -> Value a -> Value b -> Value c -> Value d -> Mixin
 prop4 key argA argB argC argD =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
-    
-    
+
+
 prop5 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Mixin
 prop5 key argA argB argC argD argE =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value ])
@@ -3467,7 +3805,8 @@ float fn =
 textDecorationColor : ColorValue compatible -> Mixin
 textDecorationColor c =
     propertyWithWarnings c.warnings "text-decoration-color" c.value
-    
+
+
 {-| Sets ['text-emphasis-color'](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color)
 
      textEmphasisColor (rgb 100 100 100)
@@ -3503,8 +3842,8 @@ textAlign fn =
 textRendering : TextRendering a -> Mixin
 textRendering =
     prop1 "text-rendering"
-    
-    
+
+
 {-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
 
     text-orientation mixed
@@ -3670,7 +4009,7 @@ boxShadow4 =
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC  -> Length compatibleD unitsD-> ColorValue compatibleE -> Mixin
+boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Mixin
 boxShadow5 =
     prop5 "box-shadow"
 
@@ -4084,8 +4423,8 @@ bottom =
 This can also be used as a `left` [text alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
 
     textAlign left
-    
-    
+
+
 It can also be used as a `left` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
 
     float left
@@ -4103,8 +4442,8 @@ left =
 This can also be used as a `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
 
     textAlign right
-    
-    
+
+
 It can also be used as a `right` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
 
     float right
@@ -4182,13 +4521,15 @@ static =
 
 
 {-| A `fixed` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
+This can also represent a `fixed` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
 
     position fixed
 -}
-fixed : Position {}
+fixed : Position (BackgroundAttachment {})
 fixed =
     { value = "fixed"
     , position = Compatible
+    , backgroundAttachment = Compatible
     }
 
 
@@ -5199,7 +5540,7 @@ borderTopStyle =
 borderStyle : BorderStyle compatible -> Mixin
 borderStyle =
     prop1 "border-style"
-    
+
 
 {-| Sets [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse)
 
@@ -5577,6 +5918,109 @@ whiteSpace =
 backgroundColor : ColorValue compatible -> Mixin
 backgroundColor c =
     propertyWithWarnings c.warnings "background-color" c.value
+
+
+{-| Sets ['background-repeat'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat)
+
+    backgroundRepeat repeatX
+-}
+backgroundRepeat : BackgroundRepeatShorthand compatible -> Mixin
+backgroundRepeat =
+    prop1 "background-repeat"
+
+
+{-| Sets ['background-repeat'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat)
+
+    backgroundRepeat2 repeat noRepeat
+-}
+backgroundRepeat2 : BackgroundRepeat compatibleA -> BackgroundRepeat compatibleB -> Mixin
+backgroundRepeat2 =
+    prop2 "background-repeat"
+
+
+{-| Sets ['background-attachment'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment)
+
+    backgroundAttachment fixed
+-}
+backgroundAttachment : BackgroundAttachment compatible -> Mixin
+backgroundAttachment =
+    prop1 "background-attachment"
+
+
+{-| Sets ['background-position'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-position)
+
+    backgroundPosition top
+
+Only supports keywords values like "top" or "center". If you want to pass a single length, use `backgroundPosition2`:
+
+    backgroundPosition2 (px 10) zero
+-}
+backgroundPosition : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+backgroundPosition fn =
+    getOverloadedProperty "backgroundPosition" "background-position" (fn lengthForOverloadedProperty)
+
+
+{-| Sets ['background-position'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-position)
+
+    backgroundPosition2 (px 10) zero
+-}
+backgroundPosition2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+backgroundPosition2 =
+    prop2 "background-position"
+
+
+{-| Sets ['background-blend-mode'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode)
+
+    backgroundBlendMode darken
+-}
+backgroundBlendMode : (ColorValue NonMixable -> Mixin) -> Mixin
+backgroundBlendMode fn =
+    getOverloadedProperty "backgroundBlendMode" "background-blend-mode" (fn colorValueForOverloadedProperty)
+
+
+{-| Sets ['background-clip'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip)
+
+    backgroundClip borderBox
+-}
+backgroundClip : BackgroundClip compatible -> Mixin
+backgroundClip =
+    prop1 "background-clip"
+
+
+{-| Sets ['background-origin'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin)
+
+    backgroundOrigin borderBox
+-}
+backgroundOrigin : BackgroundOrigin compatible -> Mixin
+backgroundOrigin =
+    prop1 "background-origin"
+
+
+{-| Sets ['background-image'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image)
+
+    backgroundImage (url "http://www.example.com/chicken.jpg")
+-}
+backgroundImage : BackgroundImage compatible -> Mixin
+backgroundImage =
+    prop1 "background-image"
+
+
+{-| Sets ['background-size'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
+
+    backgroundSize cover
+-}
+backgroundSize : LengthOrAutoOrCoverOrContain compatible -> Mixin
+backgroundSize =
+    prop1 "background-size"
+
+
+{-| Sets ['background-size'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
+
+    backgroundSize2 50% auto
+-}
+backgroundSize2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Mixin
+backgroundSize2 =
+    prop2 "background-size"
 
 
 {-| -}
