@@ -22,10 +22,25 @@ charsetToString charset =
     |> Maybe.withDefault ""
 
 
-importToString : ( String, List MediaQuery ) -> String
+importToString : ( NameOrUrl, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
-  -- TODO
-  "@import \"" ++ name ++ toString mediaQueries ++ "\""
+  let
+    toMq query =
+      String.join ", "
+        <| List.map
+            (\q ->
+              case q of
+                MediaQuery mq ->
+                  mq
+            )
+            query
+  in
+    case name of
+      Name nm ->
+        "@import \"" ++ nm ++ "\" " ++ toMq mediaQueries
+
+      Url url ->
+        "@import url(\"" ++ url ++ "\") " ++ toMq mediaQueries
 
 
 namespaceToString : ( String, String ) -> String

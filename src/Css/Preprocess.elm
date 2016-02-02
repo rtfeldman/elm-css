@@ -4,7 +4,7 @@ module Css.Preprocess (..) where
 the data structures found in this module.
 -}
 
-import Css.Structure as Structure exposing (mapLast, concatMapLast)
+import Css.Structure as Structure exposing (mapLast, concatMapLast, NameOrUrl)
 
 
 stylesheet : List Snippet -> Stylesheet
@@ -26,7 +26,7 @@ type alias Property =
 
 type alias Stylesheet =
   { charset : Maybe String
-  , imports : List ( String, List Structure.MediaQuery )
+  , imports : List ( NameOrUrl, List Structure.MediaQuery )
   , namespaces : List ( String, String )
   , snippets : List Snippet
   }

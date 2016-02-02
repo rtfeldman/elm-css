@@ -25,7 +25,7 @@ are specified once rather than intermingled with normal declarations:
 -}
 type alias Stylesheet =
   { charset : Maybe String
-  , imports : List ( String, List MediaQuery )
+  , imports : List ( NameOrUrl, List MediaQuery )
   , namespaces : List ( String, String )
   , declarations : List Declaration
   }
@@ -63,6 +63,13 @@ type Declaration
 -}
 type StyleBlock
   = StyleBlock Selector (List Selector) (List Property)
+
+
+{-| Named location or uri.
+-}
+type NameOrUrl
+  = Name String
+  | Url String
 
 
 {-| A media query.
