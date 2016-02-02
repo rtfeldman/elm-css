@@ -28,6 +28,7 @@ all =
     , transformsStyle
     , fonts
     , weightWarning
+    , imports
     , Properties.all
     ]
 
@@ -455,7 +456,25 @@ weightWarning =
             fontWeight 22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
   in
     suite
-      "fontWeightWarning"
+      "Invalid font weight warning"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
+
+
+imports : Test
+imports =
+  let
+    input =
+      Fixtures.importStylesheet
+
+    output =
+      """
+         @import url("https://fonts.googleapis.com/css?family=Open+Sans") screen, print
+      """
+  in
+    suite
+      "import stylesheet"
       [ test "pretty prints the expected output"
           <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]

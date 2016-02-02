@@ -305,3 +305,20 @@ fontWeightWarning : Stylesheet
 fontWeightWarning =
   (stylesheet << namespace "fontWeightWarning")
     [ body [ fontWeight (int 22) ] ]
+
+
+importStylesheet : Stylesheet
+importStylesheet =
+  let
+    style =
+      (stylesheet << namespace "importStylesheet")
+        []
+  in
+    { style
+      | imports =
+          [ ( url
+                "https://fonts.googleapis.com/css?family=Open+Sans"
+            , [ screen, print ]
+            )
+          ]
+    }
