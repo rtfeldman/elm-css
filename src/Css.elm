@@ -4578,6 +4578,31 @@ selector selectorStr mixins =
     |> makeSnippet mixins
 
 
+{-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
+
+    (.) Foo
+      [ children
+          [ everything
+              [ color (rgb 14 15 16)
+              , borderRadius (px 5)
+              ]
+          ]
+      ]
+
+...compiles to:
+
+    .Foo > * {
+      color: rgb(14, 15, 16);
+      border-radius: 5px;
+    }
+
+-}
+everything : List Mixin -> Snippet
+everything mixins =
+  Structure.UniversalSelectorSequence []
+    |> makeSnippet mixins
+
+
 {-| Define a custom property.
 
     $ body
