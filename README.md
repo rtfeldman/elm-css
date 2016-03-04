@@ -25,7 +25,7 @@ Wouldn't it be sweet if those problems went away?
 2. Share code between your render logic and your CSS stylesheets, so you can easily keep identifier names and URLs synchronized
 3. Use union types instead of strings for class names, IDs, and animation names, so typos will result in compile errors instead of bugs
 4. Automatically namespace all your classes, ids, and animation names to avoid name conflicts between stylesheets.
-5. Assemble your stylesheets by writing normal Elm code, so you have access to your full suite of programming tools. elm-css doesn't need a special notion of "parameterized mixins" because you can already write arbitrary Elm functions...and not just to parameterize mixins, but to parameterize anything!
+5. Assemble your stylesheets by writing normal Elm code, so you have access to your full suite of programming tools. `elm-css` doesn't need a special notion of "parameterized mixins" because you can already write arbitrary Elm functions...and not just to parameterize mixins, but to parameterize anything!
 
 Here's an example:
 
