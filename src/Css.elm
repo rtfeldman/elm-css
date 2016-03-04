@@ -1661,7 +1661,7 @@ translate { value } =
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
 -}
-translate2 : Length compatible units -> Length compatible units -> Transform {}
+translate2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Transform {}
 translate2 tx ty =
   { value = cssFunction "translate" [ tx.value, ty.value ]
   , transform = Compatible
@@ -1705,7 +1705,7 @@ translateZ { value } =
 
     transform (translate3d (px 100) (px 100) (px 100))
 -}
-translate3d : Length compatible units -> Length compatible units -> Length compatible units -> Transform {}
+translate3d : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Transform {}
 translate3d tx ty tz =
   { value = cssFunction "translate3d" [ tx.value, ty.value, tz.value ]
   , transform = Compatible
@@ -2322,7 +2322,7 @@ textShadow =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length compatible units -> Length compatible units -> Mixin
+textShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 textShadow2 =
   prop2 "text-shadow"
 
@@ -2335,7 +2335,7 @@ textShadow2 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatible units -> Length compatible units -> ColorValue compatible -> Mixin
+textShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> ColorValue compatibleC -> Mixin
 textShadow3 =
   prop3 "text-shadow"
 
@@ -2348,7 +2348,7 @@ textShadow3 =
     ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatible units -> Length compatible units -> Length compatible units -> ColorValue compatible -> Mixin
+textShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> ColorValue compatibleD -> Mixin
 textShadow4 =
   prop4 "text-shadow"
 
@@ -2495,7 +2495,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length compatible units -> Length compatible units -> Mixin
+padding2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
 padding2 =
   prop2 "padding"
 
@@ -2507,7 +2507,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length compatible units -> Length compatible units -> Length compatible units -> Mixin
+padding3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Mixin
 padding3 =
   prop3 "padding"
 
@@ -2519,7 +2519,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length compatible units -> Length compatible units -> Length compatible units -> Length compatible units -> Mixin
+padding4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatible units -> Mixin
 padding4 =
   prop4 "padding"
 
@@ -2619,7 +2619,7 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin
+margin2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Mixin
 margin2 =
   prop2 "margin"
 
@@ -2631,7 +2631,7 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin
+margin3 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> Mixin
 margin3 =
   prop3 "margin"
 
@@ -2643,7 +2643,7 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> LengthOrAuto compatible -> Mixin
+margin4 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> LengthOrAuto compatibleD -> Mixin
 margin4 =
   prop4 "margin"
 
