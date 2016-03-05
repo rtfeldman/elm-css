@@ -4,6 +4,34 @@ var path = require("path");
 var compile = require("node-elm-compiler").compile;
 var jsEmitterFilename = "emitter.js";
 
+var KNOWN_MODULES =
+  [
+    "Native",
+    "fullscreen",
+    "embed",
+    "worker",
+    "Basics",
+    "Maybe",
+    "List",
+    "Array",
+    "Char",
+    "Color",
+    "Transform2D",
+    "Text",
+    "Graphics",
+    "Debug",
+    "Result",
+    "Task",
+    "Signal",
+    "String",
+    "Dict",
+    "Json",
+    "Regex",
+    "VirtualDom",
+    "Html",
+    "Css"
+  ];
+
 // elmModuleName is optional, and is by default inferred based on the filename.
 module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort) {
 
@@ -54,11 +82,83 @@ function emit(src, dest, stylesheetsModule, stylesheetsPort) {
     .then(extractCssResults(dest, stylesheetsModule, stylesheetsPort));
 }
 
+function suggestModulesNames(Elm){
+  return Object.keys(Elm).filter(function(key){
+    return KNOWN_MODULES.indexOf(key) === -1;
+  })
+}
+
+function missingEntryModuleMessage(stylesheetsModule, Elm){
+  var errorMessage = "I couldn't find the entry module " + stylesheetsModule + ".\n";
+  var suggestions = suggestModulesNames(Elm);
+
+  if (suggestions.length > 1){
+    errorMessage += "\nMaybe you meant one of these: " + suggestions.join(",");
+  } else if (suggestions.length === 1){
+    errorMessage += "\nMaybe you meant: " + suggestions;
+  }
+
+  errorMessage += "\nYou can pass me a different module to use with --module=<moduleName>";
+
+  return errorMessage;
+}
+
+function noPortsMessage(stylesheetsModule, stylesheetsPort){
+  var errorMessage = "The module " + stylesheetsModule + " doesn't expose any ports!\n";
+
+  errorMessage += "\nI was looking for a port called `" + stylesheetsPort + "` but couldn't find it!";
+  errorMessage += "\n\nTry adding something like";
+  errorMessage += `
+port ${stylesheetsPort} : CssFileStructure
+port ${stylesheetsPort} =
+  toFileStructure
+    []
+
+to ${stylesheetsModule}!
+`;
+
+  return errorMessage.trim();
+}
+
+function noMatchingPortMessage(stylesheetsModule, stylesheetsPort, ports){
+  var errorMessage = `The module ${stylesheetsModule} has no port called ${stylesheetsPort}.\n`;
+  errorMessage += "\nI was looking for a port called `" + stylesheetsPort + "` but couldn't find it!";
+
+  var portKeys = Object.keys(ports);
+
+  if (portKeys.length === 1){
+    errorMessage += "\nHowever, I did find the port: " + portKeys[0];
+    errorMessage += "\nMaybe you meant that instead?";
+  } else {
+    errorMessage += "\nHowever, I did find the ports : " + Object.keys(ports).join(",");
+  }
+
+  errorMessage += "\n\nYou can specify which port to use by doing";
+  errorMessage += "\nelm-css -p <port-name>";
+
+  return errorMessage.trim();
+}
+
 function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
   return function () {
     return new Promise(function (resolve, reject) {
       var Elm = require(dest);
-      var stylesheets = Elm.worker(Elm[stylesheetsModule]).ports[stylesheetsPort];
+
+      if (!(stylesheetsModule in Elm)){
+        return reject(missingEntryModuleMessage(stylesheetsModule, Elm));
+      }
+
+      var worker = Elm.worker(Elm[stylesheetsModule]);
+
+      if (Object.keys(worker.ports).length === 0){
+        return reject(noPortsMessage(stylesheetsModule, stylesheetsPort));
+      }
+
+      if (!(stylesheetsPort in worker.ports)){
+        return reject(noMatchingPortMessage(stylesheetsModule, stylesheetsPort, worker.ports));
+      }
+
+      var stylesheets = worker.ports[stylesheetsPort];
       var failures = stylesheets.filter(function(result) {
         return !result.success;
       });
