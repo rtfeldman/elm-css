@@ -35,7 +35,7 @@ Wouldn't it be sweet if those problems went away?
 
 There are a few examples to check out!
 
-- (json-to-elm)[https://github.com/eeue56/json-to-elm] which can see be seen live [here](https://noredink.github.io/json-to-elm)
+- [json-to-elm](https://github.com/eeue56/json-to-elm) which can see be seen live [here](https://noredink.github.io/json-to-elm)
 - the examples folder contains a working project with a readme
 - the example below:
 
