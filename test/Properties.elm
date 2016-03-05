@@ -204,6 +204,7 @@ all =
         , ( display inline, "inline" )
         , ( display block, "block" )
         , ( display inlineBlock, "inline-block" )
+        , ( displayFlex, "flex" )
           -- TODO display: contents;
           -- TODO display: list-item;
           -- TODO display: inline-list-item;
