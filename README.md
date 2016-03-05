@@ -64,9 +64,11 @@ css =
         [ margin zero
         , padding zero
 
-        , with li
-            [ (display inlineBlock) |> important
-            , color primaryAccentColor
+        , children
+            [ li
+                [ (display inlineBlock) |> important
+                , color primaryAccentColor
+                ]
             ]
         ]
     ]
