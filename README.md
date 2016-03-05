@@ -94,3 +94,12 @@ body {
     color: #ccffaa;
 }
 ```
+
+You can also use elm-css for inline styles with the `asPairs` function, like so:
+
+
+    styles = Css.asPairs >> Html.Attributes.style
+
+    button
+      [ styles [ position absolute, left (px 5) ] ]
+      [ text "Whee!" ]
