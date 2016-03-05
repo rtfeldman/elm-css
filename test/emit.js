@@ -11,9 +11,8 @@ function prependFixturesDir(filename) {
 
 describe("emitting", function() {
   it("works with HomepageCss.elm", function (done) {
-    // Use a timeout of 10 minutes, because one time even 5 minutes wasn't
-    // enough for Travis on Linux.
-    this.timeout(600000);
+    // Use an epic timeout, because Travis on Linux is SO SLOW.
+    this.timeout(6000000);
 
     var projectDir = path.join(__dirname, "..", "examples");
     var srcFile = path.join(projectDir, "src", "Stylesheets.elm");
