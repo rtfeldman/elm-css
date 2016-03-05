@@ -135,3 +135,31 @@ mapAllLastProperty update mixins =
 unwrapSnippet : Snippet -> List SnippetDeclaration
 unwrapSnippet (Snippet declarations) =
   declarations
+
+
+toPropertyPairs : List Mixin -> List ( String, String )
+toPropertyPairs mixins =
+  case mixins of
+    [] ->
+      []
+
+    (AppendProperty property) :: rest ->
+      (propertyToPair property) :: (toPropertyPairs rest)
+
+    (ApplyMixins mixins) :: rest ->
+      (toPropertyPairs mixins) ++ (toPropertyPairs rest)
+
+    _ :: rest ->
+      toPropertyPairs rest
+
+
+propertyToPair : Property -> ( String, String )
+propertyToPair property =
+  let
+    value =
+      if property.important then
+        property.value ++ " !important"
+      else
+        property.value
+  in
+    ( property.key, value )

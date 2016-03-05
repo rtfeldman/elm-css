@@ -119,6 +119,25 @@ multiDescendent =
     ]
 
 
+universal : Stylesheet
+universal =
+  (stylesheet << namespace "universal")
+    [ everything
+        [ display none
+        , children
+            [ everything
+                [ width (pct 100)
+                , height (pct 100)
+                ]
+            ]
+        ]
+    , span
+        [ children
+            [ everything [ margin (px 11) ] ]
+        ]
+    ]
+
+
 multiSelector : Stylesheet
 multiSelector =
   (stylesheet << namespace "multiSelector")

@@ -20,6 +20,7 @@ all =
     , borders
     , atRule
     , nestedAtRule
+    , universal
     , multiSelector
     , multiDescendent
     , underlineOnHoverMixin
@@ -261,6 +262,35 @@ multiDescendent =
   in
     suite
       "Multi-descendent stylesheet"
+      [ test "pretty prints the expected output"
+          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      ]
+
+
+universal : Test
+universal =
+  let
+    input =
+      Fixtures.universal
+
+    output =
+      """
+          * {
+            display: none;
+          }
+
+          * > * {
+            width: 100%;
+            height: 100%;
+          }
+
+          span > * {
+            margin: 11px;
+          }
+        """
+  in
+    suite
+      "Universal selector stylesheet"
       [ test "pretty prints the expected output"
           <| assertEqual (outdented output) (outdented (prettyPrint input))
       ]

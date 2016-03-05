@@ -204,6 +204,7 @@ all =
         , ( display inline, "inline" )
         , ( display block, "block" )
         , ( display inlineBlock, "inline-block" )
+        , ( displayFlex, "flex" )
           -- TODO display: contents;
           -- TODO display: list-item;
           -- TODO display: inline-list-item;
@@ -359,7 +360,14 @@ testProperty propertyName modifierPairs =
 
 assertPropertyWorks : String -> ( Mixin, String ) -> Test
 assertPropertyWorks propertyName ( mixin, expectedStr ) =
-  test "pretty prints the expected output"
-    <| assertEqual
-        ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-        (prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ]))
+  suite
+    "works properly"
+    [ test "pretty prints the expected output"
+        <| assertEqual
+            ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
+            (prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ]))
+    , test "can be converted to a key-value pair"
+        <| assertEqual
+            [ ( propertyName, expectedStr ) ]
+            (asPairs [ mixin ])
+    ]
