@@ -139,6 +139,20 @@ function noMatchingPortMessage(stylesheetsModule, stylesheetsPort, ports){
   return errorMessage.trim();
 }
 
+/*
+This is a poor man's type error. To get better error messages, might be worth
+considered moving to how elm-static-site does it instead, and use Elm's compiler
+for type errors!
+*/
+function portTypeErrorMessage(stylesheetsModule, stylesheetsPort){
+  var errorMessage = `
+The type of the port ${stylesheetsPort} was not what I wanted!
+I was expecting a list but got ${typeof stylesheetsPort}!
+`;
+
+  return errorMessage.trim();
+}
+
 function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
   return function () {
     return new Promise(function (resolve, reject) {
@@ -159,6 +173,11 @@ function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
       }
 
       var stylesheets = worker.ports[stylesheetsPort];
+
+      if (!Array.isArray(stylesheets)){
+        return reject(portTypeErrorMessage(stylesheetsModule, stylesheetsPort));
+      }
+
       var failures = stylesheets.filter(function(result) {
         return !result.success;
       });
