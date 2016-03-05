@@ -144,10 +144,10 @@ This is a poor man's type error. To get better error messages, might be worth
 considered moving to how elm-static-site does it instead, and use Elm's compiler
 for type errors!
 */
-function portTypeErrorMessage(stylesheetsModule, stylesheetsPort){
+function portTypeErrorMessage(stylesheetsModule, stylesheetsPort, portValue){
   var errorMessage = `
 The type of the port ${stylesheetsPort} was not what I wanted!
-I was expecting a list but got ${typeof stylesheetsPort}!
+I was expecting a List CssFileStructure but got ${typeof portValue}!
 `;
 
   return errorMessage.trim();
@@ -175,7 +175,7 @@ function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
       var stylesheets = worker.ports[stylesheetsPort];
 
       if (!Array.isArray(stylesheets)){
-        return reject(portTypeErrorMessage(stylesheetsModule, stylesheetsPort));
+        return reject(portTypeErrorMessage(stylesheetsModule, stylesheetsPort, stylesheets));
       }
 
       var failures = stylesheets.filter(function(result) {
