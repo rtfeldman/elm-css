@@ -1155,8 +1155,10 @@ lengthConverter units unitLabel num =
 
 {-| Convenience length value that compiles to 0 with no units.
 
-    $ ul
-        ~ padding zero
+    stylesheet
+      [ ul
+          [ padding zero ]
+      ]
 
 ...compiles to:
 
@@ -1451,7 +1453,7 @@ turn =
 
 {-| The [`matrix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix()) transform-function.
 
-    ~ transform (matrix 0.5 1 1.5 2 2.5 3)
+    transform (matrix 0.5 1 1.5 2 2.5 3)
 -}
 matrix : number -> number -> number -> number -> number -> number -> Transform {}
 matrix a b c d tx ty =
@@ -1462,7 +1464,7 @@ matrix a b c d tx ty =
 
 {-| The [`matrix3d()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix3d()) transform-function.
 
-    ~ transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
+    transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
 -}
 matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
@@ -1717,18 +1719,18 @@ with a series of transform-functions. If an empty list is provided, the CSS
 output will be `none`, as if to state directly that the set of transforms
 applied to the current selector is empty:
 
-    ~ transforms [] -- transform: none;
+    transforms [] -- transform: none;
 
 In the case that only one transform is needed, the `transform` function may be
 used instead for convenience. `transform` expects exactly one transform-function
 and cannot be passed `none`:
 
-    ~ transform (matrix 1 2 3 4 5 6) -- transform: matrix(1, 2, 3, 4, 5, 6);
+    transform (matrix 1 2 3 4 5 6) -- transform: matrix(1, 2, 3, 4, 5, 6);
 
 If a collection of transforms is needed, use the `transforms` function with a
 populated list:
 
-    ~ transforms [ perspective 1, scale2 1 1.4 ]
+    transforms [ perspective 1, scale2 1 1.4 ]
 -}
 transforms : List (Transform compatible) -> Mixin
 transforms =
@@ -1792,7 +1794,7 @@ transformBox =
 
 {-| Sets [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)
 
-    ~ boxSizing borderBox
+    boxSizing borderBox
 -}
 boxSizing : BoxSizing compatible -> Mixin
 boxSizing =
@@ -1929,6 +1931,14 @@ flexFlow2 =
 
 
 {-| Sets [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items).
+
+  **Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
+  use this workaround:
+
+  property "align-items" "auto"
+
+  If this is annoying, please file an issue, so adding support for "auto"
+  can be prioritized!
 -}
 alignItems : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 alignItems fn =
@@ -1937,12 +1947,13 @@ alignItems fn =
 
 {-| Sets [`align-self`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-self).
 
-  **Note:** Due to certain implementation constraints, `auto` cannot be
-  supported here. If you need to set this property to `auto`,
+  **Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
   use this workaround:
 
-  ~ ("text-align-last", "auto")
+  property "align-self" "auto"
 
+  If this is annoying, please file an issue, so adding support for "auto"
+  can be prioritized!
 -}
 alignSelf : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 alignSelf fn =
@@ -2139,6 +2150,7 @@ auto :
   , textRendering : Compatible
   , flexBasis : Compatible
   , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+  , alignItemsOrAuto : Compatible
   , value : String
   }
 auto =
@@ -2148,6 +2160,7 @@ auto =
   , textRendering = Compatible
   , lengthOrAuto = Compatible
   , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+  , alignItemsOrAuto = Compatible
   }
 
 
@@ -2167,7 +2180,7 @@ noWrap =
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
-    ~ verticalAlign middle
+    verticalAlign middle
 -}
 middle : VerticalAlign a b
 middle =
@@ -2176,7 +2189,7 @@ middle =
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
-    ~ verticalAlign baseline
+    verticalAlign baseline
 -}
 baseline : VerticalAlign a b
 baseline =
@@ -2185,7 +2198,7 @@ baseline =
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
-    ~ verticalAlign sub
+    verticalAlign sub
 -}
 sub : VerticalAlign a b
 sub =
@@ -2194,7 +2207,7 @@ sub =
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
-    ~ verticalAlign super
+    verticalAlign super
 -}
 super : VerticalAlign a b
 super =
@@ -2203,7 +2216,7 @@ super =
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
-    ~ verticalAlign textTop
+    verticalAlign textTop
 -}
 textTop : VerticalAlign a b
 textTop =
@@ -2212,7 +2225,7 @@ textTop =
 
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
-    ~ verticalAlign textBottom
+    verticalAlign textBottom
 -}
 textBottom : VerticalAlign a b
 textBottom =
@@ -2260,14 +2273,13 @@ textDecorationColor =
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
-
-    ~ textAlignLast start
-
-    **Note:** Due to certain implementation constraints, `auto` cannot be
-    supported here. If you need to set this property to `auto`,
+    **Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
     use this workaround:
 
-    ~ ("text-align-last", "auto")
+    property "text-align-last" "auto"
+
+    If this is annoying, please file an issue, so adding support for "auto"
+    can be prioritized!
 -}
 textAlignLast : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 textAlignLast fn =
@@ -2290,11 +2302,7 @@ textRendering =
 
 {-| Sets [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow).
 
-    ~ textOverflow ellipsis
-
-To set `text-overflow` to an arbitrary String, use [`custom`](#custom) like so:
-
-    ~ custom "text-overflow" "my custom text-overflow value"
+    textOverflow ellipsis
 -}
 textOverflow : TextOverflow compatible -> Mixin
 textOverflow =
@@ -2303,10 +2311,10 @@ textOverflow =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    ~ textShadow  none
-    ~ textShadow2 (px 1) (px 2)
-    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
-    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    textShadow  none
+    textShadow2 (px 1) (px 2)
+    textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
 textShadow : None compatible -> Mixin
@@ -2316,10 +2324,10 @@ textShadow =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    ~ textShadow  none
-    ~ textShadow2 (px 1) (px 2)
-    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
-    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    textShadow  none
+    textShadow2 (px 1) (px 2)
+    textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
 textShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
@@ -2329,10 +2337,10 @@ textShadow2 =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    ~ textShadow  none
-    ~ textShadow2 (px 1) (px 2)
-    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
-    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    textShadow  none
+    textShadow2 (px 1) (px 2)
+    textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
 textShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> ColorValue compatibleC -> Mixin
@@ -2342,10 +2350,10 @@ textShadow3 =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    ~ textShadow  none
-    ~ textShadow2 (px 1) (px 2)
-    ~ textShadow3 (px 1) (px 2) (rgb 211 121 112)
-    ~ textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    textShadow  none
+    textShadow2 (px 1) (px 2)
+    textShadow3 (px 1) (px 2) (rgb 211 121 112)
+    textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
 textShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> ColorValue compatibleD -> Mixin
@@ -2355,9 +2363,9 @@ textShadow4 =
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
 
-    ~ textIndent  (px 40)
-    ~ textIndent2 (px 40) hanging
-    ~ textIndent3 (px 40) hanging eachLine
+    textIndent  (px 40)
+    textIndent2 (px 40) hanging
+    textIndent3 (px 40) hanging eachLine
 -}
 textIndent : Length compatible units -> Mixin
 textIndent =
@@ -2366,9 +2374,9 @@ textIndent =
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
 
-    ~ textIndent  (px 40)
-    ~ textIndent2 (px 40) hanging
-    ~ textIndent3 (px 40) hanging eachLine
+    textIndent  (px 40)
+    textIndent2 (px 40) hanging
+    textIndent3 (px 40) hanging eachLine
 -}
 textIndent2 : Length compatibleA unitsA -> TextIndent compatibleB -> Mixin
 textIndent2 =
@@ -2377,9 +2385,9 @@ textIndent2 =
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
 
-    ~ textIndent  (px 40)
-    ~ textIndent2 (px 40) hanging
-    ~ textIndent3 (px 40) hanging eachLine
+    textIndent  (px 40)
+    textIndent2 (px 40) hanging
+    textIndent3 (px 40) hanging eachLine
 -}
 textIndent3 : Length compatibleA unitsA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin
 textIndent3 =
@@ -2414,7 +2422,7 @@ opacity =
 
 {-| Sets [`width`](https://developer.mozilla.org/en-US/docs/Web/CSS/width)
 
-    ~ width (px 960)
+    width (px 960)
 
 -}
 width : LengthOrAuto compatible -> Mixin
@@ -2424,8 +2432,7 @@ width =
 
 {-| Sets [`max-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-width)
 
-    ~ maxWidth (px 960)
-
+    maxWidth (px 960)
 -}
 maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Mixin
 maxWidth =
@@ -2434,8 +2441,7 @@ maxWidth =
 
 {-| Sets [`min-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-width)
 
-    ~ minWidth (px 100)
-
+    minWidth (px 100)
 -}
 minWidth : LengthOrMinMaxDimension compatible -> Mixin
 minWidth =
@@ -2444,8 +2450,7 @@ minWidth =
 
 {-| Sets [`height`](https://developer.mozilla.org/en-US/docs/Web/CSS/height)
 
-    ~ height (px 800)
-
+    height (px 800)
 -}
 height : LengthOrAuto compatible -> Mixin
 height =
@@ -2454,7 +2459,7 @@ height =
 
 {-| Sets [`min-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height)
 
-    ~ minHeight (px 100)
+    minHeight (px 100)
 
 -}
 minHeight : LengthOrMinMaxDimension compatible -> Mixin
@@ -2464,7 +2469,7 @@ minHeight =
 
 {-| Sets [`max-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height)
 
-    ~ maxHeight (px 1024)
+    maxHeight (px 1024)
 
 -}
 maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Mixin
@@ -2722,12 +2727,12 @@ marginInlineEnd =
 
 {-| The [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/top) property.
 
-    ~ position absolute
-    ~ top (px 5)
+    position absolute
+    top (px 5)
 
 This can also be used as a `top` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
 
-    ~ verticalAlign top
+    verticalAlign top
 -}
 top : LengthOrAuto compatible -> Mixin
 top =
@@ -2736,12 +2741,12 @@ top =
 
 {-| The [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom) property.
 
-    ~ position absolute
-    ~ bottom (px 5)
+    position absolute
+    bottom (px 5)
 
 This can also be used as a `bottom` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
 
-    ~ verticalAlign bottom
+    verticalAlign bottom
 -}
 bottom : LengthOrAuto compatible -> Mixin
 bottom =
@@ -2750,12 +2755,12 @@ bottom =
 
 {-| The [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/left) property.
 
-    ~ position absolute
-    ~ left (px 5)
+    position absolute
+    left (px 5)
 
 This can also be used as a `left` [text alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
 
-    ~ textAlign left
+    textAlign left
 -}
 left : LengthOrAuto compatible -> Mixin
 left =
@@ -2764,12 +2769,12 @@ left =
 
 {-| Sets [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
 
-    ~ position absolute
-    ~ right (px 5)
+    position absolute
+    right (px 5)
 
 This can also be used as a `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
 
-    ~ textAlign right
+    textAlign right
 -}
 right : LengthOrAuto compatible -> Mixin
 right =
@@ -2834,7 +2839,7 @@ fillAvailable =
 
 {-| A `static` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
-    ~ position static
+    position static
 -}
 static : Position {}
 static =
@@ -2845,7 +2850,7 @@ static =
 
 {-| A `fixed` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
-    ~ position fixed
+    position fixed
 -}
 fixed : Position {}
 fixed =
@@ -2856,7 +2861,7 @@ fixed =
 
 {-| A `sticky` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
-    ~ position sticky
+    position sticky
 -}
 sticky : Position {}
 sticky =
@@ -2867,7 +2872,7 @@ sticky =
 
 {-| A `relative` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
-    ~ position relative
+    position relative
 -}
 relative : Position {}
 relative =
@@ -2878,7 +2883,7 @@ relative =
 
 {-| An `absolute` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
-    ~ position absolute
+    position absolute
 -}
 absolute : Position {}
 absolute =
@@ -4161,12 +4166,7 @@ lineHeight =
   prop1 "line-height"
 
 
-{-| Sets [`font-face`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
-
-    @ fontFace
-        ~ font-family "Bitstream Vera Serif Bold"
-        ~ src url("https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf")
--}
+{-| -}
 src : ImportType compatible -> String
 src value =
   toString value.value
@@ -4178,10 +4178,10 @@ fontFace value =
   "font-face " ++ value
 
 
-{-| Sets [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
+{-| For use with [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
 
-    ~ fontFamily    serif
-    ~ fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
+    fontFamily    serif
+    fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
 -}
 qt : String -> String
 qt str =
@@ -4202,8 +4202,8 @@ fontFamilies =
 
 {-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
 
-    ~ fontSize  xxSmall
-    ~ fontSize  (px 12)
+    fontSize  xxSmall
+    fontSize  (px 12)
 -}
 fontSize : FontSize a -> Mixin
 fontSize =
@@ -4212,7 +4212,7 @@ fontSize =
 
 {-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
 
-    ~ fontStyle  italic
+    fontStyle  italic
 -}
 fontStyle : FontStyle a -> Mixin
 fontStyle =
@@ -4221,8 +4221,8 @@ fontStyle =
 
 {-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 
-    ~ fontWeight  bold
-    ~ fontWeight  (n 300)
+    fontWeight  bold
+    fontWeight  (n 300)
 -}
 fontWeight : LengthOrNumberOrAutoOrNoneOrContent a -> Mixin
 fontWeight { value } =
@@ -4247,10 +4247,10 @@ fontWeight { value } =
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
 
-    ~ fontVariant   smallCaps
-    ~ fontVariant2  commonLigatures smallCaps
-    ~ fontVariant3  commonLigatures smallCaps slashedZero
-    ~ fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
+    fontVariant   smallCaps
+    fontVariant2  commonLigatures smallCaps
+    fontVariant3  commonLigatures smallCaps slashedZero
+    fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
 -}
 fontVariant : FontVariant a -> Mixin
 fontVariant =
@@ -4311,15 +4311,15 @@ fontVariantNumerics =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    ~ textDecoration  underline
-    ~ textDecoration2 underline wavy
-    ~ textDecoration3 underline wavy (rgb 128 64 32)
+    textDecoration  underline
+    textDecoration2 underline wavy
+    textDecoration3 underline wavy (rgb 128 64 32)
 
 You can specify multiple line decorations with `textDecorations`.
 
-    ~ textDecorations  [ underline, overline ]
-    ~ textDecorations2 [ underline, overline ] wavy
-    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+    textDecorations  [ underline, overline ]
+    textDecorations2 [ underline, overline ] wavy
+    textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
 textDecoration : TextDecorationLine a -> Mixin
 textDecoration =
@@ -4328,15 +4328,15 @@ textDecoration =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    ~ textDecoration  underline
-    ~ textDecoration2 underline wavy
-    ~ textDecoration3 underline wavy (rgb 128 64 32)
+    textDecoration  underline
+    textDecoration2 underline wavy
+    textDecoration3 underline wavy (rgb 128 64 32)
 
 You can specify multiple line decorations with `textDecorations`.
 
-    ~ textDecorations  [ underline, overline ]
-    ~ textDecorations2 [ underline, overline ] wavy
-    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+    textDecorations  [ underline, overline ]
+    textDecorations2 [ underline, overline ] wavy
+    textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
 textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Mixin
 textDecoration2 =
@@ -4345,15 +4345,15 @@ textDecoration2 =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    ~ textDecoration  underline
-    ~ textDecoration2 underline wavy
-    ~ textDecoration3 underline wavy (rgb 128 64 32)
+    textDecoration  underline
+    textDecoration2 underline wavy
+    textDecoration3 underline wavy (rgb 128 64 32)
 
 You can specify multiple line decorations with `textDecorations`.
 
-    ~ textDecorations  [ underline, overline ]
-    ~ textDecorations2 [ underline, overline ] wavy
-    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+    textDecorations  [ underline, overline ]
+    textDecorations2 [ underline, overline ] wavy
+    textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
 textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Mixin
 textDecoration3 =
@@ -4362,9 +4362,9 @@ textDecoration3 =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    ~ textDecorations  [ underline, overline ]
-    ~ textDecorations2 [ underline, overline ] wavy
-    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+    textDecorations  [ underline, overline ]
+    textDecorations2 [ underline, overline ] wavy
+    textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
 textDecorations : List (TextDecorationLine compatible) -> Mixin
 textDecorations =
@@ -4373,9 +4373,9 @@ textDecorations =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    ~ textDecorations  [ underline, overline ]
-    ~ textDecorations2 [ underline, overline ] wavy
-    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+    textDecorations  [ underline, overline ]
+    textDecorations2 [ underline, overline ] wavy
+    textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
 textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Mixin
 textDecorations2 =
@@ -4384,9 +4384,9 @@ textDecorations2 =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    ~ textDecorations  [ underline, overline ]
-    ~ textDecorations2 [ underline, overline ] wavy
-    ~ textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+    textDecorations  [ underline, overline ]
+    textDecorations2 [ underline, overline ] wavy
+    textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
 textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Mixin
 textDecorations3 =
@@ -4395,11 +4395,11 @@ textDecorations3 =
 
 {-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
 
-    ~ textDecorationLine underline
+    textDecorationLine underline
 
 You can specify multiple line decorations with `textDecorationLines`.
 
-    ~ textDecorationLines  [ underline, overline ]
+    textDecorationLines  [ underline, overline ]
 -}
 textDecorationLine : TextDecorationLine compatible -> Mixin
 textDecorationLine =
@@ -4408,7 +4408,7 @@ textDecorationLine =
 
 {-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
 
-    ~ textDecorationLines  [ underline, overline ]
+    textDecorationLines  [ underline, overline ]
 -}
 textDecorationLines : List (TextDecorationLine compatible) -> Mixin
 textDecorationLines =
@@ -4417,7 +4417,7 @@ textDecorationLines =
 
 {-| Sets [`text-decoration-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style)
 
-    ~ textDecorationStyle dotted
+    textDecorationStyle dotted
 -}
 textDecorationStyle : TextDecorationStyle compatible -> Mixin
 textDecorationStyle =
@@ -4426,13 +4426,13 @@ textDecorationStyle =
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
 
-    ~ animationName  Foo
+    animationName  Foo
 
 You can also use [`animationNames`](#animationNames) to set multiple animation
 names, or to set `animation-name: none;`
 
-    ~ animationNames [ Foo, Bar ]
-    ~ animationNames [] -- outputs "animation-name: none;"
+    animationNames [ Foo, Bar ]
+    animationNames [] -- outputs "animation-name: none;"
 -}
 animationName : animation -> Mixin
 animationName identifier =
@@ -4441,11 +4441,11 @@ animationName identifier =
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
 
-    ~ animationNames [ Foo, Bar ]
+    animationNames [ Foo, Bar ]
 
 Pass `[]` to set `animation-name: none;`
 
-    ~ animationNames [] -- outputs "animation-name: none;"
+    animationNames [] -- outputs "animation-name: none;"
 -}
 animationNames : List animation -> Mixin
 animationNames identifiers =
@@ -4458,13 +4458,14 @@ animationNames identifiers =
     property "animation-name" value
 
 
-{-| An empty namespaced stylesheet. Use this as the foundation on which to build
-your stylesheet.
+{-| A stylesheet.
 
-    stylesheet { name = "homepage" }
-        $ body
-            ~ width 960 px
-            ~ color (rgb 7 7 7)
+    stylesheet
+        [ body
+            [ width (px 960)
+            , color (rgb 7 7 7)
+            ]
+        ]
 -}
 stylesheet : List Snippet -> Stylesheet
 stylesheet =
@@ -4472,28 +4473,34 @@ stylesheet =
 
 
 {-| A Mixin allowing you to modularly reuse common styles in other styles.
-`mixin` declares the mixin, and `~=` adds the contents of a mixin to another
-style.
+The return value of `mixin` can be used like any other property, since all
+properties in elm-css are implemented as mixins.
 
     underlineOnHover =
         mixin "underlineOnHover"
-            ~ textDecoration none
+            [ textDecoration none
 
-            &: hover
-                ~ textDecoration underline
+            , hover
+                [ textDecoration underline ]
+            ]
 
-    a . FancyLink
-        ~ color (rgb 128 64 32)
-        ~= underlineOnHover
+    stylesheet
+      [ (.) FancyLink
+          [ color (rgb 128 64 32)
+          , underlineOnHover
+          ]
+      ]
 
 ...has the same result as:
 
-    a . FancyLink
-        ~ color (rgb 128 64 32)
-        ~ textDecoration none
-
-        &: hover
-            ~ textDecoration underline
+    stylesheet
+      [ (.) FancyLink
+          [ color (rgb 128 64 32)
+          , textDecoration none
+          , hover
+            [ textDecoration underline ]
+          ]
+      ]
 -}
 mixin : List Mixin -> Mixin
 mixin =
@@ -4502,14 +4509,12 @@ mixin =
 
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
 
-    stylesheet "homepage"
-        # NavBar
-            ~ width 960 px
-            ~ backgroundColor (rgb 123 42 208)
-
-    stylesheet "login"
-        button # Cancel
-            ~ backgroundColor (rgb 128 64 32)
+    stylesheet
+        [ (#) NavBar
+            [ width 960 px
+            , backgroundColor (rgb 123 42 208)
+            ]
+        ]
 -}
 (#) : id -> List Mixin -> Snippet
 (#) id mixins =
@@ -4529,13 +4534,13 @@ makeSnippet mixins sequence =
 
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
-    StyleBlock transform
-            ~ color (rgb 7 7 7)
 
-    stylesheet "login"
-        button . LoginFormButton
-            ~ fontWeight normal
-            ~ color (rgb 128 64 32)
+    stylesheet
+        [ (.) LoginFormButton
+            [ fontWeight normal
+            , color (rgb 128 64 32)
+            ]
+        ]
 -}
 (.) : class -> List Mixin -> Snippet
 (.) class mixins =
@@ -4568,9 +4573,11 @@ makeSnippet mixins sequence =
 and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
 
     stylesheet "homepage"
-        $= "* [lang^=en]"
-            ~ textDecoration underline
-            ~ color (rgb 7 7 7)
+        [ selector "* [lang^=en]"
+            [ textDecoration underline
+            , color (rgb 7 7 7)
+            ]
+        ]
 -}
 selector : String -> List Mixin -> Snippet
 selector selectorStr mixins =
@@ -4605,8 +4612,10 @@ everything mixins =
 
 {-| Define a custom property.
 
-    $ body
-        ~ custom "-webkit-font-smoothing" "none"
+    stylesheet
+      [ body
+          [ property "-webkit-font-smoothing" "none" ]
+      ]
 
 ...outputs
 
@@ -4968,9 +4977,10 @@ CSS specification, and as such are intentionally unsupported.
 Using them is a bad idea, but if the fate of the world depends on it, you can
 fall back on something like this:
 
-    stylesheet { name = "badIdeas" }
-        $ button
-            ~ ( "border-left", "thin" )
+    stylesheet
+        [ button
+            [ property "border-left" "thin" ]
+        ]
 -}
 thin : IntentionallyUnsupportedPleaseSeeDocs
 thin =
@@ -4985,9 +4995,10 @@ CSS specification, and as such are intentionally unsupported.
 Using them is a bad idea, but if the fate of the world depends on it, you can
 fall back on something like this:
 
-    stylesheet { name = "badIdeas" }
-        $ button
-            ~ ( "border-left", "thin" )
+    stylesheet
+        [ button
+            [ property "border-left" "thick" ]
+        ]
 -}
 thick : IntentionallyUnsupportedPleaseSeeDocs
 thick =
