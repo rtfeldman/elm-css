@@ -5,6 +5,7 @@ module Html.CssHelpers (namespace) where
 @docs namespace
 -}
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
+import Css.Namespace
 import Html exposing (Attribute)
 import Html.Attributes as Attr
 import String
@@ -22,6 +23,7 @@ type alias Namespace name class id =
   , classList : List ( class, Bool ) -> Attribute
   , id : id -> Attribute
   , name : name
+  , rules : List Snippet -> List Snippet
   }
 
 
@@ -30,7 +32,8 @@ type alias Namespace name class id =
 they accept union types and automatically incorporate the given namespace. Also
 note that `class` accepts a `List` instead of a single element; this is so you
 can specify multiple classes without having to call `classList` passing tuples
-that all end in `True`.
+that all end in `True`. Also returns `rules`, which you can use to namespace a
+list of rules.
 
     -- Put this before your view code to specify a namespace.
     { id, class, classList } = namespace "homepage"
@@ -51,6 +54,7 @@ namespace name =
   , classList = namespacedClassList name
   , id = toCssIdentifier >> Attr.id
   , name = name
+  , rules = Css.Namespace.namespace name
   }
 
 
