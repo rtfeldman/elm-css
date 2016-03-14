@@ -43,8 +43,11 @@ There are a few examples to check out!
 Here's an example:
 
 ```elm
+
+namespacer = namespace "dreamwriter"
+
 css =
-  (stylesheet << namespace "dreamwriter")
+  (stylesheet << namespacer.rules)
     [ body
         [ overflowX auto
         , minWidth (px 1280)
