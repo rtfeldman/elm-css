@@ -323,6 +323,13 @@ all =
         , ( fontWeight (int 900), "900" )
         ]
     , testProperty
+        "font-feature-settings"
+        [ (fontFeatureSettings (featureTag "smcp"), "\"smcp\" 1")
+        , (fontFeatureSettings (featureTag2 "liga" 0), "\"liga\" 0")
+        , (fontFeatureSettingsList [featureTag2 "liga" 0, featureTag2 "swsh" 2], "\"liga\" 0, \"swsh\" 2")
+        , (fontFeatureSettings normal, "normal")
+        ]
+    , testProperty
         "align-items"
         [ ( alignItems flexStart, "flex-start" )
         , ( alignItems flexEnd, "flex-end" )
