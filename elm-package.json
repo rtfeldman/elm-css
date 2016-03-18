@@ -10,6 +10,7 @@
         "Css",
         "Css.Elements",
         "Css.File",
+        "Css.Namespace",
         "Html.CssHelpers"
     ],
     "dependencies": {
