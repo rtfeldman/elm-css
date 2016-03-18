@@ -1,10 +1,15 @@
-module Css.Namespace (..) where
+module Css.Namespace (namespace) where
+{-| Namespacing
+@docs namespace
+-}
 
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast, SimpleSelectorSequence(UniversalSelectorSequence, TypeSelectorSequence, CustomSelector), RepeatableSimpleSelector(IdSelector, ClassSelector, PseudoClassSelector))
 
-
+{-|
+takes an identifier, namespaces the list of snippets given with that identifier
+-}
 namespace : a -> List Snippet -> List Snippet
 namespace rawIdentifier snippets =
   List.map (applyNamespaceToSnippet (toCssIdentifier rawIdentifier)) snippets
