@@ -1,4 +1,4 @@
-module Html.CssHelpers (namespace) where
+module Html.CssHelpers (withNamespace) where
 
 {-| Helper functions for using elm-css with elm-html.
 
@@ -35,7 +35,7 @@ can specify multiple classes without having to call `classList` passing tuples
 that all end in `True`.
 
     -- Put this before your view code to specify a namespace.
-    { id, class, classList } = namespace "homepage"
+    { id, class, classList } = withNamespace "homepage"
 
     view =
         h1 [ id Hero, class [ Fancy ] ] [ text "Hello, World!" ]
@@ -47,8 +47,8 @@ The above would generate this DOM element:
 
     <h1 id="Hero" class="homepage_Fancy">Hello, World!</h1>
 -}
-namespace : name -> Namespace name class id
-namespace name =
+withNamespace : name -> Namespace name class id
+withNamespace name =
   { class = namespacedClass name
   , classList = namespacedClassList name
   , id = toCssIdentifier >> Attr.id

@@ -1,6 +1,6 @@
 module SharedStyles (..) where
 
-import Html.CssHelpers exposing (namespace)
+import Html.CssHelpers exposing (withNamespace)
 
 
 type CssClasses
@@ -13,4 +13,4 @@ type CssIds
 
 
 homepageNamespace =
-  namespace "homepage"
+  withNamespace "homepage"
