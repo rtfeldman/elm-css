@@ -10,6 +10,7 @@
     "exposed-modules": [],
     "dependencies": {
         "elm-lang/core": "3.0.0 <= v <= 3.0.0",
+        "rtfeldman/elm-css-helpers": "1.0.0 <= v <= 1.0.0",
         "evancz/elm-html": "4.0.2 <= v < 5.0.0"
     },
     "elm-version": "0.16.0 <= v <= 0.16.0"
