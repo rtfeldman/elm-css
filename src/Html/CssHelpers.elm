@@ -1,12 +1,12 @@
-module Html.CssHelpers (namespace) where
+module Html.CssHelpers (withNamespace) where
 
 {-| Helper functions for using elm-css with elm-html.
 
 @docs namespace
 -}
+
 import Css exposing (Snippet)
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Namespace
 import Html exposing (Attribute)
 import Html.Attributes as Attr
 import String
@@ -24,7 +24,6 @@ type alias Namespace name class id =
   , classList : List ( class, Bool ) -> Attribute
   , id : id -> Attribute
   , name : name
-  , rules : List Snippet -> List Snippet
   }
 
 
@@ -33,11 +32,10 @@ type alias Namespace name class id =
 they accept union types and automatically incorporate the given namespace. Also
 note that `class` accepts a `List` instead of a single element; this is so you
 can specify multiple classes without having to call `classList` passing tuples
-that all end in `True`. Also returns `rules`, which you can use to namespace a
-list of rules.
+that all end in `True`.
 
     -- Put this before your view code to specify a namespace.
-    { id, class, classList } = namespace "homepage"
+    { id, class, classList } = withNamespace "homepage"
 
     view =
         h1 [ id Hero, class [ Fancy ] ] [ text "Hello, World!" ]
@@ -49,13 +47,12 @@ The above would generate this DOM element:
 
     <h1 id="Hero" class="homepage_Fancy">Hello, World!</h1>
 -}
-namespace : name -> Namespace name class id
-namespace name =
+withNamespace : name -> Namespace name class id
+withNamespace name =
   { class = namespacedClass name
   , classList = namespacedClassList name
   , id = toCssIdentifier >> Attr.id
   , name = name
-  , rules = Css.Namespace.namespace name
   }
 
 
