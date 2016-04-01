@@ -852,14 +852,21 @@ hsla hue saturation lightness alpha =
 hex : String -> Color
 hex str =
   -- TODO
-  { value = "#" ++ str
-  , color = Compatible
-  , red = 0
-  , green = 0
-  , blue = 0
-  , alpha = 1
-  , warnings = []
-  }
+  let
+    v =
+      if (String.slice 0 1 str) == "#" then
+        str
+      else
+        "#" ++ str
+  in
+    { value = v
+    , color = Compatible
+    , red = 0
+    , green = 0
+    , blue = 0
+    , alpha = 1
+    , warnings = []
+    }
 
 
 hslaToRgba : String -> List String -> Float -> Float -> Float -> Float -> Color
