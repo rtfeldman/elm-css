@@ -2,7 +2,7 @@
 
 A CSS preprocessor where you write [Elm](http://elm-lang.org) code and get .css files. Inspired by the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), and [CSS Modules](http://glenmaddern.com/articles/css-modules).
 
-(This is a BETA release, so please be careful! The documentation in particular
+(This is a BETA release, so please be careful! The [documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/) in particular
 is very much a work in progress.)
 
 Try it out! (make sure you already have [elm](http://elm-lang.org) installed, e.g. with `npm install -g elm`)
