@@ -122,4 +122,5 @@ You can also use elm-css for inline styles with the `asPairs` function, like so:
 ## Releases
 
 [**1.1.0**](https://github.com/rtfeldman/elm-css/tree/1.1.0) Add Helpers
+
 [**1.0.0**](https://github.com/rtfeldman/elm-css/tree/1.0.0) Initial Release
