@@ -2,6 +2,7 @@ module Tests (all) where
 
 import ElmTest exposing (..)
 import TestUtil exposing (outdented, prettyPrint)
+import Tests.Expect exposing (expect)
 import Compile
 import Fixtures
 import Properties
@@ -44,8 +45,10 @@ unstyledDiv =
   in
     suite
       "unstyled div"
-      [ test "pretty prints nothing, because the stylesheet had no properties."
-          <| assertEqual output (prettyPrint input)
+      [ (expect "pretty prints nothing, because the stylesheet had no properties.")
+          { expected = output
+          , actual = prettyPrint input
+          }
       ]
 
 
@@ -91,8 +94,10 @@ simpleEach =
   in
     suite
       "simple each function test"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -123,8 +128,10 @@ leftRightTopBottom =
   in
     suite
       "left & right, top & bottom property/value duality test"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -153,8 +160,10 @@ atRule =
   in
     suite
       "@media test"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -187,8 +196,10 @@ nestedAtRule =
   in
     suite
       "nested @media test"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -213,8 +224,10 @@ borders =
   in
     suite
       "Borders test"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -262,8 +275,10 @@ multiDescendent =
   in
     suite
       "Multi-descendent stylesheet"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -291,8 +306,10 @@ universal =
   in
     suite
       "Universal selector stylesheet"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -318,8 +335,10 @@ multiSelector =
   in
     suite
       "Multi-selector stylesheet"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -339,8 +358,10 @@ keyValue =
   in
     suite
       "Custom key-value properties"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -363,8 +384,10 @@ underlineOnHoverMixin =
   in
     suite
       "underline on hover link (mixin)"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -387,8 +410,10 @@ underlineOnHoverManual =
   in
     suite
       "underline on hover link (manual)"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -411,8 +436,10 @@ greenOnHoverMixin =
   in
     suite
       "green on hover (mixin)"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -439,8 +466,10 @@ transformsStyle =
   in
     suite
       "transforms"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -468,8 +497,10 @@ fonts =
   in
     suite
       "fonts"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
 
 
@@ -486,6 +517,8 @@ weightWarning =
   in
     suite
       "fontWeightWarning"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]

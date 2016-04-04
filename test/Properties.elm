@@ -2,6 +2,7 @@ module Properties (all) where
 
 import ElmTest exposing (..)
 import TestUtil exposing (prettyPrint)
+import Tests.Expect exposing (expect)
 import Css exposing (..)
 import Css.Elements exposing (p)
 import Css.Namespace exposing (namespace)
@@ -324,10 +325,10 @@ all =
         ]
     , testProperty
         "font-feature-settings"
-        [ (fontFeatureSettings (featureTag "smcp"), "\"smcp\" 1")
-        , (fontFeatureSettings (featureTag2 "liga" 0), "\"liga\" 0")
-        , (fontFeatureSettingsList [featureTag2 "liga" 0, featureTag2 "swsh" 2], "\"liga\" 0, \"swsh\" 2")
-        , (fontFeatureSettings normal, "normal")
+        [ ( fontFeatureSettings (featureTag "smcp"), "\"smcp\" 1" )
+        , ( fontFeatureSettings (featureTag2 "liga" 0), "\"liga\" 0" )
+        , ( fontFeatureSettingsList [ featureTag2 "liga" 0, featureTag2 "swsh" 2 ], "\"liga\" 0, \"swsh\" 2" )
+        , ( fontFeatureSettings normal, "normal" )
         ]
     , testProperty
         "align-items"
@@ -369,12 +370,12 @@ assertPropertyWorks : String -> ( Mixin, String ) -> Test
 assertPropertyWorks propertyName ( mixin, expectedStr ) =
   suite
     "works properly"
-    [ test "pretty prints the expected output"
-        <| assertEqual
-            ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-            (prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ]))
-    , test "can be converted to a key-value pair"
-        <| assertEqual
-            [ ( propertyName, expectedStr ) ]
-            (asPairs [ mixin ])
+    [ (expect "pretty prints the expected output")
+        { expected = "p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}"
+        , actual = prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
+        }
+    , (expect "can be converted to a key-value pair")
+        { expected = [ ( propertyName, expectedStr ) ]
+        , actual = asPairs [ mixin ]
+        }
     ]

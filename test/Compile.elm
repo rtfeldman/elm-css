@@ -2,6 +2,7 @@ module Compile (all) where
 
 import ElmTest exposing (..)
 import TestUtil exposing (outdented, prettyPrint, it)
+import Tests.Expect exposing (expect)
 import Check.Investigator exposing (..)
 import CompileFixtures
 import Random.Extra
@@ -124,8 +125,10 @@ unstyledDiv =
   in
     suite
       "unstyled div"
-      [ test "pretty prints the expected output"
-          <| assertEqual output (prettyPrint input)
+      [ (expect "pretty prints the expected output")
+          { expected = output
+          , actual = prettyPrint input
+          }
       ]
 
 
@@ -172,6 +175,8 @@ dreamwriter =
   in
     suite
       "Sample stylesheet from Dreamwriter"
-      [ test "pretty prints the expected output"
-          <| assertEqual (outdented output) (outdented (prettyPrint input))
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
       ]
