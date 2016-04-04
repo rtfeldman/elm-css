@@ -226,6 +226,7 @@ type alias FontStyleOrFeatureTagValue compatible =
   { compatible | value : String, warnings : List String, fontStyle : Compatible, featureTagValue : Compatible }
 
 
+
 -- type alias FontWeight compatible =
 --     { compatible
 --       | value : String
@@ -847,19 +848,21 @@ hsla hue saturation lightness alpha =
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
-    in hexadecimal notation.
+in hexadecimal notation. You can optionally include `#` as the first character,
+for benefits like syntax highlighting in editors, ease of copy/pasting from
+tools which express these as e.g. `#abcdef0`, etc.
 -}
 hex : String -> Color
 hex str =
-  -- TODO
+  -- TODO emit warnings for invalid hex chars
   let
-    v =
-      if (String.slice 0 1 str) == "#" then
+    value =
+      if String.slice 0 1 str == "#" then
         str
       else
         "#" ++ str
   in
-    { value = v
+    { value = value
     , color = Compatible
     , red = 0
     , green = 0
@@ -3256,6 +3259,7 @@ slashedZero =
   }
 
 
+
 {- FEATURE TAG VALUES -}
 
 
@@ -3293,14 +3297,14 @@ featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
   let
     potentialWarnings =
-      [ ((String.length tag) /= 4, "Feature tags must be exactly 4 characters long. " ++ tag ++ " is invalid.")
-      , (value < 0, "Feature values cannot be negative. " ++ (toString value) ++ " is invalid.")
+      [ ( (String.length tag) /= 4, "Feature tags must be exactly 4 characters long. " ++ tag ++ " is invalid." )
+      , ( value < 0, "Feature values cannot be negative. " ++ (toString value) ++ " is invalid." )
       ]
+
     warnings =
       potentialWarnings
         |> List.filter fst
         |> List.map snd
-
   in
     { value = (toString tag) ++ " " ++ (toString value)
     , featureTagValue = Compatible
@@ -4300,9 +4304,9 @@ fontFeatureSettingsList featureTagValues =
   let
     value =
       featureTagValues |> List.map .value |> String.join ", "
+
     warnings =
       featureTagValues |> List.map .warnings |> List.concat
-
   in
     propertyWithWarnings warnings "font-feature-settings" value
 
