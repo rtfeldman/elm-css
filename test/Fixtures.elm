@@ -324,3 +324,14 @@ fontWeightWarning : Stylesheet
 fontWeightWarning =
   (stylesheet << namespace "fontWeightWarning")
     [ body [ fontWeight (int 22) ] ]
+
+
+colorHexWarning : Stylesheet
+colorHexWarning =
+  (stylesheet << namespace "colorHexWarning")
+    [ body [ color (hex "ababah") ] ]
+
+colorHexAbbrWarning : Stylesheet
+colorHexAbbrWarning =
+  (stylesheet << namespace "colorHexAbbrWarning")
+    [ body [ color (hex "#00i") ] ]

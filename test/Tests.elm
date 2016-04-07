@@ -522,3 +522,31 @@ weightWarning =
           , actual = outdented (prettyPrint input)
           }
       ]
+
+hexWarning : Test
+hexWarning =
+  let
+    input1 =
+      Fixtures.colorHexWarning
+    input2 =
+      Fixtures.colorHexAbbrWarning
+    output1 =
+      """
+           Invalid Stylesheet:
+           Hexadecimal color values can only contain three or six characters of '0-9' and/or 'A-F'. #ababah is not valid."""
+    output2 =
+      """
+           Invalid Stylesheet:
+           Hexadecimal color values can only contain three or six characters of '0-9' and/or 'A-F'. #00i is not valid."""
+  in
+    suite
+      "colorHexWarning"
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output1
+          , actual = outdented (prettyPrint input1)
+          }
+      , (expect "pretty prints the expected output")
+          { expected = outdented output2
+          , actual = outdented (prettyPrint input2)
+          }
+      ]
