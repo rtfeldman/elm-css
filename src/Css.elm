@@ -57,6 +57,7 @@ import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Resolve as Resolve
 import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
 import Css.Structure as Structure exposing (MediaQuery(MediaQuery))
+import Regex exposing (regex, contains)
 import String
 
 
@@ -854,13 +855,17 @@ tools which express these as e.g. `#abcdef0`, etc.
 -}
 hex : String -> Color
 hex str =
-  -- TODO emit warnings for invalid hex chars
   let
     value =
       if String.slice 0 1 str == "#" then
         str
       else
         "#" ++ str
+    warnings =
+      if contains (regex "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$") value then
+        [ "Hexadecimal color values can only contain three or six characters of '0-9' and/or 'A-F'. " ++ value ++ " is not valid." ]
+      else
+        []
   in
     { value = value
     , color = Compatible
@@ -868,7 +873,7 @@ hex str =
     , green = 0
     , blue = 0
     , alpha = 1
-    , warnings = []
+    , warnings = warnings
     }
 
 
