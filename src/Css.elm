@@ -4189,8 +4189,8 @@ backgroundColor =
 
 {-| -}
 color : ColorValue compatible -> Mixin
-color =
-  prop1 "color"
+color c =
+  propertyWithWarnings c.warnings "color" c.value
 
 
 {-| -}
