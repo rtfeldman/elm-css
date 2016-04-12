@@ -30,6 +30,7 @@ all =
     , transformsStyle
     , fonts
     , weightWarning
+    , hexWarning
     , Properties.all
     ]
 
@@ -533,11 +534,11 @@ hexWarning =
     output1 =
       """
            Invalid Stylesheet:
-           Hexadecimal color values can only contain three or six characters of '0-9' and/or 'A-F'. #ababah is not valid."""
+           The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #ababah is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
     output2 =
       """
            Invalid Stylesheet:
-           Hexadecimal color values can only contain three or six characters of '0-9' and/or 'A-F'. #00i is not valid."""
+           The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #00i is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
   in
     suite
       "colorHexWarning"
