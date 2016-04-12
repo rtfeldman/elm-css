@@ -2296,8 +2296,8 @@ prop4 key argA argB argC argD =
     textDecorationColor (rgb 12 11 10)
 -}
 textDecorationColor : ColorValue compatible -> Mixin
-textDecorationColor =
-  prop1 "text-decoration-color"
+textDecorationColor c =
+  propertyWithWarnings c.warnings "text-decoration-color" c.value
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
@@ -3757,8 +3757,8 @@ borderImageWidth4 =
     borderBlockStartColor (rgb 101 202 0)
 -}
 borderBlockStartColor : ColorValue compatible -> Mixin
-borderBlockStartColor =
-  prop1 "border-block-start-color"
+borderBlockStartColor c =
+  propertyWithWarnings c.warnings "border-block-start-color" c.value
 
 
 {-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
@@ -3766,8 +3766,8 @@ borderBlockStartColor =
     borderBottomColor (rgb 101 202 0)
 -}
 borderBottomColor : ColorValue compatible -> Mixin
-borderBottomColor =
-  prop1 "border-bottom-color"
+borderBottomColor c =
+  propertyWithWarnings c.warnings "border-bottom-color" c.value
 
 
 {-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color)
@@ -3775,8 +3775,8 @@ borderBottomColor =
     borderInlineStartColor (rgb 101 202 0)
 -}
 borderInlineStartColor : ColorValue compatible -> Mixin
-borderInlineStartColor =
-  prop1 "border-inline-start-color"
+borderInlineStartColor c =
+  propertyWithWarnings c.warnings "border-inline-start-color" c.value
 
 
 {-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color)
@@ -3784,8 +3784,8 @@ borderInlineStartColor =
     borderInlineEndColor (rgb 101 202 0)
 -}
 borderInlineEndColor : ColorValue compatible -> Mixin
-borderInlineEndColor =
-  prop1 "border-inline-end-color"
+borderInlineEndColor c =
+  propertyWithWarnings c.warnings "border-inline-end-color" c.value
 
 
 {-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
@@ -3793,8 +3793,8 @@ borderInlineEndColor =
     borderLeftColor (rgb 101 202 0)
 -}
 borderLeftColor : ColorValue compatible -> Mixin
-borderLeftColor =
-  prop1 "border-left-color"
+borderLeftColor c =
+  propertyWithWarnings c.warnings "border-left-color" c.value
 
 
 {-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
@@ -3802,8 +3802,8 @@ borderLeftColor =
     borderRightColor (rgb 101 202 0)
 -}
 borderRightColor : ColorValue compatible -> Mixin
-borderRightColor =
-  prop1 "border-right-color"
+borderRightColor c =
+  propertyWithWarnings c.warnings "border-right-color" c.value
 
 
 {-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
@@ -3811,8 +3811,8 @@ borderRightColor =
     borderTopColor (rgb 101 202 0)
 -}
 borderTopColor : ColorValue compatible -> Mixin
-borderTopColor =
-  prop1 "border-top-color"
+borderTopColor c =
+  propertyWithWarnings c.warnings "border-top-color" c.value
 
 
 {-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color)
@@ -3820,8 +3820,8 @@ borderTopColor =
     borderBlockEndColor (rgb 101 202 0)
 -}
 borderBlockEndColor : ColorValue compatible -> Mixin
-borderBlockEndColor =
-  prop1 "border-block-end-color"
+borderBlockEndColor c =
+  propertyWithWarnings c.warnings "border-block-end-color" c.value
 
 
 {-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style)
@@ -4117,8 +4117,8 @@ borderSpacing2 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
 borderColor : ColorValue compatible -> Mixin
-borderColor =
-  prop1 "border-color"
+borderColor c =
+  propertyWithWarnings c.warnings "border-color" c.value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -4129,8 +4129,14 @@ borderColor =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
 borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Mixin
-borderColor2 =
-  prop2 "border-color"
+borderColor2 c1 c2 =
+  let
+    warnings =
+      c1.warnings ++ c2.warnings
+    value =
+      String.join " " [ c1.value, c2.value ]
+  in
+    propertyWithWarnings warnings "border-color" value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -4141,8 +4147,14 @@ borderColor2 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
 borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Mixin
-borderColor3 =
-  prop3 "border-color"
+borderColor3 c1 c2 c3 =
+  let
+    warnings =
+      c1.warnings ++ c2.warnings ++ c3.warnings
+    value =
+      String.join " " [ c1.value, c2.value, c3.value ]
+  in
+    propertyWithWarnings warnings "border-color" value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -4153,8 +4165,14 @@ borderColor3 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
 borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Mixin
-borderColor4 =
-  prop4 "border-color"
+borderColor4 c1 c2 c3 c4 =
+  let
+    warnings =
+      c1.warnings ++ c2.warnings ++ c3.warnings ++ c4.warnings
+    value =
+      String.join " " [ c1.value, c2.value, c3.value, c4.value]
+  in
+    propertyWithWarnings warnings "border-color" value
 
 
 {-| -}
@@ -4183,8 +4201,8 @@ whiteSpace =
 
 {-| -}
 backgroundColor : ColorValue compatible -> Mixin
-backgroundColor =
-  prop1 "background-color"
+backgroundColor c =
+  propertyWithWarnings c.warnings "background-color" c.value
 
 
 {-| -}
