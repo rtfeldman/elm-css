@@ -30,6 +30,7 @@ all =
     , transformsStyle
     , fonts
     , weightWarning
+    , hexWarning
     , Properties.all
     ]
 
@@ -520,5 +521,33 @@ weightWarning =
       [ (expect "pretty prints the expected output")
           { expected = outdented output
           , actual = outdented (prettyPrint input)
+          }
+      ]
+
+hexWarning : Test
+hexWarning =
+  let
+    input1 =
+      Fixtures.colorHexWarning
+    input2 =
+      Fixtures.colorHexAbbrWarning
+    output1 =
+      """
+            Invalid Stylesheet:
+            The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #ababah is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
+    output2 =
+      """
+            Invalid Stylesheet:
+            The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #00i is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
+  in
+    suite
+      "colorHexWarning"
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output1
+          , actual = outdented (prettyPrint input1)
+          }
+      , (expect "pretty prints the expected output")
+          { expected = outdented output2
+          , actual = outdented (prettyPrint input2)
           }
       ]
