@@ -862,8 +862,13 @@ hex str =
       else
         "#" ++ str
     warnings =
-      if contains (regex "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$") value then
-        [ "Hexadecimal color values can only contain three or six characters of '0-9' and/or 'A-F'. " ++ value ++ " is not valid." ]
+      if contains (regex "^#([a-fA-F0-9]{8}|[a-fA-F0-9]{6}|[a-fA-F0-9]{4}|[a-fA-F0-9]{3})$") value then
+        [ String.join " "
+            [ "The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits."
+            , value
+            , "is not valid."
+            , "Please see: https://drafts.csswg.org/css-color/#hex-notation"]
+        ]
       else
         []
   in
