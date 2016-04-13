@@ -144,13 +144,13 @@ stylesheet { name = "homepage" }
   , a
       [ textDecoration none
 
-      , with hover
+      , hover
           [ textDecoration underline ]
       ]
   ]
 ```
 
-The `with hover` declaration means "copy the previous selector and add `:hover`",
+The `hover` declaration means "copy the previous selector and add `:hover`",
 making it a handy way to expand upon a previous selector without writing it out again.
 
 ```css
@@ -227,7 +227,7 @@ stylesheet { name = "example" }
   [ each [ a, button, (.) FancyThing ]
       [ textDecoration none
 
-      , with hover
+      , hover
           [ textDecoration underline ]
       ]
   ]
@@ -265,7 +265,7 @@ Now let’s take things up a notch or two.
 
 ```elm
 stylesheet { name = "homepage" }
-  [ media "print"
+  [ withMedia [ print ]
       [ body
           [ width (px 1280) ]
       ]
@@ -273,7 +273,7 @@ stylesheet { name = "homepage" }
   , ul
       [ padding zero
 
-      , with (media "print")
+      , withMedia [ print ]
           [ margin2 (em 1) auto ]
 
       , children
