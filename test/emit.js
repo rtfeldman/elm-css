@@ -5,10 +5,6 @@ var fs = require("fs");
 
 var fixturesDir = path.join(__dirname, "fixtures");
 
-function prependFixturesDir(filename) {
-  return path.join(fixturesDir, filename);
-}
-
 describe("emitting", function() {
   it("works with HomepageCss.elm", function (done) {
     // Use an epic timeout, because Travis on Linux is SO SLOW.
