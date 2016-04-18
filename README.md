@@ -40,9 +40,33 @@ There are a few examples to check out!
 - the example below:
 
 
-Here's an example:
+Here's how to use `elm-css` in your projects:
+
+#### Generating CSS
+
+You will need to install both the node module and the Elm library:
+
+    npm install -g elm-css
+    elm package install rtfeldman/elm-css
+
+Then define CSS in Elm:
 
 ```elm
+module MyCss (..) where
+
+import Css exposing (..)
+import Css.Elements exposing (body, li)
+import Css.Namespace exposing (namespace)
+
+
+type CssClasses
+  = NavBar
+
+
+type CssIds
+  = Page
+
+
 css =
   (stylesheet << namespace "dreamwriter")
     [ body
@@ -77,9 +101,27 @@ primaryAccentColor =
   hex "ccffaa"
 ```
 
-The above is vanilla Elm code. `Hidden` and `Page` are backed by union types, so
+The above is vanilla Elm code. `NavBar` and `Page` are backed by union types, so
 if they get out of sync with your view code, you'll get a nice build error.
 `$`, `#`, `~`, and the like are custom operators.
+
+To generate CSS, you'll need a special module with a port for elm-css to access:
+
+```elm
+module Stylesheets (..) where
+
+import Css.File exposing (CssFileStructure)
+import MyCss
+
+
+port files : CssFileStructure
+port files =
+  Css.File.toFileStructure
+    [ ( "styles.css", Css.File.compile MyCss.css ) ]
+```
+
+Run `elm-css` on the file containing this `Stylesheets` module. 
+Then include that css file in your web page.
 
 The above `elm-css` stylesheet compiles to the following .css file:
 
@@ -110,8 +152,37 @@ body {
 }
 ```
 
-You can also use elm-css for inline styles with the `asPairs` function, like so:
+#### Coupling elm-css and Elm code
 
+In your Elm code, use the same union types to represent classes and ids. Then they can't get out of sync with your CSS. To do this, you'll need special versions the of `id`, `class`, and `classList` functions from `elm-html`.
+
+Install the handy package that combines `elm-html` and `elm-css`:
+
+     elm package install rtfeldman/elm-css-helpers
+
+The `Elm.CssHelpers.withNamespace` returns a record full of handy functions. Use that, and then construct Html using classes and ids defined in your union types. For example:
+
+```elm
+module MyView (..) where
+
+import Html.CssHelpers
+import MyCss
+
+{ id, class, classList } = 
+  Html.CssHelpers.withNamespace "dreamwriter"
+
+view =   
+  Html.div
+    []
+    [ Html.div [ class [ MyCss.NavBar ] ] [ Html.text "this has the NavBar class" ]
+    , Html.div [ id [ MyCss.Page ] ] [ Html.text "this has the Page id" ]
+    ]
+
+```
+
+#### Inline elm-css
+
+You can also use elm-css for inline styles with the `asPairs` function, like so:
 
     styles = Css.asPairs >> Html.Attributes.style
 
