@@ -44,7 +44,7 @@ Here's an example:
 
 ```elm
 css =
-  (stylesheet << withNamespace "dreamwriter")
+  (stylesheet << namespace "dreamwriter")
     [ body
         [ overflowX auto
         , minWidth (px 1280)
