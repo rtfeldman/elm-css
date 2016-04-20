@@ -1,5 +1,5 @@
 {
-    "version": "2.1.0",
+    "version": "2.1.1",
     "summary": "CSS Preprocessor for Elm",
     "repository": "https://github.com/rtfeldman/elm-css.git",
     "license": "BSD-3-Clause",
