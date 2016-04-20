@@ -148,13 +148,13 @@ atRule =
               padding: 0;
           }
 
-          @media "print" {
+          @media print {
               body {
                   margin: 2em;
               }
           }
 
-          @media "screen and (max-width: 480px)" {
+          @media screen and ( max-width: 600px ) {
               body {
                   margin: 3em;
               }
@@ -190,7 +190,7 @@ nestedAtRule =
               margin: auto;
           }
 
-          @media "print" {
+          @media print {
               body {
                   margin: 2em;
               }

@@ -64,7 +64,7 @@ prettyPrintDeclaration declaration =
             |> String.join "\n\n"
 
         query =
-          (List.map (\(MediaQuery str) -> "\"" ++ str ++ "\"") mediaQueries)
+          (List.map (\(MediaQuery str) ->  str ) mediaQueries)
             |> String.join " "
       in
         "@media " ++ query ++ " {\n" ++ indent blocks ++ "\n}"

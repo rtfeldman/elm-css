@@ -270,6 +270,10 @@ stylesheet { name = "homepage" }
           [ width (px 1280) ]
       ]
 
+  , mediaQuery "screen and ( max-width: 600px )"
+      [ body
+          [ backgroundColor (hex "FF00FF" ) ]
+      ]
   , ul
       [ padding zero
 
@@ -287,9 +291,15 @@ stylesheet { name = "homepage" }
 The above fanciness compiles to the following:
 
 ```css
-@media "print" {
+@media print {
     body {
         width: 1280px;
+    }
+}
+
+@media screen and ( max-width: 600px ) {
+    body {
+        background-color: #FF00FF;
     }
 }
 
@@ -297,7 +307,7 @@ ul {
     padding: 0;
 }
 
-@media "print" {
+@media print {
     ul {
         margin: 1em auto;
     }
