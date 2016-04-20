@@ -40,7 +40,7 @@ atRule =
         [ padding zero ]
     , (media [ print ])
         [ body [ margin (em 2) ] ]
-    , mediaQuery "screen and (max-width: 480px)"
+    , mediaQuery "screen and ( max-width: 600px )"
         [ body [ margin (em 3) ] ]
     , button
         [ margin auto ]
