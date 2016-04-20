@@ -120,12 +120,6 @@ tv =
   MediaQuery "tv"
 
 
-{-| -}
-customMediaQuery : String -> MediaQuery
-customMediaQuery str =
-  MediaQuery str
-
-
 {- Length -}
 
 
@@ -4227,7 +4221,7 @@ color c =
 {-| -}
 mediaQuery : String -> List Snippet -> Snippet
 mediaQuery queryString snippets =
-  media [ customMediaQuery queryString ] snippets
+  media [ MediaQuery queryString ] snippets
 
 {-| -}
 media : List Structure.MediaQuery -> List Snippet -> Snippet
