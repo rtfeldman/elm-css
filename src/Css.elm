@@ -120,6 +120,7 @@ tv =
   MediaQuery "tv"
 
 
+
 {- Length -}
 
 
@@ -868,15 +869,18 @@ hex str =
         str
       else
         "#" ++ str
+
     warnings =
       if contains (regex "^#([a-fA-F0-9]{8}|[a-fA-F0-9]{6}|[a-fA-F0-9]{4}|[a-fA-F0-9]{3})$") value then
         []
       else
-        [ String.join " "
+        [ String.join
+            " "
             [ "The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits."
             , value
             , "is not valid."
-            , "Please see: https://drafts.csswg.org/css-color/#hex-notation"]
+            , "Please see: https://drafts.csswg.org/css-color/#hex-notation"
+            ]
         ]
   in
     { value = value
@@ -4140,6 +4144,7 @@ borderColor2 c1 c2 =
   let
     warnings =
       c1.warnings ++ c2.warnings
+
     value =
       String.join " " [ c1.value, c2.value ]
   in
@@ -4158,6 +4163,7 @@ borderColor3 c1 c2 c3 =
   let
     warnings =
       c1.warnings ++ c2.warnings ++ c3.warnings
+
     value =
       String.join " " [ c1.value, c2.value, c3.value ]
   in
@@ -4176,8 +4182,9 @@ borderColor4 c1 c2 c3 c4 =
   let
     warnings =
       c1.warnings ++ c2.warnings ++ c3.warnings ++ c4.warnings
+
     value =
-      String.join " " [ c1.value, c2.value, c3.value, c4.value]
+      String.join " " [ c1.value, c2.value, c3.value, c4.value ]
   in
     propertyWithWarnings warnings "border-color" value
 
@@ -4222,6 +4229,7 @@ color c =
 mediaQuery : String -> List Snippet -> Snippet
 mediaQuery queryString snippets =
   media [ MediaQuery queryString ] snippets
+
 
 {-| -}
 media : List Structure.MediaQuery -> List Snippet -> Snippet
