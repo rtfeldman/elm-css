@@ -120,7 +120,7 @@ port files =
     [ ( "styles.css", Css.File.compile MyCss.css ) ]
 ```
 
-Run `elm-css` on the file containing this `Stylesheets` module. 
+Run `elm-css` on the file containing this `Stylesheets` module.
 Then include that css file in your web page.
 
 The above `elm-css` stylesheet compiles to the following .css file:
@@ -168,10 +168,10 @@ module MyView (..) where
 import Html.CssHelpers
 import MyCss
 
-{ id, class, classList } = 
+{ id, class, classList } =
   Html.CssHelpers.withNamespace "dreamwriter"
 
-view =   
+view =
   Html.div
     []
     [ Html.div [ class [ MyCss.NavBar ] ] [ Html.text "this has the NavBar class" ]
@@ -193,5 +193,6 @@ You can also use elm-css for inline styles with the `asPairs` function, like so:
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [**2.2.0**](https://github.com/rtfeldman/elm-css/tree/2.2.0) | Expose more types
 | [**1.1.0**](https://github.com/rtfeldman/elm-css/tree/1.1.0) | Add Helpers
 | [**1.0.0**](https://github.com/rtfeldman/elm-css/tree/1.0.0) | Initial Release
