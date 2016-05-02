@@ -1,4 +1,4 @@
-module Tests.Expect (expect) where
+module Tests.Expect exposing (expect)
 
 import ElmTest exposing (Test, assertEqual, test)
 

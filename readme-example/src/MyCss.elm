@@ -1,4 +1,4 @@
-module MyCss (CssClasses(..), CssIds(..), css) where
+module MyCss (CssClasses(..), CssIdsexposing (..), css)
 
 import Css exposing (..)
 import Css.Elements exposing (body, li)

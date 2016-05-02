@@ -1,4 +1,4 @@
-module Css.File (compile, toFileStructure, CssFileStructure) where
+module Css.File exposing (compile, toFileStructure, CssFileStructure)
 
 {-| Functions for writing CSS files from elm-css.
 

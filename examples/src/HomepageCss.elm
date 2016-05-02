@@ -1,4 +1,4 @@
-module HomepageCss (css) where
+module HomepageCss exposing (css)
 
 import Css exposing (..)
 import Css.Elements exposing (..)

@@ -1,4 +1,4 @@
-module Css.Namespace (namespace) where
+module Css.Namespace exposing (namespace)
 {-| Namespacing
 @docs namespace
 -}

@@ -1,4 +1,4 @@
-module Css.Structure.Output (prettyPrint) where
+module Css.Structure.Output exposing (prettyPrint)
 
 import Css.Structure exposing (..)
 import String

@@ -1,4 +1,4 @@
-module Css.Preprocess (..) where
+module Css.Preprocess exposing (..)
 
 {-| A representation of the preprocessing to be done. The elm-css DSL generates
 the data structures found in this module.

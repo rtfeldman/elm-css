@@ -1,4 +1,4 @@
-module Compile (all) where
+module Compile exposing (all)
 
 import ElmTest exposing (..)
 import TestUtil exposing (outdented, prettyPrint, it)

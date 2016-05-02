@@ -1,4 +1,4 @@
-module Main (main) where
+module Main exposing (main)
 
 import Html exposing (Html)
 import MyCss
