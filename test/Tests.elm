@@ -1,4 +1,4 @@
-module Tests (all) where
+module Tests exposing (all)
 
 import ElmTest exposing (..)
 import TestUtil exposing (outdented, prettyPrint)

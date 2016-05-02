@@ -1,4 +1,4 @@
-module Properties (all) where
+module Properties exposing (all)
 
 import ElmTest exposing (..)
 import TestUtil exposing (prettyPrint)

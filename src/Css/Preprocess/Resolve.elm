@@ -1,4 +1,4 @@
-module Css.Preprocess.Resolve (compile) where
+module Css.Preprocess.Resolve exposing (compile)
 
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures and gathering warnings along the way.

@@ -1,4 +1,4 @@
-module HomepageView (..) where
+module HomepageView exposing (..)
 
 import Html exposing (..)
 import Html.CssHelpers exposing (..)

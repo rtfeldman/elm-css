@@ -1,4 +1,4 @@
-module Css.Colors (navy, blue, aqua, teal, olive, green, lime, yellow, orange, red, maroon, fuchsia, purple, black, gray, silver) where
+module Css.Colors exposing (navy, blue, aqua, teal, olive, green, lime, yellow, orange, red, maroon, fuchsia, purple, black, gray, silver)
 
 {-| A nicer default set of colors than the ones CSS ships with. Color codes taken from [clrs.cc](http://clrs.cc).
 

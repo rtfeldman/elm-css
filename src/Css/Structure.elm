@@ -1,4 +1,4 @@
-module Css.Structure (..) where
+module Css.Structure exposing (..)
 
 {-| A representation of the structure of a stylesheet. This module is concerned
 solely with representing valid stylesheets; it is not concerned with the

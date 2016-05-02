@@ -1,4 +1,4 @@
-module Css.Elements (html, body, article, header, footer, h1, h2, h3, h4, nav, section, div, hr, li, main', ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select) where
+module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, nav, section, div, hr, li, main', ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
 
 {-| Selectors for HTML elements.
 

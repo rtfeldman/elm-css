@@ -1,4 +1,4 @@
-module Fixtures (..) where
+module Fixtures exposing (..)
 
 import Css exposing (..)
 import Css.Elements exposing (..)
