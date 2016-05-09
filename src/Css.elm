@@ -73,6 +73,7 @@ import Regex exposing (regex, contains)
 import String
 
 
+{-| -}
 type alias MediaQuery =
   Structure.MediaQuery
 
