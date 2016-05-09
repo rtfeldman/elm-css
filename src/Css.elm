@@ -68,9 +68,13 @@ deprecated or discouraged.
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Resolve as Resolve
 import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
-import Css.Structure as Structure exposing (MediaQuery(MediaQuery))
+import Css.Structure as Structure
 import Regex exposing (regex, contains)
 import String
+
+
+type alias MediaQuery =
+  Structure.MediaQuery
 
 
 {-| -}
@@ -103,25 +107,25 @@ type PseudoElement
 {-| -}
 screen : MediaQuery
 screen =
-  MediaQuery "screen"
+  Structure.MediaQuery "screen"
 
 
 {-| -}
 print : MediaQuery
 print =
-  MediaQuery "print"
+  Structure.MediaQuery "print"
 
 
 {-| -}
 projection : MediaQuery
 projection =
-  MediaQuery "projection"
+  Structure.MediaQuery "projection"
 
 
 {-| -}
 tv : MediaQuery
 tv =
-  MediaQuery "tv"
+  Structure.MediaQuery "tv"
 
 
 
@@ -4236,7 +4240,7 @@ color c =
 {-| -}
 mediaQuery : String -> List Snippet -> Snippet
 mediaQuery queryString snippets =
-  media [ MediaQuery queryString ] snippets
+  media [ Structure.MediaQuery queryString ] snippets
 
 
 {-| -}
