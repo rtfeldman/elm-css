@@ -9,9 +9,9 @@ import Tests
 
 console : IO ()
 console =
-    consoleRunner Tests.all
+  consoleRunner Tests.all
 
 
 port runner : Signal (Task.Task x ())
 port runner =
-    run console
+  run console

@@ -329,9 +329,7 @@ applyMixins mixins declarations =
                           (Structure.StyleBlock first rest [])
                       ]
               in
-                [ { declarations = declarations, warnings = [] }
-                , applyMixins nestedMixins newDeclarations
-                ]
+                [ applyMixins nestedMixins newDeclarations ]
                   |> concatDeclarationsAndWarnings
 
             Preprocess.MediaRule mediaQueries styleBlocks ->
@@ -365,6 +363,7 @@ applyMixins mixins declarations =
         snippets
           |> List.concatMap unwrapSnippet
           |> List.map expandDeclaration
+          |> (++) [ applyMixins rest declarations ]
           |> concatDeclarationsAndWarnings
 
     (Preprocess.WithPseudoElement pseudoElement nestedMixins) :: rest ->
