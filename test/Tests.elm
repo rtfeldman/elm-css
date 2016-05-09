@@ -530,17 +530,21 @@ weightWarning =
           }
       ]
 
+
 hexWarning : Test
 hexWarning =
   let
     input1 =
       Fixtures.colorHexWarning
+
     input2 =
       Fixtures.colorHexAbbrWarning
+
     output1 =
       """
             Invalid Stylesheet:
             The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #ababah is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
+
     output2 =
       """
             Invalid Stylesheet:

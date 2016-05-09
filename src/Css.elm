@@ -222,10 +222,12 @@ type alias ImportType compatible =
 type alias FontFace compatible =
   { compatible | value : String, fontFace : Compatible }
 
+
 {-| A font family
 -}
 type alias FontFamily compatible =
   { compatible | value : String, fontFamily : Compatible }
+
 
 {-| A font size
 -}
