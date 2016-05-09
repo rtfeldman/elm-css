@@ -40,7 +40,8 @@ atRule =
         [ padding zero ]
     , (media [ print ])
         [ body [ margin (em 2) ] ]
-    , mediaQuery "screen and ( max-width: 600px )"
+    , mediaQuery
+        "screen and ( max-width: 600px )"
         [ body [ margin (em 3) ] ]
     , button
         [ margin auto ]
@@ -332,6 +333,7 @@ colorHexWarning : Stylesheet
 colorHexWarning =
   (stylesheet << namespace "colorHexWarning")
     [ body [ color (hex "ababah") ] ]
+
 
 colorHexAbbrWarning : Stylesheet
 colorHexAbbrWarning =
