@@ -61,6 +61,20 @@ nestedAtRule =
     ]
 
 
+bug99 : Stylesheet
+bug99 =
+  stylesheet
+    [ article
+        [ margin zero
+        , children
+            [ header [ margin (em 1) ]
+            , section [ margin (px 2) ]
+            , nav [ margin (pct 3) ]
+            ]
+        ]
+    ]
+
+
 simpleEach : Stylesheet
 simpleEach =
   stylesheet

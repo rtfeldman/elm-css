@@ -21,6 +21,7 @@ all =
     , borders
     , atRule
     , nestedAtRule
+    , bug99
     , universal
     , multiSelector
     , multiDescendent
@@ -203,6 +204,41 @@ nestedAtRule =
   in
     suite
       "nested @media test"
+      [ (expect "pretty prints the expected output")
+          { expected = outdented output
+          , actual = outdented (prettyPrint input)
+          }
+      ]
+
+
+{-| Regression test for https://github.com/rtfeldman/elm-css/issues/99
+-}
+bug99 : Test
+bug99 =
+  let
+    input =
+      Fixtures.bug99
+
+    output =
+      """
+article {
+    margin: 0;
+}
+
+article > header {
+    margin: 1em;
+}
+
+article > section {
+    margin: 2px;
+}
+
+article > nav {
+    margin: 3%;
+}        """
+  in
+    suite
+      "Parents do not print duplicate rules for each child."
       [ (expect "pretty prints the expected output")
           { expected = outdented output
           , actual = outdented (prettyPrint input)
