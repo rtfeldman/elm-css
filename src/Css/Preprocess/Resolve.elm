@@ -329,9 +329,7 @@ applyMixins mixins declarations =
                           (Structure.StyleBlock first rest [])
                       ]
               in
-                [ { declarations = declarations, warnings = [] }
-                , applyMixins nestedMixins newDeclarations
-                ]
+                [ applyMixins nestedMixins newDeclarations ]
                   |> concatDeclarationsAndWarnings
 
             Preprocess.MediaRule mediaQueries styleBlocks ->
