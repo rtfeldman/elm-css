@@ -365,6 +365,7 @@ applyMixins mixins declarations =
         snippets
           |> List.concatMap unwrapSnippet
           |> List.map expandDeclaration
+          |> (++) [ applyMixins rest declarations ]
           |> concatDeclarationsAndWarnings
 
     (Preprocess.WithPseudoElement pseudoElement nestedMixins) :: rest ->
