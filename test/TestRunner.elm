@@ -1,4 +1,4 @@
-module Main (..) where
+module Main exposing (..)
 
 import Signal exposing (Signal)
 import ElmTest exposing (consoleRunner)
@@ -9,9 +9,9 @@ import Tests
 
 console : IO ()
 console =
-  consoleRunner Tests.all
+    consoleRunner Tests.all
 
 
 port runner : Signal (Task.Task x ())
 port runner =
-  run console
+    run console

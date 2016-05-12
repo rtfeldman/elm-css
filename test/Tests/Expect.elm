@@ -1,4 +1,4 @@
-module Tests.Expect (expect) where
+module Tests.Expect exposing (expect)
 
 import ElmTest exposing (Test, assertEqual, test)
 
@@ -8,4 +8,4 @@ expected and actual values are expected to be equal.
 -}
 expect : String -> { expected : a, actual : a } -> Test
 expect str { expected, actual } =
-  test str (assertEqual expected actual)
+    test str (assertEqual expected actual)
