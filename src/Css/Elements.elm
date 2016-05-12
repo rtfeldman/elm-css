@@ -225,8 +225,10 @@ strong =
     typeSelector "strong"
 
 
-{-| IMAGE AND MULTIMEDIA
--}
+
+{- IMAGE AND MULTIMEDIA -}
+
+
 {-| Selector for a img element.
 -}
 img : List Mixin -> Snippet
