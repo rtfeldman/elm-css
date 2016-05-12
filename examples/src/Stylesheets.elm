@@ -1,4 +1,4 @@
-module Stylesheets (..) where
+module Stylesheets exposing (..)
 
 import Css.File exposing (..)
 import HomepageCss as Homepage
@@ -6,5 +6,4 @@ import HomepageCss as Homepage
 
 port files : CssFileStructure
 port files =
-  toFileStructure
-    [ ( "homepage.css", compile Homepage.css ) ]
+    toFileStructure [ ( "homepage.css", compile Homepage.css ) ]

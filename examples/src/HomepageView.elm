@@ -1,4 +1,4 @@
-module HomepageView (..) where
+module HomepageView exposing (..)
 
 import Html exposing (..)
 import Html.CssHelpers exposing (..)
@@ -9,29 +9,22 @@ import SharedStyles exposing (..)
 
 
 { id, class, classList } =
-  homepageNamespace
-
-
+    homepageNamespace
 main : Html
 main =
-  div
-    []
-    [ header
-        []
-        [ img [ id ReactiveLogo, src "assets/logo.png" ] []
-        , nav
-            []
-            navElems
-        , span
-            [ id BuyTickets ]
-            [ text "BUY TICKETS" ]
+    div []
+        [ header []
+            [ img [ id ReactiveLogo, src "assets/logo.png" ] []
+            , nav []
+                navElems
+            , span [ id BuyTickets ]
+                [ text "BUY TICKETS" ]
+            ]
+        , div []
+            [ img [ src "assets/banner.png" ] [] ]
         ]
-    , div
-        []
-        [ img [ src "assets/banner.png" ] [] ]
-    ]
 
 
 navElems =
-  [ "SPEAKERS", "SCHEDULE", "WORKSHOPS", "VENUE", "BLOG", "CONTACT" ]
-    |> List.map (\name -> span [ class [ NavLink ] ] [ text name ])
+    [ "SPEAKERS", "SCHEDULE", "WORKSHOPS", "VENUE", "BLOG", "CONTACT" ]
+        |> List.map (\name -> span [ class [ NavLink ] ] [ text name ])

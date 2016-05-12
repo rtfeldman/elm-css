@@ -52,7 +52,7 @@ You will need to install both the node module and the Elm library:
 Then define CSS in Elm:
 
 ```elm
-module MyCss (..) where
+module MyCss exposing (..)
 
 import Css exposing (..)
 import Css.Elements exposing (body, li)
@@ -60,20 +60,19 @@ import Css.Namespace exposing (namespace)
 
 
 type CssClasses
-  = NavBar
+    = NavBar
 
 
 type CssIds
-  = Page
+    = Page
 
 
 css =
-  (stylesheet << namespace "dreamwriter")
+    (stylesheet << namespace "dreamwriter")
     [ body
         [ overflowX auto
         , minWidth (px 1280)
         ]
-
     , (#) Page
         [ backgroundColor (rgb 200 128 64)
         , color (hex "CCFFFF")
@@ -83,11 +82,9 @@ css =
         , padding (px 8)
         , margin zero
         ]
-
     , (.) NavBar
         [ margin zero
         , padding zero
-
         , children
             [ li
                 [ (display inlineBlock) |> important
@@ -97,8 +94,9 @@ css =
         ]
     ]
 
+
 primaryAccentColor =
-  hex "ccffaa"
+    hex "ccffaa"
 ```
 
 The above is vanilla Elm code. `NavBar` and `Page` are backed by union types, so
@@ -116,8 +114,7 @@ import MyCss
 
 port files : CssFileStructure
 port files =
-  Css.File.toFileStructure
-    [ ( "styles.css", Css.File.compile MyCss.css ) ]
+    Css.File.toFileStructure [ ( "styles.css", Css.File.compile MyCss.css ) ]
 ```
 
 Run `elm-css` on the file containing this `Stylesheets` module.
@@ -163,20 +160,22 @@ Install the handy package that combines `elm-html` and `elm-css`:
 The `Elm.CssHelpers.withNamespace` returns a record full of handy functions. Use that, and then construct Html using classes and ids defined in your union types. For example:
 
 ```elm
-module MyView (..) where
+module MyView where (..)
+
 
 import Html.CssHelpers
 import MyCss
 
+
 { id, class, classList } =
-  Html.CssHelpers.withNamespace "dreamwriter"
+    Html.CssHelpers.withNamespace "dreamwriter"
+
 
 view =
-  Html.div
-    []
-    [ Html.div [ class [ MyCss.NavBar ] ] [ Html.text "this has the NavBar class" ]
-    , Html.div [ id [ MyCss.Page ] ] [ Html.text "this has the Page id" ]
-    ]
+    Html.div []
+        [ Html.div [ class [ MyCss.NavBar ] ] [ Html.text "this has the NavBar class" ]
+        , Html.div [ id [ MyCss.Page ] ] [ Html.text "this has the Page id" ]
+        ]
 
 ```
 
@@ -184,11 +183,11 @@ view =
 
 You can also use elm-css for inline styles with the `asPairs` function, like so:
 
-    styles = Css.asPairs >> Html.Attributes.style
+    styles =
+        Css.asPairs >> Html.Attributes.style
 
-    button
-      [ styles [ position absolute, left (px 5) ] ]
-      [ text "Whee!" ]
+    button [ styles [ position absolute, left (px 5) ] ]
+        [ text "Whee!" ]
 
 ## Releases
 | Version | Notes |
