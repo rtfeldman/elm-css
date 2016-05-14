@@ -1,4 +1,4 @@
-module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, nav, section, div, hr, li, main', ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
+module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main', ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
 
 {-| Selectors for HTML elements.
 
@@ -6,7 +6,7 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 @docs html, body
 
 # Content sectioning
-@docs article, header, footer, h1, h2, h3, h4, nav, section
+@docs article, header, footer, h1, h2, h3, h4, h5, h6, nav, section
 
 # Text content
 @docs div, hr, li, main', ol, p, ul, pre
@@ -110,6 +110,20 @@ h3 =
 h4 : List Mixin -> Snippet
 h4 =
     typeSelector "h4"
+
+
+{-| Selector for an h5 element.
+-}
+h5 : List Mixin -> Snippet
+h5 =
+    typeSelector "h5"
+
+
+{-| Selector for an h6 element.
+-}
+h6 : List Mixin -> Snippet
+h6 =
+    typeSelector "h6"
 
 
 {-| Selector for a nav element.
