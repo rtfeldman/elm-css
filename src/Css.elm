@@ -1883,9 +1883,9 @@ transformStyle =
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex (none | content | auto | (n 1) | (px 10))
-flex2 (n 1) ((n 1) | (px 10 ))
-flex3 (n 1) (n 1) ((n 1) | (px 10))
+flex (none | content | auto | (int 1) | (px 10))
+flex2 (int 1) ((int 1) | (px 10 ))
+flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
 flex : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin
@@ -1895,9 +1895,9 @@ flex =
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex (none | content | auto | (n 1) | (px 10))
-flex2 (n 1) ((n 1) | (px 10 ))
-flex3 (n 1) (n 1) ((n 1) | (px 10))
+flex (none | content | auto | (int 1) | (px 10))
+flex2 (int 1) ((int 1) | (px 10 ))
+flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
 flex2 : Number compatibleA -> LengthOrNumber compatibleB -> Mixin
@@ -1907,9 +1907,9 @@ flex2 =
 
 {-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
 
-flex (none | content | auto | (n 1) | (px 10))
-flex2 (n 1) ((n 1) | (px 10 ))
-flex3 (n 1) (n 1) ((n 1) | (px 10))
+flex (none | content | auto | (int 1) | (px 10))
+flex2 (int 1) ((int 1) | (px 10 ))
+flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
 flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Mixin
@@ -1919,9 +1919,9 @@ flex3 =
 
 {-| Sets [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis) property.}
 
-flex (none | content | auto | (n 1) | (px 10))
-flex2 (n 1) ((n 1) | (px 10 ))
-flex3 (n 1) (n 1) ((n 1) | (px 10))
+flex (none | content | auto | (int 1) | (px 10))
+flex2 (int 1) ((int 1) | (px 10 ))
+flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
 flexBasis : FlexBasis compatible -> Mixin
@@ -3673,10 +3673,10 @@ borderInlineEnd3 =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (n 2)
-    borderImageOutset2 (n 2) (px 15)
-    borderImageOutset3 (n 2) (px 15) (n 1.5)
-    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+    borderImageOutset  (int 2)
+    borderImageOutset2 (int 2) (px 15)
+    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
 borderImageOutset : LengthOrNumber compatible -> Mixin
@@ -3686,10 +3686,10 @@ borderImageOutset =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (n 2)
-    borderImageOutset2 (n 2) (px 15)
-    borderImageOutset3 (n 2) (px 15) (n 1.5)
-    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+    borderImageOutset  (int 2)
+    borderImageOutset2 (int 2) (px 15)
+    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
 borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin
@@ -3699,10 +3699,10 @@ borderImageOutset2 =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (n 2)
-    borderImageOutset2 (n 2) (px 15)
-    borderImageOutset3 (n 2) (px 15) (n 1.5)
-    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+    borderImageOutset  (int 2)
+    borderImageOutset2 (int 2) (px 15)
+    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
 borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin
@@ -3712,10 +3712,10 @@ borderImageOutset3 =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (n 2)
-    borderImageOutset2 (n 2) (px 15)
-    borderImageOutset3 (n 2) (px 15) (n 1.5)
-    borderImageOutset4 (n 2) (px 15) (n 14) (em 3)
+    borderImageOutset  (int 2)
+    borderImageOutset2 (int 2) (px 15)
+    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
 borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin
@@ -3725,10 +3725,10 @@ borderImageOutset4 =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (n 3)
-    borderImageWidth2 (n 3) (px 15)
-    borderImageWidth3 (n 3) (px 15) auto
-    borderImageWidth4 (n 3) (px 15) auto (n 2)
+    borderImageWidth  (int 3)
+    borderImageWidth2 (int 3) (px 15)
+    borderImageWidth3 (int 3) (px 15) auto
+    borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
 borderImageWidth : LengthOrNumber compatible -> Mixin
@@ -3738,10 +3738,10 @@ borderImageWidth =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (n 3)
-    borderImageWidth2 (n 3) (px 15)
-    borderImageWidth3 (n 3) (px 15) auto
-    borderImageWidth4 (n 3) (px 15) auto (n 2)
+    borderImageWidth  (int 3)
+    borderImageWidth2 (int 3) (px 15)
+    borderImageWidth3 (int 3) (px 15) auto
+    borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
 borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin
@@ -3751,10 +3751,10 @@ borderImageWidth2 =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (n 3)
-    borderImageWidth2 (n 3) (px 15)
-    borderImageWidth3 (n 3) (px 15) auto
-    borderImageWidth4 (n 3) (px 15) auto (n 2)
+    borderImageWidth  (int 3)
+    borderImageWidth2 (int 3) (px 15)
+    borderImageWidth3 (int 3) (px 15) auto
+    borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
 borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin
@@ -3764,10 +3764,10 @@ borderImageWidth3 =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (n 3)
-    borderImageWidth2 (n 3) (px 15)
-    borderImageWidth3 (n 3) (px 15) auto
-    borderImageWidth4 (n 3) (px 15) auto (n 2)
+    borderImageWidth  (int 3)
+    borderImageWidth2 (int 3) (px 15)
+    borderImageWidth3 (int 3) (px 15) auto
+    borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
 borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin
@@ -4392,7 +4392,7 @@ fontStyle =
 {-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 
     fontWeight  bold
-    fontWeight  (n 300)
+    fontWeight  (int 300)
 -}
 fontWeight : LengthOrNumberOrAutoOrNoneOrContent a -> Mixin
 fontWeight { value } =
