@@ -78,7 +78,6 @@ function generateCssFiles(stylesheetsPath, emitterDest, outputDir, stylesheetsMo
 function emit(src, dest, stylesheetsModule, stylesheetsPort) {
     // Compile the temporary file.
   return compileEmitter(src, {output: dest, yes: true})
-    .then(makeRequirable(dest))
     .then(extractCssResults(dest, stylesheetsModule, stylesheetsPort));
 }
 
@@ -162,7 +161,7 @@ function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
         return reject(missingEntryModuleMessage(stylesheetsModule, Elm));
       }
 
-      var worker = Elm.worker(Elm[stylesheetsModule]);
+      var worker = Elm[stylesheetsModule].worker();
 
       if (Object.keys(worker.ports).length === 0){
         return reject(noPortsMessage(stylesheetsModule, stylesheetsPort));
@@ -172,36 +171,21 @@ function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
         return reject(noMatchingPortMessage(stylesheetsModule, stylesheetsPort, worker.ports));
       }
 
-      var stylesheets = worker.ports[stylesheetsPort];
+      worker.ports[stylesheetsPort].subscribe(function (stylesheets) {
+        if (!Array.isArray(stylesheets)){
+          return reject(portTypeErrorMessage(stylesheetsModule, stylesheetsPort, stylesheets));
+        }
 
-      if (!Array.isArray(stylesheets)){
-        return reject(portTypeErrorMessage(stylesheetsModule, stylesheetsPort, stylesheets));
-      }
+        var failures = stylesheets.filter(function(result) {
+          return !result.success;
+        });
 
-      var failures = stylesheets.filter(function(result) {
-        return !result.success;
+        return failures.length > 0
+        ? reject(reportFailures(failures))
+        : resolve(stylesheets);
       });
-
-      return failures.length > 0
-      ? reject(reportFailures(failures))
-      : resolve(stylesheets);
     });
   };
-}
-
-function makeRequirable(dest) {
-  return function () {
-    return new Promise(function (resolve, reject) {
-      // Make the compiled emitter.js Node-friendly.
-      fs.appendFile(dest, "\nmodule.exports = Elm;", function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
 }
 
 function writeResults(outputDir) {
