@@ -106,7 +106,7 @@ if they get out of sync with your view code, you'll get a nice build error.
 To generate CSS, you'll need a special module with a port for elm-css to access:
 
 ```elm
-module Stylesheets (..) where
+module Stylesheets exposing (..)
 
 import Css.File exposing (CssFileStructure)
 import MyCss
