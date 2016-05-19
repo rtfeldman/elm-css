@@ -160,7 +160,7 @@ Install the handy package that combines `elm-html` and `elm-css`:
 The `Elm.CssHelpers.withNamespace` returns a record full of handy functions. Use that, and then construct Html using classes and ids defined in your union types. For example:
 
 ```elm
-module MyView where (..)
+module MyView exposing (..)
 
 
 import Html.CssHelpers
