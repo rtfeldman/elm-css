@@ -106,7 +106,7 @@ if they get out of sync with your view code, you'll get a nice build error.
 To generate CSS, you'll need a special module with a port for elm-css to access:
 
 ```elm
-module Stylesheets (..) where
+module Stylesheets exposing (..)
 
 import Css.File exposing (CssFileStructure)
 import MyCss
@@ -160,7 +160,7 @@ Install the handy package that combines `elm-html` and `elm-css`:
 The `Elm.CssHelpers.withNamespace` returns a record full of handy functions. Use that, and then construct Html using classes and ids defined in your union types. For example:
 
 ```elm
-module MyView where (..)
+module MyView exposing (..)
 
 
 import Html.CssHelpers
