@@ -192,6 +192,8 @@ You can also use elm-css for inline styles with the `asPairs` function, like so:
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [**3.1.0**](https://github.com/rtfeldman/elm-css/tree/3.1.0) | Fix bug where namespace was getting applied to ID selectors, add letterSpacing, h5, h6
+| [**3.0.0**](https://github.com/rtfeldman/elm-css/tree/3.0.0) | Upgrade for Elm 0.17
 | [**2.2.0**](https://github.com/rtfeldman/elm-css/tree/2.2.0) | Expose more types
 | [**1.1.0**](https://github.com/rtfeldman/elm-css/tree/1.1.0) | Add Helpers
 | [**1.0.0**](https://github.com/rtfeldman/elm-css/tree/1.0.0) | Initial Release

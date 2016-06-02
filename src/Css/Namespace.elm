@@ -24,7 +24,7 @@ applyNamespaceToRepeatable name selector =
             ClassSelector (name ++ str)
 
         IdSelector str ->
-            IdSelector (name ++ str)
+            IdSelector str
 
         PseudoClassSelector str ->
             PseudoClassSelector str
