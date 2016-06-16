@@ -490,15 +490,6 @@ type alias TextEmphasisColor compatible =
     { compatible | value : String, textDecorationStyle : Compatible }
 
 
-
-{-
-   {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position#Values
-   -}
-   type alias TextEmphasisPosition a b =
-       Length a b -> Mixin
--}
-
-
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values
 -}
 type alias Position compatible =
