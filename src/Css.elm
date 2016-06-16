@@ -2929,7 +2929,7 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
 It can also be used as a `left` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
 
-    float left
+    floatAlign left
 -}
 left : LengthOrAuto compatible -> Mixin
 left =
@@ -2947,7 +2947,7 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
 It can also be used as a `right` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
 
-    float right
+    floatAlign right
 -}
 right : LengthOrAuto compatible -> Mixin
 right =
