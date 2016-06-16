@@ -1214,21 +1214,6 @@ collapse =
 
 
 
-{- TEXT EMPHASIS POSITION -}
-{-
-   {-| `over` [text-emphasis-position](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position).
-   -}
-   over : TextEmphasisPosition a b
-   over =
-       prop1 "over"
-
-
-   {-| `under` [text-emphasis-position](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position).
-   -}
-   under : TextEmphasisPosition a b
-   under =
-       prop1 "under"
--}
 {- ALIGNMENTS -}
 
 
@@ -4774,18 +4759,6 @@ textDecorationLines =
 textDecorationStyle : TextDecorationStyle compatible -> Mixin
 textDecorationStyle =
     prop1 "text-decoration-style"
-
-
-
-{-
-   {-| Sets [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position)
-
-       textEmphasisPosition over
-   -}
-   textEmphasisPosition : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
-   textEmphasisPosition fn =
-       getOverloadedProperty "textEmphasisPosition" "text-emphasis-position" (fn lengthForOverloadedProperty)
--}
 
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
