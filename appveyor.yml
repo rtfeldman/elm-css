@@ -16,7 +16,7 @@ install:
   - node --version
   - npm --version
   - cd test
-  - npm install -g elm@%ELM_VERSION% elm-test@0.16.1-alpha2
+  - npm install -g elm@%ELM_VERSION% project-fuzzball-test
   - npm install
   - elm-package install --yes
 
