@@ -263,6 +263,23 @@ appendToLastSelector selector styleBlock =
                 ]
 
 
+appendPseudoElementToLastSelector : PseudoElement -> StyleBlock -> List StyleBlock
+appendPseudoElementToLastSelector pseudo styleBlock =
+    case styleBlock of
+        StyleBlock only [] properties ->
+            [ StyleBlock only [] properties
+            , StyleBlock (applyPseudoElement pseudo only) [] []
+            ]
+
+        a ->
+            [ a ]
+
+
+applyPseudoElement : PseudoElement -> Selector -> Selector
+applyPseudoElement pseudo (Selector sequence selectors _) =
+    Selector sequence selectors <| Just pseudo
+
+
 concatMapLastStyleBlock : (StyleBlock -> List StyleBlock) -> List Declaration -> List Declaration
 concatMapLastStyleBlock update declarations =
     case declarations of
