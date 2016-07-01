@@ -364,9 +364,31 @@ applyMixins mixins declarations =
                     |> concatDeclarationsAndWarnings
 
         (Preprocess.WithPseudoElement pseudoElement nestedMixins) :: rest ->
-            -- TODO
-            declarations
-                |> applyMixins rest
+            -- TODO: Duplicate code with branch `ExtendSelector`
+            -- except for the `concatMapLastStyleBlock` call.
+            let
+                handleInitial declarationsAndWarnings =
+                    let
+                        result =
+                            applyMixins nestedMixins declarationsAndWarnings.declarations
+                    in
+                        { warnings = declarationsAndWarnings.warnings ++ result.warnings
+                        , declarations = result.declarations
+                        }
+
+                initialResult =
+                    declarations
+                        |> Structure.concatMapLastStyleBlock (Structure.appendPseudoElementToLastSelector pseudoElement)
+                        |> List.map (\declaration -> { declarations = [ declaration ], warnings = [] })
+                        |> mapLast handleInitial
+                        |> concatDeclarationsAndWarnings
+
+                nextResult =
+                    applyMixins rest initialResult.declarations
+            in
+                { warnings = initialResult.warnings ++ nextResult.warnings
+                , declarations = nextResult.declarations
+                }
 
         (Preprocess.WithMedia mediaQueries nestedMixins) :: rest ->
             let
