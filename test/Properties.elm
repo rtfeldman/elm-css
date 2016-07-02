@@ -1,7 +1,7 @@
 module Properties exposing (all)
 
 import Test exposing (..)
-import Assert
+import Expect
 import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (p)
@@ -332,18 +332,18 @@ all =
 testProperty : String -> List ( Mixin, String ) -> Test
 testProperty propertyName modifierPairs =
     describe (propertyName ++ " property")
-        (List.map (assertPropertyWorks propertyName) modifierPairs)
+        (List.map (expectPropertyWorks propertyName) modifierPairs)
 
 
-assertPropertyWorks : String -> ( Mixin, String ) -> Test
-assertPropertyWorks propertyName ( mixin, expectedStr ) =
+expectPropertyWorks : String -> ( Mixin, String ) -> Test
+expectPropertyWorks propertyName ( mixin, expectedStr ) =
     describe "works properly"
-        [ (test "pretty prints the expected output")
-            <| \_ ->
+        [ (test "pretty prints the expected output") <|
+            \_ ->
                 prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
-                    |> Assert.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-        , (test "can be converted to a key-value pair")
-            <| \_ ->
+                    |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
+        , (test "can be converted to a key-value pair") <|
+            \_ ->
                 [ ( propertyName, expectedStr ) ]
-                    |> Assert.equal (asPairs [ mixin ])
+                    |> Expect.equal (asPairs [ mixin ])
         ]

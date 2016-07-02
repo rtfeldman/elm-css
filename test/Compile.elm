@@ -1,7 +1,7 @@
 module Compile exposing (all)
 
 import Test exposing (..)
-import Assert
+import Expect
 import Fuzz exposing (Fuzzer, tuple3, tuple4)
 import TestUtil exposing (..)
 import CompileFixtures
@@ -33,33 +33,33 @@ colorWarnings =
         [ describe "rgb"
             [ fuzz (tuple3 ( validRgbValue, validRgbValue, validRgbValue ))
                 "does not warn when everything is valid"
-                (getRgbWarnings >> Assert.equal 0)
+                (getRgbWarnings >> Expect.equal 0)
             , fuzz (tuple3 ( invalidRgbValue, validRgbValue, validRgbValue ))
                 "warns for invalid r values"
-                (getRgbWarnings >> Assert.equal 1)
+                (getRgbWarnings >> Expect.equal 1)
             , fuzz (tuple3 ( validRgbValue, invalidRgbValue, validRgbValue ))
                 "warns for invalid g values"
-                (getRgbWarnings >> Assert.equal 1)
+                (getRgbWarnings >> Expect.equal 1)
             , fuzz (tuple3 ( validRgbValue, validRgbValue, invalidRgbValue ))
                 "warns for invalid b values"
-                (getRgbWarnings >> Assert.equal 1)
+                (getRgbWarnings >> Expect.equal 1)
             ]
         , describe "rgba"
             [ fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
                 "does not warn when everything is valid"
-                (getRgbaWarnings >> Assert.equal 0)
+                (getRgbaWarnings >> Expect.equal 0)
             , fuzz (tuple4 ( invalidRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
                 "warns for invalid r values"
-                (getRgbaWarnings >> Assert.equal 1)
+                (getRgbaWarnings >> Expect.equal 1)
             , fuzz (tuple4 ( validRgbValue, invalidRgbValue, validRgbValue, validAlphaValue ))
                 "warns for invalid g values"
-                (getRgbaWarnings >> Assert.equal 1)
+                (getRgbaWarnings >> Expect.equal 1)
             , fuzz (tuple4 ( validRgbValue, validRgbValue, invalidRgbValue, validAlphaValue ))
                 "warns for invalid b values"
-                (getRgbaWarnings >> Assert.equal 1)
+                (getRgbaWarnings >> Expect.equal 1)
             , fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, invalidAlphaValue ))
                 "warns for invalid a values"
-                (getRgbaWarnings >> Assert.equal 1)
+                (getRgbaWarnings >> Expect.equal 1)
             ]
         ]
 
@@ -74,10 +74,10 @@ unstyledDiv =
             ""
     in
         describe "unstyled div"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     prettyPrint input
-                        |> Assert.equal output
+                        |> Expect.equal output
             ]
 
 
@@ -123,8 +123,8 @@ dreamwriter =
         """
     in
         describe "Sample stylesheet from Dreamwriter"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]

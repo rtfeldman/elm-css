@@ -1,7 +1,7 @@
 module Tests exposing (all)
 
 import Test exposing (..)
-import Assert
+import Expect
 import TestUtil exposing (outdented, prettyPrint)
 import Compile
 import Fixtures
@@ -48,7 +48,7 @@ unstyledDiv =
             [ test "pretty prints nothing, because the stylesheet had no properties." <|
                 \_ ->
                     prettyPrint input
-                        |> Assert.equal (output)
+                        |> Expect.equal (output)
             ]
 
 
@@ -65,7 +65,7 @@ divWidthHeight =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     prettyPrint actual
-                        |> Assert.equal expected
+                        |> Expect.equal expected
             ]
 
 
@@ -97,7 +97,7 @@ simpleEach =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -130,7 +130,7 @@ leftRightTopBottom =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -167,7 +167,7 @@ atRule =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -202,7 +202,7 @@ nestedAtRule =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -236,7 +236,7 @@ article > nav {
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -263,7 +263,7 @@ borders =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -313,7 +313,7 @@ multiDescendent =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -343,7 +343,7 @@ universal =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -371,7 +371,7 @@ multiSelector =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -393,7 +393,7 @@ keyValue =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -418,7 +418,7 @@ underlineOnHoverMixin =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -443,7 +443,7 @@ underlineOnHoverManual =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -468,7 +468,7 @@ greenOnHoverMixin =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -497,7 +497,7 @@ transformsStyle =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -527,7 +527,7 @@ fonts =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -546,7 +546,7 @@ weightWarning =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
-                        |> Assert.equal (outdented output)
+                        |> Expect.equal (outdented output)
             ]
 
 
@@ -573,9 +573,9 @@ hexWarning =
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input1)
-                        |> Assert.equal (outdented output1)
+                        |> Expect.equal (outdented output1)
             , test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input2)
-                        |> Assert.equal (outdented output2)
+                        |> Expect.equal (outdented output2)
             ]
