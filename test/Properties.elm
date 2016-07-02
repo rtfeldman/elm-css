@@ -1,8 +1,8 @@
 module Properties exposing (all)
 
-import ElmTest exposing (..)
+import Test exposing (..)
+import Assert
 import TestUtil exposing (prettyPrint)
-import Tests.Expect exposing (expect)
 import Css exposing (..)
 import Css.Elements exposing (p)
 import Css.Namespace exposing (namespace)
@@ -10,7 +10,7 @@ import Css.Namespace exposing (namespace)
 
 all : Test
 all =
-    suite "properties"
+    describe "properties"
         [ testProperty "box-sizing"
             [ ( boxSizing initial, "initial" )
             , ( boxSizing unset, "unset" )
@@ -331,19 +331,19 @@ all =
 
 testProperty : String -> List ( Mixin, String ) -> Test
 testProperty propertyName modifierPairs =
-    suite (propertyName ++ " property")
+    describe (propertyName ++ " property")
         (List.map (assertPropertyWorks propertyName) modifierPairs)
 
 
 assertPropertyWorks : String -> ( Mixin, String ) -> Test
 assertPropertyWorks propertyName ( mixin, expectedStr ) =
-    suite "works properly"
-        [ (expect "pretty prints the expected output")
-            { expected = "p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}"
-            , actual = prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
-            }
-        , (expect "can be converted to a key-value pair")
-            { expected = [ ( propertyName, expectedStr ) ]
-            , actual = asPairs [ mixin ]
-            }
+    describe "works properly"
+        [ (test "pretty prints the expected output")
+            <| \_ ->
+                prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
+                    |> Assert.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
+        , (test "can be converted to a key-value pair")
+            <| \_ ->
+                [ ( propertyName, expectedStr ) ]
+                    |> Assert.equal (asPairs [ mixin ])
         ]

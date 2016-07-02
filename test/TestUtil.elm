@@ -1,11 +1,9 @@
 module TestUtil exposing (..)
 
-import ElmTest exposing (..)
 import String
-import Css exposing (Snippet)
-import Check.Test
-import Check.Investigator as Investigator exposing (..)
-import Random exposing (Seed, Generator, initialSeed)
+import Css exposing (Snippet, rgb, rgba)
+import Fuzz exposing (Fuzzer)
+import Random.Pcg as Random exposing (Generator)
 
 
 outdented : String -> String
@@ -29,16 +27,27 @@ prettyPrint sheet =
             "Invalid Stylesheet:\n" ++ (String.join "\n" warnings)
 
 
-seed : Seed
-seed =
-    initialSeed 42
+validRgbValue : Fuzzer Int
+validRgbValue =
+    Fuzz.intRange 0 255
 
 
-runCount : Int
-runCount =
-    100
+validAlphaValue : Fuzzer Float
+validAlphaValue =
+    Fuzz.floatRange 0 1
 
 
-it : String -> (a -> b) -> (a -> b) -> Investigator a -> Test
-it description expected actual investigator =
-    Check.Test.test description actual expected investigator runCount seed
+invalidRgbValue : Fuzzer Int
+invalidRgbValue =
+    Fuzz.frequencyOrCrash
+        [ ( 1, Fuzz.intRange -300 -1 )
+        , ( 1, Fuzz.intRange 256 300 )
+        ]
+
+
+invalidAlphaValue : Fuzzer Float
+invalidAlphaValue =
+    Fuzz.frequencyOrCrash
+        [ ( 1, Fuzz.floatRange -300 -1.0e-3 )
+        , ( 1, Fuzz.floatRange 1.0001 300 )
+        ]
