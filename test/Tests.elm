@@ -45,8 +45,8 @@ unstyledDiv =
             ""
     in
         describe "unstyled div"
-            [ test "pretty prints nothing, because the stylesheet had no properties."
-                <| \_ ->
+            [ test "pretty prints nothing, because the stylesheet had no properties." <|
+                \_ ->
                     prettyPrint input
                         |> Assert.equal (output)
             ]
@@ -62,8 +62,8 @@ divWidthHeight =
             "div {\n    width: 32%;\n    height: 50px;\n}"
     in
         describe "basic div with fixed width and height"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     prettyPrint actual
                         |> Assert.equal expected
             ]
@@ -94,8 +94,8 @@ simpleEach =
       """
     in
         describe "simple each function test"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -127,8 +127,8 @@ leftRightTopBottom =
         """
     in
         describe "left & right, top & bottom property/value duality test"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -164,8 +164,8 @@ atRule =
       """
     in
         describe "@media test"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -199,8 +199,8 @@ nestedAtRule =
       """
     in
         describe "nested @media test"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -233,8 +233,8 @@ article > nav {
 }        """
     in
         describe "Parents do not print duplicate rules for each child."
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -260,8 +260,8 @@ borders =
         """
     in
         describe "Borders test"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -310,8 +310,8 @@ multiDescendent =
         """
     in
         describe "Multi-descendent stylesheet"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -340,8 +340,8 @@ universal =
         """
     in
         describe "Universal selector stylesheet"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -368,8 +368,8 @@ multiSelector =
         """
     in
         describe "Multi-selector stylesheet"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -390,8 +390,8 @@ keyValue =
         """
     in
         describe "Custom key-value properties"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -415,8 +415,8 @@ underlineOnHoverMixin =
             """
     in
         describe "underline on hover link (mixin)"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -440,8 +440,8 @@ underlineOnHoverManual =
             """
     in
         describe "underline on hover link (manual)"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -465,8 +465,8 @@ greenOnHoverMixin =
             """
     in
         describe "green on hover (mixin)"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -494,8 +494,8 @@ transformsStyle =
             """
     in
         describe "transforms"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -524,8 +524,8 @@ fonts =
             """
     in
         describe "fonts"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -543,8 +543,8 @@ weightWarning =
             fontWeight 22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
     in
         describe "fontWeightWarning"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input)
                         |> Assert.equal (outdented output)
             ]
@@ -570,12 +570,12 @@ hexWarning =
             The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #00i is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
     in
         describe "colorHexWarning"
-            [ test "pretty prints the expected output"
-                <| \_ ->
+            [ test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input1)
                         |> Assert.equal (outdented output1)
-            , test "pretty prints the expected output"
-                <| \_ ->
+            , test "pretty prints the expected output" <|
+                \_ ->
                     outdented (prettyPrint input2)
                         |> Assert.equal (outdented output2)
             ]
