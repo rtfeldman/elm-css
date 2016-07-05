@@ -339,11 +339,11 @@ expectPropertyWorks : String -> ( Mixin, String ) -> Test
 expectPropertyWorks propertyName ( mixin, expectedStr ) =
     describe "works properly"
         [ (test "pretty prints the expected output") <|
-            \_ ->
+            \() ->
                 prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
                     |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
         , (test "can be converted to a key-value pair") <|
-            \_ ->
+            \() ->
                 [ ( propertyName, expectedStr ) ]
                     |> Expect.equal (asPairs [ mixin ])
         ]

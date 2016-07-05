@@ -75,7 +75,7 @@ unstyledDiv =
     in
         describe "unstyled div"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     prettyPrint input
                         |> Expect.equal output
             ]
@@ -124,7 +124,7 @@ dreamwriter =
     in
         describe "Sample stylesheet from Dreamwriter"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]

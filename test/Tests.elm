@@ -6,6 +6,7 @@ import TestUtil exposing (outdented, prettyPrint)
 import Compile
 import Fixtures
 import Properties
+import Selectors
 
 
 all : Test
@@ -32,6 +33,7 @@ all =
         , weightWarning
         , hexWarning
         , Properties.all
+        , Selectors.all
         ]
 
 
