@@ -48,7 +48,7 @@ unstyledDiv =
     in
         describe "unstyled div"
             [ test "pretty prints nothing, because the stylesheet had no properties." <|
-                \_ ->
+                \() ->
                     prettyPrint input
                         |> Expect.equal (output)
             ]
@@ -65,7 +65,7 @@ divWidthHeight =
     in
         describe "basic div with fixed width and height"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     prettyPrint actual
                         |> Expect.equal expected
             ]
@@ -97,7 +97,7 @@ simpleEach =
     in
         describe "simple each function test"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -130,7 +130,7 @@ leftRightTopBottom =
     in
         describe "left & right, top & bottom property/value duality test"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -167,7 +167,7 @@ atRule =
     in
         describe "@media test"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -202,7 +202,7 @@ nestedAtRule =
     in
         describe "nested @media test"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -236,7 +236,7 @@ article > nav {
     in
         describe "Parents do not print duplicate rules for each child."
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -263,7 +263,7 @@ borders =
     in
         describe "Borders test"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -313,7 +313,7 @@ multiDescendent =
     in
         describe "Multi-descendent stylesheet"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -343,7 +343,7 @@ universal =
     in
         describe "Universal selector stylesheet"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -371,7 +371,7 @@ multiSelector =
     in
         describe "Multi-selector stylesheet"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -393,7 +393,7 @@ keyValue =
     in
         describe "Custom key-value properties"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -418,7 +418,7 @@ underlineOnHoverMixin =
     in
         describe "underline on hover link (mixin)"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -443,7 +443,7 @@ underlineOnHoverManual =
     in
         describe "underline on hover link (manual)"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -468,7 +468,7 @@ greenOnHoverMixin =
     in
         describe "green on hover (mixin)"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -497,7 +497,7 @@ transformsStyle =
     in
         describe "transforms"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -527,7 +527,7 @@ fonts =
     in
         describe "fonts"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -546,7 +546,7 @@ weightWarning =
     in
         describe "fontWeightWarning"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
             ]
@@ -573,11 +573,11 @@ hexWarning =
     in
         describe "colorHexWarning"
             [ test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input1)
                         |> Expect.equal (outdented output1)
             , test "pretty prints the expected output" <|
-                \_ ->
+                \() ->
                     outdented (prettyPrint input2)
                         |> Expect.equal (outdented output2)
             ]
