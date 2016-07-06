@@ -39,7 +39,7 @@ pseudoSelectors =
             ]
                 |> stylesheet
                 |> prettyPrint
-                |> Expect.equal ("a:hover {\n    background-color: #000000;}\n\na {\n    color: #111111;\n}")
+                |> Expect.equal ("a:hover {\n    background-color: #000000;\n}\n\na {\n    color: #111111;\n}")
     ]
 
 
@@ -65,7 +65,7 @@ pseudoElements =
             ]
                 |> stylesheet
                 |> prettyPrint
-                |> Expect.equal ("a::before {\n    background-color: #000000;}\n\na {\n    color: #111111;\n}")
+                |> Expect.equal ("a::before {\n    background-color: #000000;\n}\n\na {\n    color: #111111;\n}")
     ]
 
 
