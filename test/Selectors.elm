@@ -86,5 +86,7 @@ testSelector : String -> (List Mixin -> Snippet) -> Test
 testSelector expectedOutput applySelector =
     (test (expectedOutput ++ " selector")) <|
         \() ->
-            prettyPrint (stylesheet [ applySelector [ display none ] ])
+            [ applySelector [ display none ] ]
+                |> stylesheet
+                |> prettyPrint
                 |> Expect.equal (expectedOutput ++ " {\n    display: none;\n}")
