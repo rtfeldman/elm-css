@@ -276,10 +276,15 @@ applyMixins mixins declarations =
                 }
 
         (ExtendSelector selector nestedMixins) :: rest ->
-            applyNestedMixinsToLast
-                nestedMixins
+            applyNestedMixinsToLast nestedMixins
                 rest
                 (Structure.appendToLastSelector selector)
+                declarations
+
+        (Preprocess.WithPseudoElement pseudoElement nestedMixins) :: rest ->
+            applyNestedMixinsToLast nestedMixins
+                rest
+                (Structure.appendPseudoElementToLastSelector pseudoElement)
                 declarations
 
         (NestSnippet selectorCombinator snippets) :: rest ->
@@ -296,7 +301,8 @@ applyMixins mixins declarations =
                         Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors nestedMixins) ->
                             let
                                 newSelectors =
-                                    (collectSelectors declarations)
+                                    declarations
+                                        |> collectSelectors
                                         |> List.concatMap (\originalSelector -> List.map (chain originalSelector) (firstSelector :: otherSelectors))
 
                                 newDeclarations =
@@ -344,13 +350,6 @@ applyMixins mixins declarations =
                     |> List.map expandDeclaration
                     |> (++) [ applyMixins rest declarations ]
                     |> concatDeclarationsAndWarnings
-
-        (Preprocess.WithPseudoElement pseudoElement nestedMixins) :: rest ->
-            applyNestedMixinsToLast
-                nestedMixins
-                rest
-                (Structure.appendPseudoElementToLastSelector pseudoElement)
-                declarations
 
         (Preprocess.WithMedia mediaQueries nestedMixins) :: rest ->
             let
