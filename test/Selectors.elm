@@ -11,7 +11,62 @@ import Css.Namespace exposing (namespace)
 all : Test
 all =
     describe "selectors"
-        [ nonElements, elements ]
+        ([ nonElements, elements ] ++ pseudoSelectors ++ pseudoElements)
+
+
+{-| Reproduces https://github.com/rtfeldman/elm-css/issues/136
+-}
+pseudoSelectors : List Test
+pseudoSelectors =
+    [ test "Multiple pseudo-selectors" <|
+        \() ->
+            [ a
+                [ color (hex "#000000")
+                , hover [ color (hex "#111111") ]
+                , active [ color (hex "#222222") ]
+                , disabled [ color (hex "#333333") ]
+                ]
+            ]
+                |> stylesheet
+                |> prettyPrint
+                |> Expect.equal ("a {\n    color: #000000;\n}\n\na:hover {\n    color: #111111;\n}\n\na:active {\n    color: #222222;\n}\n\na:disabled {\n    color: #333333;\n}")
+    , test "Pseudo-selector followed by attribute" <|
+        \() ->
+            [ a
+                [ hover [ backgroundColor (hex "#000000") ]
+                , color (hex "#111111")
+                ]
+            ]
+                |> stylesheet
+                |> prettyPrint
+                |> Expect.equal ("a:hover {\n    background-color: #000000;}\n\na {\n    color: #111111;\n}")
+    ]
+
+
+pseudoElements : List Test
+pseudoElements =
+    [ test "Multiple pseudo-elements" <|
+        \() ->
+            [ a
+                [ color (hex "#000000")
+                , before [ color (hex "#111111") ]
+                , after [ color (hex "#222222") ]
+                ]
+            ]
+                |> stylesheet
+                |> prettyPrint
+                |> Expect.equal ("a {\n    color: #000000;\n}\n\na::before {\n    color: #111111;\n}\n\na::after {\n    color: #222222;\n}")
+    , test "Pseudo-element followed by attribute" <|
+        \() ->
+            [ a
+                [ before [ backgroundColor (hex "#000000") ]
+                , color (hex "#111111")
+                ]
+            ]
+                |> stylesheet
+                |> prettyPrint
+                |> Expect.equal ("a::before {\n    background-color: #000000;}\n\na {\n    color: #111111;\n}")
+    ]
 
 
 nonElements : Test
