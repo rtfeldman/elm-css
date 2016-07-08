@@ -3,7 +3,6 @@ module TestUtil exposing (..)
 import String
 import Css exposing (Snippet, rgb, rgba)
 import Fuzz exposing (Fuzzer)
-import Random.Pcg as Random exposing (Generator)
 
 
 outdented : String -> String
