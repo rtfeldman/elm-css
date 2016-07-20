@@ -350,6 +350,7 @@ pseudoElementStylesheet =
                 [ color (hex "#fff") ]
             , after
                 [ color (hex "#000") ]
+            , color (hex "#aaa")
             ]
         ]
 
@@ -368,5 +369,6 @@ pseudoClassStylesheet =
                 [ fontSize (em 3) ]
             , disabled
                 [ marginTop (px 20) ]
+            , backgroundColor (hex "#aaa")
             ]
         ]
