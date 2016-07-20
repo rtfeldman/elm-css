@@ -595,6 +595,7 @@ pseudoElements =
             """
             #Page {
                 margin: 10px;
+                color: #aaa;
             }
 
             #Page::before {
@@ -624,6 +625,7 @@ pseudoClasses =
             """
             #Page {
                 color: #fff;
+                background-color: #aaa;
             }
 
             #Page:hover {
