@@ -339,3 +339,34 @@ colorHexWarning =
 colorHexAbbrWarning : Stylesheet
 colorHexAbbrWarning =
     (stylesheet << namespace "colorHexAbbrWarning") [ body [ color (hex "#00i") ] ]
+
+
+pseudoElementStylesheet : Stylesheet
+pseudoElementStylesheet =
+    (stylesheet << namespace "pseudoElements")
+        [ (#) Page
+            [ margin (px 10)
+            , before
+                [ color (hex "#fff") ]
+            , after
+                [ color (hex "#000") ]
+            ]
+        ]
+
+
+pseudoClassStylesheet : Stylesheet
+pseudoClassStylesheet =
+    (stylesheet << namespace "pseudoClasses")
+        [ (#) Page
+            [ color (hex "#fff")
+            , hover
+                [ marginTop (px 10)
+                , focus
+                    [ color (hex "#000") ]
+                ]
+            , first
+                [ fontSize (em 3) ]
+            , disabled
+                [ marginTop (px 20) ]
+            ]
+        ]

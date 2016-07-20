@@ -32,6 +32,8 @@ all =
         , fonts
         , weightWarning
         , hexWarning
+        , pseudoClasses
+        , pseudoElements
         , Properties.all
         , Selectors.all
         ]
@@ -580,4 +582,70 @@ hexWarning =
                 \_ ->
                     outdented (prettyPrint input2)
                         |> Expect.equal (outdented output2)
+            ]
+
+
+pseudoElements : Test
+pseudoElements =
+    let
+        input =
+            Fixtures.pseudoElementStylesheet
+
+        output =
+            """
+            #Page {
+                margin: 10px;
+            }
+
+            #Page::before {
+                color: #fff;
+            }
+
+            #Page::after {
+                color: #000;
+            }
+            """
+    in
+        describe "pseudo elements"
+            [ test "pretty prints the expected output" <|
+                \_ ->
+                    outdented (prettyPrint input)
+                        |> Expect.equal (outdented output)
+            ]
+
+
+pseudoClasses : Test
+pseudoClasses =
+    let
+        input =
+            Fixtures.pseudoClassStylesheet
+
+        output =
+            """
+            #Page {
+                color: #fff;
+            }
+
+            #Page:hover {
+                margin-top: 10px;
+            }
+
+            #Page:hover:focus {
+                color: #000;
+            }
+
+            #Page:first {
+                font-size: 3em;
+            }
+
+            #Page:disabled {
+                margin-top: 20px;
+            }
+            """
+    in
+        describe "pseudo classes"
+            [ test "pretty prints the expected output" <|
+                \_ ->
+                    outdented (prettyPrint input)
+                        |> Expect.equal (outdented output)
             ]
