@@ -418,9 +418,26 @@ applyNestedMixinsToLast nestedMixins rest f declarations =
         withoutParent decls =
             List.tail decls
                 |> Maybe.withDefault []
+
+        {- We recreate the declarations if necessary. It is possible that
+           there was an `AppendProperty` in between two `ExtendSelectors` or two `WithPseudoElements`
+           or an `AppendProperty` after an `ExtendSelector` or `WithPseudoElement`.
+        -}
+        newDeclarations =
+            case ( List.head nextResult.declarations, List.head <| List.reverse declarations ) of
+                ( Just nextResultParent, Just originalParent ) ->
+                    List.take (List.length declarations - 1) declarations
+                        ++ [ if originalParent /= nextResultParent then
+                                nextResultParent
+                             else
+                                originalParent
+                           ]
+
+                _ ->
+                    declarations
     in
         { warnings = initialResult.warnings ++ nextResult.warnings
-        , declarations = declarations ++ (withoutParent initialResult.declarations ) ++ (withoutParent nextResult.declarations)
+        , declarations = newDeclarations ++ (withoutParent initialResult.declarations) ++ (withoutParent nextResult.declarations)
         }
 
 
