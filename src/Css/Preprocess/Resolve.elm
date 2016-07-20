@@ -374,6 +374,19 @@ applyMixins mixins declarations =
                 |> applyMixins (otherMixins ++ rest)
 
 
+{- To apply nested mixins to a list of declarations, the following flow is used:
+
+* initialResult: we pop off the last declaration, and run function `f` that appends the nested selector to it using `mapLast handleInitial`.
+* nextResult: we pop off the last declaration, and resolve the rest of the remaining children
+
+At the end, we rebuild the declarations using
+
+* current `declarations`
+* declarations of the nested selector, __without__ the last declaration that we popped off (to avoid duplicates inside the variable `declarations`)
+* the declarations of the rest, __without__ the last declaration that we popped off.
+
+This is done in order to facilitate multiple `ExtendSelectors` inside a single `StyleBlock`.
+ -}
 applyNestedMixinsToLast : List Mixin -> List Mixin -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> DeclarationsAndWarnings
 applyNestedMixinsToLast nestedMixins rest f declarations =
     let
@@ -387,18 +400,41 @@ applyNestedMixinsToLast nestedMixins rest f declarations =
                 }
 
         initialResult =
-            declarations
-                |> Structure.concatMapLastStyleBlock f
+            lastDeclaration declarations
+                |> Maybe.map insertMixinsToNestedDecl
+                |> Maybe.withDefault { warnings = [], declarations = [] }
+
+        insertMixinsToNestedDecl lastDecl =
+            Structure.concatMapLastStyleBlock f lastDecl
                 |> List.map (\declaration -> { declarations = [ declaration ], warnings = [] })
                 |> mapLast handleInitial
                 |> concatDeclarationsAndWarnings
 
         nextResult =
-            applyMixins rest initialResult.declarations
+            lastDeclaration declarations
+                |> Maybe.withDefault []
+                |> applyMixins rest
+
+        withoutParent decls =
+            List.tail decls
+                |> Maybe.withDefault []
     in
         { warnings = initialResult.warnings ++ nextResult.warnings
-        , declarations = nextResult.declarations
+        , declarations = declarations ++ (withoutParent initialResult.declarations ) ++ (withoutParent nextResult.declarations)
         }
+
+
+lastDeclaration : List Structure.Declaration -> Maybe (List Structure.Declaration)
+lastDeclaration declarations =
+    case declarations of
+        [] ->
+            Nothing
+
+        x :: [] ->
+            Just [ x ]
+
+        _ :: xs ->
+            lastDeclaration xs
 
 
 expandStyleBlock : Preprocess.StyleBlock -> DeclarationsAndWarnings
