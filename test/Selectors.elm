@@ -77,7 +77,7 @@ elements =
         , testSelector "legend" legend
         , testSelector "optgroup" optgroup
         , testSelector "option" option
-        , testSelector "progress" progress
+        , testSelector "progress" Css.Elements.progress
         , testSelector "select" select
         ]
 
