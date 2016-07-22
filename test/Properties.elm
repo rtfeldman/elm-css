@@ -360,7 +360,7 @@ all =
             , ( cursor zoomOut, "zoom-out" )
             , ( cursor grab, "grab" )
             , ( cursor grabbing, "grabbing" )
-            , ( cursor cursorDefault, "default" )
+            , ( cursor default, "default" )
             , ( cursor auto, "auto" )
             , ( cursor none, "none" )
             , ( cursor initial, "initial" )
