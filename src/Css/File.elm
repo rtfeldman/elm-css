@@ -33,6 +33,6 @@ toFileStructure stylesheets =
 
 {-| Convenience re-export of Css.compile
 -}
-compile : Stylesheet -> { css : String, warnings : List String }
+compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
     Css.compile

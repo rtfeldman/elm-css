@@ -14,6 +14,7 @@ all =
         [ unstyledDiv
         , dreamwriter
         , colorWarnings
+        , compileTest
         ]
 
 
@@ -127,4 +128,40 @@ dreamwriter =
                 \() ->
                     outdented (prettyPrint input)
                         |> Expect.equal (outdented output)
+            ]
+
+
+compileTest : Test
+compileTest =
+    let
+        input =
+            compile
+                [ CompileFixtures.basicStyle1
+                , CompileFixtures.basicStyle2
+                ]
+
+        output =
+            """
+            .basic1BasicStyle1 {
+                display: none;
+            }
+
+            .basic2BasicStyle2 {
+                display: none;
+            }
+            """
+    in
+        describe "compiles multiple stylesheets"
+            [ test "compile output" <|
+                \() ->
+                    input
+                        |> .css
+                        |> outdented
+                        |> Expect.equal (outdented output)
+
+            , test "compile warnings" <|
+                \() ->
+                    input
+                        |> .warnings
+                        |> Expect.equal []
             ]

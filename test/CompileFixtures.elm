@@ -17,6 +17,8 @@ pageDefaultText =
 
 type CssClasses
     = Hidden
+    | BasicStyle1
+    | BasicStyle2
 
 
 type CssIds
@@ -58,4 +60,20 @@ dreamwriter =
             , backgroundColor pageBackground
             , color pageDefaultText
             ]
+        ]
+
+
+basicStyle1 : Stylesheet
+basicStyle1 =
+    (stylesheet << namespace "basic1")
+        [ (.) BasicStyle1
+            [ display none ]
+        ]
+
+
+basicStyle2 : Stylesheet
+basicStyle2 =
+    (stylesheet << namespace "basic2")
+        [ (.) BasicStyle2
+            [ display none ]
         ]

@@ -19,7 +19,7 @@ prettyPrint : Css.Stylesheet -> String
 prettyPrint sheet =
     let
         { warnings, css } =
-            Css.compile sheet
+            Css.compile [ sheet ]
     in
         if List.isEmpty warnings then
             css
