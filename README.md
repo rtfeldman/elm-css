@@ -207,6 +207,7 @@ You can also use elm-css for inline styles with the `asPairs` function, like so:
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [**4.0.1**](https://github.com/rtfeldman/elm-css/tree/4.0.1) | Fix for [#136](https://github.com/rtfeldman/elm-css/issues/136)
 | [**4.0.0**](https://github.com/rtfeldman/elm-css/tree/4.0.0) | Fix multiple pseudo-selectors, add cursor properties.
 | [**3.1.2**](https://github.com/rtfeldman/elm-css/tree/3.1.2) | Fix extraneous space in pseudo-element output
 | [**3.1.1**](https://github.com/rtfeldman/elm-css/tree/3.1.1) | Fix missing pseudo-element implementation
