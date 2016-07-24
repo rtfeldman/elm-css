@@ -76,6 +76,9 @@ bug140 =
             [ focus
                 [ borderColor (hex "#000000")
                 ]
+            , after
+                [ color (hex "#aaaaaa")
+                ]
             ]
         ]
 

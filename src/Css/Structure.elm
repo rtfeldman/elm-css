@@ -274,8 +274,17 @@ appendPseudoElementToLastSelector pseudo styleBlock =
             , StyleBlock (applyPseudoElement pseudo only) [] []
             ]
 
-        a ->
-            [ a ]
+        StyleBlock first rest properties ->
+            let
+                newRest =
+                    List.map (applyPseudoElement pseudo) rest
+
+                newFirst =
+                    applyPseudoElement pseudo first
+            in
+                [ StyleBlock first rest properties
+                , StyleBlock newFirst newRest []
+                ]
 
 
 applyPseudoElement : PseudoElement -> Selector -> Selector
