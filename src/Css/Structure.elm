@@ -245,46 +245,35 @@ extendLastSelector selector declarations =
             first :: extendLastSelector selector rest
 
 
-appendToLastSelector : RepeatableSimpleSelector -> StyleBlock -> List StyleBlock
-appendToLastSelector selector styleBlock =
+appendToLastSelector : (Selector -> Selector) -> StyleBlock -> List StyleBlock
+appendToLastSelector f styleBlock =
     case styleBlock of
         StyleBlock only [] properties ->
             [ StyleBlock only [] properties
-            , StyleBlock (appendRepeatableSelector selector only) [] []
+            , StyleBlock (f only) [] []
             ]
 
         StyleBlock first rest properties ->
             let
                 newRest =
-                    List.map (appendRepeatableSelector selector) rest
+                    List.map f rest
 
                 newFirst =
-                    appendRepeatableSelector selector first
+                    f first
             in
                 [ StyleBlock first rest properties
                 , StyleBlock newFirst newRest []
                 ]
+
+
+appendRepeatableToLastSelector : RepeatableSimpleSelector -> StyleBlock -> List StyleBlock
+appendRepeatableToLastSelector selector styleBlock =
+    appendToLastSelector (appendRepeatableSelector selector) styleBlock
 
 
 appendPseudoElementToLastSelector : PseudoElement -> StyleBlock -> List StyleBlock
 appendPseudoElementToLastSelector pseudo styleBlock =
-    case styleBlock of
-        StyleBlock only [] properties ->
-            [ StyleBlock only [] properties
-            , StyleBlock (applyPseudoElement pseudo only) [] []
-            ]
-
-        StyleBlock first rest properties ->
-            let
-                newRest =
-                    List.map (applyPseudoElement pseudo) rest
-
-                newFirst =
-                    applyPseudoElement pseudo first
-            in
-                [ StyleBlock first rest properties
-                , StyleBlock newFirst newRest []
-                ]
+    appendToLastSelector (applyPseudoElement pseudo) styleBlock
 
 
 applyPseudoElement : PseudoElement -> Selector -> Selector
