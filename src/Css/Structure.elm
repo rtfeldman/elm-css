@@ -257,9 +257,12 @@ appendToLastSelector selector styleBlock =
             let
                 newRest =
                     mapLast (appendRepeatableSelector selector) rest
+
+                newFirst =
+                    appendRepeatableSelector selector first
             in
                 [ StyleBlock first rest properties
-                , StyleBlock first newRest []
+                , StyleBlock newFirst newRest []
                 ]
 
 
