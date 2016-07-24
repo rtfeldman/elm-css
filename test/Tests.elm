@@ -221,7 +221,7 @@ bug140 =
 
         output =
             """
-input:focus, textarea:focus {
+input:focus, select:focus, textarea:focus {
     border-color: #000000;
 }        """
     in

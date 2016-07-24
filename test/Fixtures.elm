@@ -72,7 +72,7 @@ bug99 =
 bug140 : Stylesheet
 bug140 =
     stylesheet
-        [ each [ input, selector "textarea" ]
+        [ each [ input, select, selector "textarea"]
             [ focus
                 [ borderColor (hex "#000000")
                 ]

@@ -256,7 +256,7 @@ appendToLastSelector selector styleBlock =
         StyleBlock first rest properties ->
             let
                 newRest =
-                    mapLast (appendRepeatableSelector selector) rest
+                    List.map (appendRepeatableSelector selector) rest
 
                 newFirst =
                     appendRepeatableSelector selector first
