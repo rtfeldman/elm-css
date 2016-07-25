@@ -22,6 +22,7 @@ all =
         , atRule
         , nestedAtRule
         , bug99
+        , bug140
         , universal
         , multiSelector
         , multiDescendent
@@ -203,6 +204,33 @@ nestedAtRule =
       """
     in
         describe "nested @media test"
+            [ test "pretty prints the expected output" <|
+                \_ ->
+                    outdented (prettyPrint input)
+                        |> Expect.equal (outdented output)
+            ]
+
+
+{-| Regression test for https://github.com/rtfeldman/elm-css/issues/140
+-}
+bug140 : Test
+bug140 =
+    let
+        input =
+            Fixtures.bug140
+
+        output =
+            """
+input:focus, select:focus, textarea:focus {
+    border-color: #000000;
+}
+
+input::after, select::after, textarea::after {
+    color: #aaaaaa;
+}
+            """
+    in
+        describe "`each` with pseudo classes"
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)

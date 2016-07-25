@@ -279,7 +279,7 @@ applyMixins mixins declarations =
             applyNestedMixinsToLast
                 nestedMixins
                 rest
-                (Structure.appendToLastSelector selector)
+                (Structure.appendRepeatableToLastSelector selector)
                 declarations
 
         (NestSnippet selectorCombinator snippets) :: rest ->

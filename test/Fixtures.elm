@@ -69,6 +69,20 @@ bug99 =
         ]
 
 
+bug140 : Stylesheet
+bug140 =
+    stylesheet
+        [ each [ input, select, selector "textarea"]
+            [ focus
+                [ borderColor (hex "#000000")
+                ]
+            , after
+                [ color (hex "#aaaaaa")
+                ]
+            ]
+        ]
+
+
 simpleEach : Stylesheet
 simpleEach =
     stylesheet
