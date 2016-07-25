@@ -1,16 +1,29 @@
 module Css.Preprocess.Resolve exposing (compile)
 
+
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures and gathering warnings along the way.
 -}
 
+import String
 import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
 
 
-compile : Preprocess.Stylesheet -> { warnings : List String, css : String }
-compile sheet =
+compile : List Preprocess.Stylesheet -> { warnings: List String, css: String }
+compile styles =
+    let
+        results =
+            List.map compile1 styles
+    in
+        { warnings = List.concatMap .warnings results
+        , css = String.join "\n\n" (List.map .css results)
+        }
+
+
+compile1 : Preprocess.Stylesheet -> { warnings : List String, css : String }
+compile1 sheet =
     let
         ( structureStylesheet, warnings ) =
             toStructure sheet

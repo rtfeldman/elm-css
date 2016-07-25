@@ -5502,10 +5502,11 @@ stringsToValue list =
         { value = String.join ", " (List.map (\s -> s) list) }
 
 
-{-| Compile the given stylesheet to a CSS string, or to an error
+
+{-| Compile the given stylesheets to a CSS string, or to an error
 message if it could not be compiled.
 -}
-compile : Stylesheet -> { css : String, warnings : List String }
+compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
     Resolve.compile
 
