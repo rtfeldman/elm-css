@@ -483,23 +483,47 @@ type alias Angle compatible =
 type alias TextDecorationStyle compatible =
     { compatible | value : String, textDecorationStyle : Compatible }
 
+    
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color#Values
+-}
+type alias TextEmphasisColor compatible =
+    { compatible | value : String, textDecorationStyle : Compatible }
+
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values
 -}
 type alias Position compatible =
     { compatible | value : String, position : Compatible }
+    
+    
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/float#Values
+-}
+type alias FloatAlign a b =
+    Length a b -> Mixin
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values
 -}
 type alias BorderStyle compatible =
     { compatible | value : String, borderStyle : Compatible }
+    
+    
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse
+-}
+type alias BorderCollapse compatible =
+    { compatible | value : String, borderCollapse : Compatible }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box#Values
 -}
 type alias TransformBox compatible =
     { compatible | value : String, transformBox : Compatible }
+    
+    
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values
+-}
+type alias TextOrientation compatible =
+    { compatible | value : String, textOrientation : Compatible }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style#Values
@@ -986,6 +1010,37 @@ eachLine =
     { value = "each-line"
     , textIndent = Compatible
     }
+    
+    
+    
+{- TEXT-ORIENTATION -}
+
+
+{-| `mixed` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values) value
+-}
+mixed : TextOrientation {}
+mixed =
+    { value = "mixed"
+    , textOrientation = Compatible
+    }
+
+
+{-| `upright` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values) value
+-}
+upright : TextOrientation {}
+upright =
+    { value = "upright"
+    , textOrientation = Compatible
+    }
+
+
+{-| `sideways` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientationEValues) value
+-}
+sideways : TextOrientation {}
+sideways =
+    { value = "sideways"
+    , textOrientation = Compatible
+    }
 
 
 
@@ -1133,6 +1188,31 @@ outset =
     { value = "outset"
     , borderStyle = Compatible
     }
+    
+    
+    
+{- BORDER COLLAPSE -}
+
+
+{-| A `separate` [border-collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse#Values).
+-}
+separate : BorderCollapse {}
+separate =
+    { value = "separate"
+    , borderCollapse = Compatible
+    }
+
+
+{-| A `collapse` [border-collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse#Values).
+-}
+collapse : BorderCollapse {}
+collapse =
+    { value = "collapse"
+    , borderCollapse = Compatible
+    }
+
+
+
 
 
 
@@ -2324,6 +2404,16 @@ prop3 key argA argB argC =
 prop4 : String -> Value a -> Value b -> Value c -> Value d -> Mixin
 prop4 key argA argB argC argD =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
+    
+    
+{-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
+floatAlign : FloatAlign compatible -> Mixin
+
+    floatAlign right
+-}
+floatAlign : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+floatAlign fn =
+    getOverloadedProperty "floatAlign" "float" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
@@ -2333,6 +2423,15 @@ prop4 key argA argB argC argD =
 textDecorationColor : ColorValue compatible -> Mixin
 textDecorationColor c =
     propertyWithWarnings c.warnings "text-decoration-color" c.value
+    
+    
+{-| Sets ['text-emphasis-color'](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color)
+
+     textEmphasisColor (rgb 100 100 100)
+-}
+textEmphasisColor : ColorValue compatible -> Mixin
+textEmphasisColor c =
+    propertyWithWarnings c.warnings "text-emphasis-color" c.value
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
@@ -2361,6 +2460,15 @@ textAlign fn =
 textRendering : TextRendering a -> Mixin
 textRendering =
     prop1 "text-rendering"
+    
+    
+{-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
+
+    text-orientation mixed
+-}
+textOrientation : TextOrientation compatible -> Mixin
+textOrientation =
+    prop1 "text-orientation"
 
 
 {-| Sets [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow).
@@ -2833,6 +2941,10 @@ bottom =
 This can also be used as a `left` [text alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
 
     textAlign left
+
+It can also be used as a `left` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
+
+    floatAlign left
 -}
 left : LengthOrAuto compatible -> Mixin
 left =
@@ -2847,6 +2959,10 @@ left =
 This can also be used as a `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
 
     textAlign right
+
+It can also be used as a `right` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
+
+    floatAlign right
 -}
 right : LengthOrAuto compatible -> Mixin
 right =
@@ -3938,6 +4054,15 @@ borderTopStyle =
 borderStyle : BorderStyle compatible -> Mixin
 borderStyle =
     prop1 "border-style"
+    
+    
+{-| Sets [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse)
+
+    borderCollapse collapse
+-}
+borderCollapse : BorderCollapse compatible -> Mixin
+borderCollapse =
+    prop1 "border-collapse"
 
 
 {-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
@@ -3974,6 +4099,33 @@ borderLeftWidth =
 borderRightWidth : Length compatible units -> Mixin
 borderRightWidth =
     prop1 "border-right-width"
+    
+    
+{-| Sets [`border-block-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-width)
+
+    borderBlockEndWidth (px 5)
+-}
+borderBlockEndWidth : Length compatible units -> Mixin
+borderBlockEndWidth =
+    prop1 "border-block-end-width"
+
+
+{-| Sets [`border-block-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-width)
+
+    borderBlockStartWidth (px 5)
+-}
+borderBlockStartWidth : Length compatible units -> Mixin
+borderBlockStartWidth =
+    prop1 "border-block-start-width"
+
+
+{-| Sets [`border-inline-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-width)
+
+    borderInlineStartWidth (px 5)
+-}
+borderInlineStartWidth : Length compatible units -> Mixin
+borderInlineStartWidth =
+    prop1 "border-inline-start-width"
 
 
 {-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
