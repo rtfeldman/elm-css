@@ -1,12 +1,12 @@
-module Css.File exposing (compile, toFileStructure, CssFileStructure)
+module Css.File exposing (compile, toFileStructure, program, CssFileStructure)
 
 {-| Functions for writing CSS files from elm-css.
 
-@docs compile, toFileStructure, CssFileStructure
+@docs compile, toFileStructure, program, CssFileStructure
 -}
 
 import Css exposing (Stylesheet)
-import String
+import VirtualDom
 
 
 {-| A description of CSS files that will be created by elm-css.
@@ -36,3 +36,25 @@ toFileStructure stylesheets =
 compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
     Css.compile
+
+
+{-| Write a file structure out for the elm-css CLI to use
+
+    port write : CssFileStructure -> Cmd msg
+
+    cssFiles : CssFileStructure
+    cssFiles =
+        -- ...
+
+    main : Program Never
+    main =
+        Css.File.program write <| cssFiles
+-}
+program : (CssFileStructure -> Cmd msg) -> CssFileStructure -> Program Never
+program write fileStructure =
+    VirtualDom.programWithFlags
+        { view = \_ -> VirtualDom.text ""
+        , subscriptions = \_ -> Sub.none
+        , update = \_ _ -> ( (), Cmd.none )
+        , init = \_ -> ( (), write fileStructure )
+        }
