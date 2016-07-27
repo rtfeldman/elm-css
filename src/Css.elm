@@ -1,9 +1,9 @@
-module Css exposing (compile, asPairs, Stylesheet, Snippet, Mixin, Color, MediaQuery, Length, stylesheet, each, media, withMedia, withClass, everything, children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (|*|), (|+|), (|-|), (|/|), transformStyle, eachLine, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textOrientation, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, floatAlign, backgroundColor, color, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, borderCollapse, collapse, separate, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndWidth, borderBlockStartWidth, borderInlineStartWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, blink, thin, medium, thick, mixed, upright, sideways, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, displayFlex, flex, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, screen, print, projection, tv, mediaQuery, src, qt, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2, featureOn, featureOff, ColorValue, FontSize)
+module Css exposing (compile, asPairs, Stylesheet, Snippet, Mixin, Color, MediaQuery, Length, stylesheet, each, media, withMedia, withClass, everything, children, descendants, adjacentSiblings, generalSiblings, mixin, all, property, selector, important, (#), (.), (|*|), (|+|), (|-|), (|/|), transformStyle, eachLine, transformBox, textOrientation, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textDecorationColor, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, mixed, upright, sideways, textIndent, textIndent2, textIndent3, ellipsis, clip, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textShadow, textShadow2, textShadow3, textShadow4, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, solid, transparent, rgb, rgba, hsl, hsla, hex, zero, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderBlockEndWidth, borderBlockStartWidth, borderInlineStartWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderCollapse,  borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, initial, unset, noWrap, static, fixed, sticky, relative, absolute, position, floatAlign,  top, bottom, middle, baseline, sub, super, textTop, textBottom, after, before, firstLetter, firstLine, selection, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, separate, collapse, blink, thin, medium, thick, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, deg, rad, grad, turn, displayFlex, flex, flex2, flex3, flexBasis, flexDirection, flexFlow1, flexFlow2, flexGrow, flexShrink, flexWrap, order, alignItems, alignSelf, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, screen, print, projection, tv, mediaQuery, src, qt, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2, featureOn, featureOff, cursor, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing, ColorValue, FontSize)
 
 {-| Functions for building stylesheets.
 
 # Misc
-@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, collapse, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, floatAlign, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inset, italic, large, larger, lighter, liningNums, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, separate, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall
+@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderBlockEndWidth, borderBlockStartWidth, borderInlineStartWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inset, italic, large, larger, lighter, liningNums, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, separate, collapse, perspective, petiteCaps, position, floatAlign, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall
 
 # Style
 @docs Snippet, Mixin, mixin, stylesheet, compile
@@ -18,7 +18,7 @@ module Css exposing (compile, asPairs, Stylesheet, Snippet, Mixin, Color, MediaQ
 @docs screen, tv, projection, print
 
 # Properties
-@docs property, borderCollapse, flex, flex2, flex3, floatAlign, medium, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, textOrientation, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, mixed, upright, sideways, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor
 
 # Values
 
@@ -29,7 +29,7 @@ module Css exposing (compile, asPairs, Stylesheet, Snippet, Mixin, Color, MediaQ
 @docs featureTag, featureTag2, featureOn, featureOff
 
 ## Other values
-@docs borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndWidth, borderBlockStartWidth, borderInlineStartWidth, borderImageWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, mixed, sideways, upright, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero
+@docs borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
 
 # Length
 @docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, zero, (|+|), (|-|), (|*|), (|/|)
@@ -483,7 +483,7 @@ type alias Angle compatible =
 type alias TextDecorationStyle compatible =
     { compatible | value : String, textDecorationStyle : Compatible }
 
-
+    
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color#Values
 -}
 type alias TextEmphasisColor compatible =
@@ -494,8 +494,8 @@ type alias TextEmphasisColor compatible =
 -}
 type alias Position compatible =
     { compatible | value : String, position : Compatible }
-
-
+    
+    
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/float#Values
 -}
 type alias FloatAlign a b =
@@ -506,8 +506,8 @@ type alias FloatAlign a b =
 -}
 type alias BorderStyle compatible =
     { compatible | value : String, borderStyle : Compatible }
-
-
+    
+    
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse
 -}
 type alias BorderCollapse compatible =
@@ -518,6 +518,12 @@ type alias BorderCollapse compatible =
 -}
 type alias TransformBox compatible =
     { compatible | value : String, transformBox : Compatible }
+    
+    
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values
+-}
+type alias TextOrientation compatible =
+    { compatible | value : String, textOrientation : Compatible }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style#Values
@@ -550,12 +556,6 @@ type alias TextRendering compatible =
     { compatible | value : String, textRendering : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values
--}
-type alias TextOrientation compatible =
-    { compatible | value : String, textOrientation : Compatible }
-
-
 {-| https://www.microsoft.com/typography/otspec/featurelist.htm
 -}
 type alias FeatureTagValue compatible =
@@ -582,6 +582,12 @@ that it will return the desired String as its key, and use that as our value.
 -}
 type alias VerticalAlign a b =
     Length a b -> Mixin
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values
+-}
+type alias Cursor compatible =
+    { compatible | value : String, cursor : Compatible }
 
 
 
@@ -666,6 +672,7 @@ type alias BasicProperty =
     , all : Compatible
     , alignItems : Compatible
     , boxSizing : Compatible
+    , cursor : Compatible
     , display : Compatible
     , flexBasis : Compatible
     , flexWrap : Compatible
@@ -726,6 +733,7 @@ initial =
     , textIndent = Compatible
     , textDecorationStyle = Compatible
     , boxSizing = Compatible
+    , cursor = Compatible
     , display = Compatible
     , all = Compatible
     , alignItems = Compatible
@@ -1002,9 +1010,9 @@ eachLine =
     { value = "each-line"
     , textIndent = Compatible
     }
-
-
-
+    
+    
+    
 {- TEXT-ORIENTATION -}
 
 
@@ -1180,9 +1188,9 @@ outset =
     { value = "outset"
     , borderStyle = Compatible
     }
-
-
-
+    
+    
+    
 {- BORDER COLLAPSE -}
 
 
@@ -1202,6 +1210,9 @@ collapse =
     { value = "collapse"
     , borderCollapse = Compatible
     }
+
+
+
 
 
 
@@ -2249,6 +2260,7 @@ inline =
 {-| -}
 none :
     { borderStyle : Compatible
+    , cursor : Compatible
     , display : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , none : Compatible
@@ -2260,6 +2272,7 @@ none :
     }
 none =
     { value = "none"
+    , cursor = Compatible
     , none = Compatible
     , lengthOrNone = Compatible
     , lengthOrNoneOrMinMaxDimension = Compatible
@@ -2279,10 +2292,12 @@ auto :
     , flexBasis : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , alignItemsOrAuto : Compatible
+    , cursor : Compatible
     , value : String
     }
 auto =
     { value = "auto"
+    , cursor = Compatible
     , flexBasis = Compatible
     , overflow = Compatible
     , textRendering = Compatible
@@ -2389,8 +2404,8 @@ prop3 key argA argB argC =
 prop4 : String -> Value a -> Value b -> Value c -> Value d -> Mixin
 prop4 key argA argB argC argD =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
-
-
+    
+    
 {-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
 floatAlign : FloatAlign compatible -> Mixin
 
@@ -2408,8 +2423,8 @@ floatAlign fn =
 textDecorationColor : ColorValue compatible -> Mixin
 textDecorationColor c =
     propertyWithWarnings c.warnings "text-decoration-color" c.value
-
-
+    
+    
 {-| Sets ['text-emphasis-color'](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color)
 
      textEmphasisColor (rgb 100 100 100)
@@ -2445,8 +2460,8 @@ textAlign fn =
 textRendering : TextRendering a -> Mixin
 textRendering =
     prop1 "text-rendering"
-
-
+    
+    
 {-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
 
     text-orientation mixed
@@ -4039,8 +4054,8 @@ borderTopStyle =
 borderStyle : BorderStyle compatible -> Mixin
 borderStyle =
     prop1 "border-style"
-
-
+    
+    
 {-| Sets [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse)
 
     borderCollapse collapse
@@ -4084,8 +4099,8 @@ borderLeftWidth =
 borderRightWidth : Length compatible units -> Mixin
 borderRightWidth =
     prop1 "border-right-width"
-
-
+    
+    
 {-| Sets [`border-block-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-width)
 
     borderBlockEndWidth (px 5)
@@ -4457,7 +4472,6 @@ lineHeight : Length compatible units -> Mixin
 lineHeight =
     prop1 "line-height"
 
-
 {-| Sets [`letter-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
 
     letterSpacing (px 10)
@@ -4631,6 +4645,224 @@ fontVariantNumeric3 =
 fontVariantNumerics : List (FontVariantNumeric compatible) -> Mixin
 fontVariantNumerics =
     prop1 "font-variant-numeric" << valuesOrNone
+
+
+
+{- CURSOR PROPERTIES -}
+
+{-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+specifies the mouse cursor displayed when mouse pointer is over an element.
+-}
+cursor : Cursor compatible -> Mixin
+cursor =
+    prop1 "cursor"
+
+
+
+{- CURSOR VALUES -}
+
+{-| -}
+default : Cursor {}
+default =
+    { value = "default", cursor = Compatible }
+
+
+{-| -}
+crosshair : Cursor {}
+crosshair =
+    { value = "crosshair", cursor = Compatible }
+
+
+{-| -}
+contextMenu : Cursor {}
+contextMenu =
+    { value = "context-menu", cursor = Compatible }
+
+
+{-| -}
+help : Cursor {}
+help =
+    { value = "help", cursor = Compatible }
+
+
+{-| -}
+pointer : Cursor {}
+pointer =
+    { value = "pointer", cursor = Compatible }
+
+
+{-| -}
+progress : Cursor {}
+progress =
+    { value = "progress", cursor = Compatible }
+
+
+{-| -}
+wait : Cursor {}
+wait =
+    { value = "wait", cursor = Compatible }
+
+
+{-| -}
+cell : Cursor {}
+cell =
+    { value = "cell", cursor = Compatible }
+
+
+{-| -}
+text : Cursor {}
+text =
+    { value = "text", cursor = Compatible }
+
+
+{-| -}
+verticalText : Cursor {}
+verticalText =
+    { value = "vertical-text", cursor = Compatible }
+
+
+{-| -}
+cursorAlias : Cursor {}
+cursorAlias =
+    { value = "alias", cursor = Compatible }
+
+
+{-| -}
+copy : Cursor {}
+copy =
+    { value = "copy", cursor = Compatible }
+
+
+{-| -}
+move : Cursor {}
+move =
+    { value = "move", cursor = Compatible }
+
+
+{-| -}
+noDrop : Cursor {}
+noDrop =
+    { value = "no-drop", cursor = Compatible }
+
+
+{-| -}
+notAllowed : Cursor {}
+notAllowed =
+    { value = "not-allowed", cursor = Compatible }
+
+
+{-| -}
+eResize : Cursor {}
+eResize =
+    { value = "e-resize", cursor = Compatible }
+
+
+{-| -}
+nResize : Cursor {}
+nResize =
+    { value = "n-resize", cursor = Compatible }
+
+
+{-| -}
+neResize : Cursor {}
+neResize =
+    { value = "ne-resize", cursor = Compatible }
+
+
+{-| -}
+nwResize : Cursor {}
+nwResize =
+    { value = "nw-resize", cursor = Compatible }
+
+
+{-| -}
+sResize : Cursor {}
+sResize =
+    { value = "s-resize", cursor = Compatible }
+
+
+{-| -}
+seResize : Cursor {}
+seResize =
+    { value = "se-resize", cursor = Compatible }
+
+
+{-| -}
+swResize : Cursor {}
+swResize =
+    { value = "sw-resize", cursor = Compatible }
+
+
+{-| -}
+wResize : Cursor {}
+wResize =
+    { value = "w-resize", cursor = Compatible }
+
+
+{-| -}
+ewResize : Cursor {}
+ewResize =
+    { value = "ew-resize", cursor = Compatible }
+
+
+{-| -}
+nsResize : Cursor {}
+nsResize =
+    { value = "ns-resize", cursor = Compatible }
+
+
+{-| -}
+neswResize : Cursor {}
+neswResize =
+    { value = "nesw-resize", cursor = Compatible }
+
+
+{-| -}
+nwseResize : Cursor {}
+nwseResize =
+    { value = "nwse-resize", cursor = Compatible }
+
+
+{-| -}
+colResize : Cursor {}
+colResize =
+    { value = "col-resize", cursor = Compatible }
+
+
+{-| -}
+rowResize : Cursor {}
+rowResize =
+    { value = "row-resize", cursor = Compatible }
+
+
+{-| -}
+allScroll : Cursor {}
+allScroll =
+    { value = "all-scroll", cursor = Compatible }
+
+
+{-| -}
+zoomIn : Cursor {}
+zoomIn =
+    { value = "zoom-in", cursor = Compatible }
+
+
+{-| -}
+zoomOut : Cursor {}
+zoomOut =
+    { value = "zoom-out", cursor = Compatible }
+
+
+{-| -}
+grab : Cursor {}
+grab =
+    { value = "grab", cursor = Compatible }
+
+
+{-| -}
+grabbing : Cursor {}
+grabbing =
+    { value = "grabbing", cursor = Compatible }
 
 
 
@@ -5422,10 +5654,11 @@ stringsToValue list =
         { value = String.join ", " (List.map (\s -> s) list) }
 
 
-{-| Compile the given stylesheet to a CSS string, or to an error
+
+{-| Compile the given stylesheets to a CSS string, or to an error
 message if it could not be compiled.
 -}
-compile : Stylesheet -> { css : String, warnings : List String }
+compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
     Resolve.compile
 
