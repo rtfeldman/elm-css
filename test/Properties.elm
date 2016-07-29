@@ -1,8 +1,8 @@
 module Properties exposing (all)
 
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import TestUtil exposing (prettyPrint)
-import Tests.Expect exposing (expect)
 import Css exposing (..)
 import Css.Elements exposing (p)
 import Css.Namespace exposing (namespace)
@@ -10,7 +10,7 @@ import Css.Namespace exposing (namespace)
 
 all : Test
 all =
-    suite "properties"
+    describe "properties"
         [ testProperty "box-sizing"
             [ ( boxSizing initial, "initial" )
             , ( boxSizing unset, "unset" )
@@ -326,24 +326,64 @@ all =
             [ ( color (hsl 120 0.5 0.5), "hsl(120, 50%, 50%)" )
             , ( color (hsla 120 0.5 0.5 0.5), "hsla(120, 50%, 50%, 0.5)" )
             ]
+        , testProperty "cursor"
+            [ ( cursor pointer, "pointer" )
+            , ( cursor crosshair, "crosshair" )
+            , ( cursor contextMenu, "context-menu" )
+            , ( cursor help, "help" )
+            , ( cursor Css.progress, "progress" )
+            , ( cursor wait, "wait" )
+            , ( cursor cell, "cell" )
+            , ( cursor text, "text" )
+            , ( cursor verticalText, "vertical-text" )
+            , ( cursor cursorAlias, "alias" )
+            , ( cursor copy, "copy" )
+            , ( cursor move, "move" )
+            , ( cursor noDrop, "no-drop" )
+            , ( cursor notAllowed, "not-allowed" )
+            , ( cursor eResize, "e-resize" )
+            , ( cursor nResize, "n-resize" )
+            , ( cursor neResize, "ne-resize" )
+            , ( cursor nwResize, "nw-resize" )
+            , ( cursor sResize, "s-resize" )
+            , ( cursor seResize, "se-resize" )
+            , ( cursor swResize, "sw-resize" )
+            , ( cursor wResize, "w-resize" )
+            , ( cursor ewResize, "ew-resize" )
+            , ( cursor nsResize, "ns-resize" )
+            , ( cursor neswResize, "nesw-resize" )
+            , ( cursor nwseResize, "nwse-resize" )
+            , ( cursor colResize, "col-resize" )
+            , ( cursor rowResize, "row-resize" )
+            , ( cursor allScroll, "all-scroll" )
+            , ( cursor zoomIn, "zoom-in" )
+            , ( cursor zoomOut, "zoom-out" )
+            , ( cursor grab, "grab" )
+            , ( cursor grabbing, "grabbing" )
+            , ( cursor default, "default" )
+            , ( cursor auto, "auto" )
+            , ( cursor none, "none" )
+            , ( cursor initial, "initial" )
+            , ( cursor inherit, "inherit" )
+            ]
         ]
 
 
 testProperty : String -> List ( Mixin, String ) -> Test
 testProperty propertyName modifierPairs =
-    suite (propertyName ++ " property")
-        (List.map (assertPropertyWorks propertyName) modifierPairs)
+    describe (propertyName ++ " property")
+        (List.map (expectPropertyWorks propertyName) modifierPairs)
 
 
-assertPropertyWorks : String -> ( Mixin, String ) -> Test
-assertPropertyWorks propertyName ( mixin, expectedStr ) =
-    suite "works properly"
-        [ (expect "pretty prints the expected output")
-            { expected = "p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}"
-            , actual = prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
-            }
-        , (expect "can be converted to a key-value pair")
-            { expected = [ ( propertyName, expectedStr ) ]
-            , actual = asPairs [ mixin ]
-            }
+expectPropertyWorks : String -> ( Mixin, String ) -> Test
+expectPropertyWorks propertyName ( mixin, expectedStr ) =
+    describe "works properly"
+        [ (test "pretty prints the expected output") <|
+            \() ->
+                prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
+                    |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
+        , (test "can be converted to a key-value pair") <|
+            \() ->
+                [ ( propertyName, expectedStr ) ]
+                    |> Expect.equal (asPairs [ mixin ])
         ]

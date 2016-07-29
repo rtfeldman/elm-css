@@ -1,59 +1,21 @@
 module Compile exposing (all)
 
-import ElmTest exposing (..)
-import TestUtil exposing (outdented, prettyPrint, it)
-import Tests.Expect exposing (expect)
-import Check.Investigator exposing (..)
+import Test exposing (..)
+import Expect
+import Fuzz exposing (Fuzzer, tuple3, tuple4)
+import TestUtil exposing (..)
 import CompileFixtures
-import Random.Extra
-import Random
-import Shrink
 import Css exposing (..)
 
 
 all : Test
 all =
-    suite "elm-css"
+    describe "elm-css"
         [ unstyledDiv
         , dreamwriter
         , colorWarnings
+        , compileTest
         ]
-
-
-validRgbValue : Investigator Int
-validRgbValue =
-    investigator (Random.int 0 255) Shrink.int
-
-
-validAlphaValue : Investigator Float
-validAlphaValue =
-    investigator (Random.float 0 1) Shrink.float
-
-
-invalidRgbValue : Investigator Int
-invalidRgbValue =
-    let
-        generator =
-            Random.Extra.frequency
-                [ ( 1, Random.int -300 -1 )
-                , ( 1, Random.int 256 300 )
-                ]
-                (Random.int 256 300)
-    in
-        investigator generator Shrink.int
-
-
-invalidAlphaValue : Investigator Float
-invalidAlphaValue =
-    let
-        generator =
-            Random.Extra.frequency
-                [ ( 1, Random.float -300 -1.0e-3 )
-                , ( 1, Random.float 1.0001 300 )
-                ]
-                (Random.float -300 -1.0e-3)
-    in
-        investigator generator Shrink.float
 
 
 getRgbaWarnings : ( Int, Int, Int, Float ) -> Int
@@ -68,37 +30,37 @@ getRgbWarnings ( red, green, blue ) =
 
 colorWarnings : Test
 colorWarnings =
-    suite "color warnings"
-        [ (suite "rgb")
-            [ (it "does not warn when everything is valid") (\_ -> 0)
-                getRgbWarnings
-                (tuple3 ( validRgbValue, validRgbValue, validRgbValue ))
-            , (it "warns for invalid r values") (\_ -> 1)
-                getRgbWarnings
-                (tuple3 ( invalidRgbValue, validRgbValue, validRgbValue ))
-            , (it "warns for invalid g values") (\_ -> 1)
-                getRgbWarnings
-                (tuple3 ( validRgbValue, invalidRgbValue, validRgbValue ))
-            , (it "warns for invalid b values") (\_ -> 1)
-                getRgbWarnings
-                (tuple3 ( validRgbValue, validRgbValue, invalidRgbValue ))
+    describe "color warnings"
+        [ describe "rgb"
+            [ fuzz (tuple3 ( validRgbValue, validRgbValue, validRgbValue ))
+                "does not warn when everything is valid"
+                (getRgbWarnings >> Expect.equal 0)
+            , fuzz (tuple3 ( invalidRgbValue, validRgbValue, validRgbValue ))
+                "warns for invalid r values"
+                (getRgbWarnings >> Expect.equal 1)
+            , fuzz (tuple3 ( validRgbValue, invalidRgbValue, validRgbValue ))
+                "warns for invalid g values"
+                (getRgbWarnings >> Expect.equal 1)
+            , fuzz (tuple3 ( validRgbValue, validRgbValue, invalidRgbValue ))
+                "warns for invalid b values"
+                (getRgbWarnings >> Expect.equal 1)
             ]
-        , (suite "rgba")
-            [ (it "does not warn when everything is valid") (\_ -> 0)
-                getRgbaWarnings
-                (tuple4 ( validRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
-            , (it "warns for invalid r values") (\_ -> 1)
-                getRgbaWarnings
-                (tuple4 ( invalidRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
-            , (it "warns for invalid g values") (\_ -> 1)
-                getRgbaWarnings
-                (tuple4 ( validRgbValue, invalidRgbValue, validRgbValue, validAlphaValue ))
-            , (it "warns for invalid b values") (\_ -> 1)
-                getRgbaWarnings
-                (tuple4 ( validRgbValue, validRgbValue, invalidRgbValue, validAlphaValue ))
-            , (it "warns for invalid a values") (\_ -> 1)
-                getRgbaWarnings
-                (tuple4 ( validRgbValue, validRgbValue, validRgbValue, invalidAlphaValue ))
+        , describe "rgba"
+            [ fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
+                "does not warn when everything is valid"
+                (getRgbaWarnings >> Expect.equal 0)
+            , fuzz (tuple4 ( invalidRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
+                "warns for invalid r values"
+                (getRgbaWarnings >> Expect.equal 1)
+            , fuzz (tuple4 ( validRgbValue, invalidRgbValue, validRgbValue, validAlphaValue ))
+                "warns for invalid g values"
+                (getRgbaWarnings >> Expect.equal 1)
+            , fuzz (tuple4 ( validRgbValue, validRgbValue, invalidRgbValue, validAlphaValue ))
+                "warns for invalid b values"
+                (getRgbaWarnings >> Expect.equal 1)
+            , fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, invalidAlphaValue ))
+                "warns for invalid a values"
+                (getRgbaWarnings >> Expect.equal 1)
             ]
         ]
 
@@ -112,11 +74,11 @@ unstyledDiv =
         output =
             ""
     in
-        suite "unstyled div"
-            [ (expect "pretty prints the expected output")
-                { expected = output
-                , actual = prettyPrint input
-                }
+        describe "unstyled div"
+            [ test "pretty prints the expected output" <|
+                \() ->
+                    prettyPrint input
+                        |> Expect.equal output
             ]
 
 
@@ -150,7 +112,7 @@ dreamwriter =
               display: none !important;
             }
 
-            #dreamwriterPage {
+            #Page {
               width: 100%;
               height: 100%;
               box-sizing: border-box;
@@ -161,9 +123,45 @@ dreamwriter =
             }
         """
     in
-        suite "Sample stylesheet from Dreamwriter"
-            [ (expect "pretty prints the expected output")
-                { expected = outdented output
-                , actual = outdented (prettyPrint input)
-                }
+        describe "Sample stylesheet from Dreamwriter"
+            [ test "pretty prints the expected output" <|
+                \() ->
+                    outdented (prettyPrint input)
+                        |> Expect.equal (outdented output)
+            ]
+
+
+compileTest : Test
+compileTest =
+    let
+        input =
+            compile
+                [ CompileFixtures.basicStyle1
+                , CompileFixtures.basicStyle2
+                ]
+
+        output =
+            """
+            .basic1BasicStyle1 {
+                display: none;
+            }
+
+            .basic2BasicStyle2 {
+                display: none;
+            }
+            """
+    in
+        describe "compiles multiple stylesheets"
+            [ test "compile output" <|
+                \() ->
+                    input
+                        |> .css
+                        |> outdented
+                        |> Expect.equal (outdented output)
+
+            , test "compile warnings" <|
+                \() ->
+                    input
+                        |> .warnings
+                        |> Expect.equal []
             ]

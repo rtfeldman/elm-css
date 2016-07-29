@@ -6,8 +6,8 @@ os:
 
 env:
   matrix:
-    - ELM_VERSION=0.16.0 TARGET_NODE_VERSION=node
-    - ELM_VERSION=0.16.0 TARGET_NODE_VERSION=4.0
+    - ELM_VERSION=0.17.0 TARGET_NODE_VERSION=node
+    - ELM_VERSION=0.17.0 TARGET_NODE_VERSION=4.0
 
 before_install:
   - if [ ${TRAVIS_OS_NAME} == "osx" ];
@@ -21,7 +21,7 @@ install:
   - node --version
   - npm --version
   - cd test
-  - npm install -g elm@$ELM_VERSION elm-test@0.16.1-alpha2
+  - npm install -g elm@$ELM_VERSION project-fuzzball-test
   - npm install
   - git clone https://github.com/NoRedInk/elm-ops-tooling
   - elm-ops-tooling/with_retry.rb elm package install --yes

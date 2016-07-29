@@ -1,7 +1,7 @@
 environment:
-  ELM_VERSION: "0.16.0"
+  ELM_VERSION: "0.17.0"
   matrix:
-  - nodejs_version: "5.0"
+  - nodejs_version: "6.0"
   - nodejs_version: "4.0"
 
 platform:
@@ -16,7 +16,7 @@ install:
   - node --version
   - npm --version
   - cd test
-  - npm install -g elm@%ELM_VERSION% elm-test@0.16.1-alpha2
+  - npm install -g elm@%ELM_VERSION% project-fuzzball-test
   - npm install
   - elm-package install --yes
 
