@@ -19,8 +19,7 @@ describe("emitting", function() {
       var expected = fs.readFileSync(expectedFile, {encoding: "utf8"});
       var actual = fs.readFileSync(path.join(outputDir, "homepage.css"), {encoding: "utf8"});
 
-      assert.strictEqual(expected, actual);
-      done();
-    }, assert.fail);
+      return assert.strictEqual(expected, actual);
+    }).then(done, function() { setTimeout(assert.fail, 1); });
   });
 });

@@ -14,14 +14,14 @@ nav {
     color: rgb(255, 255, 255);
 }
 
-#homepageReactiveLogo {
+#ReactiveLogo {
     display: inline-block;
     margin-left: 150px;
     margin-right: 80px;
     vertical-align: middle;
 }
 
-#homepageBuyTickets {
+#BuyTickets {
     padding: 16px;
     padding-left: 24px;
     padding-right: 24px;

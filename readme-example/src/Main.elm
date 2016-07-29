@@ -11,5 +11,5 @@ main : Html msg
 main =
     Html.div []
         [ Html.div [ class [ MyCss.NavBar ] ] [ Html.text "this has the navbar class" ]
-        , Html.div [ id [ MyCss.Page ] ] [ Html.text "this has the Page id" ]
+        , Html.div [ id MyCss.Page ] [ Html.text "this has the Page id" ]
         ]

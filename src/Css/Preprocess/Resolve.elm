@@ -1,16 +1,29 @@
 module Css.Preprocess.Resolve exposing (compile)
 
+
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures and gathering warnings along the way.
 -}
 
+import String
 import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
 
 
-compile : Preprocess.Stylesheet -> { warnings : List String, css : String }
-compile sheet =
+compile : List Preprocess.Stylesheet -> { warnings: List String, css: String }
+compile styles =
+    let
+        results =
+            List.map compile1 styles
+    in
+        { warnings = List.concatMap .warnings results
+        , css = String.join "\n\n" (List.map .css results)
+        }
+
+
+compile1 : Preprocess.Stylesheet -> { warnings : List String, css : String }
+compile1 sheet =
     let
         ( structureStylesheet, warnings ) =
             toStructure sheet
@@ -276,29 +289,11 @@ applyMixins mixins declarations =
                 }
 
         (ExtendSelector selector nestedMixins) :: rest ->
-            let
-                handleInitial declarationsAndWarnings =
-                    let
-                        result =
-                            applyMixins nestedMixins declarationsAndWarnings.declarations
-                    in
-                        { warnings = declarationsAndWarnings.warnings ++ result.warnings
-                        , declarations = result.declarations
-                        }
-
-                initialResult =
-                    declarations
-                        |> Structure.concatMapLastStyleBlock (Structure.appendToLastSelector selector)
-                        |> List.map (\declaration -> { declarations = [ declaration ], warnings = [] })
-                        |> mapLast handleInitial
-                        |> concatDeclarationsAndWarnings
-
-                nextResult =
-                    applyMixins rest initialResult.declarations
-            in
-                { warnings = initialResult.warnings ++ nextResult.warnings
-                , declarations = nextResult.declarations
-                }
+            applyNestedMixinsToLast
+                nestedMixins
+                rest
+                (Structure.appendRepeatableToLastSelector selector)
+                declarations
 
         (NestSnippet selectorCombinator snippets) :: rest ->
             let
@@ -364,9 +359,11 @@ applyMixins mixins declarations =
                     |> concatDeclarationsAndWarnings
 
         (Preprocess.WithPseudoElement pseudoElement nestedMixins) :: rest ->
-            -- TODO
-            declarations
-                |> applyMixins rest
+            applyNestedMixinsToLast
+                nestedMixins
+                rest
+                (Structure.appendPseudoElementToLastSelector pseudoElement)
+                declarations
 
         (Preprocess.WithMedia mediaQueries nestedMixins) :: rest ->
             let
@@ -388,6 +385,86 @@ applyMixins mixins declarations =
         (Preprocess.ApplyMixins otherMixins) :: rest ->
             declarations
                 |> applyMixins (otherMixins ++ rest)
+
+
+{- To apply nested mixins to a list of declarations, the following flow is used:
+
+* initialResult: we pop off the last declaration, and run function `f` that appends the nested selector to it using `mapLast handleInitial`.
+* nextResult: we pop off the last declaration, and resolve the rest of the remaining children
+
+At the end, we rebuild the declarations using
+
+* current `declarations`
+* declarations of the nested selector, __without__ the last declaration that we popped off (to avoid duplicates inside the variable `declarations`)
+* the declarations of the rest, __without__ the last declaration that we popped off.
+
+This is done in order to facilitate multiple `ExtendSelectors` inside a single `StyleBlock`.
+ -}
+applyNestedMixinsToLast : List Mixin -> List Mixin -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> DeclarationsAndWarnings
+applyNestedMixinsToLast nestedMixins rest f declarations =
+    let
+        handleInitial declarationsAndWarnings =
+            let
+                result =
+                    applyMixins nestedMixins declarationsAndWarnings.declarations
+            in
+                { warnings = declarationsAndWarnings.warnings ++ result.warnings
+                , declarations = result.declarations
+                }
+
+        initialResult =
+            lastDeclaration declarations
+                |> Maybe.map insertMixinsToNestedDecl
+                |> Maybe.withDefault { warnings = [], declarations = [] }
+
+        insertMixinsToNestedDecl lastDecl =
+            Structure.concatMapLastStyleBlock f lastDecl
+                |> List.map (\declaration -> { declarations = [ declaration ], warnings = [] })
+                |> mapLast handleInitial
+                |> concatDeclarationsAndWarnings
+
+        nextResult =
+            lastDeclaration declarations
+                |> Maybe.withDefault []
+                |> applyMixins rest
+
+        withoutParent decls =
+            List.tail decls
+                |> Maybe.withDefault []
+
+        {- We recreate the declarations if necessary. It is possible that
+           there was an `AppendProperty` in between two `ExtendSelectors` or two `WithPseudoElements`
+           or an `AppendProperty` after an `ExtendSelector` or `WithPseudoElement`.
+        -}
+        newDeclarations =
+            case ( List.head nextResult.declarations, List.head <| List.reverse declarations ) of
+                ( Just nextResultParent, Just originalParent ) ->
+                    List.take (List.length declarations - 1) declarations
+                        ++ [ if originalParent /= nextResultParent then
+                                nextResultParent
+                             else
+                                originalParent
+                           ]
+
+                _ ->
+                    declarations
+    in
+        { warnings = initialResult.warnings ++ nextResult.warnings
+        , declarations = newDeclarations ++ (withoutParent initialResult.declarations) ++ (withoutParent nextResult.declarations)
+        }
+
+
+lastDeclaration : List Structure.Declaration -> Maybe (List Structure.Declaration)
+lastDeclaration declarations =
+    case declarations of
+        [] ->
+            Nothing
+
+        x :: [] ->
+            Just [ x ]
+
+        _ :: xs ->
+            lastDeclaration xs
 
 
 expandStyleBlock : Preprocess.StyleBlock -> DeclarationsAndWarnings

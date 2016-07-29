@@ -245,22 +245,40 @@ extendLastSelector selector declarations =
             first :: extendLastSelector selector rest
 
 
-appendToLastSelector : RepeatableSimpleSelector -> StyleBlock -> List StyleBlock
-appendToLastSelector selector styleBlock =
+appendToLastSelector : (Selector -> Selector) -> StyleBlock -> List StyleBlock
+appendToLastSelector f styleBlock =
     case styleBlock of
         StyleBlock only [] properties ->
             [ StyleBlock only [] properties
-            , StyleBlock (appendRepeatableSelector selector only) [] []
+            , StyleBlock (f only) [] []
             ]
 
         StyleBlock first rest properties ->
             let
                 newRest =
-                    mapLast (appendRepeatableSelector selector) rest
+                    List.map f rest
+
+                newFirst =
+                    f first
             in
                 [ StyleBlock first rest properties
-                , StyleBlock first newRest []
+                , StyleBlock newFirst newRest []
                 ]
+
+
+appendRepeatableToLastSelector : RepeatableSimpleSelector -> StyleBlock -> List StyleBlock
+appendRepeatableToLastSelector selector styleBlock =
+    appendToLastSelector (appendRepeatableSelector selector) styleBlock
+
+
+appendPseudoElementToLastSelector : PseudoElement -> StyleBlock -> List StyleBlock
+appendPseudoElementToLastSelector pseudo styleBlock =
+    appendToLastSelector (applyPseudoElement pseudo) styleBlock
+
+
+applyPseudoElement : PseudoElement -> Selector -> Selector
+applyPseudoElement pseudo (Selector sequence selectors _) =
+    Selector sequence selectors <| Just pseudo
 
 
 concatMapLastStyleBlock : (StyleBlock -> List StyleBlock) -> List Declaration -> List Declaration

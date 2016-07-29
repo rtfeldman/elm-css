@@ -1,17 +1,13 @@
-module Main exposing (..)
+port module Main exposing (..)
 
-import Signal exposing (Signal)
-import ElmTest exposing (consoleRunner)
-import Console exposing (IO, run)
-import Task
+import Test.Runner.Node exposing (run)
 import Tests
+import Json.Encode exposing (Value)
 
 
-console : IO ()
-console =
-    consoleRunner Tests.all
+main : Program Never
+main =
+    run emit Tests.all
 
 
-port runner : Signal (Task.Task x ())
-port runner =
-    run console
+port emit : ( String, Value ) -> Cmd msg
