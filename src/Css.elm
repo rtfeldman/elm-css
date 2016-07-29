@@ -648,6 +648,7 @@ type alias BasicProperty =
     , all : Compatible
     , alignItems : Compatible
     , boxSizing : Compatible
+    , color : Compatible
     , cursor : Compatible
     , display : Compatible
     , flexBasis : Compatible
@@ -676,6 +677,7 @@ type alias BasicProperty =
     , units : IncompatibleUnits
     , numericValue : Float
     , unitLabel : String
+    , warnings : List String
     }
 
 
@@ -709,6 +711,7 @@ initial =
     , textIndent = Compatible
     , textDecorationStyle = Compatible
     , boxSizing = Compatible
+    , color = Compatible
     , cursor = Compatible
     , display = Compatible
     , all = Compatible
@@ -732,6 +735,7 @@ initial =
     , units = IncompatibleUnits
     , numericValue = 0
     , unitLabel = ""
+    , warnings = []
     }
 
 
