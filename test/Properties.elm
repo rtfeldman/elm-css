@@ -369,6 +369,15 @@ all =
             , ( cursor initial, "initial" )
             , ( cursor inherit, "inherit" )
             ]
+        , testProperty "outline"
+            [ ( outline3 (px 10) dashed (hsl 120 0.5 0.5), "10px dashed hsl(120, 50%, 50%)" )
+            , ( outline3 (em 1.4) solid (hsla 120 0.5 0.5 0.5), "1.4em solid hsla(120, 50%, 50%, 0.5)" )
+            , ( outline inherit , "inherit" )
+            , ( outline unset, "unset" )
+            , ( outline initial, "initial" )
+            , ( outline zero, "0" )
+            , ( outline none, "none" )
+            ]
         ]
 
 

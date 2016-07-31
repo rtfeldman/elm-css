@@ -566,6 +566,8 @@ type alias Cursor compatible =
     { compatible | value : String, cursor : Compatible }
 
 
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/outline#Values
+-}
 type alias Outline compatible =
     { compatible | value : String, outline : Compatible }
 
