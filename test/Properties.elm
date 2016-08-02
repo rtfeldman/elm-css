@@ -369,6 +369,50 @@ all =
             , ( cursor initial, "initial" )
             , ( cursor inherit, "inherit" )
             ]
+        , testProperty "outline"
+            [ ( outline3 (px 10) dashed (hsl 120 0.5 0.5), "10px dashed hsl(120, 50%, 50%)" )
+            , ( outline3 (em 1.4) solid (hsla 120 0.5 0.5 0.5), "1.4em solid hsla(120, 50%, 50%, 0.5)" )
+            , ( outline inherit , "inherit" )
+            , ( outline unset, "unset" )
+            , ( outline initial, "initial" )
+            , ( outline zero, "0" )
+            , ( outline none, "none" )
+            ]
+        , testProperty "outline-width"
+            [ ( outlineWidth (px 10), "10px" )
+            , ( outlineWidth (em 1.4), "1.4em" )
+            , ( outlineWidth (pct 20), "20%" )
+            , ( outlineWidth inherit , "inherit" )
+            , ( outlineWidth unset, "unset" )
+            , ( outlineWidth initial, "initial" )
+            , ( outlineWidth zero, "0" )
+            , ( outlineWidth none, "none" )
+            ]
+        , testProperty "outline-color"
+            [ ( outlineColor (hsl 120 0.5 0.5), "hsl(120, 50%, 50%)" )
+            , ( outlineColor (hsla 120 0.5 0.5 0.5), "hsla(120, 50%, 50%, 0.5)" )
+            , ( outlineColor transparent, "transparent" )
+            , ( outlineColor inherit , "inherit" )
+            , ( outlineColor unset, "unset" )
+            , ( outlineColor initial, "initial" )
+            ]
+        , testProperty "outline-style"
+            [ ( outlineStyle none, "none" )
+            , ( outlineStyle dashed, "dashed" )
+            , ( outlineStyle dotted, "dotted" )
+            , ( outlineStyle inherit , "inherit" )
+            , ( outlineStyle unset, "unset" )
+            , ( outlineStyle initial, "initial" )
+            ]
+        , testProperty "outline-offset"
+            [ ( outlineOffset zero, "0" )
+            , ( outlineOffset (px 10), "10px" )
+            , ( outlineOffset (pct 10), "10%" )
+            , ( outlineOffset (px 10), "10px" )
+            , ( outlineOffset inherit , "inherit" )
+            , ( outlineOffset unset, "unset" )
+            , ( outlineOffset initial, "initial" )
+            ]
         ]
 
 
