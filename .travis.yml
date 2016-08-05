@@ -1,5 +1,9 @@
 sudo: false
 
+cache:
+  directories:
+    - test/elm-stuff/build-artifacts
+
 os:
   - linux
   - osx
