@@ -1,6 +1,6 @@
 # elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
 
-`elm-css` lets you define CSS in Elm:
+`elm-css` lets you define CSS in Elm, like so:
 
 ```elm
 module MyCss exposing (..)
@@ -50,7 +50,7 @@ primaryAccentColor =
     hex "ccffaa"
 ```
 
-`(.)` defines a class selector and `(#)` defines an ID selector.
+*Note:* `(.)` defines a class selector and `(#)` defines an ID selector.
 
 Here's what you can do with this code:
 
