@@ -4435,13 +4435,19 @@ qt str =
     toString str
 
 
-{-| -}
+{-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).
+If you want to refer to a font by its name (like Helvetica or Arial), use [`fontFamilies`](#fontFamilies) instead.
+-}
 fontFamily : FontFamily a -> Mixin
 fontFamily =
     prop1 "font-family"
 
 
-{-| -}
+{-| For multiple font families:
+
+    fontFamilies  ["Verdana", "Arial"]
+    fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
+-}
 fontFamilies : List String -> Mixin
 fontFamilies =
     prop1 "font-family" << stringsToValue
