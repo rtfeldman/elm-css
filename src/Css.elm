@@ -4969,7 +4969,7 @@ The return value of `mixin` can be used like any other property, since all
 properties in elm-css are implemented as mixins.
 
     underlineOnHover =
-        mixin "underlineOnHover"
+        mixin
             [ textDecoration none
 
             , hover

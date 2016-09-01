@@ -178,21 +178,16 @@ a:hover {
 }
 ```
 
-You can also use `with` to add classes and IDs. For example:
+You can also use `withClass` to add classes. For example:
 
 ```elm
 stylesheet { name = "fancyButton" }
   [ button
       [ padding (px 5)
 
-      , with ((.) Large)
+      , withClass Large
           [ fontSize (px 24)
           , padding (px 30)
-          ]
-
-      , with ((#) SignUp)
-          [ fontWeight bold
-          , hex "aaffbb"
           ]
       ]
   ]
