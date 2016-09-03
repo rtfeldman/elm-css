@@ -13,6 +13,7 @@ program
   .option('-m, --module [moduleName]', '(optional) name of stylesheets module in your project', null, 'Stylesheets')
   .option('-p, --port [portName]', '(optional) name of the port from which to read CSS results', null, 'files')
   .option('-r, --root [projectDir]', '(optional) root directory of the project', process.cwd())
+  .option('-e, --pathToMake [pathToMake]', '(optional) path to elm-make')
   .action(function(src) {
     sourcePath = src;
   })
@@ -29,7 +30,8 @@ elmCss(
   sourcePath,
   program.output,
   program.module,
-  program.port
+  program.port,
+  program.pathToMake
 ).then(function (results) {
   console.log(chalk.green('Successfully generated output! The following css files were created: '));
   results.forEach(function (result) {
