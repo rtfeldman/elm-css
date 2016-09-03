@@ -15,8 +15,8 @@ install:
   - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version) $env:Platform
   - node --version
   - npm --version
-  - cd test
-  - npm install -g elm@%ELM_VERSION% project-fuzzball-test
+  - cd tests
+  - npm install -g elm@%ELM_VERSION% elm-test
   - npm install
   - elm-package install --yes
 
