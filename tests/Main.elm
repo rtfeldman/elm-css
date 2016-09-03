@@ -5,7 +5,7 @@ import Tests
 import Json.Encode exposing (Value)
 
 
-main : Program Never
+main : Program Value
 main =
     run emit Tests.all
 

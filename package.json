@@ -7,10 +7,10 @@
     "elm-css": "./elm-css.js"
   },
   "directories": {
-    "test": "test"
+    "test": "tests"
   },
   "scripts": {
-    "test": "cd test && elm-test TestRunner.elm && mocha *.js"
+    "test": "elm-test && cd tests && mocha *.js"
   },
   "repository": {
     "type": "git",
