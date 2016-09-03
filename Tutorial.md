@@ -39,7 +39,7 @@ stylesheet { name = "homepage" }
       ]
 
   , (.) MenuItem
-      [ fontFamily [ "Georga", "serif" ]
+      [ fontFamilies [ "Georga", "serif" ]
       , fontWeight bold
       ]
   ]
