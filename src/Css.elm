@@ -2194,6 +2194,30 @@ inline =
 
 
 {-| -}
+table : Display {}
+table =
+    { value = "table"
+    , display = Compatible
+    }
+
+
+{-| -}
+tableRow : Display {}
+tableRow =
+    { value = "table-row"
+    , display = Compatible
+    }
+
+
+{-| -}
+tableCell : Display {}
+tableCell =
+    { value = "table-cell"
+    , display = Compatible
+    }
+
+
+{-| -}
 none :
     { borderStyle : Compatible
     , cursor : Compatible
