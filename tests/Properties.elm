@@ -447,6 +447,14 @@ all =
             , ( listStyleType telugu, "telugu" )
             , ( listStyleType thai, "thai" )
             ]
+        , testProperty "list-style-position"
+            [ ( listStylePosition inherit, "inherit" )
+            , ( listStylePosition initial, "initial" )
+            , ( listStylePosition unset, "unset" )
+
+            , ( listStylePosition inside, "inside" )
+            , ( listStylePosition outside, "outside" )
+            ]
         ]
 
 
