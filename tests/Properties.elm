@@ -468,6 +468,9 @@ all =
             , ( listStyle2 disc inside, "disc inside" )
             , ( listStyle2 inside disc, "inside disc" )
             , ( listStyle2 outside decimal, "outside decimal" )
+            , ( listStyle3 disc inside none, "disc inside none" )
+            , ( listStyle3 inside none circle, "inside none circle" )
+            , ( listStyle3 none outside decimal, "none outside decimal" )
             ]
         ]
 
