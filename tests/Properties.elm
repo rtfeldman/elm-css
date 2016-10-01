@@ -189,10 +189,10 @@ all =
             , ( display inline, "inline" )
             , ( display block, "block" )
             , ( display inlineBlock, "inline-block" )
+            , ( display listItem, "list-item" )
+            , ( display inlineListItem, "inline-list-item" )
             , ( displayFlex, "flex" )
               -- TODO display: contents;
-              -- TODO display: list-item;
-              -- TODO display: inline-list-item;
               -- TODO display: table;
               -- TODO display: inline-table;
               -- TODO display: table-cell;
