@@ -451,9 +451,23 @@ all =
             [ ( listStylePosition inherit, "inherit" )
             , ( listStylePosition initial, "initial" )
             , ( listStylePosition unset, "unset" )
-
             , ( listStylePosition inside, "inside" )
             , ( listStylePosition outside, "outside" )
+            ]
+        , testProperty "list-style"
+            [ ( listStyle inherit, "inherit" )
+            , ( listStyle initial, "initial" )
+            , ( listStyle unset, "unset" )
+            , ( listStyle none, "none" )
+            , ( listStyle inside, "inside" )
+            , ( listStyle outside, "outside" )
+            , ( listStyle disc, "disc" )
+            , ( listStyle circle, "circle" )
+            , ( listStyle square, "square" )
+            , ( listStyle decimal, "decimal" )
+            , ( listStyle2 disc inside, "disc inside" )
+            , ( listStyle2 inside disc, "inside disc" )
+            , ( listStyle2 outside decimal, "outside decimal" )
             ]
         ]
 
