@@ -1045,12 +1045,6 @@ type alias TextEmphasisColor compatible =
 type alias Position compatible =
     { compatible | value : String, position : Compatible }
     
-    
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/float#Values
--}
-type alias FloatAlign a b =
-    Length a b -> Mixin
-
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values
 -}
