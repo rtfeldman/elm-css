@@ -1048,7 +1048,7 @@ type alias Position compatible =
     
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/float#Values
 -}
-type alias Float a b =
+type alias FloatAlign a b =
     Length a b -> Mixin
 
 
@@ -3429,7 +3429,7 @@ floatAlign : FloatAlign compatible -> Mixin
 -}
 float : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 float fn =
-    getOverloadedProperty "float" "float" (fn lengthForOverloadedProperty)
+    getOverloadedProperty "floatAlign" "float" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
