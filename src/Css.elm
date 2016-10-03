@@ -2435,6 +2435,7 @@ transformStyle =
     prop1 "transform-style"
 
 
+
 {- LIST STYLE POSITION -}
 
 
@@ -2461,6 +2462,7 @@ outside =
     , listStylePosition = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
     }
+
 
 
 {- LIST STYLE TYPE -}
@@ -2741,6 +2743,7 @@ thai =
     , listStyleType = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
     }
+
 
 
 {- LIST STYLE SHORTHAND -}
@@ -5290,6 +5293,7 @@ lineHeight : Length compatible units -> Mixin
 lineHeight =
     prop1 "line-height"
 
+
 {-| Sets [`letter-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
 
     letterSpacing (px 10)
@@ -5474,6 +5478,7 @@ fontVariantNumerics =
 
 {- CURSOR PROPERTIES -}
 
+
 {-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
 specifies the mouse cursor displayed when mouse pointer is over an element.
 -}
@@ -5484,6 +5489,7 @@ cursor =
 
 
 {- CURSOR VALUES -}
+
 
 {-| -}
 default : Cursor {}
@@ -6476,7 +6482,6 @@ stringsToValue list =
         { value = "none" }
     else
         { value = String.join ", " (List.map (\s -> s) list) }
-
 
 
 {-| Compile the given stylesheets to a CSS string, or to an error
