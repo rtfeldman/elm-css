@@ -145,8 +145,23 @@ module Css
         , cm
         , inches
         , pc
+        , Pct
+        , Em
+        , Ex
+        , Ch
+        , Rem
+        , Vh
+        , Vw
+        , Vmin
+        , Vmax
+        , Px
+        , Mm
+        , Cm
+        , In
+        , Pt
+        , Pc
         , int
-        , float
+        , num
         , borderColor
         , borderColor2
         , borderColor3
@@ -542,7 +557,10 @@ module Css
 @docs borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
 
 # Length
-@docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, float, zero, (|+|), (|-|), (|*|), (|/|)
+@docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, (|+|), (|-|), (|*|), (|/|)
+
+# Length Units
+@docs Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax,  Mm, Cm, In, Pt, Pc
 
 # Angle
 @docs deg, rad, grad, turn
@@ -1805,7 +1823,13 @@ zero =
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
-pct : Float -> ExplicitLength PercentageUnits
+type alias Pct =
+    ExplicitLength PercentageUnits
+
+
+{-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
+-}
+pct : Float -> Pct
 pct =
     lengthConverter PercentageUnits "%"
 
@@ -1816,7 +1840,13 @@ type PercentageUnits
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
-em : Float -> ExplicitLength EmUnits
+type alias Em =
+    ExplicitLength EmUnits
+
+
+{-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
+-}
+em : Float -> Em
 em =
     lengthConverter EmUnits "em"
 
@@ -1827,7 +1857,13 @@ type EmUnits
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
-ex : Float -> ExplicitLength ExUnits
+type alias Ex =
+    ExplicitLength ExUnits
+
+
+{-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
+-}
+ex : Float -> Ex
 ex =
     lengthConverter ExUnits "ex"
 
@@ -1838,7 +1874,13 @@ type ExUnits
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
-ch : Float -> ExplicitLength ChUnits
+type alias Ch =
+    ExplicitLength ChUnits
+
+
+{-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
+-}
+ch : Float -> Ch
 ch =
     lengthConverter ChUnits "ch"
 
@@ -1849,7 +1891,13 @@ type ChUnits
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
-rem : Float -> ExplicitLength RemUnits
+type alias Rem =
+    ExplicitLength RemUnits
+
+
+{-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
+-}
+rem : Float -> Rem
 rem =
     lengthConverter RemUnits "rem"
 
@@ -1860,7 +1908,13 @@ type RemUnits
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
-vh : Float -> ExplicitLength VhUnits
+type alias Vh =
+    ExplicitLength VhUnits
+
+
+{-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
+-}
+vh : Float -> Vh
 vh =
     lengthConverter VhUnits "vh"
 
@@ -1871,7 +1925,13 @@ type VhUnits
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
-vw : Float -> ExplicitLength VwUnits
+type alias Vw =
+    ExplicitLength VwUnits
+
+
+{-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
+-}
+vw : Float -> Vw
 vw =
     lengthConverter VwUnits "vw"
 
@@ -1882,7 +1942,13 @@ type VwUnits
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
-vmin : Float -> ExplicitLength VMinUnits
+type alias Vmin =
+    ExplicitLength VMinUnits
+
+
+{-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
+-}
+vmin : Float -> Vmin
 vmin =
     lengthConverter VMinUnits "vmin"
 
@@ -1893,7 +1959,13 @@ type VMinUnits
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
-vmax : Float -> ExplicitLength VMaxUnits
+type alias Vmax =
+    ExplicitLength VMaxUnits
+
+
+{-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
+-}
+vmax : Float -> Vmax
 vmax =
     lengthConverter VMaxUnits "vmax"
 
@@ -1904,7 +1976,13 @@ type VMaxUnits
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
-px : Float -> ExplicitLength PxUnits
+type alias Px =
+    ExplicitLength PxUnits
+
+
+{-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
+-}
+px : Float -> Px
 px =
     lengthConverter PxUnits "px"
 
@@ -1915,7 +1993,13 @@ type PxUnits
 
 {-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
-mm : Float -> ExplicitLength MMUnits
+type alias Mm =
+    ExplicitLength MMUnits
+
+
+{-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+-}
+mm : Float -> Mm
 mm =
     lengthConverter MMUnits "mm"
 
@@ -1926,7 +2010,13 @@ type MMUnits
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
-cm : Float -> ExplicitLength CMUnits
+type alias Cm =
+    ExplicitLength CMUnits
+
+
+{-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
+-}
+cm : Float -> Cm
 cm =
     lengthConverter CMUnits "cm"
 
@@ -1936,10 +2026,16 @@ type CMUnits
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
+-}
+type alias In =
+    ExplicitLength InchUnits
+
+
+{-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 -}
-inches : Float -> ExplicitLength InchUnits
+inches : Float -> In
 inches =
     lengthConverter InchUnits "in"
 
@@ -1950,7 +2046,13 @@ type InchUnits
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
-pt : Float -> ExplicitLength PtUnits
+type alias Pt =
+    ExplicitLength PtUnits
+
+
+{-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
+-}
+pt : Float -> Pt
 pt =
     lengthConverter PtUnits "pt"
 
@@ -1961,7 +2063,13 @@ type PtUnits
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
-pc : Float -> ExplicitLength PcUnits
+type alias Pc =
+    ExplicitLength PcUnits
+
+
+{-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
+-}
+pc : Float -> Pc
 pc =
     lengthConverter PcUnits "pc"
 
@@ -1992,8 +2100,8 @@ type UnitlessInteger
 {-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
 which accept unitless numbers.
 -}
-float : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
-float val =
+num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
+num val =
     { value = numberToString val
     , lengthOrNumber = Compatible
     , number = Compatible
@@ -2435,6 +2543,7 @@ transformStyle =
     prop1 "transform-style"
 
 
+
 {- LIST STYLE POSITION -}
 
 
@@ -2461,6 +2570,7 @@ outside =
     , listStylePosition = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
     }
+
 
 
 {- LIST STYLE TYPE -}
@@ -2741,6 +2851,7 @@ thai =
     , listStyleType = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
     }
+
 
 
 {- LIST STYLE SHORTHAND -}
@@ -5290,6 +5401,7 @@ lineHeight : Length compatible units -> Mixin
 lineHeight =
     prop1 "line-height"
 
+
 {-| Sets [`letter-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
 
     letterSpacing (px 10)
@@ -5474,6 +5586,7 @@ fontVariantNumerics =
 
 {- CURSOR PROPERTIES -}
 
+
 {-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
 specifies the mouse cursor displayed when mouse pointer is over an element.
 -}
@@ -5484,6 +5597,7 @@ cursor =
 
 
 {- CURSOR VALUES -}
+
 
 {-| -}
 default : Cursor {}
@@ -6476,7 +6590,6 @@ stringsToValue list =
         { value = "none" }
     else
         { value = String.join ", " (List.map (\s -> s) list) }
-
 
 
 {-| Compile the given stylesheets to a CSS string, or to an error
