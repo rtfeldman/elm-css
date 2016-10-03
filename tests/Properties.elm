@@ -245,11 +245,11 @@ all =
             ]
         , testProperty "flex-grow"
             [ ( flexGrow (int 1), "1" )
-            , ( flexGrow (float 0.2), "0.2" )
+            , ( flexGrow (num 0.2), "0.2" )
             ]
         , testProperty "flex-shrink"
             [ ( flexShrink (int 1), "1" )
-            , ( flexShrink (float 0.2), "0.2" )
+            , ( flexShrink (num 0.2), "0.2" )
             ]
         , testProperty "flex-direction"
             [ ( flexDirection initial, "initial" )
