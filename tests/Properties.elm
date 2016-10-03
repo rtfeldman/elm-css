@@ -189,10 +189,10 @@ all =
             , ( display inline, "inline" )
             , ( display block, "block" )
             , ( display inlineBlock, "inline-block" )
+            , ( display listItem, "list-item" )
+            , ( display inlineListItem, "inline-list-item" )
             , ( displayFlex, "flex" )
               -- TODO display: contents;
-              -- TODO display: list-item;
-              -- TODO display: inline-list-item;
               -- TODO display: table;
               -- TODO display: inline-table;
               -- TODO display: table-cell;
@@ -412,6 +412,65 @@ all =
             , ( outlineOffset inherit, "inherit" )
             , ( outlineOffset unset, "unset" )
             , ( outlineOffset initial, "initial" )
+            ]
+        , testProperty "list-style-type"
+            [ ( listStyleType none, "none" )
+            , ( listStyleType initial, "initial" )
+            , ( listStyleType inherit, "inherit" )
+            , ( listStyleType disc, "disc" )
+            , ( listStyleType circle, "circle" )
+            , ( listStyleType square, "square" )
+            , ( listStyleType decimal, "decimal" )
+            , ( listStyleType decimalLeadingZero, "decimal-leading-zero" )
+            , ( listStyleType lowerRoman, "lower-roman" )
+            , ( listStyleType upperRoman, "upper-roman" )
+            , ( listStyleType lowerGreek, "lower-greek" )
+            , ( listStyleType lowerAlpha, "lower-alpha" )
+            , ( listStyleType lowerLatin, "lower-latin" )
+            , ( listStyleType upperAlpha, "upper-alpha" )
+            , ( listStyleType upperLatin, "upper-latin" )
+            , ( listStyleType arabicIndic, "arabic-indic" )
+            , ( listStyleType armenian, "armenian" )
+            , ( listStyleType bengali, "bengali" )
+            , ( listStyleType cjkEarthlyBranch, "cjk-earthly-branch" )
+            , ( listStyleType cjkHeavenlyStem, "cjk-heavenly-stem" )
+            , ( listStyleType devanagari, "devanagari" )
+            , ( listStyleType georgian, "georgian" )
+            , ( listStyleType gujarati, "gujarati" )
+            , ( listStyleType gurmukhi, "gurmukhi" )
+            , ( listStyleType kannada, "kannada" )
+            , ( listStyleType khmer, "khmer" )
+            , ( listStyleType lao, "lao" )
+            , ( listStyleType malayalam, "malayalam" )
+            , ( listStyleType myanmar, "myanmar" )
+            , ( listStyleType oriya, "oriya" )
+            , ( listStyleType telugu, "telugu" )
+            , ( listStyleType thai, "thai" )
+            ]
+        , testProperty "list-style-position"
+            [ ( listStylePosition inherit, "inherit" )
+            , ( listStylePosition initial, "initial" )
+            , ( listStylePosition unset, "unset" )
+            , ( listStylePosition inside, "inside" )
+            , ( listStylePosition outside, "outside" )
+            ]
+        , testProperty "list-style"
+            [ ( listStyle inherit, "inherit" )
+            , ( listStyle initial, "initial" )
+            , ( listStyle unset, "unset" )
+            , ( listStyle none, "none" )
+            , ( listStyle inside, "inside" )
+            , ( listStyle outside, "outside" )
+            , ( listStyle disc, "disc" )
+            , ( listStyle circle, "circle" )
+            , ( listStyle square, "square" )
+            , ( listStyle decimal, "decimal" )
+            , ( listStyle2 disc inside, "disc inside" )
+            , ( listStyle2 inside disc, "inside disc" )
+            , ( listStyle2 outside decimal, "outside decimal" )
+            , ( listStyle3 disc inside none, "disc inside none" )
+            , ( listStyle3 inside none circle, "inside none circle" )
+            , ( listStyle3 none outside decimal, "none outside decimal" )
             ]
         ]
 
