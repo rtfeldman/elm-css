@@ -204,6 +204,7 @@ view =
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [**6.0.0**](https://github.com/rtfeldman/elm-css/tree/6.0.0) | `float` is now `num`. Length units expose type aliases, e.g. `Px`. Many new keywords!
 | [**5.0.0**](https://github.com/rtfeldman/elm-css/tree/5.0.0) | Have `compile` accept multiple files, add more keywords.
 | [**4.0.2**](https://github.com/rtfeldman/elm-css/tree/4.0.2) | Fix for [#140](https://github.com/rtfeldman/elm-css/issues/140)
 | [**4.0.1**](https://github.com/rtfeldman/elm-css/tree/4.0.1) | Fix for [#136](https://github.com/rtfeldman/elm-css/issues/136)
