@@ -3417,13 +3417,13 @@ prop4 key argA argB argC argD =
     
     
 {-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
-floatAlign : FloatAlign compatible -> Mixin
+float : Float compatible -> Mixin
 
     float right
 -}
 float : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
 float fn =
-    getOverloadedProperty "floatAlign" "float" (fn lengthForOverloadedProperty)
+    getOverloadedProperty "float" "float" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
