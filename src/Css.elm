@@ -1372,7 +1372,7 @@ rgba red green blue alpha =
         , red = red
         , green = green
         , blue = blue
-        , alpha = 1
+        , alpha = alpha
         }
 
 
