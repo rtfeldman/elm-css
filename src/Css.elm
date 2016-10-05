@@ -3557,9 +3557,13 @@ textShadow4 =
     boxShadow2 (px 1) (px 2)
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
     boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
 boxShadow : None compatible -> Mixin
@@ -3573,9 +3577,13 @@ boxShadow =
     boxShadow2 (px 1) (px 2)
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
     boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
 boxShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
@@ -3589,12 +3597,16 @@ boxShadow2 =
     boxShadow2 (px 1) (px 2)
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
     boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Value c -> Mixin
+boxShadow3 : Value a -> Length compatibleB unitsB -> Value c -> Mixin
 boxShadow3 =
     prop3 "box-shadow"
 
@@ -3605,12 +3617,16 @@ boxShadow3 =
     boxShadow2 (px 1) (px 2)
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
     boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Value d -> Mixin
+boxShadow4 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Value d -> Mixin
 boxShadow4 =
     prop4 "box-shadow"
 
@@ -3621,12 +3637,16 @@ boxShadow4 =
     boxShadow2 (px 1) (px 2)
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
     boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow5 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC  -> Length compatibleD unitsD-> ColorValue compatibleE -> Mixin
+boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC  -> Length compatibleD unitsD-> ColorValue compatibleE -> Mixin
 boxShadow5 =
     prop5 "box-shadow"
 
