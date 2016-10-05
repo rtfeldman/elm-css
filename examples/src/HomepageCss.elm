@@ -12,6 +12,7 @@ css =
             [ backgroundColor (rgb 90 90 90)
             , boxSizing borderBox
             , padding (px -80)
+            , boxShadow5 inset (px 2) (px 3) (px 4) (hex "333")
             ]
         , nav
             [ display inlineBlock
