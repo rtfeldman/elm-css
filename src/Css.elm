@@ -2193,7 +2193,7 @@ inline =
     }
 
 
-{-| -}
+{-| Sets the display style to [`table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values) -}
 table : Display {}
 table =
     { value = "table"
@@ -2201,7 +2201,7 @@ table =
     }
 
 
-{-| -}
+{-| Sets the display style to [`tableRow`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values) -}
 tableRow : Display {}
 tableRow =
     { value = "table-row"
@@ -2209,7 +2209,7 @@ tableRow =
     }
 
 
-{-| -}
+{-| Sets the display style to [`tableCell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values) -}
 tableCell : Display {}
 tableCell =
     { value = "table-cell"
