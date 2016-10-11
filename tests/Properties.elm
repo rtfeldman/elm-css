@@ -472,6 +472,19 @@ all =
             , ( listStyle3 inside none circle, "inside none circle" )
             , ( listStyle3 none outside decimal, "none outside decimal" )
             ]
+        , testProperty "box-shadow"
+            [ ( boxShadow none, "none" )
+            , ( boxShadow2 (px 1) (px 2) , "1px 2px")
+            , ( boxShadow3 (px 1) (px 2) (hex "333" ) , "1px 2px #333")
+            , ( boxShadow3 (px 1) (px 2) (px 3) , "1px 2px 3px")
+            , ( boxShadow3 inset (px 2) (px 3) , "inset 2px 3px")
+            , ( boxShadow4 (px 1) (px 2) (px 3) (hex "333" ) , "1px 2px 3px #333")
+            , ( boxShadow4 inset (px 2) (px 3) (hex "333" ) , "inset 2px 3px #333")
+            , ( boxShadow4 (px 1) (px 2) (px 3) (px 4) , "1px 2px 3px 4px")
+            , ( boxShadow4 inset (px 2) (px 3) (px 4) , "inset 2px 3px 4px")
+            , ( boxShadow5 (px 1) (px 2) (px 3) (px 4) (hex "333") , "1px 2px 3px 4px #333")
+            , ( boxShadow5 inset (px 2) (px 3) (px 4) (hex "333") , "inset 2px 3px 4px #333")
+            ]
         ]
 
 
