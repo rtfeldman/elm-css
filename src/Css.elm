@@ -5652,7 +5652,7 @@ withMedia =
 
     lineHeight (px 10)
 -}
-lineHeight : Length compatible units -> Mixin
+lineHeight : LengthOrNumber compatible -> Mixin
 lineHeight =
     prop1 "line-height"
 

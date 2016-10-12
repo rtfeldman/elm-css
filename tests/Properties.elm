@@ -145,6 +145,17 @@ all =
             , ( textDecorationLines [ none ], "none" )
             , ( textDecorationLines [ underline, overline, lineThrough ], "underline overline line-through" )
             ]
+        , testProperty "line-height"
+            [ ( lineHeight (px 1), "1px" )
+            , ( lineHeight (pct 10), "10%" )
+            , ( lineHeight (em 1.2), "1.2em" )
+            , ( lineHeight (pt 12), "12pt" )
+            , ( lineHeight (num 1.8), "1.8" )
+            , ( lineHeight (num 0), "0" )
+            , ( lineHeight inherit, "inherit" )
+            , ( lineHeight initial, "initial" )
+            , ( lineHeight unset, "unset" )
+            ]
         , testProperty "overflow-x"
             [ ( overflowX initial, "initial" )
             , ( overflowX unset, "unset" )
