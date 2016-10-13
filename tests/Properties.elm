@@ -330,6 +330,13 @@ all =
             , ( alignSelf baseline, "baseline" )
             , ( alignSelf stretch, "stretch" )
             ]
+        , testProperty "justify-content"
+            [ ( justifyContent flexStart, "flex-start" )
+            , ( justifyContent flexEnd, "flex-end" )
+            , ( justifyContent center, "center" )
+            , ( justifyContent spaceAround, "space-around" )
+            , ( justifyContent spaceBetween, "space-between" )
+            ]
         , testProperty "opacity"
             [ ( opacity inherit, "inherit" )
             , ( opacity (int 1), "1" )
