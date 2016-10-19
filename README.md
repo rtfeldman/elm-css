@@ -217,3 +217,8 @@ view =
 | [**2.2.0**](https://github.com/rtfeldman/elm-css/tree/2.2.0) | Expose more types
 | [**1.1.0**](https://github.com/rtfeldman/elm-css/tree/1.1.0) | Add Helpers
 | [**1.0.0**](https://github.com/rtfeldman/elm-css/tree/1.0.0) | Initial Release
+
+
+## Related Projects
+
+* [Elm CSS Normalize](https://github.com/scottcorgan/elm-css-normalize)
