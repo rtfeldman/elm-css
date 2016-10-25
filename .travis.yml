@@ -24,7 +24,7 @@ install:
   - nvm use $TARGET_NODE_VERSION
   - node --version
   - npm --version
-  - cd test
+  - cd tests
   - npm install -g elm@$ELM_VERSION elm-test
   - npm install
   - git clone https://github.com/NoRedInk/elm-ops-tooling

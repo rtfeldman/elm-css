@@ -72,7 +72,7 @@ bug99 =
 bug140 : Stylesheet
 bug140 =
     stylesheet
-        [ each [ input, select, selector "textarea"]
+        [ each [ input, select, selector "textarea" ]
             [ focus
                 [ borderColor (hex "#000000")
                 ]
@@ -384,5 +384,49 @@ pseudoClassStylesheet =
             , disabled
                 [ marginTop (px 20) ]
             , backgroundColor (hex "#aaa")
+            ]
+        ]
+
+
+backgrounds : Stylesheet
+backgrounds =
+    (stylesheet << namespace "background-test")
+        [ div
+            [ backgroundColor (rgb 128 127 126)
+            , backgroundRepeat repeatX
+            , backgroundRepeat repeatY
+            , backgroundRepeat2 repeat noRepeat
+            , backgroundRepeat2 space Css.round
+            , backgroundAttachment local
+            , backgroundAttachment scroll
+            , backgroundAttachment fixed
+            , backgroundBlendMode color
+            , backgroundBlendMode screenBlendMode
+            , backgroundBlendMode multiply
+            , backgroundBlendMode overlay
+            , backgroundBlendMode darken
+            , backgroundBlendMode lighten
+            , backgroundBlendMode colorDodge
+            , backgroundBlendMode colorBurn
+            , backgroundBlendMode hardLight
+            , backgroundBlendMode softLight
+            , backgroundBlendMode difference
+            , backgroundBlendMode exclusion
+            , backgroundBlendMode hue
+            , backgroundBlendMode saturation
+            , backgroundBlendMode luminosity
+            , backgroundClip borderBox
+            , backgroundClip paddingBox
+            , backgroundClip contentBox
+            , backgroundImage (url "http://example.com/elm.png")
+            , backgroundOrigin borderBox
+            , backgroundOrigin paddingBox
+            , backgroundOrigin contentBox
+            , backgroundSize cover
+            , backgroundSize contain
+            , backgroundSize (px 50)
+            , backgroundSize2 auto (px 20)
+            , backgroundPosition center
+            , backgroundPosition2 (pct 10) zero
             ]
         ]
