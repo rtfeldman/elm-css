@@ -829,10 +829,6 @@ type alias FontStyleOrFeatureTagValue compatible =
 --       , fontWeight : Compatible }
 
 
-type alias NumberedWeight =
-    { value : String, fontWeight : Compatible }
-
-
 type alias FontVariant compatible =
     { compatible | value : String, fontVariant : Compatible }
 
