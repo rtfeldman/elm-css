@@ -821,12 +821,8 @@ type alias FontStyleOrFeatureTagValue compatible =
     { compatible | value : String, warnings : List String, fontStyle : Compatible, featureTagValue : Compatible }
 
 
-
--- type alias FontWeight compatible =
---     { compatible
---       | value : String
---       , lengthOrNumber : Compatible
---       , fontWeight : Compatible }
+type alias FontWeight compatible =
+    { compatible | value : String, fontWeight : Compatible }
 
 
 type alias FontVariant compatible =
@@ -2415,11 +2411,12 @@ type PcUnits
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-int : Int -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))
+int : Int -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger })))
 int val =
     { value = numberToString val
     , lengthOrNumber = Compatible
     , number = Compatible
+    , fontWeight = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , numericValue = toFloat val
     , unitLabel = ""
@@ -4660,11 +4657,12 @@ larger =
 
 
 {-| -}
-normal : FontStyleOrFeatureTagValue {}
+normal : FontStyleOrFeatureTagValue (FontWeight {})
 normal =
     { value = "normal"
     , warnings = []
     , fontStyle = Compatible
+    , fontWeight = Compatible
     , featureTagValue = Compatible
     }
 
@@ -4686,26 +4684,26 @@ oblique =
 
 
 {-| -}
-bold : LengthOrNumberOrAutoOrNoneOrContent {}
+bold : FontWeight {}
 bold =
     { value = "bold"
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    , fontWeight = Compatible
     }
 
 
 {-| -}
-lighter : LengthOrNumberOrAutoOrNoneOrContent {}
+lighter : FontWeight {}
 lighter =
     { value = "lighter"
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    , fontWeight = Compatible
     }
 
 
 {-| -}
-bolder : LengthOrNumberOrAutoOrNoneOrContent {}
+bolder : FontWeight {}
 bolder =
     { value = "bolder"
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    , fontWeight = Compatible
     }
 
 
@@ -6197,7 +6195,7 @@ fontStyle =
     fontWeight  bold
     fontWeight  (int 300)
 -}
-fontWeight : LengthOrNumberOrAutoOrNoneOrContent a -> Mixin
+fontWeight : FontWeight a -> Mixin
 fontWeight { value } =
     let
         validWeight weight =
