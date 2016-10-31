@@ -299,6 +299,7 @@ all =
             [ ( order (int 1), "1" ) ]
         , testProperty "font-weight"
             [ ( fontWeight bold, "bold" )
+            , ( fontWeight normal, "normal" )
             , ( fontWeight (int 100), "100" )
             , ( fontWeight (int 200), "200" )
             , ( fontWeight (int 300), "300" )
