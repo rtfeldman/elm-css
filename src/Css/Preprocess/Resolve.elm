@@ -1,6 +1,5 @@
 module Css.Preprocess.Resolve exposing (compile)
 
-
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures and gathering warnings along the way.
 -}
@@ -11,7 +10,7 @@ import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
 
 
-compile : List Preprocess.Stylesheet -> { warnings: List String, css: String }
+compile : List Preprocess.Stylesheet -> { warnings : List String, css : String }
 compile styles =
     let
         results =
@@ -387,19 +386,22 @@ applyMixins mixins declarations =
                 |> applyMixins (otherMixins ++ rest)
 
 
+
 {- To apply nested mixins to a list of declarations, the following flow is used:
 
-* initialResult: we pop off the last declaration, and run function `f` that appends the nested selector to it using `mapLast handleInitial`.
-* nextResult: we pop off the last declaration, and resolve the rest of the remaining children
+   * initialResult: we pop off the last declaration, and run function `f` that appends the nested selector to it using `mapLast handleInitial`.
+   * nextResult: we pop off the last declaration, and resolve the rest of the remaining children
 
-At the end, we rebuild the declarations using
+   At the end, we rebuild the declarations using
 
-* current `declarations`
-* declarations of the nested selector, __without__ the last declaration that we popped off (to avoid duplicates inside the variable `declarations`)
-* the declarations of the rest, __without__ the last declaration that we popped off.
+   * current `declarations`
+   * declarations of the nested selector, __without__ the last declaration that we popped off (to avoid duplicates inside the variable `declarations`)
+   * the declarations of the rest, __without__ the last declaration that we popped off.
 
-This is done in order to facilitate multiple `ExtendSelectors` inside a single `StyleBlock`.
- -}
+   This is done in order to facilitate multiple `ExtendSelectors` inside a single `StyleBlock`.
+-}
+
+
 applyNestedMixinsToLast : List Mixin -> List Mixin -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> DeclarationsAndWarnings
 applyNestedMixinsToLast nestedMixins rest f declarations =
     let
