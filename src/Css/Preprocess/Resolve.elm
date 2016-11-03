@@ -8,6 +8,7 @@ import String
 import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
+import Tuple
 
 
 compile : List Preprocess.Stylesheet -> { warnings : List String, css : String }
@@ -300,7 +301,7 @@ applyMixins mixins declarations =
                 chain (Structure.Selector originalSequence originalTuples originalPseudoElement) (Structure.Selector newSequence newTuples newPseudoElement) =
                     Structure.Selector originalSequence
                         (originalTuples ++ (( selectorCombinator, newSequence ) :: newTuples))
-                        (Maybe.oneOf [ newPseudoElement, originalPseudoElement ])
+                        (oneOf [ newPseudoElement, originalPseudoElement ])
 
                 expandDeclaration : SnippetDeclaration -> DeclarationsAndWarnings
                 expandDeclaration declaration =
@@ -506,7 +507,7 @@ toDocumentRule str1 str2 str3 str4 declaration =
 extractWarnings : List Preprocess.Property -> ( List String, List Structure.Property )
 extractWarnings properties =
     ( List.concatMap .warnings properties
-    , List.map (\prop -> snd (extractWarning prop)) properties
+    , List.map (\prop -> Tuple.second (extractWarning prop)) properties
     )
 
 
@@ -526,3 +527,18 @@ collectSelectors declarations =
 
         _ :: rest ->
             collectSelectors rest
+
+
+oneOf : List (Maybe a) -> Maybe a
+oneOf maybes =
+    case maybes of
+        [] ->
+            Nothing
+
+        maybe :: rest ->
+            case maybe of
+                Nothing ->
+                    oneOf rest
+
+                Just _ ->
+                    maybe
