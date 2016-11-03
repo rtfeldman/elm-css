@@ -1,12 +1,11 @@
-module Css.File exposing (compile, toFileStructure, CssFileStructure)
+module Css.File exposing (compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram)
 
 {-| Functions for writing CSS files from elm-css.
 
-@docs compile, toFileStructure, CssFileStructure
+@docs compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
 -}
 
 import Css exposing (Stylesheet)
-import String
 
 
 {-| A description of CSS files that will be created by elm-css.
@@ -36,3 +35,41 @@ toFileStructure stylesheets =
 compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
     Css.compile
+
+
+{-| Create a program that compiles an elm-css stylesheet to a CSS file.
+
+    port module Stylesheets exposing (..)
+
+    import Css.File exposing (CssFileStructure, CssCompilerProgram)
+    import HomepageCss as Homepage
+
+
+    port files : CssFileStructure -> Cmd msg
+
+
+    fileStructure : CssFileStructure
+    fileStructure =
+        Css.File.toFileStructure
+            [ ( "homepage.css", Css.File.compile [ Homepage.css ] ) ]
+
+
+    main : CssCompilerProgram
+    main =
+        Css.File.compiler files fileStructure
+-}
+compiler : (CssFileStructure -> Cmd Never) -> CssFileStructure -> CssCompilerProgram
+compiler filesPort structure =
+    Platform.program
+        { init = ( (), filesPort structure )
+        , update = \_ _ -> ( (), Cmd.none )
+        , subscriptions = \_ -> Sub.none
+        }
+
+
+{-| A prorgam that compiles a CSS file.
+
+See [`compiler`](#compiler).
+-}
+type alias CssCompilerProgram =
+    Program Never () Never
