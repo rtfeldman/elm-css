@@ -1,4 +1,4 @@
-module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main', ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
+module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
 
 {-| Selectors for HTML elements.
 
@@ -9,7 +9,7 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 @docs article, header, footer, h1, h2, h3, h4, h5, h6, nav, section
 
 # Text content
-@docs div, hr, li, main', ol, p, ul, pre
+@docs div, hr, li, main_, ol, p, ul, pre
 
 # Inline text semantics
 @docs a, code, small, span, strong
@@ -167,8 +167,8 @@ li =
 
 {-| Selector for a main element.
 -}
-main' : List Mixin -> Snippet
-main' =
+main_ : List Mixin -> Snippet
+main_ =
     typeSelector "main"
 
 
