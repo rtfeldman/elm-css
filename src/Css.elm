@@ -369,11 +369,14 @@ module Css
         , order
         , alignItems
         , alignSelf
+        , justifyContent
         , content
         , wrapReverse
         , wrap
         , flexStart
         , flexEnd
+        , spaceAround
+        , spaceBetween
         , stretch
         , row
         , rowReverse
@@ -588,7 +591,7 @@ module Css
 @docs screen, tv, projection, print
 
 # Properties
-@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset
 
 # Values
 
@@ -908,6 +911,12 @@ type alias AlignItems a b =
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values
 -}
 type alias AlignSelf a b =
+    Length a b -> Mixin
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values
+-}
+type alias JustifyContent a b =
     Length a b -> Mixin
 
 
@@ -1459,6 +1468,7 @@ type alias BasicProperty =
     { value : String
     , all : Compatible
     , alignItems : Compatible
+    , justifyContent : Compatible
     , borderStyle : Compatible
     , boxSizing : Compatible
     , color : Compatible
@@ -1468,6 +1478,7 @@ type alias BasicProperty =
     , flexWrap : Compatible
     , flexDirection : Compatible
     , flexDirectionOrWrap : Compatible
+    , justifyContent : Compatible
     , none : Compatible
     , number : Compatible
     , outline : Compatible
@@ -1541,6 +1552,7 @@ initial =
     , display = Compatible
     , all = Compatible
     , alignItems = Compatible
+    , justifyContent = Compatible
     , length = Compatible
     , lengthOrAuto = Compatible
     , lengthOrNone = Compatible
@@ -2033,7 +2045,7 @@ collapse =
 
 
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
-Can also be used with flex-box's align-items property to apply the value of center
+Can also be used with flex-box's align-items and justify-content properties to apply the value of center
 -}
 center : TextAlign a b
 center =
@@ -3347,6 +3359,13 @@ alignSelf fn =
     getOverloadedProperty "alignSelf" "align-self" (fn lengthForOverloadedProperty)
 
 
+{-| Sets [`justify-content`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content).
+-}
+justifyContent : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+justifyContent fn =
+    getOverloadedProperty "justifyContent" "justify-content" (fn lengthForOverloadedProperty)
+
+
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
 -}
 order : Number compatible -> Mixin
@@ -3386,6 +3405,7 @@ wrapReverse =
 
 {-| The[`flex-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
   align-items property.
+  Can also be used with flex-box's justify-content property to apply the value of flex-start.
 -}
 flexStart : AlignItems a b
 flexStart =
@@ -3394,10 +3414,27 @@ flexStart =
 
 {-| The[`flex-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
   align-items property.
+  Can also be used with flex-box's justify-content property to apply the value of flex-end.
 -}
 flexEnd : AlignItems a b
 flexEnd =
     prop1 "flex-end"
+
+
+{-| The[`space-around`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values) value for the
+  justify-content property.
+-}
+spaceAround : JustifyContent a b
+spaceAround =
+    prop1 "space-around"
+
+
+{-| The[`space-between`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values) value for the
+  justify-content property.
+-}
+spaceBetween : JustifyContent a b
+spaceBetween =
+    prop1 "space-between"
 
 
 {-| The[`stretch`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
@@ -3660,6 +3697,7 @@ auto :
     , flexBasis : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , alignItemsOrAuto : Compatible
+    , justifyContentOrAuto : Compatible
     , cursor : Compatible
     , value : String
     , lengthOrAutoOrCoverOrContain : Compatible
@@ -3674,6 +3712,7 @@ auto =
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , alignItemsOrAuto = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
+    , justifyContentOrAuto = Compatible
     }
 
 
