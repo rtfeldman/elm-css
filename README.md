@@ -200,6 +200,26 @@ view =
 
 ```
 
+#### Missing CSS properties
+
+`elm-css` is still in development. Not all CSS properties have been added yet.
+If you run into this problem, `elm-css` includes the `property` function. It takes
+two `Strings`; the property key, and its value.
+
+**e.g.**
+
+You want `z-index`, but `elm-css` does not implement it yet. So we define it ourselves:
+
+```elm
+import Css exposing (..)
+
+zIndex : Int -> Mixin
+zIndex i =
+    property "z-index" <| toString i
+```
+
+Now `zIndex 9999` is available to use inside your `Stylesheet`.
+
 
 ## Releases
 | Version | Notes |
