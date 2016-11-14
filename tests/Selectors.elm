@@ -5,7 +5,6 @@ import Expect
 import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (..)
-import Css.Namespace exposing (namespace)
 
 
 all : Test
@@ -45,7 +44,7 @@ elements =
         , testSelector "div" div
         , testSelector "hr" hr
         , testSelector "li" li
-        , testSelector "main" main'
+        , testSelector "main" main_
         , testSelector "ol" ol
         , testSelector "p" p
         , testSelector "ul" ul

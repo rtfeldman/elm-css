@@ -1,24 +1,18 @@
 port module Stylesheets exposing (..)
 
-import Css.File exposing (..)
+import Css.File exposing (CssFileStructure, CssCompilerProgram)
 import HomepageCss as Homepage
-import Html exposing (div)
-import Html.App as Html
 
 
 port files : CssFileStructure -> Cmd msg
 
 
-cssFiles : CssFileStructure
-cssFiles =
-    toFileStructure [ ( "homepage.css", compile [ Homepage.css ] ) ]
+fileStructure : CssFileStructure
+fileStructure =
+    Css.File.toFileStructure
+        [ ( "homepage.css", Css.File.compile [ Homepage.css ] ) ]
 
 
-main : Program Never
+main : CssCompilerProgram
 main =
-    Html.program
-        { init = ( (), files cssFiles )
-        , view = \_ -> (div [] [])
-        , update = \_ _ -> ( (), Cmd.none )
-        , subscriptions = \_ -> Sub.none
-        }
+    Css.File.compiler files fileStructure

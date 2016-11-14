@@ -647,6 +647,7 @@ import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
 import Css.Structure as Structure
 import Regex exposing (regex, contains)
 import String
+import Tuple
 
 
 {-| -}
@@ -797,7 +798,7 @@ type alias MinMaxDimension compatible =
 
 
 type alias ImportType compatible =
-    { compatible | value : String, import' : Compatible }
+    { compatible | value : String, import_ : Compatible }
 
 
 type alias FontFace compatible =
@@ -1652,7 +1653,7 @@ rgba red green blue alpha =
             else
                 []
     in
-        { value = cssFunction "rgba" (List.map numberToString [ red, green, blue, alpha ])
+        { value = cssFunction "rgba" ((List.map numberToString [ red, green, blue ]) ++ [ numberToString alpha ])
         , color = Compatible
         , warnings = warnings
         , red = red
@@ -1666,7 +1667,7 @@ rgba red green blue alpha =
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
-hsl : number -> number -> number -> Color
+hsl : Float -> Float -> Float -> Color
 hsl hue saturation lightness =
     let
         valuesList =
@@ -1698,7 +1699,7 @@ hsl hue saturation lightness =
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
-hsla : number -> number -> number -> number -> Color
+hsla : Float -> Float -> Float -> Float -> Color
 hsla hue saturation lightness alpha =
     let
         valuesList =
@@ -4983,8 +4984,8 @@ featureTag2 tag value =
 
         warnings =
             potentialWarnings
-                |> List.filter fst
-                |> List.map snd
+                |> List.filter Tuple.first
+                |> List.map Tuple.second
     in
         { value = (toString tag) ++ " " ++ (toString value)
         , featureTagValue = Compatible
@@ -6242,7 +6243,7 @@ fontWeight { value } =
                 -- This means it was one of the string keywords, e.g. "bold"
                 True
             else
-                [1..9]
+                List.range 1 9
                     |> List.map ((*) 100)
                     |> List.member weight
 
