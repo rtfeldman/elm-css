@@ -8,6 +8,7 @@ module Css
         , Color
         , MediaQuery
         , Length
+        , IntOrAuto
         , stylesheet
         , each
         , media
@@ -568,6 +569,7 @@ module Css
         , backgroundSize2
         , cover
         , contain
+        , zIndex
         )
 
 {-| Functions for building stylesheets.
@@ -591,7 +593,7 @@ module Css
 @docs screen, tv, projection, print
 
 # Properties
-@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween
 
 # Values
 
@@ -630,7 +632,7 @@ module Css
 
 # Types
 
-@docs FontSize, ColorValue
+@docs FontSize, ColorValue, IntOrAuto
 
 # Intentionally Unsupported
 
@@ -879,6 +881,12 @@ type alias Overflow compatible =
 -}
 type alias LengthOrNumberOrAutoOrNoneOrContent compatible =
     { compatible | value : String, lengthOrNumberOrAutoOrNoneOrContent : Compatible }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
+-}
+type alias IntOrAuto compatible =
+    { compatible | value : String, intOrAuto : Compatible }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values
@@ -1514,6 +1522,7 @@ type alias BasicProperty =
     , backgroundOrigin : Compatible
     , backgroundImage : Compatible
     , lengthOrAutoOrCoverOrContain : Compatible
+    , intOrAuto : Compatible
     }
 
 
@@ -1585,6 +1594,7 @@ initial =
     , backgroundOrigin = Compatible
     , backgroundImage = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
+    , intOrAuto = Compatible
     }
 
 
@@ -2424,13 +2434,14 @@ type PcUnits
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-int : Int -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger })))
+int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
     { value = numberToString val
     , lengthOrNumber = Compatible
     , number = Compatible
     , fontWeight = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    , intOrAuto = Compatible
     , numericValue = toFloat val
     , unitLabel = ""
     , units = UnitlessInteger
@@ -3702,6 +3713,7 @@ auto :
     , cursor : Compatible
     , value : String
     , lengthOrAutoOrCoverOrContain : Compatible
+    , intOrAuto : Compatible
     }
 auto =
     { value = "auto"
@@ -3714,6 +3726,7 @@ auto =
     , alignItemsOrAuto = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
     , justifyContentOrAuto = Compatible
+    , intOrAuto = Compatible
     }
 
 
@@ -7358,3 +7371,12 @@ can then be passed to a `style` attribute.
 asPairs : List Mixin -> List ( String, String )
 asPairs =
     Preprocess.toPropertyPairs
+
+
+{-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
+
+    zIndex (int 2)
+-}
+zIndex : IntOrAuto compatible -> Mixin
+zIndex =
+    prop1 "z-index"
