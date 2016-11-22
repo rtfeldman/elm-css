@@ -29,6 +29,8 @@ install:
   - npm install
   - git clone https://github.com/NoRedInk/elm-ops-tooling
   - elm-ops-tooling/with_retry.rb elm package install --yes
+  - elm-make ../src/Css/Namespace.elm 
+  - elm-make ../src/Css.elm ../src/Html/CssHelpers.elm
 
 script:
   - npm test
