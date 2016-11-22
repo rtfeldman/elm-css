@@ -493,6 +493,8 @@ all =
             ]
         , testProperty "box-shadow"
             [ ( boxShadow none, "none" )
+            , ( boxShadow initial, "initial" )
+            , ( boxShadow unset, "unset" )
             , ( boxShadow2 (px 1) (px 2), "1px 2px" )
             , ( boxShadow3 (px 1) (px 2) (hex "333"), "1px 2px #333" )
             , ( boxShadow3 (px 1) (px 2) (px 3), "1px 2px 3px" )
