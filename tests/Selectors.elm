@@ -54,6 +54,8 @@ elements =
         , testSelector "small" Css.Elements.small
         , testSelector "span" span
         , testSelector "strong" strong
+        , testSelector "i" i
+        , testSelector "em" Css.Elements.em
         , testSelector "img" img
         , testSelector "audio" audio
         , testSelector "video" video
