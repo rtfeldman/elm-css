@@ -239,14 +239,14 @@ strong =
     typeSelector "strong"
 
 
-{-| Selector for a strong element.
+{-| Selector for a i element.
 -}
 i : List Mixin -> Snippet
 i =
     typeSelector "i"
 
 
-{-| Selector for a strong element.
+{-| Selector for a em element.
 -}
 em : List Mixin -> Snippet
 em =
