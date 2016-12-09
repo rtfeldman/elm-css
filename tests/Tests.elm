@@ -3,6 +3,7 @@ module Tests exposing (all)
 import Test exposing (..)
 import Expect
 import TestUtil exposing (outdented, prettyPrint)
+import Arithmetic
 import Compile
 import Fixtures
 import Properties
@@ -37,6 +38,7 @@ all =
         , pseudoElements
         , Properties.all
         , Selectors.all
+        , Arithmetic.all
         , backgrounds
         ]
 

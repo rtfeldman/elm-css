@@ -1044,41 +1044,64 @@ type alias Length compatible units =
     }
 
 
-{-| -}
+{-| Add two lengths.
+
+    >>> em 2 |+| em 3
+    em 5
+-}
 (|+|) : Length compatible units -> Length compatible units -> Length compatible units
 (|+|) =
     combineLengths (+)
 
 
-{-| -}
+{-| Subtract two lengths.
+
+    >>> em 7 |-| em 3
+    em 4
+-}
 (|-|) : Length compatible units -> Length compatible units -> Length compatible units
 (|-|) =
     combineLengths (-)
 
 
-{-| -}
+{-| Subtract two lengths.
+
+    >>> em 9 |/| em 2
+    em 7
+-}
 (|/|) : Length compatible units -> Length compatible units -> Length compatible units
 (|/|) =
     combineLengths (/)
 
 
-{-| -}
+{-| Subtract two lengths.
+
+    >>> em 3 |*| em 6
+    em 18
+-}
 (|*|) : Length compatible units -> Length compatible units -> Length compatible units
 (|*|) =
     combineLengths (*)
 
 
-combineLengths : (a -> b -> c) -> { e | numericValue : a, unitLabel : String, value : d } -> { f | numericValue : b } -> { e | numericValue : a, unitLabel : String, value : String }
+combineLengths :
+    (number -> number -> number)
+    -> { r | numericValue : number, unitLabel : String, value : String }
+    -> { r | numericValue : number, unitLabel : String, value : String }
+    -> { r | numericValue : number, unitLabel : String, value : String }
 combineLengths operation first second =
     let
+        numericValue =
+            operation first.numericValue second.numericValue
+
         value =
-            [ toString (operation first.numericValue second.numericValue)
+            [ toString numericValue
             , first.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
-                |> String.join " "
+                |> String.join ""
     in
-        { first | value = value }
+        { first | value = value, numericValue = numericValue }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -2110,9 +2133,9 @@ true =
 
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
-lengthConverter units unitLabel num =
-    { value = (numberToString num) ++ unitLabel
-    , numericValue = num
+lengthConverter units unitLabel numericValue =
+    { value = (numberToString numericValue) ++ unitLabel
+    , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
     , length = Compatible
