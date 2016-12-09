@@ -506,6 +506,13 @@ all =
             , ( boxShadow5 (px 1) (px 2) (px 3) (px 4) (hex "333"), "1px 2px 3px 4px #333" )
             , ( boxShadow5 inset (px 2) (px 3) (px 4) (hex "333"), "inset 2px 3px 4px #333" )
             ]
+        , testProperty "z-index"
+            [ ( zIndex auto, "auto" )
+            , ( zIndex inherit, "inherit" )
+            , ( zIndex initial, "initial" )
+            , ( zIndex unset, "unset" )
+            , ( zIndex (int 5), "5" )
+            ]
         ]
 
 
