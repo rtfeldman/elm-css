@@ -2133,9 +2133,9 @@ true =
 
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
-lengthConverter units unitLabel num =
-    { value = (numberToString num) ++ unitLabel
-    , numericValue = num
+lengthConverter units unitLabel numericValue =
+    { value = (numberToString numericValue) ++ unitLabel
+    , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
     , length = Compatible
