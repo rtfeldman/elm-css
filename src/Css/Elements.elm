@@ -1,4 +1,4 @@
-module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
+module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
 
 {-| Selectors for HTML elements.
 
@@ -12,7 +12,7 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 @docs div, hr, li, main_, ol, p, ul, pre
 
 # Inline text semantics
-@docs a, code, small, span, strong
+@docs a, code, small, span, strong, i, em
 
 # Image and multimedia
 @docs img, audio, video, canvas
@@ -237,6 +237,20 @@ span =
 strong : List Mixin -> Snippet
 strong =
     typeSelector "strong"
+
+
+{-| Selector for a i element.
+-}
+i : List Mixin -> Snippet
+i =
+    typeSelector "i"
+
+
+{-| Selector for a em element.
+-}
+em : List Mixin -> Snippet
+em =
+    typeSelector "em"
 
 
 
