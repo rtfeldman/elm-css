@@ -19,7 +19,7 @@ css =
             [ overflowX auto
             , minWidth (px 1280)
             ]
-        , (#) Page
+        , id Page
             [ backgroundColor (rgb 200 128 64)
             , color (hex "CCFFFF")
             , width (pct 100)
@@ -28,7 +28,7 @@ css =
             , padding (px 8)
             , margin zero
             ]
-        , (.) NavBar
+        , class NavBar
             [ margin zero
             , padding zero
             , children
