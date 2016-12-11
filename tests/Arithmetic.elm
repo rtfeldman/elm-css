@@ -46,8 +46,12 @@ all =
         , describe "|/|"
             [ fuzzArithmetic3 "it divides" <|
                 \first second third ->
-                    ((em first |/| em second) |/| em third)
-                        |> Expect.equal (em ((first / second) / third))
+                    if second == 0 || (first / second) == 0 then
+                        -- Skip tests of division by zero.
+                        Expect.pass
+                    else
+                        ((em first |/| em second) |/| em third)
+                            |> Expect.equal (em ((first / second) / third))
             ]
         ]
 
