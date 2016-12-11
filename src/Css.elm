@@ -1067,7 +1067,7 @@ type alias Length compatible units =
 {-| Subtract two lengths.
 
     >>> em 9 |/| em 2
-    em 7
+    em 4.5
 -}
 (|/|) : Length compatible units -> Length compatible units -> Length compatible units
 (|/|) =
