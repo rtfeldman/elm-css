@@ -1,20 +1,15 @@
-module Tests exposing (all)
+module Misc exposing (suite)
 
 import Test exposing (..)
 import Expect
 import TestUtil exposing (outdented, prettyPrint)
-import Arithmetic
-import Compile
 import Fixtures
-import Properties
-import Selectors
 
 
-all : Test
-all =
+suite : Test
+suite =
     describe "elm-css"
-        [ Compile.all
-        , unstyledDiv
+        [ unstyledDiv
         , keyValue
         , simpleEach
         , divWidthHeight
@@ -36,9 +31,6 @@ all =
         , hexWarning
         , pseudoClasses
         , pseudoElements
-        , Properties.all
-        , Selectors.all
-        , Arithmetic.all
         , backgrounds
         ]
 

@@ -1,4 +1,4 @@
-module Properties exposing (all)
+module Properties exposing (suite)
 
 import Test exposing (..)
 import Expect
@@ -8,8 +8,8 @@ import Css.Elements exposing (p)
 import Css.Namespace exposing (namespace)
 
 
-all : Test
-all =
+suite : Test
+suite =
     describe "properties"
         [ testProperty "box-sizing"
             [ ( boxSizing initial, "initial" )

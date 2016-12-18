@@ -1,4 +1,4 @@
-module Compile exposing (all)
+module Compile exposing (suite)
 
 import Test exposing (..)
 import Expect
@@ -8,8 +8,8 @@ import CompileFixtures
 import Css exposing (..)
 
 
-all : Test
-all =
+suite : Test
+suite =
     describe "elm-css"
         [ unstyledDiv
         , dreamwriter
@@ -158,7 +158,6 @@ compileTest =
                         |> .css
                         |> outdented
                         |> Expect.equal (outdented output)
-
             , test "compile warnings" <|
                 \() ->
                     input

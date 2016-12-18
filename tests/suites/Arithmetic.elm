@@ -1,4 +1,4 @@
-module Arithmetic exposing (all)
+module Arithmetic exposing (suite)
 
 import Test exposing (..)
 import Fuzz
@@ -6,8 +6,8 @@ import Expect
 import Css exposing (em, (|+|), (|*|), (|/|), (|-|))
 
 
-all : Test
-all =
+suite : Test
+suite =
     describe "arithmetic operators"
         [ describe "|+|"
             [ fuzzArithmetic3 "it adds" <|

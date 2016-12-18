@@ -1,4 +1,4 @@
-module Selectors exposing (all)
+module Selectors exposing (suite)
 
 import Test exposing (..)
 import Expect
@@ -7,8 +7,8 @@ import Css exposing (..)
 import Css.Elements exposing (..)
 
 
-all : Test
-all =
+suite : Test
+suite =
     describe "selectors"
         [ nonElements, elements ]
 

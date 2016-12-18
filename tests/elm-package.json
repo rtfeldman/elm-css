@@ -4,15 +4,16 @@
     "repository": "https://github.com/rtfeldman/elm-css.git",
     "license": "BSD-3-Clause",
     "source-directories": [
-        ".",
+        "suites",
+        "shared",
         "../src"
     ],
     "exposed-modules": [],
     "dependencies": {
         "elm-community/elm-test": "3.0.0 <= v < 4.0.0",
         "elm-lang/core": "5.0.0 <= v < 6.0.0",
-        "rtfeldman/elm-css-util": "1.0.2 <= v < 2.0.0",
-        "rtfeldman/node-test-runner": "3.0.0 <= v < 4.0.0"
+        "mgold/elm-random-pcg": "4.0.2 <= v < 5.0.0",
+        "rtfeldman/elm-css-util": "1.0.2 <= v < 2.0.0"
     },
     "elm-version": "0.18.0 <= v < 0.19.0"
 }
