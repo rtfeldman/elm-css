@@ -3,6 +3,7 @@ sudo: false
 cache:
   directories:
     - test/elm-stuff/build-artifacts
+    - node_modules/elm
 
 os:
   - linux
@@ -25,10 +26,10 @@ install:
   - node --version
   - npm --version
   - cd tests
-  - npm install -g elm@$ELM_VERSION elm-test
+  - npm install elm@$ELM_VERSION elm-test
   - npm install
   - git clone https://github.com/NoRedInk/elm-ops-tooling
-  - elm-ops-tooling/with_retry.rb elm package install --yes
+  - elm-ops-tooling/with_retry.rb node_modules/.bin/elm-package install --yes
 
 script:
   - npm test
