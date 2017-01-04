@@ -2,6 +2,7 @@ module Fixtures exposing (..)
 
 import Css exposing (..)
 import Css.Elements exposing (..)
+import Css.Media exposing (media, mediaQuery, print, withMedia)
 import Css.Namespace exposing (namespace)
 
 
@@ -37,7 +38,7 @@ atRule =
     (stylesheet << namespace "homepage")
         [ body [ padding zero ]
         , media [ print ] [ body [ margin (Css.em 2) ] ]
-        , mediaQuery "screen and ( max-width: 600px )"
+        , mediaQuery [ "screen and ( max-width: 600px )" ]
             [ body [ margin (Css.em 3) ] ]
         , button [ margin auto ]
         ]
@@ -395,7 +396,7 @@ pseudoClassStylesheet =
 mediaQueryIndentation : Stylesheet
 mediaQueryIndentation =
     (stylesheet << namespace "")
-        [ mediaQuery "(max-width: 515px)"
+        [ mediaQuery [ "(max-width: 515px)" ]
             [ class "mdl-layout__header"
                 [ children
                     [ class "mdl-layout-icon" [ display none ] ]
