@@ -3401,7 +3401,7 @@ justifyContent fn =
     getOverloadedProperty "justifyContent" "justify-content" (fn lengthForOverloadedProperty)
 
 
-{-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
+{-| Sets [`order`](https://developer.mozilla.org/en-US/docs/Web/CSS/order) property.}
 -}
 order : Number compatible -> Mixin
 order =
@@ -3776,7 +3776,7 @@ middle =
     prop1 "middle"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `baseline` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign baseline
 -}
@@ -3785,7 +3785,7 @@ baseline =
     prop1 "baseline"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `sub` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign sub
 -}
@@ -3794,7 +3794,7 @@ sub =
     prop1 "sub"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `super` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign super
 -}
@@ -3803,7 +3803,7 @@ super =
     prop1 "super"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `text-top` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign textTop
 -}
@@ -3812,7 +3812,7 @@ textTop =
     prop1 "text-top"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `text-bottom` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign textBottom
 -}
