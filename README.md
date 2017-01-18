@@ -200,7 +200,7 @@ two `Strings`; the property key, and its value.
 
 **e.g.**
 
-You want `z-index`, but `elm-css` does not implement it yet. So we define it ourselves:
+We want `z-index`, but suppose `elm-css` did not implement it. We would define it ourselves:
 
 ```elm
 import Css exposing (..)
@@ -210,7 +210,7 @@ zIndex i =
     property "z-index" <| toString i
 ```
 
-Now `zIndex 9999` is available to use inside your `Stylesheet`.
+Now `zIndex 9999` is available to use inside our `Stylesheet`.
 
 
 ## Releases
