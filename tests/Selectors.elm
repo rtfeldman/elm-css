@@ -63,7 +63,7 @@ elements =
         , testSelector "caption" caption
         , testSelector "col" col
         , testSelector "colgroup" colgroup
-        , testSelector "table" table
+        , testSelector "table" Css.Elements.table
         , testSelector "tbody" tbody
         , testSelector "td" td
         , testSelector "tfoot" tfoot

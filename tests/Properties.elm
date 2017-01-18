@@ -203,16 +203,16 @@ all =
             , ( display listItem, "list-item" )
             , ( display inlineListItem, "inline-list-item" )
             , ( displayFlex, "flex" )
+            , ( display table, "table" )
+            , ( display inlineTable, "inline-table" )
+            , ( display tableCell, "table-cell" )
+            , ( display tableColumn, "table-column" )
+            , ( display tableColumnGroup, "table-column-group" )
+            , ( display tableFooterGroup, "table-footer-group" )
+            , ( display tableHeaderGroup, "table-header-group" )
+            , ( display tableRow, "table-row" )
+            , ( display tableRowGroup, "table-row-group" )
               -- TODO display: contents;
-              -- TODO display: table;
-              -- TODO display: inline-table;
-              -- TODO display: table-cell;
-              -- TODO display: table-column;
-              -- TODO display: table-column-group;
-              -- TODO display: table-footer-group;
-              -- TODO display: table-header-group;
-              -- TODO display: table-row;
-              -- TODO display: table-row-group;
               -- TODO display: flex;
               -- TODO display: inline-flex;
               -- TODO display: grid;
