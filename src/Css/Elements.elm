@@ -1,4 +1,4 @@
-module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select)
+module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea)
 
 {-| Selectors for HTML elements.
 
@@ -21,7 +21,7 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 @docs caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
 
 # Forms
-@docs button, fieldset, form, input, label, legend, optgroup, option, progress, select
+@docs button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea
 -}
 
 import Css.Preprocess exposing (Mixin, Snippet(Snippet), StyleBlock(StyleBlock), SnippetDeclaration(StyleBlockDeclaration))
@@ -431,3 +431,10 @@ progress =
 select : List Mixin -> Snippet
 select =
     typeSelector "select"
+
+
+{-| Selector for a textarea element.
+-}
+textarea : List Mixin -> Snippet
+textarea =
+    typeSelector "textarea"
