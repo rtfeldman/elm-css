@@ -54,6 +54,8 @@ elements =
         , testSelector "small" Css.Elements.small
         , testSelector "span" span
         , testSelector "strong" strong
+        , testSelector "i" i
+        , testSelector "em" Css.Elements.em
         , testSelector "img" img
         , testSelector "audio" audio
         , testSelector "video" video
@@ -61,7 +63,7 @@ elements =
         , testSelector "caption" caption
         , testSelector "col" col
         , testSelector "colgroup" colgroup
-        , testSelector "table" table
+        , testSelector "table" Css.Elements.table
         , testSelector "tbody" tbody
         , testSelector "td" td
         , testSelector "tfoot" tfoot

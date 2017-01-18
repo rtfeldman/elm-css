@@ -203,16 +203,16 @@ all =
             , ( display listItem, "list-item" )
             , ( display inlineListItem, "inline-list-item" )
             , ( displayFlex, "flex" )
+            , ( display table, "table" )
+            , ( display inlineTable, "inline-table" )
+            , ( display tableCell, "table-cell" )
+            , ( display tableColumn, "table-column" )
+            , ( display tableColumnGroup, "table-column-group" )
+            , ( display tableFooterGroup, "table-footer-group" )
+            , ( display tableHeaderGroup, "table-header-group" )
+            , ( display tableRow, "table-row" )
+            , ( display tableRowGroup, "table-row-group" )
               -- TODO display: contents;
-              -- TODO display: table;
-              -- TODO display: inline-table;
-              -- TODO display: table-cell;
-              -- TODO display: table-column;
-              -- TODO display: table-column-group;
-              -- TODO display: table-footer-group;
-              -- TODO display: table-header-group;
-              -- TODO display: table-row;
-              -- TODO display: table-row-group;
               -- TODO display: flex;
               -- TODO display: inline-flex;
               -- TODO display: grid;
@@ -493,6 +493,8 @@ all =
             ]
         , testProperty "box-shadow"
             [ ( boxShadow none, "none" )
+            , ( boxShadow initial, "initial" )
+            , ( boxShadow unset, "unset" )
             , ( boxShadow2 (px 1) (px 2), "1px 2px" )
             , ( boxShadow3 (px 1) (px 2) (hex "333"), "1px 2px #333" )
             , ( boxShadow3 (px 1) (px 2) (px 3), "1px 2px 3px" )
@@ -503,6 +505,14 @@ all =
             , ( boxShadow4 inset (px 2) (px 3) (px 4), "inset 2px 3px 4px" )
             , ( boxShadow5 (px 1) (px 2) (px 3) (px 4) (hex "333"), "1px 2px 3px 4px #333" )
             , ( boxShadow5 inset (px 2) (px 3) (px 4) (hex "333"), "inset 2px 3px 4px #333" )
+            , ( boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (hex "333"), "inset 1px 2px 3px 4px #333" )
+            ]
+        , testProperty "z-index"
+            [ ( zIndex auto, "auto" )
+            , ( zIndex inherit, "inherit" )
+            , ( zIndex initial, "initial" )
+            , ( zIndex unset, "unset" )
+            , ( zIndex (int 5), "5" )
             ]
         ]
 

@@ -8,6 +8,7 @@
     ],
     "exposed-modules": [
         "Css",
+        "Css.Colors",
         "Css.Elements",
         "Css.File",
         "Css.Namespace"

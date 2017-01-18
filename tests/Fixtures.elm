@@ -36,9 +36,9 @@ atRule : Stylesheet
 atRule =
     (stylesheet << namespace "homepage")
         [ body [ padding zero ]
-        , (media [ print ]) [ body [ margin (em 2) ] ]
+        , (media [ print ]) [ body [ margin (Css.em 2) ] ]
         , mediaQuery "screen and ( max-width: 600px )"
-            [ body [ margin (em 3) ] ]
+            [ body [ margin (Css.em 3) ] ]
         , button [ margin auto ]
         ]
 
@@ -49,7 +49,7 @@ nestedAtRule =
         [ button [ padding zero ]
         , body
             [ margin auto
-            , (withMedia [ print ]) [ margin (em 2) ]
+            , (withMedia [ print ]) [ margin (Css.em 2) ]
             ]
         , a [ textDecoration none ]
         ]
@@ -61,7 +61,7 @@ bug99 =
         [ article
             [ margin zero
             , children
-                [ header [ margin (em 1) ]
+                [ header [ margin (Css.em 1) ]
                 , section [ margin (px 2) ]
                 , nav [ margin (pct 3) ]
                 ]
@@ -88,7 +88,7 @@ simpleEach =
     stylesheet
         [ span
             [ width (px 30)
-            , height (em 2)
+            , height (Css.em 2)
             ]
         , (each [ html, body ])
             [ boxSizing borderBox
@@ -195,7 +195,7 @@ leftRightTopBottom =
     (stylesheet << namespace "left-right-top-bottom")
         [ div
             [ position absolute
-            , top (em 2)
+            , top (Css.em 2)
             , left (px 5)
             , textAlign left
             , verticalAlign bottom
@@ -204,7 +204,7 @@ leftRightTopBottom =
             [ position relative
             , right zero
             , textAlign right
-            , bottom (em 2)
+            , bottom (Css.em 2)
             , verticalAlign top
             ]
         ]
@@ -216,7 +216,7 @@ borders =
         [ button
             [ borderLeft3 (px 5) dashed (rgb 11 14 17)
             , borderRight (px 7)
-            , borderImageOutset2 (int 3) (em 4)
+            , borderImageOutset2 (int 3) (Css.em 4)
             ]
         , a [ border2 (px 10) solid ]
         ]
@@ -380,7 +380,7 @@ pseudoClassStylesheet =
                     [ color (hex "#000") ]
                 ]
             , first
-                [ fontSize (em 3) ]
+                [ fontSize (Css.em 3) ]
             , disabled
                 [ marginTop (px 20) ]
             , backgroundColor (hex "#aaa")

@@ -8,6 +8,7 @@ module Css
         , Color
         , MediaQuery
         , Length
+        , IntOrAuto
         , stylesheet
         , each
         , media
@@ -74,6 +75,7 @@ module Css
         , boxShadow3
         , boxShadow4
         , boxShadow5
+        , boxShadow6
         , textAlign
         , textAlignLast
         , left
@@ -256,6 +258,16 @@ module Css
         , block
         , inlineBlock
         , inline
+        , table
+        , inlineTable
+        , tableCell
+        , tableRow
+        , tableColumn
+        , tableCaption
+        , tableRowGroup
+        , tableColumnGroup
+        , tableHeaderGroup
+        , tableFooterGroup
         , listItem
         , inlineListItem
         , none
@@ -575,12 +587,15 @@ module Css
         , backgroundSize2
         , cover
         , contain
+        , zIndex
         )
 
 {-| Functions for building stylesheets.
 
+
+
 # Misc
-@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, normalWrap, breakWord, spaceAround, spaceBetween
+@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, normalWrap, breakWord, spaceAround, spaceBetween
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
@@ -598,7 +613,7 @@ module Css
 @docs screen, tv, projection, print
 
 # Properties
-@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, resize
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize
 
 # Values
 
@@ -637,7 +652,7 @@ module Css
 
 # Types
 
-@docs FontSize, ColorValue
+@docs FontSize, ColorValue, IntOrAuto
 
 # Intentionally Unsupported
 
@@ -900,6 +915,12 @@ type alias LengthOrNumberOrAutoOrNoneOrContent compatible =
     { compatible | value : String, lengthOrNumberOrAutoOrNoneOrContent : Compatible }
 
 
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
+-}
+type alias IntOrAuto compatible =
+    { compatible | value : String, intOrAuto : Compatible }
+
+
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values
 -}
 type alias FlexBasis compatible =
@@ -1055,41 +1076,64 @@ type alias Length compatible units =
     }
 
 
-{-| -}
+{-| Add two lengths.
+
+    >>> em 2 |+| em 3
+    em 5
+-}
 (|+|) : Length compatible units -> Length compatible units -> Length compatible units
 (|+|) =
     combineLengths (+)
 
 
-{-| -}
+{-| Subtract two lengths.
+
+    >>> em 7 |-| em 3
+    em 4
+-}
 (|-|) : Length compatible units -> Length compatible units -> Length compatible units
 (|-|) =
     combineLengths (-)
 
 
-{-| -}
+{-| Subtract two lengths.
+
+    >>> em 9 |/| em 2
+    em 4.5
+-}
 (|/|) : Length compatible units -> Length compatible units -> Length compatible units
 (|/|) =
     combineLengths (/)
 
 
-{-| -}
+{-| Subtract two lengths.
+
+    >>> em 3 |*| em 6
+    em 18
+-}
 (|*|) : Length compatible units -> Length compatible units -> Length compatible units
 (|*|) =
     combineLengths (*)
 
 
-combineLengths : (a -> b -> c) -> { e | numericValue : a, unitLabel : String, value : d } -> { f | numericValue : b } -> { e | numericValue : a, unitLabel : String, value : String }
+combineLengths :
+    (number -> number -> number)
+    -> { r | numericValue : number, unitLabel : String, value : String }
+    -> { r | numericValue : number, unitLabel : String, value : String }
+    -> { r | numericValue : number, unitLabel : String, value : String }
 combineLengths operation first second =
     let
+        numericValue =
+            operation first.numericValue second.numericValue
+
         value =
-            [ toString (operation first.numericValue second.numericValue)
+            [ toString numericValue
             , first.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
-                |> String.join " "
+                |> String.join ""
     in
-        { first | value = value }
+        { first | value = value, numericValue = numericValue }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
@@ -1578,6 +1622,7 @@ type alias BasicProperty =
     , backgroundOrigin : Compatible
     , backgroundImage : Compatible
     , lengthOrAutoOrCoverOrContain : Compatible
+    , intOrAuto : Compatible
     }
 
 
@@ -1649,6 +1694,7 @@ initial =
     , backgroundOrigin = Compatible
     , backgroundImage = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
+    , intOrAuto = Compatible
     }
 
 
@@ -2164,9 +2210,9 @@ true =
 
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
-lengthConverter units unitLabel num =
-    { value = (numberToString num) ++ unitLabel
-    , numericValue = num
+lengthConverter units unitLabel numericValue =
+    { value = (numberToString numericValue) ++ unitLabel
+    , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
     , length = Compatible
@@ -2488,13 +2534,14 @@ type PcUnits
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-int : Int -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger })))
+int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
     { value = numberToString val
     , lengthOrNumber = Compatible
     , number = Compatible
     , fontWeight = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    , intOrAuto = Compatible
     , numericValue = toFloat val
     , unitLabel = ""
     , units = UnitlessInteger
@@ -3431,7 +3478,7 @@ justifyContent fn =
     getOverloadedProperty "justifyContent" "justify-content" (fn lengthForOverloadedProperty)
 
 
-{-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
+{-| Sets [`order`](https://developer.mozilla.org/en-US/docs/Web/CSS/order) property.}
 -}
 order : Number compatible -> Mixin
 order =
@@ -3687,7 +3734,16 @@ table =
     }
 
 
-{-| Sets the display style to [`tableRow`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+{-| Sets the display style to [`inline-table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+inlineTable : Display {}
+inlineTable =
+    { value = "inline-table"
+    , display = Compatible
+    }
+
+
+{-| Sets the display style to [`table-row`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableRow : Display {}
 tableRow =
@@ -3696,11 +3752,65 @@ tableRow =
     }
 
 
-{-| Sets the display style to [`tableCell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+{-| Sets the display style to [`table-cell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableCell : Display {}
 tableCell =
     { value = "table-cell"
+    , display = Compatible
+    }
+
+
+{-| Sets the display style to [`table-column`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+tableColumn : Display {}
+tableColumn =
+    { value = "table-column"
+    , display = Compatible
+    }
+
+
+{-| Sets the display style to [`table-caption`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+tableCaption : Display {}
+tableCaption =
+    { value = "table-caption"
+    , display = Compatible
+    }
+
+
+{-| Sets the display style to [`table-row-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+tableRowGroup : Display {}
+tableRowGroup =
+    { value = "table-row-group"
+    , display = Compatible
+    }
+
+
+{-| Sets the display style to [`table-column-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+tableColumnGroup : Display {}
+tableColumnGroup =
+    { value = "table-column-group"
+    , display = Compatible
+    }
+
+
+{-| Sets the display style to [`table-header-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+tableHeaderGroup : Display {}
+tableHeaderGroup =
+    { value = "table-header-group"
+    , display = Compatible
+    }
+
+
+{-| Sets the display style to [`table-footer-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+tableFooterGroup : Display {}
+tableFooterGroup =
+    { value = "table-footer-group"
     , display = Compatible
     }
 
@@ -3768,6 +3878,7 @@ auto :
     , cursor : Compatible
     , value : String
     , lengthOrAutoOrCoverOrContain : Compatible
+    , intOrAuto : Compatible
     }
 auto =
     { value = "auto"
@@ -3780,6 +3891,7 @@ auto =
     , alignItemsOrAuto = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
     , justifyContentOrAuto = Compatible
+    , intOrAuto = Compatible
     }
 
 
@@ -3806,7 +3918,7 @@ middle =
     prop1 "middle"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `baseline` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign baseline
 -}
@@ -3815,7 +3927,7 @@ baseline =
     prop1 "baseline"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `sub` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign sub
 -}
@@ -3824,7 +3936,7 @@ sub =
     prop1 "sub"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `super` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign super
 -}
@@ -3833,7 +3945,7 @@ super =
     prop1 "super"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `text-top` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign textTop
 -}
@@ -3842,7 +3954,7 @@ textTop =
     prop1 "text-top"
 
 
-{-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
+{-| The `text-bottom` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign textBottom
 -}
@@ -3885,6 +3997,11 @@ prop4 key argA argB argC argD =
 prop5 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Mixin
 prop5 key argA argB argC argD argE =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value ])
+
+
+prop6 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Value f -> Mixin
+prop6 key argA argB argC argD argE argF =
+    property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value, argF.value ])
 
 
 {-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
@@ -4026,6 +4143,7 @@ textShadow4 =
     boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
 boxShadow : None compatible -> Mixin
@@ -4046,6 +4164,7 @@ boxShadow =
     boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
 boxShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
@@ -4066,6 +4185,7 @@ boxShadow2 =
     boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
 boxShadow3 : Value a -> Length compatibleB unitsB -> Value c -> Mixin
@@ -4086,6 +4206,7 @@ boxShadow3 =
     boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
 boxShadow4 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Value d -> Mixin
@@ -4106,11 +4227,33 @@ boxShadow4 =
     boxShadow4 inset (px 2) (px 3) (px 4)
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
 boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Mixin
 boxShadow5 =
     prop5 "box-shadow"
+
+
+{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+
+    boxShadow  none
+    boxShadow2 (px 1) (px 2)
+    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+    boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
+    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
+    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
+-}
+boxShadow6 : Value a -> Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Mixin
+boxShadow6 =
+    prop6 "box-shadow"
 
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
@@ -7436,3 +7579,12 @@ can then be passed to a `style` attribute.
 asPairs : List Mixin -> List ( String, String )
 asPairs =
     Preprocess.toPropertyPairs
+
+
+{-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
+
+    zIndex (int 2)
+-}
+zIndex : IntOrAuto compatible -> Mixin
+zIndex =
+    prop1 "z-index"
