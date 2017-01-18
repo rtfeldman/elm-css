@@ -24,7 +24,7 @@ css =
         [ overflowX auto
         , minWidth (px 1280)
         ]
-    , (#) Page
+    , id Page
         [ backgroundColor (rgb 200 128 64)
         , color (hex "CCFFFF")
         , width (pct 100)
@@ -33,7 +33,7 @@ css =
         , padding (px 8)
         , margin zero
         ]
-    , (.) NavBar
+    , class NavBar
         [ margin zero
         , padding zero
         , children
@@ -49,8 +49,6 @@ css =
 primaryAccentColor =
     hex "ccffaa"
 ```
-
-*Note:* `(.)` defines a class selector and `(#)` defines an ID selector.
 
 Here's what you can do with this code:
 
