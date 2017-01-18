@@ -1,4 +1,4 @@
-module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea)
+module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, svg, path, rect, circle, ellipse, line, polyline, polygon)
 
 {-| Selectors for HTML elements.
 
@@ -22,6 +22,9 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 
 # Forms
 @docs button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea
+
+# SVG
+@docs svg, path, rect, circle, ellipse, line, polyline, polygon
 -}
 
 import Css.Preprocess exposing (Mixin, Snippet(Snippet), StyleBlock(StyleBlock), SnippetDeclaration(StyleBlockDeclaration))
@@ -438,3 +441,59 @@ select =
 textarea : List Mixin -> Snippet
 textarea =
     typeSelector "textarea"
+
+
+{-| Selector for a svg element.
+-}
+svg : List Mixin -> Snippet
+svg =
+    typeSelector "svg"
+
+
+{-| Selector for a path element.
+-}
+path : List Mixin -> Snippet
+path =
+    typeSelector "path"
+
+
+{-| Selector for a rect element.
+-}
+rect : List Mixin -> Snippet
+rect =
+    typeSelector "rect"
+
+
+{-| Selector for a circle element.
+-}
+circle : List Mixin -> Snippet
+circle =
+    typeSelector "circle"
+
+
+{-| Selector for a ellipse element.
+-}
+ellipse : List Mixin -> Snippet
+ellipse =
+    typeSelector "ellipse"
+
+
+{-| Selector for a line element.
+-}
+line : List Mixin -> Snippet
+line =
+    typeSelector "line"
+
+
+{-| Selector for a polyline element.
+-}
+polyline : List Mixin -> Snippet
+polyline =
+    typeSelector "polyline"
+
+
+{-| Selector for a polygon element.
+-}
+polygon : List Mixin -> Snippet
+polygon =
+    typeSelector "polygon"
