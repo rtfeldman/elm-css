@@ -358,7 +358,7 @@ colorHexAbbrWarning =
 pseudoElementStylesheet : Stylesheet
 pseudoElementStylesheet =
     (stylesheet << namespace "pseudoElements")
-        [ (#) Page
+        [ id Page
             [ margin (px 10)
             , before
                 [ color (hex "#fff") ]
@@ -372,7 +372,7 @@ pseudoElementStylesheet =
 pseudoClassStylesheet : Stylesheet
 pseudoClassStylesheet =
     (stylesheet << namespace "pseudoClasses")
-        [ (#) Page
+        [ id Page
             [ color (hex "#fff")
             , hover
                 [ marginTop (px 10)

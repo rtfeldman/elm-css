@@ -16,8 +16,8 @@ all =
 nonElements : Test
 nonElements =
     describe "non-elements"
-        [ testSelector ".foo" ((.) "foo")
-        , testSelector "#foo" ((#) "foo")
+        [ testSelector ".foo" (class "foo")
+        , testSelector "#foo" (id "foo")
         , testSelector "div:hover" (\children -> div [ hover children ])
         , testSelector "div::before" (\children -> div [ before children ])
         ]

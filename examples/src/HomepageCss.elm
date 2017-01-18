@@ -18,17 +18,17 @@ css =
             [ display inlineBlock
             , paddingBottom (px 12)
             ]
-        , (.) NavLink
+        , class NavLink
             [ margin (px 12)
             , color (rgb 255 255 255)
             ]
-        , (#) ReactiveLogo
+        , id ReactiveLogo
             [ display inlineBlock
             , marginLeft (px 150)
             , marginRight (px 80)
             , verticalAlign middle
             ]
-        , (#) BuyTickets
+        , id BuyTickets
             [ padding (px 16)
             , paddingLeft (px 24)
             , paddingRight (px 24)

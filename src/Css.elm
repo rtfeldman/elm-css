@@ -24,8 +24,8 @@ module Css
         , property
         , selector
         , important
-        , (#)
-        , (.)
+        , id
+        , class
         , (|*|)
         , (|+|)
         , (|-|)
@@ -604,7 +604,7 @@ module Css
 @docs Snippet, Mixin, mixin, stylesheet, compile
 
 # Statements
-@docs (#), (.), selector, everything
+@docs class, id, selector, everything
 
 # Combinators
 @docs children, descendants, adjacentSiblings, generalSiblings
@@ -6937,7 +6937,7 @@ properties in elm-css are implemented as mixins.
             ]
 
     stylesheet
-      [ (.) FancyLink
+      [ class FancyLink
           [ color (rgb 128 64 32)
           , underlineOnHover
           ]
@@ -6946,7 +6946,7 @@ properties in elm-css are implemented as mixins.
 ...has the same result as:
 
     stylesheet
-      [ (.) FancyLink
+      [ class FancyLink
           [ color (rgb 128 64 32)
           , textDecoration none
           , hover
@@ -6962,15 +6962,15 @@ mixin =
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
 
     stylesheet
-        [ (#) NavBar
+        [ id NavBar
             [ width 960 px
             , backgroundColor (rgb 123 42 208)
             ]
         ]
 -}
-(#) : id -> List Mixin -> Snippet
-(#) id mixins =
-    [ Structure.IdSelector (identifierToString "" id) ]
+id : id -> List Mixin -> Snippet
+id identifier mixins =
+    [ Structure.IdSelector (identifierToString "" identifier) ]
         |> Structure.UniversalSelectorSequence
         |> makeSnippet mixins
 
@@ -6988,14 +6988,14 @@ makeSnippet mixins sequence =
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
     stylesheet
-        [ (.) LoginFormButton
+        [ class LoginFormButton
             [ fontWeight normal
             , color (rgb 128 64 32)
             ]
         ]
 -}
-(.) : class -> List Mixin -> Snippet
-(.) class mixins =
+class : class -> List Mixin -> Snippet
+class class mixins =
     [ Structure.ClassSelector (identifierToString "" class) ]
         |> Structure.UniversalSelectorSequence
         |> makeSnippet mixins
@@ -7039,7 +7039,7 @@ selector selectorStr mixins =
 
 {-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
 
-    (.) Foo
+    class Foo
       [ children
           [ everything
               [ color (rgb 14 15 16)

@@ -50,8 +50,8 @@ dreamwriter =
                     ]
                 ]
             ]
-        , ((.) Hidden) [ (display none) |> important ]
-        , ((#) Page)
+        , (class Hidden) [ (display none) |> important ]
+        , (id Page)
             [ width (pct 100)
             , height (pct 100)
             , boxSizing borderBox
@@ -66,7 +66,7 @@ dreamwriter =
 basicStyle1 : Stylesheet
 basicStyle1 =
     (stylesheet << namespace "basic1")
-        [ (.) BasicStyle1
+        [ class BasicStyle1
             [ display none ]
         ]
 
@@ -74,6 +74,6 @@ basicStyle1 =
 basicStyle2 : Stylesheet
 basicStyle2 =
     (stylesheet << namespace "basic2")
-        [ (.) BasicStyle2
+        [ class BasicStyle2
             [ display none ]
         ]
