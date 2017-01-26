@@ -1022,7 +1022,7 @@ type alias BackgroundAttachment compatible =
     { compatible | value : String, backgroundAttachment : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-position
 -}
 type alias BackgroundPosition compatible =
     { compatible | value : String, backgroundPosition : Compatible }
@@ -3331,7 +3331,7 @@ listStyle3 =
 {- FLEX BOX -}
 
 
-{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
+{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.
 
 flex (none | content | auto | (int 1) | (px 10))
 flex2 (int 1) ((int 1) | (px 10 ))
@@ -3343,7 +3343,7 @@ flex =
     prop1 "flex"
 
 
-{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
+{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.
 
 flex (none | content | auto | (int 1) | (px 10))
 flex2 (int 1) ((int 1) | (px 10 ))
@@ -3355,7 +3355,7 @@ flex2 =
     prop2 "flex"
 
 
-{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.}
+{-| Sets [`flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex) property.
 
 flex (none | content | auto | (int 1) | (px 10))
 flex2 (int 1) ((int 1) | (px 10 ))
@@ -3367,7 +3367,7 @@ flex3 =
     prop3 "flex"
 
 
-{-| Sets [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis) property.}
+{-| Sets [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis) property.
 
 flex (none | content | auto | (int 1) | (px 10))
 flex2 (int 1) ((int 1) | (px 10 ))
@@ -3379,35 +3379,35 @@ flexBasis =
     prop1 "flex-basis"
 
 
-{-| Sets [`flex-grow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow) property.}
+{-| Sets [`flex-grow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow) property.
 -}
 flexGrow : Number compatible -> Mixin
 flexGrow =
     prop1 "flex-grow"
 
 
-{-| Sets [`flex-shrink`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink) property.}
+{-| Sets [`flex-shrink`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink) property.
 -}
 flexShrink : Number compatible -> Mixin
 flexShrink =
     prop1 "flex-shrink"
 
 
-{-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.}
+{-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.
 -}
 flexWrap : FlexWrap compatible -> Mixin
 flexWrap =
     prop1 "flex-wrap"
 
 
-{-| Sets [`flex-direction`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction) property.}
+{-| Sets [`flex-direction`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction) property.
 -}
 flexDirection : FlexDirection compatible -> Mixin
 flexDirection =
     prop1 "flex-direction"
 
 
-{-| Sets [`flex-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow) property.}
+{-| Sets [`flex-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow) property.
 
 flexFlow1 (wrap | wrapReverse | noWrap)
 flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnReverse)
@@ -3419,7 +3419,7 @@ flexFlow1 =
     prop1 "flex-flow"
 
 
-{-| Sets [`flex-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow) property.}
+{-| Sets [`flex-flow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow) property.
 
 flexFlow1 (wrap | wrapReverse | noWrap)
 flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnReverse)
@@ -3468,7 +3468,7 @@ justifyContent fn =
     getOverloadedProperty "justifyContent" "justify-content" (fn lengthForOverloadedProperty)
 
 
-{-| Sets [`order`](https://developer.mozilla.org/en-US/docs/Web/CSS/order) property.}
+{-| Sets [`order`](https://developer.mozilla.org/en-US/docs/Web/CSS/order) property.
 -}
 order : Number compatible -> Mixin
 order =
