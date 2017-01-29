@@ -1568,7 +1568,6 @@ type alias BasicProperty =
     { value : String
     , all : Compatible
     , alignItems : Compatible
-    , justifyContent : Compatible
     , borderStyle : Compatible
     , boxSizing : Compatible
     , color : Compatible
