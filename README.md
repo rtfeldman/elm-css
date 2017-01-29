@@ -216,6 +216,7 @@ Now `zIndex 9999` is available to use inside our `Stylesheet`.
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [**7.0.0**](https://github.com/rtfeldman/elm-css/tree/7.0.0) | Switch from `(#)` and `(.)` to `class` and `id`
 | [**6.1.0**](https://github.com/rtfeldman/elm-css/tree/6.1.0) | Add box styles and table display options.
 | [**6.0.0**](https://github.com/rtfeldman/elm-css/tree/6.0.0) | `float` is now `num`. Length units expose type aliases, e.g. `Px`. Many new keywords!
 | [**5.0.0**](https://github.com/rtfeldman/elm-css/tree/5.0.0) | Have `compile` accept multiple files, add more keywords.
