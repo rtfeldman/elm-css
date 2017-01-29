@@ -6129,8 +6129,9 @@ resize : Resize compatible -> Mixin
 resize =
     prop1 "resize"
 
+
 {-| -}
-fill: ColorValue compatible -> Mixin
+fill : ColorValue compatible -> Mixin
 fill =
     prop1 "fill"
 
