@@ -8,12 +8,14 @@ import Compile
 import Fixtures
 import Properties
 import Selectors
+import Colors
 
 
 all : Test
 all =
     describe "elm-css"
         [ Compile.all
+        , Colors.all
         , unstyledDiv
         , keyValue
         , simpleEach
