@@ -158,7 +158,6 @@ compileTest =
                         |> .css
                         |> outdented
                         |> Expect.equal (outdented output)
-
             , test "compile warnings" <|
                 \() ->
                     input
