@@ -18,6 +18,17 @@ all =
             , ( boxSizing contentBox, "content-box" )
             , ( boxSizing borderBox, "border-box" )
             ]
+        , testProperty "border-style"
+            [ ( borderStyle initial, "initial" )
+            , ( borderStyle unset, "unset" )
+            , ( borderStyle inherit, "inherit" )
+            , ( borderStyle none, "none" )
+            , ( borderStyle solid, "solid" )
+            , ( borderStyle dotted, "dotted" )
+            , ( borderStyle dashed, "dashed" )
+            , ( borderStyle hidden, "hidden" )
+            , ( borderStyle double, "double" )
+            ]
         , testProperty "width"
             [ ( width initial, "initial" )
             , ( width unset, "unset" )
