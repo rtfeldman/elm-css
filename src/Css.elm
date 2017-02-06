@@ -669,9 +669,10 @@ import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Resolve as Resolve
 import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
 import Css.Structure as Structure
-import Regex exposing (regex, contains)
 import String
 import Tuple
+import Hex
+import Color
 
 
 {-| -}
@@ -1840,45 +1841,92 @@ tools which express these as e.g. `#abcdef0`, etc.
 hex : String -> Color
 hex str =
     let
-        value =
-            if String.slice 0 1 str == "#" then
+        withoutHash =
+            if String.startsWith "#" str then
+                String.dropLeft 1 str
+            else
                 str
-            else
-                "#" ++ str
-
-        warnings =
-            if contains (regex "^#([a-fA-F0-9]{8}|[a-fA-F0-9]{6}|[a-fA-F0-9]{4}|[a-fA-F0-9]{3})$") value then
-                []
-            else
-                [ String.join " "
-                    [ "The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits."
-                    , value
-                    , "is not valid."
-                    , "Please see: https://drafts.csswg.org/css-color/#hex-notation"
-                    ]
-                ]
     in
-        { value = value
-        , color = Compatible
-        , red = 0
-        , green = 0
-        , blue = 0
-        , alpha = 1
-        , warnings = warnings
-        }
+        case String.toList withoutHash of
+            [ r, g, b ] ->
+                validHex str ( r, r ) ( g, g ) ( b, b ) ( 'f', 'f' )
+
+            [ r, g, b, a ] ->
+                validHex str ( r, r ) ( g, g ) ( b, b ) ( a, a )
+
+            [ r1, r2, g1, g2, b1, b2 ] ->
+                validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( 'f', 'f' )
+
+            [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
+                validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 )
+
+            _ ->
+                erroneousHex str
+
+
+validHex : String -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> Color
+validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
+    let
+        toResult =
+            String.fromList >> String.toLower >> Hex.fromString
+
+        results =
+            ( toResult [ r1, r2 ]
+            , toResult [ g1, g2 ]
+            , toResult [ b1, b2 ]
+            , toResult [ a1, a2 ]
+            )
+    in
+        case results of
+            ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+                { value = withPrecedingHash str
+                , color = Compatible
+                , red = red
+                , green = green
+                , blue = blue
+                , alpha = toFloat alpha / 255
+                , warnings = []
+                }
+
+            _ ->
+                erroneousHex str
+
+
+withPrecedingHash : String -> String
+withPrecedingHash str =
+    if String.startsWith "#" str then
+        str
+    else
+        String.cons '#' str
+
+
+{-| Not to be confused with Thelonious Monk or Hieronymus Bosch.
+-}
+erroneousHex : String -> Color
+erroneousHex str =
+    { value = withPrecedingHash str
+    , color = Compatible
+    , red = 0
+    , green = 0
+    , blue = 0
+    , alpha = 1
+    , warnings =
+        [ "Hex color strings must contain exactly 3, 4, 6, or 8 hexadecimal digits, optionally preceded by \"#\"."
+        , toString str
+        , "is an invalid hex color string."
+        , "Please see: https://drafts.csswg.org/css-color/#hex-notation"
+        ]
+            |> String.join " "
+            |> List.singleton
+    }
 
 
 hslaToRgba : String -> List String -> Float -> Float -> Float -> Float -> Color
-hslaToRgba value warnings hue saturation lightness alpha =
+hslaToRgba value warnings hue saturation lightness hslAlpha =
     let
-        red =
-            0
-
-        green =
-            0
-
-        blue =
-            0
+        { red, green, blue, alpha } =
+            Color.hsla hue saturation lightness hslAlpha
+                |> Color.toRgb
     in
         { value = value
         , color = Compatible
