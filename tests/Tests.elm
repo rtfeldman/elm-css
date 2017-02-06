@@ -1,19 +1,22 @@
 module Tests exposing (all)
 
 import Test exposing (..)
-import Expect
+import Expect exposing (Expectation)
+import Css exposing (Stylesheet)
 import TestUtil exposing (outdented, prettyPrint)
 import Arithmetic
 import Compile
 import Fixtures
 import Properties
 import Selectors
+import Colors
 
 
 all : Test
 all =
     describe "elm-css"
         [ Compile.all
+        , Colors.all
         , unstyledDiv
         , keyValue
         , simpleEach
@@ -587,33 +590,22 @@ weightWarning =
 
 hexWarning : Test
 hexWarning =
-    let
-        input1 =
-            Fixtures.colorHexWarning
+    describe "invalid hex colors"
+        [ test "prints a warning for an invalid hex color" <|
+            \_ ->
+                expectInvalidStylesheet Fixtures.colorHexWarning
+        , test "prints a warning for an invalid abbreviated hex color" <|
+            \_ ->
+                expectInvalidStylesheet Fixtures.colorHexAbbrWarning
+        ]
 
-        input2 =
-            Fixtures.colorHexAbbrWarning
 
-        output1 =
-            """
-            Invalid Stylesheet:
-            The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #ababah is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
-
-        output2 =
-            """
-            Invalid Stylesheet:
-            The syntax of a hex-color is a token whose value consists of 3, 4, 6, or 8 hexadecimal digits. #00i is not valid. Please see: https://drafts.csswg.org/css-color/#hex-notation"""
-    in
-        describe "colorHexWarning"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input1)
-                        |> Expect.equal (outdented output1)
-            , test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input2)
-                        |> Expect.equal (outdented output2)
-            ]
+expectInvalidStylesheet : Stylesheet -> Expectation
+expectInvalidStylesheet stylesheet =
+    stylesheet
+        |> prettyPrint
+        |> String.contains "Invalid Stylesheet"
+        |> Expect.true "Stylesheet was valid, but should have been invalid."
 
 
 pseudoElements : Test
