@@ -10,6 +10,8 @@ import SharedStyles exposing (..)
 
 { id, class, classList } =
     homepageNamespace
+
+
 main : Html a
 main =
     div []
