@@ -216,6 +216,7 @@ Now `zIndex 9999` is available to use inside our `Stylesheet`.
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [**8.1.0**](https://github.com/rtfeldman/elm-css/tree/8.1.0) | Expose some types, fix mixing bugs
 | [**8.0.0**](https://github.com/rtfeldman/elm-css/tree/8.0.0) | Switch from `(#)` and `(.)` to `class` and `id`
 | [**7.0.0**](https://github.com/rtfeldman/elm-css/tree/7.0.0) | Upgrade to Elm 0.18
 | [**6.1.0**](https://github.com/rtfeldman/elm-css/tree/6.1.0) | Add box styles and table display options.
