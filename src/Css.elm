@@ -6391,7 +6391,7 @@ withMedia =
     Preprocess.WithMedia
 
 
-{-| Animation's @keyframe
+{-| Animation's @keyframes
 
     keyframes "animationName"
         [( 0
