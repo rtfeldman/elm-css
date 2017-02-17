@@ -7631,6 +7631,8 @@ compileWithWarnings styles =
     left: 0;
     right: 0;
     z-index: 99999;
+    max-height: 50%;
+    overflow: auto;
 }""" , warnings = warnings }
 
 
