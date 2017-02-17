@@ -74,7 +74,7 @@ prettyPrintDeclaration declaration =
                 prettyPrintStep ( step, props ) =
                     (toString step)
                         ++ "% {\n"
-                        ++ (prettyPrintProperties props |> indentLines)
+                        ++ (prettyPrintProperties props)
                         ++ "\n}"
             in
                 "@keyframes "
@@ -188,7 +188,7 @@ indent str =
 indentLines : String -> String
 indentLines =
     String.lines
-        >> List.map ((++) "    ")
+        >> List.map indent
         >> String.join "\n"
 
 
