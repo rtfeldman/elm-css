@@ -52,10 +52,14 @@ type SnippetDeclaration
     | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
-    | Keyframes String (List Structure.KeyframeProperty)
+    | Keyframes String (List KeyframeStep)
     | Viewport (List Property)
     | CounterStyle (List Property)
     | FontFeatureValues (List ( String, List Property ))
+
+
+type alias KeyframeStep =
+    ( Float, List Mixin )
 
 
 type StyleBlock

@@ -10,6 +10,7 @@ import Fixtures
 import Properties
 import Selectors
 import Colors
+import Animations
 
 
 all : Test
@@ -43,6 +44,7 @@ all =
         , Selectors.all
         , Arithmetic.all
         , backgrounds
+        , Animations.all
         ]
 
 
