@@ -8,7 +8,7 @@ var sourcePath = null;
 
 program
   .version(pkg.version)
-  .usage('elm-css PATH # path to your Stylesheets.elm file')
+  .usage('PATH # path to your Stylesheets.elm file')
   .option('-o, --output [outputDir]', '(optional) directory in which to write CSS file', process.cwd())
   .option('-m, --module [moduleName]', '(optional) name of stylesheets module in your project', null, 'Stylesheets')
   .option('-p, --port [portName]', '(optional) name of the port from which to read CSS results', null, 'files')
