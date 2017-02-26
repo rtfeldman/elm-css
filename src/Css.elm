@@ -582,6 +582,19 @@ module Css
         , paddingBox
         , backgroundImage
         , url
+        , ColorStop
+        , linearGradient
+        , linearGradient2
+        , stop
+        , stopAt
+        , toTop
+        , toTopRight
+        , toRight
+        , toBottomRight
+        , toBottom
+        , toBottomLeft
+        , toLeft
+        , toTopLeft
         , backgroundPosition
         , backgroundPosition2
         , backgroundOrigin
@@ -597,7 +610,7 @@ module Css
 
 
 # Misc
-@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
+@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, linearGradient, linearGradient2, stop, stopAt, toTop, toTopRight, toRight, toBottomRight, toBottom, toBottomLeft, toLeft, toTopLeft, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
@@ -653,8 +666,7 @@ module Css
 @docs qt
 
 # Types
-
-@docs FontSize, ColorValue, IntOrAuto
+@docs FontSize, ColorValue, ColorStop, IntOrAuto
 
 # Intentionally Unsupported
 
@@ -1198,6 +1210,12 @@ type alias Transform compatible =
 -}
 type alias Angle compatible =
     { compatible | value : String, angle : Compatible }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values
+-}
+type alias AngleOrDirection compatible =
+    { compatible | value : String, angleOrDirection : Compatible }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values
@@ -2624,37 +2642,38 @@ type IncompatibleUnits
 {- ANGLES -}
 
 
-angleConverter : String -> number -> Angle {}
+angleConverter : String -> number -> AngleOrDirection (Angle {})
 angleConverter suffix num =
     { value = (numberToString num) ++ suffix
     , angle = Compatible
+    , angleOrDirection = Compatible
     }
 
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
 -}
-deg : number -> Angle {}
+deg : number -> AngleOrDirection (Angle {})
 deg =
     angleConverter "deg"
 
 
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
-grad : number -> Angle {}
+grad : number -> AngleOrDirection (Angle {})
 grad =
     angleConverter "grad"
 
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
-rad : number -> Angle {}
+rad : number -> AngleOrDirection (Angle {})
 rad =
     angleConverter "rad"
 
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
-turn : number -> Angle {}
+turn : number -> AngleOrDirection (Angle {})
 turn =
     angleConverter "turn"
 
@@ -3734,6 +3753,154 @@ local : BackgroundAttachment {}
 local =
     { value = "local"
     , backgroundAttachment = Compatible
+    }
+
+
+
+{- LINEAR GRADIENT -}
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values
+-}
+type alias ColorStop compatibleA compatibleB unit =
+    ( ColorValue compatibleA, Maybe (Length compatibleB unit) )
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+
+    linearGradient  (stopAt red <| pct 75%) (stop <| hex "222") []
+    linearGradient  (stop red) (stop <| hex "222") [ stop green, stop blue ]
+-}
+linearGradient :
+    ColorStop compatibleA compatibleB unit
+    -> ColorStop compatibleA compatibleB unit
+    -> List (ColorStop compatibleA compatibleB unit)
+    -> BackgroundImage {}
+linearGradient stop1 stop2 stops =
+    { value =
+        [ stop1, stop2 ]
+            ++ stops
+            |> collectStops
+            |> cssFunction "linear-gradient"
+    , backgroundImage = Compatible
+    }
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+
+    linearGradient  toBottomLeft (stopAt red <| pct 75%) (stop <| hex "222") []
+    linearGradient  toTop (stop red) (stop <| hex "222") [ stop green, stop blue ]
+-}
+linearGradient2 :
+    AngleOrDirection compatible
+    -> ColorStop compatibleA compatibleB unit
+    -> ColorStop compatibleA compatibleB unit
+    -> List (ColorStop compatibleA compatibleB unit)
+    -> BackgroundImage {}
+linearGradient2 dir stop1 stop2 stops =
+    { value =
+        [ stop1, stop2 ]
+            ++ stops
+            |> collectStops
+            |> (::) ("to " ++ dir.value)
+            |> cssFunction "linear-gradient"
+    , backgroundImage = Compatible
+    }
+
+
+collectStops : List (ColorStop compatibleA compatibleB unit) -> List String
+collectStops =
+    List.map <|
+        \( c, len ) ->
+            len
+                |> Maybe.map (String.cons ' ' << .value)
+                |> Maybe.withDefault ""
+                |> String.append c.value
+
+
+{-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+stop : ColorValue compatibleA -> ColorStop compatibleA compatibleB unit
+stop c =
+    ( c, Nothing )
+
+
+{-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+stopAt : ColorValue compatibleA -> Length compatibleB unit -> ColorStop compatibleA compatibleB unit
+stopAt c len =
+    ( c, Just len )
+
+
+{-| Sets the direction to [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toTop : AngleOrDirection {}
+toTop =
+    { value = "top"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`top right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toTopRight : AngleOrDirection {}
+toTopRight =
+    { value = "top right"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toRight : AngleOrDirection {}
+toRight =
+    { value = "right"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`bottom right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toBottomRight : AngleOrDirection {}
+toBottomRight =
+    { value = "bottom right"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toBottom : AngleOrDirection {}
+toBottom =
+    { value = "bottom"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`bottom left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toBottomLeft : AngleOrDirection {}
+toBottomLeft =
+    { value = "bottom left"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toLeft : AngleOrDirection {}
+toLeft =
+    { value = "left"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`top left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toTopLeft : AngleOrDirection {}
+toTopLeft =
+    { value = "top left"
+    , angleOrDirection = Compatible
     }
 
 
