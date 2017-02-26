@@ -495,6 +495,7 @@ all =
             , ( listStyle circle, "circle" )
             , ( listStyle square, "square" )
             , ( listStyle decimal, "decimal" )
+            , ( listStyle (linearGradient (stop <| hex "111") (stop <| hex "222") []), "linear-gradient(#111, #222)" )
             , ( listStyle2 disc inside, "disc inside" )
             , ( listStyle2 inside disc, "inside disc" )
             , ( listStyle2 outside decimal, "outside decimal" )

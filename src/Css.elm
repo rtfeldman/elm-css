@@ -3775,7 +3775,7 @@ linearGradient :
     ColorStop compatibleA compatibleB unit
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
-    -> BackgroundImage {}
+    -> BackgroundImage (ListStyle {})
 linearGradient stop1 stop2 stops =
     { value =
         [ stop1, stop2 ]
@@ -3783,6 +3783,7 @@ linearGradient stop1 stop2 stops =
             |> collectStops
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
+    , listStyleTypeOrPositionOrImage = Compatible
     }
 
 
@@ -3796,7 +3797,7 @@ linearGradient2 :
     -> ColorStop compatibleA compatibleB unit
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
-    -> BackgroundImage {}
+    -> BackgroundImage (ListStyle {})
 linearGradient2 dir stop1 stop2 stops =
     { value =
         [ stop1, stop2 ]
@@ -3805,6 +3806,7 @@ linearGradient2 dir stop1 stop2 stops =
             |> (::) ("to " ++ dir.value)
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
+    , listStyleTypeOrPositionOrImage = Compatible
     }
 
 
