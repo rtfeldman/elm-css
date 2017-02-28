@@ -1099,7 +1099,7 @@ type alias Length compatible units =
     combineLengths (-)
 
 
-{-| Subtract two lengths.
+{-| Divide two lengths.
 
     >>> em 9 |/| em 2
     em 4.5
@@ -1109,7 +1109,7 @@ type alias Length compatible units =
     combineLengths (/)
 
 
-{-| Subtract two lengths.
+{-| Multiply two lengths.
 
     >>> em 3 |*| em 6
     em 18
