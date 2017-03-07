@@ -308,6 +308,7 @@ module Css
         , fullscreen
         , focus
         , hover
+        , visited
         , indeterminate
         , invalid
         , lang
@@ -638,7 +639,7 @@ module Css
 @docs deg, rad, grad, turn
 
 # Pseudo-Classes
-@docs active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
+@docs active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
 # Pseudo-Elements
 @docs after, before, firstLetter, firstLine, selection
@@ -7256,6 +7257,14 @@ focus =
 hover : List Mixin -> Mixin
 hover =
     Preprocess.ExtendSelector (Structure.PseudoClassSelector "hover")
+
+
+{-| An [`:visited`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avisited)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
+visited : List Mixin -> Mixin
+visited =
+    Preprocess.ExtendSelector (Structure.PseudoClassSelector "visited")
 
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
