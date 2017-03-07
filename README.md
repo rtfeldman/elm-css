@@ -70,19 +70,21 @@ There are two popular approaches to using it; you can use either or combine both
 
 #### Approach 1: Inline Styles
 
-One way to use elm-css is for inline styles, using the `asPairs` function:
+One way to use `elm-css` is for inline styles, using the `asPairs` function:
 
-    styles =
-        Css.asPairs >> Html.Attributes.style
+```elm
+styles =
+    Css.asPairs >> Html.Attributes.style
 
-    button [ styles [ position absolute, left (px 5) ] ]
-        [ text "Whee!" ]
+button [ styles [ position absolute, left (px 5) ] ]
+    [ text "Whee!" ]
+```
 
 This approach is the simplest way to get started with `elm-css`. One advantage of inline styles is that these can be dynamically changed at runtime; a limitation is that CSS selectors cannot be used with inline styles.
 
 #### Approach 2: Generating CSS files
 
-You can also use elm-css as a CSS preprocessor which generates separate .css files.
+You can also use `elm-css` as a CSS preprocessor which generates separate .css files.
 
 To do this, you will need to install both the node module and the Elm library:
 
@@ -162,7 +164,7 @@ There are a few examples to check out!
 - the [examples](https://github.com/rtfeldman/elm-css/tree/master/examples) folder, which contains a working project with a README
 - the example above
 
-#### Using elm-css with Elm view code
+#### Using `elm-css` with Elm view code
 
 Here's how to use `elm-css` in your projects:
 
