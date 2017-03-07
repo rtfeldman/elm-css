@@ -66,7 +66,7 @@ if you write `color "blah"` or `margin (rgb 1 2 3)`, you'll get a type mismatch.
 * [namespaces](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Namespace#namespace)
 * [nested media queries](https://davidwalsh.name/write-media-queries-sass) (and nested selectors in general, like how [Sass](http://sass-lang.com/) does them)
 
-There are two popular approaches to use it.
+There are two popular approaches to using it; you can use either or combine both of these, depending on your needs and preferences.
 
 #### Approach 1: Inline Styles
 
@@ -77,6 +77,8 @@ One way to use elm-css is for inline styles, using the `asPairs` function:
 
     button [ styles [ position absolute, left (px 5) ] ]
         [ text "Whee!" ]
+
+This approach is the simplest way to get started with `elm-css`. One advantage of inline styles is that these can be dynamically changed at runtime; a limitation is that CSS selectors cannot be used with inline styles.
 
 #### Approach 2: Generating CSS files
 
