@@ -80,7 +80,7 @@ button [ styles [ position absolute, left (px 5) ] ]
     [ text "Whee!" ]
 ```
 
-This approach is the simplest way to get started with `elm-css`. One advantage of inline styles is that these can be dynamically changed at runtime; a limitation is that CSS selectors cannot be used with inline styles.
+This approach is the simplest way to get started with `elm-css`. One advantage of inline styles is that these can be dynamically changed at runtime; a limitation is that CSS pseudo-classes and pseudo-elements cannot be used with inline styles.
 
 #### Approach 2: Generating CSS files
 
