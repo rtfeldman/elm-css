@@ -670,6 +670,10 @@ pseudoClasses =
             #Page:disabled {
                 margin-top: 20px;
             }
+
+            #Page:any-link {
+                color: #f00;
+            }
             """
     in
         describe "pseudo classes"
