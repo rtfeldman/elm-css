@@ -364,6 +364,8 @@ pseudoElementStylesheet =
                 [ color (hex "#fff") ]
             , after
                 [ color (hex "#000") ]
+            , pseudoElement "-webkit-scrollbar"
+                [ display none ]
             , color (hex "#aaa")
             ]
         ]

@@ -290,6 +290,7 @@ module Css
         , super
         , textTop
         , textBottom
+        , pseudoElement
         , after
         , before
         , firstLetter
@@ -642,7 +643,7 @@ module Css
 @docs active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
 # Pseudo-Elements
-@docs after, before, firstLetter, firstLine, selection
+@docs pseudoElement, after, before, firstLetter, firstLine, selection
 
 # Media Queries
 @docs MediaQuery, screen, print, tv, projection
@@ -7431,12 +7432,30 @@ valid =
 -- Pseudo-Elements --
 
 
+{-| Define a custom pseudo-element.
+
+    stylesheet
+      [ body
+          [ pseudoElement "-webkit-scrollbar" [ display none ] ]
+      ]
+
+...outputs
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+-}
+pseudoElement : String -> List Mixin -> Mixin
+pseudoElement element =
+    Preprocess.WithPseudoElement (Structure.PseudoElement element)
+
+
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
 after : List Mixin -> Mixin
 after =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "after")
+    pseudoElement "after"
 
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
@@ -7444,7 +7463,7 @@ after =
 -}
 before : List Mixin -> Mixin
 before =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "before")
+    pseudoElement "before"
 
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
@@ -7452,7 +7471,7 @@ before =
 -}
 firstLetter : List Mixin -> Mixin
 firstLetter =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "first-letter")
+    pseudoElement "first-letter"
 
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
@@ -7460,7 +7479,7 @@ firstLetter =
 -}
 firstLine : List Mixin -> Mixin
 firstLine =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "first-line")
+    pseudoElement "first-line"
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
@@ -7468,7 +7487,7 @@ firstLine =
 -}
 selection : List Mixin -> Mixin
 selection =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "selection")
+    pseudoElement "selection"
 
 
 

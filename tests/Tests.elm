@@ -628,6 +628,10 @@ pseudoElements =
             #Page::after {
                 color: #000;
             }
+
+            #Page::-webkit-scrollbar {
+                display: none;
+            }
             """
     in
         describe "pseudo elements"
