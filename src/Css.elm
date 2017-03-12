@@ -295,6 +295,7 @@ module Css
         , firstLetter
         , firstLine
         , selection
+        , webkitScrollbar
         , active
         , any
         , checked
@@ -642,7 +643,7 @@ module Css
 @docs active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
 # Pseudo-Elements
-@docs after, before, firstLetter, firstLine, selection
+@docs after, before, firstLetter, firstLine, selection, webkitScrollbar
 
 # Media Queries
 @docs MediaQuery, screen, print, tv, projection
@@ -7469,6 +7470,14 @@ firstLine =
 selection : List Mixin -> Mixin
 selection =
     Preprocess.WithPseudoElement (Structure.PseudoElement "selection")
+
+
+{-| A [`::-webkit-scrollbar`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3A-webkit-scrollbar)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
+webkitScrollbar : List Mixin -> Mixin
+webkitScrollbar =
+    Preprocess.WithPseudoElement (Structure.PseudoElement "-webkist-scrollbar")
 
 
 
