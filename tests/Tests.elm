@@ -628,6 +628,10 @@ pseudoElements =
             #Page::after {
                 color: #000;
             }
+
+            #Page::-webkit-scrollbar {
+                display: none;
+            }
             """
     in
         describe "pseudo elements"
@@ -665,6 +669,10 @@ pseudoClasses =
 
             #Page:disabled {
                 margin-top: 20px;
+            }
+
+            #Page:any-link {
+                color: #f00;
             }
             """
     in

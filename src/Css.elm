@@ -290,11 +290,13 @@ module Css
         , super
         , textTop
         , textBottom
+        , pseudoElement
         , after
         , before
         , firstLetter
         , firstLine
         , selection
+        , pseudoClass
         , active
         , any
         , checked
@@ -639,10 +641,10 @@ module Css
 @docs deg, rad, grad, turn
 
 # Pseudo-Classes
-@docs active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
+@docs pseudoClass, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
 # Pseudo-Elements
-@docs after, before, firstLetter, firstLine, selection
+@docs pseudoElement, after, before, firstLetter, firstLine, selection
 
 # Media Queries
 @docs MediaQuery, screen, print, tv, projection
@@ -7155,12 +7157,30 @@ directionalityToString directionality =
             "rtl"
 
 
+{-| Define a custom pseudo-class.
+
+    stylesheet
+      [ body
+          [ pseudoClass "any-link" [ color (hex "f00") ] ]
+      ]
+
+...outputs
+
+    body:any-link {
+        color: #f00;
+    }
+-}
+pseudoClass : String -> List Mixin -> Mixin
+pseudoClass class =
+    Preprocess.ExtendSelector (Structure.PseudoClassSelector class)
+
+
 {-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
 active : List Mixin -> Mixin
 active =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "active")
+    pseudoClass "active"
 
 
 {-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
@@ -7168,7 +7188,7 @@ active =
 -}
 any : String -> List Mixin -> Mixin
 any str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("any(" ++ str ++ ")"))
+    pseudoClass ("any(" ++ str ++ ")")
 
 
 {-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
@@ -7176,7 +7196,7 @@ any str =
 -}
 checked : List Mixin -> Mixin
 checked =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "checked")
+    pseudoClass "checked"
 
 
 {-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
@@ -7184,7 +7204,7 @@ checked =
 -}
 dir : Directionality -> List Mixin -> Mixin
 dir directionality =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("dir(" ++ (directionalityToString directionality) ++ ")"))
+    pseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
@@ -7192,7 +7212,7 @@ dir directionality =
 -}
 disabled : List Mixin -> Mixin
 disabled =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "disabled")
+    pseudoClass "disabled"
 
 
 {-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
@@ -7200,7 +7220,7 @@ disabled =
 -}
 empty : List Mixin -> Mixin
 empty =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "empty")
+    pseudoClass "empty"
 
 
 {-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
@@ -7208,7 +7228,7 @@ empty =
 -}
 enabled : List Mixin -> Mixin
 enabled =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "enabled")
+    pseudoClass "enabled"
 
 
 {-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
@@ -7216,7 +7236,7 @@ enabled =
 -}
 first : List Mixin -> Mixin
 first =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "first")
+    pseudoClass "first"
 
 
 {-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
@@ -7224,7 +7244,7 @@ first =
 -}
 firstChild : List Mixin -> Mixin
 firstChild =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-child")
+    pseudoClass "first-child"
 
 
 {-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
@@ -7232,7 +7252,7 @@ firstChild =
 -}
 firstOfType : List Mixin -> Mixin
 firstOfType =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-of-type")
+    pseudoClass "first-of-type"
 
 
 {-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
@@ -7240,7 +7260,7 @@ firstOfType =
 -}
 fullscreen : List Mixin -> Mixin
 fullscreen =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "fullscreen")
+    pseudoClass "fullscreen"
 
 
 {-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
@@ -7248,7 +7268,7 @@ fullscreen =
 -}
 focus : List Mixin -> Mixin
 focus =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "focus")
+    pseudoClass "focus"
 
 
 {-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
@@ -7256,7 +7276,7 @@ focus =
 -}
 hover : List Mixin -> Mixin
 hover =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "hover")
+    pseudoClass "hover"
 
 
 {-| An [`:visited`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avisited)
@@ -7264,7 +7284,7 @@ hover =
 -}
 visited : List Mixin -> Mixin
 visited =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "visited")
+    pseudoClass "visited"
 
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
@@ -7272,7 +7292,7 @@ visited =
 -}
 indeterminate : List Mixin -> Mixin
 indeterminate =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "indeterminate")
+    pseudoClass "indeterminate"
 
 
 {-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
@@ -7280,7 +7300,7 @@ indeterminate =
 -}
 invalid : List Mixin -> Mixin
 invalid =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "invalid")
+    pseudoClass "invalid"
 
 
 {-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
@@ -7288,7 +7308,7 @@ invalid =
 -}
 lang : String -> List Mixin -> Mixin
 lang str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("lang(" ++ str ++ ")"))
+    pseudoClass ("lang(" ++ str ++ ")")
 
 
 {-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
@@ -7296,7 +7316,7 @@ lang str =
 -}
 lastChild : List Mixin -> Mixin
 lastChild =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-child")
+    pseudoClass "last-child"
 
 
 {-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
@@ -7304,7 +7324,7 @@ lastChild =
 -}
 lastOfType : List Mixin -> Mixin
 lastOfType =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-of-type")
+    pseudoClass "last-of-type"
 
 
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
@@ -7312,7 +7332,7 @@ lastOfType =
 -}
 link : List Mixin -> Mixin
 link =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "link")
+    pseudoClass "link"
 
 
 {-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
@@ -7320,7 +7340,7 @@ link =
 -}
 nthChild : String -> List Mixin -> Mixin
 nthChild str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-child(" ++ str ++ ")"))
+    pseudoClass ("nth-child(" ++ str ++ ")")
 
 
 {-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
@@ -7328,7 +7348,7 @@ nthChild str =
 -}
 nthLastChild : String -> List Mixin -> Mixin
 nthLastChild str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-child(" ++ str ++ ")"))
+    pseudoClass ("nth-last-child(" ++ str ++ ")")
 
 
 {-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
@@ -7336,7 +7356,7 @@ nthLastChild str =
 -}
 nthLastOfType : String -> List Mixin -> Mixin
 nthLastOfType str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-of-type(" ++ str ++ ")"))
+    pseudoClass ("nth-last-of-type(" ++ str ++ ")")
 
 
 {-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
@@ -7344,7 +7364,7 @@ nthLastOfType str =
 -}
 nthOfType : String -> List Mixin -> Mixin
 nthOfType str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-of-type(" ++ str ++ ")"))
+    pseudoClass ("nth-of-type(" ++ str ++ ")")
 
 
 {-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
@@ -7352,7 +7372,7 @@ nthOfType str =
 -}
 onlyChild : List Mixin -> Mixin
 onlyChild =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-child")
+    pseudoClass "only-child"
 
 
 {-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
@@ -7360,7 +7380,7 @@ onlyChild =
 -}
 onlyOfType : List Mixin -> Mixin
 onlyOfType =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-of-type")
+    pseudoClass "only-of-type"
 
 
 {-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
@@ -7368,7 +7388,7 @@ onlyOfType =
 -}
 optional : List Mixin -> Mixin
 optional =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "optional")
+    pseudoClass "optional"
 
 
 {-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
@@ -7376,7 +7396,7 @@ optional =
 -}
 outOfRange : List Mixin -> Mixin
 outOfRange =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "out-of-range")
+    pseudoClass "out-of-range"
 
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
@@ -7384,7 +7404,7 @@ outOfRange =
 -}
 readWrite : List Mixin -> Mixin
 readWrite =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "read-write")
+    pseudoClass "read-write"
 
 
 {-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
@@ -7392,7 +7412,7 @@ readWrite =
 -}
 required : List Mixin -> Mixin
 required =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "required")
+    pseudoClass "required"
 
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
@@ -7400,7 +7420,7 @@ required =
 -}
 root : List Mixin -> Mixin
 root =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "root")
+    pseudoClass "root"
 
 
 {-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
@@ -7408,7 +7428,7 @@ root =
 -}
 scope : List Mixin -> Mixin
 scope =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "scope")
+    pseudoClass "scope"
 
 
 {-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
@@ -7416,7 +7436,7 @@ scope =
 -}
 target : List Mixin -> Mixin
 target =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "target")
+    pseudoClass "target"
 
 
 {-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
@@ -7424,11 +7444,29 @@ target =
 -}
 valid : List Mixin -> Mixin
 valid =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "valid")
+    pseudoClass "valid"
 
 
 
 -- Pseudo-Elements --
+
+
+{-| Define a custom pseudo-element.
+
+    stylesheet
+      [ body
+          [ pseudoElement "-webkit-scrollbar" [ display none ] ]
+      ]
+
+...outputs
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+-}
+pseudoElement : String -> List Mixin -> Mixin
+pseudoElement element =
+    Preprocess.WithPseudoElement (Structure.PseudoElement element)
 
 
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
@@ -7436,7 +7474,7 @@ valid =
 -}
 after : List Mixin -> Mixin
 after =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "after")
+    pseudoElement "after"
 
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
@@ -7444,7 +7482,7 @@ after =
 -}
 before : List Mixin -> Mixin
 before =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "before")
+    pseudoElement "before"
 
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
@@ -7452,7 +7490,7 @@ before =
 -}
 firstLetter : List Mixin -> Mixin
 firstLetter =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "first-letter")
+    pseudoElement "first-letter"
 
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
@@ -7460,7 +7498,7 @@ firstLetter =
 -}
 firstLine : List Mixin -> Mixin
 firstLine =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "first-line")
+    pseudoElement "first-line"
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
@@ -7468,7 +7506,7 @@ firstLine =
 -}
 selection : List Mixin -> Mixin
 selection =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "selection")
+    pseudoElement "selection"
 
 
 

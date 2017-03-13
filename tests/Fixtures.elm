@@ -364,6 +364,8 @@ pseudoElementStylesheet =
                 [ color (hex "#fff") ]
             , after
                 [ color (hex "#000") ]
+            , pseudoElement "-webkit-scrollbar"
+                [ display none ]
             , color (hex "#aaa")
             ]
         ]
@@ -383,6 +385,8 @@ pseudoClassStylesheet =
                 [ fontSize (Css.em 3) ]
             , disabled
                 [ marginTop (px 20) ]
+            , pseudoClass "any-link"
+                [ color (hex "f00") ]
             , backgroundColor (hex "#aaa")
             ]
         ]
