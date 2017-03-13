@@ -7159,14 +7159,18 @@ directionalityToString directionality =
 
 {-| Define a custom pseudo-class.
 
+This can be useful for deprecated pseudo-classes such as `-moz-any-link`, which
+[has been deprecated and removed](https://www.fxsitecompat.com/en-CA/docs/2016/any-link-css-pseudo-class-has-been-unprefixed/)
+in modern browsers.
+
     stylesheet
       [ body
-          [ pseudoClass "any-link" [ color (hex "f00") ] ]
+          [ pseudoClass "-moz-any-link" [ color (hex "f00") ] ]
       ]
 
 ...outputs
 
-    body:any-link {
+    body:-moz-any-link {
         color: #f00;
     }
 -}
