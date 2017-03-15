@@ -355,7 +355,7 @@ thead =
     typeSelector "thead"
 
 
-{-| Selector for a thead element.
+{-| Selector for a tr element.
 -}
 tr : List Mixin -> Snippet
 tr =
