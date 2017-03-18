@@ -48,4 +48,9 @@ install:
 
 script:
   - elm-format --validate src tests examples readme-example
+  - cd examples
+  - elm-make --output=/dev/null --yes
+  - cd ../readme-example
+  - elm-make --output=/dev/null --yes
+  - cd ..
   - npm test
