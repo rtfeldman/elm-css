@@ -1,5 +1,15 @@
 ### Example
 
+```
+elm-make --output=elm.js src/HomepageView.elm --yes
+elm-css src/Stylesheets.elm
+elm-reactor
+```
+
+Now open `index.html` in elm-reactor!
+
+### How does this example work?
+
 For any `elm-css` project, you will need a minimum of:
 
 - An `elm-html` view
