@@ -3889,6 +3889,7 @@ none :
     , resize : Compatible
     , textDecorationLine : Compatible
     , transform : Compatible
+    , backgroundImage : Compatible
     , value : String
     }
 none =
@@ -3906,6 +3907,7 @@ none =
     , resize = Compatible
     , transform = Compatible
     , borderStyle = Compatible
+    , backgroundImage = Compatible
     }
 
 
