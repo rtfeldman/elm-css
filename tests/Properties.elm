@@ -525,13 +525,6 @@ all =
             , ( zIndex unset, "unset" )
             , ( zIndex (int 5), "5" )
             ]
-        , testProperty "background-image"
-            [ ( backgroundImage initial, "initial" )
-            , ( backgroundImage unset, "unset" )
-            , ( backgroundImage inherit, "inherit" )
-            , ( backgroundImage none, "none" )
-            , ( backgroundImage (url "blah.com"), "url(blah.com)" )
-            ]
         ]
 
 
