@@ -532,6 +532,12 @@ all =
             , ( backgroundImage none, "none" )
             , ( backgroundImage (url "blah.com"), "url(blah.com)" )
             ]
+        , testProperty "border-radius"
+            [ ( borderRadius (em 4), "4em" )
+            , ( borderRadius2 (em 4) (px 2), "4em 2px" )
+            , ( borderRadius3 (em 4) (px 2) (pct 5), "4em 2px 5%" )
+            , ( borderRadius4 (em 4) (px 2) (pct 5) (px 3), "4em 2px 5% 3px" )
+            ]
         ]
 
 
