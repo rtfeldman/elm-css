@@ -11,7 +11,40 @@ all =
     describe "at-rules"
         [ mediaQueryTests
         , nestedAtRules
+        , fontFaceTests
         ]
+
+
+fontFaceTests : Test
+fontFaceTests =
+    let
+        input =
+            Fixtures.fontFaceAtRule
+
+        output =
+            """
+        @font-face {
+          font-family: "MyFontName";
+          src: url(https://example.com/fonts/MyFont-Weird.ttf),
+            url(https://example.com/fonts/MyFont-Odd.ttf);
+          font-variant: small-caps;
+          font-weight: 500;
+          font-style: italic;
+        }
+
+        @font-face {
+          font-family: "MyFontName";
+          src: url(https://example.com/fonts/MyFont-Bold.woff);
+          font-weight: bold;
+        }
+    """
+    in
+        describe "@font-face"
+            [ test "pretty prints the expected output" <|
+                \_ ->
+                    outdented (prettyPrint input)
+                        |> Expect.equal (outdented output)
+            ]
 
 
 mediaQueryTests : Test

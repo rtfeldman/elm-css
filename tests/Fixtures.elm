@@ -32,6 +32,28 @@ divWidthHeight =
         ]
 
 
+fontFaceAtRule : Stylesheet
+fontFaceAtRule =
+    -- NOTE: The following code is aspirational and does not compile (yet)
+    (stylesheet << namespace "homepage")
+        [ fontFace
+            [ fontFamily "MyFontName"
+            , src
+                [ url "https://example.com/fonts/MyFont-Weird.ttf"
+                , url "https://example.com/fonts/MyFont-Odd.ttf"
+                ]
+            , fontVariant smallCaps
+            , fontWeight <| int 500
+            , fontStyle italic
+            ]
+        , fontFace
+            [ fontFamily "MyFontName"
+            , src <| url "https://example.com/fonts/MyFont-Bold.woff"
+            , fontWeight bold
+            ]
+        ]
+
+
 mediaQueryAtRule : Stylesheet
 mediaQueryAtRule =
     (stylesheet << namespace "homepage")
