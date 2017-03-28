@@ -32,8 +32,8 @@ divWidthHeight =
         ]
 
 
-atRule : Stylesheet
-atRule =
+mediaQueryAtRule : Stylesheet
+mediaQueryAtRule =
     (stylesheet << namespace "homepage")
         [ body [ padding zero ]
         , (media [ print ]) [ body [ margin (Css.em 2) ] ]
