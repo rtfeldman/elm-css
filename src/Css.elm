@@ -1,6 +1,7 @@
 module Css
     exposing
         ( compile
+        , compileWithWarnings
         , asPairs
         , Stylesheet
         , Snippet
@@ -610,7 +611,7 @@ module Css
 @docs listStyle, listStyle2, listStyle3
 
 # Style
-@docs Snippet, Mixin, mixin, stylesheet, compile
+@docs Snippet, Mixin, mixin, stylesheet, compile, compileWithWarnings
 
 # Statements
 @docs class, id, selector, everything
@@ -7704,6 +7705,40 @@ message if it could not be compiled.
 compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
     Resolve.compile
+
+
+{-| Compile the stylesheets, and inject warnings in a red box in the browser.
+
+For debug purposes.
+-}
+compileWithWarnings : List Stylesheet -> { warnings : List String, css : String }
+compileWithWarnings styles =
+    let
+        {warnings,css} =
+            compile styles
+
+        allWarnings =
+            List.map ((++) " - ") warnings
+            |> String.join "\\A" 
+            |> (++) ("CSS compiled with " ++ (toString (List.length warnings)) ++ " warnings :\\A\\A")
+
+    in
+        { css = css ++ """\nbody:after {
+    content: " """ ++ allWarnings ++ """ ";
+    padding: 40px;
+    background: #e13232;
+    color: white;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-family: monospace;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    max-height: 50%;
+    overflow: auto;
+}""" , warnings = warnings }
 
 
 collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
