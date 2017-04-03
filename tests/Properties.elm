@@ -221,6 +221,7 @@ all =
             , ( display inline, "inline" )
             , ( display block, "block" )
             , ( display inlineBlock, "inline-block" )
+            , ( display inlineFlex, "inline-flex" )
             , ( display listItem, "list-item" )
             , ( display inlineListItem, "inline-list-item" )
             , ( displayFlex, "flex" )
@@ -235,7 +236,6 @@ all =
             , ( display tableRowGroup, "table-row-group" )
               -- TODO display: contents;
               -- TODO display: flex;
-              -- TODO display: inline-flex;
               -- TODO display: grid;
               -- TODO display: inline-grid;
               -- TODO display: ruby;
