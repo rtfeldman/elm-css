@@ -61,24 +61,24 @@ applyNamespaceToStyle name style =
             applyNamespaceToProperty name property
                 |> Preprocess.AppendProperty
 
-        Preprocess.ExtendSelector selector styleList ->
-            List.map (applyNamespaceToStyle name) styleList
+        Preprocess.ExtendSelector selector styles ->
+            List.map (applyNamespaceToStyle name) styles
                 |> Preprocess.ExtendSelector (applyNamespaceToRepeatable name selector)
 
         Preprocess.NestSnippet combinator snippets ->
             List.map (applyNamespaceToSnippet name) snippets
                 |> Preprocess.NestSnippet combinator
 
-        Preprocess.WithPseudoElement pseudoElement styleList ->
-            List.map (applyNamespaceToStyle name) styleList
+        Preprocess.WithPseudoElement pseudoElement styles ->
+            List.map (applyNamespaceToStyle name) styles
                 |> Preprocess.WithPseudoElement pseudoElement
 
-        Preprocess.WithMedia mediaQueries styleList ->
-            List.map (applyNamespaceToStyle name) styleList
+        Preprocess.WithMedia mediaQueries styles ->
+            List.map (applyNamespaceToStyle name) styles
                 |> Preprocess.WithMedia mediaQueries
 
-        Preprocess.ApplyStyles styleList ->
-            List.map (applyNamespaceToStyle name) styleList
+        Preprocess.ApplyStyles styles ->
+            List.map (applyNamespaceToStyle name) styles
                 |> Preprocess.ApplyStyles
 
 
@@ -93,10 +93,10 @@ applyNamespaceToProperty name property =
 
 
 applyNamespaceToStyleBlock : String -> Preprocess.StyleBlock -> Preprocess.StyleBlock
-applyNamespaceToStyleBlock name (Preprocess.StyleBlock firstSelector otherSelectors styleList) =
+applyNamespaceToStyleBlock name (Preprocess.StyleBlock firstSelector otherSelectors styles) =
     Preprocess.StyleBlock (applyNamespaceToSelector name firstSelector)
         (List.map (applyNamespaceToSelector name) otherSelectors)
-        (List.map (applyNamespaceToStyle name) styleList)
+        (List.map (applyNamespaceToStyle name) styles)
 
 
 applyNamespaceToSnippet : String -> Snippet -> Snippet

@@ -19,7 +19,7 @@ module Css
         , descendants
         , adjacentSiblings
         , generalSiblings
-        , styles
+        , batch
         , all
         , property
         , selector
@@ -611,7 +611,7 @@ module Css
 @docs listStyle, listStyle2, listStyle3
 
 # Style
-@docs Snippet, Style, styles, stylesheet, compile
+@docs Snippet, Style, batch, stylesheet, compile
 
 # Statements
 @docs class, id, selector, everything
@@ -7041,7 +7041,7 @@ stylesheet =
 {-| Create a style from multiple other styles.
 
     underlineOnHover =
-        styles
+        batch
             [ textDecoration none
 
             , hover
@@ -7066,8 +7066,8 @@ stylesheet =
           ]
       ]
 -}
-styles : List Style -> Style
-styles =
+batch : List Style -> Style
+batch =
     Preprocess.ApplyStyles
 
 
@@ -7081,19 +7081,19 @@ styles =
         ]
 -}
 id : id -> List Style -> Snippet
-id identifier styleList =
+id identifier styles =
     [ Structure.IdSelector (identifierToString "" identifier) ]
         |> Structure.UniversalSelectorSequence
-        |> makeSnippet styleList
+        |> makeSnippet styles
 
 
 makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Snippet
-makeSnippet styleList sequence =
+makeSnippet styles sequence =
     let
         selector =
             Structure.Selector sequence [] Nothing
     in
-        [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styleList) ]
+        [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
             |> Preprocess.Snippet
 
 
@@ -7107,10 +7107,10 @@ makeSnippet styleList sequence =
         ]
 -}
 class : class -> List Style -> Snippet
-class class styleList =
+class class styles =
     [ Structure.ClassSelector (identifierToString "" class) ]
         |> Structure.UniversalSelectorSequence
-        |> makeSnippet styleList
+        |> makeSnippet styles
 
 
 
@@ -7144,9 +7144,9 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
         ]
 -}
 selector : String -> List Style -> Snippet
-selector selectorStr styleList =
+selector selectorStr styles =
     Structure.CustomSelector selectorStr []
-        |> makeSnippet styleList
+        |> makeSnippet styles
 
 
 {-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
@@ -7169,9 +7169,9 @@ selector selectorStr styleList =
 
 -}
 everything : List Style -> Snippet
-everything styleList =
+everything styles =
     Structure.UniversalSelectorSequence []
-        |> makeSnippet styleList
+        |> makeSnippet styles
 
 
 {-| Define a custom property.
@@ -7658,7 +7658,7 @@ generalSiblings =
 
 {-| -}
 each : List (List Style -> Snippet) -> List Style -> Snippet
-each snippetCreators styleList =
+each snippetCreators styles =
     let
         selectorsToSnippet selectors =
             case selectors of
@@ -7666,7 +7666,7 @@ each snippetCreators styleList =
                     Preprocess.Snippet []
 
                 first :: rest ->
-                    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest styleList) ]
+                    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest styles) ]
                         |> Preprocess.Snippet
     in
         List.map ((|>) []) snippetCreators

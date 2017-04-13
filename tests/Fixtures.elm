@@ -224,7 +224,7 @@ borders =
 
 underlineOnHover : Style
 underlineOnHover =
-    styles
+    batch
         --~ textDecoration none
         [ color (rgb 128 127 126)
         , hover
@@ -235,7 +235,7 @@ underlineOnHover =
 
 greenOnHover : Style
 greenOnHover =
-    styles
+    batch
         [ hover [ color (rgb 0 0 122) ]
         ]
 

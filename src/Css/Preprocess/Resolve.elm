@@ -269,8 +269,8 @@ extract snippetDeclarations =
 
 
 applyStyles : List Style -> List Structure.Declaration -> DeclarationsAndWarnings
-applyStyles styleList declarations =
-    case styleList of
+applyStyles styles declarations =
+    case styles of
         [] ->
             { declarations = declarations, warnings = [] }
 
@@ -471,9 +471,9 @@ lastDeclaration declarations =
 
 
 expandStyleBlock : Preprocess.StyleBlock -> DeclarationsAndWarnings
-expandStyleBlock (Preprocess.StyleBlock firstSelector otherSelectors styleList) =
+expandStyleBlock (Preprocess.StyleBlock firstSelector otherSelectors styles) =
     [ Structure.StyleBlockDeclaration (Structure.StyleBlock firstSelector otherSelectors []) ]
-        |> applyStyles styleList
+        |> applyStyles styles
 
 
 toStructure : Preprocess.Stylesheet -> ( Structure.Stylesheet, List String )

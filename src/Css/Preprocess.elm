@@ -103,8 +103,8 @@ mapLastProperty update style =
         AppendProperty property ->
             AppendProperty (update property)
 
-        ExtendSelector selector styleList ->
-            ExtendSelector selector (mapAllLastProperty update styleList)
+        ExtendSelector selector styles ->
+            ExtendSelector selector (mapAllLastProperty update styles)
 
         NestSnippet _ _ ->
             style
@@ -120,10 +120,10 @@ mapLastProperty update style =
 
 
 mapAllLastProperty : (Property -> Property) -> List Style -> List Style
-mapAllLastProperty update styleList =
-    case styleList of
+mapAllLastProperty update styles =
+    case styles of
         [] ->
-            styleList
+            styles
 
         only :: [] ->
             [ mapLastProperty update only ]
@@ -138,16 +138,16 @@ unwrapSnippet (Snippet declarations) =
 
 
 toPropertyPairs : List Style -> List ( String, String )
-toPropertyPairs styleList =
-    case styleList of
+toPropertyPairs styles =
+    case styles of
         [] ->
             []
 
         (AppendProperty property) :: rest ->
             (propertyToPair property) :: (toPropertyPairs rest)
 
-        (ApplyStyles styleList) :: rest ->
-            (toPropertyPairs styleList) ++ (toPropertyPairs rest)
+        (ApplyStyles styles) :: rest ->
+            (toPropertyPairs styles) ++ (toPropertyPairs rest)
 
         _ :: rest ->
             toPropertyPairs rest
