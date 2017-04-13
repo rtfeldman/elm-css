@@ -27,12 +27,12 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 @docs svg, path, rect, circle, ellipse, line, polyline, polygon
 -}
 
-import Css.Preprocess exposing (Mixin, Snippet(Snippet), StyleBlock(StyleBlock), SnippetDeclaration(StyleBlockDeclaration))
+import Css.Preprocess exposing (Style, Snippet(Snippet), StyleBlock(StyleBlock), SnippetDeclaration(StyleBlockDeclaration))
 import Css.Structure as Structure
 
 
-typeSelector : String -> List Mixin -> Snippet
-typeSelector selectorStr mixins =
+typeSelector : String -> List Style -> Snippet
+typeSelector selectorStr styles =
     let
         sequence =
             Structure.TypeSelectorSequence (Structure.TypeSelector selectorStr) []
@@ -40,7 +40,7 @@ typeSelector selectorStr mixins =
         selector =
             Structure.Selector sequence [] Nothing
     in
-        [ StyleBlockDeclaration (StyleBlock selector [] mixins) ]
+        [ StyleBlockDeclaration (StyleBlock selector [] styles) ]
             |> Snippet
 
 
@@ -50,14 +50,14 @@ typeSelector selectorStr mixins =
 
 {-| Selector for a html element.
 -}
-html : List Mixin -> Snippet
+html : List Style -> Snippet
 html =
     typeSelector "html"
 
 
 {-| Selector for a body element.
 -}
-body : List Mixin -> Snippet
+body : List Style -> Snippet
 body =
     typeSelector "body"
 
@@ -68,77 +68,77 @@ body =
 
 {-| Selector for an article element.
 -}
-article : List Mixin -> Snippet
+article : List Style -> Snippet
 article =
     typeSelector "article"
 
 
 {-| Selector for a header element.
 -}
-header : List Mixin -> Snippet
+header : List Style -> Snippet
 header =
     typeSelector "header"
 
 
 {-| Selector for a footer element.
 -}
-footer : List Mixin -> Snippet
+footer : List Style -> Snippet
 footer =
     typeSelector "footer"
 
 
 {-| Selector for an h1 element.
 -}
-h1 : List Mixin -> Snippet
+h1 : List Style -> Snippet
 h1 =
     typeSelector "h1"
 
 
 {-| Selector for an h2 element.
 -}
-h2 : List Mixin -> Snippet
+h2 : List Style -> Snippet
 h2 =
     typeSelector "h2"
 
 
 {-| Selector for an h3 element.
 -}
-h3 : List Mixin -> Snippet
+h3 : List Style -> Snippet
 h3 =
     typeSelector "h3"
 
 
 {-| Selector for an h4 element.
 -}
-h4 : List Mixin -> Snippet
+h4 : List Style -> Snippet
 h4 =
     typeSelector "h4"
 
 
 {-| Selector for an h5 element.
 -}
-h5 : List Mixin -> Snippet
+h5 : List Style -> Snippet
 h5 =
     typeSelector "h5"
 
 
 {-| Selector for an h6 element.
 -}
-h6 : List Mixin -> Snippet
+h6 : List Style -> Snippet
 h6 =
     typeSelector "h6"
 
 
 {-| Selector for a nav element.
 -}
-nav : List Mixin -> Snippet
+nav : List Style -> Snippet
 nav =
     typeSelector "nav"
 
 
 {-| Selector for a section element.
 -}
-section : List Mixin -> Snippet
+section : List Style -> Snippet
 section =
     typeSelector "section"
 
@@ -149,56 +149,56 @@ section =
 
 {-| Selector for a div element.
 -}
-div : List Mixin -> Snippet
+div : List Style -> Snippet
 div =
     typeSelector "div"
 
 
 {-| Selector for an hr element.
 -}
-hr : List Mixin -> Snippet
+hr : List Style -> Snippet
 hr =
     typeSelector "hr"
 
 
 {-| Selector for an li element.
 -}
-li : List Mixin -> Snippet
+li : List Style -> Snippet
 li =
     typeSelector "li"
 
 
 {-| Selector for a main element.
 -}
-main_ : List Mixin -> Snippet
+main_ : List Style -> Snippet
 main_ =
     typeSelector "main"
 
 
 {-| Selector for an ol element.
 -}
-ol : List Mixin -> Snippet
+ol : List Style -> Snippet
 ol =
     typeSelector "ol"
 
 
 {-| Selector for a p element.
 -}
-p : List Mixin -> Snippet
+p : List Style -> Snippet
 p =
     typeSelector "p"
 
 
 {-| Selector for a ul element.
 -}
-ul : List Mixin -> Snippet
+ul : List Style -> Snippet
 ul =
     typeSelector "ul"
 
 
 {-| Selector for a pre element.
 -}
-pre : List Mixin -> Snippet
+pre : List Style -> Snippet
 pre =
     typeSelector "pre"
 
@@ -209,49 +209,49 @@ pre =
 
 {-| Selector for an `<a>` element.
 -}
-a : List Mixin -> Snippet
+a : List Style -> Snippet
 a =
     typeSelector "a"
 
 
 {-| Selector for a code element.
 -}
-code : List Mixin -> Snippet
+code : List Style -> Snippet
 code =
     typeSelector "code"
 
 
 {-| Selector for a small element.
 -}
-small : List Mixin -> Snippet
+small : List Style -> Snippet
 small =
     typeSelector "small"
 
 
 {-| Selector for a span element.
 -}
-span : List Mixin -> Snippet
+span : List Style -> Snippet
 span =
     typeSelector "span"
 
 
 {-| Selector for a strong element.
 -}
-strong : List Mixin -> Snippet
+strong : List Style -> Snippet
 strong =
     typeSelector "strong"
 
 
 {-| Selector for a i element.
 -}
-i : List Mixin -> Snippet
+i : List Style -> Snippet
 i =
     typeSelector "i"
 
 
 {-| Selector for a em element.
 -}
-em : List Mixin -> Snippet
+em : List Style -> Snippet
 em =
     typeSelector "em"
 
@@ -262,28 +262,28 @@ em =
 
 {-| Selector for a img element.
 -}
-img : List Mixin -> Snippet
+img : List Style -> Snippet
 img =
     typeSelector "img"
 
 
 {-| Selector for an audio element.
 -}
-audio : List Mixin -> Snippet
+audio : List Style -> Snippet
 audio =
     typeSelector "audio"
 
 
 {-| Selector for a video element.
 -}
-video : List Mixin -> Snippet
+video : List Style -> Snippet
 video =
     typeSelector "video"
 
 
 {-| Selector for a canvas element.
 -}
-canvas : List Mixin -> Snippet
+canvas : List Style -> Snippet
 canvas =
     typeSelector "canvas"
 
@@ -294,70 +294,70 @@ canvas =
 
 {-| Selector for a caption element.
 -}
-caption : List Mixin -> Snippet
+caption : List Style -> Snippet
 caption =
     typeSelector "caption"
 
 
 {-| Selector for a col element.
 -}
-col : List Mixin -> Snippet
+col : List Style -> Snippet
 col =
     typeSelector "col"
 
 
 {-| Selector for a colgroup element.
 -}
-colgroup : List Mixin -> Snippet
+colgroup : List Style -> Snippet
 colgroup =
     typeSelector "colgroup"
 
 
 {-| Selector for a table element.
 -}
-table : List Mixin -> Snippet
+table : List Style -> Snippet
 table =
     typeSelector "table"
 
 
 {-| Selector for a tbody element.
 -}
-tbody : List Mixin -> Snippet
+tbody : List Style -> Snippet
 tbody =
     typeSelector "tbody"
 
 
 {-| Selector for a td element.
 -}
-td : List Mixin -> Snippet
+td : List Style -> Snippet
 td =
     typeSelector "td"
 
 
 {-| Selector for a tfoot element.
 -}
-tfoot : List Mixin -> Snippet
+tfoot : List Style -> Snippet
 tfoot =
     typeSelector "tfoot"
 
 
 {-| Selector for a th element.
 -}
-th : List Mixin -> Snippet
+th : List Style -> Snippet
 th =
     typeSelector "th"
 
 
 {-| Selector for a thead element.
 -}
-thead : List Mixin -> Snippet
+thead : List Style -> Snippet
 thead =
     typeSelector "thead"
 
 
 {-| Selector for a tr element.
 -}
-tr : List Mixin -> Snippet
+tr : List Style -> Snippet
 tr =
     typeSelector "tr"
 
@@ -368,139 +368,139 @@ tr =
 
 {-| Selector for a button element.
 -}
-button : List Mixin -> Snippet
+button : List Style -> Snippet
 button =
     typeSelector "button"
 
 
 {-| Selector for a fieldset element.
 -}
-fieldset : List Mixin -> Snippet
+fieldset : List Style -> Snippet
 fieldset =
     typeSelector "fieldset"
 
 
 {-| Selector for a form element.
 -}
-form : List Mixin -> Snippet
+form : List Style -> Snippet
 form =
     typeSelector "form"
 
 
 {-| Selector for an input element.
 -}
-input : List Mixin -> Snippet
+input : List Style -> Snippet
 input =
     typeSelector "input"
 
 
 {-| Selector for a label element.
 -}
-label : List Mixin -> Snippet
+label : List Style -> Snippet
 label =
     typeSelector "label"
 
 
 {-| Selector for a legend element.
 -}
-legend : List Mixin -> Snippet
+legend : List Style -> Snippet
 legend =
     typeSelector "legend"
 
 
 {-| Selector for an optgroup element.
 -}
-optgroup : List Mixin -> Snippet
+optgroup : List Style -> Snippet
 optgroup =
     typeSelector "optgroup"
 
 
 {-| Selector for an option element.
 -}
-option : List Mixin -> Snippet
+option : List Style -> Snippet
 option =
     typeSelector "option"
 
 
 {-| Selector for a progress element.
 -}
-progress : List Mixin -> Snippet
+progress : List Style -> Snippet
 progress =
     typeSelector "progress"
 
 
 {-| Selector for a select element.
 -}
-select : List Mixin -> Snippet
+select : List Style -> Snippet
 select =
     typeSelector "select"
 
 
 {-| Selector for a textarea element.
 -}
-textarea : List Mixin -> Snippet
+textarea : List Style -> Snippet
 textarea =
     typeSelector "textarea"
 
 
 {-| Selector for a blockquote element.
 -}
-blockquote : List Mixin -> Snippet
+blockquote : List Style -> Snippet
 blockquote =
     typeSelector "blockquote"
 
 
 {-| Selector for a svg element.
 -}
-svg : List Mixin -> Snippet
+svg : List Style -> Snippet
 svg =
     typeSelector "svg"
 
 
 {-| Selector for a path element.
 -}
-path : List Mixin -> Snippet
+path : List Style -> Snippet
 path =
     typeSelector "path"
 
 
 {-| Selector for a rect element.
 -}
-rect : List Mixin -> Snippet
+rect : List Style -> Snippet
 rect =
     typeSelector "rect"
 
 
 {-| Selector for a circle element.
 -}
-circle : List Mixin -> Snippet
+circle : List Style -> Snippet
 circle =
     typeSelector "circle"
 
 
 {-| Selector for a ellipse element.
 -}
-ellipse : List Mixin -> Snippet
+ellipse : List Style -> Snippet
 ellipse =
     typeSelector "ellipse"
 
 
 {-| Selector for a line element.
 -}
-line : List Mixin -> Snippet
+line : List Style -> Snippet
 line =
     typeSelector "line"
 
 
 {-| Selector for a polyline element.
 -}
-polyline : List Mixin -> Snippet
+polyline : List Style -> Snippet
 polyline =
     typeSelector "polyline"
 
 
 {-| Selector for a polygon element.
 -}
-polygon : List Mixin -> Snippet
+polygon : List Style -> Snippet
 polygon =
     typeSelector "polygon"

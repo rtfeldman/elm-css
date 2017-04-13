@@ -5,7 +5,7 @@ Structure data structures and gathering warnings along the way.
 -}
 
 import String
-import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
 import Tuple
@@ -268,9 +268,9 @@ extract snippetDeclarations =
                 }
 
 
-applyMixins : List Mixin -> List Structure.Declaration -> DeclarationsAndWarnings
-applyMixins mixins declarations =
-    case mixins of
+applyStyles : List Style -> List Structure.Declaration -> DeclarationsAndWarnings
+applyStyles styleList declarations =
+    case styleList of
         [] ->
             { declarations = declarations, warnings = [] }
 
@@ -282,15 +282,15 @@ applyMixins mixins declarations =
                 result =
                     declarations
                         |> Structure.appendProperty property
-                        |> applyMixins rest
+                        |> applyStyles rest
             in
                 { declarations = result.declarations
                 , warnings = warnings ++ result.warnings
                 }
 
-        (ExtendSelector selector nestedMixins) :: rest ->
-            applyNestedMixinsToLast
-                nestedMixins
+        (ExtendSelector selector nestedStyles) :: rest ->
+            applyNestedStylesToLast
+                nestedStyles
                 rest
                 (Structure.appendRepeatableToLastSelector selector)
                 declarations
@@ -306,7 +306,7 @@ applyMixins mixins declarations =
                 expandDeclaration : SnippetDeclaration -> DeclarationsAndWarnings
                 expandDeclaration declaration =
                     case declaration of
-                        Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors nestedMixins) ->
+                        Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors nestedStyles) ->
                             let
                                 newSelectors =
                                     (collectSelectors declarations)
@@ -321,7 +321,7 @@ applyMixins mixins declarations =
                                             [ Structure.StyleBlockDeclaration (Structure.StyleBlock first rest [])
                                             ]
                             in
-                                [ applyMixins nestedMixins newDeclarations ]
+                                [ applyStyles nestedStyles newDeclarations ]
                                     |> concatDeclarationsAndWarnings
 
                         Preprocess.MediaRule mediaQueries styleBlocks ->
@@ -355,17 +355,17 @@ applyMixins mixins declarations =
                 snippets
                     |> List.concatMap unwrapSnippet
                     |> List.map expandDeclaration
-                    |> (++) [ applyMixins rest declarations ]
+                    |> (++) [ applyStyles rest declarations ]
                     |> concatDeclarationsAndWarnings
 
-        (Preprocess.WithPseudoElement pseudoElement nestedMixins) :: rest ->
-            applyNestedMixinsToLast
-                nestedMixins
+        (Preprocess.WithPseudoElement pseudoElement nestedStyles) :: rest ->
+            applyNestedStylesToLast
+                nestedStyles
                 rest
                 (Structure.appendPseudoElementToLastSelector pseudoElement)
                 declarations
 
-        (Preprocess.WithMedia mediaQueries nestedMixins) :: rest ->
+        (Preprocess.WithMedia mediaQueries nestedStyles) :: rest ->
             let
                 newDeclarations =
                     case collectSelectors declarations of
@@ -377,18 +377,18 @@ applyMixins mixins declarations =
                                 |> Structure.MediaRule mediaQueries
                             ]
             in
-                [ applyMixins rest declarations
-                , applyMixins nestedMixins newDeclarations
+                [ applyStyles rest declarations
+                , applyStyles nestedStyles newDeclarations
                 ]
                     |> concatDeclarationsAndWarnings
 
-        (Preprocess.ApplyMixins otherMixins) :: rest ->
+        (Preprocess.ApplyStyles otherStyles) :: rest ->
             declarations
-                |> applyMixins (otherMixins ++ rest)
+                |> applyStyles (otherStyles ++ rest)
 
 
 
-{- To apply nested mixins to a list of declarations, the following flow is used:
+{- Use the following flow to apply nested Styles to a list of Declarations:
 
    * initialResult: we pop off the last declaration, and run function `f` that appends the nested selector to it using `mapLast handleInitial`.
    * nextResult: we pop off the last declaration, and resolve the rest of the remaining children
@@ -403,13 +403,13 @@ applyMixins mixins declarations =
 -}
 
 
-applyNestedMixinsToLast : List Mixin -> List Mixin -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> DeclarationsAndWarnings
-applyNestedMixinsToLast nestedMixins rest f declarations =
+applyNestedStylesToLast : List Style -> List Style -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> DeclarationsAndWarnings
+applyNestedStylesToLast nestedStyles rest f declarations =
     let
         handleInitial declarationsAndWarnings =
             let
                 result =
-                    applyMixins nestedMixins declarationsAndWarnings.declarations
+                    applyStyles nestedStyles declarationsAndWarnings.declarations
             in
                 { warnings = declarationsAndWarnings.warnings ++ result.warnings
                 , declarations = result.declarations
@@ -417,10 +417,10 @@ applyNestedMixinsToLast nestedMixins rest f declarations =
 
         initialResult =
             lastDeclaration declarations
-                |> Maybe.map insertMixinsToNestedDecl
+                |> Maybe.map insertStylesToNestedDecl
                 |> Maybe.withDefault { warnings = [], declarations = [] }
 
-        insertMixinsToNestedDecl lastDecl =
+        insertStylesToNestedDecl lastDecl =
             Structure.concatMapLastStyleBlock f lastDecl
                 |> List.map (\declaration -> { declarations = [ declaration ], warnings = [] })
                 |> mapLast handleInitial
@@ -429,7 +429,7 @@ applyNestedMixinsToLast nestedMixins rest f declarations =
         nextResult =
             lastDeclaration declarations
                 |> Maybe.withDefault []
-                |> applyMixins rest
+                |> applyStyles rest
 
         withoutParent decls =
             List.tail decls
@@ -471,9 +471,9 @@ lastDeclaration declarations =
 
 
 expandStyleBlock : Preprocess.StyleBlock -> DeclarationsAndWarnings
-expandStyleBlock (Preprocess.StyleBlock firstSelector otherSelectors mixins) =
+expandStyleBlock (Preprocess.StyleBlock firstSelector otherSelectors styleList) =
     [ Structure.StyleBlockDeclaration (Structure.StyleBlock firstSelector otherSelectors []) ]
-        |> applyMixins mixins
+        |> applyStyles styleList
 
 
 toStructure : Preprocess.Stylesheet -> ( Structure.Stylesheet, List String )
