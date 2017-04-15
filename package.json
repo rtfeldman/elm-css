@@ -32,6 +32,7 @@
   "dependencies": {
     "chalk": "1.1.1",
     "commander": "2.9.0",
+    "elm-test": "^0.18.2",
     "node-elm-compiler": "2.3.2",
     "tmp": "0.0.28"
   },

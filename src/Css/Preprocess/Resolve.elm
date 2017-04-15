@@ -5,6 +5,7 @@ Structure data structures and gathering warnings along the way.
 -}
 
 import String
+import List
 import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
@@ -141,11 +142,43 @@ resolveFontFace fontFaceProperties =
         }
 
 
-resolveKeyframes : String -> List Structure.KeyframeProperty -> DeclarationsAndWarnings
-resolveKeyframes str properties =
-    { declarations = [ Structure.Keyframes str properties ]
-    , warnings = []
-    }
+resolveKeyframes : String -> List Preprocess.KeyframeStep -> DeclarationsAndWarnings
+resolveKeyframes name steps =
+    let
+        ( warnings, keyframes ) =
+            extractWarningsFromKeyframes steps ( [], [] )
+    in
+        { declarations = [ Structure.Keyframes name keyframes ]
+        , warnings = warnings
+        }
+
+
+extractWarningsFromKeyframes : List Preprocess.KeyframeStep -> ( List String, List Structure.KeyframeStep ) -> ( List String, List Structure.KeyframeStep )
+extractWarningsFromKeyframes ls ( warnings, steps ) =
+    case ls of
+        ( step, mixins ) :: tl ->
+            if step < 0 || step > 100 then
+                -- keyframe is dropped
+                extractWarningsFromKeyframes tl
+                    ( "Keyframe must be between 0 and 100 (those are percents)." :: warnings
+                    , steps
+                    )
+            else
+                let
+                    props =
+                        Preprocess.toPropertyPairs mixins
+                            |> List.map pairToProperty
+
+                    pairToProperty ( k, v ) =
+                        { important = False
+                        , key = k
+                        , value = v
+                        }
+                in
+                    extractWarningsFromKeyframes tl ( warnings, ( step, props ) :: steps )
+
+        [] ->
+            ( warnings, steps )
 
 
 resolveViewport : List Preprocess.Property -> DeclarationsAndWarnings
@@ -218,8 +251,8 @@ toDeclarations snippetDeclaration =
         Preprocess.FontFace fontFaceProperties ->
             resolveFontFace fontFaceProperties
 
-        Preprocess.Keyframes str properties ->
-            resolveKeyframes str properties
+        Preprocess.Keyframes name steps ->
+            resolveKeyframes name steps
 
         Preprocess.Viewport viewportProperties ->
             resolveViewport viewportProperties

@@ -53,7 +53,7 @@ type Declaration
     | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
-    | Keyframes String (List KeyframeProperty)
+    | Keyframes String (List KeyframeStep)
     | Viewport (List Property)
     | CounterStyle (List Property)
     | FontFeatureValues (List ( String, List Property ))
@@ -121,8 +121,8 @@ type SelectorCombinator
     | Descendant
 
 
-type alias KeyframeProperty =
-    String
+type alias KeyframeStep =
+    ( Float, List Property )
 
 
 {-| Add a property to the last style block in the given declarations.
@@ -141,6 +141,11 @@ appendProperty property declarations =
                 (mapLast (withPropertyAppended property) styleBlocks)
             ]
 
+        (Keyframes name steps) :: [] ->
+            [ Keyframes name
+                (mapLast (appendPropertyToKeyframe property) steps)
+            ]
+
         -- TODO
         _ :: [] ->
             declarations
@@ -149,7 +154,6 @@ appendProperty property declarations =
         --| DocumentRule String String String String StyleBlock
         --| PageRule String (List Property)
         --| FontFace (List Property)
-        --| Keyframes String (List KeyframeProperty)
         --| Viewport (List Property)
         --| CounterStyle (List Property)
         --| FontFeatureValues (List ( String, List Property ))
@@ -160,6 +164,11 @@ appendProperty property declarations =
 withPropertyAppended : Property -> StyleBlock -> StyleBlock
 withPropertyAppended property (StyleBlock firstSelector otherSelectors properties) =
     StyleBlock firstSelector otherSelectors (properties ++ [ property ])
+
+
+appendPropertyToKeyframe : Property -> KeyframeStep -> KeyframeStep
+appendPropertyToKeyframe prop ( step, props ) =
+    ( step, prop :: props )
 
 
 extendLastSelector : RepeatableSimpleSelector -> List Declaration -> List Declaration
@@ -229,7 +238,7 @@ extendLastSelector selector declarations =
         (FontFace _) :: [] ->
             declarations
 
-        (Keyframes _ _) :: [] ->
+        (Keyframes name steps) :: [] ->
             declarations
 
         (Viewport _) :: [] ->

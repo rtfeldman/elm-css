@@ -69,6 +69,24 @@ prettyPrintDeclaration declaration =
             in
                 "@media " ++ query ++ " {\n" ++ indent blocks ++ "\n}"
 
+        Keyframes name steps ->
+            let
+                prettyPrintStep ( step, props ) =
+                    (toString step)
+                        ++ "% {\n"
+                        ++ (prettyPrintProperties props)
+                        ++ "\n}"
+            in
+                "@keyframes "
+                    ++ name
+                    ++ " {\n"
+                    ++ (List.map prettyPrintStep steps
+                            |> List.reverse
+                            |> String.join "\n"
+                            |> indentLines
+                       )
+                    ++ "\n}"
+
         _ ->
             Debug.crash "not yet implemented :x"
 
@@ -165,6 +183,13 @@ prettyPrintProperty { key, value, important } =
 indent : String -> String
 indent str =
     "    " ++ str
+
+
+indentLines : String -> String
+indentLines =
+    String.lines
+        >> List.map indent
+        >> String.join "\n"
 
 
 prettyPrintProperties : List Property -> String
