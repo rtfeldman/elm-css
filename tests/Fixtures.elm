@@ -32,29 +32,6 @@ divWidthHeight =
         ]
 
 
-atRule : Stylesheet
-atRule =
-    (stylesheet << namespace "homepage")
-        [ body [ padding zero ]
-        , (media [ print ]) [ body [ margin (Css.em 2) ] ]
-        , mediaQuery "screen and ( max-width: 600px )"
-            [ body [ margin (Css.em 3) ] ]
-        , button [ margin auto ]
-        ]
-
-
-nestedAtRule : Stylesheet
-nestedAtRule =
-    (stylesheet << namespace "homepage")
-        [ button [ padding zero ]
-        , body
-            [ margin auto
-            , (withMedia [ print ]) [ margin (Css.em 2) ]
-            ]
-        , a [ textDecoration none ]
-        ]
-
-
 bug99 : Stylesheet
 bug99 =
     stylesheet

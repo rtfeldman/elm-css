@@ -6,6 +6,16 @@ elm-css DSL, collecting warnings, or
 -}
 
 
+{-| For typing
+-}
+type Compatible
+    = Compatible
+
+
+type alias Number compatible =
+    { compatible | value : String, number : Compatible }
+
+
 {-| A property consisting of a key, a value, and a flag for whether or not
 the property is `!important`.
 -}
@@ -63,6 +73,39 @@ type Declaration
 -}
 type StyleBlock
     = StyleBlock Selector (List Selector) (List Property)
+
+
+{-| A media modifier. It can be `not` or `only`
+-}
+type MediaModifier
+    = MediaModifier String
+
+
+{-| A media type. It can be things like all, screen, screen, speech
+-}
+type MediaType
+    = MediaType String
+
+
+{-| A media feature.
+-}
+type alias MediaFeature =
+    { key : String, value : Maybe String }
+
+
+{-| In an or in a media query, rendered as a `,`
+-}
+type MediaOrSeparator
+    = MediaOrSeparator
+
+
+{-| The components that make up a media query
+-}
+type MediaQueryComponent
+    = PrependMediaModifier MediaModifier
+    | AppendMediaType MediaType
+    | AppendMediaFeature MediaFeature
+    | AppendOrSeparator MediaOrSeparator
 
 
 {-| A media query.

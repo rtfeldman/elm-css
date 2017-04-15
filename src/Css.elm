@@ -6,13 +6,10 @@ module Css
         , Snippet
         , Mixin
         , Color
-        , MediaQuery
         , Length
         , IntOrAuto
         , stylesheet
         , each
-        , media
-        , withMedia
         , withClass
         , everything
         , children
@@ -465,11 +462,6 @@ module Css
         , stackedFractions
         , ordinal
         , slashedZero
-        , screen
-        , print
-        , projection
-        , tv
-        , mediaQuery
         , src
         , qt
         , fontFamilies
@@ -619,11 +611,8 @@ module Css
 # Combinators
 @docs children, descendants, adjacentSiblings, generalSiblings
 
-# Media Queries
-@docs screen, tv, projection, print
-
 # Properties
-@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, each, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill
 
 # Values
 
@@ -651,9 +640,6 @@ module Css
 # Pseudo-Elements
 @docs pseudoElement, after, before, firstLetter, firstLine, selection
 
-# Media Queries
-@docs MediaQuery, screen, print, tv, projection
-
 # Source
 @docs src
 
@@ -673,19 +659,14 @@ deprecated or discouraged.
 @docs thin, medium, thick, blink
 -}
 
+import Color
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Preprocess.Resolve as Resolve
 import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
-import Css.Structure as Structure
+import Css.Preprocess.Resolve as Resolve
+import Css.Structure as Structure exposing (..)
+import Hex
 import String
 import Tuple
-import Hex
-import Color
-
-
-{-| -}
-type alias MediaQuery =
-    Structure.MediaQuery
 
 
 {-| -}
@@ -703,40 +684,12 @@ type alias Mixin =
     Preprocess.Mixin
 
 
-type Compatible
-    = Compatible
-
-
 type PseudoClass
     = PseudoClass String (List Mixin)
 
 
 type PseudoElement
     = PseudoElement String (List Mixin)
-
-
-{-| -}
-screen : MediaQuery
-screen =
-    Structure.MediaQuery "screen"
-
-
-{-| -}
-print : MediaQuery
-print =
-    Structure.MediaQuery "print"
-
-
-{-| -}
-projection : MediaQuery
-projection =
-    Structure.MediaQuery "projection"
-
-
-{-| -}
-tv : MediaQuery
-tv =
-    Structure.MediaQuery "tv"
 
 
 
@@ -807,10 +760,6 @@ type alias Value compatible =
 
 type alias All compatible =
     { compatible | value : String, all : Compatible }
-
-
-type alias Number compatible =
-    { compatible | value : String, number : Compatible }
 
 
 type alias None compatible =
@@ -1190,6 +1139,7 @@ type alias ExplicitLength units =
     , lengthOrNoneOrMinMaxDimension : Compatible
     , textIndent : Compatible
     , flexBasis : Compatible
+    , absoluteLength : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , fontSize : Compatible
     , lengthOrAutoOrCoverOrContain : Compatible
@@ -1378,12 +1328,23 @@ visible =
 
 {-| The `scroll` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
 This can also represent a `scroll` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
+It can also be used in the overflow-block and oveflow-line media features.
 -}
-scroll : Overflow (BackgroundAttachment {})
+scroll :
+    { value : String
+    , scroll : Compatible
+    , overflow : Compatible
+    , backgroundAttachment : Compatible
+    , blockAxisOverflow : Compatible
+    , inlineAxisOverflow : Compatible
+    }
 scroll =
     { value = "scroll"
+    , scroll = Compatible
     , overflow = Compatible
     , backgroundAttachment = Compatible
+    , blockAxisOverflow = Compatible
+    , inlineAxisOverflow = Compatible
     }
 
 
@@ -2273,6 +2234,7 @@ lengthConverter units unitLabel numericValue =
     , flexBasis = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , fontSize = Compatible
+    , absoluteLength = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
     }
 
@@ -3905,6 +3867,12 @@ none :
     , transform : Compatible
     , backgroundImage : Compatible
     , value : String
+    , updateFrequency : Compatible
+    , blockAxisOverflow : Compatible
+    , inlineAxisOverflow : Compatible
+    , pointerDevice : Compatible
+    , hoverCapability : Compatible
+    , scriptingSupport : Compatible
     }
 none =
     { value = "none"
@@ -3922,6 +3890,12 @@ none =
     , transform = Compatible
     , borderStyle = Compatible
     , backgroundImage = Compatible
+    , updateFrequency = Compatible
+    , blockAxisOverflow = Compatible
+    , inlineAxisOverflow = Compatible
+    , pointerDevice = Compatible
+    , hoverCapability = Compatible
+    , scriptingSupport = Compatible
     }
 
 
@@ -6396,65 +6370,6 @@ backgroundSize2 =
 color : ColorValue compatible -> Mixin
 color c =
     propertyWithWarnings c.warnings "color" c.value
-
-
-{-| -}
-mediaQuery : String -> List Snippet -> Snippet
-mediaQuery queryString snippets =
-    media [ Structure.MediaQuery queryString ] snippets
-
-
-{-| -}
-media : List Structure.MediaQuery -> List Snippet -> Snippet
-media mediaQueries snippets =
-    let
-        snippetDeclarations : List Preprocess.SnippetDeclaration
-        snippetDeclarations =
-            List.concatMap unwrapSnippet snippets
-
-        extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
-        extractStyleBlocks declarations =
-            case declarations of
-                [] ->
-                    []
-
-                (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
-                    styleBlock :: extractStyleBlocks rest
-
-                first :: rest ->
-                    extractStyleBlocks rest
-
-        mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
-        mediaRuleFromStyleBlocks =
-            Preprocess.MediaRule mediaQueries
-                (extractStyleBlocks snippetDeclarations)
-
-        nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
-        nestedMediaRules declarations =
-            case declarations of
-                [] ->
-                    []
-
-                (Preprocess.StyleBlockDeclaration _) :: rest ->
-                    -- These will already have been handled previously, with appropriate
-                    -- bundling, so don't create duplicates here.
-                    nestedMediaRules rest
-
-                (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
-                    -- nest the media queries
-                    (Preprocess.MediaRule (mediaQueries ++ nestedMediaQueries) styleBlocks)
-                        :: nestedMediaRules rest
-
-                first :: rest ->
-                    first :: nestedMediaRules rest
-    in
-        Preprocess.Snippet (mediaRuleFromStyleBlocks :: (nestedMediaRules snippetDeclarations))
-
-
-{-| -}
-withMedia : List Structure.MediaQuery -> List Mixin -> Mixin
-withMedia =
-    Preprocess.WithMedia
 
 
 
