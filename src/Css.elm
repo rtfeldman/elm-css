@@ -594,7 +594,7 @@ module Css
         , linearGradient
         , linearGradient2
         , stop
-        , stopAt
+        , stop2
         , toTop
         , toTopRight
         , toRight
@@ -622,7 +622,7 @@ module Css
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
-@docs linearGradient, linearGradient2, stop, stopAt, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+@docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 # Style
 @docs Snippet, Style, batch, stylesheet, compile
@@ -3777,7 +3777,7 @@ type alias ColorStop compatibleA compatibleB unit =
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
-    linearGradient  (stopAt red <| pct 75%) (stop <| hex "222") []
+    linearGradient  (stop2 red <| pct 75%) (stop <| hex "222") []
     linearGradient  (stop red) (stop <| hex "222") [ stop green, stop blue ]
 -}
 linearGradient :
@@ -3798,7 +3798,7 @@ linearGradient stop1 stop2 stops =
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
-    linearGradient  toBottomLeft (stopAt red <| pct 75%) (stop <| hex "222") []
+    linearGradient  toBottomLeft (stop2 red <| pct 75%) (stop <| hex "222") []
     linearGradient  toTop (stop red) (stop <| hex "222") [ stop green, stop blue ]
 -}
 linearGradient2 :
@@ -3838,8 +3838,8 @@ stop c =
 
 {-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-stopAt : ColorValue compatibleA -> Length compatibleB unit -> ColorStop compatibleA compatibleB unit
-stopAt c len =
+stop2 : ColorValue compatibleA -> Length compatibleB unit -> ColorStop compatibleA compatibleB unit
+stop2 c len =
     ( c, Just len )
 
 

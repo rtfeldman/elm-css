@@ -427,7 +427,7 @@ backgrounds =
                 linearGradient
                     (stop <| hex "111")
                     (stop <| rgb 16 32 64)
-                    [ stopAt (hex "222") <| px 25 ]
+                    [ stop2 (hex "222") <| px 25 ]
             , backgroundImage <|
                 linearGradient2
                     toLeft
