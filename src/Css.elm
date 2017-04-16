@@ -622,6 +622,7 @@ module Css
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
+@docs linearGradient, linearGradient2, stop, stopAt, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 # Style
 @docs Snippet, Style, batch, stylesheet, compile
