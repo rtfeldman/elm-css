@@ -551,21 +551,21 @@ all =
         ]
 
 
-testProperty : String -> List ( Mixin, String ) -> Test
+testProperty : String -> List ( Style, String ) -> Test
 testProperty propertyName modifierPairs =
     describe (propertyName ++ " property")
         (List.map (expectPropertyWorks propertyName) modifierPairs)
 
 
-expectPropertyWorks : String -> ( Mixin, String ) -> Test
-expectPropertyWorks propertyName ( mixin, expectedStr ) =
+expectPropertyWorks : String -> ( Style, String ) -> Test
+expectPropertyWorks propertyName ( style, expectedStr ) =
     describe "works properly"
         [ (test "pretty prints the expected output") <|
             \() ->
-                prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
+                prettyPrint ((stylesheet << namespace "test") [ p [ style ] ])
                     |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
         , (test "can be converted to a key-value pair") <|
             \() ->
                 [ ( propertyName, expectedStr ) ]
-                    |> Expect.equal (asPairs [ mixin ])
+                    |> Expect.equal (asPairs [ style ])
         ]

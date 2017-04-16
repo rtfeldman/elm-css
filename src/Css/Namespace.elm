@@ -5,7 +5,7 @@ module Css.Namespace exposing (namespace)
 -}
 
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Mixin(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast, SimpleSelectorSequence(UniversalSelectorSequence, TypeSelectorSequence, CustomSelector), RepeatableSimpleSelector(IdSelector, ClassSelector, PseudoClassSelector))
 
 
@@ -54,32 +54,32 @@ applyNamespaceToSelector name (Structure.Selector sequence chain pseudoElement) 
             pseudoElement
 
 
-applyNamespaceToMixin : String -> Mixin -> Mixin
-applyNamespaceToMixin name mixin =
-    case mixin of
+applyNamespaceToStyle : String -> Style -> Style
+applyNamespaceToStyle name style =
+    case style of
         Preprocess.AppendProperty property ->
             applyNamespaceToProperty name property
                 |> Preprocess.AppendProperty
 
-        Preprocess.ExtendSelector selector mixins ->
-            List.map (applyNamespaceToMixin name) mixins
+        Preprocess.ExtendSelector selector styles ->
+            List.map (applyNamespaceToStyle name) styles
                 |> Preprocess.ExtendSelector (applyNamespaceToRepeatable name selector)
 
         Preprocess.NestSnippet combinator snippets ->
             List.map (applyNamespaceToSnippet name) snippets
                 |> Preprocess.NestSnippet combinator
 
-        Preprocess.WithPseudoElement pseudoElement mixins ->
-            List.map (applyNamespaceToMixin name) mixins
+        Preprocess.WithPseudoElement pseudoElement styles ->
+            List.map (applyNamespaceToStyle name) styles
                 |> Preprocess.WithPseudoElement pseudoElement
 
-        Preprocess.WithMedia mediaQueries mixins ->
-            List.map (applyNamespaceToMixin name) mixins
+        Preprocess.WithMedia mediaQueries styles ->
+            List.map (applyNamespaceToStyle name) styles
                 |> Preprocess.WithMedia mediaQueries
 
-        Preprocess.ApplyMixins mixins ->
-            List.map (applyNamespaceToMixin name) mixins
-                |> Preprocess.ApplyMixins
+        Preprocess.ApplyStyles styles ->
+            List.map (applyNamespaceToStyle name) styles
+                |> Preprocess.ApplyStyles
 
 
 applyNamespaceToProperty : String -> Preprocess.Property -> Preprocess.Property
@@ -93,10 +93,10 @@ applyNamespaceToProperty name property =
 
 
 applyNamespaceToStyleBlock : String -> Preprocess.StyleBlock -> Preprocess.StyleBlock
-applyNamespaceToStyleBlock name (Preprocess.StyleBlock firstSelector otherSelectors mixins) =
+applyNamespaceToStyleBlock name (Preprocess.StyleBlock firstSelector otherSelectors styles) =
     Preprocess.StyleBlock (applyNamespaceToSelector name firstSelector)
         (List.map (applyNamespaceToSelector name) otherSelectors)
-        (List.map (applyNamespaceToMixin name) mixins)
+        (List.map (applyNamespaceToStyle name) styles)
 
 
 applyNamespaceToSnippet : String -> Snippet -> Snippet

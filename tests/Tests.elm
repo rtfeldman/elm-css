@@ -30,9 +30,9 @@ all =
         , universal
         , multiSelector
         , multiDescendent
-        , underlineOnHoverMixin
+        , underlineOnHoverStyle
         , underlineOnHoverManual
-        , greenOnHoverMixin
+        , greenOnHoverStyle
         , transformsStyle
         , fonts
         , weightWarning
@@ -435,11 +435,11 @@ keyValue =
             ]
 
 
-underlineOnHoverMixin : Test
-underlineOnHoverMixin =
+underlineOnHoverStyle : Test
+underlineOnHoverStyle =
     let
         input =
-            Fixtures.mixinUnderlineOnHoverStylesheet
+            Fixtures.styleUnderlineOnHoverStylesheet
 
         output =
             """
@@ -452,7 +452,7 @@ underlineOnHoverMixin =
             }
             """
     in
-        describe "underline on hover link (mixin)"
+        describe "underline on hover link (style)"
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)
@@ -485,11 +485,11 @@ underlineOnHoverManual =
             ]
 
 
-greenOnHoverMixin : Test
-greenOnHoverMixin =
+greenOnHoverStyle : Test
+greenOnHoverStyle =
     let
         input =
-            Fixtures.mixinGreenOnHoverStylesheet
+            Fixtures.styleGreenOnHoverStylesheet
 
         output =
             """
@@ -502,7 +502,7 @@ greenOnHoverMixin =
             }
             """
     in
-        describe "green on hover (mixin)"
+        describe "green on hover (style)"
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)

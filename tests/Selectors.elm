@@ -84,7 +84,7 @@ elements =
         ]
 
 
-testSelector : String -> (List Mixin -> Snippet) -> Test
+testSelector : String -> (List Style -> Snippet) -> Test
 testSelector expectedOutput applySelector =
     (test (expectedOutput ++ " selector")) <|
         \() ->

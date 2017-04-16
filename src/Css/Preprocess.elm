@@ -32,13 +32,13 @@ type alias Stylesheet =
     }
 
 
-type Mixin
+type Style
     = AppendProperty Property
-    | ExtendSelector Structure.RepeatableSimpleSelector (List Mixin)
+    | ExtendSelector Structure.RepeatableSimpleSelector (List Style)
     | NestSnippet Structure.SelectorCombinator (List Snippet)
-    | WithPseudoElement Structure.PseudoElement (List Mixin)
-    | WithMedia (List Structure.MediaQuery) (List Mixin)
-    | ApplyMixins (List Mixin)
+    | WithPseudoElement Structure.PseudoElement (List Style)
+    | WithMedia (List Structure.MediaQuery) (List Style)
+    | ApplyStyles (List Style)
 
 
 type Snippet
@@ -59,7 +59,7 @@ type SnippetDeclaration
 
 
 type StyleBlock
-    = StyleBlock Structure.Selector (List Structure.Selector) (List Mixin)
+    = StyleBlock Structure.Selector (List Structure.Selector) (List Style)
 
 
 toMediaRule : List Structure.MediaQuery -> Structure.Declaration -> Structure.Declaration
@@ -97,33 +97,33 @@ toMediaRule mediaQueries declaration =
             declaration
 
 
-mapLastProperty : (Property -> Property) -> Mixin -> Mixin
-mapLastProperty update mixin =
-    case mixin of
+mapLastProperty : (Property -> Property) -> Style -> Style
+mapLastProperty update style =
+    case style of
         AppendProperty property ->
             AppendProperty (update property)
 
-        ExtendSelector selector mixins ->
-            ExtendSelector selector (mapAllLastProperty update mixins)
+        ExtendSelector selector styles ->
+            ExtendSelector selector (mapAllLastProperty update styles)
 
         NestSnippet _ _ ->
-            mixin
+            style
 
         WithPseudoElement _ _ ->
-            mixin
+            style
 
         WithMedia _ _ ->
-            mixin
+            style
 
-        ApplyMixins otherMixins ->
-            ApplyMixins (mapLast (mapLastProperty update) otherMixins)
+        ApplyStyles otherStyles ->
+            ApplyStyles (mapLast (mapLastProperty update) otherStyles)
 
 
-mapAllLastProperty : (Property -> Property) -> List Mixin -> List Mixin
-mapAllLastProperty update mixins =
-    case mixins of
+mapAllLastProperty : (Property -> Property) -> List Style -> List Style
+mapAllLastProperty update styles =
+    case styles of
         [] ->
-            mixins
+            styles
 
         only :: [] ->
             [ mapLastProperty update only ]
@@ -137,17 +137,17 @@ unwrapSnippet (Snippet declarations) =
     declarations
 
 
-toPropertyPairs : List Mixin -> List ( String, String )
-toPropertyPairs mixins =
-    case mixins of
+toPropertyPairs : List Style -> List ( String, String )
+toPropertyPairs styles =
+    case styles of
         [] ->
             []
 
         (AppendProperty property) :: rest ->
             (propertyToPair property) :: (toPropertyPairs rest)
 
-        (ApplyMixins mixins) :: rest ->
-            (toPropertyPairs mixins) ++ (toPropertyPairs rest)
+        (ApplyStyles styles) :: rest ->
+            (toPropertyPairs styles) ++ (toPropertyPairs rest)
 
         _ :: rest ->
             toPropertyPairs rest
