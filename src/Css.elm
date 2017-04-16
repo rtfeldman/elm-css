@@ -4,7 +4,7 @@ module Css
         , asPairs
         , Stylesheet
         , Snippet
-        , Mixin
+        , Style
         , Color
         , MediaQuery
         , Length
@@ -19,7 +19,7 @@ module Css
         , descendants
         , adjacentSiblings
         , generalSiblings
-        , mixin
+        , batch
         , all
         , property
         , selector
@@ -188,6 +188,10 @@ module Css
         , borderRadius2
         , borderRadius3
         , borderRadius4
+        , borderWidth
+        , borderWidth2
+        , borderWidth3
+        , borderWidth4
         , borderBottomWidth
         , borderInlineEndWidth
         , borderLeftWidth
@@ -256,6 +260,7 @@ module Css
         , vertical
         , block
         , inlineBlock
+        , inlineFlex
         , inline
         , table
         , inlineTable
@@ -290,11 +295,13 @@ module Css
         , super
         , textTop
         , textBottom
+        , pseudoElement
         , after
         , before
         , firstLetter
         , firstLine
         , selection
+        , pseudoClass
         , active
         , any
         , checked
@@ -308,6 +315,7 @@ module Css
         , fullscreen
         , focus
         , hover
+        , visited
         , indeterminate
         , invalid
         , lang
@@ -610,13 +618,13 @@ module Css
 
 
 # Misc
-@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, linearGradient, linearGradient2, stop, stopAt, toTop, toTopRight, toRight, toBottomRight, toBottom, toBottomLeft, toLeft, toTopLeft, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
+@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
 
 # Style
-@docs Snippet, Mixin, mixin, stylesheet, compile
+@docs Snippet, Style, batch, stylesheet, compile
 
 # Statements
 @docs class, id, selector, everything
@@ -639,7 +647,7 @@ module Css
 @docs featureTag, featureTag2, featureOn, featureOff
 
 ## Other values
-@docs borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
+@docs borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
 
 # Length
 @docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, (|+|), (|-|), (|*|), (|/|)
@@ -651,10 +659,10 @@ module Css
 @docs deg, rad, grad, turn
 
 # Pseudo-Classes
-@docs active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
+@docs pseudoClass, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
 # Pseudo-Elements
-@docs after, before, firstLetter, firstLine, selection
+@docs pseudoElement, after, before, firstLetter, firstLine, selection
 
 # Media Queries
 @docs MediaQuery, screen, print, tv, projection
@@ -679,7 +687,7 @@ deprecated or discouraged.
 
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Resolve as Resolve
-import Css.Preprocess as Preprocess exposing (Mixin, unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure
 import String
 import Tuple
@@ -703,8 +711,8 @@ type alias Snippet =
 
 
 {-| -}
-type alias Mixin =
-    Preprocess.Mixin
+type alias Style =
+    Preprocess.Style
 
 
 type Compatible
@@ -712,11 +720,11 @@ type Compatible
 
 
 type PseudoClass
-    = PseudoClass String (List Mixin)
+    = PseudoClass String (List Style)
 
 
 type PseudoElement
-    = PseudoElement String (List Mixin)
+    = PseudoElement String (List Style)
 
 
 {-| -}
@@ -758,10 +766,10 @@ cssFunction funcName args =
 {-| Caution: trickery ahead!
 
 This is for use with overloaded CSS properties like `left` that need to be keys
-in some places and values in othes. You give it a Mixin that evaluates to the
+in some places and values in othes. You give it a Style that evaluates to the
 relevant key, and then use that key as your value.
 
-For example, `left` is a Mixin that takes a Length and adds a property like
+For example, `left` is a Style that takes a Length and adds a property like
 "left: 3px". What this does is take `left`, pass it `zero` (to create a
 "left: 0" definition), then inspects that definition that it just created to
 extract the key (in this case the string "left"), then uses that key as the
@@ -776,33 +784,33 @@ Other notes:
 `desiredKey` is the key of the property.
 `functionName` is just for better error messages.
 -}
-getOverloadedProperty : String -> String -> Mixin -> Mixin
-getOverloadedProperty functionName desiredKey mixin =
-    case mixin of
+getOverloadedProperty : String -> String -> Style -> Style
+getOverloadedProperty functionName desiredKey style =
+    case style of
         Preprocess.AppendProperty { key } ->
-            -- Use the given mixin's Key as the resulting property's value.
+            -- Use the given style's Key as the resulting property's value.
             property desiredKey key
 
         Preprocess.ExtendSelector selector _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for selector " ++ toString selector ] desiredKey ""
+            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for selector " ++ toString selector ] desiredKey ""
 
         Preprocess.NestSnippet combinator _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for combinator " ++ toString combinator ] desiredKey ""
+            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for combinator " ++ toString combinator ] desiredKey ""
 
         Preprocess.WithPseudoElement pseudoElement _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for pseudo-element setter " ++ toString pseudoElement ] desiredKey ""
+            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for pseudo-element setter " ++ toString pseudoElement ] desiredKey ""
 
         Preprocess.WithMedia mediaQuery _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable mixin for media query " ++ toString mediaQuery ] desiredKey ""
+            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for media query " ++ toString mediaQuery ] desiredKey ""
 
-        Preprocess.ApplyMixins [] ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty mixin. " ] desiredKey ""
+        Preprocess.ApplyStyles [] ->
+            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty Style. " ] desiredKey ""
 
-        Preprocess.ApplyMixins (only :: []) ->
+        Preprocess.ApplyStyles (only :: []) ->
             getOverloadedProperty functionName desiredKey only
 
-        Preprocess.ApplyMixins (first :: rest) ->
-            getOverloadedProperty functionName desiredKey (Preprocess.ApplyMixins rest)
+        Preprocess.ApplyStyles (first :: rest) ->
+            getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
 
 
 type alias Value compatible =
@@ -961,19 +969,19 @@ type alias FlexDirectionOrWrap compatible =
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values
 -}
 type alias AlignItems a b =
-    Length a b -> Mixin
+    Length a b -> Style
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values
 -}
 type alias AlignSelf a b =
-    Length a b -> Mixin
+    Length a b -> Style
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values
 -}
 type alias JustifyContent a b =
-    Length a b -> Mixin
+    Length a b -> Style
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values
@@ -1052,7 +1060,7 @@ that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `VerticalAlign`.)
 -}
 type alias BackgroundBlendMode a =
-    ColorValue a -> Mixin
+    ColorValue a -> Style
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
@@ -1304,7 +1312,7 @@ that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `VerticalAlign` follows a similar pattern.)
 -}
 type alias TextAlign a b =
-    Length a b -> Mixin
+    Length a b -> Style
 
 
 {-| Because `top` and `bottom` are both common properties and common values
@@ -1315,7 +1323,7 @@ that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `TextAlign` follows a similar pattern.)
 -}
 type alias VerticalAlign a b =
-    Length a b -> Mixin
+    Length a b -> Style
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values
@@ -1336,7 +1344,7 @@ type alias Outline compatible =
 
 {-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
 -}
-all : All compatible -> Mixin
+all : All compatible -> Style
 all =
     prop1 "all"
 
@@ -1344,7 +1352,7 @@ all =
 {-| Transforms the given property by adding !important to the end of its
 declaration.
 -}
-important : Mixin -> Mixin
+important : Style -> Style
 important =
     Preprocess.mapLastProperty (\property -> { property | important = True })
 
@@ -2963,7 +2971,7 @@ populated list:
 
     transforms [ perspective 1, scale2 1 1.4 ]
 -}
-transforms : List (Transform compatible) -> Mixin
+transforms : List (Transform compatible) -> Style
 transforms =
     prop1 "transform" << valuesOrNone
 
@@ -2975,7 +2983,7 @@ property to `none`, use the `transforms` function with an empty list. See
 
     transform (scaleX 1.4)
 -}
-transform : Transform compatible -> Mixin
+transform : Transform compatible -> Style
 transform only =
     transforms [ only ]
 
@@ -3022,7 +3030,7 @@ viewBox =
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-transformBox : TransformBox compatible -> Mixin
+transformBox : TransformBox compatible -> Style
 transformBox =
     prop1 "transform-box"
 
@@ -3031,7 +3039,7 @@ transformBox =
 
     boxSizing borderBox
 -}
-boxSizing : BoxSizing compatible -> Mixin
+boxSizing : BoxSizing compatible -> Style
 boxSizing =
     prop1 "box-sizing"
 
@@ -3056,7 +3064,7 @@ flat =
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-transformStyle : TransformStyle compatible -> Mixin
+transformStyle : TransformStyle compatible -> Style
 transformStyle =
     prop1 "transform-style"
 
@@ -3067,7 +3075,7 @@ transformStyle =
 
 {-| The [`list-style-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position) property.
 -}
-listStylePosition : ListStylePosition compatible -> Mixin
+listStylePosition : ListStylePosition compatible -> Style
 listStylePosition =
     prop1 "list-style-position"
 
@@ -3096,7 +3104,7 @@ outside =
 
 {-| The [`list-style-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type) property.
 -}
-listStyleType : ListStyleType compatible -> Mixin
+listStyleType : ListStyleType compatible -> Style
 listStyleType =
     prop1 "list-style-type"
 
@@ -3377,21 +3385,21 @@ thai =
 
 {-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
 -}
-listStyle : ListStyle compatible -> Mixin
+listStyle : ListStyle compatible -> Style
 listStyle =
     prop1 "list-style"
 
 
 {-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
 -}
-listStyle2 : ListStyle compatible1 -> ListStyle compatible2 -> Mixin
+listStyle2 : ListStyle compatible1 -> ListStyle compatible2 -> Style
 listStyle2 =
     prop2 "list-style"
 
 
 {-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
 -}
-listStyle3 : ListStyle compatible1 -> ListStyle compatible2 -> ListStyle compatible3 -> Mixin
+listStyle3 : ListStyle compatible1 -> ListStyle compatible2 -> ListStyle compatible3 -> Style
 listStyle3 =
     prop3 "list-style"
 
@@ -3407,7 +3415,7 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flex : LengthOrNumberOrAutoOrNoneOrContent compatible -> Mixin
+flex : LengthOrNumberOrAutoOrNoneOrContent compatible -> Style
 flex =
     prop1 "flex"
 
@@ -3419,7 +3427,7 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flex2 : Number compatibleA -> LengthOrNumber compatibleB -> Mixin
+flex2 : Number compatibleA -> LengthOrNumber compatibleB -> Style
 flex2 =
     prop2 "flex"
 
@@ -3431,7 +3439,7 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Mixin
+flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Style
 flex3 =
     prop3 "flex"
 
@@ -3443,35 +3451,35 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flexBasis : FlexBasis compatible -> Mixin
+flexBasis : FlexBasis compatible -> Style
 flexBasis =
     prop1 "flex-basis"
 
 
 {-| Sets [`flex-grow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow) property.
 -}
-flexGrow : Number compatible -> Mixin
+flexGrow : Number compatible -> Style
 flexGrow =
     prop1 "flex-grow"
 
 
 {-| Sets [`flex-shrink`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink) property.
 -}
-flexShrink : Number compatible -> Mixin
+flexShrink : Number compatible -> Style
 flexShrink =
     prop1 "flex-shrink"
 
 
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.
 -}
-flexWrap : FlexWrap compatible -> Mixin
+flexWrap : FlexWrap compatible -> Style
 flexWrap =
     prop1 "flex-wrap"
 
 
 {-| Sets [`flex-direction`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction) property.
 -}
-flexDirection : FlexDirection compatible -> Mixin
+flexDirection : FlexDirection compatible -> Style
 flexDirection =
     prop1 "flex-direction"
 
@@ -3483,7 +3491,7 @@ flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnRever
 
 Or vice versa, order is not important for flex-flow
 -}
-flexFlow1 : FlexDirectionOrWrap compatible -> Mixin
+flexFlow1 : FlexDirectionOrWrap compatible -> Style
 flexFlow1 =
     prop1 "flex-flow"
 
@@ -3495,7 +3503,7 @@ flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnRever
 
 Or vice versa, order is not important for flex-flow
 -}
-flexFlow2 : FlexDirectionOrWrap compatibleA -> FlexDirectionOrWrap compatibleB -> Mixin
+flexFlow2 : FlexDirectionOrWrap compatibleA -> FlexDirectionOrWrap compatibleB -> Style
 flexFlow2 =
     prop2 "flex-flow"
 
@@ -3510,7 +3518,7 @@ flexFlow2 =
   If this is annoying, please file an issue, so adding support for "auto"
   can be prioritized!
 -}
-alignItems : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+alignItems : (ExplicitLength IncompatibleUnits -> Style) -> Style
 alignItems fn =
     getOverloadedProperty "alignItems" "align-items" (fn lengthForOverloadedProperty)
 
@@ -3525,21 +3533,21 @@ alignItems fn =
   If this is annoying, please file an issue, so adding support for "auto"
   can be prioritized!
 -}
-alignSelf : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+alignSelf : (ExplicitLength IncompatibleUnits -> Style) -> Style
 alignSelf fn =
     getOverloadedProperty "alignSelf" "align-self" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`justify-content`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content).
 -}
-justifyContent : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+justifyContent : (ExplicitLength IncompatibleUnits -> Style) -> Style
 justifyContent fn =
     getOverloadedProperty "justifyContent" "justify-content" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`order`](https://developer.mozilla.org/en-US/docs/Web/CSS/order) property.
 -}
-order : Number compatible -> Mixin
+order : Number compatible -> Style
 order =
     prop1 "order"
 
@@ -3926,6 +3934,15 @@ inlineBlock =
     }
 
 
+{-| Sets the display style to [`inline-flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
+-}
+inlineFlex : Display {}
+inlineFlex =
+    { value = "inline-flex"
+    , display = Compatible
+    }
+
+
 {-| -}
 inline : Display {}
 inline =
@@ -4055,6 +4072,7 @@ none :
     , resize : Compatible
     , textDecorationLine : Compatible
     , transform : Compatible
+    , backgroundImage : Compatible
     , value : String
     }
 none =
@@ -4072,6 +4090,7 @@ none =
     , resize = Compatible
     , transform = Compatible
     , borderStyle = Compatible
+    , backgroundImage = Compatible
     }
 
 
@@ -4174,7 +4193,7 @@ textBottom =
 
 {-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
 -}
-position : Position compatible -> Mixin
+position : Position compatible -> Style
 position =
     prop1 "position"
 
@@ -4183,42 +4202,42 @@ position =
 {- Properties -}
 
 
-prop1 : String -> Value a -> Mixin
+prop1 : String -> Value a -> Style
 prop1 key arg =
     property key arg.value
 
 
-prop2 : String -> Value a -> Value b -> Mixin
+prop2 : String -> Value a -> Value b -> Style
 prop2 key argA argB =
     property key (String.join " " [ argA.value, argB.value ])
 
 
-prop3 : String -> Value a -> Value b -> Value c -> Mixin
+prop3 : String -> Value a -> Value b -> Value c -> Style
 prop3 key argA argB argC =
     property key (String.join " " [ argA.value, argB.value, argC.value ])
 
 
-prop4 : String -> Value a -> Value b -> Value c -> Value d -> Mixin
+prop4 : String -> Value a -> Value b -> Value c -> Value d -> Style
 prop4 key argA argB argC argD =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
 
 
-prop5 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Mixin
+prop5 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Style
 prop5 key argA argB argC argD argE =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value ])
 
 
-prop6 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Value f -> Mixin
+prop6 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Value f -> Style
 prop6 key argA argB argC argD argE argF =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value, argF.value ])
 
 
 {-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
-float : Float compatible -> Mixin
+float : Float compatible -> Style
 
     float right
 -}
-float : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+float : (ExplicitLength IncompatibleUnits -> Style) -> Style
 float fn =
     getOverloadedProperty "float" "float" (fn lengthForOverloadedProperty)
 
@@ -4227,7 +4246,7 @@ float fn =
 
     textDecorationColor (rgb 12 11 10)
 -}
-textDecorationColor : ColorValue compatible -> Mixin
+textDecorationColor : ColorValue compatible -> Style
 textDecorationColor c =
     propertyWithWarnings c.warnings "text-decoration-color" c.value
 
@@ -4236,7 +4255,7 @@ textDecorationColor c =
 
      textEmphasisColor (rgb 100 100 100)
 -}
-textEmphasisColor : ColorValue compatible -> Mixin
+textEmphasisColor : ColorValue compatible -> Style
 textEmphasisColor c =
     propertyWithWarnings c.warnings "text-emphasis-color" c.value
 
@@ -4250,21 +4269,21 @@ textEmphasisColor c =
     If this is annoying, please file an issue, so adding support for "auto"
     can be prioritized!
 -}
-textAlignLast : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+textAlignLast : (ExplicitLength IncompatibleUnits -> Style) -> Style
 textAlignLast fn =
     getOverloadedProperty "textAlignLast" "text-align-last" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+textAlign : (ExplicitLength IncompatibleUnits -> Style) -> Style
 textAlign fn =
     getOverloadedProperty "textAlign" "text-align" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
 -}
-textRendering : TextRendering a -> Mixin
+textRendering : TextRendering a -> Style
 textRendering =
     prop1 "text-rendering"
 
@@ -4273,7 +4292,7 @@ textRendering =
 
     text-orientation mixed
 -}
-textOrientation : TextOrientation compatible -> Mixin
+textOrientation : TextOrientation compatible -> Style
 textOrientation =
     prop1 "text-orientation"
 
@@ -4282,7 +4301,7 @@ textOrientation =
 
     textOverflow ellipsis
 -}
-textOverflow : TextOverflow compatible -> Mixin
+textOverflow : TextOverflow compatible -> Style
 textOverflow =
     prop1 "text-overflow"
 
@@ -4295,7 +4314,7 @@ textOverflow =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow : None compatible -> Mixin
+textShadow : None compatible -> Style
 textShadow =
     prop1 "text-shadow"
 
@@ -4308,7 +4327,7 @@ textShadow =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+textShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 textShadow2 =
     prop2 "text-shadow"
 
@@ -4321,7 +4340,7 @@ textShadow2 =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> ColorValue compatibleC -> Mixin
+textShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> ColorValue compatibleC -> Style
 textShadow3 =
     prop3 "text-shadow"
 
@@ -4334,7 +4353,7 @@ textShadow3 =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> ColorValue compatibleD -> Mixin
+textShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> ColorValue compatibleD -> Style
 textShadow4 =
     prop4 "text-shadow"
 
@@ -4355,7 +4374,7 @@ textShadow4 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow : None compatible -> Mixin
+boxShadow : None compatible -> Style
 boxShadow =
     prop1 "box-shadow"
 
@@ -4376,7 +4395,7 @@ boxShadow =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+boxShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 boxShadow2 =
     prop2 "box-shadow"
 
@@ -4397,7 +4416,7 @@ boxShadow2 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow3 : Value a -> Length compatibleB unitsB -> Value c -> Mixin
+boxShadow3 : Value a -> Length compatibleB unitsB -> Value c -> Style
 boxShadow3 =
     prop3 "box-shadow"
 
@@ -4418,7 +4437,7 @@ boxShadow3 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow4 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Value d -> Mixin
+boxShadow4 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Value d -> Style
 boxShadow4 =
     prop4 "box-shadow"
 
@@ -4439,7 +4458,7 @@ boxShadow4 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Mixin
+boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
 boxShadow5 =
     prop5 "box-shadow"
 
@@ -4460,7 +4479,7 @@ boxShadow5 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow6 : Value a -> Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Mixin
+boxShadow6 : Value a -> Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
 boxShadow6 =
     prop6 "box-shadow"
 
@@ -4471,7 +4490,7 @@ boxShadow6 =
     textIndent2 (px 40) hanging
     textIndent3 (px 40) hanging eachLine
 -}
-textIndent : Length compatible units -> Mixin
+textIndent : Length compatible units -> Style
 textIndent =
     prop1 "text-indent"
 
@@ -4482,7 +4501,7 @@ textIndent =
     textIndent2 (px 40) hanging
     textIndent3 (px 40) hanging eachLine
 -}
-textIndent2 : Length compatibleA unitsA -> TextIndent compatibleB -> Mixin
+textIndent2 : Length compatibleA unitsA -> TextIndent compatibleB -> Style
 textIndent2 =
     prop2 "text-indent"
 
@@ -4493,28 +4512,28 @@ textIndent2 =
     textIndent2 (px 40) hanging
     textIndent3 (px 40) hanging eachLine
 -}
-textIndent3 : Length compatibleA unitsA -> TextIndent compatibleB -> TextIndent compatibleC -> Mixin
+textIndent3 : Length compatibleA unitsA -> TextIndent compatibleB -> TextIndent compatibleC -> Style
 textIndent3 =
     prop3 "text-indent"
 
 
 {-| Sets [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 -}
-textTransform : TextTransform compatible -> Mixin
+textTransform : TextTransform compatible -> Style
 textTransform =
     prop1 "text-transform"
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+verticalAlign : (ExplicitLength IncompatibleUnits -> Style) -> Style
 verticalAlign fn =
     getOverloadedProperty "verticalAlign" "vertical-align" (fn lengthForOverloadedProperty)
 
 
 {-| For `display: flex`, use [`displayFlex`](#displayFlex).
 -}
-display : Display compatible -> Mixin
+display : Display compatible -> Style
 display =
     prop1 "display"
 
@@ -4522,13 +4541,13 @@ display =
 {-| `display: flex`. This works around the fact that
 [`flex` is already taken](#flex).
 -}
-displayFlex : Mixin
+displayFlex : Style
 displayFlex =
     property "display" "flex"
 
 
 {-| -}
-opacity : Number compatible -> Mixin
+opacity : Number compatible -> Style
 opacity =
     prop1 "opacity"
 
@@ -4538,7 +4557,7 @@ opacity =
     width (px 960)
 
 -}
-width : LengthOrAuto compatible -> Mixin
+width : LengthOrAuto compatible -> Style
 width =
     prop1 "width"
 
@@ -4547,7 +4566,7 @@ width =
 
     maxWidth (px 960)
 -}
-maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Mixin
+maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Style
 maxWidth =
     prop1 "max-width"
 
@@ -4556,7 +4575,7 @@ maxWidth =
 
     minWidth (px 100)
 -}
-minWidth : LengthOrMinMaxDimension compatible -> Mixin
+minWidth : LengthOrMinMaxDimension compatible -> Style
 minWidth =
     prop1 "min-width"
 
@@ -4565,7 +4584,7 @@ minWidth =
 
     height (px 800)
 -}
-height : LengthOrAuto compatible -> Mixin
+height : LengthOrAuto compatible -> Style
 height =
     prop1 "height"
 
@@ -4575,7 +4594,7 @@ height =
     minHeight (px 100)
 
 -}
-minHeight : LengthOrMinMaxDimension compatible -> Mixin
+minHeight : LengthOrMinMaxDimension compatible -> Style
 minHeight =
     prop1 "min-height"
 
@@ -4585,7 +4604,7 @@ minHeight =
     maxHeight (px 1024)
 
 -}
-maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Mixin
+maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Style
 maxHeight =
     prop1 "max-height"
 
@@ -4601,7 +4620,7 @@ maxHeight =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding : Length compatible units -> Mixin
+padding : Length compatible units -> Style
 padding =
     prop1 "padding"
 
@@ -4613,7 +4632,7 @@ padding =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+padding2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 padding2 =
     prop2 "padding"
 
@@ -4625,7 +4644,7 @@ padding2 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Mixin
+padding3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
 padding3 =
     prop3 "padding"
 
@@ -4637,7 +4656,7 @@ padding3 =
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
 -}
-padding4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatible units -> Mixin
+padding4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatible units -> Style
 padding4 =
     prop4 "padding"
 
@@ -4646,7 +4665,7 @@ padding4 =
 
     paddingBlockStart (px 10)
 -}
-paddingBlockStart : LengthOrAuto compatible -> Mixin
+paddingBlockStart : LengthOrAuto compatible -> Style
 paddingBlockStart =
     prop1 "padding-block-start"
 
@@ -4655,7 +4674,7 @@ paddingBlockStart =
 
     paddingBlockEnd (px 10)
 -}
-paddingBlockEnd : LengthOrAuto compatible -> Mixin
+paddingBlockEnd : LengthOrAuto compatible -> Style
 paddingBlockEnd =
     prop1 "padding-block-end"
 
@@ -4664,7 +4683,7 @@ paddingBlockEnd =
 
     paddingInlineStart (px 10)
 -}
-paddingInlineStart : LengthOrAuto compatible -> Mixin
+paddingInlineStart : LengthOrAuto compatible -> Style
 paddingInlineStart =
     prop1 "padding-inline-start"
 
@@ -4673,7 +4692,7 @@ paddingInlineStart =
 
     paddingInlineEnd (px 10)
 -}
-paddingInlineEnd : LengthOrAuto compatible -> Mixin
+paddingInlineEnd : LengthOrAuto compatible -> Style
 paddingInlineEnd =
     prop1 "padding-inline-end"
 
@@ -4682,7 +4701,7 @@ paddingInlineEnd =
 
     paddingTop (px 10)
 -}
-paddingTop : Length compatible units -> Mixin
+paddingTop : Length compatible units -> Style
 paddingTop =
     prop1 "padding-top"
 
@@ -4691,7 +4710,7 @@ paddingTop =
 
     paddingBottom (px 10)
 -}
-paddingBottom : Length compatible units -> Mixin
+paddingBottom : Length compatible units -> Style
 paddingBottom =
     prop1 "padding-bottom"
 
@@ -4700,7 +4719,7 @@ paddingBottom =
 
     paddingRight (px 10)
 -}
-paddingRight : Length compatible units -> Mixin
+paddingRight : Length compatible units -> Style
 paddingRight =
     prop1 "padding-right"
 
@@ -4709,7 +4728,7 @@ paddingRight =
 
     paddingLeft (px 10)
 -}
-paddingLeft : Length compatible units -> Mixin
+paddingLeft : Length compatible units -> Style
 paddingLeft =
     prop1 "padding-left"
 
@@ -4725,7 +4744,7 @@ paddingLeft =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin : LengthOrAuto compatible -> Mixin
+margin : LengthOrAuto compatible -> Style
 margin =
     prop1 "margin"
 
@@ -4737,7 +4756,7 @@ margin =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Mixin
+margin2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
 margin2 =
     prop2 "margin"
 
@@ -4749,7 +4768,7 @@ margin2 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin3 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> Mixin
+margin3 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> Style
 margin3 =
     prop3 "margin"
 
@@ -4761,7 +4780,7 @@ margin3 =
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
 -}
-margin4 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> LengthOrAuto compatibleD -> Mixin
+margin4 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> LengthOrAuto compatibleD -> Style
 margin4 =
     prop4 "margin"
 
@@ -4770,7 +4789,7 @@ margin4 =
 
     marginTop (px 10)
 -}
-marginTop : LengthOrAuto compatible -> Mixin
+marginTop : LengthOrAuto compatible -> Style
 marginTop =
     prop1 "margin-top"
 
@@ -4779,7 +4798,7 @@ marginTop =
 
     marginBottom (px 10)
 -}
-marginBottom : LengthOrAuto compatible -> Mixin
+marginBottom : LengthOrAuto compatible -> Style
 marginBottom =
     prop1 "margin-bottom"
 
@@ -4788,7 +4807,7 @@ marginBottom =
 
     marginRight (px 10)
 -}
-marginRight : LengthOrAuto compatible -> Mixin
+marginRight : LengthOrAuto compatible -> Style
 marginRight =
     prop1 "margin-right"
 
@@ -4797,7 +4816,7 @@ marginRight =
 
     marginLeft (px 10)
 -}
-marginLeft : LengthOrAuto compatible -> Mixin
+marginLeft : LengthOrAuto compatible -> Style
 marginLeft =
     prop1 "margin-left"
 
@@ -4806,7 +4825,7 @@ marginLeft =
 
     marginBlockStart (px 10)
 -}
-marginBlockStart : LengthOrAuto compatible -> Mixin
+marginBlockStart : LengthOrAuto compatible -> Style
 marginBlockStart =
     prop1 "margin-block-start"
 
@@ -4815,7 +4834,7 @@ marginBlockStart =
 
     marginBlockEnd (px 10)
 -}
-marginBlockEnd : LengthOrAuto compatible -> Mixin
+marginBlockEnd : LengthOrAuto compatible -> Style
 marginBlockEnd =
     prop1 "margin-block-end"
 
@@ -4824,7 +4843,7 @@ marginBlockEnd =
 
     marginInlineStart (px 10)
 -}
-marginInlineStart : LengthOrAuto compatible -> Mixin
+marginInlineStart : LengthOrAuto compatible -> Style
 marginInlineStart =
     prop1 "margin-inline-start"
 
@@ -4833,7 +4852,7 @@ marginInlineStart =
 
     marginInlineEnd (px 10)
 -}
-marginInlineEnd : LengthOrAuto compatible -> Mixin
+marginInlineEnd : LengthOrAuto compatible -> Style
 marginInlineEnd =
     prop1 "margin-inline-end"
 
@@ -4847,7 +4866,7 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
 
     verticalAlign top
 -}
-top : LengthOrAuto compatible -> Mixin
+top : LengthOrAuto compatible -> Style
 top =
     prop1 "top"
 
@@ -4861,7 +4880,7 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
 
     verticalAlign bottom
 -}
-bottom : LengthOrAuto compatible -> Mixin
+bottom : LengthOrAuto compatible -> Style
 bottom =
     prop1 "bottom"
 
@@ -4880,7 +4899,7 @@ It can also be used as a `left` [float](https://developer.mozilla.org/en-US/docs
 
     float left
 -}
-left : LengthOrAuto compatible -> Mixin
+left : LengthOrAuto compatible -> Style
 left =
     prop1 "left"
 
@@ -4899,7 +4918,7 @@ It can also be used as a `right` [float](https://developer.mozilla.org/en-US/doc
 
     float right
 -}
-right : LengthOrAuto compatible -> Mixin
+right : LengthOrAuto compatible -> Style
 right =
     prop1 "right"
 
@@ -5422,7 +5441,7 @@ featureTag2 tag value =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border : Length compatible units -> Mixin
+border : Length compatible units -> Style
 border =
     prop1 "border"
 
@@ -5434,7 +5453,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+border2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 border2 =
     prop2 "border"
 
@@ -5445,7 +5464,7 @@ border2 =
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
 -}
-border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 border3 =
     prop3 "border"
 
@@ -5457,7 +5476,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length compatible units -> Mixin
+borderTop : Length compatible units -> Style
 borderTop =
     prop1 "border-top"
 
@@ -5469,7 +5488,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderTop2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderTop2 =
     prop2 "border-top"
 
@@ -5481,7 +5500,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderTop3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderTop3 =
     prop3 "border-top"
 
@@ -5493,7 +5512,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length compatible units -> Mixin
+borderBottom : Length compatible units -> Style
 borderBottom =
     prop1 "border-bottom"
 
@@ -5505,7 +5524,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderBottom2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderBottom2 =
     prop2 "border-bottom"
 
@@ -5517,7 +5536,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBottom3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderBottom3 =
     prop3 "border-bottom"
 
@@ -5529,7 +5548,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length compatible units -> Mixin
+borderLeft : Length compatible units -> Style
 borderLeft =
     prop1 "border-left"
 
@@ -5541,7 +5560,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderLeft2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderLeft2 =
     prop2 "border-left"
 
@@ -5553,7 +5572,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderLeft3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderLeft3 =
     prop3 "border-left"
 
@@ -5565,7 +5584,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length compatible units -> Mixin
+borderRight : Length compatible units -> Style
 borderRight =
     prop1 "border-right"
 
@@ -5577,7 +5596,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderRight2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderRight2 =
     prop2 "border-right"
 
@@ -5589,7 +5608,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderRight3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderRight3 =
     prop3 "border-right"
 
@@ -5601,7 +5620,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length compatible units -> Mixin
+borderBlockStart : Length compatible units -> Style
 borderBlockStart =
     prop1 "border-block-start"
 
@@ -5613,7 +5632,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderBlockStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderBlockStart2 =
     prop2 "border-block-start"
 
@@ -5625,7 +5644,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA units -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBlockStart3 : Length compatibleA units -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderBlockStart3 =
     prop3 "border-block-start"
 
@@ -5637,7 +5656,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length compatible units -> Mixin
+borderBlockEnd : Length compatible units -> Style
 borderBlockEnd =
     prop1 "border-block-end"
 
@@ -5649,7 +5668,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderBlockEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderBlockEnd2 =
     prop2 "border-block-end"
 
@@ -5661,7 +5680,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderBlockEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderBlockEnd3 =
     prop3 "border-block-end"
 
@@ -5673,7 +5692,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length compatible units -> Mixin
+borderInlineStart : Length compatible units -> Style
 borderInlineStart =
     prop1 "border-block-start"
 
@@ -5685,7 +5704,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderInlineStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderInlineStart2 =
     prop2 "border-block-start"
 
@@ -5697,7 +5716,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderInlineStart3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderInlineStart3 =
     prop3 "border-block-start"
 
@@ -5709,7 +5728,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length compatible units -> Mixin
+borderInlineEnd : Length compatible units -> Style
 borderInlineEnd =
     prop1 "border-block-end"
 
@@ -5721,7 +5740,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Mixin
+borderInlineEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
 borderInlineEnd2 =
     prop2 "border-block-end"
 
@@ -5733,7 +5752,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+borderInlineEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 borderInlineEnd3 =
     prop3 "border-block-end"
 
@@ -5746,7 +5765,7 @@ borderInlineEnd3 =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset : LengthOrNumber compatible -> Mixin
+borderImageOutset : LengthOrNumber compatible -> Style
 borderImageOutset =
     prop1 "border-image-outset"
 
@@ -5759,7 +5778,7 @@ borderImageOutset =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin
+borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Style
 borderImageOutset2 =
     prop2 "border-image-outset"
 
@@ -5772,7 +5791,7 @@ borderImageOutset2 =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin
+borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Style
 borderImageOutset3 =
     prop3 "border-image-outset"
 
@@ -5785,7 +5804,7 @@ borderImageOutset3 =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin
+borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Style
 borderImageOutset4 =
     prop4 "border-image-outset"
 
@@ -5798,7 +5817,7 @@ borderImageOutset4 =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth : LengthOrNumber compatible -> Mixin
+borderImageWidth : LengthOrNumber compatible -> Style
 borderImageWidth =
     prop1 "border-image-width"
 
@@ -5811,7 +5830,7 @@ borderImageWidth =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Mixin
+borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Style
 borderImageWidth2 =
     prop2 "border-image-width"
 
@@ -5824,7 +5843,7 @@ borderImageWidth2 =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Mixin
+borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Style
 borderImageWidth3 =
     prop3 "border-image-width"
 
@@ -5837,7 +5856,7 @@ borderImageWidth3 =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Mixin
+borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Style
 borderImageWidth4 =
     prop4 "border-image-width"
 
@@ -5846,7 +5865,7 @@ borderImageWidth4 =
 
     borderBlockStartColor (rgb 101 202 0)
 -}
-borderBlockStartColor : ColorValue compatible -> Mixin
+borderBlockStartColor : ColorValue compatible -> Style
 borderBlockStartColor c =
     propertyWithWarnings c.warnings "border-block-start-color" c.value
 
@@ -5855,7 +5874,7 @@ borderBlockStartColor c =
 
     borderBottomColor (rgb 101 202 0)
 -}
-borderBottomColor : ColorValue compatible -> Mixin
+borderBottomColor : ColorValue compatible -> Style
 borderBottomColor c =
     propertyWithWarnings c.warnings "border-bottom-color" c.value
 
@@ -5864,7 +5883,7 @@ borderBottomColor c =
 
     borderInlineStartColor (rgb 101 202 0)
 -}
-borderInlineStartColor : ColorValue compatible -> Mixin
+borderInlineStartColor : ColorValue compatible -> Style
 borderInlineStartColor c =
     propertyWithWarnings c.warnings "border-inline-start-color" c.value
 
@@ -5873,7 +5892,7 @@ borderInlineStartColor c =
 
     borderInlineEndColor (rgb 101 202 0)
 -}
-borderInlineEndColor : ColorValue compatible -> Mixin
+borderInlineEndColor : ColorValue compatible -> Style
 borderInlineEndColor c =
     propertyWithWarnings c.warnings "border-inline-end-color" c.value
 
@@ -5882,7 +5901,7 @@ borderInlineEndColor c =
 
     borderLeftColor (rgb 101 202 0)
 -}
-borderLeftColor : ColorValue compatible -> Mixin
+borderLeftColor : ColorValue compatible -> Style
 borderLeftColor c =
     propertyWithWarnings c.warnings "border-left-color" c.value
 
@@ -5891,7 +5910,7 @@ borderLeftColor c =
 
     borderRightColor (rgb 101 202 0)
 -}
-borderRightColor : ColorValue compatible -> Mixin
+borderRightColor : ColorValue compatible -> Style
 borderRightColor c =
     propertyWithWarnings c.warnings "border-right-color" c.value
 
@@ -5900,7 +5919,7 @@ borderRightColor c =
 
     borderTopColor (rgb 101 202 0)
 -}
-borderTopColor : ColorValue compatible -> Mixin
+borderTopColor : ColorValue compatible -> Style
 borderTopColor c =
     propertyWithWarnings c.warnings "border-top-color" c.value
 
@@ -5909,7 +5928,7 @@ borderTopColor c =
 
     borderBlockEndColor (rgb 101 202 0)
 -}
-borderBlockEndColor : ColorValue compatible -> Mixin
+borderBlockEndColor : ColorValue compatible -> Style
 borderBlockEndColor c =
     propertyWithWarnings c.warnings "border-block-end-color" c.value
 
@@ -5918,7 +5937,7 @@ borderBlockEndColor c =
 
     borderBlockEndStyle dashed
 -}
-borderBlockEndStyle : BorderStyle compatible -> Mixin
+borderBlockEndStyle : BorderStyle compatible -> Style
 borderBlockEndStyle =
     prop1 "border-block-end-style"
 
@@ -5927,7 +5946,7 @@ borderBlockEndStyle =
 
     borderBlockStartStyle dashed
 -}
-borderBlockStartStyle : BorderStyle compatible -> Mixin
+borderBlockStartStyle : BorderStyle compatible -> Style
 borderBlockStartStyle =
     prop1 "border-block-start-style"
 
@@ -5936,7 +5955,7 @@ borderBlockStartStyle =
 
     borderInlineEndStyle dashed
 -}
-borderInlineEndStyle : BorderStyle compatible -> Mixin
+borderInlineEndStyle : BorderStyle compatible -> Style
 borderInlineEndStyle =
     prop1 "border-inline-end-style"
 
@@ -5945,7 +5964,7 @@ borderInlineEndStyle =
 
     borderBottomStyle dashed
 -}
-borderBottomStyle : BorderStyle compatible -> Mixin
+borderBottomStyle : BorderStyle compatible -> Style
 borderBottomStyle =
     prop1 "border-bottom-style"
 
@@ -5954,7 +5973,7 @@ borderBottomStyle =
 
     borderInlineStartStyle dashed
 -}
-borderInlineStartStyle : BorderStyle compatible -> Mixin
+borderInlineStartStyle : BorderStyle compatible -> Style
 borderInlineStartStyle =
     prop1 "border-inline-start-style"
 
@@ -5963,7 +5982,7 @@ borderInlineStartStyle =
 
     borderLeftStyle dashed
 -}
-borderLeftStyle : BorderStyle compatible -> Mixin
+borderLeftStyle : BorderStyle compatible -> Style
 borderLeftStyle =
     prop1 "border-left-style"
 
@@ -5972,7 +5991,7 @@ borderLeftStyle =
 
     borderRightStyle dashed
 -}
-borderRightStyle : BorderStyle compatible -> Mixin
+borderRightStyle : BorderStyle compatible -> Style
 borderRightStyle =
     prop1 "border-right-style"
 
@@ -5981,7 +6000,7 @@ borderRightStyle =
 
     borderTopStyle dashed
 -}
-borderTopStyle : BorderStyle compatible -> Mixin
+borderTopStyle : BorderStyle compatible -> Style
 borderTopStyle =
     prop1 "border-top-style"
 
@@ -5990,7 +6009,7 @@ borderTopStyle =
 
     borderStyle dashed
 -}
-borderStyle : BorderStyle compatible -> Mixin
+borderStyle : BorderStyle compatible -> Style
 borderStyle =
     prop1 "border-style"
 
@@ -5999,16 +6018,64 @@ borderStyle =
 
     borderCollapse collapse
 -}
-borderCollapse : BorderCollapse compatible -> Mixin
+borderCollapse : BorderCollapse compatible -> Style
 borderCollapse =
     prop1 "border-collapse"
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+
+    borderWidth  (em 4)
+    borderWidth2 (em 4) (px 2)
+    borderWidth3 (em 4) (px 2) (pct 5)
+    borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderWidth : Length compatible units -> Style
+borderWidth =
+    prop1 "border-width"
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+
+    borderWidth  (em 4)
+    borderWidth2 (em 4) (px 2)
+    borderWidth3 (em 4) (px 2) (pct 5)
+    borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderWidth2 =
+    prop2 "border-width"
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+
+    borderWidth  (em 4)
+    borderWidth2 (em 4) (px 2)
+    borderWidth3 (em 4) (px 2) (pct 5)
+    borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderWidth3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
+borderWidth3 =
+    prop3 "border-width"
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
+
+    borderWidth  (em 4)
+    borderWidth2 (em 4) (px 2)
+    borderWidth3 (em 4) (px 2) (pct 5)
+    borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+-}
+borderWidth4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Style
+borderWidth4 =
+    prop4 "border-width"
 
 
 {-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
 
     borderBottomWidth (em 4)
 -}
-borderBottomWidth : Length compatible units -> Mixin
+borderBottomWidth : Length compatible units -> Style
 borderBottomWidth =
     prop1 "border-bottom-width"
 
@@ -6017,7 +6084,7 @@ borderBottomWidth =
 
     borderInlineEndWidth (em 4)
 -}
-borderInlineEndWidth : Length compatible units -> Mixin
+borderInlineEndWidth : Length compatible units -> Style
 borderInlineEndWidth =
     prop1 "border-inline-end-width"
 
@@ -6026,7 +6093,7 @@ borderInlineEndWidth =
 
     borderLeftWidth (em 4)
 -}
-borderLeftWidth : Length compatible units -> Mixin
+borderLeftWidth : Length compatible units -> Style
 borderLeftWidth =
     prop1 "border-left-width"
 
@@ -6035,7 +6102,7 @@ borderLeftWidth =
 
     borderRightWidth (em 4)
 -}
-borderRightWidth : Length compatible units -> Mixin
+borderRightWidth : Length compatible units -> Style
 borderRightWidth =
     prop1 "border-right-width"
 
@@ -6045,7 +6112,7 @@ borderRightWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth : Length compatible units -> Mixin
+borderTopWidth : Length compatible units -> Style
 borderTopWidth =
     prop1 "border-top-width"
 
@@ -6055,7 +6122,7 @@ borderTopWidth =
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
 -}
-borderTopWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+borderTopWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderTopWidth2 =
     prop2 "border-top-width"
 
@@ -6065,7 +6132,7 @@ borderTopWidth2 =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius : Length compatible units -> Mixin
+borderBottomLeftRadius : Length compatible units -> Style
 borderBottomLeftRadius =
     prop1 "border-bottom-left-radius"
 
@@ -6075,7 +6142,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 -}
-borderBottomLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+borderBottomLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderBottomLeftRadius2 =
     prop2 "border-bottom-left-radius"
 
@@ -6085,7 +6152,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius : Length compatible units -> Mixin
+borderBottomRightRadius : Length compatible units -> Style
 borderBottomRightRadius =
     prop1 "border-bottom-right-radius"
 
@@ -6095,7 +6162,7 @@ borderBottomRightRadius =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 -}
-borderBottomRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+borderBottomRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderBottomRightRadius2 =
     prop2 "border-bottom-right-radius"
 
@@ -6105,7 +6172,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius : Length compatible units -> Mixin
+borderTopLeftRadius : Length compatible units -> Style
 borderTopLeftRadius =
     prop1 "border-top-left-radius"
 
@@ -6115,7 +6182,7 @@ borderTopLeftRadius =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 -}
-borderTopLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+borderTopLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderTopLeftRadius2 =
     prop2 "border-top-left-radius"
 
@@ -6125,7 +6192,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius : Length compatible units -> Mixin
+borderTopRightRadius : Length compatible units -> Style
 borderTopRightRadius =
     prop1 "border-top-right-radius"
 
@@ -6135,7 +6202,7 @@ borderTopRightRadius =
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
 -}
-borderTopRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+borderTopRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderTopRightRadius2 =
     prop2 "border-top-right-radius"
 
@@ -6147,7 +6214,7 @@ borderTopRightRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius : Length compatible units -> Mixin
+borderRadius : Length compatible units -> Style
 borderRadius =
     prop1 "border-radius"
 
@@ -6159,7 +6226,7 @@ borderRadius =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+borderRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderRadius2 =
     prop2 "border-radius"
 
@@ -6171,7 +6238,7 @@ borderRadius2 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Mixin
+borderRadius3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
 borderRadius3 =
     prop3 "border-radius"
 
@@ -6183,7 +6250,7 @@ borderRadius3 =
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 -}
-borderRadius4 : Length compatibleB unitsB -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Mixin
+borderRadius4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Style
 borderRadius4 =
     prop4 "border-radius"
 
@@ -6193,7 +6260,7 @@ borderRadius4 =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing : Length compatible units -> Mixin
+borderSpacing : Length compatible units -> Style
 borderSpacing =
     prop1 "border-spacing"
 
@@ -6203,7 +6270,7 @@ borderSpacing =
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
 -}
-borderSpacing2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+borderSpacing2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderSpacing2 =
     prop2 "border-spacing"
 
@@ -6215,7 +6282,7 @@ borderSpacing2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor : ColorValue compatible -> Mixin
+borderColor : ColorValue compatible -> Style
 borderColor c =
     propertyWithWarnings c.warnings "border-color" c.value
 
@@ -6227,7 +6294,7 @@ borderColor c =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Mixin
+borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Style
 borderColor2 c1 c2 =
     let
         warnings =
@@ -6246,7 +6313,7 @@ borderColor2 c1 c2 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Mixin
+borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Style
 borderColor3 c1 c2 c3 =
     let
         warnings =
@@ -6265,7 +6332,7 @@ borderColor3 c1 c2 c3 =
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 -}
-borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Mixin
+borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Style
 borderColor4 c1 c2 c3 c4 =
     let
         warnings =
@@ -6283,7 +6350,7 @@ borderColor4 c1 c2 c3 c4 =
     outline  initial
     outline3 (px 10) dashed (rgb 11 14 17)
 -}
-outline : Outline compatible -> Mixin
+outline : Outline compatible -> Style
 outline =
     prop1 "outline"
 
@@ -6294,7 +6361,7 @@ outline =
     outline  initial
     outline3 (px 10) dashed (rgb 11 14 17)
 -}
-outline3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Mixin
+outline3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 outline3 =
     prop3 "outline"
 
@@ -6305,7 +6372,7 @@ outline3 =
     outlineColor (hex "#ffffff")
     outlineColor (hsla 120 0.5 0.5 0.5)
 -}
-outlineColor : ColorValue compatible -> Mixin
+outlineColor : ColorValue compatible -> Style
 outlineColor c =
     propertyWithWarnings c.warnings "outline-color" c.value
 
@@ -6316,7 +6383,7 @@ outlineColor c =
     outlineWidth (em 1.4)
     outlineWidth none
 -}
-outlineWidth : LengthOrNone compatible -> Mixin
+outlineWidth : LengthOrNone compatible -> Style
 outlineWidth =
     prop1 "outline-width"
 
@@ -6327,7 +6394,7 @@ outlineWidth =
     outlineStyle solid
     outlineStyle outset
 -}
-outlineStyle : BorderStyle compatible -> Mixin
+outlineStyle : BorderStyle compatible -> Style
 outlineStyle =
     prop1 "outline-style"
 
@@ -6338,55 +6405,55 @@ outlineStyle =
     outlineOffset (em 1.4)
     outlineOffset (pct 50)
 -}
-outlineOffset : Length compatible units -> Mixin
+outlineOffset : Length compatible units -> Style
 outlineOffset =
     prop1 "outline-offset"
 
 
 {-| -}
-resize : Resize compatible -> Mixin
+resize : Resize compatible -> Style
 resize =
     prop1 "resize"
 
 
 {-| -}
-fill : ColorValue compatible -> Mixin
+fill : ColorValue compatible -> Style
 fill =
     prop1 "fill"
 
 
 {-| -}
-overflow : Overflow compatible -> Mixin
+overflow : Overflow compatible -> Style
 overflow =
     prop1 "overflow"
 
 
 {-| -}
-overflowX : Overflow compatible -> Mixin
+overflowX : Overflow compatible -> Style
 overflowX =
     prop1 "overflow-x"
 
 
 {-| -}
-overflowY : Overflow compatible -> Mixin
+overflowY : Overflow compatible -> Style
 overflowY =
     prop1 "overflow-y"
 
 
 {-| -}
-overflowWrap : Wrap compatible -> Mixin
+overflowWrap : Wrap compatible -> Style
 overflowWrap =
     prop1 "overflow-wrap"
 
 
 {-| -}
-whiteSpace : WhiteSpace compatible -> Mixin
+whiteSpace : WhiteSpace compatible -> Style
 whiteSpace =
     prop1 "white-space"
 
 
 {-| -}
-backgroundColor : ColorValue compatible -> Mixin
+backgroundColor : ColorValue compatible -> Style
 backgroundColor c =
     propertyWithWarnings c.warnings "background-color" c.value
 
@@ -6395,7 +6462,7 @@ backgroundColor c =
 
     backgroundRepeat repeatX
 -}
-backgroundRepeat : BackgroundRepeatShorthand compatible -> Mixin
+backgroundRepeat : BackgroundRepeatShorthand compatible -> Style
 backgroundRepeat =
     prop1 "background-repeat"
 
@@ -6404,7 +6471,7 @@ backgroundRepeat =
 
     backgroundRepeat2 repeat noRepeat
 -}
-backgroundRepeat2 : BackgroundRepeat compatibleA -> BackgroundRepeat compatibleB -> Mixin
+backgroundRepeat2 : BackgroundRepeat compatibleA -> BackgroundRepeat compatibleB -> Style
 backgroundRepeat2 =
     prop2 "background-repeat"
 
@@ -6413,7 +6480,7 @@ backgroundRepeat2 =
 
     backgroundAttachment fixed
 -}
-backgroundAttachment : BackgroundAttachment compatible -> Mixin
+backgroundAttachment : BackgroundAttachment compatible -> Style
 backgroundAttachment =
     prop1 "background-attachment"
 
@@ -6426,7 +6493,7 @@ Only supports keywords values like "top" or "center". If you want to pass a sing
 
     backgroundPosition2 (px 10) zero
 -}
-backgroundPosition : (ExplicitLength IncompatibleUnits -> Mixin) -> Mixin
+backgroundPosition : (ExplicitLength IncompatibleUnits -> Style) -> Style
 backgroundPosition fn =
     getOverloadedProperty "backgroundPosition" "background-position" (fn lengthForOverloadedProperty)
 
@@ -6435,7 +6502,7 @@ backgroundPosition fn =
 
     backgroundPosition2 (px 10) zero
 -}
-backgroundPosition2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Mixin
+backgroundPosition2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 backgroundPosition2 =
     prop2 "background-position"
 
@@ -6444,7 +6511,7 @@ backgroundPosition2 =
 
     backgroundBlendMode darken
 -}
-backgroundBlendMode : (ColorValue NonMixable -> Mixin) -> Mixin
+backgroundBlendMode : (ColorValue NonMixable -> Style) -> Style
 backgroundBlendMode fn =
     getOverloadedProperty "backgroundBlendMode" "background-blend-mode" (fn colorValueForOverloadedProperty)
 
@@ -6453,7 +6520,7 @@ backgroundBlendMode fn =
 
     backgroundClip borderBox
 -}
-backgroundClip : BackgroundClip compatible -> Mixin
+backgroundClip : BackgroundClip compatible -> Style
 backgroundClip =
     prop1 "background-clip"
 
@@ -6462,7 +6529,7 @@ backgroundClip =
 
     backgroundOrigin borderBox
 -}
-backgroundOrigin : BackgroundOrigin compatible -> Mixin
+backgroundOrigin : BackgroundOrigin compatible -> Style
 backgroundOrigin =
     prop1 "background-origin"
 
@@ -6471,7 +6538,7 @@ backgroundOrigin =
 
     backgroundImage (url "http://www.example.com/chicken.jpg")
 -}
-backgroundImage : BackgroundImage compatible -> Mixin
+backgroundImage : BackgroundImage compatible -> Style
 backgroundImage =
     prop1 "background-image"
 
@@ -6480,7 +6547,7 @@ backgroundImage =
 
     backgroundSize cover
 -}
-backgroundSize : LengthOrAutoOrCoverOrContain compatible -> Mixin
+backgroundSize : LengthOrAutoOrCoverOrContain compatible -> Style
 backgroundSize =
     prop1 "background-size"
 
@@ -6489,13 +6556,13 @@ backgroundSize =
 
     backgroundSize2 50% auto
 -}
-backgroundSize2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Mixin
+backgroundSize2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
 backgroundSize2 =
     prop2 "background-size"
 
 
 {-| -}
-color : ColorValue compatible -> Mixin
+color : ColorValue compatible -> Style
 color c =
     propertyWithWarnings c.warnings "color" c.value
 
@@ -6554,7 +6621,7 @@ media mediaQueries snippets =
 
 
 {-| -}
-withMedia : List Structure.MediaQuery -> List Mixin -> Mixin
+withMedia : List Structure.MediaQuery -> List Style -> Style
 withMedia =
     Preprocess.WithMedia
 
@@ -6567,7 +6634,7 @@ withMedia =
 
     lineHeight (px 10)
 -}
-lineHeight : LengthOrNumber compatible -> Mixin
+lineHeight : LengthOrNumber compatible -> Style
 lineHeight =
     prop1 "line-height"
 
@@ -6576,7 +6643,7 @@ lineHeight =
 
     letterSpacing (px 10)
 -}
-letterSpacing : Length compatible units -> Mixin
+letterSpacing : Length compatible units -> Style
 letterSpacing =
     prop1 "letter-spacing"
 
@@ -6606,7 +6673,7 @@ qt str =
 {-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).
 If you want to refer to a font by its name (like Helvetica or Arial), use [`fontFamilies`](#fontFamilies) instead.
 -}
-fontFamily : FontFamily a -> Mixin
+fontFamily : FontFamily a -> Style
 fontFamily =
     prop1 "font-family"
 
@@ -6616,7 +6683,7 @@ fontFamily =
     fontFamilies  ["Verdana", "Arial"]
     fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
 -}
-fontFamilies : List String -> Mixin
+fontFamilies : List String -> Style
 fontFamilies =
     prop1 "font-family" << stringsToValue
 
@@ -6627,7 +6694,7 @@ fontFamilies =
     fontFeatureSettings (featureTag2 "smcp" on)
     fontFeatureSettings (featureTag2 "swsh" 2)
 -}
-fontFeatureSettings : FeatureTagValue a -> Mixin
+fontFeatureSettings : FeatureTagValue a -> Style
 fontFeatureSettings { value, warnings } =
     propertyWithWarnings warnings "font-feature-settings" value
 
@@ -6636,7 +6703,7 @@ fontFeatureSettings { value, warnings } =
 
     fontFeatureSettingsList [featureTag "c2sc", featureTag "smcp"]
 -}
-fontFeatureSettingsList : List (FeatureTagValue a) -> Mixin
+fontFeatureSettingsList : List (FeatureTagValue a) -> Style
 fontFeatureSettingsList featureTagValues =
     let
         value =
@@ -6653,7 +6720,7 @@ fontFeatureSettingsList featureTagValues =
     fontSize  xxSmall
     fontSize  (px 12)
 -}
-fontSize : FontSize a -> Mixin
+fontSize : FontSize a -> Style
 fontSize =
     prop1 "font-size"
 
@@ -6662,7 +6729,7 @@ fontSize =
 
     fontStyle  italic
 -}
-fontStyle : FontStyle a -> Mixin
+fontStyle : FontStyle a -> Style
 fontStyle =
     prop1 "font-style"
 
@@ -6672,7 +6739,7 @@ fontStyle =
     fontWeight  bold
     fontWeight  (int 300)
 -}
-fontWeight : FontWeight a -> Mixin
+fontWeight : FontWeight a -> Style
 fontWeight { value } =
     let
         validWeight weight =
@@ -6700,55 +6767,55 @@ fontWeight { value } =
     fontVariant3  commonLigatures smallCaps slashedZero
     fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
 -}
-fontVariant : FontVariant a -> Mixin
+fontVariant : FontVariant a -> Style
 fontVariant =
     prop1 "font-variant"
 
 
 {-| -}
-fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Mixin
+fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Style
 fontVariant2 =
     prop2 "font-variant"
 
 
 {-| -}
-fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Mixin
+fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Style
 fontVariant3 =
     prop3 "font-variant"
 
 
 {-| -}
-fontVariantLigatures : FontVariantLigatures a -> Mixin
+fontVariantLigatures : FontVariantLigatures a -> Style
 fontVariantLigatures =
     prop1 "font-variant-ligatures"
 
 
 {-| -}
-fontVariantCaps : FontVariantCaps a -> Mixin
+fontVariantCaps : FontVariantCaps a -> Style
 fontVariantCaps =
     prop1 "font-variant-caps"
 
 
 {-| -}
-fontVariantNumeric : FontVariantNumeric a -> Mixin
+fontVariantNumeric : FontVariantNumeric a -> Style
 fontVariantNumeric =
     prop1 "font-variant-numeric"
 
 
 {-| -}
-fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Mixin
+fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Style
 fontVariantNumeric2 =
     prop2 "font-variant-numeric"
 
 
 {-| -}
-fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Mixin
+fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Style
 fontVariantNumeric3 =
     prop3 "font-variant-numeric"
 
 
 {-| -}
-fontVariantNumerics : List (FontVariantNumeric compatible) -> Mixin
+fontVariantNumerics : List (FontVariantNumeric compatible) -> Style
 fontVariantNumerics =
     prop1 "font-variant-numeric" << valuesOrNone
 
@@ -6760,7 +6827,7 @@ fontVariantNumerics =
 {-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
 specifies the mouse cursor displayed when mouse pointer is over an element.
 -}
-cursor : Cursor compatible -> Mixin
+cursor : Cursor compatible -> Style
 cursor =
     prop1 "cursor"
 
@@ -6989,7 +7056,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration : TextDecorationLine a -> Mixin
+textDecoration : TextDecorationLine a -> Style
 textDecoration =
     prop1 "text-decoration"
 
@@ -7006,7 +7073,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Mixin
+textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Style
 textDecoration2 =
     prop2 "text-decoration"
 
@@ -7023,7 +7090,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Mixin
+textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
 textDecoration3 =
     prop3 "text-decoration"
 
@@ -7034,7 +7101,7 @@ textDecoration3 =
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations : List (TextDecorationLine compatible) -> Mixin
+textDecorations : List (TextDecorationLine compatible) -> Style
 textDecorations =
     prop1 "text-decoration" << valuesOrNone
 
@@ -7045,7 +7112,7 @@ textDecorations =
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Mixin
+textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Style
 textDecorations2 =
     prop2 "text-decoration" << valuesOrNone
 
@@ -7056,7 +7123,7 @@ textDecorations2 =
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 -}
-textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Mixin
+textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
 textDecorations3 =
     prop3 "text-decoration" << valuesOrNone
 
@@ -7069,7 +7136,7 @@ You can specify multiple line decorations with `textDecorationLines`.
 
     textDecorationLines  [ underline, overline ]
 -}
-textDecorationLine : TextDecorationLine compatible -> Mixin
+textDecorationLine : TextDecorationLine compatible -> Style
 textDecorationLine =
     prop1 "text-decoration-line"
 
@@ -7078,7 +7145,7 @@ textDecorationLine =
 
     textDecorationLines  [ underline, overline ]
 -}
-textDecorationLines : List (TextDecorationLine compatible) -> Mixin
+textDecorationLines : List (TextDecorationLine compatible) -> Style
 textDecorationLines =
     prop1 "text-decoration-line" << valuesOrNone
 
@@ -7087,7 +7154,7 @@ textDecorationLines =
 
     textDecorationStyle dotted
 -}
-textDecorationStyle : TextDecorationStyle compatible -> Mixin
+textDecorationStyle : TextDecorationStyle compatible -> Style
 textDecorationStyle =
     prop1 "text-decoration-style"
 
@@ -7102,7 +7169,7 @@ names, or to set `animation-name: none;`
     animationNames [ Foo, Bar ]
     animationNames [] -- outputs "animation-name: none;"
 -}
-animationName : animation -> Mixin
+animationName : animation -> Style
 animationName identifier =
     animationNames [ identifier ]
 
@@ -7115,7 +7182,7 @@ Pass `[]` to set `animation-name: none;`
 
     animationNames [] -- outputs "animation-name: none;"
 -}
-animationNames : List animation -> Mixin
+animationNames : List animation -> Style
 animationNames identifiers =
     let
         value =
@@ -7140,12 +7207,10 @@ stylesheet =
     Preprocess.stylesheet
 
 
-{-| A Mixin allowing you to modularly reuse common styles in other styles.
-The return value of `mixin` can be used like any other property, since all
-properties in elm-css are implemented as mixins.
+{-| Create a style from multiple other styles.
 
     underlineOnHover =
-        mixin
+        batch
             [ textDecoration none
 
             , hover
@@ -7170,9 +7235,9 @@ properties in elm-css are implemented as mixins.
           ]
       ]
 -}
-mixin : List Mixin -> Mixin
-mixin =
-    Preprocess.ApplyMixins
+batch : List Style -> Style
+batch =
+    Preprocess.ApplyStyles
 
 
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
@@ -7184,20 +7249,20 @@ mixin =
             ]
         ]
 -}
-id : id -> List Mixin -> Snippet
-id identifier mixins =
+id : id -> List Style -> Snippet
+id identifier styles =
     [ Structure.IdSelector (identifierToString "" identifier) ]
         |> Structure.UniversalSelectorSequence
-        |> makeSnippet mixins
+        |> makeSnippet styles
 
 
-makeSnippet : List Mixin -> Structure.SimpleSelectorSequence -> Snippet
-makeSnippet mixins sequence =
+makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Snippet
+makeSnippet styles sequence =
     let
         selector =
             Structure.Selector sequence [] Nothing
     in
-        [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] mixins) ]
+        [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
             |> Preprocess.Snippet
 
 
@@ -7210,24 +7275,24 @@ makeSnippet mixins sequence =
             ]
         ]
 -}
-class : class -> List Mixin -> Snippet
-class class mixins =
+class : class -> List Style -> Snippet
+class class styles =
     [ Structure.ClassSelector (identifierToString "" class) ]
         |> Structure.UniversalSelectorSequence
-        |> makeSnippet mixins
+        |> makeSnippet styles
 
 
 
--- {-| A mixin that adds the [Clearfix for Modern Browsers](http://www.cssmojo.com/latest_new_clearfix_so_far/#clearfix-for-modern-browsers)
+-- {-| A Style that adds the [Clearfix for Modern Browsers](http://www.cssmojo.com/latest_new_clearfix_so_far/#clearfix-for-modern-browsers)
 -- implementation of [clearfix](http://www.cssmojo.com/clearfix_block-formatting-context_and_hasLayout/).
 --
 -- This works with Internet Explorer 8 and later; if you need
 -- to support older browsers, consider using the legacy [Micro Clearfix from 2011](http://nicolasgallagher.com/micro-clearfix-hack/)
 -- instead.
 -- -}
---clearfix : Mixin
+--clearfix : Style
 --clearfix =
---  mixin
+--  styles
 --    [ after
 --        [ content ""
 --        , display table
@@ -7247,10 +7312,10 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             ]
         ]
 -}
-selector : String -> List Mixin -> Snippet
-selector selectorStr mixins =
+selector : String -> List Style -> Snippet
+selector selectorStr styles =
     Structure.CustomSelector selectorStr []
-        |> makeSnippet mixins
+        |> makeSnippet styles
 
 
 {-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
@@ -7272,10 +7337,10 @@ selector selectorStr mixins =
     }
 
 -}
-everything : List Mixin -> Snippet
-everything mixins =
+everything : List Style -> Snippet
+everything styles =
     Structure.UniversalSelectorSequence []
-        |> makeSnippet mixins
+        |> makeSnippet styles
 
 
 {-| Define a custom property.
@@ -7291,12 +7356,12 @@ everything mixins =
         -webkit-font-smoothing: none;
     }
 -}
-property : String -> String -> Mixin
+property : String -> String -> Style
 property =
     propertyWithWarnings []
 
 
-propertyWithWarnings : List String -> String -> String -> Mixin
+propertyWithWarnings : List String -> String -> String -> Style
 propertyWithWarnings warnings key value =
     { key = key, value = value, important = False, warnings = warnings }
         |> Preprocess.AppendProperty
@@ -7321,312 +7386,360 @@ directionalityToString directionality =
             "rtl"
 
 
+{-| Define a custom pseudo-class.
+
+This can be useful for deprecated pseudo-classes such as `-moz-any-link`, which
+[has been deprecated and removed](https://www.fxsitecompat.com/en-CA/docs/2016/any-link-css-pseudo-class-has-been-unprefixed/)
+in modern browsers.
+
+    stylesheet
+      [ body
+          [ pseudoClass "-moz-any-link" [ color (hex "f00") ] ]
+      ]
+
+...outputs
+
+    body:-moz-any-link {
+        color: #f00;
+    }
+-}
+pseudoClass : String -> List Style -> Style
+pseudoClass class =
+    Preprocess.ExtendSelector (Structure.PseudoClassSelector class)
+
+
 {-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-active : List Mixin -> Mixin
+active : List Style -> Style
 active =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "active")
+    pseudoClass "active"
 
 
 {-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-any : String -> List Mixin -> Mixin
+any : String -> List Style -> Style
 any str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("any(" ++ str ++ ")"))
+    pseudoClass ("any(" ++ str ++ ")")
 
 
 {-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Achecked)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-checked : List Mixin -> Mixin
+checked : List Style -> Style
 checked =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "checked")
+    pseudoClass "checked"
 
 
 {-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-dir : Directionality -> List Mixin -> Mixin
+dir : Directionality -> List Style -> Style
 dir directionality =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("dir(" ++ (directionalityToString directionality) ++ ")"))
+    pseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-disabled : List Mixin -> Mixin
+disabled : List Style -> Style
 disabled =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "disabled")
+    pseudoClass "disabled"
 
 
 {-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aempty)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-empty : List Mixin -> Mixin
+empty : List Style -> Style
 empty =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "empty")
+    pseudoClass "empty"
 
 
 {-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aenabled)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-enabled : List Mixin -> Mixin
+enabled : List Style -> Style
 enabled =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "enabled")
+    pseudoClass "enabled"
 
 
 {-| A [`:first`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-first : List Mixin -> Mixin
+first : List Style -> Style
 first =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "first")
+    pseudoClass "first"
 
 
 {-| A [`:first-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstChild : List Mixin -> Mixin
+firstChild : List Style -> Style
 firstChild =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-child")
+    pseudoClass "first-child"
 
 
 {-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afirst-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-firstOfType : List Mixin -> Mixin
+firstOfType : List Style -> Style
 firstOfType =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "first-of-type")
+    pseudoClass "first-of-type"
 
 
 {-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afullscreen)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-fullscreen : List Mixin -> Mixin
+fullscreen : List Style -> Style
 fullscreen =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "fullscreen")
+    pseudoClass "fullscreen"
 
 
 {-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Afocus)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-focus : List Mixin -> Mixin
+focus : List Style -> Style
 focus =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "focus")
+    pseudoClass "focus"
 
 
 {-| An [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ahover)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-hover : List Mixin -> Mixin
+hover : List Style -> Style
 hover =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "hover")
+    pseudoClass "hover"
+
+
+{-| An [`:visited`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avisited)
+[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+-}
+visited : List Style -> Style
+visited =
+    pseudoClass "visited"
 
 
 {-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aindeterminate)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-indeterminate : List Mixin -> Mixin
+indeterminate : List Style -> Style
 indeterminate =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "indeterminate")
+    pseudoClass "indeterminate"
 
 
 {-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ainvalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-invalid : List Mixin -> Mixin
+invalid : List Style -> Style
 invalid =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "invalid")
+    pseudoClass "invalid"
 
 
 {-| A [`:lang`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alang)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lang : String -> List Mixin -> Mixin
+lang : String -> List Style -> Style
 lang str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("lang(" ++ str ++ ")"))
+    pseudoClass ("lang(" ++ str ++ ")")
 
 
 {-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastChild : List Mixin -> Mixin
+lastChild : List Style -> Style
 lastChild =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-child")
+    pseudoClass "last-child"
 
 
 {-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alast-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-lastOfType : List Mixin -> Mixin
+lastOfType : List Style -> Style
 lastOfType =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "last-of-type")
+    pseudoClass "last-of-type"
 
 
 {-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Alink)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-link : List Mixin -> Mixin
+link : List Style -> Style
 link =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "link")
+    pseudoClass "link"
 
 
 {-| An [`:nth-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthChild : String -> List Mixin -> Mixin
+nthChild : String -> List Style -> Style
 nthChild str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-child(" ++ str ++ ")"))
+    pseudoClass ("nth-child(" ++ str ++ ")")
 
 
 {-| An [`:nth-last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastChild : String -> List Mixin -> Mixin
+nthLastChild : String -> List Style -> Style
 nthLastChild str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-child(" ++ str ++ ")"))
+    pseudoClass ("nth-last-child(" ++ str ++ ")")
 
 
 {-| An [`:nth-last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-last-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthLastOfType : String -> List Mixin -> Mixin
+nthLastOfType : String -> List Style -> Style
 nthLastOfType str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-last-of-type(" ++ str ++ ")"))
+    pseudoClass ("nth-last-of-type(" ++ str ++ ")")
 
 
 {-| An [`:nth`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Anth-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-nthOfType : String -> List Mixin -> Mixin
+nthOfType : String -> List Style -> Style
 nthOfType str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("nth-of-type(" ++ str ++ ")"))
+    pseudoClass ("nth-of-type(" ++ str ++ ")")
 
 
 {-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-child)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyChild : List Mixin -> Mixin
+onlyChild : List Style -> Style
 onlyChild =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-child")
+    pseudoClass "only-child"
 
 
 {-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aonly-of-type)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-onlyOfType : List Mixin -> Mixin
+onlyOfType : List Style -> Style
 onlyOfType =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "only-of-type")
+    pseudoClass "only-of-type"
 
 
 {-| An [`:optional`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aoptional)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-optional : List Mixin -> Mixin
+optional : List Style -> Style
 optional =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "optional")
+    pseudoClass "optional"
 
 
 {-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aout-of-range)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-outOfRange : List Mixin -> Mixin
+outOfRange : List Style -> Style
 outOfRange =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "out-of-range")
+    pseudoClass "out-of-range"
 
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aread-write)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-readWrite : List Mixin -> Mixin
+readWrite : List Style -> Style
 readWrite =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "read-write")
+    pseudoClass "read-write"
 
 
 {-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Arequired)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-required : List Mixin -> Mixin
+required : List Style -> Style
 required =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "required")
+    pseudoClass "required"
 
 
 {-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aroot)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-root : List Mixin -> Mixin
+root : List Style -> Style
 root =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "root")
+    pseudoClass "root"
 
 
 {-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Ascope)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-scope : List Mixin -> Mixin
+scope : List Style -> Style
 scope =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "scope")
+    pseudoClass "scope"
 
 
 {-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Atarget)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-target : List Mixin -> Mixin
+target : List Style -> Style
 target =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "target")
+    pseudoClass "target"
 
 
 {-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Avalid)
 [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
-valid : List Mixin -> Mixin
+valid : List Style -> Style
 valid =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "valid")
+    pseudoClass "valid"
 
 
 
 -- Pseudo-Elements --
 
 
+{-| Define a custom pseudo-element.
+
+    stylesheet
+      [ body
+          [ pseudoElement "-webkit-scrollbar" [ display none ] ]
+      ]
+
+...outputs
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+-}
+pseudoElement : String -> List Style -> Style
+pseudoElement element =
+    Preprocess.WithPseudoElement (Structure.PseudoElement element)
+
+
 {-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-after : List Mixin -> Mixin
+after : List Style -> Style
 after =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "after")
+    pseudoElement "after"
 
 
 {-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-before : List Mixin -> Mixin
+before : List Style -> Style
 before =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "before")
+    pseudoElement "before"
 
 
 {-| A [`::first-letter`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-letter)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLetter : List Mixin -> Mixin
+firstLetter : List Style -> Style
 firstLetter =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "first-letter")
+    pseudoElement "first-letter"
 
 
 {-| A [`::first-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Afirst-line)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-firstLine : List Mixin -> Mixin
+firstLine : List Style -> Style
 firstLine =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "first-line")
+    pseudoElement "first-line"
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 -}
-selection : List Mixin -> Mixin
+selection : List Style -> Style
 selection =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "selection")
+    pseudoElement "selection"
 
 
 
@@ -7683,38 +7796,38 @@ blink =
 
 
 {-| -}
-children : List Snippet -> Mixin
+children : List Snippet -> Style
 children =
     Preprocess.NestSnippet Structure.Child
 
 
 {-| -}
-withClass : class -> List Mixin -> Mixin
+withClass : class -> List Style -> Style
 withClass class =
     Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
 
 
 {-| -}
-descendants : List Snippet -> Mixin
+descendants : List Snippet -> Style
 descendants =
     Preprocess.NestSnippet Structure.Descendant
 
 
 {-| -}
-adjacentSiblings : List Snippet -> Mixin
+adjacentSiblings : List Snippet -> Style
 adjacentSiblings =
     Preprocess.NestSnippet Structure.AdjacentSibling
 
 
 {-| -}
-generalSiblings : List Snippet -> Mixin
+generalSiblings : List Snippet -> Style
 generalSiblings =
     Preprocess.NestSnippet Structure.GeneralSibling
 
 
 {-| -}
-each : List (List Mixin -> Snippet) -> List Mixin -> Snippet
-each snippetCreators mixins =
+each : List (List Style -> Snippet) -> List Style -> Snippet
+each snippetCreators styles =
     let
         selectorsToSnippet selectors =
             case selectors of
@@ -7722,7 +7835,7 @@ each snippetCreators mixins =
                     Preprocess.Snippet []
 
                 first :: rest ->
-                    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest mixins) ]
+                    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest styles) ]
                         |> Preprocess.Snippet
     in
         List.map ((|>) []) snippetCreators
@@ -7783,16 +7896,16 @@ collectSelectors declarations =
             collectSelectors rest
 
 
-{-| Take a list of mixins and return a list of key-value pairs that
+{-| Take a list of styles and return a list of key-value pairs that
 can then be passed to a `style` attribute.
 
-    styles = asPairs >> Html.Attributes.style
+    styled = asPairs >> Html.Attributes.style
 
     button
-      [ styles [ position absolute, left (px 5) ] ]
+      [ styled [ position absolute, left (px 5) ] ]
       [ text "Whee!" ]
 -}
-asPairs : List Mixin -> List ( String, String )
+asPairs : List Style -> List ( String, String )
 asPairs =
     Preprocess.toPropertyPairs
 
@@ -7801,6 +7914,6 @@ asPairs =
 
     zIndex (int 2)
 -}
-zIndex : IntOrAuto compatible -> Mixin
+zIndex : IntOrAuto compatible -> Style
 zIndex =
     prop1 "z-index"

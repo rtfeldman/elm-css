@@ -29,6 +29,16 @@ all =
             , ( borderStyle hidden, "hidden" )
             , ( borderStyle double, "double" )
             ]
+        , testProperty "border-width"
+            [ ( borderWidth initial, "initial" )
+            , ( borderWidth unset, "unset" )
+            , ( borderWidth inherit, "inherit" )
+            , ( borderWidth (pct 90), "90%" )
+            , ( borderWidth (em 4), "4em" )
+            , ( borderWidth2 (em 4) (px 2), "4em 2px" )
+            , ( borderWidth3 (em 4) (px 2) (pct 5), "4em 2px 5%" )
+            , ( borderWidth4 (em 4) (px 2) (pct 5) (px 3), "4em 2px 5% 3px" )
+            ]
         , testProperty "width"
             [ ( width initial, "initial" )
             , ( width unset, "unset" )
@@ -211,6 +221,7 @@ all =
             , ( display inline, "inline" )
             , ( display block, "block" )
             , ( display inlineBlock, "inline-block" )
+            , ( display inlineFlex, "inline-flex" )
             , ( display listItem, "list-item" )
             , ( display inlineListItem, "inline-list-item" )
             , ( displayFlex, "flex" )
@@ -225,7 +236,6 @@ all =
             , ( display tableRowGroup, "table-row-group" )
               -- TODO display: contents;
               -- TODO display: flex;
-              -- TODO display: inline-flex;
               -- TODO display: grid;
               -- TODO display: inline-grid;
               -- TODO display: ruby;
@@ -526,24 +536,37 @@ all =
             , ( zIndex unset, "unset" )
             , ( zIndex (int 5), "5" )
             ]
+        , testProperty "background-image"
+            [ ( backgroundImage initial, "initial" )
+            , ( backgroundImage unset, "unset" )
+            , ( backgroundImage inherit, "inherit" )
+            , ( backgroundImage none, "none" )
+            , ( backgroundImage (url "blah.com"), "url(blah.com)" )
+            ]
+        , testProperty "border-radius"
+            [ ( borderRadius (em 4), "4em" )
+            , ( borderRadius2 (em 4) (px 2), "4em 2px" )
+            , ( borderRadius3 (em 4) (px 2) (pct 5), "4em 2px 5%" )
+            , ( borderRadius4 (em 4) (px 2) (pct 5) (px 3), "4em 2px 5% 3px" )
+            ]
         ]
 
 
-testProperty : String -> List ( Mixin, String ) -> Test
+testProperty : String -> List ( Style, String ) -> Test
 testProperty propertyName modifierPairs =
     describe (propertyName ++ " property")
         (List.map (expectPropertyWorks propertyName) modifierPairs)
 
 
-expectPropertyWorks : String -> ( Mixin, String ) -> Test
-expectPropertyWorks propertyName ( mixin, expectedStr ) =
+expectPropertyWorks : String -> ( Style, String ) -> Test
+expectPropertyWorks propertyName ( style, expectedStr ) =
     describe "works properly"
         [ (test "pretty prints the expected output") <|
             \() ->
-                prettyPrint ((stylesheet << namespace "test") [ p [ mixin ] ])
+                prettyPrint ((stylesheet << namespace "test") [ p [ style ] ])
                     |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
         , (test "can be converted to a key-value pair") <|
             \() ->
                 [ ( propertyName, expectedStr ) ]
-                    |> Expect.equal (asPairs [ mixin ])
+                    |> Expect.equal (asPairs [ style ])
         ]

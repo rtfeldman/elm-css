@@ -1,10 +1,7 @@
 module HomepageView exposing (..)
 
 import Html exposing (..)
-import Html.CssHelpers exposing (..)
 import Html.Attributes exposing (..)
-import HomepageCss exposing (..)
-import Json.Encode as Encode
 import SharedStyles exposing (..)
 
 
@@ -12,7 +9,7 @@ import SharedStyles exposing (..)
     homepageNamespace
 
 
-main : Html a
+main : Html msg
 main =
     div []
         [ header []
@@ -27,6 +24,7 @@ main =
         ]
 
 
+navElems : List (Html msg)
 navElems =
     [ "SPEAKERS", "SCHEDULE", "WORKSHOPS", "VENUE", "BLOG", "CONTACT" ]
         |> List.map (\name -> span [ class [ NavLink ] ] [ text name ])

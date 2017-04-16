@@ -20,6 +20,7 @@ nonElements =
         , testSelector "#foo" (id "foo")
         , testSelector "div:hover" (\children -> div [ hover children ])
         , testSelector "div::before" (\children -> div [ before children ])
+        , testSelector "div:visited" (\children -> div [ visited children ])
         ]
 
 
@@ -83,7 +84,7 @@ elements =
         ]
 
 
-testSelector : String -> (List Mixin -> Snippet) -> Test
+testSelector : String -> (List Style -> Snippet) -> Test
 testSelector expectedOutput applySelector =
     (test (expectedOutput ++ " selector")) <|
         \() ->

@@ -222,9 +222,9 @@ borders =
         ]
 
 
-underlineOnHover : Mixin
+underlineOnHover : Style
 underlineOnHover =
-    mixin
+    batch
         --~ textDecoration none
         [ color (rgb 128 127 126)
         , hover
@@ -233,15 +233,15 @@ underlineOnHover =
         ]
 
 
-greenOnHover : Mixin
+greenOnHover : Style
 greenOnHover =
-    mixin
+    batch
         [ hover [ color (rgb 0 0 122) ]
         ]
 
 
-mixinGreenOnHoverStylesheet : Stylesheet
-mixinGreenOnHoverStylesheet =
+styleGreenOnHoverStylesheet : Stylesheet
+styleGreenOnHoverStylesheet =
     (stylesheet << namespace "greenOnHoverStylesheetsheet")
         [ button
             [ color (rgb 11 22 33)
@@ -250,8 +250,8 @@ mixinGreenOnHoverStylesheet =
         ]
 
 
-mixinUnderlineOnHoverStylesheet : Stylesheet
-mixinUnderlineOnHoverStylesheet =
+styleUnderlineOnHoverStylesheet : Stylesheet
+styleUnderlineOnHoverStylesheet =
     (stylesheet << namespace "underlineOnHoverStylesheetsheet")
         [ a
             --[ color (rgb 128 64 32) ]
@@ -364,6 +364,8 @@ pseudoElementStylesheet =
                 [ color (hex "#fff") ]
             , after
                 [ color (hex "#000") ]
+            , pseudoElement "-webkit-scrollbar"
+                [ display none ]
             , color (hex "#aaa")
             ]
         ]
@@ -383,6 +385,8 @@ pseudoClassStylesheet =
                 [ fontSize (Css.em 3) ]
             , disabled
                 [ marginTop (px 20) ]
+            , pseudoClass "any-link"
+                [ color (hex "f00") ]
             , backgroundColor (hex "#aaa")
             ]
         ]
