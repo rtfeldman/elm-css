@@ -720,6 +720,8 @@ backgrounds =
                 background-clip: padding-box;
                 background-clip: content-box;
                 background-image: url(http://example.com/elm.png);
+                background-image: linear-gradient(#111, rgb(16, 32, 64), #222 25px);
+                background-image: linear-gradient(to left, #111, #222);
                 background-origin: border-box;
                 background-origin: padding-box;
                 background-origin: content-box;

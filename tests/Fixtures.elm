@@ -423,6 +423,17 @@ backgrounds =
             , backgroundClip paddingBox
             , backgroundClip contentBox
             , backgroundImage (url "http://example.com/elm.png")
+            , backgroundImage <|
+                linearGradient
+                    (stop <| hex "111")
+                    (stop <| rgb 16 32 64)
+                    [ stopAt (hex "222") <| px 25 ]
+            , backgroundImage <|
+                linearGradient2
+                    toLeft
+                    (stop <| hex "111")
+                    (stop <| hex "222")
+                    []
             , backgroundOrigin borderBox
             , backgroundOrigin paddingBox
             , backgroundOrigin contentBox

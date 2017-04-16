@@ -590,6 +590,19 @@ module Css
         , paddingBox
         , backgroundImage
         , url
+        , ColorStop
+        , linearGradient
+        , linearGradient2
+        , stop
+        , stopAt
+        , toTop
+        , toTopRight
+        , toRight
+        , toBottomRight
+        , toBottom
+        , toBottomLeft
+        , toLeft
+        , toTopLeft
         , backgroundPosition
         , backgroundPosition2
         , backgroundOrigin
@@ -661,8 +674,7 @@ module Css
 @docs qt
 
 # Types
-
-@docs FontSize, ColorValue, IntOrAuto
+@docs FontSize, ColorValue, ColorStop, IntOrAuto
 
 # Intentionally Unsupported
 
@@ -1206,6 +1218,12 @@ type alias Transform compatible =
 -}
 type alias Angle compatible =
     { compatible | value : String, angle : Compatible }
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values
+-}
+type alias AngleOrDirection compatible =
+    { compatible | value : String, angleOrDirection : Compatible }
 
 
 {-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values
@@ -2632,37 +2650,38 @@ type IncompatibleUnits
 {- ANGLES -}
 
 
-angleConverter : String -> number -> Angle {}
+angleConverter : String -> number -> AngleOrDirection (Angle {})
 angleConverter suffix num =
     { value = (numberToString num) ++ suffix
     , angle = Compatible
+    , angleOrDirection = Compatible
     }
 
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
 -}
-deg : number -> Angle {}
+deg : number -> AngleOrDirection (Angle {})
 deg =
     angleConverter "deg"
 
 
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
-grad : number -> Angle {}
+grad : number -> AngleOrDirection (Angle {})
 grad =
     angleConverter "grad"
 
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
-rad : number -> Angle {}
+rad : number -> AngleOrDirection (Angle {})
 rad =
     angleConverter "rad"
 
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
-turn : number -> Angle {}
+turn : number -> AngleOrDirection (Angle {})
 turn =
     angleConverter "turn"
 
@@ -3742,6 +3761,156 @@ local : BackgroundAttachment {}
 local =
     { value = "local"
     , backgroundAttachment = Compatible
+    }
+
+
+
+{- LINEAR GRADIENT -}
+
+
+{-| https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values
+-}
+type alias ColorStop compatibleA compatibleB unit =
+    ( ColorValue compatibleA, Maybe (Length compatibleB unit) )
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+
+    linearGradient  (stopAt red <| pct 75%) (stop <| hex "222") []
+    linearGradient  (stop red) (stop <| hex "222") [ stop green, stop blue ]
+-}
+linearGradient :
+    ColorStop compatibleA compatibleB unit
+    -> ColorStop compatibleA compatibleB unit
+    -> List (ColorStop compatibleA compatibleB unit)
+    -> BackgroundImage (ListStyle {})
+linearGradient stop1 stop2 stops =
+    { value =
+        [ stop1, stop2 ]
+            ++ stops
+            |> collectStops
+            |> cssFunction "linear-gradient"
+    , backgroundImage = Compatible
+    , listStyleTypeOrPositionOrImage = Compatible
+    }
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+
+    linearGradient  toBottomLeft (stopAt red <| pct 75%) (stop <| hex "222") []
+    linearGradient  toTop (stop red) (stop <| hex "222") [ stop green, stop blue ]
+-}
+linearGradient2 :
+    AngleOrDirection compatible
+    -> ColorStop compatibleA compatibleB unit
+    -> ColorStop compatibleA compatibleB unit
+    -> List (ColorStop compatibleA compatibleB unit)
+    -> BackgroundImage (ListStyle {})
+linearGradient2 dir stop1 stop2 stops =
+    { value =
+        [ stop1, stop2 ]
+            ++ stops
+            |> collectStops
+            |> (::) ("to " ++ dir.value)
+            |> cssFunction "linear-gradient"
+    , backgroundImage = Compatible
+    , listStyleTypeOrPositionOrImage = Compatible
+    }
+
+
+collectStops : List (ColorStop compatibleA compatibleB unit) -> List String
+collectStops =
+    List.map <|
+        \( c, len ) ->
+            len
+                |> Maybe.map (String.cons ' ' << .value)
+                |> Maybe.withDefault ""
+                |> String.append c.value
+
+
+{-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+stop : ColorValue compatibleA -> ColorStop compatibleA compatibleB unit
+stop c =
+    ( c, Nothing )
+
+
+{-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+stopAt : ColorValue compatibleA -> Length compatibleB unit -> ColorStop compatibleA compatibleB unit
+stopAt c len =
+    ( c, Just len )
+
+
+{-| Sets the direction to [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toTop : AngleOrDirection {}
+toTop =
+    { value = "top"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`top right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toTopRight : AngleOrDirection {}
+toTopRight =
+    { value = "top right"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toRight : AngleOrDirection {}
+toRight =
+    { value = "right"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`bottom right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toBottomRight : AngleOrDirection {}
+toBottomRight =
+    { value = "bottom right"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toBottom : AngleOrDirection {}
+toBottom =
+    { value = "bottom"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`bottom left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toBottomLeft : AngleOrDirection {}
+toBottomLeft =
+    { value = "bottom left"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toLeft : AngleOrDirection {}
+toLeft =
+    { value = "left"
+    , angleOrDirection = Compatible
+    }
+
+
+{-| Sets the direction to [`top left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
+-}
+toTopLeft : AngleOrDirection {}
+toTopLeft =
+    { value = "top left"
+    , angleOrDirection = Compatible
     }
 
 
