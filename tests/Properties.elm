@@ -170,6 +170,7 @@ all =
             [ ( textTransform capitalize, "capitalize" )
             , ( textTransform uppercase, "uppercase" )
             , ( textTransform lowercase, "lowercase" )
+            , ( textTransform none, "none" )
             , ( textTransform fullWidth, "full-width" )
             ]
         , testProperty "line-height"

@@ -4075,6 +4075,7 @@ none :
     , transform : Compatible
     , backgroundImage : Compatible
     , value : String
+    , textTransform : Compatible
     }
 none =
     { value = "none"
@@ -4092,6 +4093,7 @@ none =
     , transform = Compatible
     , borderStyle = Compatible
     , backgroundImage = Compatible
+    , textTransform = Compatible
     }
 
 
