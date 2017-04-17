@@ -1616,6 +1616,7 @@ type alias BasicProperty =
     , textRendering : Compatible
     , textIndent : Compatible
     , textDecorationStyle : Compatible
+    , textTransform : Compatible
     , length : Compatible
     , lengthOrAuto : Compatible
     , lengthOrNone : Compatible
@@ -1675,6 +1676,7 @@ initial =
     , textRendering = Compatible
     , textIndent = Compatible
     , textDecorationStyle = Compatible
+    , textTransform = Compatible
     , borderStyle = Compatible
     , boxSizing = Compatible
     , color = Compatible

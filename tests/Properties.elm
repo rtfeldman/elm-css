@@ -172,6 +172,9 @@ all =
             , ( textTransform lowercase, "lowercase" )
             , ( textTransform none, "none" )
             , ( textTransform fullWidth, "full-width" )
+            , ( textTransform inherit, "inherit" )
+            , ( textTransform initial, "initial" )
+            , ( textTransform unset, "unset" )
             ]
         , testProperty "line-height"
             [ ( lineHeight (px 1), "1px" )
