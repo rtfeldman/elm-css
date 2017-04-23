@@ -1,3 +1,5 @@
+[![Logo](https://raw.githubusercontent.com/rtfeldman/elm-css/master/assets/logo.png)](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest)
+
 # elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
 
 `elm-css` lets you define CSS in Elm, like so:
