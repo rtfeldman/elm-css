@@ -611,6 +611,9 @@ module Css
         , cover
         , contain
         , zIndex
+        , calc
+        , plus
+        , minus
         )
 
 {-| Functions for building stylesheets.
@@ -651,7 +654,7 @@ module Css
 @docs borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
 
 # Length
-@docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, (|+|), (|-|), (|*|), (|/|)
+@docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, (|+|), (|-|), (|*|), (|/|), calc, plus, minus
 
 # Length Units
 @docs Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax,  Mm, Cm, In, Pt, Pc
@@ -1100,6 +1103,117 @@ type alias Length compatible units =
     }
 
 
+{-| https://developer.mozilla.org/en/docs/Web/CSS/calc
+-}
+type alias Calc compatible =
+    { compatible
+        | value : String
+        , calc : Compatible
+    }
+
+
+type alias CalculatedLength =
+    { value : String
+    , length : Compatible
+    , lengthOrAuto : Compatible
+    , lengthOrNumber : Compatible
+    , lengthOrNone : Compatible
+    , lengthOrMinMaxDimension : Compatible
+    , lengthOrNoneOrMinMaxDimension : Compatible
+    , textIndent : Compatible
+    , flexBasis : Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+    , fontSize : Compatible
+    , lengthOrAutoOrCoverOrContain : Compatible
+    , calc : Compatible
+    }
+
+
+type CalcExpression
+    = Addition
+    | Subtraction
+
+
+calcExpressionToString : CalcExpression -> String
+calcExpressionToString expression =
+    case expression of
+        Addition ->
+            "+"
+
+        Subtraction ->
+            "-"
+
+
+{-| The css [calc](https://developer.mozilla.org/en/docs/Web/CSS/calc) function.
+
+    -- calc(100% - 2px)
+    almostPct100 =
+       (calc (pct 100) minus (px 2))
+
+    -- calc(100vh - (2px + 2rem))
+    screenMinusBorderAndFooter =
+       (calc (vh 100) minus (calc (px 2) plus (rem 2)))
+
+    myWidth = width almostPct100
+    myHeight =  height screenMinusBorderAndFooter
+
+Using * and / with calc isn't supported. Use arithmetics from elm instead.
+-}
+calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
+calc first expression second =
+    let
+        grab l =
+            if String.startsWith "calc(" l.value then
+                String.dropLeft 4 l.value
+            else
+                l.value
+
+        calcs =
+            String.join " "
+                [ grab first
+                , calcExpressionToString expression
+                , grab second
+                ]
+
+        value =
+            cssFunction "calc" [ calcs ]
+    in
+        { value = value
+        , length = Compatible
+        , lengthOrAuto = Compatible
+        , lengthOrNumber = Compatible
+        , lengthOrNone = Compatible
+        , lengthOrMinMaxDimension = Compatible
+        , lengthOrNoneOrMinMaxDimension = Compatible
+        , textIndent = Compatible
+        , flexBasis = Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+        , fontSize = Compatible
+        , lengthOrAutoOrCoverOrContain = Compatible
+        , calc = Compatible
+        }
+
+
+{-| Use with calc to add lengths together
+
+    >>> calc (pct 100) plus (px 2)
+    calc (100% + 2px)
+-}
+plus : CalcExpression
+plus =
+    Addition
+
+
+{-| Use with calc to subtract lengths from eachother
+
+    >>> calc (pct 100) minus (px 2)
+    calc (100% - 2px)
+-}
+minus : CalcExpression
+minus =
+    Subtraction
+
+
 {-| Add two lengths.
 
     >>> em 2 |+| em 3
@@ -1206,6 +1320,7 @@ type alias ExplicitLength units =
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , fontSize : Compatible
     , lengthOrAutoOrCoverOrContain : Compatible
+    , calc : Compatible
     }
 
 
@@ -2293,6 +2408,7 @@ lengthConverter units unitLabel numericValue =
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , fontSize = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
+    , calc = Compatible
     }
 
 
