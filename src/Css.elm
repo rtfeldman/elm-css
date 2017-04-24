@@ -1129,7 +1129,7 @@ calcExpressionToString expression =
     almostPct100 =
        (calc (pct 100) minus (px 2))
 
-    -- calc(100% - (2px + 10vh))
+    -- calc(100vh - (2px + 2rem))
     screenMinusBorderAndFooter =
        (calc (vh 100) minus (calc (px 2) plus (rem 2)))
 
