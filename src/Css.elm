@@ -1123,7 +1123,20 @@ calcExpressionToString expression =
             "-"
 
 
-{-| https://developer.mozilla.org/en/docs/Web/CSS/calc
+{-| The css [calc](https://developer.mozilla.org/en/docs/Web/CSS/calc) function.
+
+    -- calc(100% - 2px)
+    almostPct100 =
+       (calc (pct 100) minus (px 2))
+
+    -- calc(100% - (2px + 10vh))
+    screenMinusBorderAndFooter =
+       (calc (vh 100) minus (calc (px 2) plus (rem 2)))
+
+    myWidth = width almostPct100
+    myHeight =  height screenMinusBorderAndFooter
+
+Using * and / with calc isn't supported. Use arithmetics from elm instead.
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
 calc first expression second =
