@@ -166,6 +166,16 @@ all =
             , ( textDecorationLines [ none ], "none" )
             , ( textDecorationLines [ underline, overline, lineThrough ], "underline overline line-through" )
             ]
+        , testProperty "text-transform"
+            [ ( textTransform capitalize, "capitalize" )
+            , ( textTransform uppercase, "uppercase" )
+            , ( textTransform lowercase, "lowercase" )
+            , ( textTransform none, "none" )
+            , ( textTransform fullWidth, "full-width" )
+            , ( textTransform inherit, "inherit" )
+            , ( textTransform initial, "initial" )
+            , ( textTransform unset, "unset" )
+            ]
         , testProperty "line-height"
             [ ( lineHeight (px 1), "1px" )
             , ( lineHeight (pct 10), "10%" )

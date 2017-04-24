@@ -1731,6 +1731,7 @@ type alias BasicProperty =
     , textRendering : Compatible
     , textIndent : Compatible
     , textDecorationStyle : Compatible
+    , textTransform : Compatible
     , length : Compatible
     , lengthOrAuto : Compatible
     , lengthOrNone : Compatible
@@ -1790,6 +1791,7 @@ initial =
     , textRendering = Compatible
     , textIndent = Compatible
     , textDecorationStyle = Compatible
+    , textTransform = Compatible
     , borderStyle = Compatible
     , boxSizing = Compatible
     , color = Compatible
@@ -4191,6 +4193,7 @@ none :
     , transform : Compatible
     , backgroundImage : Compatible
     , value : String
+    , textTransform : Compatible
     }
 none =
     { value = "none"
@@ -4208,6 +4211,7 @@ none =
     , transform = Compatible
     , borderStyle = Compatible
     , backgroundImage = Compatible
+    , textTransform = Compatible
     }
 
 
