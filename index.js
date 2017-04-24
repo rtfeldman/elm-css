@@ -153,28 +153,50 @@ I was expecting a List CssFileStructure but got ${typeof portValue}!
   return errorMessage.trim();
 }
 
-function extractCssResults(dest, stylesheetsModule, stylesheetsPort) {
+function extractCssResults(dest, stylesheetsModuleName, stylesheetsPort) {
   return function () {
     return new Promise(function (resolve, reject) {
       var Elm = require(dest);
 
-      if (!(stylesheetsModule in Elm)){
-        return reject(missingEntryModuleMessage(stylesheetsModule, Elm));
+      /*
+      If you have a nested stylesheet Elm module like "My.Nested.Stylesheet"
+      the resulting Elm object will be like that:
+
+      Elm = {
+        My: {
+          Nested: {
+            Stylesheet: { worker: function () {...} }
+          }
+        }
       }
 
-      var worker = Elm[stylesheetsModule].worker();
+      So we need to split the module name on each dot and iterate
+      over the nested objects to reach the targeted one,
+      starting with the Elm object itself
+      */
+      var stylesheetsModule = Elm;
+      var parts = stylesheetsModuleName.split('.');
+
+      parts.forEach(function (part) {
+        if (!stylesheetsModule || !stylesheetsModule[part]){
+          return reject(missingEntryModuleMessage(stylesheetsModuleName, Elm));
+        }
+        stylesheetsModule = stylesheetsModule[part];
+      })
+
+      var worker = stylesheetsModule.worker();
 
       if (Object.keys(worker.ports).length === 0){
-        return reject(noPortsMessage(stylesheetsModule, stylesheetsPort));
+        return reject(noPortsMessage(stylesheetsModuleName, stylesheetsPort));
       }
 
       if (!(stylesheetsPort in worker.ports)){
-        return reject(noMatchingPortMessage(stylesheetsModule, stylesheetsPort, worker.ports));
+        return reject(noMatchingPortMessage(stylesheetsModuleName, stylesheetsPort, worker.ports));
       }
 
       worker.ports[stylesheetsPort].subscribe(function (stylesheets) {
         if (!Array.isArray(stylesheets)){
-          return reject(portTypeErrorMessage(stylesheetsModule, stylesheetsPort, stylesheets));
+          return reject(portTypeErrorMessage(stylesheetsModuleName, stylesheetsPort, stylesheets));
         }
 
         var failures = stylesheets.filter(function(result) {
