@@ -39,11 +39,30 @@ all =
         , hexWarning
         , pseudoClasses
         , pseudoElements
+        , imports
         , Properties.all
         , Selectors.all
         , Arithmetic.all
         , backgrounds
         ]
+
+
+imports : Test
+imports =
+    let
+        input =
+            Fixtures.importStylesheet
+
+        output =
+            """
+         @import url("https://fonts.googleapis.com/css?family=Open+Sans") screen, print
+      """
+    in
+        suite
+            "import stylesheet"
+            [ test "pretty prints the expected output" <|
+                assertEqual (outdented output) (outdented (prettyPrint input))
+            ]
 
 
 unstyledDiv : Test

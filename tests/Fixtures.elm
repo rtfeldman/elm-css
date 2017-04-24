@@ -392,6 +392,23 @@ pseudoClassStylesheet =
         ]
 
 
+importStylesheet : Stylesheet
+importStylesheet =
+    let
+        style =
+            (stylesheet << namespace "importStylesheet")
+                []
+    in
+        { style
+            | imports =
+                [ ( url
+                        "https://fonts.googleapis.com/css?family=Open+Sans"
+                  , [ screen, print ]
+                  )
+                ]
+        }
+
+
 backgrounds : Stylesheet
 backgrounds =
     (stylesheet << namespace "background-test")

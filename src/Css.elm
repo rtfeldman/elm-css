@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module Css
     exposing
         ( compile
@@ -671,8 +672,8 @@ module Css
 # Media Queries
 @docs MediaQuery, screen, print, tv, projection
 
-# Source
-@docs src
+# Sources
+@docs src, name, url
 
 # Quoting
 @docs qt
@@ -692,7 +693,7 @@ deprecated or discouraged.
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Resolve as Resolve
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
-import Css.Structure as Structure
+import Css.Structure as Structure exposing (MediaQuery(MediaQuery), NameOrUrl)
 import String
 import Tuple
 import Hex
@@ -729,6 +730,26 @@ type PseudoClass
 
 type PseudoElement
     = PseudoElement String (List Style)
+
+
+{-| Named location or uri.
+-}
+
+
+
+-- type NameOrUrl
+--   = Name Structure.Name
+--   | Url Structure.Url
+
+
+name : String -> NameOrUrl
+name nm =
+  Structure.Name nm
+
+
+url : String -> NameOrUrl
+url url =
+  Structure.Url url
 
 
 {-| -}
