@@ -8034,6 +8034,9 @@ asPairs =
 {-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
 
     zIndex (int 2)
+
+See http://package.elm-lang.org/packages/rtfeldman/count/latest for a useful library
+to manage z-index values.
 -}
 zIndex : IntOrAuto compatible -> Style
 zIndex =
