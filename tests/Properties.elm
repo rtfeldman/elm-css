@@ -10,15 +10,15 @@ import Css.Namespace exposing (namespace)
 
 all : Test
 all =
-    describe "properties"
-        [ testProperty "box-sizing"
+    Test.concat
+        [ testProperty { function = "boxSizing", property = "box-sizing" }
             [ ( boxSizing initial, "initial" )
             , ( boxSizing unset, "unset" )
             , ( boxSizing inherit, "inherit" )
             , ( boxSizing contentBox, "content-box" )
             , ( boxSizing borderBox, "border-box" )
             ]
-        , testProperty "border-style"
+        , testProperty { function = "borderStyle", property = "border-style" }
             [ ( borderStyle initial, "initial" )
             , ( borderStyle unset, "unset" )
             , ( borderStyle inherit, "inherit" )
@@ -29,7 +29,7 @@ all =
             , ( borderStyle hidden, "hidden" )
             , ( borderStyle double, "double" )
             ]
-        , testProperty "border-width"
+        , testProperty { function = "borderWidth", property = "border-width" }
             [ ( borderWidth initial, "initial" )
             , ( borderWidth unset, "unset" )
             , ( borderWidth inherit, "inherit" )
@@ -39,14 +39,14 @@ all =
             , ( borderWidth3 (em 4) (px 2) (pct 5), "4em 2px 5%" )
             , ( borderWidth4 (em 4) (px 2) (pct 5) (px 3), "4em 2px 5% 3px" )
             ]
-        , testProperty "width"
+        , testProperty { function = "width", property = "width" }
             [ ( width initial, "initial" )
             , ( width unset, "unset" )
             , ( width inherit, "inherit" )
             , ( width auto, "auto" )
             , ( width (pct 90), "90%" )
             ]
-        , testProperty "min-width"
+        , testProperty { function = "minWidth", property = "min-width" }
             [ ( minWidth initial, "initial" )
             , ( minWidth unset, "unset" )
             , ( minWidth inherit, "inherit" )
@@ -56,7 +56,7 @@ all =
             , ( minWidth fillAvailable, "fill-available" )
             , ( minWidth (pc 9), "9pc" )
             ]
-        , testProperty "max-width"
+        , testProperty { function = "maxWidth", property = "max-width" }
             [ ( maxWidth initial, "initial" )
             , ( maxWidth unset, "unset" )
             , ( maxWidth inherit, "inherit" )
@@ -67,14 +67,14 @@ all =
             , ( maxWidth fillAvailable, "fill-available" )
             , ( maxWidth (cm 17), "17cm" )
             ]
-        , testProperty "height"
+        , testProperty { function = "height", property = "height" }
             [ ( height initial, "initial" )
             , ( height unset, "unset" )
             , ( height inherit, "inherit" )
             , ( height auto, "auto" )
             , ( height (mm 8), "8mm" )
             ]
-        , testProperty "min-height"
+        , testProperty { function = "minHeight", property = "min-height" }
             [ ( minHeight initial, "initial" )
             , ( minHeight unset, "unset" )
             , ( minHeight inherit, "inherit" )
@@ -84,7 +84,7 @@ all =
             , ( minHeight fillAvailable, "fill-available" )
             , ( minHeight (pc 9), "9pc" )
             ]
-        , testProperty "max-height"
+        , testProperty { function = "maxHeight", property = "max-height" }
             [ ( maxHeight initial, "initial" )
             , ( maxHeight unset, "unset" )
             , ( maxHeight inherit, "inherit" )
@@ -95,7 +95,7 @@ all =
             , ( maxHeight fillAvailable, "fill-available" )
             , ( maxHeight (cm 17), "17cm" )
             ]
-        , testProperty "text-indent"
+        , testProperty { function = "textIndent", property = "text-indent" }
             [ ( textIndent initial, "initial" )
             , ( textIndent unset, "unset" )
             , ( textIndent inherit, "inherit" )
@@ -106,7 +106,7 @@ all =
             , ( textIndent2 (em 3) hanging, "3em hanging" )
             , ( textIndent2 (pc 2) eachLine, "2pc each-line" )
             ]
-        , testProperty "text-decoration"
+        , testProperty { function = "textDecoration", property = "text-decoration" }
             [ ( textDecoration initial, "initial" )
             , ( textDecoration unset, "unset" )
             , ( textDecoration inherit, "inherit" )
@@ -114,7 +114,9 @@ all =
             , ( textDecoration underline, "underline" )
             , ( textDecoration overline, "overline" )
             , ( textDecoration lineThrough, "line-through" )
-            , ( textDecoration2 initial wavy, "initial wavy" )
+            ]
+        , testProperty { function = "textDecoration2", property = "text-decoration" }
+            [ ( textDecoration2 initial wavy, "initial wavy" )
             , ( textDecoration2 unset dotted, "unset dotted" )
             , ( textDecoration2 inherit dashed, "inherit dashed" )
             , ( textDecoration2 none solid, "none solid" )
@@ -122,7 +124,9 @@ all =
             , ( textDecoration2 overline initial, "overline initial" )
             , ( textDecoration2 lineThrough unset, "line-through unset" )
             , ( textDecoration2 lineThrough inherit, "line-through inherit" )
-            , ( textDecoration3 initial wavy (rgb 11 12 13), "initial wavy rgb(11, 12, 13)" )
+            ]
+        , testProperty { function = "textDecoration3", property = "text-decoration" }
+            [ ( textDecoration3 initial wavy (rgb 11 12 13), "initial wavy rgb(11, 12, 13)" )
             , ( textDecoration3 unset dotted (rgb 11 12 13), "unset dotted rgb(11, 12, 13)" )
             , ( textDecoration3 inherit dashed (rgb 11 12 13), "inherit dashed rgb(11, 12, 13)" )
             , ( textDecoration3 none solid (rgb 11 12 13), "none solid rgb(11, 12, 13)" )
@@ -130,12 +134,17 @@ all =
             , ( textDecoration3 overline initial (hex "aabbcc"), "overline initial #aabbcc" )
             , ( textDecoration3 lineThrough unset (hex "#bbccdd"), "line-through unset #bbccdd" )
             , ( textDecoration3 lineThrough inherit (hex "bbccdd05"), "line-through inherit #bbccdd05" )
-            , ( textDecorations [], "none" )
-            , ( textDecorations [ initial ], "initial" )
+            ]
+        , testProperty { function = "textDecorations []", property = "text-decoration" }
+            [ ( textDecorations [], "none" ) ]
+        , testProperty { function = "textDecorations", property = "text-decoration" }
+            [ ( textDecorations [ initial ], "initial" )
             , ( textDecorations [ unset, inherit ], "unset inherit" )
             , ( textDecorations [ none ], "none" )
             , ( textDecorations [ underline, overline, lineThrough ], "underline overline line-through" )
-            , ( textDecorations2 [] double, "none double" )
+            ]
+        , testProperty { function = "textDecorations2", property = "text-decoration" }
+            [ ( textDecorations2 [] double, "none double" )
             , ( textDecorations2 [ initial ] solid, "initial solid" )
             , ( textDecorations2 [ unset, inherit ] dashed, "unset inherit dashed" )
             , ( textDecorations2 [ none ] dotted, "none dotted" )
@@ -143,7 +152,9 @@ all =
             , ( textDecorations2 [ underline, overline, lineThrough ] initial, "underline overline line-through initial" )
             , ( textDecorations2 [ underline, overline, lineThrough ] unset, "underline overline line-through unset" )
             , ( textDecorations2 [ underline, overline, lineThrough ] inherit, "underline overline line-through inherit" )
-            , ( textDecorations3 [] double (rgb 11 12 13), "none double rgb(11, 12, 13)" )
+            ]
+        , testProperty { function = "textDecorations3", property = "text-decoration" }
+            [ ( textDecorations3 [] double (rgb 11 12 13), "none double rgb(11, 12, 13)" )
             , ( textDecorations3 [ initial ] solid (rgb 11 12 13), "initial solid rgb(11, 12, 13)" )
             , ( textDecorations3 [ unset, inherit ] dashed (rgb 11 12 13), "unset inherit dashed rgb(11, 12, 13)" )
             , ( textDecorations3 [ none ] dotted (rgb 11 12 13), "none dotted rgb(11, 12, 13)" )
@@ -152,7 +163,7 @@ all =
             , ( textDecorations3 [ underline, overline, lineThrough ] unset (rgb 11 12 13), "underline overline line-through unset rgb(11, 12, 13)" )
             , ( textDecorations3 [ underline, overline, lineThrough ] inherit (rgb 11 12 13), "underline overline line-through inherit rgb(11, 12, 13)" )
             ]
-        , testProperty "text-decoration-line"
+        , testProperty { function = "textDecorationLine", property = "text-decoration-line" }
             [ ( textDecorationLine initial, "initial" )
             , ( textDecorationLine unset, "unset" )
             , ( textDecorationLine inherit, "inherit" )
@@ -160,13 +171,16 @@ all =
             , ( textDecorationLine underline, "underline" )
             , ( textDecorationLine overline, "overline" )
             , ( textDecorationLine lineThrough, "line-through" )
-            , ( textDecorationLines [], "none" )
-            , ( textDecorationLines [ initial ], "initial" )
+            ]
+        , testProperty { function = "textDecorationLines []", property = "text-decoration-line" }
+            [ ( textDecorationLines [], "none" ) ]
+        , testProperty { function = "textDecorationLines", property = "text-decoration-line" }
+            [ ( textDecorationLines [ initial ], "initial" )
             , ( textDecorationLines [ unset, inherit ], "unset inherit" )
             , ( textDecorationLines [ none ], "none" )
             , ( textDecorationLines [ underline, overline, lineThrough ], "underline overline line-through" )
             ]
-        , testProperty "text-transform"
+        , testProperty { function = "textTransform", property = "text-transform" }
             [ ( textTransform capitalize, "capitalize" )
             , ( textTransform uppercase, "uppercase" )
             , ( textTransform lowercase, "lowercase" )
@@ -176,7 +190,7 @@ all =
             , ( textTransform initial, "initial" )
             , ( textTransform unset, "unset" )
             ]
-        , testProperty "line-height"
+        , testProperty { function = "lineHeight", property = "line-height" }
             [ ( lineHeight (px 1), "1px" )
             , ( lineHeight (pct 10), "10%" )
             , ( lineHeight (em 1.2), "1.2em" )
@@ -197,7 +211,7 @@ all =
             , ( lineHeight initial, "initial" )
             , ( lineHeight unset, "unset" )
             ]
-        , testProperty "overflow-x"
+        , testProperty { function = "overflowX", property = "overflow-x" }
             [ ( overflowX initial, "initial" )
             , ( overflowX unset, "unset" )
             , ( overflowX inherit, "inherit" )
@@ -206,7 +220,7 @@ all =
             , ( overflowX hidden, "hidden" )
             , ( overflowX scroll, "scroll" )
             ]
-        , testProperty "overflow-y"
+        , testProperty { function = "overflowY", property = "overflow-y" }
             [ ( overflowY initial, "initial" )
             , ( overflowY unset, "unset" )
             , ( overflowY inherit, "inherit" )
@@ -215,7 +229,7 @@ all =
             , ( overflowY hidden, "hidden" )
             , ( overflowY scroll, "scroll" )
             ]
-        , testProperty "overflow"
+        , testProperty { function = "overflow", property = "overflow" }
             [ ( overflow initial, "initial" )
             , ( overflow unset, "unset" )
             , ( overflow inherit, "inherit" )
@@ -224,7 +238,7 @@ all =
             , ( overflow hidden, "hidden" )
             , ( overflow scroll, "scroll" )
             ]
-        , testProperty "text-rendering"
+        , testProperty { function = "textRendering", property = "text-rendering" }
             [ ( textRendering initial, "initial" )
             , ( textRendering unset, "unset" )
             , ( textRendering inherit, "inherit" )
@@ -233,7 +247,7 @@ all =
             , ( textRendering optimizeLegibility, "optimizeLegibility" )
             , ( textRendering geometricPrecision, "geometricPrecision" )
             ]
-        , testProperty "display"
+        , testProperty { function = "display", property = "display" }
             [ ( display initial, "initial" )
             , ( display unset, "unset" )
             , ( display inherit, "inherit" )
@@ -254,18 +268,19 @@ all =
             , ( display tableHeaderGroup, "table-header-group" )
             , ( display tableRow, "table-row" )
             , ( display tableRowGroup, "table-row-group" )
-              -- TODO display: contents;
-              -- TODO display: flex;
-              -- TODO display: grid;
-              -- TODO display: inline-grid;
-              -- TODO display: ruby;
-              -- TODO display: ruby-base;
-              -- TODO display: ruby-text;
-              -- TODO display: ruby-base-container;
-              -- TODO display: ruby-text-container ;
-              -- TODO display: run-in;
+
+            -- TODO display: contents;
+            -- TODO display: flex;
+            -- TODO display: grid;
+            -- TODO display: inline-grid;
+            -- TODO display: ruby;
+            -- TODO display: ruby-base;
+            -- TODO display: ruby-text;
+            -- TODO display: ruby-base-container;
+            -- TODO display: ruby-text-container ;
+            -- TODO display: run-in;
             ]
-        , testProperty "flex"
+        , testProperty { function = "flex", property = "flex" }
             [ ( flex initial, "initial" )
             , ( flex unset, "unset" )
             , ( flex inherit, "inherit" )
@@ -278,7 +293,7 @@ all =
             , ( flex2 (int 1) (px 30), "1 30px" )
             , ( flex3 (int 1) (int 2) (px 20), "1 2 20px" )
             ]
-        , testProperty "flex-basis"
+        , testProperty { function = "flexBasis", property = "flex-basis" }
             [ ( flexBasis initial, "initial" )
             , ( flexBasis unset, "unset" )
             , ( flexBasis inherit, "inherit" )
@@ -287,7 +302,7 @@ all =
             , ( flexBasis (px 10), "10px" )
             , ( flexBasis (mm 8), "8mm" )
             ]
-        , testProperty "flex-wrap"
+        , testProperty { function = "flexWrap", property = "flex-wrap" }
             [ ( flexWrap initial, "initial" )
             , ( flexWrap unset, "unset" )
             , ( flexWrap inherit, "inherit" )
@@ -295,15 +310,15 @@ all =
             , ( flexWrap noWrap, "nowrap" )
             , ( flexWrap wrapReverse, "wrap-reverse" )
             ]
-        , testProperty "flex-grow"
+        , testProperty { function = "flexGrow", property = "flex-grow" }
             [ ( flexGrow (int 1), "1" )
             , ( flexGrow (num 0.2), "0.2" )
             ]
-        , testProperty "flex-shrink"
+        , testProperty { function = "flexShrink", property = "flex-shrink" }
             [ ( flexShrink (int 1), "1" )
             , ( flexShrink (num 0.2), "0.2" )
             ]
-        , testProperty "flex-direction"
+        , testProperty { function = "flexDirection", property = "flex-direction" }
             [ ( flexDirection initial, "initial" )
             , ( flexDirection unset, "unset" )
             , ( flexDirection inherit, "inherit" )
@@ -312,7 +327,7 @@ all =
             , ( flexDirection column, "column" )
             , ( flexDirection columnReverse, "column-reverse" )
             ]
-        , testProperty "flex-flow"
+        , testProperty { function = "flexFlow1", property = "flex-flow" }
             [ ( flexFlow1 initial, "initial" )
             , ( flexFlow1 unset, "unset" )
             , ( flexFlow1 inherit, "inherit" )
@@ -336,9 +351,9 @@ all =
             , ( flexFlow2 columnReverse noWrap, "column-reverse nowrap" )
             , ( flexFlow2 columnReverse wrapReverse, "column-reverse wrap-reverse" )
             ]
-        , testProperty "order"
+        , testProperty { function = "order", property = "order" }
             [ ( order (int 1), "1" ) ]
-        , testProperty "font-weight"
+        , testProperty { function = "fontWeight", property = "font-weight" }
             [ ( fontWeight bold, "bold" )
             , ( fontWeight normal, "normal" )
             , ( fontWeight (int 100), "100" )
@@ -351,45 +366,45 @@ all =
             , ( fontWeight (int 800), "800" )
             , ( fontWeight (int 900), "900" )
             ]
-        , testProperty "font-feature-settings"
+        , testProperty { function = "fontFeatureSettings", property = "font-feature-settings" }
             [ ( fontFeatureSettings (featureTag "smcp"), "\"smcp\" 1" )
             , ( fontFeatureSettings (featureTag2 "liga" 0), "\"liga\" 0" )
             , ( fontFeatureSettingsList [ featureTag2 "liga" 0, featureTag2 "swsh" 2 ], "\"liga\" 0, \"swsh\" 2" )
             , ( fontFeatureSettings normal, "normal" )
             ]
-        , testProperty "align-items"
+        , testProperty { function = "alignItems", property = "align-items" }
             [ ( alignItems flexStart, "flex-start" )
             , ( alignItems flexEnd, "flex-end" )
             , ( alignItems center, "center" )
             , ( alignItems baseline, "baseline" )
             , ( alignItems stretch, "stretch" )
             ]
-        , testProperty "align-self"
+        , testProperty { function = "alignSelf", property = "align-self" }
             [ ( alignSelf flexStart, "flex-start" )
             , ( alignSelf flexEnd, "flex-end" )
             , ( alignSelf center, "center" )
             , ( alignSelf baseline, "baseline" )
             , ( alignSelf stretch, "stretch" )
             ]
-        , testProperty "justify-content"
+        , testProperty { function = "justifyContent", property = "justify-content" }
             [ ( justifyContent flexStart, "flex-start" )
             , ( justifyContent flexEnd, "flex-end" )
             , ( justifyContent center, "center" )
             , ( justifyContent spaceAround, "space-around" )
             , ( justifyContent spaceBetween, "space-between" )
             ]
-        , testProperty "opacity"
+        , testProperty { function = "opacity", property = "opacity" }
             [ ( opacity inherit, "inherit" )
             , ( opacity (int 1), "1" )
             ]
-        , testProperty "color"
+        , testProperty { function = "color", property = "color" }
             [ ( color (hsl 120 0.5 0.5), "hsl(120, 50%, 50%)" )
             , ( color (hsla 120 0.5 0.5 0.5), "hsla(120, 50%, 50%, 0.5)" )
             , ( color inherit, "inherit" )
             , ( color unset, "unset" )
             , ( color initial, "initial" )
             ]
-        , testProperty "cursor"
+        , testProperty { function = "cursor", property = "cursor" }
             [ ( cursor pointer, "pointer" )
             , ( cursor crosshair, "crosshair" )
             , ( cursor contextMenu, "context-menu" )
@@ -429,7 +444,7 @@ all =
             , ( cursor initial, "initial" )
             , ( cursor inherit, "inherit" )
             ]
-        , testProperty "outline"
+        , testProperty { function = "outline3", property = "outline" }
             [ ( outline3 (px 10) dashed (hsl 120 0.5 0.5), "10px dashed hsl(120, 50%, 50%)" )
             , ( outline3 (em 1.4) solid (hsla 120 0.5 0.5 0.5), "1.4em solid hsla(120, 50%, 50%, 0.5)" )
             , ( outline inherit, "inherit" )
@@ -438,7 +453,7 @@ all =
             , ( outline zero, "0" )
             , ( outline none, "none" )
             ]
-        , testProperty "outline-width"
+        , testProperty { function = "outlineWidth", property = "outline-width" }
             [ ( outlineWidth (px 10), "10px" )
             , ( outlineWidth (em 1.4), "1.4em" )
             , ( outlineWidth (pct 20), "20%" )
@@ -448,7 +463,7 @@ all =
             , ( outlineWidth zero, "0" )
             , ( outlineWidth none, "none" )
             ]
-        , testProperty "outline-color"
+        , testProperty { function = "outlineColor", property = "outline-color" }
             [ ( outlineColor (hsl 120 0.5 0.5), "hsl(120, 50%, 50%)" )
             , ( outlineColor (hsla 120 0.5 0.5 0.5), "hsla(120, 50%, 50%, 0.5)" )
             , ( outlineColor transparent, "transparent" )
@@ -456,7 +471,7 @@ all =
             , ( outlineColor unset, "unset" )
             , ( outlineColor initial, "initial" )
             ]
-        , testProperty "outline-style"
+        , testProperty { function = "outlineStyle", property = "outline-style" }
             [ ( outlineStyle none, "none" )
             , ( outlineStyle dashed, "dashed" )
             , ( outlineStyle dotted, "dotted" )
@@ -464,7 +479,7 @@ all =
             , ( outlineStyle unset, "unset" )
             , ( outlineStyle initial, "initial" )
             ]
-        , testProperty "outline-offset"
+        , testProperty { function = "outlineOffset", property = "outline-offset" }
             [ ( outlineOffset zero, "0" )
             , ( outlineOffset (px 10), "10px" )
             , ( outlineOffset (pct 10), "10%" )
@@ -472,7 +487,7 @@ all =
             , ( outlineOffset unset, "unset" )
             , ( outlineOffset initial, "initial" )
             ]
-        , testProperty "list-style-type"
+        , testProperty { function = "listStyleType", property = "list-style-type" }
             [ ( listStyleType none, "none" )
             , ( listStyleType initial, "initial" )
             , ( listStyleType inherit, "inherit" )
@@ -506,14 +521,14 @@ all =
             , ( listStyleType telugu, "telugu" )
             , ( listStyleType thai, "thai" )
             ]
-        , testProperty "list-style-position"
+        , testProperty { function = "listStylePosition", property = "list-style-position" }
             [ ( listStylePosition inherit, "inherit" )
             , ( listStylePosition initial, "initial" )
             , ( listStylePosition unset, "unset" )
             , ( listStylePosition inside, "inside" )
             , ( listStylePosition outside, "outside" )
             ]
-        , testProperty "list-style"
+        , testProperty { function = "listStyle", property = "list-style" }
             [ ( listStyle inherit, "inherit" )
             , ( listStyle initial, "initial" )
             , ( listStyle unset, "unset" )
@@ -525,14 +540,16 @@ all =
             , ( listStyle square, "square" )
             , ( listStyle decimal, "decimal" )
             , ( listStyle (linearGradient (stop <| hex "111") (stop <| hex "222") []), "linear-gradient(#111, #222)" )
-            , ( listStyle2 disc inside, "disc inside" )
+            ]
+        , testProperty { function = "listStyle2", property = "list-style" }
+            [ ( listStyle2 disc inside, "disc inside" )
             , ( listStyle2 inside disc, "inside disc" )
             , ( listStyle2 outside decimal, "outside decimal" )
             , ( listStyle3 disc inside none, "disc inside none" )
             , ( listStyle3 inside none circle, "inside none circle" )
             , ( listStyle3 none outside decimal, "none outside decimal" )
             ]
-        , testProperty "box-shadow"
+        , testProperty { function = "boxShadow", property = "box-shadow" }
             [ ( boxShadow none, "none" )
             , ( boxShadow initial, "initial" )
             , ( boxShadow unset, "unset" )
@@ -548,21 +565,21 @@ all =
             , ( boxShadow5 inset (px 2) (px 3) (px 4) (hex "333"), "inset 2px 3px 4px #333" )
             , ( boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (hex "333"), "inset 1px 2px 3px 4px #333" )
             ]
-        , testProperty "z-index"
+        , testProperty { function = "zIndex", property = "z-index" }
             [ ( zIndex auto, "auto" )
             , ( zIndex inherit, "inherit" )
             , ( zIndex initial, "initial" )
             , ( zIndex unset, "unset" )
             , ( zIndex (int 5), "5" )
             ]
-        , testProperty "background-image"
+        , testProperty { function = "backgroundImage", property = "background-image" }
             [ ( backgroundImage initial, "initial" )
             , ( backgroundImage unset, "unset" )
             , ( backgroundImage inherit, "inherit" )
             , ( backgroundImage none, "none" )
             , ( backgroundImage (url "blah.com"), "url(blah.com)" )
             ]
-        , testProperty "border-radius"
+        , testProperty { function = "borderRadius", property = "border-radius" }
             [ ( borderRadius (em 4), "4em" )
             , ( borderRadius2 (em 4) (px 2), "4em 2px" )
             , ( borderRadius3 (em 4) (px 2) (pct 5), "4em 2px 5%" )
@@ -571,20 +588,20 @@ all =
         ]
 
 
-testProperty : String -> List ( Style, String ) -> Test
-testProperty propertyName modifierPairs =
-    describe (propertyName ++ " property")
-        (List.map (expectPropertyWorks propertyName) modifierPairs)
+testProperty : { function : String, property : String } -> List ( Style, String ) -> Test
+testProperty { function, property } modifierPairs =
+    describe function
+        (List.map (expectPropertyWorks property) modifierPairs)
 
 
 expectPropertyWorks : String -> ( Style, String ) -> Test
 expectPropertyWorks propertyName ( style, expectedStr ) =
-    describe "works properly"
-        [ (test "pretty prints the expected output") <|
+    describe (propertyName ++ ": " ++ expectedStr)
+        [ (test ("emitted as expected")) <|
             \() ->
                 prettyPrint ((stylesheet << namespace "test") [ p [ style ] ])
                     |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-        , (test "can be converted to a key-value pair") <|
+        , (test ("can be converted to a key-value pair")) <|
             \() ->
                 [ ( propertyName, expectedStr ) ]
                     |> Expect.equal (asPairs [ style ])
