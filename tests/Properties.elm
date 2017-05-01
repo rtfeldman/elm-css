@@ -469,7 +469,6 @@ all =
             [ ( outlineOffset zero, "0" )
             , ( outlineOffset (px 10), "10px" )
             , ( outlineOffset (pct 10), "10%" )
-            , ( outlineOffset (px 10), "10px" )
             , ( outlineOffset inherit, "inherit" )
             , ( outlineOffset unset, "unset" )
             , ( outlineOffset initial, "initial" )
