@@ -40,9 +40,7 @@ elements =
         , testSelector "hr" hr
         , testSelector "li" li
         , testSelector "main" main_
-        , testSelector "ol" ol
         , testSelector "p" p
-        , testSelector "ul" ul
         , testSelector "pre" pre
         , testSelector "dd" dd
         , testSelector "dl" dl
