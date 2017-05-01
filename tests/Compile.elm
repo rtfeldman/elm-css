@@ -1,4 +1,4 @@
-module Compile exposing (all)
+module Compile exposing (..)
 
 import Test exposing (..)
 import Expect
@@ -6,16 +6,6 @@ import Fuzz exposing (Fuzzer, tuple3, tuple4)
 import TestUtil exposing (..)
 import CompileFixtures
 import Css exposing (..)
-
-
-all : Test
-all =
-    describe "elm-css"
-        [ unstyledDiv
-        , dreamwriter
-        , colorWarnings
-        , compileTest
-        ]
 
 
 getRgbaWarnings : ( Int, Int, Int, Float ) -> Int

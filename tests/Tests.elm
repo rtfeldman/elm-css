@@ -1,4 +1,4 @@
-module Tests exposing (all)
+module Tests exposing (..)
 
 import Test exposing (..)
 import Expect exposing (Expectation)
@@ -10,40 +10,6 @@ import Fixtures
 import Properties
 import Selectors
 import Colors
-
-
-all : Test
-all =
-    describe "elm-css"
-        [ Compile.all
-        , Colors.all
-        , unstyledDiv
-        , keyValue
-        , simpleEach
-        , divWidthHeight
-        , leftRightTopBottom
-        , borders
-        , atRule
-        , nestedAtRule
-        , bug99
-        , bug140
-        , universal
-        , multiSelector
-        , multiDescendent
-        , underlineOnHoverStyle
-        , underlineOnHoverManual
-        , greenOnHoverStyle
-        , transformsStyle
-        , fonts
-        , weightWarning
-        , hexWarning
-        , pseudoClasses
-        , pseudoElements
-        , Properties.all
-        , Selectors.all
-        , Arithmetic.all
-        , backgrounds
-        ]
 
 
 unstyledDiv : Test
