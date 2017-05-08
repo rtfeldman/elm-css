@@ -15,8 +15,11 @@ module Css.Colors exposing (navy, blue, aqua, teal, olive, green, lime, yellow, 
         backgroundColor: #0074D9;
     }
 
+
 # Colors
+
 @docs navy, blue, aqua, teal, olive, green, lime, yellow, orange, red, maroon, fuchsia, purple, black, gray, silver
+
 -}
 
 import Css exposing (Color, hex)

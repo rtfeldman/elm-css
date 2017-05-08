@@ -619,66 +619,102 @@ module Css
 {-| Functions for building stylesheets.
 
 
-
 # Misc
+
 @docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
 @docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
+
 # Style
+
 @docs Snippet, Style, batch, stylesheet, compile
 
+
 # Statements
+
 @docs class, id, selector, everything
 
+
 # Combinators
+
 @docs children, descendants, adjacentSiblings, generalSiblings
 
+
 # Media Queries
+
 @docs screen, tv, projection, print
 
+
 # Properties
+
 @docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, textJustify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill
+
 
 # Values
 
+
 ## Color values
+
 @docs Color all, important, custom, solid, transparent, rgb, rgba, hsl, hsla, hex
 
+
 ## Font values
+
 @docs featureTag, featureTag2, featureOn, featureOff
 
+
 ## Other values
+
 @docs borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
 
+
 # Length
+
 @docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, (|+|), (|-|), (|*|), (|/|), calc, plus, minus
 
+
 # Length Units
-@docs Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax,  Mm, Cm, In, Pt, Pc
+
+@docs Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax, Mm, Cm, In, Pt, Pc
+
 
 # Angle
+
 @docs deg, rad, grad, turn
 
+
 # Pseudo-Classes
+
 @docs pseudoClass, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
+
 # Pseudo-Elements
+
 @docs pseudoElement, after, before, firstLetter, firstLine, selection
 
+
 # Media Queries
+
 @docs MediaQuery, screen, print, tv, projection
 
+
 # Source
+
 @docs src
 
+
 # Quoting
+
 @docs qt
 
+
 # Types
+
 @docs FontSize, ColorValue, ColorStop, IntOrAuto
+
 
 # Intentionally Unsupported
 
@@ -687,6 +723,7 @@ CSS specification) but which have been omitted because their use is either
 deprecated or discouraged.
 
 @docs thin, medium, thick, blink
+
 -}
 
 import Css.Helpers exposing (toCssIdentifier, identifierToString)
@@ -787,6 +824,7 @@ Other notes:
 
 `desiredKey` is the key of the property.
 `functionName` is just for better error messages.
+
 -}
 getOverloadedProperty : String -> String -> Style -> Style
 getOverloadedProperty functionName desiredKey style =
@@ -906,61 +944,61 @@ type alias FontVariantNumeric compatible =
     }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Values>
 -}
 type alias TextDecorationLine compatible =
     { compatible | value : String, textDecorationLine : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing#Values>
 -}
 type alias BoxSizing compatible =
     { compatible | value : String, boxSizing : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values>
 -}
 type alias Overflow compatible =
     { compatible | value : String, overflow : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap#Values>
 -}
 type alias Wrap compatible =
     { compatible | value : String, overflowWrap : Compatible }
 
 
-{-| https://developer.mozilla.org/en/docs/Web/CSS/resize#Values
+{-| <https://developer.mozilla.org/en/docs/Web/CSS/resize#Values>
 -}
 type alias Resize compatible =
     { compatible | value : String, resize : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex#Values>
 -}
 type alias LengthOrNumberOrAutoOrNoneOrContent compatible =
     { compatible | value : String, lengthOrNumberOrAutoOrNoneOrContent : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/z-index>
 -}
 type alias IntOrAuto compatible =
     { compatible | value : String, intOrAuto : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values>
 -}
 type alias FlexBasis compatible =
     { compatible | value : String, flexBasis : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values>
 -}
 type alias FlexWrap compatible =
     { compatible | value : String, flexWrap : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values>
 -}
 type alias FlexDirection compatible =
     { compatible | value : String, flexDirection : Compatible }
@@ -970,55 +1008,55 @@ type alias FlexDirectionOrWrap compatible =
     { compatible | value : String, flexDirectionOrWrap : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values>
 -}
 type alias AlignItems a b =
     Length a b -> Style
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values>
 -}
 type alias AlignSelf a b =
     Length a b -> Style
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values>
 -}
 type alias JustifyContent a b =
     Length a b -> Style
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values>
 -}
 type alias Display compatible =
     { compatible | value : String, display : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Values>
 -}
 type alias ListStyleType compatible =
     { compatible | value : String, listStyleType : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position#Values>
 -}
 type alias ListStylePosition compatible =
     { compatible | value : String, listStylePosition : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#Values>
 -}
 type alias ListStyle compatible =
     { compatible | value : String, listStyleTypeOrPositionOrImage : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/white-space#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/white-space#Values>
 -}
 type alias WhiteSpace compatible =
     { compatible | value : String, whiteSpace : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values>
 -}
 type alias ColorValue compatible =
     { compatible | value : String, color : Compatible, warnings : List String }
@@ -1034,7 +1072,7 @@ type alias Color =
     ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#repeat-style
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#repeat-style>
 -}
 type alias BackgroundRepeat compatible =
     { compatible | value : String, backgroundRepeat : Compatible, backgroundRepeatShorthand : Compatible }
@@ -1044,13 +1082,13 @@ type alias BackgroundRepeatShorthand compatible =
     { compatible | value : String, backgroundRepeatShorthand : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment>
 -}
 type alias BackgroundAttachment compatible =
     { compatible | value : String, backgroundAttachment : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-position
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-position>
 -}
 type alias BackgroundPosition compatible =
     { compatible | value : String, backgroundPosition : Compatible }
@@ -1067,31 +1105,31 @@ type alias BackgroundBlendMode a =
     ColorValue a -> Style
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip>
 -}
 type alias BackgroundClip compatible =
     { compatible | value : String, backgroundClip : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin>
 -}
 type alias BackgroundOrigin compatible =
     BackgroundClip compatible
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-image
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-image>
 -}
 type alias BackgroundImage compatible =
     { compatible | value : String, backgroundImage : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/background-size
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-size>
 -}
 type alias LengthOrAutoOrCoverOrContain compatible =
     { compatible | value : String, lengthOrAutoOrCoverOrContain : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias Length compatible units =
     { compatible
@@ -1103,7 +1141,7 @@ type alias Length compatible units =
     }
 
 
-{-| https://developer.mozilla.org/en/docs/Web/CSS/calc
+{-| <https://developer.mozilla.org/en/docs/Web/CSS/calc>
 -}
 type alias Calc compatible =
     { compatible
@@ -1146,18 +1184,23 @@ calcExpressionToString expression =
 
 {-| The css [calc](https://developer.mozilla.org/en/docs/Web/CSS/calc) function.
 
-    -- calc(100% - 2px)
     almostPct100 =
-       (calc (pct 100) minus (px 2))
+        (calc (pct 100) minus (px 2))
+
 
     -- calc(100vh - (2px + 2rem))
-    screenMinusBorderAndFooter =
-       (calc (vh 100) minus (calc (px 2) plus (rem 2)))
 
-    myWidth = width almostPct100
-    myHeight =  height screenMinusBorderAndFooter
+    screenMinusBorderAndFooter =
+        (calc (vh 100) minus (calc (px 2) plus (rem 2)))
+
+    myWidth =
+        width almostPct100
+
+    myHeight =
+        height screenMinusBorderAndFooter
 
 Using * and / with calc isn't supported. Use arithmetics from elm instead.
+
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
 calc first expression second =
@@ -1198,6 +1241,7 @@ calc first expression second =
 
     >>> calc (pct 100) plus (px 2)
     calc (100% + 2px)
+
 -}
 plus : CalcExpression
 plus =
@@ -1208,6 +1252,7 @@ plus =
 
     >>> calc (pct 100) minus (px 2)
     calc (100% - 2px)
+
 -}
 minus : CalcExpression
 minus =
@@ -1218,6 +1263,7 @@ minus =
 
     >>> em 2 |+| em 3
     em 5
+
 -}
 (|+|) : Length compatible units -> Length compatible units -> Length compatible units
 (|+|) =
@@ -1228,6 +1274,7 @@ minus =
 
     >>> em 7 |-| em 3
     em 4
+
 -}
 (|-|) : Length compatible units -> Length compatible units -> Length compatible units
 (|-|) =
@@ -1238,6 +1285,7 @@ minus =
 
     >>> em 9 |/| em 2
     em 4.5
+
 -}
 (|/|) : Length compatible units -> Length compatible units -> Length compatible units
 (|/|) =
@@ -1248,6 +1296,7 @@ minus =
 
     >>> em 3 |*| em 6
     em 18
+
 -}
 (|*|) : Length compatible units -> Length compatible units -> Length compatible units
 (|*|) =
@@ -1274,31 +1323,31 @@ combineLengths operation first second =
         { first | value = value, numericValue = numericValue }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrAuto compatible =
     { compatible | value : String, lengthOrAuto : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrNoneOrMinMaxDimension compatible =
     { compatible | value : String, lengthOrNoneOrMinMaxDimension : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrMinMaxDimension compatible =
     { compatible | value : String, lengthOrMinMaxDimension : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrNone compatible =
     { compatible | value : String, lengthOrNone : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/length
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrNumber compatible =
     { compatible | value : String, lengthOrNumber : Compatible }
@@ -1324,97 +1373,97 @@ type alias ExplicitLength units =
     }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform#Values>
 -}
 type alias Transform compatible =
     { compatible | value : String, transform : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/angle
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/angle>
 -}
 type alias Angle compatible =
     { compatible | value : String, angle : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values>
 -}
 type alias AngleOrDirection compatible =
     { compatible | value : String, angleOrDirection : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values>
 -}
 type alias TextDecorationStyle compatible =
     { compatible | value : String, textDecorationStyle : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color#Values>
 -}
 type alias TextEmphasisColor compatible =
     { compatible | value : String, textDecorationStyle : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values>
 -}
 type alias Position compatible =
     { compatible | value : String, position : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values>
 -}
 type alias BorderStyle compatible =
     { compatible | value : String, borderStyle : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse>
 -}
 type alias BorderCollapse compatible =
     { compatible | value : String, borderCollapse : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box#Values>
 -}
 type alias TransformBox compatible =
     { compatible | value : String, transformBox : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values>
 -}
 type alias TextOrientation compatible =
     { compatible | value : String, textOrientation : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style#Values>
 -}
 type alias TransformStyle compatible =
     { compatible | value : String, transformStyle : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values>
 -}
 type alias TextIndent compatible =
     { compatible | value : String, textIndent : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values>
 -}
 type alias TextOverflow compatible =
     { compatible | value : String, textOverflow : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values>
 -}
 type alias TextTransform compatible =
     { compatible | value : String, textTransform : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values>
 -}
 type alias TextRendering compatible =
     { compatible | value : String, textRendering : Compatible }
 
 
-{-| https://www.microsoft.com/typography/otspec/featurelist.htm
+{-| <https://www.microsoft.com/typography/otspec/featurelist.htm>
 -}
 type alias FeatureTagValue compatible =
     { compatible | value : String, featureTagValue : Compatible, warnings : List String }
@@ -1442,13 +1491,13 @@ type alias VerticalAlign a b =
     Length a b -> Style
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>
 -}
 type alias Cursor compatible =
     { compatible | value : String, cursor : Compatible }
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/outline#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/outline#Values>
 -}
 type alias Outline compatible =
     { compatible | value : String, outline : Compatible }
@@ -1491,7 +1540,7 @@ transparent =
 
 
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
-    value.
+value.
 -}
 currentColor : ColorValue NonMixable
 currentColor =
@@ -1700,6 +1749,7 @@ contain =
 {-| `hidden` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
 
 This can also represent a `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+
 -}
 hidden : Overflow (BorderStyle {})
 hidden =
@@ -1836,7 +1886,7 @@ initial =
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
-    in functional notation.
+in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
 rgb red green blue =
@@ -2426,6 +2476,7 @@ lengthConverter units unitLabel numericValue =
     ul {
         padding: 0;
     }
+
 -}
 zero :
     { value : String
@@ -2629,13 +2680,13 @@ type PxUnits
     = PxUnits
 
 
-{-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
 -}
 type alias Mm =
     ExplicitLength MMUnits
 
 
-{-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
 -}
 mm : Float -> Mm
 mm =
@@ -2672,6 +2723,7 @@ type alias In =
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
+
 -}
 inches : Float -> In
 inches =
@@ -2812,6 +2864,7 @@ turn =
 {-| The [`matrix()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix()) transform-function.
 
     transform (matrix 0.5 1 1.5 2 2.5 3)
+
 -}
 matrix : number -> number -> number -> number -> number -> number -> Transform {}
 matrix a b c d tx ty =
@@ -2823,6 +2876,7 @@ matrix a b c d tx ty =
 {-| The [`matrix3d()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix3d()) transform-function.
 
     transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
+
 -}
 matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
@@ -2834,6 +2888,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 {-| The [`perspective()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#perspective()) transform-function.
 
      transform (perspective 0.5)
+
 -}
 perspective : number -> Transform {}
 perspective l =
@@ -2845,6 +2900,7 @@ perspective l =
 {-| The [`rotate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate()) transform-function.
 
      transform (rotate (deg 90))
+
 -}
 rotate : Angle compatible -> Transform {}
 rotate { value } =
@@ -2856,6 +2912,7 @@ rotate { value } =
 {-| The [`rotateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateX()) transform-function.
 
      transform (rotateX (deg 90))
+
 -}
 rotateX : Angle compatible -> Transform {}
 rotateX { value } =
@@ -2867,6 +2924,7 @@ rotateX { value } =
 {-| The [`rotateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateY()) transform-function.
 
      transform (rotateY (deg 90))
+
 -}
 rotateY : Angle compatible -> Transform {}
 rotateY { value } =
@@ -2878,6 +2936,7 @@ rotateY { value } =
 {-| The [`rotateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateZ()) transform-function.
 
      transform (rotateZ (deg 90))
+
 -}
 rotateZ : Angle compatible -> Transform {}
 rotateZ { value } =
@@ -2889,6 +2948,7 @@ rotateZ { value } =
 {-| The [`rotate3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate3d()) transform-function.
 
      transform (rotate3d 1 1 1 (deg 90))
+
 -}
 rotate3d : number -> number -> number -> Angle compatible -> Transform {}
 rotate3d x y z { value } =
@@ -2905,6 +2965,7 @@ rotate3d x y z { value } =
 
      transform (scale 0.5)
      transform (scale2 0.5 0.7)
+
 -}
 scale : number -> Transform {}
 scale x =
@@ -2917,6 +2978,7 @@ scale x =
 
      transform (scale 0.5)
      transform (scale2 0.5 0.7)
+
 -}
 scale2 : number -> number -> Transform {}
 scale2 x y =
@@ -2928,6 +2990,7 @@ scale2 x y =
 {-| The [`scaleX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleX()) transform-function.
 
      transform (scaleX 0.5)
+
 -}
 scaleX : number -> Transform {}
 scaleX x =
@@ -2939,6 +3002,7 @@ scaleX x =
 {-| The [`scaleY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleY()) transform-function.
 
      transform (scaleY 0.5)
+
 -}
 scaleY : number -> Transform {}
 scaleY y =
@@ -2950,6 +3014,7 @@ scaleY y =
 {-| The [`scale3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale3d()) transform-function.
 
      transform (scale3d 0.5 0.5 1)
+
 -}
 scale3d : number -> number -> number -> Transform {}
 scale3d x y z =
@@ -2962,6 +3027,7 @@ scale3d x y z =
 
      transform (skew (deg 90))
      transform (skew2 (deg 90) (deg 45))
+
 -}
 skew : Angle compatible -> Transform {}
 skew { value } =
@@ -2974,6 +3040,7 @@ skew { value } =
 
      transform (skew (deg 90))
      transform (skew2 (deg 90) (deg 45))
+
 -}
 skew2 : Angle compatibleA -> Angle compatibleB -> Transform {}
 skew2 ax ay =
@@ -2985,6 +3052,7 @@ skew2 ax ay =
 {-| The [`skewX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewX()) transform-function.
 
      transform (skewX (deg 90))
+
 -}
 skewX : Angle compatible -> Transform {}
 skewX { value } =
@@ -2996,6 +3064,7 @@ skewX { value } =
 {-| The [`skewY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewY()) transform-function.
 
     transform (skewY (deg 90))
+
 -}
 skewY : Angle compatible -> Transform {}
 skewY { value } =
@@ -3008,6 +3077,7 @@ skewY { value } =
 
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
+
 -}
 translate : Length compatible units -> Transform {}
 translate { value } =
@@ -3020,6 +3090,7 @@ translate { value } =
 
     transform (translate (px 100))
     transform (translate2 (px 100) (pct -45))
+
 -}
 translate2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Transform {}
 translate2 tx ty =
@@ -3031,6 +3102,7 @@ translate2 tx ty =
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
 
     transform (translateX (px 100))
+
 -}
 translateX : Length compatible units -> Transform {}
 translateX { value } =
@@ -3042,6 +3114,7 @@ translateX { value } =
 {-| The [`translateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateY()) transform-function.
 
     transform (translateY (px 100))
+
 -}
 translateY : Length compatible units -> Transform {}
 translateY { value } =
@@ -3053,6 +3126,7 @@ translateY { value } =
 {-| The [`translateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateZ()) transform-function.
 
     transform (translateZ (px 100))
+
 -}
 translateZ : Length compatible units -> Transform {}
 translateZ { value } =
@@ -3064,6 +3138,7 @@ translateZ { value } =
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
 
     transform (translate3d (px 100) (px 100) (px 100))
+
 -}
 translate3d : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Transform {}
 translate3d tx ty tz =
@@ -3089,6 +3164,7 @@ If a collection of transforms is needed, use the `transforms` function with a
 populated list:
 
     transforms [ perspective 1, scale2 1 1.4 ]
+
 -}
 transforms : List (Transform compatible) -> Style
 transforms =
@@ -3101,6 +3177,7 @@ property to `none`, use the `transforms` function with an empty list. See
 `transforms` for more details.
 
     transform (scaleX 1.4)
+
 -}
 transform : Transform compatible -> Style
 transform only =
@@ -3157,6 +3234,7 @@ transformBox =
 {-| Sets [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing)
 
     boxSizing borderBox
+
 -}
 boxSizing : BoxSizing compatible -> Style
 boxSizing =
@@ -3609,6 +3687,7 @@ flexFlow1 (wrap | wrapReverse | noWrap)
 flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnReverse)
 
 Or vice versa, order is not important for flex-flow
+
 -}
 flexFlow1 : FlexDirectionOrWrap compatible -> Style
 flexFlow1 =
@@ -3621,6 +3700,7 @@ flexFlow1 (wrap | wrapReverse | noWrap)
 flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnReverse)
 
 Or vice versa, order is not important for flex-flow
+
 -}
 flexFlow2 : FlexDirectionOrWrap compatibleA -> FlexDirectionOrWrap compatibleB -> Style
 flexFlow2 =
@@ -3629,13 +3709,14 @@ flexFlow2 =
 
 {-| Sets [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items).
 
-  **Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
-  use this workaround:
+**Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
+use this workaround:
 
-  property "align-items" "auto"
+property "align-items" "auto"
 
-  If this is annoying, please file an issue, so adding support for "auto"
-  can be prioritized!
+If this is annoying, please file an issue, so adding support for "auto"
+can be prioritized!
+
 -}
 alignItems : (ExplicitLength IncompatibleUnits -> Style) -> Style
 alignItems fn =
@@ -3644,13 +3725,14 @@ alignItems fn =
 
 {-| Sets [`align-self`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-self).
 
-  **Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
-  use this workaround:
+**Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
+use this workaround:
 
-  property "align-self" "auto"
+property "align-self" "auto"
 
-  If this is annoying, please file an issue, so adding support for "auto"
-  can be prioritized!
+If this is annoying, please file an issue, so adding support for "auto"
+can be prioritized!
+
 -}
 alignSelf : (ExplicitLength IncompatibleUnits -> Style) -> Style
 alignSelf fn =
@@ -3672,7 +3754,7 @@ order =
 
 
 {-| The [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values) value for the
-  flex-basis property.
+flex-basis property.
 -}
 content : LengthOrNumberOrAutoOrNoneOrContent (FlexBasis {})
 content =
@@ -3683,7 +3765,7 @@ content =
 
 
 {-| The[`wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values) value for the
-  flex-wrap property.
+flex-wrap property.
 -}
 wrap : FlexDirectionOrWrap (FlexWrap {})
 wrap =
@@ -3694,7 +3776,7 @@ wrap =
 
 
 {-| The[`wrap-reverse`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values) value for the
-  flex-wrap property.
+flex-wrap property.
 -}
 wrapReverse : FlexDirectionOrWrap (FlexWrap {})
 wrapReverse =
@@ -3702,8 +3784,8 @@ wrapReverse =
 
 
 {-| The[`flex-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-items property.
-  Can also be used with flex-box's justify-content property to apply the value of flex-start.
+align-items property.
+Can also be used with flex-box's justify-content property to apply the value of flex-start.
 -}
 flexStart : AlignItems a b
 flexStart =
@@ -3711,8 +3793,8 @@ flexStart =
 
 
 {-| The[`flex-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-items property.
-  Can also be used with flex-box's justify-content property to apply the value of flex-end.
+align-items property.
+Can also be used with flex-box's justify-content property to apply the value of flex-end.
 -}
 flexEnd : AlignItems a b
 flexEnd =
@@ -3720,7 +3802,7 @@ flexEnd =
 
 
 {-| The[`space-around`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values) value for the
-  justify-content property.
+justify-content property.
 -}
 spaceAround : JustifyContent a b
 spaceAround =
@@ -3728,7 +3810,7 @@ spaceAround =
 
 
 {-| The[`space-between`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values) value for the
-  justify-content property.
+justify-content property.
 -}
 spaceBetween : JustifyContent a b
 spaceBetween =
@@ -3736,15 +3818,15 @@ spaceBetween =
 
 
 {-| The[`stretch`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
-  align-items property.
+align-items property.
 -}
 stretch : AlignItems a b
 stretch =
     prop1 "stretch"
 
 
-{-| The[`row`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction #Values) value for the
-  flex-direction property.
+{-| The[`row`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
+flex-direction property.
 -}
 row : FlexDirectionOrWrap (FlexDirection {})
 row =
@@ -3754,24 +3836,24 @@ row =
     }
 
 
-{-| The[`row-reverse`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction #Values) value for the
-  flex-direction property.
+{-| The[`row-reverse`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
+flex-direction property.
 -}
 rowReverse : FlexDirectionOrWrap (FlexDirection {})
 rowReverse =
     { row | value = "row-reverse" }
 
 
-{-| The[`column`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction #Values) value for the
-  flex-direction property.
+{-| The[`column`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
+flex-direction property.
 -}
 column : FlexDirectionOrWrap (FlexDirection {})
 column =
     { row | value = "column" }
 
 
-{-| The[`column-reverse`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction #Values) value for the
-  flex-direction property.
+{-| The[`column-reverse`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
+flex-direction property.
 -}
 columnReverse : FlexDirectionOrWrap (FlexDirection {})
 columnReverse =
@@ -3887,7 +3969,7 @@ local =
 {- LINEAR GRADIENT -}
 
 
-{-| https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values>
 -}
 type alias ColorStop compatibleA compatibleB unit =
     ( ColorValue compatibleA, Maybe (Length compatibleB unit) )
@@ -3897,6 +3979,7 @@ type alias ColorStop compatibleA compatibleB unit =
 
     linearGradient  (stop2 red <| pct 75%) (stop <| hex "222") []
     linearGradient  (stop red) (stop <| hex "222") [ stop green, stop blue ]
+
 -}
 linearGradient :
     ColorStop compatibleA compatibleB unit
@@ -3918,6 +4001,7 @@ linearGradient stop1 stop2 stops =
 
     linearGradient  toBottomLeft (stop2 red <| pct 75%) (stop <| hex "222") []
     linearGradient  toTop (stop red) (stop <| hex "222") [ stop green, stop blue ]
+
 -}
 linearGradient2 :
     AngleOrDirection compatible
@@ -4261,6 +4345,7 @@ noWrap =
 {-| The `middle` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign middle
+
 -}
 middle : VerticalAlign a b
 middle =
@@ -4270,6 +4355,7 @@ middle =
 {-| The `baseline` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign baseline
+
 -}
 baseline : VerticalAlign a b
 baseline =
@@ -4279,6 +4365,7 @@ baseline =
 {-| The `sub` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign sub
+
 -}
 sub : VerticalAlign a b
 sub =
@@ -4288,6 +4375,7 @@ sub =
 {-| The `super` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign super
+
 -}
 super : VerticalAlign a b
 super =
@@ -4297,6 +4385,7 @@ super =
 {-| The `text-top` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign textTop
+
 -}
 textTop : VerticalAlign a b
 textTop =
@@ -4306,6 +4395,7 @@ textTop =
 {-| The `text-bottom` [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value.
 
     verticalAlign textBottom
+
 -}
 textBottom : VerticalAlign a b
 textBottom =
@@ -4357,6 +4447,7 @@ prop6 key argA argB argC argD argE argF =
 float : Float compatible -> Style
 
     float right
+
 -}
 float : (ExplicitLength IncompatibleUnits -> Style) -> Style
 float fn =
@@ -4366,6 +4457,7 @@ float fn =
 {-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color)
 
     textDecorationColor (rgb 12 11 10)
+
 -}
 textDecorationColor : ColorValue compatible -> Style
 textDecorationColor c =
@@ -4375,6 +4467,7 @@ textDecorationColor c =
 {-| Sets ['text-emphasis-color'](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color)
 
      textEmphasisColor (rgb 100 100 100)
+
 -}
 textEmphasisColor : ColorValue compatible -> Style
 textEmphasisColor c =
@@ -4382,13 +4475,14 @@ textEmphasisColor c =
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
-    **Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
-    use this workaround:
+**Note:** `auto` is not currently supported here. If you need to set this property to `auto`,
+use this workaround:
 
     property "text-align-last" "auto"
 
     If this is annoying, please file an issue, so adding support for "auto"
     can be prioritized!
+
 -}
 textAlignLast : (ExplicitLength IncompatibleUnits -> Style) -> Style
 textAlignLast fn =
@@ -4412,6 +4506,7 @@ textRendering =
 {-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
 
     text-orientation mixed
+
 -}
 textOrientation : TextOrientation compatible -> Style
 textOrientation =
@@ -4421,6 +4516,7 @@ textOrientation =
 {-| Sets [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow).
 
     textOverflow ellipsis
+
 -}
 textOverflow : TextOverflow compatible -> Style
 textOverflow =
@@ -4610,6 +4706,7 @@ boxShadow6 =
     textIndent  (px 40)
     textIndent2 (px 40) hanging
     textIndent3 (px 40) hanging eachLine
+
 -}
 textIndent : Length compatible units -> Style
 textIndent =
@@ -4621,6 +4718,7 @@ textIndent =
     textIndent  (px 40)
     textIndent2 (px 40) hanging
     textIndent3 (px 40) hanging eachLine
+
 -}
 textIndent2 : Length compatibleA unitsA -> TextIndent compatibleB -> Style
 textIndent2 =
@@ -4632,6 +4730,7 @@ textIndent2 =
     textIndent  (px 40)
     textIndent2 (px 40) hanging
     textIndent3 (px 40) hanging eachLine
+
 -}
 textIndent3 : Length compatibleA unitsA -> TextIndent compatibleB -> TextIndent compatibleC -> Style
 textIndent3 =
@@ -4686,6 +4785,7 @@ width =
 {-| Sets [`max-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-width)
 
     maxWidth (px 960)
+
 -}
 maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Style
 maxWidth =
@@ -4695,6 +4795,7 @@ maxWidth =
 {-| Sets [`min-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-width)
 
     minWidth (px 100)
+
 -}
 minWidth : LengthOrMinMaxDimension compatible -> Style
 minWidth =
@@ -4704,6 +4805,7 @@ minWidth =
 {-| Sets [`height`](https://developer.mozilla.org/en-US/docs/Web/CSS/height)
 
     height (px 800)
+
 -}
 height : LengthOrAuto compatible -> Style
 height =
@@ -4740,6 +4842,7 @@ maxHeight =
     padding2 (px 10) (px 10)
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 padding : Length compatible units -> Style
 padding =
@@ -4752,6 +4855,7 @@ padding =
     padding2 (px 10) (px 10)
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 padding2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 padding2 =
@@ -4764,6 +4868,7 @@ padding2 =
     padding2 (px 10) (px 10)
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 padding3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
 padding3 =
@@ -4776,6 +4881,7 @@ padding3 =
     padding2 (px 10) (px 10)
     padding3 (px 10) (px 10) (px 10)
     padding4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 padding4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatible units -> Style
 padding4 =
@@ -4785,6 +4891,7 @@ padding4 =
 {-| Sets [`padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-start)
 
     paddingBlockStart (px 10)
+
 -}
 paddingBlockStart : LengthOrAuto compatible -> Style
 paddingBlockStart =
@@ -4794,6 +4901,7 @@ paddingBlockStart =
 {-| Sets [`padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end)
 
     paddingBlockEnd (px 10)
+
 -}
 paddingBlockEnd : LengthOrAuto compatible -> Style
 paddingBlockEnd =
@@ -4803,6 +4911,7 @@ paddingBlockEnd =
 {-| Sets [`padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start)
 
     paddingInlineStart (px 10)
+
 -}
 paddingInlineStart : LengthOrAuto compatible -> Style
 paddingInlineStart =
@@ -4812,6 +4921,7 @@ paddingInlineStart =
 {-| Sets [`padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end)
 
     paddingInlineEnd (px 10)
+
 -}
 paddingInlineEnd : LengthOrAuto compatible -> Style
 paddingInlineEnd =
@@ -4821,6 +4931,7 @@ paddingInlineEnd =
 {-| Sets [`padding-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top)
 
     paddingTop (px 10)
+
 -}
 paddingTop : Length compatible units -> Style
 paddingTop =
@@ -4830,6 +4941,7 @@ paddingTop =
 {-| Sets [`padding-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom)
 
     paddingBottom (px 10)
+
 -}
 paddingBottom : Length compatible units -> Style
 paddingBottom =
@@ -4839,6 +4951,7 @@ paddingBottom =
 {-| Sets [`padding-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right)
 
     paddingRight (px 10)
+
 -}
 paddingRight : Length compatible units -> Style
 paddingRight =
@@ -4848,6 +4961,7 @@ paddingRight =
 {-| Sets [`padding-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left)
 
     paddingLeft (px 10)
+
 -}
 paddingLeft : Length compatible units -> Style
 paddingLeft =
@@ -4864,6 +4978,7 @@ paddingLeft =
     margin2 (px 10) (px 10)
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 margin : LengthOrAuto compatible -> Style
 margin =
@@ -4876,6 +4991,7 @@ margin =
     margin2 (px 10) (px 10)
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 margin2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
 margin2 =
@@ -4888,6 +5004,7 @@ margin2 =
     margin2 (px 10) (px 10)
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 margin3 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> Style
 margin3 =
@@ -4900,6 +5017,7 @@ margin3 =
     margin2 (px 10) (px 10)
     margin3 (px 10) (px 10) (px 10)
     margin4 (px 10) (px 10) (px 10) (px 10)
+
 -}
 margin4 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> LengthOrAuto compatibleD -> Style
 margin4 =
@@ -4909,6 +5027,7 @@ margin4 =
 {-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top)
 
     marginTop (px 10)
+
 -}
 marginTop : LengthOrAuto compatible -> Style
 marginTop =
@@ -4918,6 +5037,7 @@ marginTop =
 {-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom)
 
     marginBottom (px 10)
+
 -}
 marginBottom : LengthOrAuto compatible -> Style
 marginBottom =
@@ -4927,6 +5047,7 @@ marginBottom =
 {-| Sets [`margin-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right)
 
     marginRight (px 10)
+
 -}
 marginRight : LengthOrAuto compatible -> Style
 marginRight =
@@ -4936,6 +5057,7 @@ marginRight =
 {-| Sets [`margin-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left)
 
     marginLeft (px 10)
+
 -}
 marginLeft : LengthOrAuto compatible -> Style
 marginLeft =
@@ -4945,6 +5067,7 @@ marginLeft =
 {-| Sets [`margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-start)
 
     marginBlockStart (px 10)
+
 -}
 marginBlockStart : LengthOrAuto compatible -> Style
 marginBlockStart =
@@ -4954,6 +5077,7 @@ marginBlockStart =
 {-| Sets [`margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-end)
 
     marginBlockEnd (px 10)
+
 -}
 marginBlockEnd : LengthOrAuto compatible -> Style
 marginBlockEnd =
@@ -4963,6 +5087,7 @@ marginBlockEnd =
 {-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start)
 
     marginInlineStart (px 10)
+
 -}
 marginInlineStart : LengthOrAuto compatible -> Style
 marginInlineStart =
@@ -4972,6 +5097,7 @@ marginInlineStart =
 {-| Sets [`margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end)
 
     marginInlineEnd (px 10)
+
 -}
 marginInlineEnd : LengthOrAuto compatible -> Style
 marginInlineEnd =
@@ -4986,6 +5112,7 @@ marginInlineEnd =
 This can also be used as a `top` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
 
     verticalAlign top
+
 -}
 top : LengthOrAuto compatible -> Style
 top =
@@ -5000,6 +5127,7 @@ top =
 This can also be used as a `bottom` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
 
     verticalAlign bottom
+
 -}
 bottom : LengthOrAuto compatible -> Style
 bottom =
@@ -5015,10 +5143,10 @@ This can also be used as a `left` [text alignment](https://developer.mozilla.org
 
     textAlign left
 
-
 It can also be used as a `left` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
 
     float left
+
 -}
 left : LengthOrAuto compatible -> Style
 left =
@@ -5034,10 +5162,10 @@ This can also be used as a `right` [alignment](https://developer.mozilla.org/en-
 
     textAlign right
 
-
 It can also be used as a `right` [float](https://developer.mozilla.org/en-US/docs/Web/CSS/float) value :
 
     float right
+
 -}
 right : LengthOrAuto compatible -> Style
 right =
@@ -5103,6 +5231,7 @@ fillAvailable =
 {-| A `static` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     position static
+
 -}
 static : Position {}
 static =
@@ -5115,6 +5244,7 @@ static =
 This can also represent a `fixed` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
 
     position fixed
+
 -}
 fixed : Position (BackgroundAttachment {})
 fixed =
@@ -5127,6 +5257,7 @@ fixed =
 {-| A `sticky` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     position sticky
+
 -}
 sticky : Position {}
 sticky =
@@ -5138,6 +5269,7 @@ sticky =
 {-| A `relative` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     position relative
+
 -}
 relative : Position {}
 relative =
@@ -5149,6 +5281,7 @@ relative =
 {-| An `absolute` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
 
     position absolute
+
 -}
 absolute : Position {}
 absolute =
@@ -5521,6 +5654,7 @@ featureOff =
 with the default value of `1`
 
     fontFeatureSettings (featureTag "hist")
+
 -}
 featureTag : String -> FeatureTagValue {}
 featureTag tag =
@@ -5532,6 +5666,7 @@ with a particular integer value
 
     fontFeatureSettings (featureTag2 "smcp" on)
     fontFeatureSettings (featureTag2 "swsh" 2)
+
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
@@ -5561,6 +5696,7 @@ featureTag2 tag value =
     border  (px 10)
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
+
 -}
 border : Length compatible units -> Style
 border =
@@ -5584,6 +5720,7 @@ border2 =
     border  (px 10)
     border2 (px 10) dashed
     border3 (px 10) dashed (rgb 11 14 17)
+
 -}
 border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 border3 =
@@ -5985,6 +6122,7 @@ borderImageWidth4 =
 {-| Sets [`border-block-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-color)
 
     borderBlockStartColor (rgb 101 202 0)
+
 -}
 borderBlockStartColor : ColorValue compatible -> Style
 borderBlockStartColor c =
@@ -5994,6 +6132,7 @@ borderBlockStartColor c =
 {-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
 
     borderBottomColor (rgb 101 202 0)
+
 -}
 borderBottomColor : ColorValue compatible -> Style
 borderBottomColor c =
@@ -6003,6 +6142,7 @@ borderBottomColor c =
 {-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color)
 
     borderInlineStartColor (rgb 101 202 0)
+
 -}
 borderInlineStartColor : ColorValue compatible -> Style
 borderInlineStartColor c =
@@ -6012,6 +6152,7 @@ borderInlineStartColor c =
 {-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color)
 
     borderInlineEndColor (rgb 101 202 0)
+
 -}
 borderInlineEndColor : ColorValue compatible -> Style
 borderInlineEndColor c =
@@ -6021,6 +6162,7 @@ borderInlineEndColor c =
 {-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
 
     borderLeftColor (rgb 101 202 0)
+
 -}
 borderLeftColor : ColorValue compatible -> Style
 borderLeftColor c =
@@ -6030,6 +6172,7 @@ borderLeftColor c =
 {-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
 
     borderRightColor (rgb 101 202 0)
+
 -}
 borderRightColor : ColorValue compatible -> Style
 borderRightColor c =
@@ -6039,6 +6182,7 @@ borderRightColor c =
 {-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
 
     borderTopColor (rgb 101 202 0)
+
 -}
 borderTopColor : ColorValue compatible -> Style
 borderTopColor c =
@@ -6048,6 +6192,7 @@ borderTopColor c =
 {-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color)
 
     borderBlockEndColor (rgb 101 202 0)
+
 -}
 borderBlockEndColor : ColorValue compatible -> Style
 borderBlockEndColor c =
@@ -6057,6 +6202,7 @@ borderBlockEndColor c =
 {-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style)
 
     borderBlockEndStyle dashed
+
 -}
 borderBlockEndStyle : BorderStyle compatible -> Style
 borderBlockEndStyle =
@@ -6066,6 +6212,7 @@ borderBlockEndStyle =
 {-| Sets [`border-block-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style)
 
     borderBlockStartStyle dashed
+
 -}
 borderBlockStartStyle : BorderStyle compatible -> Style
 borderBlockStartStyle =
@@ -6075,6 +6222,7 @@ borderBlockStartStyle =
 {-| Sets [`border-inline-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style)
 
     borderInlineEndStyle dashed
+
 -}
 borderInlineEndStyle : BorderStyle compatible -> Style
 borderInlineEndStyle =
@@ -6084,6 +6232,7 @@ borderInlineEndStyle =
 {-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style)
 
     borderBottomStyle dashed
+
 -}
 borderBottomStyle : BorderStyle compatible -> Style
 borderBottomStyle =
@@ -6093,6 +6242,7 @@ borderBottomStyle =
 {-| Sets [`border-inline-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style)
 
     borderInlineStartStyle dashed
+
 -}
 borderInlineStartStyle : BorderStyle compatible -> Style
 borderInlineStartStyle =
@@ -6102,6 +6252,7 @@ borderInlineStartStyle =
 {-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style)
 
     borderLeftStyle dashed
+
 -}
 borderLeftStyle : BorderStyle compatible -> Style
 borderLeftStyle =
@@ -6111,6 +6262,7 @@ borderLeftStyle =
 {-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style)
 
     borderRightStyle dashed
+
 -}
 borderRightStyle : BorderStyle compatible -> Style
 borderRightStyle =
@@ -6120,6 +6272,7 @@ borderRightStyle =
 {-| Sets [`border-top-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style)
 
     borderTopStyle dashed
+
 -}
 borderTopStyle : BorderStyle compatible -> Style
 borderTopStyle =
@@ -6129,6 +6282,7 @@ borderTopStyle =
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style)
 
     borderStyle dashed
+
 -}
 borderStyle : BorderStyle compatible -> Style
 borderStyle =
@@ -6138,6 +6292,7 @@ borderStyle =
 {-| Sets [`border-collapse`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse)
 
     borderCollapse collapse
+
 -}
 borderCollapse : BorderCollapse compatible -> Style
 borderCollapse =
@@ -6150,6 +6305,7 @@ borderCollapse =
     borderWidth2 (em 4) (px 2)
     borderWidth3 (em 4) (px 2) (pct 5)
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderWidth : Length compatible units -> Style
 borderWidth =
@@ -6162,6 +6318,7 @@ borderWidth =
     borderWidth2 (em 4) (px 2)
     borderWidth3 (em 4) (px 2) (pct 5)
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderWidth2 =
@@ -6174,6 +6331,7 @@ borderWidth2 =
     borderWidth2 (em 4) (px 2)
     borderWidth3 (em 4) (px 2) (pct 5)
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderWidth3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
 borderWidth3 =
@@ -6186,6 +6344,7 @@ borderWidth3 =
     borderWidth2 (em 4) (px 2)
     borderWidth3 (em 4) (px 2) (pct 5)
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderWidth4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Style
 borderWidth4 =
@@ -6195,6 +6354,7 @@ borderWidth4 =
 {-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
 
     borderBottomWidth (em 4)
+
 -}
 borderBottomWidth : Length compatible units -> Style
 borderBottomWidth =
@@ -6204,6 +6364,7 @@ borderBottomWidth =
 {-| Sets [`border-inline-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width)
 
     borderInlineEndWidth (em 4)
+
 -}
 borderInlineEndWidth : Length compatible units -> Style
 borderInlineEndWidth =
@@ -6213,6 +6374,7 @@ borderInlineEndWidth =
 {-| Sets [`border-left-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width)
 
     borderLeftWidth (em 4)
+
 -}
 borderLeftWidth : Length compatible units -> Style
 borderLeftWidth =
@@ -6222,6 +6384,7 @@ borderLeftWidth =
 {-| Sets [`border-right-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width)
 
     borderRightWidth (em 4)
+
 -}
 borderRightWidth : Length compatible units -> Style
 borderRightWidth =
@@ -6232,6 +6395,7 @@ borderRightWidth =
 
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
+
 -}
 borderTopWidth : Length compatible units -> Style
 borderTopWidth =
@@ -6242,6 +6406,7 @@ borderTopWidth =
 
     borderTopWidth  (em 4)
     borderTopWidth2 (em 4) (px 2)
+
 -}
 borderTopWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderTopWidth2 =
@@ -6252,6 +6417,7 @@ borderTopWidth2 =
 
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
+
 -}
 borderBottomLeftRadius : Length compatible units -> Style
 borderBottomLeftRadius =
@@ -6262,6 +6428,7 @@ borderBottomLeftRadius =
 
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
+
 -}
 borderBottomLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderBottomLeftRadius2 =
@@ -6272,6 +6439,7 @@ borderBottomLeftRadius2 =
 
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
+
 -}
 borderBottomRightRadius : Length compatible units -> Style
 borderBottomRightRadius =
@@ -6282,6 +6450,7 @@ borderBottomRightRadius =
 
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
+
 -}
 borderBottomRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderBottomRightRadius2 =
@@ -6292,6 +6461,7 @@ borderBottomRightRadius2 =
 
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
+
 -}
 borderTopLeftRadius : Length compatible units -> Style
 borderTopLeftRadius =
@@ -6302,6 +6472,7 @@ borderTopLeftRadius =
 
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
+
 -}
 borderTopLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderTopLeftRadius2 =
@@ -6312,6 +6483,7 @@ borderTopLeftRadius2 =
 
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
+
 -}
 borderTopRightRadius : Length compatible units -> Style
 borderTopRightRadius =
@@ -6322,6 +6494,7 @@ borderTopRightRadius =
 
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
+
 -}
 borderTopRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderTopRightRadius2 =
@@ -6334,6 +6507,7 @@ borderTopRightRadius2 =
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderRadius : Length compatible units -> Style
 borderRadius =
@@ -6346,6 +6520,7 @@ borderRadius =
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderRadius2 =
@@ -6358,6 +6533,7 @@ borderRadius2 =
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderRadius3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
 borderRadius3 =
@@ -6370,6 +6546,7 @@ borderRadius3 =
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
 -}
 borderRadius4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Style
 borderRadius4 =
@@ -6380,6 +6557,7 @@ borderRadius4 =
 
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
+
 -}
 borderSpacing : Length compatible units -> Style
 borderSpacing =
@@ -6390,6 +6568,7 @@ borderSpacing =
 
     borderSpacing  (em 4)
     borderSpacing2 (em 4) (px 2)
+
 -}
 borderSpacing2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 borderSpacing2 =
@@ -6402,6 +6581,7 @@ borderSpacing2 =
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+
 -}
 borderColor : ColorValue compatible -> Style
 borderColor c =
@@ -6414,6 +6594,7 @@ borderColor c =
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+
 -}
 borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Style
 borderColor2 c1 c2 =
@@ -6433,6 +6614,7 @@ borderColor2 c1 c2 =
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+
 -}
 borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Style
 borderColor3 c1 c2 c3 =
@@ -6452,6 +6634,7 @@ borderColor3 c1 c2 c3 =
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
+
 -}
 borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Style
 borderColor4 c1 c2 c3 c4 =
@@ -6470,6 +6653,7 @@ borderColor4 c1 c2 c3 c4 =
     outline  zero
     outline  initial
     outline3 (px 10) dashed (rgb 11 14 17)
+
 -}
 outline : Outline compatible -> Style
 outline =
@@ -6481,6 +6665,7 @@ outline =
     outline  zero
     outline  initial
     outline3 (px 10) dashed (rgb 11 14 17)
+
 -}
 outline3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
 outline3 =
@@ -6492,6 +6677,7 @@ outline3 =
     outlineColor (rgb 11 14 17)
     outlineColor (hex "#ffffff")
     outlineColor (hsla 120 0.5 0.5 0.5)
+
 -}
 outlineColor : ColorValue compatible -> Style
 outlineColor c =
@@ -6503,6 +6689,7 @@ outlineColor c =
     outlineWidth (px 10)
     outlineWidth (em 1.4)
     outlineWidth none
+
 -}
 outlineWidth : LengthOrNone compatible -> Style
 outlineWidth =
@@ -6514,6 +6701,7 @@ outlineWidth =
     outlineStyle dashed
     outlineStyle solid
     outlineStyle outset
+
 -}
 outlineStyle : BorderStyle compatible -> Style
 outlineStyle =
@@ -6525,6 +6713,7 @@ outlineStyle =
     outlineOffset (px 10)
     outlineOffset (em 1.4)
     outlineOffset (pct 50)
+
 -}
 outlineOffset : Length compatible units -> Style
 outlineOffset =
@@ -6582,6 +6771,7 @@ backgroundColor c =
 {-| Sets ['background-repeat'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat)
 
     backgroundRepeat repeatX
+
 -}
 backgroundRepeat : BackgroundRepeatShorthand compatible -> Style
 backgroundRepeat =
@@ -6591,6 +6781,7 @@ backgroundRepeat =
 {-| Sets ['background-repeat'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat)
 
     backgroundRepeat2 repeat noRepeat
+
 -}
 backgroundRepeat2 : BackgroundRepeat compatibleA -> BackgroundRepeat compatibleB -> Style
 backgroundRepeat2 =
@@ -6600,6 +6791,7 @@ backgroundRepeat2 =
 {-| Sets ['background-attachment'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment)
 
     backgroundAttachment fixed
+
 -}
 backgroundAttachment : BackgroundAttachment compatible -> Style
 backgroundAttachment =
@@ -6613,6 +6805,7 @@ backgroundAttachment =
 Only supports keywords values like "top" or "center". If you want to pass a single length, use `backgroundPosition2`:
 
     backgroundPosition2 (px 10) zero
+
 -}
 backgroundPosition : (ExplicitLength IncompatibleUnits -> Style) -> Style
 backgroundPosition fn =
@@ -6622,6 +6815,7 @@ backgroundPosition fn =
 {-| Sets ['background-position'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-position)
 
     backgroundPosition2 (px 10) zero
+
 -}
 backgroundPosition2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
 backgroundPosition2 =
@@ -6631,6 +6825,7 @@ backgroundPosition2 =
 {-| Sets ['background-blend-mode'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode)
 
     backgroundBlendMode darken
+
 -}
 backgroundBlendMode : (ColorValue NonMixable -> Style) -> Style
 backgroundBlendMode fn =
@@ -6640,6 +6835,7 @@ backgroundBlendMode fn =
 {-| Sets ['background-clip'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip)
 
     backgroundClip borderBox
+
 -}
 backgroundClip : BackgroundClip compatible -> Style
 backgroundClip =
@@ -6649,6 +6845,7 @@ backgroundClip =
 {-| Sets ['background-origin'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin)
 
     backgroundOrigin borderBox
+
 -}
 backgroundOrigin : BackgroundOrigin compatible -> Style
 backgroundOrigin =
@@ -6658,6 +6855,7 @@ backgroundOrigin =
 {-| Sets ['background-image'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image)
 
     backgroundImage (url "http://www.example.com/chicken.jpg")
+
 -}
 backgroundImage : BackgroundImage compatible -> Style
 backgroundImage =
@@ -6667,6 +6865,7 @@ backgroundImage =
 {-| Sets ['background-size'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
 
     backgroundSize cover
+
 -}
 backgroundSize : LengthOrAutoOrCoverOrContain compatible -> Style
 backgroundSize =
@@ -6676,6 +6875,7 @@ backgroundSize =
 {-| Sets ['background-size'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
 
     backgroundSize2 50% auto
+
 -}
 backgroundSize2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
 backgroundSize2 =
@@ -6754,6 +6954,7 @@ withMedia =
 {-| Sets [`line-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
 
     lineHeight (px 10)
+
 -}
 lineHeight : LengthOrNumber compatible -> Style
 lineHeight =
@@ -6763,6 +6964,7 @@ lineHeight =
 {-| Sets [`letter-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
 
     letterSpacing (px 10)
+
 -}
 letterSpacing : Length compatible units -> Style
 letterSpacing =
@@ -6785,6 +6987,7 @@ fontFace value =
 
     fontFamily    serif
     fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
+
 -}
 qt : String -> String
 qt str =
@@ -6803,6 +7006,7 @@ fontFamily =
 
     fontFamilies  ["Verdana", "Arial"]
     fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
+
 -}
 fontFamilies : List String -> Style
 fontFamilies =
@@ -6814,6 +7018,7 @@ fontFamilies =
     fontFeatureSettings (featureTag "hist")
     fontFeatureSettings (featureTag2 "smcp" on)
     fontFeatureSettings (featureTag2 "swsh" 2)
+
 -}
 fontFeatureSettings : FeatureTagValue a -> Style
 fontFeatureSettings { value, warnings } =
@@ -6823,6 +7028,7 @@ fontFeatureSettings { value, warnings } =
 {-| Sets [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings)
 
     fontFeatureSettingsList [featureTag "c2sc", featureTag "smcp"]
+
 -}
 fontFeatureSettingsList : List (FeatureTagValue a) -> Style
 fontFeatureSettingsList featureTagValues =
@@ -6840,6 +7046,7 @@ fontFeatureSettingsList featureTagValues =
 
     fontSize  xxSmall
     fontSize  (px 12)
+
 -}
 fontSize : FontSize a -> Style
 fontSize =
@@ -6849,6 +7056,7 @@ fontSize =
 {-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
 
     fontStyle  italic
+
 -}
 fontStyle : FontStyle a -> Style
 fontStyle =
@@ -6859,6 +7067,7 @@ fontStyle =
 
     fontWeight  bold
     fontWeight  (int 300)
+
 -}
 fontWeight : FontWeight a -> Style
 fontWeight { value } =
@@ -6887,6 +7096,7 @@ fontWeight { value } =
     fontVariant2  commonLigatures smallCaps
     fontVariant3  commonLigatures smallCaps slashedZero
     fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
+
 -}
 fontVariant : FontVariant a -> Style
 fontVariant =
@@ -7176,6 +7386,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations  [ underline, overline ]
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+
 -}
 textDecoration : TextDecorationLine a -> Style
 textDecoration =
@@ -7193,6 +7404,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations  [ underline, overline ]
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+
 -}
 textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Style
 textDecoration2 =
@@ -7210,6 +7422,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations  [ underline, overline ]
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+
 -}
 textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
 textDecoration3 =
@@ -7221,6 +7434,7 @@ textDecoration3 =
     textDecorations  [ underline, overline ]
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+
 -}
 textDecorations : List (TextDecorationLine compatible) -> Style
 textDecorations =
@@ -7232,6 +7446,7 @@ textDecorations =
     textDecorations  [ underline, overline ]
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+
 -}
 textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Style
 textDecorations2 =
@@ -7243,6 +7458,7 @@ textDecorations2 =
     textDecorations  [ underline, overline ]
     textDecorations2 [ underline, overline ] wavy
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
+
 -}
 textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
 textDecorations3 =
@@ -7256,6 +7472,7 @@ textDecorations3 =
 You can specify multiple line decorations with `textDecorationLines`.
 
     textDecorationLines  [ underline, overline ]
+
 -}
 textDecorationLine : TextDecorationLine compatible -> Style
 textDecorationLine =
@@ -7265,6 +7482,7 @@ textDecorationLine =
 {-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
 
     textDecorationLines  [ underline, overline ]
+
 -}
 textDecorationLines : List (TextDecorationLine compatible) -> Style
 textDecorationLines =
@@ -7274,6 +7492,7 @@ textDecorationLines =
 {-| Sets [`text-decoration-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style)
 
     textDecorationStyle dotted
+
 -}
 textDecorationStyle : TextDecorationStyle compatible -> Style
 textDecorationStyle =
@@ -7289,6 +7508,7 @@ names, or to set `animation-name: none;`
 
     animationNames [ Foo, Bar ]
     animationNames [] -- outputs "animation-name: none;"
+
 -}
 animationName : animation -> Style
 animationName identifier =
@@ -7302,6 +7522,7 @@ animationName identifier =
 Pass `[]` to set `animation-name: none;`
 
     animationNames [] -- outputs "animation-name: none;"
+
 -}
 animationNames : List animation -> Style
 animationNames identifiers =
@@ -7322,6 +7543,7 @@ animationNames identifiers =
             , color (rgb 7 7 7)
             ]
         ]
+
 -}
 stylesheet : List Snippet -> Stylesheet
 stylesheet =
@@ -7355,6 +7577,7 @@ stylesheet =
             [ textDecoration underline ]
           ]
       ]
+
 -}
 batch : List Style -> Style
 batch =
@@ -7369,6 +7592,7 @@ batch =
             , backgroundColor (rgb 123 42 208)
             ]
         ]
+
 -}
 id : id -> List Style -> Snippet
 id identifier styles =
@@ -7395,6 +7619,7 @@ makeSnippet styles sequence =
             , color (rgb 128 64 32)
             ]
         ]
+
 -}
 class : class -> List Style -> Snippet
 class class styles =
@@ -7432,6 +7657,7 @@ and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Unive
             , color (rgb 7 7 7)
             ]
         ]
+
 -}
 selector : String -> List Style -> Snippet
 selector selectorStr styles =
@@ -7476,6 +7702,7 @@ everything styles =
     body {
         -webkit-font-smoothing: none;
     }
+
 -}
 property : String -> String -> Style
 property =
@@ -7523,6 +7750,7 @@ in modern browsers.
     body:-moz-any-link {
         color: #f00;
     }
+
 -}
 pseudoClass : String -> List Style -> Style
 pseudoClass class =
@@ -7817,6 +8045,7 @@ valid =
     body::-webkit-scrollbar {
         display: none;
     }
+
 -}
 pseudoElement : String -> List Style -> Style
 pseudoElement element =
@@ -7883,6 +8112,7 @@ fall back on something like this:
         [ button
             [ property "border-left" "thin" ]
         ]
+
 -}
 thin : IntentionallyUnsupportedPleaseSeeDocs
 thin =
@@ -7901,6 +8131,7 @@ fall back on something like this:
         [ button
             [ property "border-left" "thick" ]
         ]
+
 -}
 thick : IntentionallyUnsupportedPleaseSeeDocs
 thick =
@@ -8025,6 +8256,7 @@ can then be passed to a `style` attribute.
     button
       [ styled [ position absolute, left (px 5) ] ]
       [ text "Whee!" ]
+
 -}
 asPairs : List Style -> List ( String, String )
 asPairs =
@@ -8035,8 +8267,9 @@ asPairs =
 
     zIndex (int 2)
 
-See http://package.elm-lang.org/packages/rtfeldman/count/latest for a useful library
+See <http://package.elm-lang.org/packages/rtfeldman/count/latest> for a useful library
 to manage z-index values.
+
 -}
 zIndex : IntOrAuto compatible -> Style
 zIndex =
