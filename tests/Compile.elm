@@ -6,6 +6,7 @@ import Fuzz exposing (Fuzzer, tuple3, tuple4)
 import TestUtil exposing (..)
 import CompileFixtures
 import Css exposing (..)
+import Css.Internal exposing (getWarnings)
 
 
 all : Test
@@ -20,12 +21,12 @@ all =
 
 getRgbaWarnings : ( Int, Int, Int, Float ) -> Int
 getRgbaWarnings ( red, green, blue, alpha ) =
-    rgba red green blue alpha |> .warnings |> List.length
+    rgba red green blue alpha |> getWarnings |> List.length
 
 
 getRgbWarnings : ( Int, Int, Int ) -> Int
 getRgbWarnings ( red, green, blue ) =
-    rgb red green blue |> .warnings |> List.length
+    rgb red green blue |> getWarnings |> List.length
 
 
 colorWarnings : Test

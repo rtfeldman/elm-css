@@ -5,6 +5,7 @@ import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer)
 import Hex
 import Test exposing (..)
+import Css.Internal as Internal
 
 
 all : Test
@@ -78,9 +79,9 @@ hexInt =
 
 expectEqualsRgba :
     ( Int, Int, Int, Float )
-    -> { record | red : Int, green : Int, blue : Int, alpha : Float }
+    -> Internal.Value { record | red : Int, green : Int, blue : Int, alpha : Float }
     -> Expectation
-expectEqualsRgba ( expectedRed, expectedGreen, expectedBlue, expectedAlpha ) { red, green, blue, alpha } =
+expectEqualsRgba ( expectedRed, expectedGreen, expectedBlue, expectedAlpha ) (Internal.Value _ { red, green, blue, alpha }) =
     { red = red, green = green, blue = blue, alpha = alpha }
         |> Expect.equal
             { red = expectedRed
