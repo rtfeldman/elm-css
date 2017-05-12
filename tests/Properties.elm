@@ -254,16 +254,17 @@ all =
             , ( display tableHeaderGroup, "table-header-group" )
             , ( display tableRow, "table-row" )
             , ( display tableRowGroup, "table-row-group" )
-              -- TODO display: contents;
-              -- TODO display: flex;
-              -- TODO display: grid;
-              -- TODO display: inline-grid;
-              -- TODO display: ruby;
-              -- TODO display: ruby-base;
-              -- TODO display: ruby-text;
-              -- TODO display: ruby-base-container;
-              -- TODO display: ruby-text-container ;
-              -- TODO display: run-in;
+
+            -- TODO display: contents;
+            -- TODO display: flex;
+            -- TODO display: grid;
+            -- TODO display: inline-grid;
+            -- TODO display: ruby;
+            -- TODO display: ruby-base;
+            -- TODO display: ruby-text;
+            -- TODO display: ruby-base-container;
+            -- TODO display: ruby-text-container ;
+            -- TODO display: run-in;
             ]
         , testProperty "flex"
             [ ( flex initial, "initial" )

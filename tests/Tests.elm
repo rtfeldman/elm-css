@@ -217,7 +217,7 @@ nestedAtRule =
             ]
 
 
-{-| Regression test for https://github.com/rtfeldman/elm-css/issues/140
+{-| Regression test for <https://github.com/rtfeldman/elm-css/issues/140>
 -}
 bug140 : Test
 bug140 =
@@ -244,7 +244,7 @@ input::after, select::after, textarea::after {
             ]
 
 
-{-| Regression test for https://github.com/rtfeldman/elm-css/issues/99
+{-| Regression test for <https://github.com/rtfeldman/elm-css/issues/99>
 -}
 bug99 : Test
 bug99 =

@@ -9,8 +9,7 @@ import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippe
 import Css.Structure as Structure exposing (mapLast, SimpleSelectorSequence(UniversalSelectorSequence, TypeSelectorSequence, CustomSelector), RepeatableSimpleSelector(IdSelector, ClassSelector, PseudoClassSelector))
 
 
-{-|
-takes an identifier, namespaces the list of snippets given with that identifier
+{-| takes an identifier, namespaces the list of snippets given with that identifier
 -}
 namespace : a -> List Snippet -> List Snippet
 namespace rawIdentifier snippets =

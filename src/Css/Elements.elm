@@ -2,29 +2,46 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 
 {-| Selectors for HTML elements.
 
+
 # Basic elements
+
 @docs html, body
 
+
 # Content sectioning
+
 @docs article, header, footer, h1, h2, h3, h4, h5, h6, nav, section
 
+
 # Text content
+
 @docs div, hr, li, main_, ol, p, ul, pre, blockquote
 
+
 # Inline text semantics
+
 @docs a, code, small, span, strong, i, em
 
+
 # Image and multimedia
+
 @docs img, audio, video, canvas
 
+
 # Table content
+
 @docs caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
 
+
 # Forms
+
 @docs button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea
 
+
 # SVG
+
 @docs svg, path, rect, circle, ellipse, line, polyline, polygon
+
 -}
 
 import Css.Preprocess exposing (Style, Snippet(Snippet), StyleBlock(StyleBlock), SnippetDeclaration(StyleBlockDeclaration))
