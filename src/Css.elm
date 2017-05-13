@@ -30,6 +30,7 @@ module Css
         , (|+|)
         , (|-|)
         , (|/|)
+        , toColor
         , transformStyle
         , eachLine
         , transformBox
@@ -658,7 +659,7 @@ module Css
 
 ## Color values
 
-@docs Color, all, important, solid, transparent, rgb, rgba, hsl, hsla, hex
+@docs Color, all, important, solid, transparent, rgb, rgba, hsl, hsla, hex, toColor
 
 
 ## Font values
@@ -725,7 +726,21 @@ import Css.Helpers exposing (toCssIdentifier, identifierToString)
 import Css.Preprocess.Resolve as Resolve
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure
-import Css.Internal as Internal exposing (getWarnings, getValue, EmittedValue(EmittedString, EmittedNumber), emittedValueToString)
+import Css.Internal as Internal
+    exposing
+        ( getWarnings
+        , getValue
+        , EmittedValue
+            ( EmittedString
+            , EmittedNumber
+            , EmittedColor
+            , InvalidValue
+            )
+        , ColorDescriptor(RgbColor, RgbaColor, HexColor, HslColor, HslaColor, InvalidColor)
+        , emittedValueToString
+        , cssFunction
+        , numberToString
+        )
 import String
 import Tuple
 import Hex
@@ -791,14 +806,6 @@ tv =
 
 
 {- Length -}
-
-
-cssFunction : String -> List String -> String
-cssFunction funcName args =
-    funcName
-        ++ "("
-        ++ (String.join ", " args)
-        ++ ")"
 
 
 {-| Caution: trickery ahead!
@@ -869,13 +876,7 @@ colorValueForOverloadedProperty =
 
 {-| -}
 type alias Color =
-    Internal.Value
-        { color : Compatible
-        , red : Int
-        , green : Int
-        , blue : Int
-        , alpha : Float
-        }
+    Internal.Value { color : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
@@ -942,29 +943,37 @@ calc :
             , lengthOrNumberOrAutoOrNoneOrContent : Compatible
             , textIndent : Compatible
             }
-calc (Internal.Value _ first _) expression (Internal.Value _ second _) =
+calc ((Internal.Value _ first _) as firstArg) expression ((Internal.Value _ second _) as secondArg) =
     let
         fromString emittedValue =
             case emittedValue of
                 EmittedString str ->
-                    if String.startsWith "calc(" str then
-                        String.dropLeft 4 str
-                    else
-                        str
+                    Ok <|
+                        if String.startsWith "calc(" str then
+                            String.dropLeft 4 str
+                        else
+                            str
 
-                EmittedNumber num unitLabel ->
-                    -- TODO this should never happen...add a warning?
-                    toString num ++ unitLabel
+                _ ->
+                    Err (toString emittedValue)
 
-        calcs =
-            String.join " "
-                [ fromString first
-                , calcExpressionToString expression
-                , fromString second
-                ]
+        newEmittedValue =
+            case ( fromString first, fromString second ) of
+                ( Ok firstStr, Ok secondStr ) ->
+                    let
+                        calcs =
+                            [ firstStr, calcExpressionToString expression, secondStr ]
+                                |> String.join " "
+                    in
+                        (EmittedString (cssFunction "calc" [ calcs ]))
+
+                _ ->
+                    [ "calc", toString firstArg, toString expression, toString secondArg ]
+                        |> String.join " "
+                        |> InvalidValue
     in
         Internal.Value []
-            (EmittedString (cssFunction "calc" [ calcs ]))
+            newEmittedValue
             { length = Compatible
             , lengthOrAuto = Compatible
             , lengthOrNumber = Compatible
@@ -1591,18 +1600,7 @@ initialVal =
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
 in functional notation.
 -}
-rgb :
-    Int
-    -> Int
-    -> Int
-    ->
-        Internal.Value
-            { red : Int
-            , green : Int
-            , blue : Int
-            , alpha : Float
-            , color : Compatible
-            }
+rgb : Int -> Int -> Int -> Internal.Value { color : Compatible }
 rgb red green blue =
     let
         warnings =
@@ -1626,30 +1624,13 @@ rgb red green blue =
                 []
     in
         Internal.Value warnings
-            (EmittedString (cssFunction "rgb" (List.map numberToString [ red, green, blue ])))
-            { color = Compatible
-            , red = red
-            , green = green
-            , blue = blue
-            , alpha = 1
-            }
+            (EmittedColor (RgbColor red green blue))
+            { color = Compatible }
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
-rgba :
-    Int
-    -> Int
-    -> Int
-    -> Float
-    ->
-        Internal.Value
-            { red : Int
-            , green : Int
-            , blue : Int
-            , alpha : Float
-            , color : Compatible
-            }
+rgba : Int -> Int -> Int -> Float -> Internal.Value { color : Compatible }
 rgba red green blue alpha =
     let
         warnings =
@@ -1677,42 +1658,17 @@ rgba red green blue alpha =
                 []
     in
         Internal.Value warnings
-            (EmittedString (cssFunction "rgba" ((List.map numberToString [ red, green, blue ]) ++ [ numberToString alpha ])))
-            { color = Compatible
-            , red = red
-            , green = green
-            , blue = blue
-            , alpha = alpha
-            }
+            (EmittedColor (RgbaColor red green blue alpha))
+            { color = Compatible }
 
 
 {-| [HSL color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl())
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
-hsl :
-    Float
-    -> Float
-    -> Float
-    ->
-        Internal.Value
-            { red : Int
-            , green : Int
-            , blue : Int
-            , alpha : Float
-            , color : Compatible
-            }
+hsl : Float -> Float -> Float -> Internal.Value { color : Compatible }
 hsl hue saturation lightness =
     let
-        valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
-            ]
-
-        value =
-            cssFunction "hsl" valuesList
-
         warnings =
             if
                 (hue > 360)
@@ -1722,42 +1678,22 @@ hsl hue saturation lightness =
                     || (lightness > 1)
                     || (lightness < 0)
             then
-                [ "HSL color values must have an H value between 0 and 360 (as in degrees) and S and L values between 0 and 1. " ++ value ++ " is not valid." ]
+                [ "HSL color values must have an H value between 0 and 360 (as in degrees) and S and L values between 0 and 1. hsl(" ++ numberToString hue ++ ", " ++ numberToString saturation ++ ", " ++ numberToString lightness ++ ") is not valid." ]
             else
                 []
     in
-        hslaToRgba warnings value hue saturation lightness 1
+        Internal.Value warnings
+            (EmittedColor (HslColor hue saturation lightness))
+            { color = Compatible }
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
-hsla :
-    Float
-    -> Float
-    -> Float
-    -> Float
-    ->
-        Internal.Value
-            { red : Int
-            , green : Int
-            , blue : Int
-            , alpha : Float
-            , color : Compatible
-            }
+hsla : Float -> Float -> Float -> Float -> Value { color : Compatible }
 hsla hue saturation lightness alpha =
     let
-        valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
-            , numberToString alpha
-            ]
-
-        value =
-            cssFunction "hsla" valuesList
-
         warnings =
             if
                 (hue > 360)
@@ -1769,11 +1705,13 @@ hsla hue saturation lightness alpha =
                     || (alpha > 1)
                     || (alpha < 0)
             then
-                [ "HSLA color values must have an H value between 0 and 360 (as in degrees) and S, L, and A values between 0 and 1. " ++ value ++ " is not valid." ]
+                [ "HSLA color values must have an H value between 0 and 360 (as in degrees) and S, L, and A values between 0 and 1. hsla(" ++ numberToString hue ++ ", " ++ numberToString saturation ++ ", " ++ numberToString lightness ++ ", " ++ numberToString alpha ++ ") is not valid." ]
             else
                 []
     in
-        hslaToRgba warnings value hue saturation lightness alpha
+        Internal.Value warnings
+            (EmittedColor (HslaColor hue saturation lightness alpha))
+            { color = Compatible }
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -1781,102 +1719,14 @@ in hexadecimal notation. You can optionally include `#` as the first character,
 for benefits like syntax highlighting in editors, ease of copy/pasting from
 tools which express these as e.g. `#abcdef0`, etc.
 -}
-hex :
-    String
-    ->
-        Internal.Value
-            { alpha : Float
-            , blue : Int
-            , color : Compatible
-            , green : Int
-            , red : Int
-            }
+hex : String -> Internal.Value { color : Compatible }
 hex str =
-    let
-        withoutHash =
-            if String.startsWith "#" str then
-                String.dropLeft 1 str
-            else
-                str
-    in
-        case String.toList withoutHash of
-            [ r, g, b ] ->
-                validHex str ( r, r ) ( g, g ) ( b, b ) ( 'f', 'f' )
-
-            [ r, g, b, a ] ->
-                validHex str ( r, r ) ( g, g ) ( b, b ) ( a, a )
-
-            [ r1, r2, g1, g2, b1, b2 ] ->
-                validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( 'f', 'f' )
-
-            [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
-                validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 )
-
-            _ ->
-                erroneousHex str
-
-
-validHex :
-    String
-    -> ( Char, Char )
-    -> ( Char, Char )
-    -> ( Char, Char )
-    -> ( Char, Char )
-    ->
-        Internal.Value
-            { alpha : Float
-            , blue : Int
-            , color : Compatible
-            , green : Int
-            , red : Int
-            }
-validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
-    let
-        toResult =
-            String.fromList >> String.toLower >> Hex.fromString
-
-        results =
-            ( toResult [ r1, r2 ]
-            , toResult [ g1, g2 ]
-            , toResult [ b1, b2 ]
-            , toResult [ a1, a2 ]
-            )
-    in
-        case results of
-            ( Ok red, Ok green, Ok blue, Ok alpha ) ->
-                Internal.Value []
-                    (EmittedString (withPrecedingHash str))
-                    { color = Compatible
-                    , red = red
-                    , green = green
-                    , blue = blue
-                    , alpha = toFloat alpha / 255
-                    }
-
-            _ ->
-                erroneousHex str
-
-
-withPrecedingHash : String -> String
-withPrecedingHash str =
-    if String.startsWith "#" str then
-        str
-    else
-        String.cons '#' str
+    Internal.Value [] (EmittedColor (HexColor str)) { color = Compatible }
 
 
 {-| Not to be confused with Thelonious Monk or Hieronymus Bosch.
 -}
-erroneousHex :
-    String
-    ->
-        Internal.Value
-            { alpha : Float
-            , blue : Int
-            , color : Compatible
-            , green : Int
-            , red : Int
-            }
+erroneousHex : String -> Internal.Value { color : Compatible }
 erroneousHex str =
     Internal.Value
         ([ "Hex color strings must contain exactly 3, 4, 6, or 8 hexadecimal digits, optionally preceded by \"#\"."
@@ -1887,44 +1737,88 @@ erroneousHex str =
             |> String.join " "
             |> List.singleton
         )
-        (EmittedString (withPrecedingHash str))
-        { color = Compatible
-        , red = 0
-        , green = 0
-        , blue = 0
-        , alpha = 1
-        }
+        (EmittedColor (InvalidColor str))
+        { color = Compatible }
 
 
-hslaToRgba :
-    List String
-    -> String
-    -> Float
-    -> Float
-    -> Float
-    -> Float
-    ->
-        Internal.Value
-            { alpha : Float
-            , blue : Int
-            , color : Compatible
-            , green : Int
-            , red : Int
-            }
-hslaToRgba warnings emittedStr hue saturation lightness hslAlpha =
-    let
-        { red, green, blue, alpha } =
-            Color.hsla hue saturation lightness hslAlpha
-                |> Color.toRgb
-    in
-        Internal.Value warnings
-            (EmittedString emittedStr)
-            { color = Compatible
-            , red = red
-            , green = green
-            , blue = blue
-            , alpha = alpha
-            }
+{-| Convert to a Color.Color
+-}
+toColor : Internal.Value { r | color : Compatible } -> Result String Color.Color
+toColor ((Internal.Value _ emittedValue _) as original) =
+    case emittedValue of
+        EmittedColor (RgbColor red green blue) ->
+            Ok (Color.rgb red green blue)
+
+        EmittedColor (RgbaColor red green blue alpha) ->
+            Ok (Color.rgb red green blue)
+
+        EmittedColor (HslaColor hue saturation lightness alpha) ->
+            Ok (Color.hsla hue saturation lightness alpha)
+
+        EmittedColor (HslColor hue saturation lightness) ->
+            Ok (Color.hsl hue saturation lightness)
+
+        EmittedColor (InvalidColor str) ->
+            Err str
+
+        EmittedColor (HexColor str) ->
+            let
+                withoutHash =
+                    if String.startsWith "#" str then
+                        String.dropLeft 1 str
+                    else
+                        str
+
+                toInt =
+                    String.fromList >> String.toLower >> Hex.fromString
+
+                error =
+                    [ "Hex color strings must contain exactly 3, 4, 6, or 8 hexadecimal digits, optionally preceded by \"#\"."
+                    , toString str
+                    , "is an invalid hex color string."
+                    , "Please see: https://drafts.csswg.org/css-color/#hex-notation"
+                    ]
+                        |> String.join " "
+                        |> Err
+            in
+                case String.toList withoutHash of
+                    [ r, g, b ] ->
+                        case ( toInt [ r, r ], toInt [ g, g ], toInt [ b, b ] ) of
+                            ( Ok red, Ok green, Ok blue ) ->
+                                Ok (Color.rgb red green blue)
+
+                            _ ->
+                                error
+
+                    [ r, g, b, a ] ->
+                        case ( toInt [ r, r ], toInt [ g, g ], toInt [ b, b ], toInt [ a, a ] ) of
+                            ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+                                Ok (Color.rgba red green blue (toFloat alpha / 255))
+
+                            _ ->
+                                error
+
+                    [ r1, r2, g1, g2, b1, b2 ] ->
+                        case ( toInt [ r1, r2 ], toInt [ g1, g2 ], toInt [ b1, b2 ] ) of
+                            ( Ok red, Ok green, Ok blue ) ->
+                                Ok (Color.rgb red green blue)
+
+                            _ ->
+                                error
+
+                    [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
+                        case ( toInt [ r1, r2 ], toInt [ g1, g2 ], toInt [ b1, b2 ], toInt [ a1, a2 ] ) of
+                            ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+                                Ok (Color.rgba red green blue (toFloat alpha / 255))
+
+                            _ ->
+                                error
+
+                    _ ->
+                        error
+
+        _ ->
+            Err (toString original ++ " is not a color.")
 
 
 
@@ -7172,7 +7066,7 @@ borderSpacing2 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor : Internal.Value compatibility -> Style
+borderColor : Internal.Value { r | color : Compatible } -> Style
 borderColor (Internal.Value warnings emittedValue _) =
     propertyWithWarnings warnings "border-color" (emittedValueToString emittedValue)
 
@@ -7186,8 +7080,8 @@ borderColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderColor2 :
-    Internal.Value compatibility
-    -> Internal.Value compatibility2
+    Internal.Value { r | color : Compatible }
+    -> Internal.Value { r | color : Compatible }
     -> Style
 borderColor2 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) =
     let
@@ -7209,9 +7103,9 @@ borderColor2 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) =
 
 -}
 borderColor3 :
-    Internal.Value compatibility
-    -> Internal.Value compatibility2
-    -> Internal.Value compatibility3
+    Internal.Value { r | color : Compatible }
+    -> Internal.Value { r | color : Compatible }
+    -> Internal.Value { r | color : Compatible }
     -> Style
 borderColor3 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) (Internal.Value c3warnings c3 _) =
     let
@@ -7233,10 +7127,10 @@ borderColor3 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) (
 
 -}
 borderColor4 :
-    Internal.Value compatibility
-    -> Internal.Value compatibility2
-    -> Internal.Value compatibility3
-    -> Internal.Value compatibility4
+    Internal.Value { r | color : Compatible }
+    -> Internal.Value { r | color : Compatible }
+    -> Internal.Value { r | color : Compatible }
+    -> Internal.Value { r | color : Compatible }
     -> Style
 borderColor4 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) (Internal.Value c3warnings c3 _) (Internal.Value c4warnings c4 _) =
     let
@@ -7712,6 +7606,12 @@ fontWeight ((Internal.Value _ emittedValue _) as value) =
                             []
                         else
                             [ "fontWeight " ++ toString weight ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
+
+                EmittedColor _ ->
+                    [ "fontWeight" ++ toString emittedValue ++ " is invalid." ]
+
+                InvalidValue _ ->
+                    []
     in
         propertyWithWarnings warnings "font-weight" (emittedValueToString emittedValue)
 
@@ -8834,19 +8734,9 @@ each snippetCreators styles =
             |> selectorsToSnippet
 
 
-numberToString : number -> String
-numberToString num =
-    toString (num + 0)
-
-
 stringToInt : String -> Int
 stringToInt str =
     Result.withDefault 0 <| String.toInt str
-
-
-numericalPercentageToString : number -> String
-numericalPercentageToString value =
-    value |> (*) 100 |> numberToString |> (flip (++)) "%"
 
 
 valuesOrNone : List (Internal.Value compatible) -> Internal.Value {}

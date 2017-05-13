@@ -6,6 +6,7 @@ import Fuzz exposing (Fuzzer)
 import Hex
 import Test exposing (..)
 import Css.Internal as Internal
+import Color
 
 
 hexTests : Test
@@ -72,13 +73,16 @@ hexInt =
 
 expectEqualsRgba :
     ( Int, Int, Int, Float )
-    -> Internal.Value { record | red : Int, green : Int, blue : Int, alpha : Float }
+    -> Internal.Value { record | color : Compatible }
     -> Expectation
-expectEqualsRgba ( expectedRed, expectedGreen, expectedBlue, expectedAlpha ) (Internal.Value _ _ { red, green, blue, alpha }) =
-    { red = red, green = green, blue = blue, alpha = alpha }
+expectEqualsRgba ( expectedRed, expectedGreen, expectedBlue, expectedAlpha ) val =
+    toColor val
+        |> Result.map Color.toRgb
         |> Expect.equal
-            { red = expectedRed
-            , green = expectedGreen
-            , blue = expectedBlue
-            , alpha = expectedAlpha
-            }
+            (Ok
+                { red = expectedRed
+                , green = expectedGreen
+                , blue = expectedBlue
+                , alpha = expectedAlpha
+                }
+            )
