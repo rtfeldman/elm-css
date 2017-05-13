@@ -1,4 +1,4 @@
-module Properties exposing (all)
+module Properties exposing (..)
 
 import Test exposing (..)
 import Expect

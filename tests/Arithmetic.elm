@@ -1,4 +1,4 @@
-module Arithmetic exposing (all)
+module Arithmetic exposing (..)
 
 import Test exposing (..)
 import Fuzz

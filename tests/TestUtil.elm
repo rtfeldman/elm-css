@@ -38,7 +38,7 @@ validAlphaValue =
 
 invalidRgbValue : Fuzzer Int
 invalidRgbValue =
-    Fuzz.frequencyOrCrash
+    Fuzz.frequency
         [ ( 1, Fuzz.intRange -300 -1 )
         , ( 1, Fuzz.intRange 256 300 )
         ]
@@ -46,7 +46,7 @@ invalidRgbValue =
 
 invalidAlphaValue : Fuzzer Float
 invalidAlphaValue =
-    Fuzz.frequencyOrCrash
+    Fuzz.frequency
         [ ( 1, Fuzz.floatRange -300 -1.0e-3 )
         , ( 1, Fuzz.floatRange 1.0001 300 )
         ]

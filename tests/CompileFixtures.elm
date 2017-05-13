@@ -5,12 +5,28 @@ import Css.Elements exposing (..)
 import Css.Namespace exposing (namespace)
 
 
-pageBackground : Color
+pageBackground :
+    Css.Value
+        { alpha : Float
+        , blue : Int
+        , color : Css.Compatible
+        , green : Int
+        , red : Int
+        , warnings : List String
+        }
 pageBackground =
     rgb 100 90 128
 
 
-pageDefaultText : Color
+pageDefaultText :
+    Css.Value
+        { alpha : Float
+        , blue : Int
+        , color : Css.Compatible
+        , green : Int
+        , red : Int
+        , warnings : List String
+        }
 pageDefaultText =
     rgb 40 35 76
 
