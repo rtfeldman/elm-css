@@ -74,7 +74,7 @@ expectEqualsRgba :
     ( Int, Int, Int, Float )
     -> Internal.Value { record | red : Int, green : Int, blue : Int, alpha : Float }
     -> Expectation
-expectEqualsRgba ( expectedRed, expectedGreen, expectedBlue, expectedAlpha ) (Internal.Value _ { red, green, blue, alpha }) =
+expectEqualsRgba ( expectedRed, expectedGreen, expectedBlue, expectedAlpha ) (Internal.Value _ _ { red, green, blue, alpha }) =
     { red = red, green = green, blue = blue, alpha = alpha }
         |> Expect.equal
             { red = expectedRed

@@ -1,20 +1,15 @@
-module Css.Internal exposing (Value(Value), getValue, getCompatibility, getWarnings)
+module Css.Internal exposing (Value(Value), getValue, getWarnings)
 
 
 type Value compatible
-    = Value String compatible
+    = Value (List String) String compatible
 
 
 getValue : Value compatibility -> String
-getValue (Value str _) =
+getValue (Value _ str _) =
     str
 
 
-getCompatibility : Value compatibility -> compatibility
-getCompatibility (Value _ compatibility) =
-    compatibility
-
-
-getWarnings : Value { b | warnings : a } -> a
-getWarnings (Value _ { warnings }) =
+getWarnings : Value compatibility -> List String
+getWarnings (Value warnings _ _) =
     warnings
