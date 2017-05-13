@@ -8,7 +8,7 @@ module Css
         , Color
         , MediaQuery
         , Length
-        , IntOrAuto
+        , Compatible
         , stylesheet
         , each
         , media
@@ -523,9 +523,7 @@ module Css
         , outlineOffset
         , resize
         , fill
-        , ColorValue
         , Value
-        , FontSize
         , listStyleType
         , disc
         , circle
@@ -591,7 +589,6 @@ module Css
         , paddingBox
         , backgroundImage
         , url
-        , ColorStop
         , linearGradient
         , linearGradient2
         , stop
@@ -622,7 +619,7 @@ module Css
 
 # Misc
 
-@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
+@docs Compatible, Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, perspective, petiteCaps, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
@@ -661,7 +658,7 @@ module Css
 
 ## Color values
 
-@docs Color all, important, custom, solid, transparent, rgb, rgba, hsl, hsla, hex
+@docs Color, all, important, solid, transparent, rgb, rgba, hsl, hsla, hex
 
 
 ## Font values
@@ -714,11 +711,6 @@ module Css
 @docs qt
 
 
-# Types
-
-@docs FontSize, ColorValue, ColorStop, IntOrAuto
-
-
 # Intentionally Unsupported
 
 These are features you might expect to be in elm-css (because they are in the
@@ -760,6 +752,7 @@ type alias Style =
     Preprocess.Style
 
 
+{-| -}
 type Compatible
     = Compatible
 
@@ -869,189 +862,21 @@ type alias Value a =
 {- FONTS -}
 
 
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Values>
--}
-type alias TextDecorationLine compatible =
-    Internal.Value { compatible | textDecorationLine : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing#Values>
--}
-type alias BoxSizing compatible =
-    Internal.Value { compatible | boxSizing : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values>
--}
-type alias Overflow compatible =
-    Internal.Value { compatible | overflow : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap#Values>
--}
-type alias Wrap compatible =
-    Internal.Value { compatible | overflowWrap : Compatible }
-
-
-{-| <https://developer.mozilla.org/en/docs/Web/CSS/resize#Values>
--}
-type alias Resize compatible =
-    Internal.Value { compatible | resize : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex#Values>
--}
-type alias LengthOrNumberOrAutoOrNoneOrContent compatible =
-    Internal.Value { compatible | lengthOrNumberOrAutoOrNoneOrContent : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/z-index>
--}
-type alias IntOrAuto compatible =
-    Internal.Value { compatible | intOrAuto : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values>
--}
-type alias FlexBasis compatible =
-    Internal.Value { compatible | flexBasis : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values>
--}
-type alias FlexWrap compatible =
-    Internal.Value { compatible | flexWrap : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values>
--}
-type alias FlexDirection compatible =
-    Internal.Value { compatible | flexDirection : Compatible }
-
-
-type alias FlexDirectionOrWrap compatible =
-    Internal.Value { compatible | flexDirectionOrWrap : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values>
--}
-type alias AlignItems a b =
-    Length a b -> Style
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/align-self#Values>
--}
-type alias AlignSelf a b =
-    Length a b -> Style
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values>
--}
-type alias JustifyContent a b =
-    Length a b -> Style
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values>
--}
-type alias Display compatible =
-    Internal.Value { compatible | display : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Values>
--}
-type alias ListStyleType compatible =
-    Internal.Value { compatible | listStyleType : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position#Values>
--}
-type alias ListStylePosition compatible =
-    Internal.Value { compatible | listStylePosition : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#Values>
--}
-type alias ListStyle compatible =
-    Internal.Value { compatible | listStyleTypeOrPositionOrImage : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/white-space#Values>
--}
-type alias WhiteSpace compatible =
-    Internal.Value { compatible | whiteSpace : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values>
--}
-type alias ColorValue compatible =
-    Internal.Value { compatible | color : Compatible, warnings : List String }
-
-
-colorValueForOverloadedProperty : ColorValue NonMixable
+colorValueForOverloadedProperty : Internal.Value { color : Compatible, warnings : List a }
 colorValueForOverloadedProperty =
     transparent
 
 
 {-| -}
 type alias Color =
-    ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#repeat-style>
--}
-type alias BackgroundRepeat compatible =
-    Internal.Value { compatible | backgroundRepeat : Compatible, backgroundRepeatShorthand : Compatible }
-
-
-type alias BackgroundRepeatShorthand compatible =
-    Internal.Value { compatible | backgroundRepeatShorthand : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment>
--}
-type alias BackgroundAttachment compatible =
-    Internal.Value { compatible | backgroundAttachment : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-position>
--}
-type alias BackgroundPosition compatible =
-    Internal.Value { compatible | backgroundPosition : Compatible }
-
-
-{-| Because `color` is both a common propertie and common value
-in CSS (e.g. `color: red` with and `background-blend-mode: color`),
-we implement it as a property (for the `color: red` case) and allow it to
-be used as a value as well. When being used as a value, we call it, expect
-that it will return the desired String as its key, and use that as our value.
-(See `getOverloadedProperty`. Note that `VerticalAlign`.)
--}
-type alias BackgroundBlendMode a =
-    ColorValue a -> Style
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip>
--}
-type alias BackgroundClip compatible =
-    Internal.Value { compatible | backgroundClip : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin>
--}
-type alias BackgroundOrigin compatible =
-    BackgroundClip compatible
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-image>
--}
-type alias BackgroundImage compatible =
-    Internal.Value { compatible | backgroundImage : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-size>
--}
-type alias LengthOrAutoOrCoverOrContain compatible =
-    Internal.Value { compatible | lengthOrAutoOrCoverOrContain : Compatible }
+    Internal.Value
+        { color : Compatible
+        , red : Int
+        , green : Int
+        , blue : Int
+        , alpha : Float
+        , warnings : List String
+        }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
@@ -1063,29 +888,6 @@ type alias Length compatible units =
             , numericValue : Float
             , units : units
             , unitLabel : String
-        }
-
-
-{-| <https://developer.mozilla.org/en/docs/Web/CSS/calc>
--}
-type alias Calc compatible =
-    Internal.Value { compatible | calc : Compatible }
-
-
-type alias CalculatedLength =
-    Internal.Value
-        { length : Compatible
-        , lengthOrAuto : Compatible
-        , lengthOrNumber : Compatible
-        , lengthOrNone : Compatible
-        , lengthOrMinMaxDimension : Compatible
-        , lengthOrNoneOrMinMaxDimension : Compatible
-        , textIndent : Compatible
-        , flexBasis : Compatible
-        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-        , fontSize : Compatible
-        , lengthOrAutoOrCoverOrContain : Compatible
-        , calc : Compatible
         }
 
 
@@ -1124,7 +926,25 @@ calcExpressionToString expression =
 Using * and / with calc isn't supported. Use arithmetics from elm instead.
 
 -}
-calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
+calc :
+    Internal.Value compatible
+    -> CalcExpression
+    -> Internal.Value compatible1
+    ->
+        Internal.Value
+            { calc : Compatible
+            , flexBasis : Compatible
+            , fontSize : Compatible
+            , length : Compatible
+            , lengthOrAuto : Compatible
+            , lengthOrAutoOrCoverOrContain : Compatible
+            , lengthOrMinMaxDimension : Compatible
+            , lengthOrNone : Compatible
+            , lengthOrNoneOrMinMaxDimension : Compatible
+            , lengthOrNumber : Compatible
+            , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+            , textIndent : Compatible
+            }
 calc (Internal.Value first _) expression (Internal.Value second _) =
     let
         fromString str =
@@ -1187,7 +1007,10 @@ minus =
     em 5
 
 -}
-(|+|) : Length compatible units -> Length compatible units -> Length compatible units
+(|+|) :
+    Internal.Value { r | numericValue : number, unitLabel : String }
+    -> Internal.Value { r | numericValue : number, unitLabel : String }
+    -> Internal.Value { r | numericValue : number, unitLabel : String }
 (|+|) =
     combineLengths (+)
 
@@ -1198,7 +1021,10 @@ minus =
     em 4
 
 -}
-(|-|) : Length compatible units -> Length compatible units -> Length compatible units
+(|-|) :
+    Internal.Value { r | numericValue : number, unitLabel : String }
+    -> Internal.Value { r | numericValue : number, unitLabel : String }
+    -> Internal.Value { r | numericValue : number, unitLabel : String }
 (|-|) =
     combineLengths (-)
 
@@ -1209,7 +1035,10 @@ minus =
     em 4.5
 
 -}
-(|/|) : Length compatible units -> Length compatible units -> Length compatible units
+(|/|) :
+    Internal.Value { r | numericValue : Float, unitLabel : String }
+    -> Internal.Value { r | numericValue : Float, unitLabel : String }
+    -> Internal.Value { r | numericValue : Float, unitLabel : String }
 (|/|) =
     combineLengths (/)
 
@@ -1220,7 +1049,10 @@ minus =
     em 18
 
 -}
-(|*|) : Length compatible units -> Length compatible units -> Length compatible units
+(|*|) :
+    Internal.Value { r | numericValue : number, unitLabel : String }
+    -> Internal.Value { r | numericValue : number, unitLabel : String }
+    -> Internal.Value { r | numericValue : number, unitLabel : String }
 (|*|) =
     combineLengths (*)
 
@@ -1245,193 +1077,13 @@ combineLengths operation (Internal.Value _ first) (Internal.Value _ second) =
         Internal.Value val { first | numericValue = numericValue }
 
 
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
--}
-type alias LengthOrAuto compatible =
-    Internal.Value { compatible | lengthOrAuto : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
--}
-type alias LengthOrNoneOrMinMaxDimension compatible =
-    Internal.Value { compatible | lengthOrNoneOrMinMaxDimension : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
--}
-type alias LengthOrMinMaxDimension compatible =
-    Internal.Value { compatible | lengthOrMinMaxDimension : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
--}
-type alias LengthOrNone compatible =
-    Internal.Value { compatible | lengthOrNone : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
--}
-type alias LengthOrNumber compatible =
-    Internal.Value { compatible | lengthOrNumber : Compatible }
-
-
-type alias ExplicitLength units =
-    Internal.Value
-        { numericValue : Float
-        , units : units
-        , unitLabel : String
-        , length : Compatible
-        , lengthOrAuto : Compatible
-        , lengthOrNumber : Compatible
-        , lengthOrNone : Compatible
-        , lengthOrMinMaxDimension : Compatible
-        , lengthOrNoneOrMinMaxDimension : Compatible
-        , textIndent : Compatible
-        , flexBasis : Compatible
-        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-        , fontSize : Compatible
-        , lengthOrAutoOrCoverOrContain : Compatible
-        , calc : Compatible
-        }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform#Values>
--}
-type alias Transform compatible =
-    Internal.Value { compatible | transform : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/angle>
--}
-type alias Angle compatible =
-    Internal.Value { compatible | angle : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values>
--}
-type alias AngleOrDirection compatible =
-    Internal.Value { compatible | angleOrDirection : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values>
--}
-type alias TextDecorationStyle compatible =
-    Internal.Value { compatible | textDecorationStyle : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color#Values>
--}
-type alias TextEmphasisColor compatible =
-    Internal.Value { compatible | textDecorationStyle : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values>
--}
-type alias Position compatible =
-    Internal.Value { compatible | position : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values>
--}
-type alias BorderStyle compatible =
-    Internal.Value { compatible | borderStyle : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse>
--}
-type alias BorderCollapse compatible =
-    Internal.Value { compatible | borderCollapse : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box#Values>
--}
-type alias TransformBox compatible =
-    Internal.Value { compatible | transformBox : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values>
--}
-type alias TextOrientation compatible =
-    Internal.Value { compatible | textOrientation : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style#Values>
--}
-type alias TransformStyle compatible =
-    Internal.Value { compatible | transformStyle : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values>
--}
-type alias TextIndent compatible =
-    Internal.Value { compatible | textIndent : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values>
--}
-type alias TextOverflow compatible =
-    Internal.Value { compatible | textOverflow : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values>
--}
-type alias TextTransform compatible =
-    Internal.Value { compatible | textTransform : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values>
--}
-type alias TextRendering compatible =
-    Internal.Value { compatible | textRendering : Compatible }
-
-
-{-| <https://www.microsoft.com/typography/otspec/featurelist.htm>
--}
-type alias FeatureTagValue compatible =
-    Internal.Value { compatible | featureTagValue : Compatible, warnings : List String }
-
-
-{-| Because `left` and `right` are both common properties and common values
-in CSS (e.g. `left: 5px` with `position: absolute` and `text-align: left`),
-we implement it as a property (for the `left: 5px` case) and allow it to
-be used as a value as well. When being used as a value, we call it, expect
-that it will return the desired String as its key, and use that as our value.
-(See `getOverloadedProperty`. Note that `VerticalAlign` follows a similar pattern.)
--}
-type alias TextAlign a b =
-    Length a b -> Style
-
-
-{-| Because `top` and `bottom` are both common properties and common values
-in CSS (e.g. `top: 5px` with `position: absolute` and `vertical-align: top`),
-we implement it as a property (for the `top: 5px` case) and allow it to
-be used as a value as well. When being used as a value, we call it, expect
-that it will return the desired String as its key, and use that as our value.
-(See `getOverloadedProperty`. Note that `TextAlign` follows a similar pattern.)
--}
-type alias VerticalAlign a b =
-    Length a b -> Style
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>
--}
-type alias Cursor compatible =
-    Internal.Value { compatible | cursor : Compatible }
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/outline#Values>
--}
-type alias Outline compatible =
-    Internal.Value { compatible | outline : Compatible }
-
-
 
 -- Properties --
 
 
 {-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
 -}
-all : All compatible -> Style
+all : Internal.Value a -> Style
 all =
     prop1 "all"
 
@@ -1453,7 +1105,6 @@ type alias NonMixable =
 
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
 -}
-transparent : ColorValue NonMixable
 transparent =
     Internal.Value "transparent"
         { color = Compatible
@@ -1464,7 +1115,6 @@ transparent =
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
 value.
 -}
-currentColor : ColorValue NonMixable
 currentColor =
     Internal.Value "currentColor"
         { color = Compatible
@@ -1474,7 +1124,7 @@ currentColor =
 
 {-| The `visible` value for the [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) property.
 -}
-visible : Overflow {}
+visible : Internal.Value { overflow : Compatible }
 visible =
     Internal.Value "visible"
         { overflow = Compatible }
@@ -1493,7 +1143,7 @@ scroll =
 
 {-| The `break-word` value for the [`overflow-wrap`](https://developer.mozilla.org/en/docs/Web/CSS/overflow-wrap#Values) property.
 -}
-breakWord : Wrap {}
+breakWord : Internal.Value { overflowWrap : Compatible }
 breakWord =
     Internal.Value "break-word"
         { overflowWrap = Compatible }
@@ -1501,7 +1151,7 @@ breakWord =
 
 {-| The `both` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
 -}
-both : Resize {}
+both : Internal.Value { resize : Compatible }
 both =
     Internal.Value "both"
         { resize = Compatible
@@ -1510,7 +1160,7 @@ both =
 
 {-| The `horizontal` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
 -}
-horizontal : Resize {}
+horizontal : Internal.Value { resize : Compatible }
 horizontal =
     Internal.Value "horizontal"
         { resize = Compatible
@@ -1519,7 +1169,7 @@ horizontal =
 
 {-| The `vertical` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
 -}
-vertical : Resize {}
+vertical : Internal.Value { resize : Compatible }
 vertical =
     Internal.Value "vertical"
         { resize = Compatible
@@ -1528,105 +1178,105 @@ vertical =
 
 {-| The `multiply` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#multiply).
 -}
-multiply : BackgroundBlendMode compatible
+multiply : Internal.Value a -> Style
 multiply =
     prop1 "multiply"
 
 
 {-| The `screen` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#screen).
 -}
-screenBlendMode : BackgroundBlendMode compatible
+screenBlendMode : Internal.Value a -> Style
 screenBlendMode =
     prop1 "screen"
 
 
 {-| The `overlay` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#overlay).
 -}
-overlay : BackgroundBlendMode compatible
+overlay : Internal.Value a -> Style
 overlay =
     prop1 "overlay"
 
 
 {-| The `darken` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#darken).
 -}
-darken : BackgroundBlendMode compatible
+darken : Internal.Value a -> Style
 darken =
     prop1 "darken"
 
 
 {-| The `lighten` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#lighten).
 -}
-lighten : BackgroundBlendMode compatible
+lighten : Internal.Value a -> Style
 lighten =
     prop1 "lighten"
 
 
 {-| The `color-dodge` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#color-dodge).
 -}
-colorDodge : BackgroundBlendMode compatible
+colorDodge : Internal.Value a -> Style
 colorDodge =
     prop1 "color-dodge"
 
 
 {-| The `color-burn` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#color-burn).
 -}
-colorBurn : BackgroundBlendMode compatible
+colorBurn : Internal.Value a -> Style
 colorBurn =
     prop1 "color-burn"
 
 
 {-| The `hard-light` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#hard-light).
 -}
-hardLight : BackgroundBlendMode compatible
+hardLight : Internal.Value a -> Style
 hardLight =
     prop1 "hard-light"
 
 
 {-| The `soft-light` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#soft-light).
 -}
-softLight : BackgroundBlendMode compatible
+softLight : Internal.Value a -> Style
 softLight =
     prop1 "soft-light"
 
 
 {-| The `difference` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#difference).
 -}
-difference : BackgroundBlendMode compatible
+difference : Internal.Value a -> Style
 difference =
     prop1 "difference"
 
 
 {-| The `exclusion` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#exclusion).
 -}
-exclusion : BackgroundBlendMode compatible
+exclusion : Internal.Value a -> Style
 exclusion =
     prop1 "exclusion"
 
 
 {-| The `hue` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#hue).
 -}
-hue : BackgroundBlendMode compatible
+hue : Internal.Value a -> Style
 hue =
     prop1 "hue"
 
 
 {-| The `saturation` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#saturation).
 -}
-saturation : BackgroundBlendMode compatible
+saturation : Internal.Value a -> Style
 saturation =
     prop1 "saturation"
 
 
 {-| The `luminosity` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#luminosity).
 -}
-luminosity : BackgroundBlendMode compatible
+luminosity : Internal.Value a -> Style
 luminosity =
     prop1 "luminosity"
 
 
 {-| The `padding-box` [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip) value.
 -}
-paddingBox : BackgroundClip {}
+paddingBox : Internal.Value { backgroundClip : Compatible }
 paddingBox =
     Internal.Value "padding-box"
         { backgroundClip = Compatible }
@@ -1634,7 +1284,7 @@ paddingBox =
 
 {-| The `url` [`background-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image) value.
 -}
-url : String -> BackgroundImage {}
+url : String -> Internal.Value { backgroundImage : Compatible }
 url urlValue =
     Internal.Value ("url(" ++ urlValue ++ ")")
         { backgroundImage = Compatible }
@@ -1669,63 +1319,60 @@ hidden =
         }
 
 
-type alias BasicProperty =
+{-| The [`unset`](https://developer.mozilla.org/en-US/docs/Web/CSS/unset) value.
+Any CSS property can be set to this value.
+-}
+unset :
     Internal.Value
-        { all : Compatible
-        , alignItems : Compatible
+        { alignItems : Compatible
+        , all : Compatible
+        , backgroundAttachment : Compatible
+        , backgroundBlendMode : Compatible
+        , backgroundImage : Compatible
+        , backgroundOrigin : Compatible
+        , backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
         , borderStyle : Compatible
         , boxSizing : Compatible
         , color : Compatible
         , cursor : Compatible
         , display : Compatible
         , flexBasis : Compatible
-        , flexWrap : Compatible
         , flexDirection : Compatible
         , flexDirectionOrWrap : Compatible
-        , justifyContent : Compatible
-        , none : Compatible
-        , number : Compatible
-        , outline : Compatible
-        , overflow : Compatible
-        , textDecorationLine : Compatible
-        , textRendering : Compatible
-        , textIndent : Compatible
-        , textDecorationStyle : Compatible
-        , textTransform : Compatible
-        , length : Compatible
-        , lengthOrAuto : Compatible
-        , lengthOrNone : Compatible
-        , lengthOrNumber : Compatible
-        , lengthOrMinMaxDimension : Compatible
-        , lengthOrNoneOrMinMaxDimension : Compatible
-        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-        , listStyleType : Compatible
-        , listStylePosition : Compatible
-        , listStyleTypeOrPositionOrImage : Compatible
+        , flexWrap : Compatible
         , fontFamily : Compatible
         , fontSize : Compatible
         , fontStyle : Compatible
-        , fontWeight : Compatible
         , fontVariant : Compatible
-        , units : IncompatibleUnits
-        , numericValue : Float
-        , unitLabel : String
-        , warnings : List String
-        , backgroundRepeat : Compatible
-        , backgroundRepeatShorthand : Compatible
-        , backgroundAttachment : Compatible
-        , backgroundBlendMode : Compatible
-        , backgroundOrigin : Compatible
-        , backgroundImage : Compatible
-        , lengthOrAutoOrCoverOrContain : Compatible
+        , fontWeight : Compatible
         , intOrAuto : Compatible
+        , justifyContent : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , listStylePosition : Compatible
+        , listStyleType : Compatible
+        , listStyleTypeOrPositionOrImage : Compatible
+        , none : Compatible
+        , number : Compatible
+        , numericValue : number
+        , outline : Compatible
+        , overflow : Compatible
+        , textDecorationLine : Compatible
+        , textDecorationStyle : Compatible
+        , textIndent : Compatible
+        , textRendering : Compatible
+        , textTransform : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        , warnings : List a
         }
-
-
-{-| The [`unset`](https://developer.mozilla.org/en-US/docs/Web/CSS/unset) value.
-Any CSS property can be set to this value.
--}
-unset : BasicProperty
 unset =
     Internal.Value "unset" initialVal
 
@@ -1733,7 +1380,57 @@ unset =
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
 Any CSS property can be set to this value.
 -}
-inherit : BasicProperty
+inherit :
+    Internal.Value
+        { alignItems : Compatible
+        , all : Compatible
+        , backgroundAttachment : Compatible
+        , backgroundBlendMode : Compatible
+        , backgroundImage : Compatible
+        , backgroundOrigin : Compatible
+        , backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
+        , borderStyle : Compatible
+        , boxSizing : Compatible
+        , color : Compatible
+        , cursor : Compatible
+        , display : Compatible
+        , flexBasis : Compatible
+        , flexDirection : Compatible
+        , flexDirectionOrWrap : Compatible
+        , flexWrap : Compatible
+        , fontFamily : Compatible
+        , fontSize : Compatible
+        , fontStyle : Compatible
+        , fontVariant : Compatible
+        , fontWeight : Compatible
+        , intOrAuto : Compatible
+        , justifyContent : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , listStylePosition : Compatible
+        , listStyleType : Compatible
+        , listStyleTypeOrPositionOrImage : Compatible
+        , none : Compatible
+        , number : Compatible
+        , numericValue : number
+        , outline : Compatible
+        , overflow : Compatible
+        , textDecorationLine : Compatible
+        , textDecorationStyle : Compatible
+        , textIndent : Compatible
+        , textRendering : Compatible
+        , textTransform : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        , warnings : List a
+        }
 inherit =
     Internal.Value "inherit" initialVal
 
@@ -1741,7 +1438,57 @@ inherit =
 {-| The [`initial`](https://developer.mozilla.org/en-US/docs/Web/CSS/initial) value.
 Any CSS property can be set to this value.
 -}
-initial : BasicProperty
+initial :
+    Internal.Value
+        { alignItems : Compatible
+        , all : Compatible
+        , backgroundAttachment : Compatible
+        , backgroundBlendMode : Compatible
+        , backgroundImage : Compatible
+        , backgroundOrigin : Compatible
+        , backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
+        , borderStyle : Compatible
+        , boxSizing : Compatible
+        , color : Compatible
+        , cursor : Compatible
+        , display : Compatible
+        , flexBasis : Compatible
+        , flexDirection : Compatible
+        , flexDirectionOrWrap : Compatible
+        , flexWrap : Compatible
+        , fontFamily : Compatible
+        , fontSize : Compatible
+        , fontStyle : Compatible
+        , fontVariant : Compatible
+        , fontWeight : Compatible
+        , intOrAuto : Compatible
+        , justifyContent : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , listStylePosition : Compatible
+        , listStyleType : Compatible
+        , listStyleTypeOrPositionOrImage : Compatible
+        , none : Compatible
+        , number : Compatible
+        , numericValue : number
+        , outline : Compatible
+        , overflow : Compatible
+        , textDecorationLine : Compatible
+        , textDecorationStyle : Compatible
+        , textIndent : Compatible
+        , textRendering : Compatible
+        , textTransform : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        , warnings : List a
+        }
 initial =
     Internal.Value "initial" initialVal
 
@@ -1851,7 +1598,19 @@ initialVal =
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
 in functional notation.
 -}
-rgb : Int -> Int -> Int -> Color
+rgb :
+    Int
+    -> Int
+    -> Int
+    ->
+        Internal.Value
+            { red : Int
+            , green : Int
+            , blue : Int
+            , alpha : Float
+            , color : Compatible
+            , warnings : List String
+            }
 rgb red green blue =
     let
         warnings =
@@ -1886,7 +1645,20 @@ rgb red green blue =
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
-rgba : Int -> Int -> Int -> Float -> Color
+rgba :
+    Int
+    -> Int
+    -> Int
+    -> Float
+    ->
+        Internal.Value
+            { red : Int
+            , green : Int
+            , blue : Int
+            , alpha : Float
+            , color : Compatible
+            , warnings : List String
+            }
 rgba red green blue alpha =
     let
         warnings =
@@ -1927,7 +1699,19 @@ rgba red green blue alpha =
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
-hsl : Float -> Float -> Float -> Color
+hsl :
+    Float
+    -> Float
+    -> Float
+    ->
+        Internal.Value
+            { red : Int
+            , green : Int
+            , blue : Int
+            , alpha : Float
+            , color : Compatible
+            , warnings : List String
+            }
 hsl hue saturation lightness =
     let
         valuesList =
@@ -1959,7 +1743,20 @@ hsl hue saturation lightness =
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
-hsla : Float -> Float -> Float -> Float -> Color
+hsla :
+    Float
+    -> Float
+    -> Float
+    -> Float
+    ->
+        Internal.Value
+            { red : Int
+            , green : Int
+            , blue : Int
+            , alpha : Float
+            , color : Compatible
+            , warnings : List String
+            }
 hsla hue saturation lightness alpha =
     let
         valuesList =
@@ -1995,7 +1792,17 @@ in hexadecimal notation. You can optionally include `#` as the first character,
 for benefits like syntax highlighting in editors, ease of copy/pasting from
 tools which express these as e.g. `#abcdef0`, etc.
 -}
-hex : String -> Color
+hex :
+    String
+    ->
+        Internal.Value
+            { alpha : Float
+            , blue : Int
+            , color : Compatible
+            , green : Int
+            , red : Int
+            , warnings : List String
+            }
 hex str =
     let
         withoutHash =
@@ -2021,7 +1828,21 @@ hex str =
                 erroneousHex str
 
 
-validHex : String -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> Color
+validHex :
+    String
+    -> ( Char, Char )
+    -> ( Char, Char )
+    -> ( Char, Char )
+    -> ( Char, Char )
+    ->
+        Internal.Value
+            { alpha : Float
+            , blue : Int
+            , color : Compatible
+            , green : Int
+            , red : Int
+            , warnings : List String
+            }
 validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
     let
         toResult =
@@ -2059,7 +1880,17 @@ withPrecedingHash str =
 
 {-| Not to be confused with Thelonious Monk or Hieronymus Bosch.
 -}
-erroneousHex : String -> Color
+erroneousHex :
+    String
+    ->
+        Internal.Value
+            { alpha : Float
+            , blue : Int
+            , color : Compatible
+            , green : Int
+            , red : Int
+            , warnings : List String
+            }
 erroneousHex str =
     Internal.Value (withPrecedingHash str)
         { color = Compatible
@@ -2078,7 +1909,22 @@ erroneousHex str =
         }
 
 
-hslaToRgba : String -> List String -> Float -> Float -> Float -> Float -> Color
+hslaToRgba :
+    String
+    -> a
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    ->
+        Internal.Value
+            { alpha : Float
+            , blue : Int
+            , color : Compatible
+            , green : Int
+            , red : Int
+            , warnings : a
+            }
 hslaToRgba value warnings hue saturation lightness hslAlpha =
     let
         { red, green, blue, alpha } =
@@ -2101,7 +1947,7 @@ hslaToRgba value warnings hue saturation lightness hslAlpha =
 
 {-| `optimizeSpeed` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
-optimizeSpeed : TextRendering {}
+optimizeSpeed : Internal.Value { textRendering : Compatible }
 optimizeSpeed =
     Internal.Value "optimizeSpeed"
         { textRendering = Compatible
@@ -2110,7 +1956,7 @@ optimizeSpeed =
 
 {-| `optimizeLegibility` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
-optimizeLegibility : TextRendering {}
+optimizeLegibility : Internal.Value { textRendering : Compatible }
 optimizeLegibility =
     Internal.Value "optimizeLegibility"
         { textRendering = Compatible
@@ -2119,7 +1965,7 @@ optimizeLegibility =
 
 {-| `geometricPrecision` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
-geometricPrecision : TextRendering {}
+geometricPrecision : Internal.Value { textRendering : Compatible }
 geometricPrecision =
     Internal.Value "geometricPrecision"
         { textRendering = Compatible
@@ -2132,7 +1978,7 @@ geometricPrecision =
 
 {-| `hanging` [`hanging`](https://developer.mozilla.org/en-US/docs/Web/CSS/hanging#Values) value
 -}
-hanging : TextIndent {}
+hanging : Internal.Value { textIndent : Compatible }
 hanging =
     Internal.Value "hanging"
         { textIndent = Compatible
@@ -2141,7 +1987,7 @@ hanging =
 
 {-| `each-line` [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values) value
 -}
-eachLine : TextIndent {}
+eachLine : Internal.Value { textIndent : Compatible }
 eachLine =
     Internal.Value "each-line"
         { textIndent = Compatible
@@ -2154,7 +2000,7 @@ eachLine =
 
 {-| `mixed` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values) value
 -}
-mixed : TextOrientation {}
+mixed : Internal.Value { textOrientation : Compatible }
 mixed =
     Internal.Value "mixed"
         { textOrientation = Compatible
@@ -2163,7 +2009,7 @@ mixed =
 
 {-| `upright` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values) value
 -}
-upright : TextOrientation {}
+upright : Internal.Value { textOrientation : Compatible }
 upright =
     Internal.Value "upright"
         { textOrientation = Compatible
@@ -2172,7 +2018,7 @@ upright =
 
 {-| `sideways` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientationEValues) value
 -}
-sideways : TextOrientation {}
+sideways : Internal.Value { textOrientation : Compatible }
 sideways =
     Internal.Value "sideways"
         { textOrientation = Compatible
@@ -2185,7 +2031,7 @@ sideways =
 
 {-| `capitalize` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-capitalize : TextTransform {}
+capitalize : Internal.Value { textTransform : Compatible }
 capitalize =
     Internal.Value "capitalize"
         { textTransform = Compatible
@@ -2194,7 +2040,7 @@ capitalize =
 
 {-| `uppercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-uppercase : TextTransform {}
+uppercase : Internal.Value { textTransform : Compatible }
 uppercase =
     Internal.Value "uppercase"
         { textTransform = Compatible
@@ -2203,7 +2049,7 @@ uppercase =
 
 {-| `lowercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-lowercase : TextTransform {}
+lowercase : Internal.Value { textTransform : Compatible }
 lowercase =
     Internal.Value "lowercase"
         { textTransform = Compatible
@@ -2212,7 +2058,7 @@ lowercase =
 
 {-| `full-width` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
-fullWidth : TextTransform {}
+fullWidth : Internal.Value { textTransform : Compatible }
 fullWidth =
     Internal.Value "full-width"
         { textTransform = Compatible
@@ -2221,7 +2067,7 @@ fullWidth =
 
 {-| `ellipsis` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
 -}
-ellipsis : TextOverflow {}
+ellipsis : Internal.Value { textOverflow : Compatible }
 ellipsis =
     Internal.Value "ellipsis"
         { textOverflow = Compatible
@@ -2230,7 +2076,7 @@ ellipsis =
 
 {-| `clip` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
 -}
-clip : TextOverflow {}
+clip : Internal.Value { textOverflow : Compatible }
 clip =
     Internal.Value "clip"
         { textOverflow = Compatible
@@ -2243,7 +2089,7 @@ clip =
 
 {-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
 -}
-wavy : TextDecorationStyle {}
+wavy : Internal.Value { textDecorationStyle : Compatible }
 wavy =
     Internal.Value "wavy"
         { textDecorationStyle = Compatible
@@ -2292,7 +2138,7 @@ double =
 
 {-| A `groove` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-groove : BorderStyle {}
+groove : Internal.Value { borderStyle : Compatible }
 groove =
     Internal.Value "groove"
         { borderStyle = Compatible
@@ -2301,7 +2147,7 @@ groove =
 
 {-| A `ridge` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-ridge : BorderStyle {}
+ridge : Internal.Value { borderStyle : Compatible }
 ridge =
     Internal.Value "ridge"
         { borderStyle = Compatible
@@ -2310,7 +2156,7 @@ ridge =
 
 {-| An `inset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-inset : BorderStyle {}
+inset : Internal.Value { borderStyle : Compatible }
 inset =
     Internal.Value "inset"
         { borderStyle = Compatible
@@ -2319,7 +2165,7 @@ inset =
 
 {-| An `outset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-outset : BorderStyle {}
+outset : Internal.Value { borderStyle : Compatible }
 outset =
     Internal.Value "outset"
         { borderStyle = Compatible
@@ -2332,7 +2178,7 @@ outset =
 
 {-| A `separate` [border-collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse#Values).
 -}
-separate : BorderCollapse {}
+separate : Internal.Value { borderCollapse : Compatible }
 separate =
     Internal.Value "separate"
         { borderCollapse = Compatible
@@ -2341,7 +2187,7 @@ separate =
 
 {-| A `collapse` [border-collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse#Values).
 -}
-collapse : BorderCollapse {}
+collapse : Internal.Value { borderCollapse : Compatible }
 collapse =
     Internal.Value "collapse"
         { borderCollapse = Compatible
@@ -2355,49 +2201,49 @@ collapse =
 {-| `center` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 Can also be used with flex-box's align-items and justify-content properties to apply the value of center
 -}
-center : TextAlign a b
+center : Internal.Value a -> Style
 center =
     prop1 "center"
 
 
 {-| `text-justify` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textJustify : TextAlign a b
+textJustify : Internal.Value a -> Style
 textJustify =
     prop1 "text-justify"
 
 
 {-| `justify-all` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-justifyAll : TextAlign a b
+justifyAll : Internal.Value a -> Style
 justifyAll =
     prop1 "justify-all"
 
 
 {-| `start` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-start : TextAlign a b
+start : Internal.Value a -> Style
 start =
     prop1 "start"
 
 
 {-| `end` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-end : TextAlign a b
+end : Internal.Value a -> Style
 end =
     prop1 "end"
 
 
 {-| `match-parent` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-matchParent : TextAlign a b
+matchParent : Internal.Value a -> Style
 matchParent =
     prop1 "match-parent"
 
 
 {-| `true` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-true : TextAlign a b
+true : Internal.Value a -> Style
 true =
     prop1 "true"
 
@@ -2406,7 +2252,28 @@ true =
 {- LENGTHS -}
 
 
-lengthConverter : units -> String -> Float -> ExplicitLength units
+lengthConverter :
+    a
+    -> String
+    -> number
+    ->
+        Internal.Value
+            { calc : Compatible
+            , flexBasis : Compatible
+            , fontSize : Compatible
+            , length : Compatible
+            , lengthOrAuto : Compatible
+            , lengthOrAutoOrCoverOrContain : Compatible
+            , lengthOrMinMaxDimension : Compatible
+            , lengthOrNone : Compatible
+            , lengthOrNoneOrMinMaxDimension : Compatible
+            , lengthOrNumber : Compatible
+            , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+            , numericValue : number
+            , textIndent : Compatible
+            , unitLabel : String
+            , units : a
+            }
 lengthConverter units unitLabel numericValue =
     Internal.Value ((numberToString numericValue) ++ unitLabel)
         { numericValue = numericValue
@@ -2476,7 +2343,21 @@ zero =
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
 type alias Pct =
-    ExplicitLength PercentageUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : PercentageUnits
+        }
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
@@ -2493,7 +2374,21 @@ type PercentageUnits
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
 type alias Em =
-    ExplicitLength EmUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : EmUnits
+        }
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
@@ -2510,7 +2405,21 @@ type EmUnits
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
 type alias Ex =
-    ExplicitLength ExUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : ExUnits
+        }
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
@@ -2527,7 +2436,21 @@ type ExUnits
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
 type alias Ch =
-    ExplicitLength ChUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : ChUnits
+        }
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
@@ -2544,7 +2467,21 @@ type ChUnits
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
 type alias Rem =
-    ExplicitLength RemUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : RemUnits
+        }
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
@@ -2561,7 +2498,21 @@ type RemUnits
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
 type alias Vh =
-    ExplicitLength VhUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : VhUnits
+        }
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
@@ -2578,7 +2529,21 @@ type VhUnits
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
 type alias Vw =
-    ExplicitLength VwUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : VwUnits
+        }
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
@@ -2595,7 +2560,21 @@ type VwUnits
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
 type alias Vmin =
-    ExplicitLength VMinUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : VMinUnits
+        }
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
@@ -2612,7 +2591,21 @@ type VMinUnits
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
 type alias Vmax =
-    ExplicitLength VMaxUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : VMaxUnits
+        }
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
@@ -2629,7 +2622,21 @@ type VMaxUnits
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
 type alias Px =
-    ExplicitLength PxUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : PxUnits
+        }
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
@@ -2646,7 +2653,21 @@ type PxUnits
 {-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
 -}
 type alias Mm =
-    ExplicitLength MMUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : MMUnits
+        }
 
 
 {-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
@@ -2663,7 +2684,21 @@ type MMUnits
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
 type alias Cm =
-    ExplicitLength CMUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : CMUnits
+        }
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
@@ -2680,7 +2715,21 @@ type CMUnits
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 -}
 type alias In =
-    ExplicitLength InchUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : InchUnits
+        }
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
@@ -2700,7 +2749,21 @@ type InchUnits
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
 type alias Pt =
-    ExplicitLength PtUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : PtUnits
+        }
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
@@ -2717,7 +2780,21 @@ type PtUnits
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
 type alias Pc =
-    ExplicitLength PcUnits
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , textIndent : Compatible
+        , units : PcUnits
+        }
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
@@ -2793,7 +2870,24 @@ type UnitlessFloat
     = UnitlessFloat
 
 
-lengthForOverloadedProperty : ExplicitLength IncompatibleUnits
+lengthForOverloadedProperty :
+    Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
 lengthForOverloadedProperty =
     lengthConverter IncompatibleUnits "" 0
 
@@ -2854,7 +2948,14 @@ turn =
     transform (matrix 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix : number -> number -> number -> number -> number -> number -> Transform {}
+matrix :
+    number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> Internal.Value { transform : Compatible }
 matrix a b c d tx ty =
     Internal.Value (cssFunction "matrix" (List.map numberToString [ a, b, c, d, tx, ty ]))
         { transform = Compatible }
@@ -2865,7 +2966,24 @@ matrix a b c d tx ty =
     transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
+matrix3d :
+    number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> number
+    -> Internal.Value { transform : Compatible }
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
     Internal.Value (cssFunction "matrix3d" (List.map numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ]))
         { transform = Compatible }
@@ -2876,7 +2994,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
      transform (perspective 0.5)
 
 -}
-perspective : number -> Transform {}
+perspective : number -> Internal.Value { transform : Compatible }
 perspective l =
     Internal.Value (cssFunction "perspective" [ numberToString l ])
         { transform = Compatible }
@@ -2887,7 +3005,7 @@ perspective l =
      transform (rotate (deg 90))
 
 -}
-rotate : Angle compatible -> Transform {}
+rotate : Internal.Value compatible -> Internal.Value { transform : Compatible }
 rotate (Internal.Value value _) =
     Internal.Value (cssFunction "rotate" [ value ])
         { transform = Compatible }
@@ -2898,7 +3016,7 @@ rotate (Internal.Value value _) =
      transform (rotateX (deg 90))
 
 -}
-rotateX : Angle compatible -> Transform {}
+rotateX : Internal.Value compatible -> Internal.Value { transform : Compatible }
 rotateX (Internal.Value value _) =
     Internal.Value (cssFunction "rotateX" [ value ])
         { transform = Compatible }
@@ -2909,7 +3027,7 @@ rotateX (Internal.Value value _) =
      transform (rotateY (deg 90))
 
 -}
-rotateY : Angle compatible -> Transform {}
+rotateY : Internal.Value compatible -> Internal.Value { transform : Compatible }
 rotateY (Internal.Value value _) =
     Internal.Value (cssFunction "rotateY" [ value ])
         { transform = Compatible }
@@ -2920,7 +3038,7 @@ rotateY (Internal.Value value _) =
      transform (rotateZ (deg 90))
 
 -}
-rotateZ : Angle compatible -> Transform {}
+rotateZ : Internal.Value compatible -> Internal.Value { transform : Compatible }
 rotateZ (Internal.Value value _) =
     Internal.Value (cssFunction "rotateZ" [ value ])
         { transform = Compatible }
@@ -2931,7 +3049,12 @@ rotateZ (Internal.Value value _) =
      transform (rotate3d 1 1 1 (deg 90))
 
 -}
-rotate3d : number -> number -> number -> Angle compatible -> Transform {}
+rotate3d :
+    number
+    -> number
+    -> number
+    -> Internal.Value compatible
+    -> Internal.Value { transform : Compatible }
 rotate3d x y z (Internal.Value value _) =
     let
         coordsAsStrings =
@@ -2947,7 +3070,7 @@ rotate3d x y z (Internal.Value value _) =
      transform (scale2 0.5 0.7)
 
 -}
-scale : number -> Transform {}
+scale : number -> Internal.Value { transform : Compatible }
 scale x =
     Internal.Value (cssFunction "scale" [ numberToString x ])
         { transform = Compatible }
@@ -2959,7 +3082,7 @@ scale x =
      transform (scale2 0.5 0.7)
 
 -}
-scale2 : number -> number -> Transform {}
+scale2 : number -> number -> Internal.Value { transform : Compatible }
 scale2 x y =
     Internal.Value (cssFunction "scale" (List.map numberToString [ x, y ]))
         { transform = Compatible }
@@ -2970,7 +3093,7 @@ scale2 x y =
      transform (scaleX 0.5)
 
 -}
-scaleX : number -> Transform {}
+scaleX : number -> Internal.Value { transform : Compatible }
 scaleX x =
     Internal.Value (cssFunction "scaleX" [ numberToString x ])
         { transform = Compatible }
@@ -2981,7 +3104,7 @@ scaleX x =
      transform (scaleY 0.5)
 
 -}
-scaleY : number -> Transform {}
+scaleY : number -> Internal.Value { transform : Compatible }
 scaleY y =
     Internal.Value (cssFunction "scaleY" [ numberToString y ])
         { transform = Compatible }
@@ -2992,7 +3115,11 @@ scaleY y =
      transform (scale3d 0.5 0.5 1)
 
 -}
-scale3d : number -> number -> number -> Transform {}
+scale3d :
+    number
+    -> number
+    -> number
+    -> Internal.Value { transform : Compatible }
 scale3d x y z =
     Internal.Value (cssFunction "scale3d" (List.map numberToString [ x, y, z ]))
         { transform = Compatible }
@@ -3004,7 +3131,7 @@ scale3d x y z =
      transform (skew2 (deg 90) (deg 45))
 
 -}
-skew : Angle compatible -> Transform {}
+skew : Internal.Value compatible -> Internal.Value { transform : Compatible }
 skew (Internal.Value value _) =
     Internal.Value (cssFunction "skew" [ value ])
         { transform = Compatible }
@@ -3030,7 +3157,7 @@ skew2 (Internal.Value ax _) (Internal.Value ay _) =
      transform (skewX (deg 90))
 
 -}
-skewX : Angle compatible -> Transform {}
+skewX : Internal.Value compatible -> Internal.Value { transform : Compatible }
 skewX (Internal.Value value _) =
     Internal.Value (cssFunction "skewX" [ value ])
         { transform = Compatible }
@@ -3041,7 +3168,7 @@ skewX (Internal.Value value _) =
     transform (skewY (deg 90))
 
 -}
-skewY : Angle compatible -> Transform {}
+skewY : Internal.Value compatible -> Internal.Value { transform : Compatible }
 skewY (Internal.Value value _) =
     Internal.Value (cssFunction "skewY" [ value ])
         { transform = Compatible }
@@ -3053,7 +3180,9 @@ skewY (Internal.Value value _) =
     transform (translate2 (px 100) (pct -45))
 
 -}
-translate : Length compatible units -> Transform {}
+translate :
+    Internal.Value compatible
+    -> Internal.Value { transform : Compatible }
 translate (Internal.Value value _) =
     Internal.Value (cssFunction "translate" [ value ])
         { transform = Compatible }
@@ -3065,7 +3194,10 @@ translate (Internal.Value value _) =
     transform (translate2 (px 100) (pct -45))
 
 -}
-translate2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Transform {}
+translate2 :
+    Internal.Value compatible
+    -> Internal.Value compatible1
+    -> Internal.Value { transform : Compatible }
 translate2 (Internal.Value tx _) (Internal.Value ty _) =
     Internal.Value (cssFunction "translate" [ tx, ty ])
         { transform = Compatible }
@@ -3076,7 +3208,9 @@ translate2 (Internal.Value tx _) (Internal.Value ty _) =
     transform (translateX (px 100))
 
 -}
-translateX : Length compatible units -> Transform {}
+translateX :
+    Internal.Value compatible
+    -> Internal.Value { transform : Compatible }
 translateX (Internal.Value value _) =
     Internal.Value (cssFunction "translateX" [ value ])
         { transform = Compatible }
@@ -3087,7 +3221,9 @@ translateX (Internal.Value value _) =
     transform (translateY (px 100))
 
 -}
-translateY : Length compatible units -> Transform {}
+translateY :
+    Internal.Value compatible
+    -> Internal.Value { transform : Compatible }
 translateY (Internal.Value value _) =
     Internal.Value (cssFunction "translateY" [ value ])
         { transform = Compatible }
@@ -3098,7 +3234,9 @@ translateY (Internal.Value value _) =
     transform (translateZ (px 100))
 
 -}
-translateZ : Length compatible units -> Transform {}
+translateZ :
+    Internal.Value compatible
+    -> Internal.Value { transform : Compatible }
 translateZ (Internal.Value value _) =
     Internal.Value (cssFunction "translateZ" [ value ])
         { transform = Compatible }
@@ -3109,7 +3247,11 @@ translateZ (Internal.Value value _) =
     transform (translate3d (px 100) (px 100) (px 100))
 
 -}
-translate3d : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Transform {}
+translate3d :
+    Internal.Value compatible
+    -> Internal.Value compatible1
+    -> Internal.Value compatible2
+    -> Internal.Value { transform : Compatible }
 translate3d (Internal.Value tx _) (Internal.Value ty _) (Internal.Value tz _) =
     Internal.Value (cssFunction "translate3d" [ tx, ty, tz ])
         { transform = Compatible }
@@ -3134,7 +3276,7 @@ populated list:
     transforms [ perspective 1, scale2 1 1.4 ]
 
 -}
-transforms : List (Transform compatible) -> Style
+transforms : List (Internal.Value compatible) -> Style
 transforms =
     prop1 "transform" << valuesOrNone
 
@@ -3147,14 +3289,14 @@ property to `none`, use the `transforms` function with an empty list. See
     transform (scaleX 1.4)
 
 -}
-transform : Transform compatible -> Style
+transform : Internal.Value compatible -> Style
 transform only =
     transforms [ only ]
 
 
 {-| The `fill-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-fillBox : TransformBox {}
+fillBox : Internal.Value { transformBox : Compatible }
 fillBox =
     Internal.Value "fill-box"
         { transformBox = Compatible
@@ -3185,7 +3327,7 @@ borderBox =
 
 {-| The `view-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-viewBox : TransformBox {}
+viewBox : Internal.Value { transformBox : Compatible }
 viewBox =
     Internal.Value "view-box"
         { transformBox = Compatible
@@ -3194,7 +3336,7 @@ viewBox =
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
-transformBox : TransformBox compatible -> Style
+transformBox : Internal.Value a -> Style
 transformBox =
     prop1 "transform-box"
 
@@ -3204,14 +3346,14 @@ transformBox =
     boxSizing borderBox
 
 -}
-boxSizing : BoxSizing compatible -> Style
+boxSizing : Internal.Value a -> Style
 boxSizing =
     prop1 "box-sizing"
 
 
 {-| The `preserve-3d` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-preserve3d : TransformStyle {}
+preserve3d : Internal.Value { transformStyle : Compatible }
 preserve3d =
     Internal.Value "preserve-3d"
         { transformStyle = Compatible
@@ -3220,7 +3362,7 @@ preserve3d =
 
 {-| The `flat` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-flat : TransformStyle {}
+flat : Internal.Value { transformStyle : Compatible }
 flat =
     Internal.Value "flat"
         { transformStyle = Compatible
@@ -3229,7 +3371,7 @@ flat =
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
-transformStyle : TransformStyle compatible -> Style
+transformStyle : Internal.Value a -> Style
 transformStyle =
     prop1 "transform-style"
 
@@ -3240,7 +3382,7 @@ transformStyle =
 
 {-| The [`list-style-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position) property.
 -}
-listStylePosition : ListStylePosition compatible -> Style
+listStylePosition : Internal.Value a -> Style
 listStylePosition =
     prop1 "list-style-position"
 
@@ -3277,7 +3419,7 @@ outside =
 
 {-| The [`list-style-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type) property.
 -}
-listStyleType : ListStyleType compatible -> Style
+listStyleType : Internal.Value a -> Style
 listStyleType =
     prop1 "list-style-type"
 
@@ -3678,21 +3820,21 @@ thai =
 
 {-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
 -}
-listStyle : ListStyle compatible -> Style
+listStyle : Internal.Value a -> Style
 listStyle =
     prop1 "list-style"
 
 
 {-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
 -}
-listStyle2 : ListStyle compatible1 -> ListStyle compatible2 -> Style
+listStyle2 : Internal.Value a -> Internal.Value b -> Style
 listStyle2 =
     prop2 "list-style"
 
 
 {-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
 -}
-listStyle3 : ListStyle compatible1 -> ListStyle compatible2 -> ListStyle compatible3 -> Style
+listStyle3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 listStyle3 =
     prop3 "list-style"
 
@@ -3708,7 +3850,7 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flex : LengthOrNumberOrAutoOrNoneOrContent compatible -> Style
+flex : Internal.Value a -> Style
 flex =
     prop1 "flex"
 
@@ -3720,7 +3862,7 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flex2 : Number compatibleA -> LengthOrNumber compatibleB -> Style
+flex2 : Internal.Value a -> Internal.Value b -> Style
 flex2 =
     prop2 "flex"
 
@@ -3732,7 +3874,7 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Style
+flex3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 flex3 =
     prop3 "flex"
 
@@ -3744,35 +3886,35 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flexBasis : FlexBasis compatible -> Style
+flexBasis : Internal.Value a -> Style
 flexBasis =
     prop1 "flex-basis"
 
 
 {-| Sets [`flex-grow`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow) property.
 -}
-flexGrow : Number compatible -> Style
+flexGrow : Internal.Value a -> Style
 flexGrow =
     prop1 "flex-grow"
 
 
 {-| Sets [`flex-shrink`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink) property.
 -}
-flexShrink : Number compatible -> Style
+flexShrink : Internal.Value a -> Style
 flexShrink =
     prop1 "flex-shrink"
 
 
 {-| Sets [`flex-wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap) property.
 -}
-flexWrap : FlexWrap compatible -> Style
+flexWrap : Internal.Value a -> Style
 flexWrap =
     prop1 "flex-wrap"
 
 
 {-| Sets [`flex-direction`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction) property.
 -}
-flexDirection : FlexDirection compatible -> Style
+flexDirection : Internal.Value a -> Style
 flexDirection =
     prop1 "flex-direction"
 
@@ -3785,7 +3927,7 @@ flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnRever
 Or vice versa, order is not important for flex-flow
 
 -}
-flexFlow1 : FlexDirectionOrWrap compatible -> Style
+flexFlow1 : Internal.Value a -> Style
 flexFlow1 =
     prop1 "flex-flow"
 
@@ -3798,7 +3940,7 @@ flexFlow2 (wrap | wrapReverse | noWrap) (row | column | rowReverse | columnRever
 Or vice versa, order is not important for flex-flow
 
 -}
-flexFlow2 : FlexDirectionOrWrap compatibleA -> FlexDirectionOrWrap compatibleB -> Style
+flexFlow2 : Internal.Value a -> Internal.Value b -> Style
 flexFlow2 =
     prop2 "flex-flow"
 
@@ -3814,7 +3956,27 @@ If this is annoying, please file an issue, so adding support for "auto"
 can be prioritized!
 
 -}
-alignItems : (ExplicitLength IncompatibleUnits -> Style) -> Style
+alignItems :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 alignItems fn =
     getOverloadedProperty "alignItems" "align-items" (fn lengthForOverloadedProperty)
 
@@ -3830,21 +3992,61 @@ If this is annoying, please file an issue, so adding support for "auto"
 can be prioritized!
 
 -}
-alignSelf : (ExplicitLength IncompatibleUnits -> Style) -> Style
+alignSelf :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 alignSelf fn =
     getOverloadedProperty "alignSelf" "align-self" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`justify-content`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content).
 -}
-justifyContent : (ExplicitLength IncompatibleUnits -> Style) -> Style
+justifyContent :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 justifyContent fn =
     getOverloadedProperty "justifyContent" "justify-content" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`order`](https://developer.mozilla.org/en-US/docs/Web/CSS/order) property.
 -}
-order : Number compatible -> Style
+order : Internal.Value a -> Style
 order =
     prop1 "order"
 
@@ -3887,7 +4089,7 @@ wrapReverse =
 align-items property.
 Can also be used with flex-box's justify-content property to apply the value of flex-start.
 -}
-flexStart : AlignItems a b
+flexStart : Internal.Value a -> Style
 flexStart =
     prop1 "flex-start"
 
@@ -3896,7 +4098,7 @@ flexStart =
 align-items property.
 Can also be used with flex-box's justify-content property to apply the value of flex-end.
 -}
-flexEnd : AlignItems a b
+flexEnd : Internal.Value a -> Style
 flexEnd =
     prop1 "flex-end"
 
@@ -3904,7 +4106,7 @@ flexEnd =
 {-| The[`space-around`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values) value for the
 justify-content property.
 -}
-spaceAround : JustifyContent a b
+spaceAround : Internal.Value a -> Style
 spaceAround =
     prop1 "space-around"
 
@@ -3912,7 +4114,7 @@ spaceAround =
 {-| The[`space-between`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values) value for the
 justify-content property.
 -}
-spaceBetween : JustifyContent a b
+spaceBetween : Internal.Value a -> Style
 spaceBetween =
     prop1 "space-between"
 
@@ -3920,7 +4122,7 @@ spaceBetween =
 {-| The[`stretch`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
 align-items property.
 -}
-stretch : AlignItems a b
+stretch : Internal.Value a -> Style
 stretch =
     prop1 "stretch"
 
@@ -3967,7 +4169,7 @@ columnReverse =
 {-| An [`underline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Internal.Value)
 text decoration line.
 -}
-underline : TextDecorationLine {}
+underline : Internal.Value { textDecorationLine : Compatible }
 underline =
     Internal.Value "underline"
         { textDecorationLine = Compatible
@@ -3977,7 +4179,7 @@ underline =
 {-| An [`overline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Internal.Value)
 text decoration line.
 -}
-overline : TextDecorationLine {}
+overline : Internal.Value { textDecorationLine : Compatible }
 overline =
     Internal.Value "overline"
         { textDecorationLine = Compatible
@@ -3987,7 +4189,7 @@ overline =
 {-| A [`line-through`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Internal.Value)
 text decoration line.
 -}
-lineThrough : TextDecorationLine {}
+lineThrough : Internal.Value { textDecorationLine : Compatible }
 lineThrough =
     Internal.Value "line-through"
         { textDecorationLine = Compatible
@@ -4000,7 +4202,7 @@ lineThrough =
 
 {-| The `repeat-x` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
-repeatX : BackgroundRepeatShorthand {}
+repeatX : Internal.Value { backgroundRepeatShorthand : Compatible }
 repeatX =
     Internal.Value "repeat-x"
         { backgroundRepeatShorthand = Compatible
@@ -4009,7 +4211,7 @@ repeatX =
 
 {-| The `repeat-y` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
-repeatY : BackgroundRepeatShorthand {}
+repeatY : Internal.Value { backgroundRepeatShorthand : Compatible }
 repeatY =
     Internal.Value "repeat-y"
         { backgroundRepeatShorthand = Compatible
@@ -4018,7 +4220,11 @@ repeatY =
 
 {-| The `repeat` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
-repeat : BackgroundRepeat {}
+repeat :
+    Internal.Value
+        { backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
+        }
 repeat =
     Internal.Value "repeat"
         { backgroundRepeat = Compatible
@@ -4028,7 +4234,11 @@ repeat =
 
 {-| The `space` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
-space : BackgroundRepeat {}
+space :
+    Internal.Value
+        { backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
+        }
 space =
     Internal.Value "space"
         { backgroundRepeat = Compatible
@@ -4038,7 +4248,11 @@ space =
 
 {-| The `round` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
-round : BackgroundRepeat {}
+round :
+    Internal.Value
+        { backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
+        }
 round =
     Internal.Value "round"
         { backgroundRepeat = Compatible
@@ -4048,7 +4262,11 @@ round =
 
 {-| The `no-repeat` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
-noRepeat : BackgroundRepeat {}
+noRepeat :
+    Internal.Value
+        { backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
+        }
 noRepeat =
     Internal.Value "no-repeat"
         { backgroundRepeat = Compatible
@@ -4058,7 +4276,7 @@ noRepeat =
 
 {-| The `local` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
 -}
-local : BackgroundAttachment {}
+local : Internal.Value { backgroundAttachment : Compatible }
 local =
     Internal.Value "local"
         { backgroundAttachment = Compatible
@@ -4069,12 +4287,6 @@ local =
 {- LINEAR GRADIENT -}
 
 
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values>
--}
-type alias ColorStop compatibleA compatibleB unit =
-    ( ColorValue compatibleA, Maybe (Length compatibleB unit) )
-
-
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
     linearGradient  (stop2 red <| pct 75%) (stop <| hex "222") []
@@ -4082,9 +4294,9 @@ type alias ColorStop compatibleA compatibleB unit =
 
 -}
 linearGradient :
-    ColorStop compatibleA compatibleB unit
-    -> ColorStop compatibleA compatibleB unit
-    -> List (ColorStop compatibleA compatibleB unit)
+    ( Internal.Value compatibility, Maybe (Internal.Value compatibility1) )
+    -> ( Internal.Value compatibility, Maybe (Internal.Value compatibility1) )
+    -> List ( Internal.Value compatibility, Maybe (Internal.Value compatibility1) )
     ->
         Internal.Value
             { backgroundImage : Compatible
@@ -4111,9 +4323,9 @@ linearGradient stop1 stop2 stops =
 -}
 linearGradient2 :
     Internal.Value compatible
-    -> ColorStop compatibleA compatibleB unit
-    -> ColorStop compatibleA compatibleB unit
-    -> List (ColorStop compatibleA compatibleB unit)
+    -> ( Internal.Value compatibility, Maybe (Internal.Value compatibility1) )
+    -> ( Internal.Value compatibility, Maybe (Internal.Value compatibility1) )
+    -> List ( Internal.Value compatibility, Maybe (Internal.Value compatibility1) )
     ->
         Internal.Value
             { backgroundImage : Compatible
@@ -4133,7 +4345,9 @@ linearGradient2 (Internal.Value dir _) stop1 stop2 stops =
             }
 
 
-collectStops : List (ColorStop compatibleA compatibleB unit) -> List String
+collectStops :
+    List ( Internal.Value compatibility, Maybe (Internal.Value compatibility1) )
+    -> List String
 collectStops =
     List.map <|
         \( c, len ) ->
@@ -4145,21 +4359,21 @@ collectStops =
 
 {-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-stop : ColorValue compatibleA -> ColorStop compatibleA compatibleB unit
+stop : b -> ( b, Maybe a )
 stop c =
     ( c, Nothing )
 
 
 {-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-stop2 : ColorValue compatibleA -> Length compatibleB unit -> ColorStop compatibleA compatibleB unit
+stop2 : a -> b -> ( a, Maybe b )
 stop2 c len =
     ( c, Just len )
 
 
 {-| Sets the direction to [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toTop : AngleOrDirection {}
+toTop : Internal.Value { angleOrDirection : Compatible }
 toTop =
     Internal.Value "top"
         { angleOrDirection = Compatible
@@ -4168,7 +4382,7 @@ toTop =
 
 {-| Sets the direction to [`top right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toTopRight : AngleOrDirection {}
+toTopRight : Internal.Value { angleOrDirection : Compatible }
 toTopRight =
     Internal.Value "top right"
         { angleOrDirection = Compatible
@@ -4177,7 +4391,7 @@ toTopRight =
 
 {-| Sets the direction to [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toRight : AngleOrDirection {}
+toRight : Internal.Value { angleOrDirection : Compatible }
 toRight =
     Internal.Value "right"
         { angleOrDirection = Compatible
@@ -4186,7 +4400,7 @@ toRight =
 
 {-| Sets the direction to [`bottom right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toBottomRight : AngleOrDirection {}
+toBottomRight : Internal.Value { angleOrDirection : Compatible }
 toBottomRight =
     Internal.Value "bottom right"
         { angleOrDirection = Compatible
@@ -4195,7 +4409,7 @@ toBottomRight =
 
 {-| Sets the direction to [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toBottom : AngleOrDirection {}
+toBottom : Internal.Value { angleOrDirection : Compatible }
 toBottom =
     Internal.Value "bottom"
         { angleOrDirection = Compatible
@@ -4204,7 +4418,7 @@ toBottom =
 
 {-| Sets the direction to [`bottom left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toBottomLeft : AngleOrDirection {}
+toBottomLeft : Internal.Value { angleOrDirection : Compatible }
 toBottomLeft =
     Internal.Value "bottom left"
         { angleOrDirection = Compatible
@@ -4213,7 +4427,7 @@ toBottomLeft =
 
 {-| Sets the direction to [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toLeft : AngleOrDirection {}
+toLeft : Internal.Value { angleOrDirection : Compatible }
 toLeft =
     Internal.Value "left"
         { angleOrDirection = Compatible
@@ -4222,7 +4436,7 @@ toLeft =
 
 {-| Sets the direction to [`top left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-toTopLeft : AngleOrDirection {}
+toTopLeft : Internal.Value { angleOrDirection : Compatible }
 toTopLeft =
     Internal.Value "top left"
         { angleOrDirection = Compatible
@@ -4234,7 +4448,7 @@ toTopLeft =
 
 
 {-| -}
-block : Display {}
+block : Internal.Value { display : Compatible }
 block =
     Internal.Value "block"
         { display = Compatible
@@ -4242,7 +4456,7 @@ block =
 
 
 {-| -}
-inlineBlock : Display {}
+inlineBlock : Internal.Value { display : Compatible }
 inlineBlock =
     Internal.Value "inline-block"
         { display = Compatible
@@ -4251,7 +4465,7 @@ inlineBlock =
 
 {-| Sets the display style to [`inline-flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-inlineFlex : Display {}
+inlineFlex : Internal.Value { display : Compatible }
 inlineFlex =
     Internal.Value "inline-flex"
         { display = Compatible
@@ -4259,7 +4473,7 @@ inlineFlex =
 
 
 {-| -}
-inline : Display {}
+inline : Internal.Value { display : Compatible }
 inline =
     Internal.Value "inline"
         { display = Compatible }
@@ -4267,7 +4481,7 @@ inline =
 
 {-| Sets the display style to [`table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-table : Display {}
+table : Internal.Value { display : Compatible }
 table =
     Internal.Value "table"
         { display = Compatible }
@@ -4275,7 +4489,7 @@ table =
 
 {-| Sets the display style to [`inline-table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-inlineTable : Display {}
+inlineTable : Internal.Value { display : Compatible }
 inlineTable =
     Internal.Value "inline-table"
         { display = Compatible
@@ -4284,7 +4498,7 @@ inlineTable =
 
 {-| Sets the display style to [`table-row`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableRow : Display {}
+tableRow : Internal.Value { display : Compatible }
 tableRow =
     Internal.Value "table-row"
         { display = Compatible
@@ -4293,7 +4507,7 @@ tableRow =
 
 {-| Sets the display style to [`table-cell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableCell : Display {}
+tableCell : Internal.Value { display : Compatible }
 tableCell =
     Internal.Value "table-cell"
         { display = Compatible
@@ -4302,7 +4516,7 @@ tableCell =
 
 {-| Sets the display style to [`table-column`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableColumn : Display {}
+tableColumn : Internal.Value { display : Compatible }
 tableColumn =
     Internal.Value "table-column"
         { display = Compatible
@@ -4311,7 +4525,7 @@ tableColumn =
 
 {-| Sets the display style to [`table-caption`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableCaption : Display {}
+tableCaption : Internal.Value { display : Compatible }
 tableCaption =
     Internal.Value "table-caption"
         { display = Compatible
@@ -4320,7 +4534,7 @@ tableCaption =
 
 {-| Sets the display style to [`table-row-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableRowGroup : Display {}
+tableRowGroup : Internal.Value { display : Compatible }
 tableRowGroup =
     Internal.Value "table-row-group"
         { display = Compatible
@@ -4329,7 +4543,7 @@ tableRowGroup =
 
 {-| Sets the display style to [`table-column-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableColumnGroup : Display {}
+tableColumnGroup : Internal.Value { display : Compatible }
 tableColumnGroup =
     Internal.Value "table-column-group"
         { display = Compatible
@@ -4338,7 +4552,7 @@ tableColumnGroup =
 
 {-| Sets the display style to [`table-header-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableHeaderGroup : Display {}
+tableHeaderGroup : Internal.Value { display : Compatible }
 tableHeaderGroup =
     Internal.Value "table-header-group"
         { display = Compatible
@@ -4347,7 +4561,7 @@ tableHeaderGroup =
 
 {-| Sets the display style to [`table-footer-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
-tableFooterGroup : Display {}
+tableFooterGroup : Internal.Value { display : Compatible }
 tableFooterGroup =
     Internal.Value "table-footer-group"
         { display = Compatible
@@ -4355,7 +4569,7 @@ tableFooterGroup =
 
 
 {-| -}
-listItem : Display {}
+listItem : Internal.Value { display : Compatible }
 listItem =
     Internal.Value "list-item"
         { display = Compatible
@@ -4363,7 +4577,7 @@ listItem =
 
 
 {-| -}
-inlineListItem : Display {}
+inlineListItem : Internal.Value { display : Compatible }
 inlineListItem =
     Internal.Value "inline-list-item"
         { display = Compatible
@@ -4462,7 +4676,7 @@ noWrap =
     verticalAlign middle
 
 -}
-middle : VerticalAlign a b
+middle : Internal.Value a -> Style
 middle =
     prop1 "middle"
 
@@ -4472,7 +4686,7 @@ middle =
     verticalAlign baseline
 
 -}
-baseline : VerticalAlign a b
+baseline : Internal.Value a -> Style
 baseline =
     prop1 "baseline"
 
@@ -4482,7 +4696,7 @@ baseline =
     verticalAlign sub
 
 -}
-sub : VerticalAlign a b
+sub : Internal.Value a -> Style
 sub =
     prop1 "sub"
 
@@ -4492,7 +4706,7 @@ sub =
     verticalAlign super
 
 -}
-super : VerticalAlign a b
+super : Internal.Value a -> Style
 super =
     prop1 "super"
 
@@ -4502,7 +4716,7 @@ super =
     verticalAlign textTop
 
 -}
-textTop : VerticalAlign a b
+textTop : Internal.Value a -> Style
 textTop =
     prop1 "text-top"
 
@@ -4512,14 +4726,14 @@ textTop =
     verticalAlign textBottom
 
 -}
-textBottom : VerticalAlign a b
+textBottom : Internal.Value a -> Style
 textBottom =
     prop1 "text-bottom"
 
 
 {-| The [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) property.
 -}
-position : Position compatible -> Style
+position : Internal.Value a -> Style
 position =
     prop1 "position"
 
@@ -4564,7 +4778,27 @@ float : Float compatible -> Style
     float right
 
 -}
-float : (ExplicitLength IncompatibleUnits -> Style) -> Style
+float :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 float fn =
     getOverloadedProperty "float" "float" (fn lengthForOverloadedProperty)
 
@@ -4574,7 +4808,7 @@ float fn =
     textDecorationColor (rgb 12 11 10)
 
 -}
-textDecorationColor : ColorValue compatible -> Style
+textDecorationColor : Internal.Value { a | warnings : List String } -> Style
 textDecorationColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "text-decoration-color" val
 
@@ -4584,7 +4818,7 @@ textDecorationColor (Internal.Value val { warnings }) =
      textEmphasisColor (rgb 100 100 100)
 
 -}
-textEmphasisColor : ColorValue compatible -> Style
+textEmphasisColor : Internal.Value { a | warnings : List String } -> Style
 textEmphasisColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "text-emphasis-color" val
 
@@ -4599,21 +4833,61 @@ use this workaround:
     can be prioritized!
 
 -}
-textAlignLast : (ExplicitLength IncompatibleUnits -> Style) -> Style
+textAlignLast :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 textAlignLast fn =
     getOverloadedProperty "textAlignLast" "text-align-last" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align).
 -}
-textAlign : (ExplicitLength IncompatibleUnits -> Style) -> Style
+textAlign :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 textAlign fn =
     getOverloadedProperty "textAlign" "text-align" (fn lengthForOverloadedProperty)
 
 
 {-| Sets [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering).
 -}
-textRendering : TextRendering a -> Style
+textRendering : Internal.Value a -> Style
 textRendering =
     prop1 "text-rendering"
 
@@ -4623,7 +4897,7 @@ textRendering =
     text-orientation mixed
 
 -}
-textOrientation : TextOrientation compatible -> Style
+textOrientation : Internal.Value a -> Style
 textOrientation =
     prop1 "text-orientation"
 
@@ -4633,7 +4907,7 @@ textOrientation =
     textOverflow ellipsis
 
 -}
-textOverflow : TextOverflow compatible -> Style
+textOverflow : Internal.Value a -> Style
 textOverflow =
     prop1 "text-overflow"
 
@@ -4646,7 +4920,7 @@ textOverflow =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow : None compatible -> Style
+textShadow : Internal.Value a -> Style
 textShadow =
     prop1 "text-shadow"
 
@@ -4659,7 +4933,7 @@ textShadow =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+textShadow2 : Internal.Value a -> Internal.Value b -> Style
 textShadow2 =
     prop2 "text-shadow"
 
@@ -4672,7 +4946,7 @@ textShadow2 =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> ColorValue compatibleC -> Style
+textShadow3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 textShadow3 =
     prop3 "text-shadow"
 
@@ -4685,7 +4959,12 @@ textShadow3 =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> ColorValue compatibleD -> Style
+textShadow4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 textShadow4 =
     prop4 "text-shadow"
 
@@ -4706,7 +4985,7 @@ textShadow4 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow : None compatible -> Style
+boxShadow : Internal.Value a -> Style
 boxShadow =
     prop1 "box-shadow"
 
@@ -4727,7 +5006,7 @@ boxShadow =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+boxShadow2 : Internal.Value a -> Internal.Value b -> Style
 boxShadow2 =
     prop2 "box-shadow"
 
@@ -4748,7 +5027,7 @@ boxShadow2 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow3 : Internal.Value a -> Length compatibleB unitsB -> Internal.Value c -> Style
+boxShadow3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 boxShadow3 =
     prop3 "box-shadow"
 
@@ -4769,7 +5048,12 @@ boxShadow3 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow4 : Internal.Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Internal.Value d -> Style
+boxShadow4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 boxShadow4 =
     prop4 "box-shadow"
 
@@ -4790,7 +5074,13 @@ boxShadow4 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow5 : Internal.Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
+boxShadow5 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Internal.Value e
+    -> Style
 boxShadow5 =
     prop5 "box-shadow"
 
@@ -4811,7 +5101,14 @@ boxShadow5 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow6 : Internal.Value a -> Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
+boxShadow6 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Internal.Value e
+    -> Internal.Value f
+    -> Style
 boxShadow6 =
     prop6 "box-shadow"
 
@@ -4823,7 +5120,7 @@ boxShadow6 =
     textIndent3 (px 40) hanging eachLine
 
 -}
-textIndent : Length compatible units -> Style
+textIndent : Internal.Value a -> Style
 textIndent =
     prop1 "text-indent"
 
@@ -4835,7 +5132,7 @@ textIndent =
     textIndent3 (px 40) hanging eachLine
 
 -}
-textIndent2 : Length compatibleA unitsA -> TextIndent compatibleB -> Style
+textIndent2 : Internal.Value a -> Internal.Value b -> Style
 textIndent2 =
     prop2 "text-indent"
 
@@ -4847,21 +5144,41 @@ textIndent2 =
     textIndent3 (px 40) hanging eachLine
 
 -}
-textIndent3 : Length compatibleA unitsA -> TextIndent compatibleB -> TextIndent compatibleC -> Style
+textIndent3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 textIndent3 =
     prop3 "text-indent"
 
 
 {-| Sets [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 -}
-textTransform : TextTransform compatible -> Style
+textTransform : Internal.Value a -> Style
 textTransform =
     prop1 "text-transform"
 
 
 {-| Sets [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
 -}
-verticalAlign : (ExplicitLength IncompatibleUnits -> Style) -> Style
+verticalAlign :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 verticalAlign fn =
     getOverloadedProperty "verticalAlign" "vertical-align" (fn lengthForOverloadedProperty)
 
@@ -4882,7 +5199,7 @@ displayFlex =
 
 
 {-| -}
-opacity : Number compatible -> Style
+opacity : Internal.Value a -> Style
 opacity =
     prop1 "opacity"
 
@@ -4892,7 +5209,7 @@ opacity =
     width (px 960)
 
 -}
-width : LengthOrAuto compatible -> Style
+width : Internal.Value a -> Style
 width =
     prop1 "width"
 
@@ -4902,7 +5219,7 @@ width =
     maxWidth (px 960)
 
 -}
-maxWidth : LengthOrNoneOrMinMaxDimension compatible -> Style
+maxWidth : Internal.Value a -> Style
 maxWidth =
     prop1 "max-width"
 
@@ -4912,7 +5229,7 @@ maxWidth =
     minWidth (px 100)
 
 -}
-minWidth : LengthOrMinMaxDimension compatible -> Style
+minWidth : Internal.Value a -> Style
 minWidth =
     prop1 "min-width"
 
@@ -4922,7 +5239,7 @@ minWidth =
     height (px 800)
 
 -}
-height : LengthOrAuto compatible -> Style
+height : Internal.Value a -> Style
 height =
     prop1 "height"
 
@@ -4932,7 +5249,7 @@ height =
     minHeight (px 100)
 
 -}
-minHeight : LengthOrMinMaxDimension compatible -> Style
+minHeight : Internal.Value a -> Style
 minHeight =
     prop1 "min-height"
 
@@ -4942,7 +5259,7 @@ minHeight =
     maxHeight (px 1024)
 
 -}
-maxHeight : LengthOrNoneOrMinMaxDimension compatible -> Style
+maxHeight : Internal.Value a -> Style
 maxHeight =
     prop1 "max-height"
 
@@ -4959,7 +5276,7 @@ maxHeight =
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-padding : Length compatible units -> Style
+padding : Internal.Value a -> Style
 padding =
     prop1 "padding"
 
@@ -4972,7 +5289,7 @@ padding =
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-padding2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+padding2 : Internal.Value a -> Internal.Value b -> Style
 padding2 =
     prop2 "padding"
 
@@ -4985,7 +5302,7 @@ padding2 =
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-padding3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
+padding3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 padding3 =
     prop3 "padding"
 
@@ -4998,7 +5315,12 @@ padding3 =
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-padding4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatible units -> Style
+padding4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 padding4 =
     prop4 "padding"
 
@@ -5008,7 +5330,7 @@ padding4 =
     paddingBlockStart (px 10)
 
 -}
-paddingBlockStart : LengthOrAuto compatible -> Style
+paddingBlockStart : Internal.Value a -> Style
 paddingBlockStart =
     prop1 "padding-block-start"
 
@@ -5018,7 +5340,7 @@ paddingBlockStart =
     paddingBlockEnd (px 10)
 
 -}
-paddingBlockEnd : LengthOrAuto compatible -> Style
+paddingBlockEnd : Internal.Value a -> Style
 paddingBlockEnd =
     prop1 "padding-block-end"
 
@@ -5028,7 +5350,7 @@ paddingBlockEnd =
     paddingInlineStart (px 10)
 
 -}
-paddingInlineStart : LengthOrAuto compatible -> Style
+paddingInlineStart : Internal.Value a -> Style
 paddingInlineStart =
     prop1 "padding-inline-start"
 
@@ -5038,7 +5360,7 @@ paddingInlineStart =
     paddingInlineEnd (px 10)
 
 -}
-paddingInlineEnd : LengthOrAuto compatible -> Style
+paddingInlineEnd : Internal.Value a -> Style
 paddingInlineEnd =
     prop1 "padding-inline-end"
 
@@ -5048,7 +5370,7 @@ paddingInlineEnd =
     paddingTop (px 10)
 
 -}
-paddingTop : Length compatible units -> Style
+paddingTop : Internal.Value a -> Style
 paddingTop =
     prop1 "padding-top"
 
@@ -5058,7 +5380,7 @@ paddingTop =
     paddingBottom (px 10)
 
 -}
-paddingBottom : Length compatible units -> Style
+paddingBottom : Internal.Value a -> Style
 paddingBottom =
     prop1 "padding-bottom"
 
@@ -5068,7 +5390,7 @@ paddingBottom =
     paddingRight (px 10)
 
 -}
-paddingRight : Length compatible units -> Style
+paddingRight : Internal.Value a -> Style
 paddingRight =
     prop1 "padding-right"
 
@@ -5078,7 +5400,7 @@ paddingRight =
     paddingLeft (px 10)
 
 -}
-paddingLeft : Length compatible units -> Style
+paddingLeft : Internal.Value a -> Style
 paddingLeft =
     prop1 "padding-left"
 
@@ -5095,7 +5417,7 @@ paddingLeft =
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-margin : LengthOrAuto compatible -> Style
+margin : Internal.Value a -> Style
 margin =
     prop1 "margin"
 
@@ -5108,7 +5430,7 @@ margin =
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-margin2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
+margin2 : Internal.Value a -> Internal.Value b -> Style
 margin2 =
     prop2 "margin"
 
@@ -5121,7 +5443,7 @@ margin2 =
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-margin3 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> Style
+margin3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 margin3 =
     prop3 "margin"
 
@@ -5134,7 +5456,12 @@ margin3 =
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
-margin4 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> LengthOrAuto compatibleC -> LengthOrAuto compatibleD -> Style
+margin4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 margin4 =
     prop4 "margin"
 
@@ -5144,7 +5471,7 @@ margin4 =
     marginTop (px 10)
 
 -}
-marginTop : LengthOrAuto compatible -> Style
+marginTop : Internal.Value a -> Style
 marginTop =
     prop1 "margin-top"
 
@@ -5154,7 +5481,7 @@ marginTop =
     marginBottom (px 10)
 
 -}
-marginBottom : LengthOrAuto compatible -> Style
+marginBottom : Internal.Value a -> Style
 marginBottom =
     prop1 "margin-bottom"
 
@@ -5164,7 +5491,7 @@ marginBottom =
     marginRight (px 10)
 
 -}
-marginRight : LengthOrAuto compatible -> Style
+marginRight : Internal.Value a -> Style
 marginRight =
     prop1 "margin-right"
 
@@ -5174,7 +5501,7 @@ marginRight =
     marginLeft (px 10)
 
 -}
-marginLeft : LengthOrAuto compatible -> Style
+marginLeft : Internal.Value a -> Style
 marginLeft =
     prop1 "margin-left"
 
@@ -5184,7 +5511,7 @@ marginLeft =
     marginBlockStart (px 10)
 
 -}
-marginBlockStart : LengthOrAuto compatible -> Style
+marginBlockStart : Internal.Value a -> Style
 marginBlockStart =
     prop1 "margin-block-start"
 
@@ -5194,7 +5521,7 @@ marginBlockStart =
     marginBlockEnd (px 10)
 
 -}
-marginBlockEnd : LengthOrAuto compatible -> Style
+marginBlockEnd : Internal.Value a -> Style
 marginBlockEnd =
     prop1 "margin-block-end"
 
@@ -5204,7 +5531,7 @@ marginBlockEnd =
     marginInlineStart (px 10)
 
 -}
-marginInlineStart : LengthOrAuto compatible -> Style
+marginInlineStart : Internal.Value a -> Style
 marginInlineStart =
     prop1 "margin-inline-start"
 
@@ -5214,7 +5541,7 @@ marginInlineStart =
     marginInlineEnd (px 10)
 
 -}
-marginInlineEnd : LengthOrAuto compatible -> Style
+marginInlineEnd : Internal.Value a -> Style
 marginInlineEnd =
     prop1 "margin-inline-end"
 
@@ -5229,7 +5556,7 @@ This can also be used as a `top` [vertical-align](https://developer.mozilla.org/
     verticalAlign top
 
 -}
-top : LengthOrAuto compatible -> Style
+top : Internal.Value a -> Style
 top =
     prop1 "top"
 
@@ -5244,7 +5571,7 @@ This can also be used as a `bottom` [vertical-align](https://developer.mozilla.o
     verticalAlign bottom
 
 -}
-bottom : LengthOrAuto compatible -> Style
+bottom : Internal.Value a -> Style
 bottom =
     prop1 "bottom"
 
@@ -5263,7 +5590,7 @@ It can also be used as a `left` [float](https://developer.mozilla.org/en-US/docs
     float left
 
 -}
-left : LengthOrAuto compatible -> Style
+left : Internal.Value a -> Style
 left =
     prop1 "left"
 
@@ -5282,7 +5609,7 @@ It can also be used as a `right` [float](https://developer.mozilla.org/en-US/doc
     float right
 
 -}
-right : LengthOrAuto compatible -> Style
+right : Internal.Value a -> Style
 right =
     prop1 "right"
 
@@ -5297,7 +5624,12 @@ right =
 [`min-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
 [`max-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
 -}
-maxContent : MinMaxDimension {}
+maxContent :
+    Internal.Value
+        { lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , minMaxDimension : Compatible
+        }
 maxContent =
     Internal.Value "max-content" (getCompatibility fillAvailable)
 
@@ -5308,7 +5640,12 @@ maxContent =
 [`min-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
 [`max-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
 -}
-minContent : MinMaxDimension {}
+minContent :
+    Internal.Value
+        { lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , minMaxDimension : Compatible
+        }
 minContent =
     Internal.Value "min-content" (getCompatibility fillAvailable)
 
@@ -5319,7 +5656,12 @@ minContent =
 [`min-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
 [`max-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
 -}
-fitContent : MinMaxDimension {}
+fitContent :
+    Internal.Value
+        { lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , minMaxDimension : Compatible
+        }
 fitContent =
     Internal.Value "fit-content" (getCompatibility fillAvailable)
 
@@ -5330,7 +5672,12 @@ fitContent =
 [`min-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height#Values), and
 [`max-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height#Values)
 -}
-fillAvailable : MinMaxDimension {}
+fillAvailable :
+    Internal.Value
+        { lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , minMaxDimension : Compatible
+        }
 fillAvailable =
     Internal.Value "fill-available"
         { minMaxDimension = Compatible
@@ -5348,7 +5695,7 @@ fillAvailable =
     position static
 
 -}
-static : Position {}
+static : Internal.Value { position : Compatible }
 static =
     Internal.Value "static"
         { position = Compatible
@@ -5374,7 +5721,7 @@ fixed =
     position sticky
 
 -}
-sticky : Position {}
+sticky : Internal.Value { position : Compatible }
 sticky =
     Internal.Value "sticky"
         { position = Compatible
@@ -5386,7 +5733,7 @@ sticky =
     position relative
 
 -}
-relative : Position {}
+relative : Internal.Value { position : Compatible }
 relative =
     Internal.Value "relative"
         { position = Compatible
@@ -5398,7 +5745,7 @@ relative =
     position absolute
 
 -}
-absolute : Position {}
+absolute : Internal.Value { position : Compatible }
 absolute =
     Internal.Value "absolute"
         { position = Compatible
@@ -5411,31 +5758,31 @@ absolute =
 
 
 {-| -}
-serif : FontFamily {}
+serif : Internal.Value { fontFamily : Compatible }
 serif =
     Internal.Value "serif" { fontFamily = Compatible }
 
 
 {-| -}
-sansSerif : FontFamily {}
+sansSerif : Internal.Value { fontFamily : Compatible }
 sansSerif =
     Internal.Value "sans-serif" { fontFamily = Compatible }
 
 
 {-| -}
-monospace : FontFamily {}
+monospace : Internal.Value { fontFamily : Compatible }
 monospace =
     Internal.Value "monospace" { fontFamily = Compatible }
 
 
 {-| -}
-cursive : FontFamily {}
+cursive : Internal.Value { fontFamily : Compatible }
 cursive =
     Internal.Value "cursive" { fontFamily = Compatible }
 
 
 {-| -}
-fantasy : FontFamily {}
+fantasy : Internal.Value { fontFamily : Compatible }
 fantasy =
     Internal.Value "fantasy" { fontFamily = Compatible }
 
@@ -5445,55 +5792,55 @@ fantasy =
 
 
 {-| -}
-xxSmall : FontSize {}
+xxSmall : Internal.Value { fontSize : Compatible }
 xxSmall =
     Internal.Value "xx-small" { fontSize = Compatible }
 
 
 {-| -}
-xSmall : FontSize {}
+xSmall : Internal.Value { fontSize : Compatible }
 xSmall =
     Internal.Value "x-small" { fontSize = Compatible }
 
 
 {-| -}
-small : FontSize {}
+small : Internal.Value { fontSize : Compatible }
 small =
     Internal.Value "small" { fontSize = Compatible }
 
 
 {-| -}
-medium : FontSize {}
+medium : Internal.Value { fontSize : Compatible }
 medium =
     Internal.Value "medium" { fontSize = Compatible }
 
 
 {-| -}
-large : FontSize {}
+large : Internal.Value { fontSize : Compatible }
 large =
     Internal.Value "large" { fontSize = Compatible }
 
 
 {-| -}
-xLarge : FontSize {}
+xLarge : Internal.Value { fontSize : Compatible }
 xLarge =
     Internal.Value "x-large" { fontSize = Compatible }
 
 
 {-| -}
-xxLarge : FontSize {}
+xxLarge : Internal.Value { fontSize : Compatible }
 xxLarge =
     Internal.Value "xx-large" { fontSize = Compatible }
 
 
 {-| -}
-smaller : FontSize {}
+smaller : Internal.Value { fontSize : Compatible }
 smaller =
     Internal.Value "smaller" { fontSize = Compatible }
 
 
 {-| -}
-larger : FontSize {}
+larger : Internal.Value { fontSize : Compatible }
 larger =
     Internal.Value "larger" { fontSize = Compatible }
 
@@ -5522,13 +5869,13 @@ normal =
 
 
 {-| -}
-italic : FontStyle {}
+italic : Internal.Value { fontStyle : Compatible }
 italic =
     Internal.Value "italic" { fontStyle = Compatible }
 
 
 {-| -}
-oblique : FontStyle {}
+oblique : Internal.Value { fontStyle : Compatible }
 oblique =
     Internal.Value "oblique" { fontStyle = Compatible }
 
@@ -5538,7 +5885,7 @@ oblique =
 
 
 {-| -}
-bold : FontWeight {}
+bold : Internal.Value { fontWeight : Compatible }
 bold =
     Internal.Value "bold"
         { fontWeight = Compatible
@@ -5546,7 +5893,7 @@ bold =
 
 
 {-| -}
-lighter : FontWeight {}
+lighter : Internal.Value { fontWeight : Compatible }
 lighter =
     Internal.Value "lighter"
         { fontWeight = Compatible
@@ -5554,7 +5901,7 @@ lighter =
 
 
 {-| -}
-bolder : FontWeight {}
+bolder : Internal.Value { fontWeight : Compatible }
 bolder =
     Internal.Value "bolder"
         { fontWeight = Compatible
@@ -5567,37 +5914,37 @@ bolder =
 
 
 {-| -}
-smallCaps : FontVariantCaps {}
+smallCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 smallCaps =
     Internal.Value "small-caps" { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
-allSmallCaps : FontVariantCaps {}
+allSmallCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 allSmallCaps =
     Internal.Value "all-small-caps" { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
-petiteCaps : FontVariantCaps {}
+petiteCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 petiteCaps =
     Internal.Value "petite-caps" { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
-allPetiteCaps : FontVariantCaps {}
+allPetiteCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 allPetiteCaps =
     Internal.Value "all-petite-caps" { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
-unicase : FontVariantCaps {}
+unicase : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 unicase =
     Internal.Value "unicase" { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
-titlingCaps : FontVariantCaps {}
+titlingCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 titlingCaps =
     Internal.Value "titling-caps" { fontVariant = Compatible, fontVariantCaps = Compatible }
 
@@ -5607,7 +5954,7 @@ titlingCaps =
 
 
 {-| -}
-commonLigatures : FontVariantLigatures {}
+commonLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 commonLigatures =
     Internal.Value "common-ligatures"
         { fontVariant = Compatible
@@ -5616,7 +5963,7 @@ commonLigatures =
 
 
 {-| -}
-noCommonLigatures : FontVariantLigatures {}
+noCommonLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noCommonLigatures =
     Internal.Value "no-common-ligatures"
         { fontVariant = Compatible
@@ -5625,7 +5972,7 @@ noCommonLigatures =
 
 
 {-| -}
-discretionaryLigatures : FontVariantLigatures {}
+discretionaryLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 discretionaryLigatures =
     Internal.Value "discretionary-ligatures"
         { fontVariant = Compatible
@@ -5634,7 +5981,7 @@ discretionaryLigatures =
 
 
 {-| -}
-noDiscretionaryLigatures : FontVariantLigatures {}
+noDiscretionaryLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noDiscretionaryLigatures =
     Internal.Value "no-discretionary-ligatures"
         { fontVariant = Compatible
@@ -5643,7 +5990,7 @@ noDiscretionaryLigatures =
 
 
 {-| -}
-historicalLigatures : FontVariantLigatures {}
+historicalLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 historicalLigatures =
     Internal.Value "historical-ligatures"
         { fontVariant = Compatible
@@ -5652,7 +5999,7 @@ historicalLigatures =
 
 
 {-| -}
-noHistoricalLigatures : FontVariantLigatures {}
+noHistoricalLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noHistoricalLigatures =
     Internal.Value "no-historical-ligatures"
         { fontVariant = Compatible
@@ -5661,7 +6008,7 @@ noHistoricalLigatures =
 
 
 {-| -}
-contextual : FontVariantLigatures {}
+contextual : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 contextual =
     Internal.Value "context"
         { fontVariant = Compatible
@@ -5670,7 +6017,7 @@ contextual =
 
 
 {-| -}
-noContextual : FontVariantLigatures {}
+noContextual : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noContextual =
     Internal.Value "no-contextual"
         { fontVariant = Compatible
@@ -5683,7 +6030,7 @@ noContextual =
 
 
 {-| -}
-liningNums : FontVariantNumeric {}
+liningNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 liningNums =
     Internal.Value "lining-nums"
         { fontVariant = Compatible
@@ -5692,7 +6039,7 @@ liningNums =
 
 
 {-| -}
-oldstyleNums : FontVariantNumeric {}
+oldstyleNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 oldstyleNums =
     Internal.Value "oldstyle-nums"
         { fontVariant = Compatible
@@ -5701,7 +6048,7 @@ oldstyleNums =
 
 
 {-| -}
-proportionalNums : FontVariantNumeric {}
+proportionalNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 proportionalNums =
     Internal.Value "proportional-nums"
         { fontVariant = Compatible
@@ -5710,7 +6057,7 @@ proportionalNums =
 
 
 {-| -}
-tabularNums : FontVariantNumeric {}
+tabularNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 tabularNums =
     Internal.Value "tabular-nums"
         { fontVariant = Compatible
@@ -5719,7 +6066,7 @@ tabularNums =
 
 
 {-| -}
-diagonalFractions : FontVariantNumeric {}
+diagonalFractions : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 diagonalFractions =
     Internal.Value "diagonal-fractions"
         { fontVariant = Compatible
@@ -5728,7 +6075,7 @@ diagonalFractions =
 
 
 {-| -}
-stackedFractions : FontVariantNumeric {}
+stackedFractions : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 stackedFractions =
     Internal.Value "stacked-fractions"
         { fontVariant = Compatible
@@ -5737,7 +6084,7 @@ stackedFractions =
 
 
 {-| -}
-ordinal : FontVariantNumeric {}
+ordinal : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 ordinal =
     Internal.Value "ordinal"
         { fontVariant = Compatible
@@ -5746,7 +6093,7 @@ ordinal =
 
 
 {-| -}
-slashedZero : FontVariantNumeric {}
+slashedZero : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 slashedZero =
     Internal.Value "slashed-zero"
         { fontVariant = Compatible
@@ -5778,7 +6125,9 @@ with the default value of `1`
     fontFeatureSettings (featureTag "hist")
 
 -}
-featureTag : String -> FeatureTagValue {}
+featureTag :
+    String
+    -> Internal.Value { featureTagValue : Compatible, warnings : List String }
 featureTag tag =
     featureTag2 tag 1
 
@@ -5790,7 +6139,7 @@ with a particular integer value
     fontFeatureSettings (featureTag2 "swsh" 2)
 
 -}
-featureTag2 : String -> Int -> FeatureTagValue {}
+featureTag2 : String -> Int -> Internal.Value { featureTagValue : Compatible, warnings : List String }
 featureTag2 tag value =
     let
         potentialWarnings =
@@ -5820,7 +6169,7 @@ featureTag2 tag value =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border : Length compatible units -> Style
+border : Internal.Value a -> Style
 border =
     prop1 "border"
 
@@ -5832,7 +6181,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+border2 : Internal.Value a -> Internal.Value b -> Style
 border2 =
     prop2 "border"
 
@@ -5844,7 +6193,7 @@ border2 =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+border3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 border3 =
     prop3 "border"
 
@@ -5856,7 +6205,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Length compatible units -> Style
+borderTop : Internal.Value a -> Style
 borderTop =
     prop1 "border-top"
 
@@ -5868,7 +6217,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderTop2 : Internal.Value a -> Internal.Value b -> Style
 borderTop2 =
     prop2 "border-top"
 
@@ -5880,7 +6229,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderTop3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 borderTop3 =
     prop3 "border-top"
 
@@ -5892,7 +6241,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Length compatible units -> Style
+borderBottom : Internal.Value a -> Style
 borderBottom =
     prop1 "border-bottom"
 
@@ -5904,7 +6253,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderBottom2 : Internal.Value a -> Internal.Value b -> Style
 borderBottom2 =
     prop2 "border-bottom"
 
@@ -5916,7 +6265,11 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderBottom3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderBottom3 =
     prop3 "border-bottom"
 
@@ -5928,7 +6281,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Length compatible units -> Style
+borderLeft : Internal.Value a -> Style
 borderLeft =
     prop1 "border-left"
 
@@ -5940,7 +6293,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderLeft2 : Internal.Value a -> Internal.Value b -> Style
 borderLeft2 =
     prop2 "border-left"
 
@@ -5952,7 +6305,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderLeft3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 borderLeft3 =
     prop3 "border-left"
 
@@ -5964,7 +6317,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Length compatible units -> Style
+borderRight : Internal.Value a -> Style
 borderRight =
     prop1 "border-right"
 
@@ -5976,7 +6329,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderRight2 : Internal.Value a -> Internal.Value b -> Style
 borderRight2 =
     prop2 "border-right"
 
@@ -5988,7 +6341,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderRight3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 borderRight3 =
     prop3 "border-right"
 
@@ -6000,7 +6353,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Length compatible units -> Style
+borderBlockStart : Internal.Value a -> Style
 borderBlockStart =
     prop1 "border-block-start"
 
@@ -6012,7 +6365,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderBlockStart2 : Internal.Value a -> Internal.Value b -> Style
 borderBlockStart2 =
     prop2 "border-block-start"
 
@@ -6024,7 +6377,11 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA units -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderBlockStart3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderBlockStart3 =
     prop3 "border-block-start"
 
@@ -6036,7 +6393,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Length compatible units -> Style
+borderBlockEnd : Internal.Value a -> Style
 borderBlockEnd =
     prop1 "border-block-end"
 
@@ -6048,7 +6405,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderBlockEnd2 : Internal.Value a -> Internal.Value b -> Style
 borderBlockEnd2 =
     prop2 "border-block-end"
 
@@ -6060,7 +6417,11 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderBlockEnd3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderBlockEnd3 =
     prop3 "border-block-end"
 
@@ -6072,7 +6433,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Length compatible units -> Style
+borderInlineStart : Internal.Value a -> Style
 borderInlineStart =
     prop1 "border-block-start"
 
@@ -6084,7 +6445,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderInlineStart2 : Internal.Value a -> Internal.Value b -> Style
 borderInlineStart2 =
     prop2 "border-block-start"
 
@@ -6096,7 +6457,11 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderInlineStart3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderInlineStart3 =
     prop3 "border-block-start"
 
@@ -6108,7 +6473,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Length compatible units -> Style
+borderInlineEnd : Internal.Value a -> Style
 borderInlineEnd =
     prop1 "border-block-end"
 
@@ -6120,7 +6485,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Length compatibleA unitsA -> BorderStyle compatibleB -> Style
+borderInlineEnd2 : Internal.Value a -> Internal.Value b -> Style
 borderInlineEnd2 =
     prop2 "border-block-end"
 
@@ -6132,7 +6497,11 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderInlineEnd3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderInlineEnd3 =
     prop3 "border-block-end"
 
@@ -6145,7 +6514,7 @@ borderInlineEnd3 =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset : LengthOrNumber compatible -> Style
+borderImageOutset : Internal.Value a -> Style
 borderImageOutset =
     prop1 "border-image-outset"
 
@@ -6158,7 +6527,7 @@ borderImageOutset =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Style
+borderImageOutset2 : Internal.Value a -> Internal.Value b -> Style
 borderImageOutset2 =
     prop2 "border-image-outset"
 
@@ -6171,7 +6540,11 @@ borderImageOutset2 =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Style
+borderImageOutset3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderImageOutset3 =
     prop3 "border-image-outset"
 
@@ -6184,7 +6557,12 @@ borderImageOutset3 =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Style
+borderImageOutset4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 borderImageOutset4 =
     prop4 "border-image-outset"
 
@@ -6197,7 +6575,7 @@ borderImageOutset4 =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth : LengthOrNumber compatible -> Style
+borderImageWidth : Internal.Value a -> Style
 borderImageWidth =
     prop1 "border-image-width"
 
@@ -6210,7 +6588,7 @@ borderImageWidth =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth2 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> Style
+borderImageWidth2 : Internal.Value a -> Internal.Value b -> Style
 borderImageWidth2 =
     prop2 "border-image-width"
 
@@ -6223,7 +6601,11 @@ borderImageWidth2 =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth3 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> Style
+borderImageWidth3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderImageWidth3 =
     prop3 "border-image-width"
 
@@ -6236,7 +6618,12 @@ borderImageWidth3 =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth4 : LengthOrNumber compatibleA -> LengthOrNumber compatibleB -> LengthOrNumber compatibleC -> LengthOrNumber compatibleD -> Style
+borderImageWidth4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 borderImageWidth4 =
     prop4 "border-image-width"
 
@@ -6246,7 +6633,7 @@ borderImageWidth4 =
     borderBlockStartColor (rgb 101 202 0)
 
 -}
-borderBlockStartColor : ColorValue compatible -> Style
+borderBlockStartColor : Internal.Value { a | warnings : List String } -> Style
 borderBlockStartColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-block-start-color" val
 
@@ -6256,7 +6643,7 @@ borderBlockStartColor (Internal.Value val { warnings }) =
     borderBottomColor (rgb 101 202 0)
 
 -}
-borderBottomColor : ColorValue compatible -> Style
+borderBottomColor : Internal.Value { a | warnings : List String } -> Style
 borderBottomColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-bottom-color" val
 
@@ -6266,7 +6653,7 @@ borderBottomColor (Internal.Value val { warnings }) =
     borderInlineStartColor (rgb 101 202 0)
 
 -}
-borderInlineStartColor : ColorValue compatible -> Style
+borderInlineStartColor : Internal.Value { a | warnings : List String } -> Style
 borderInlineStartColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-inline-start-color" val
 
@@ -6276,7 +6663,7 @@ borderInlineStartColor (Internal.Value val { warnings }) =
     borderInlineEndColor (rgb 101 202 0)
 
 -}
-borderInlineEndColor : ColorValue compatible -> Style
+borderInlineEndColor : Internal.Value { a | warnings : List String } -> Style
 borderInlineEndColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-inline-end-color" val
 
@@ -6286,7 +6673,7 @@ borderInlineEndColor (Internal.Value val { warnings }) =
     borderLeftColor (rgb 101 202 0)
 
 -}
-borderLeftColor : ColorValue compatible -> Style
+borderLeftColor : Internal.Value { a | warnings : List String } -> Style
 borderLeftColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-left-color" val
 
@@ -6296,7 +6683,7 @@ borderLeftColor (Internal.Value val { warnings }) =
     borderRightColor (rgb 101 202 0)
 
 -}
-borderRightColor : ColorValue compatible -> Style
+borderRightColor : Internal.Value { a | warnings : List String } -> Style
 borderRightColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-right-color" val
 
@@ -6306,7 +6693,7 @@ borderRightColor (Internal.Value val { warnings }) =
     borderTopColor (rgb 101 202 0)
 
 -}
-borderTopColor : ColorValue compatible -> Style
+borderTopColor : Internal.Value { a | warnings : List String } -> Style
 borderTopColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-top-color" val
 
@@ -6316,7 +6703,7 @@ borderTopColor (Internal.Value val { warnings }) =
     borderBlockEndColor (rgb 101 202 0)
 
 -}
-borderBlockEndColor : ColorValue compatible -> Style
+borderBlockEndColor : Internal.Value { a | warnings : List String } -> Style
 borderBlockEndColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-block-end-color" val
 
@@ -6326,7 +6713,7 @@ borderBlockEndColor (Internal.Value val { warnings }) =
     borderBlockEndStyle dashed
 
 -}
-borderBlockEndStyle : BorderStyle compatible -> Style
+borderBlockEndStyle : Internal.Value a -> Style
 borderBlockEndStyle =
     prop1 "border-block-end-style"
 
@@ -6336,7 +6723,7 @@ borderBlockEndStyle =
     borderBlockStartStyle dashed
 
 -}
-borderBlockStartStyle : BorderStyle compatible -> Style
+borderBlockStartStyle : Internal.Value a -> Style
 borderBlockStartStyle =
     prop1 "border-block-start-style"
 
@@ -6346,7 +6733,7 @@ borderBlockStartStyle =
     borderInlineEndStyle dashed
 
 -}
-borderInlineEndStyle : BorderStyle compatible -> Style
+borderInlineEndStyle : Internal.Value a -> Style
 borderInlineEndStyle =
     prop1 "border-inline-end-style"
 
@@ -6356,7 +6743,7 @@ borderInlineEndStyle =
     borderBottomStyle dashed
 
 -}
-borderBottomStyle : BorderStyle compatible -> Style
+borderBottomStyle : Internal.Value a -> Style
 borderBottomStyle =
     prop1 "border-bottom-style"
 
@@ -6366,7 +6753,7 @@ borderBottomStyle =
     borderInlineStartStyle dashed
 
 -}
-borderInlineStartStyle : BorderStyle compatible -> Style
+borderInlineStartStyle : Internal.Value a -> Style
 borderInlineStartStyle =
     prop1 "border-inline-start-style"
 
@@ -6376,7 +6763,7 @@ borderInlineStartStyle =
     borderLeftStyle dashed
 
 -}
-borderLeftStyle : BorderStyle compatible -> Style
+borderLeftStyle : Internal.Value a -> Style
 borderLeftStyle =
     prop1 "border-left-style"
 
@@ -6386,7 +6773,7 @@ borderLeftStyle =
     borderRightStyle dashed
 
 -}
-borderRightStyle : BorderStyle compatible -> Style
+borderRightStyle : Internal.Value a -> Style
 borderRightStyle =
     prop1 "border-right-style"
 
@@ -6396,7 +6783,7 @@ borderRightStyle =
     borderTopStyle dashed
 
 -}
-borderTopStyle : BorderStyle compatible -> Style
+borderTopStyle : Internal.Value a -> Style
 borderTopStyle =
     prop1 "border-top-style"
 
@@ -6406,7 +6793,7 @@ borderTopStyle =
     borderStyle dashed
 
 -}
-borderStyle : BorderStyle compatible -> Style
+borderStyle : Internal.Value a -> Style
 borderStyle =
     prop1 "border-style"
 
@@ -6416,7 +6803,7 @@ borderStyle =
     borderCollapse collapse
 
 -}
-borderCollapse : BorderCollapse compatible -> Style
+borderCollapse : Internal.Value a -> Style
 borderCollapse =
     prop1 "border-collapse"
 
@@ -6429,7 +6816,7 @@ borderCollapse =
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderWidth : Length compatible units -> Style
+borderWidth : Internal.Value a -> Style
 borderWidth =
     prop1 "border-width"
 
@@ -6442,7 +6829,7 @@ borderWidth =
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderWidth2 : Internal.Value a -> Internal.Value b -> Style
 borderWidth2 =
     prop2 "border-width"
 
@@ -6455,7 +6842,7 @@ borderWidth2 =
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderWidth3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
+borderWidth3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 borderWidth3 =
     prop3 "border-width"
 
@@ -6468,7 +6855,12 @@ borderWidth3 =
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderWidth4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Style
+borderWidth4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 borderWidth4 =
     prop4 "border-width"
 
@@ -6478,7 +6870,7 @@ borderWidth4 =
     borderBottomWidth (em 4)
 
 -}
-borderBottomWidth : Length compatible units -> Style
+borderBottomWidth : Internal.Value a -> Style
 borderBottomWidth =
     prop1 "border-bottom-width"
 
@@ -6488,7 +6880,7 @@ borderBottomWidth =
     borderInlineEndWidth (em 4)
 
 -}
-borderInlineEndWidth : Length compatible units -> Style
+borderInlineEndWidth : Internal.Value a -> Style
 borderInlineEndWidth =
     prop1 "border-inline-end-width"
 
@@ -6498,7 +6890,7 @@ borderInlineEndWidth =
     borderLeftWidth (em 4)
 
 -}
-borderLeftWidth : Length compatible units -> Style
+borderLeftWidth : Internal.Value a -> Style
 borderLeftWidth =
     prop1 "border-left-width"
 
@@ -6508,7 +6900,7 @@ borderLeftWidth =
     borderRightWidth (em 4)
 
 -}
-borderRightWidth : Length compatible units -> Style
+borderRightWidth : Internal.Value a -> Style
 borderRightWidth =
     prop1 "border-right-width"
 
@@ -6519,7 +6911,7 @@ borderRightWidth =
     borderTopWidth2 (em 4) (px 2)
 
 -}
-borderTopWidth : Length compatible units -> Style
+borderTopWidth : Internal.Value a -> Style
 borderTopWidth =
     prop1 "border-top-width"
 
@@ -6530,7 +6922,7 @@ borderTopWidth =
     borderTopWidth2 (em 4) (px 2)
 
 -}
-borderTopWidth2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderTopWidth2 : Internal.Value a -> Internal.Value b -> Style
 borderTopWidth2 =
     prop2 "border-top-width"
 
@@ -6541,7 +6933,7 @@ borderTopWidth2 =
     borderBottomLeftRadius2 (em 4) (px 2)
 
 -}
-borderBottomLeftRadius : Length compatible units -> Style
+borderBottomLeftRadius : Internal.Value a -> Style
 borderBottomLeftRadius =
     prop1 "border-bottom-left-radius"
 
@@ -6552,7 +6944,7 @@ borderBottomLeftRadius =
     borderBottomLeftRadius2 (em 4) (px 2)
 
 -}
-borderBottomLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderBottomLeftRadius2 : Internal.Value a -> Internal.Value b -> Style
 borderBottomLeftRadius2 =
     prop2 "border-bottom-left-radius"
 
@@ -6563,7 +6955,7 @@ borderBottomLeftRadius2 =
     borderBottomRightRadius2 (em 4) (px 2)
 
 -}
-borderBottomRightRadius : Length compatible units -> Style
+borderBottomRightRadius : Internal.Value a -> Style
 borderBottomRightRadius =
     prop1 "border-bottom-right-radius"
 
@@ -6574,7 +6966,7 @@ borderBottomRightRadius =
     borderBottomRightRadius2 (em 4) (px 2)
 
 -}
-borderBottomRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderBottomRightRadius2 : Internal.Value a -> Internal.Value b -> Style
 borderBottomRightRadius2 =
     prop2 "border-bottom-right-radius"
 
@@ -6585,7 +6977,7 @@ borderBottomRightRadius2 =
     borderTopLeftRadius2 (em 4) (px 2)
 
 -}
-borderTopLeftRadius : Length compatible units -> Style
+borderTopLeftRadius : Internal.Value a -> Style
 borderTopLeftRadius =
     prop1 "border-top-left-radius"
 
@@ -6596,7 +6988,7 @@ borderTopLeftRadius =
     borderTopLeftRadius2 (em 4) (px 2)
 
 -}
-borderTopLeftRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderTopLeftRadius2 : Internal.Value a -> Internal.Value b -> Style
 borderTopLeftRadius2 =
     prop2 "border-top-left-radius"
 
@@ -6607,7 +6999,7 @@ borderTopLeftRadius2 =
     borderTopRightRadius2 (em 4) (px 2)
 
 -}
-borderTopRightRadius : Length compatible units -> Style
+borderTopRightRadius : Internal.Value a -> Style
 borderTopRightRadius =
     prop1 "border-top-right-radius"
 
@@ -6618,7 +7010,7 @@ borderTopRightRadius =
     borderTopRightRadius2 (em 4) (px 2)
 
 -}
-borderTopRightRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderTopRightRadius2 : Internal.Value a -> Internal.Value b -> Style
 borderTopRightRadius2 =
     prop2 "border-top-right-radius"
 
@@ -6631,7 +7023,7 @@ borderTopRightRadius2 =
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderRadius : Length compatible units -> Style
+borderRadius : Internal.Value a -> Style
 borderRadius =
     prop1 "border-radius"
 
@@ -6644,7 +7036,7 @@ borderRadius =
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderRadius2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderRadius2 : Internal.Value a -> Internal.Value b -> Style
 borderRadius2 =
     prop2 "border-radius"
 
@@ -6657,7 +7049,11 @@ borderRadius2 =
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderRadius3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Style
+borderRadius3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 borderRadius3 =
     prop3 "border-radius"
 
@@ -6670,7 +7066,12 @@ borderRadius3 =
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
-borderRadius4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Style
+borderRadius4 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Internal.Value d
+    -> Style
 borderRadius4 =
     prop4 "border-radius"
 
@@ -6681,7 +7082,7 @@ borderRadius4 =
     borderSpacing2 (em 4) (px 2)
 
 -}
-borderSpacing : Length compatible units -> Style
+borderSpacing : Internal.Value a -> Style
 borderSpacing =
     prop1 "border-spacing"
 
@@ -6692,7 +7093,7 @@ borderSpacing =
     borderSpacing2 (em 4) (px 2)
 
 -}
-borderSpacing2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+borderSpacing2 : Internal.Value a -> Internal.Value b -> Style
 borderSpacing2 =
     prop2 "border-spacing"
 
@@ -6705,7 +7106,7 @@ borderSpacing2 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor : ColorValue compatible -> Style
+borderColor : Internal.Value { a | warnings : List String } -> Style
 borderColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "border-color" val
 
@@ -6718,7 +7119,10 @@ borderColor (Internal.Value val { warnings }) =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Style
+borderColor2 :
+    Internal.Value { a | warnings : List String }
+    -> Internal.Value { b | warnings : List String }
+    -> Style
 borderColor2 (Internal.Value c1 c1record) (Internal.Value c2 c2record) =
     let
         warnings =
@@ -6738,7 +7142,11 @@ borderColor2 (Internal.Value c1 c1record) (Internal.Value c2 c2record) =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Style
+borderColor3 :
+    Internal.Value { a | warnings : List String }
+    -> Internal.Value { b | warnings : List String }
+    -> Internal.Value { c | warnings : List String }
+    -> Style
 borderColor3 (Internal.Value c1 c1record) (Internal.Value c2 c2record) (Internal.Value c3 c3record) =
     let
         warnings =
@@ -6758,7 +7166,12 @@ borderColor3 (Internal.Value c1 c1record) (Internal.Value c2 c2record) (Internal
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Style
+borderColor4 :
+    Internal.Value { a | warnings : List String }
+    -> Internal.Value { b | warnings : List String }
+    -> Internal.Value { c | warnings : List String }
+    -> Internal.Value { d | warnings : List String }
+    -> Style
 borderColor4 (Internal.Value c1 c1record) (Internal.Value c2 c2record) (Internal.Value c3 c3record) (Internal.Value c4 c4record) =
     let
         warnings =
@@ -6777,7 +7190,7 @@ borderColor4 (Internal.Value c1 c1record) (Internal.Value c2 c2record) (Internal
     outline3 (px 10) dashed (rgb 11 14 17)
 
 -}
-outline : Outline compatible -> Style
+outline : Internal.Value a -> Style
 outline =
     prop1 "outline"
 
@@ -6789,7 +7202,7 @@ outline =
     outline3 (px 10) dashed (rgb 11 14 17)
 
 -}
-outline3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+outline3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 outline3 =
     prop3 "outline"
 
@@ -6801,7 +7214,7 @@ outline3 =
     outlineColor (hsla 120 0.5 0.5 0.5)
 
 -}
-outlineColor : ColorValue compatible -> Style
+outlineColor : Internal.Value { a | warnings : List String } -> Style
 outlineColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "outline-color" val
 
@@ -6813,7 +7226,7 @@ outlineColor (Internal.Value val { warnings }) =
     outlineWidth none
 
 -}
-outlineWidth : LengthOrNone compatible -> Style
+outlineWidth : Internal.Value a -> Style
 outlineWidth =
     prop1 "outline-width"
 
@@ -6825,7 +7238,7 @@ outlineWidth =
     outlineStyle outset
 
 -}
-outlineStyle : BorderStyle compatible -> Style
+outlineStyle : Internal.Value a -> Style
 outlineStyle =
     prop1 "outline-style"
 
@@ -6837,55 +7250,55 @@ outlineStyle =
     outlineOffset (pct 50)
 
 -}
-outlineOffset : Length compatible units -> Style
+outlineOffset : Internal.Value a -> Style
 outlineOffset =
     prop1 "outline-offset"
 
 
 {-| -}
-resize : Resize compatible -> Style
+resize : Internal.Value a -> Style
 resize =
     prop1 "resize"
 
 
 {-| -}
-fill : ColorValue compatible -> Style
+fill : Internal.Value a -> Style
 fill =
     prop1 "fill"
 
 
 {-| -}
-overflow : Overflow compatible -> Style
+overflow : Internal.Value a -> Style
 overflow =
     prop1 "overflow"
 
 
 {-| -}
-overflowX : Overflow compatible -> Style
+overflowX : Internal.Value a -> Style
 overflowX =
     prop1 "overflow-x"
 
 
 {-| -}
-overflowY : Overflow compatible -> Style
+overflowY : Internal.Value a -> Style
 overflowY =
     prop1 "overflow-y"
 
 
 {-| -}
-overflowWrap : Wrap compatible -> Style
+overflowWrap : Internal.Value a -> Style
 overflowWrap =
     prop1 "overflow-wrap"
 
 
 {-| -}
-whiteSpace : WhiteSpace compatible -> Style
+whiteSpace : Internal.Value a -> Style
 whiteSpace =
     prop1 "white-space"
 
 
 {-| -}
-backgroundColor : ColorValue compatible -> Style
+backgroundColor : Internal.Value { a | warnings : List String } -> Style
 backgroundColor (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "background-color" val
 
@@ -6895,7 +7308,7 @@ backgroundColor (Internal.Value val { warnings }) =
     backgroundRepeat repeatX
 
 -}
-backgroundRepeat : BackgroundRepeatShorthand compatible -> Style
+backgroundRepeat : Internal.Value a -> Style
 backgroundRepeat =
     prop1 "background-repeat"
 
@@ -6905,7 +7318,7 @@ backgroundRepeat =
     backgroundRepeat2 repeat noRepeat
 
 -}
-backgroundRepeat2 : BackgroundRepeat compatibleA -> BackgroundRepeat compatibleB -> Style
+backgroundRepeat2 : Internal.Value a -> Internal.Value b -> Style
 backgroundRepeat2 =
     prop2 "background-repeat"
 
@@ -6915,7 +7328,7 @@ backgroundRepeat2 =
     backgroundAttachment fixed
 
 -}
-backgroundAttachment : BackgroundAttachment compatible -> Style
+backgroundAttachment : Internal.Value a -> Style
 backgroundAttachment =
     prop1 "background-attachment"
 
@@ -6929,7 +7342,27 @@ Only supports keywords values like "top" or "center". If you want to pass a sing
     backgroundPosition2 (px 10) zero
 
 -}
-backgroundPosition : (ExplicitLength IncompatibleUnits -> Style) -> Style
+backgroundPosition :
+    (Internal.Value
+        { calc : Compatible
+        , flexBasis : Compatible
+        , fontSize : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , numericValue : number
+        , textIndent : Compatible
+        , unitLabel : String
+        , units : IncompatibleUnits
+        }
+     -> Style
+    )
+    -> Style
 backgroundPosition fn =
     getOverloadedProperty "backgroundPosition" "background-position" (fn lengthForOverloadedProperty)
 
@@ -6939,7 +7372,7 @@ backgroundPosition fn =
     backgroundPosition2 (px 10) zero
 
 -}
-backgroundPosition2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+backgroundPosition2 : Internal.Value a -> Internal.Value b -> Style
 backgroundPosition2 =
     prop2 "background-position"
 
@@ -6949,7 +7382,9 @@ backgroundPosition2 =
     backgroundBlendMode darken
 
 -}
-backgroundBlendMode : (ColorValue NonMixable -> Style) -> Style
+backgroundBlendMode :
+    (Internal.Value { color : Compatible, warnings : List a } -> Style)
+    -> Style
 backgroundBlendMode fn =
     getOverloadedProperty "backgroundBlendMode" "background-blend-mode" (fn colorValueForOverloadedProperty)
 
@@ -6959,7 +7394,7 @@ backgroundBlendMode fn =
     backgroundClip borderBox
 
 -}
-backgroundClip : BackgroundClip compatible -> Style
+backgroundClip : Internal.Value a -> Style
 backgroundClip =
     prop1 "background-clip"
 
@@ -6969,7 +7404,7 @@ backgroundClip =
     backgroundOrigin borderBox
 
 -}
-backgroundOrigin : BackgroundOrigin compatible -> Style
+backgroundOrigin : Internal.Value a -> Style
 backgroundOrigin =
     prop1 "background-origin"
 
@@ -6979,7 +7414,7 @@ backgroundOrigin =
     backgroundImage (url "http://www.example.com/chicken.jpg")
 
 -}
-backgroundImage : BackgroundImage compatible -> Style
+backgroundImage : Internal.Value a -> Style
 backgroundImage =
     prop1 "background-image"
 
@@ -6989,7 +7424,7 @@ backgroundImage =
     backgroundSize cover
 
 -}
-backgroundSize : LengthOrAutoOrCoverOrContain compatible -> Style
+backgroundSize : Internal.Value a -> Style
 backgroundSize =
     prop1 "background-size"
 
@@ -6999,13 +7434,13 @@ backgroundSize =
     backgroundSize2 50% auto
 
 -}
-backgroundSize2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
+backgroundSize2 : Internal.Value a -> Internal.Value b -> Style
 backgroundSize2 =
     prop2 "background-size"
 
 
 {-| -}
-color : ColorValue compatible -> Style
+color : Internal.Value { a | warnings : List String } -> Style
 color (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "color" val
 
@@ -7078,7 +7513,7 @@ withMedia =
     lineHeight (px 10)
 
 -}
-lineHeight : LengthOrNumber compatible -> Style
+lineHeight : Internal.Value a -> Style
 lineHeight =
     prop1 "line-height"
 
@@ -7088,13 +7523,13 @@ lineHeight =
     letterSpacing (px 10)
 
 -}
-letterSpacing : Length compatible units -> Style
+letterSpacing : Internal.Value a -> Style
 letterSpacing =
     prop1 "letter-spacing"
 
 
 {-| -}
-src : ImportType compatible -> String
+src : Internal.Value compatible -> String
 src (Internal.Value val _) =
     toString val
 
@@ -7119,7 +7554,7 @@ qt str =
 {-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).
 If you want to refer to a font by its name (like Helvetica or Arial), use [`fontFamilies`](#fontFamilies) instead.
 -}
-fontFamily : FontFamily a -> Style
+fontFamily : Internal.Value a -> Style
 fontFamily =
     prop1 "font-family"
 
@@ -7142,7 +7577,7 @@ fontFamilies =
     fontFeatureSettings (featureTag2 "swsh" 2)
 
 -}
-fontFeatureSettings : FeatureTagValue a -> Style
+fontFeatureSettings : Internal.Value { a | warnings : List String } -> Style
 fontFeatureSettings (Internal.Value val { warnings }) =
     propertyWithWarnings warnings "font-feature-settings" val
 
@@ -7152,7 +7587,9 @@ fontFeatureSettings (Internal.Value val { warnings }) =
     fontFeatureSettingsList [featureTag "c2sc", featureTag "smcp"]
 
 -}
-fontFeatureSettingsList : List (FeatureTagValue a) -> Style
+fontFeatureSettingsList :
+    List (Internal.Value { a | warnings : List String })
+    -> Style
 fontFeatureSettingsList featureTagValues =
     let
         value =
@@ -7170,7 +7607,7 @@ fontFeatureSettingsList featureTagValues =
     fontSize  (px 12)
 
 -}
-fontSize : FontSize a -> Style
+fontSize : Internal.Value a -> Style
 fontSize =
     prop1 "font-size"
 
@@ -7180,7 +7617,7 @@ fontSize =
     fontStyle  italic
 
 -}
-fontStyle : FontStyle a -> Style
+fontStyle : Internal.Value a -> Style
 fontStyle =
     prop1 "font-style"
 
@@ -7191,7 +7628,7 @@ fontStyle =
     fontWeight  (int 300)
 
 -}
-fontWeight : FontWeight a -> Style
+fontWeight : Internal.Value compatible -> Style
 fontWeight (Internal.Value value _) =
     let
         validWeight weight =
@@ -7220,55 +7657,59 @@ fontWeight (Internal.Value value _) =
     fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
 
 -}
-fontVariant : FontVariant a -> Style
+fontVariant : Internal.Value a -> Style
 fontVariant =
     prop1 "font-variant"
 
 
 {-| -}
-fontVariant2 : FontVariant compatibleA -> FontVariant compatibleB -> Style
+fontVariant2 : Internal.Value a -> Internal.Value b -> Style
 fontVariant2 =
     prop2 "font-variant"
 
 
 {-| -}
-fontVariant3 : FontVariant compatibleA -> FontVariant compatibleB -> FontVariant compatibleC -> Style
+fontVariant3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
 fontVariant3 =
     prop3 "font-variant"
 
 
 {-| -}
-fontVariantLigatures : FontVariantLigatures a -> Style
+fontVariantLigatures : Internal.Value a -> Style
 fontVariantLigatures =
     prop1 "font-variant-ligatures"
 
 
 {-| -}
-fontVariantCaps : FontVariantCaps a -> Style
+fontVariantCaps : Internal.Value a -> Style
 fontVariantCaps =
     prop1 "font-variant-caps"
 
 
 {-| -}
-fontVariantNumeric : FontVariantNumeric a -> Style
+fontVariantNumeric : Internal.Value a -> Style
 fontVariantNumeric =
     prop1 "font-variant-numeric"
 
 
 {-| -}
-fontVariantNumeric2 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> Style
+fontVariantNumeric2 : Internal.Value a -> Internal.Value b -> Style
 fontVariantNumeric2 =
     prop2 "font-variant-numeric"
 
 
 {-| -}
-fontVariantNumeric3 : FontVariantNumeric compatibleA -> FontVariantNumeric compatibleB -> FontVariantNumeric compatibleC -> Style
+fontVariantNumeric3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 fontVariantNumeric3 =
     prop3 "font-variant-numeric"
 
 
 {-| -}
-fontVariantNumerics : List (FontVariantNumeric compatible) -> Style
+fontVariantNumerics : List (Internal.Value compatible) -> Style
 fontVariantNumerics =
     prop1 "font-variant-numeric" << valuesOrNone
 
@@ -7280,7 +7721,7 @@ fontVariantNumerics =
 {-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
 specifies the mouse cursor displayed when mouse pointer is over an element.
 -}
-cursor : Cursor compatible -> Style
+cursor : Internal.Value a -> Style
 cursor =
     prop1 "cursor"
 
@@ -7290,205 +7731,205 @@ cursor =
 
 
 {-| -}
-default : Cursor {}
+default : Internal.Value { cursor : Compatible }
 default =
     Internal.Value "default" { cursor = Compatible }
 
 
 {-| -}
-crosshair : Cursor {}
+crosshair : Internal.Value { cursor : Compatible }
 crosshair =
     Internal.Value "crosshair" { cursor = Compatible }
 
 
 {-| -}
-contextMenu : Cursor {}
+contextMenu : Internal.Value { cursor : Compatible }
 contextMenu =
     Internal.Value "context-menu" { cursor = Compatible }
 
 
 {-| -}
-help : Cursor {}
+help : Internal.Value { cursor : Compatible }
 help =
     Internal.Value "help" { cursor = Compatible }
 
 
 {-| -}
-pointer : Cursor {}
+pointer : Internal.Value { cursor : Compatible }
 pointer =
     Internal.Value "pointer" { cursor = Compatible }
 
 
 {-| -}
-progress : Cursor {}
+progress : Internal.Value { cursor : Compatible }
 progress =
     Internal.Value "progress" { cursor = Compatible }
 
 
 {-| -}
-wait : Cursor {}
+wait : Internal.Value { cursor : Compatible }
 wait =
     Internal.Value "wait" { cursor = Compatible }
 
 
 {-| -}
-cell : Cursor {}
+cell : Internal.Value { cursor : Compatible }
 cell =
     Internal.Value "cell" { cursor = Compatible }
 
 
 {-| -}
-text : Cursor {}
+text : Internal.Value { cursor : Compatible }
 text =
     Internal.Value "text" { cursor = Compatible }
 
 
 {-| -}
-verticalText : Cursor {}
+verticalText : Internal.Value { cursor : Compatible }
 verticalText =
     Internal.Value "vertical-text" { cursor = Compatible }
 
 
 {-| -}
-cursorAlias : Cursor {}
+cursorAlias : Internal.Value { cursor : Compatible }
 cursorAlias =
     Internal.Value "alias" { cursor = Compatible }
 
 
 {-| -}
-copy : Cursor {}
+copy : Internal.Value { cursor : Compatible }
 copy =
     Internal.Value "copy" { cursor = Compatible }
 
 
 {-| -}
-move : Cursor {}
+move : Internal.Value { cursor : Compatible }
 move =
     Internal.Value "move" { cursor = Compatible }
 
 
 {-| -}
-noDrop : Cursor {}
+noDrop : Internal.Value { cursor : Compatible }
 noDrop =
     Internal.Value "no-drop" { cursor = Compatible }
 
 
 {-| -}
-notAllowed : Cursor {}
+notAllowed : Internal.Value { cursor : Compatible }
 notAllowed =
     Internal.Value "not-allowed" { cursor = Compatible }
 
 
 {-| -}
-eResize : Cursor {}
+eResize : Internal.Value { cursor : Compatible }
 eResize =
     Internal.Value "e-resize" { cursor = Compatible }
 
 
 {-| -}
-nResize : Cursor {}
+nResize : Internal.Value { cursor : Compatible }
 nResize =
     Internal.Value "n-resize" { cursor = Compatible }
 
 
 {-| -}
-neResize : Cursor {}
+neResize : Internal.Value { cursor : Compatible }
 neResize =
     Internal.Value "ne-resize" { cursor = Compatible }
 
 
 {-| -}
-nwResize : Cursor {}
+nwResize : Internal.Value { cursor : Compatible }
 nwResize =
     Internal.Value "nw-resize" { cursor = Compatible }
 
 
 {-| -}
-sResize : Cursor {}
+sResize : Internal.Value { cursor : Compatible }
 sResize =
     Internal.Value "s-resize" { cursor = Compatible }
 
 
 {-| -}
-seResize : Cursor {}
+seResize : Internal.Value { cursor : Compatible }
 seResize =
     Internal.Value "se-resize" { cursor = Compatible }
 
 
 {-| -}
-swResize : Cursor {}
+swResize : Internal.Value { cursor : Compatible }
 swResize =
     Internal.Value "sw-resize" { cursor = Compatible }
 
 
 {-| -}
-wResize : Cursor {}
+wResize : Internal.Value { cursor : Compatible }
 wResize =
     Internal.Value "w-resize" { cursor = Compatible }
 
 
 {-| -}
-ewResize : Cursor {}
+ewResize : Internal.Value { cursor : Compatible }
 ewResize =
     Internal.Value "ew-resize" { cursor = Compatible }
 
 
 {-| -}
-nsResize : Cursor {}
+nsResize : Internal.Value { cursor : Compatible }
 nsResize =
     Internal.Value "ns-resize" { cursor = Compatible }
 
 
 {-| -}
-neswResize : Cursor {}
+neswResize : Internal.Value { cursor : Compatible }
 neswResize =
     Internal.Value "nesw-resize" { cursor = Compatible }
 
 
 {-| -}
-nwseResize : Cursor {}
+nwseResize : Internal.Value { cursor : Compatible }
 nwseResize =
     Internal.Value "nwse-resize" { cursor = Compatible }
 
 
 {-| -}
-colResize : Cursor {}
+colResize : Internal.Value { cursor : Compatible }
 colResize =
     Internal.Value "col-resize" { cursor = Compatible }
 
 
 {-| -}
-rowResize : Cursor {}
+rowResize : Internal.Value { cursor : Compatible }
 rowResize =
     Internal.Value "row-resize" { cursor = Compatible }
 
 
 {-| -}
-allScroll : Cursor {}
+allScroll : Internal.Value { cursor : Compatible }
 allScroll =
     Internal.Value "all-scroll" { cursor = Compatible }
 
 
 {-| -}
-zoomIn : Cursor {}
+zoomIn : Internal.Value { cursor : Compatible }
 zoomIn =
     Internal.Value "zoom-in" { cursor = Compatible }
 
 
 {-| -}
-zoomOut : Cursor {}
+zoomOut : Internal.Value { cursor : Compatible }
 zoomOut =
     Internal.Value "zoom-out" { cursor = Compatible }
 
 
 {-| -}
-grab : Cursor {}
+grab : Internal.Value { cursor : Compatible }
 grab =
     Internal.Value "grab" { cursor = Compatible }
 
 
 {-| -}
-grabbing : Cursor {}
+grabbing : Internal.Value { cursor : Compatible }
 grabbing =
     Internal.Value "grabbing" { cursor = Compatible }
 
@@ -7510,7 +7951,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecoration : TextDecorationLine a -> Style
+textDecoration : Internal.Value a -> Style
 textDecoration =
     prop1 "text-decoration"
 
@@ -7528,7 +7969,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecoration2 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Style
+textDecoration2 : Internal.Value a -> Internal.Value b -> Style
 textDecoration2 =
     prop2 "text-decoration"
 
@@ -7546,7 +7987,11 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
+textDecoration3 :
+    Internal.Value a
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 textDecoration3 =
     prop3 "text-decoration"
 
@@ -7558,7 +8003,7 @@ textDecoration3 =
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecorations : List (TextDecorationLine compatible) -> Style
+textDecorations : List (Internal.Value compatible) -> Style
 textDecorations =
     prop1 "text-decoration" << valuesOrNone
 
@@ -7570,7 +8015,7 @@ textDecorations =
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecorations2 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Style
+textDecorations2 : List (Internal.Value compatible) -> Internal.Value b -> Style
 textDecorations2 =
     prop2 "text-decoration" << valuesOrNone
 
@@ -7582,7 +8027,11 @@ textDecorations2 =
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
+textDecorations3 :
+    List (Internal.Value compatible)
+    -> Internal.Value b
+    -> Internal.Value c
+    -> Style
 textDecorations3 =
     prop3 "text-decoration" << valuesOrNone
 
@@ -7596,7 +8045,7 @@ You can specify multiple line decorations with `textDecorationLines`.
     textDecorationLines  [ underline, overline ]
 
 -}
-textDecorationLine : TextDecorationLine compatible -> Style
+textDecorationLine : Internal.Value a -> Style
 textDecorationLine =
     prop1 "text-decoration-line"
 
@@ -7606,7 +8055,7 @@ textDecorationLine =
     textDecorationLines  [ underline, overline ]
 
 -}
-textDecorationLines : List (TextDecorationLine compatible) -> Style
+textDecorationLines : List (Internal.Value compatible) -> Style
 textDecorationLines =
     prop1 "text-decoration-line" << valuesOrNone
 
@@ -7616,7 +8065,7 @@ textDecorationLines =
     textDecorationStyle dotted
 
 -}
-textDecorationStyle : TextDecorationStyle compatible -> Style
+textDecorationStyle : Internal.Value a -> Style
 textDecorationStyle =
     prop1 "text-decoration-style"
 
@@ -8401,6 +8850,6 @@ See <http://package.elm-lang.org/packages/rtfeldman/count/latest> for a useful l
 to manage z-index values.
 
 -}
-zIndex : IntOrAuto compatible -> Style
+zIndex : Internal.Value a -> Style
 zIndex =
     prop1 "z-index"
