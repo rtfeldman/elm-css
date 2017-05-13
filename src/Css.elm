@@ -1119,8 +1119,7 @@ currentColor : Internal.Value { color : Compatible }
 currentColor =
     Internal.Value []
         (EmittedString "currentColor")
-        { color = Compatible
-        }
+        { color = Compatible }
 
 
 {-| The `visible` value for the [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) property.
@@ -1159,8 +1158,7 @@ both : Internal.Value { resize : Compatible }
 both =
     Internal.Value []
         (EmittedString "both")
-        { resize = Compatible
-        }
+        { resize = Compatible }
 
 
 {-| The `horizontal` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
@@ -1169,8 +1167,7 @@ horizontal : Internal.Value { resize : Compatible }
 horizontal =
     Internal.Value []
         (EmittedString "horizontal")
-        { resize = Compatible
-        }
+        { resize = Compatible }
 
 
 {-| The `vertical` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
@@ -1179,8 +1176,7 @@ vertical : Internal.Value { resize : Compatible }
 vertical =
     Internal.Value []
         (EmittedString "vertical")
-        { resize = Compatible
-        }
+        { resize = Compatible }
 
 
 {-| The `multiply` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#multiply).
@@ -1941,8 +1937,7 @@ optimizeSpeed : Internal.Value { textRendering : Compatible }
 optimizeSpeed =
     Internal.Value []
         (EmittedString "optimizeSpeed")
-        { textRendering = Compatible
-        }
+        { textRendering = Compatible }
 
 
 {-| `optimizeLegibility` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
@@ -1951,8 +1946,7 @@ optimizeLegibility : Internal.Value { textRendering : Compatible }
 optimizeLegibility =
     Internal.Value []
         (EmittedString "optimizeLegibility")
-        { textRendering = Compatible
-        }
+        { textRendering = Compatible }
 
 
 {-| `geometricPrecision` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
@@ -1961,8 +1955,7 @@ geometricPrecision : Internal.Value { textRendering : Compatible }
 geometricPrecision =
     Internal.Value []
         (EmittedString "geometricPrecision")
-        { textRendering = Compatible
-        }
+        { textRendering = Compatible }
 
 
 
@@ -1975,8 +1968,7 @@ hanging : Internal.Value { textIndent : Compatible }
 hanging =
     Internal.Value []
         (EmittedString "hanging")
-        { textIndent = Compatible
-        }
+        { textIndent = Compatible }
 
 
 {-| `each-line` [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values) value
@@ -1985,8 +1977,7 @@ eachLine : Internal.Value { textIndent : Compatible }
 eachLine =
     Internal.Value []
         (EmittedString "each-line")
-        { textIndent = Compatible
-        }
+        { textIndent = Compatible }
 
 
 
@@ -1999,8 +1990,7 @@ mixed : Internal.Value { textOrientation : Compatible }
 mixed =
     Internal.Value []
         (EmittedString "mixed")
-        { textOrientation = Compatible
-        }
+        { textOrientation = Compatible }
 
 
 {-| `upright` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values) value
@@ -2009,8 +1999,7 @@ upright : Internal.Value { textOrientation : Compatible }
 upright =
     Internal.Value []
         (EmittedString "upright")
-        { textOrientation = Compatible
-        }
+        { textOrientation = Compatible }
 
 
 {-| `sideways` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientationEValues) value
@@ -2019,8 +2008,7 @@ sideways : Internal.Value { textOrientation : Compatible }
 sideways =
     Internal.Value []
         (EmittedString "sideways")
-        { textOrientation = Compatible
-        }
+        { textOrientation = Compatible }
 
 
 
@@ -2033,8 +2021,7 @@ capitalize : Internal.Value { textTransform : Compatible }
 capitalize =
     Internal.Value []
         (EmittedString "capitalize")
-        { textTransform = Compatible
-        }
+        { textTransform = Compatible }
 
 
 {-| `uppercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
@@ -2043,8 +2030,7 @@ uppercase : Internal.Value { textTransform : Compatible }
 uppercase =
     Internal.Value []
         (EmittedString "uppercase")
-        { textTransform = Compatible
-        }
+        { textTransform = Compatible }
 
 
 {-| `lowercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
@@ -2053,8 +2039,7 @@ lowercase : Internal.Value { textTransform : Compatible }
 lowercase =
     Internal.Value []
         (EmittedString "lowercase")
-        { textTransform = Compatible
-        }
+        { textTransform = Compatible }
 
 
 {-| `full-width` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
@@ -2063,8 +2048,7 @@ fullWidth : Internal.Value { textTransform : Compatible }
 fullWidth =
     Internal.Value []
         (EmittedString "full-width")
-        { textTransform = Compatible
-        }
+        { textTransform = Compatible }
 
 
 {-| `ellipsis` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
@@ -2073,8 +2057,7 @@ ellipsis : Internal.Value { textOverflow : Compatible }
 ellipsis =
     Internal.Value []
         (EmittedString "ellipsis")
-        { textOverflow = Compatible
-        }
+        { textOverflow = Compatible }
 
 
 {-| `clip` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
@@ -2083,8 +2066,7 @@ clip : Internal.Value { textOverflow : Compatible }
 clip =
     Internal.Value []
         (EmittedString "clip")
-        { textOverflow = Compatible
-        }
+        { textOverflow = Compatible }
 
 
 
@@ -2097,8 +2079,7 @@ wavy : Internal.Value { textDecorationStyle : Compatible }
 wavy =
     Internal.Value []
         (EmittedString "wavy")
-        { textDecorationStyle = Compatible
-        }
+        { textDecorationStyle = Compatible }
 
 
 {-| A `dotted` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
@@ -2151,8 +2132,7 @@ groove : Internal.Value { borderStyle : Compatible }
 groove =
     Internal.Value []
         (EmittedString "groove")
-        { borderStyle = Compatible
-        }
+        { borderStyle = Compatible }
 
 
 {-| A `ridge` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
@@ -2161,8 +2141,7 @@ ridge : Internal.Value { borderStyle : Compatible }
 ridge =
     Internal.Value []
         (EmittedString "ridge")
-        { borderStyle = Compatible
-        }
+        { borderStyle = Compatible }
 
 
 {-| An `inset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
@@ -2171,8 +2150,7 @@ inset : Internal.Value { borderStyle : Compatible }
 inset =
     Internal.Value []
         (EmittedString "inset")
-        { borderStyle = Compatible
-        }
+        { borderStyle = Compatible }
 
 
 {-| An `outset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
@@ -2181,8 +2159,7 @@ outset : Internal.Value { borderStyle : Compatible }
 outset =
     Internal.Value []
         (EmittedString "outset")
-        { borderStyle = Compatible
-        }
+        { borderStyle = Compatible }
 
 
 
@@ -2195,8 +2172,7 @@ separate : Internal.Value { borderCollapse : Compatible }
 separate =
     Internal.Value []
         (EmittedString "separate")
-        { borderCollapse = Compatible
-        }
+        { borderCollapse = Compatible }
 
 
 {-| A `collapse` [border-collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse#Values).
@@ -2205,8 +2181,7 @@ collapse : Internal.Value { borderCollapse : Compatible }
 collapse =
     Internal.Value []
         (EmittedString "collapse")
-        { borderCollapse = Compatible
-        }
+        { borderCollapse = Compatible }
 
 
 
@@ -3325,8 +3300,7 @@ fillBox : Internal.Value { transformBox : Compatible }
 fillBox =
     Internal.Value []
         (EmittedString "fill-box")
-        { transformBox = Compatible
-        }
+        { transformBox = Compatible }
 
 
 {-| The `content-box` value for the [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property.
@@ -3359,8 +3333,7 @@ viewBox : Internal.Value { transformBox : Compatible }
 viewBox =
     Internal.Value []
         (EmittedString "view-box")
-        { transformBox = Compatible
-        }
+        { transformBox = Compatible }
 
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
@@ -3386,8 +3359,7 @@ preserve3d : Internal.Value { transformStyle : Compatible }
 preserve3d =
     Internal.Value []
         (EmittedString "preserve-3d")
-        { transformStyle = Compatible
-        }
+        { transformStyle = Compatible }
 
 
 {-| The `flat` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
@@ -3396,8 +3368,7 @@ flat : Internal.Value { transformStyle : Compatible }
 flat =
     Internal.Value []
         (EmittedString "flat")
-        { transformStyle = Compatible
-        }
+        { transformStyle = Compatible }
 
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
@@ -4242,8 +4213,7 @@ underline : Internal.Value { textDecorationLine : Compatible }
 underline =
     Internal.Value []
         (EmittedString "underline")
-        { textDecorationLine = Compatible
-        }
+        { textDecorationLine = Compatible }
 
 
 {-| An [`overline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Internal.Value)
@@ -4253,8 +4223,7 @@ overline : Internal.Value { textDecorationLine : Compatible }
 overline =
     Internal.Value []
         (EmittedString "overline")
-        { textDecorationLine = Compatible
-        }
+        { textDecorationLine = Compatible }
 
 
 {-| A [`line-through`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Internal.Value)
@@ -4264,8 +4233,7 @@ lineThrough : Internal.Value { textDecorationLine : Compatible }
 lineThrough =
     Internal.Value []
         (EmittedString "line-through")
-        { textDecorationLine = Compatible
-        }
+        { textDecorationLine = Compatible }
 
 
 
@@ -4278,8 +4246,7 @@ repeatX : Internal.Value { backgroundRepeatShorthand : Compatible }
 repeatX =
     Internal.Value []
         (EmittedString "repeat-x")
-        { backgroundRepeatShorthand = Compatible
-        }
+        { backgroundRepeatShorthand = Compatible }
 
 
 {-| The `repeat-y` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
@@ -4288,8 +4255,7 @@ repeatY : Internal.Value { backgroundRepeatShorthand : Compatible }
 repeatY =
     Internal.Value []
         (EmittedString "repeat-y")
-        { backgroundRepeatShorthand = Compatible
-        }
+        { backgroundRepeatShorthand = Compatible }
 
 
 {-| The `repeat` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
@@ -4358,8 +4324,7 @@ local : Internal.Value { backgroundAttachment : Compatible }
 local =
     Internal.Value []
         (EmittedString "local")
-        { backgroundAttachment = Compatible
-        }
+        { backgroundAttachment = Compatible }
 
 
 
@@ -4458,8 +4423,7 @@ toTop : Internal.Value { angleOrDirection : Compatible }
 toTop =
     Internal.Value []
         (EmittedString "top")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 {-| Sets the direction to [`top right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4468,8 +4432,7 @@ toTopRight : Internal.Value { angleOrDirection : Compatible }
 toTopRight =
     Internal.Value []
         (EmittedString "top right")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 {-| Sets the direction to [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4478,8 +4441,7 @@ toRight : Internal.Value { angleOrDirection : Compatible }
 toRight =
     Internal.Value []
         (EmittedString "right")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 {-| Sets the direction to [`bottom right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4488,8 +4450,7 @@ toBottomRight : Internal.Value { angleOrDirection : Compatible }
 toBottomRight =
     Internal.Value []
         (EmittedString "bottom right")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 {-| Sets the direction to [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4498,8 +4459,7 @@ toBottom : Internal.Value { angleOrDirection : Compatible }
 toBottom =
     Internal.Value []
         (EmittedString "bottom")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 {-| Sets the direction to [`bottom left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4508,8 +4468,7 @@ toBottomLeft : Internal.Value { angleOrDirection : Compatible }
 toBottomLeft =
     Internal.Value []
         (EmittedString "bottom left")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 {-| Sets the direction to [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4518,8 +4477,7 @@ toLeft : Internal.Value { angleOrDirection : Compatible }
 toLeft =
     Internal.Value []
         (EmittedString "left")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 {-| Sets the direction to [`top left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4528,8 +4486,7 @@ toTopLeft : Internal.Value { angleOrDirection : Compatible }
 toTopLeft =
     Internal.Value []
         (EmittedString "top left")
-        { angleOrDirection = Compatible
-        }
+        { angleOrDirection = Compatible }
 
 
 
@@ -4541,8 +4498,7 @@ block : Internal.Value { display : Compatible }
 block =
     Internal.Value []
         (EmittedString "block")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| -}
@@ -4550,8 +4506,7 @@ inlineBlock : Internal.Value { display : Compatible }
 inlineBlock =
     Internal.Value []
         (EmittedString "inline-block")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`inline-flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4560,8 +4515,7 @@ inlineFlex : Internal.Value { display : Compatible }
 inlineFlex =
     Internal.Value []
         (EmittedString "inline-flex")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| -}
@@ -4587,8 +4541,7 @@ inlineTable : Internal.Value { display : Compatible }
 inlineTable =
     Internal.Value []
         (EmittedString "inline-table")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-row`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4597,8 +4550,7 @@ tableRow : Internal.Value { display : Compatible }
 tableRow =
     Internal.Value []
         (EmittedString "table-row")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-cell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4607,8 +4559,7 @@ tableCell : Internal.Value { display : Compatible }
 tableCell =
     Internal.Value []
         (EmittedString "table-cell")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-column`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4617,8 +4568,7 @@ tableColumn : Internal.Value { display : Compatible }
 tableColumn =
     Internal.Value []
         (EmittedString "table-column")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-caption`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4627,8 +4577,7 @@ tableCaption : Internal.Value { display : Compatible }
 tableCaption =
     Internal.Value []
         (EmittedString "table-caption")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-row-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4637,8 +4586,7 @@ tableRowGroup : Internal.Value { display : Compatible }
 tableRowGroup =
     Internal.Value []
         (EmittedString "table-row-group")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-column-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4647,8 +4595,7 @@ tableColumnGroup : Internal.Value { display : Compatible }
 tableColumnGroup =
     Internal.Value []
         (EmittedString "table-column-group")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-header-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4657,8 +4604,7 @@ tableHeaderGroup : Internal.Value { display : Compatible }
 tableHeaderGroup =
     Internal.Value []
         (EmittedString "table-header-group")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| Sets the display style to [`table-footer-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
@@ -4667,8 +4613,7 @@ tableFooterGroup : Internal.Value { display : Compatible }
 tableFooterGroup =
     Internal.Value []
         (EmittedString "table-footer-group")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| -}
@@ -4676,8 +4621,7 @@ listItem : Internal.Value { display : Compatible }
 listItem =
     Internal.Value []
         (EmittedString "list-item")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| -}
@@ -4685,8 +4629,7 @@ inlineListItem : Internal.Value { display : Compatible }
 inlineListItem =
     Internal.Value []
         (EmittedString "inline-list-item")
-        { display = Compatible
-        }
+        { display = Compatible }
 
 
 {-| -}
@@ -5809,8 +5752,7 @@ static : Internal.Value { position : Compatible }
 static =
     Internal.Value []
         (EmittedString "static")
-        { position = Compatible
-        }
+        { position = Compatible }
 
 
 {-| A `fixed` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
@@ -5837,8 +5779,7 @@ sticky : Internal.Value { position : Compatible }
 sticky =
     Internal.Value []
         (EmittedString "sticky")
-        { position = Compatible
-        }
+        { position = Compatible }
 
 
 {-| A `relative` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
@@ -5850,8 +5791,7 @@ relative : Internal.Value { position : Compatible }
 relative =
     Internal.Value []
         (EmittedString "relative")
-        { position = Compatible
-        }
+        { position = Compatible }
 
 
 {-| An `absolute` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
@@ -5863,8 +5803,7 @@ absolute : Internal.Value { position : Compatible }
 absolute =
     Internal.Value []
         (EmittedString "absolute")
-        { position = Compatible
-        }
+        { position = Compatible }
 
 
 
@@ -6003,8 +5942,7 @@ bold : Internal.Value { fontWeight : Compatible }
 bold =
     Internal.Value []
         (EmittedString "bold")
-        { fontWeight = Compatible
-        }
+        { fontWeight = Compatible }
 
 
 {-| -}
@@ -6012,8 +5950,7 @@ lighter : Internal.Value { fontWeight : Compatible }
 lighter =
     Internal.Value []
         (EmittedString "lighter")
-        { fontWeight = Compatible
-        }
+        { fontWeight = Compatible }
 
 
 {-| -}
@@ -6021,8 +5958,7 @@ bolder : Internal.Value { fontWeight : Compatible }
 bolder =
     Internal.Value []
         (EmittedString "bolder")
-        { fontWeight = Compatible
-        }
+        { fontWeight = Compatible }
 
 
 
