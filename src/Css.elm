@@ -887,6 +887,11 @@ type alias Length compatible units =
     Internal.Value
         { compatible
             | length : Compatible
+            , lengthOrAuto : Compatible
+            , lengthOrNumber : Compatible
+            , lengthOrNone : Compatible
+            , lengthOrMinMaxDimension : Compatible
+            , lengthOrNoneOrMinMaxDimension : Compatible
             , units : units
         }
 
@@ -6135,7 +6140,7 @@ featureTag2 tag value =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border : Internal.Value a -> Style
+border : Internal.Value { r | length : Compatible } -> Style
 border =
     prop1 "border"
 
@@ -6147,7 +6152,7 @@ border =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border2 : Internal.Value a -> Internal.Value b -> Style
+border2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 border2 =
     prop2 "border"
 
@@ -6159,7 +6164,7 @@ border2 =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
+border3 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Internal.Value c -> Style
 border3 =
     prop3 "border"
 
@@ -6171,7 +6176,7 @@ border3 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop : Internal.Value a -> Style
+borderTop : Internal.Value { r | length : Compatible } -> Style
 borderTop =
     prop1 "border-top"
 
@@ -6183,7 +6188,7 @@ borderTop =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop2 : Internal.Value a -> Internal.Value b -> Style
+borderTop2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderTop2 =
     prop2 "border-top"
 
@@ -6195,7 +6200,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
+borderTop3 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Internal.Value c -> Style
 borderTop3 =
     prop3 "border-top"
 
@@ -6207,7 +6212,7 @@ borderTop3 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom : Internal.Value a -> Style
+borderBottom : Internal.Value { r | length : Compatible } -> Style
 borderBottom =
     prop1 "border-bottom"
 
@@ -6219,7 +6224,7 @@ borderBottom =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom2 : Internal.Value a -> Internal.Value b -> Style
+borderBottom2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderBottom2 =
     prop2 "border-bottom"
 
@@ -6232,7 +6237,7 @@ borderBottom2 =
 
 -}
 borderBottom3 :
-    Internal.Value a
+    Internal.Value { r | length : Compatible }
     -> Internal.Value b
     -> Internal.Value c
     -> Style
@@ -6247,7 +6252,7 @@ borderBottom3 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft : Internal.Value a -> Style
+borderLeft : Internal.Value { r | length : Compatible } -> Style
 borderLeft =
     prop1 "border-left"
 
@@ -6259,7 +6264,7 @@ borderLeft =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft2 : Internal.Value a -> Internal.Value b -> Style
+borderLeft2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderLeft2 =
     prop2 "border-left"
 
@@ -6271,7 +6276,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
+borderLeft3 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Internal.Value c -> Style
 borderLeft3 =
     prop3 "border-left"
 
@@ -6283,7 +6288,7 @@ borderLeft3 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight : Internal.Value a -> Style
+borderRight : Internal.Value { r | length : Compatible } -> Style
 borderRight =
     prop1 "border-right"
 
@@ -6295,7 +6300,7 @@ borderRight =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight2 : Internal.Value a -> Internal.Value b -> Style
+borderRight2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderRight2 =
     prop2 "border-right"
 
@@ -6307,7 +6312,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
+borderRight3 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Internal.Value c -> Style
 borderRight3 =
     prop3 "border-right"
 
@@ -6319,7 +6324,7 @@ borderRight3 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart : Internal.Value a -> Style
+borderBlockStart : Internal.Value { r | length : Compatible } -> Style
 borderBlockStart =
     prop1 "border-block-start"
 
@@ -6331,7 +6336,7 @@ borderBlockStart =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart2 : Internal.Value a -> Internal.Value b -> Style
+borderBlockStart2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderBlockStart2 =
     prop2 "border-block-start"
 
@@ -6344,7 +6349,7 @@ borderBlockStart2 =
 
 -}
 borderBlockStart3 :
-    Internal.Value a
+    Internal.Value { r | length : Compatible }
     -> Internal.Value b
     -> Internal.Value c
     -> Style
@@ -6359,7 +6364,7 @@ borderBlockStart3 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd : Internal.Value a -> Style
+borderBlockEnd : Internal.Value { r | length : Compatible } -> Style
 borderBlockEnd =
     prop1 "border-block-end"
 
@@ -6371,7 +6376,7 @@ borderBlockEnd =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd2 : Internal.Value a -> Internal.Value b -> Style
+borderBlockEnd2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderBlockEnd2 =
     prop2 "border-block-end"
 
@@ -6384,7 +6389,7 @@ borderBlockEnd2 =
 
 -}
 borderBlockEnd3 :
-    Internal.Value a
+    Internal.Value { r | length : Compatible }
     -> Internal.Value b
     -> Internal.Value c
     -> Style
@@ -6399,7 +6404,7 @@ borderBlockEnd3 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart : Internal.Value a -> Style
+borderInlineStart : Internal.Value { r | length : Compatible } -> Style
 borderInlineStart =
     prop1 "border-block-start"
 
@@ -6411,7 +6416,7 @@ borderInlineStart =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart2 : Internal.Value a -> Internal.Value b -> Style
+borderInlineStart2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderInlineStart2 =
     prop2 "border-block-start"
 
@@ -6424,7 +6429,7 @@ borderInlineStart2 =
 
 -}
 borderInlineStart3 :
-    Internal.Value a
+    Internal.Value { r | length : Compatible }
     -> Internal.Value b
     -> Internal.Value c
     -> Style
@@ -6439,7 +6444,7 @@ borderInlineStart3 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd : Internal.Value a -> Style
+borderInlineEnd : Internal.Value { r | length : Compatible } -> Style
 borderInlineEnd =
     prop1 "border-block-end"
 
@@ -6451,7 +6456,7 @@ borderInlineEnd =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd2 : Internal.Value a -> Internal.Value b -> Style
+borderInlineEnd2 : Internal.Value { r | length : Compatible } -> Internal.Value b -> Style
 borderInlineEnd2 =
     prop2 "border-block-end"
 
@@ -6464,7 +6469,7 @@ borderInlineEnd2 =
 
 -}
 borderInlineEnd3 :
-    Internal.Value a
+    Internal.Value { r | length : Compatible }
     -> Internal.Value b
     -> Internal.Value c
     -> Style
@@ -6480,7 +6485,7 @@ borderInlineEnd3 =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset : Internal.Value a -> Style
+borderImageOutset : Internal.Value { r | lengthOrNumber : Compatible } -> Style
 borderImageOutset =
     prop1 "border-image-outset"
 
@@ -6493,7 +6498,10 @@ borderImageOutset =
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
-borderImageOutset2 : Internal.Value a -> Internal.Value b -> Style
+borderImageOutset2 :
+    Internal.Value { r1 | lengthOrNumber : Compatible }
+    -> Internal.Value { r2 | lengthOrNumber : Compatible }
+    -> Style
 borderImageOutset2 =
     prop2 "border-image-outset"
 
@@ -6507,9 +6515,9 @@ borderImageOutset2 =
 
 -}
 borderImageOutset3 :
-    Internal.Value a
-    -> Internal.Value b
-    -> Internal.Value c
+    Internal.Value { r1 | lengthOrNumber : Compatible }
+    -> Internal.Value { r2 | lengthOrNumber : Compatible }
+    -> Internal.Value { r3 | lengthOrNumber : Compatible }
     -> Style
 borderImageOutset3 =
     prop3 "border-image-outset"
@@ -6524,10 +6532,10 @@ borderImageOutset3 =
 
 -}
 borderImageOutset4 :
-    Internal.Value a
-    -> Internal.Value b
-    -> Internal.Value c
-    -> Internal.Value d
+    Internal.Value { r1 | lengthOrNumber : Compatible }
+    -> Internal.Value { r2 | lengthOrNumber : Compatible }
+    -> Internal.Value { r3 | lengthOrNumber : Compatible }
+    -> Internal.Value { r4 | lengthOrNumber : Compatible }
     -> Style
 borderImageOutset4 =
     prop4 "border-image-outset"
@@ -6541,7 +6549,7 @@ borderImageOutset4 =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth : Internal.Value a -> Style
+borderImageWidth : Internal.Value { r | length : Compatible } -> Style
 borderImageWidth =
     prop1 "border-image-width"
 
@@ -6554,7 +6562,7 @@ borderImageWidth =
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
-borderImageWidth2 : Internal.Value a -> Internal.Value b -> Style
+borderImageWidth2 : Internal.Value { r | length : Compatible } -> Internal.Value { r | length : Compatible } -> Style
 borderImageWidth2 =
     prop2 "border-image-width"
 
@@ -6568,9 +6576,9 @@ borderImageWidth2 =
 
 -}
 borderImageWidth3 :
-    Internal.Value a
-    -> Internal.Value b
-    -> Internal.Value c
+    Internal.Value { r | length : Compatible }
+    -> Internal.Value { r | length : Compatible }
+    -> Internal.Value { r | length : Compatible }
     -> Style
 borderImageWidth3 =
     prop3 "border-image-width"
@@ -6585,10 +6593,10 @@ borderImageWidth3 =
 
 -}
 borderImageWidth4 :
-    Internal.Value a
-    -> Internal.Value b
-    -> Internal.Value c
-    -> Internal.Value d
+    Internal.Value { r | length : Compatible }
+    -> Internal.Value { r | length : Compatible }
+    -> Internal.Value { r | length : Compatible }
+    -> Internal.Value { r | length : Compatible }
     -> Style
 borderImageWidth4 =
     prop4 "border-image-width"
