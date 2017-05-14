@@ -955,11 +955,13 @@ calc ((Internal.Value _ first _) as firstArg) expression ((Internal.Value _ seco
         fromString emittedValue =
             case emittedValue of
                 EmittedString str ->
-                    Ok <|
-                        if String.startsWith "calc(" str then
-                            String.dropLeft 4 str
-                        else
-                            str
+                    if String.startsWith "calc(" str then
+                        Ok (String.dropLeft 4 str)
+                    else
+                        Err (toString emittedValue)
+
+                EmittedNumber num unitLabel ->
+                    Ok (toString num ++ unitLabel)
 
                 _ ->
                     Err (toString emittedValue)
@@ -975,7 +977,7 @@ calc ((Internal.Value _ first _) as firstArg) expression ((Internal.Value _ seco
                         (EmittedString (cssFunction "calc" [ calcs ]))
 
                 _ ->
-                    [ "calc", toString firstArg, toString expression, toString secondArg ]
+                    [ "invalid calc value", toString firstArg, toString expression, toString secondArg ]
                         |> String.join " "
                         |> InvalidValue
     in
