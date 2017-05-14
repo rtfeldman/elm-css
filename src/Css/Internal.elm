@@ -1,4 +1,4 @@
-module Css.Internal exposing (Value(Value), EmittedValue(..), ColorDescriptor(..), getValue, getWarnings, emittedValueToString, cssFunction, numberToString)
+module Css.Internal exposing (Value(Value), CalcOperation, EmittedValue(..), ColorDescriptor(..), CalcOperation(..), getValue, getWarnings, emittedValueToString, cssFunction, numberToString)
 
 
 type Value compatible
@@ -9,7 +9,13 @@ type EmittedValue
     = EmittedString String
     | EmittedNumber Float String
     | EmittedColor ColorDescriptor
+    | EmittedCalc EmittedValue CalcOperation EmittedValue
     | InvalidValue String
+
+
+type CalcOperation
+    = Minus
+    | Plus
 
 
 getValue : Value compatibility -> String
@@ -25,6 +31,15 @@ emittedValueToString emittedValue =
 
         EmittedString str ->
             str
+
+        EmittedCalc first operation second ->
+            [ emittedValueToString first
+            , calcOperationToSring operation
+            , emittedValueToString second
+            ]
+                |> String.join " "
+                |> List.singleton
+                |> cssFunction "calc"
 
         EmittedColor descriptor ->
             case descriptor of
@@ -98,3 +113,13 @@ numberToString num =
 numericalPercentageToString : number -> String
 numericalPercentageToString value =
     value |> (*) 100 |> numberToString |> (flip (++)) "%"
+
+
+calcOperationToSring : CalcOperation -> String
+calcOperationToSring operation =
+    case operation of
+        Plus ->
+            "+"
+
+        Minus ->
+            "-"

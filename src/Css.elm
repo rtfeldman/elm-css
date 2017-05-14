@@ -736,8 +736,10 @@ import Css.Internal as Internal
             ( EmittedString
             , EmittedNumber
             , EmittedColor
+            , EmittedCalc
             , InvalidValue
             )
+        , CalcOperation
         , ColorDescriptor(RgbColor, RgbaColor, HexColor, HslColor, HslaColor, InvalidColor)
         , emittedValueToString
         , cssFunction
@@ -896,21 +898,6 @@ type alias Length compatible units =
         }
 
 
-type CalcExpression
-    = Addition
-    | Subtraction
-
-
-calcExpressionToString : CalcExpression -> String
-calcExpressionToString expression =
-    case expression of
-        Addition ->
-            "+"
-
-        Subtraction ->
-            "-"
-
-
 {-| The css [calc](https://developer.mozilla.org/en/docs/Web/CSS/calc) function.
 
     almostPct100 =
@@ -933,7 +920,7 @@ Using * and / with calc isn't supported. Use arithmetics from elm instead.
 -}
 calc :
     Internal.Value compatible
-    -> CalcExpression
+    -> CalcOperation
     -> Internal.Value compatible1
     ->
         Internal.Value
@@ -950,34 +937,26 @@ calc :
             , lengthOrNumberOrAutoOrNoneOrContent : Compatible
             , textIndent : Compatible
             }
-calc ((Internal.Value _ first _) as firstArg) expression ((Internal.Value _ second _) as secondArg) =
+calc ((Internal.Value _ first _) as firstArg) calcOperation ((Internal.Value _ second _) as secondArg) =
     let
-        fromString emittedValue =
+        validate emittedValue =
             case emittedValue of
-                EmittedString str ->
-                    if String.startsWith "calc(" str then
-                        Ok (String.dropLeft 4 str)
-                    else
-                        Err (toString emittedValue)
+                EmittedNumber _ _ ->
+                    Ok emittedValue
 
-                EmittedNumber num unitLabel ->
-                    Ok (toString num ++ unitLabel)
+                EmittedCalc _ _ _ ->
+                    Ok emittedValue
 
                 _ ->
                     Err (toString emittedValue)
 
         newEmittedValue =
-            case ( fromString first, fromString second ) of
-                ( Ok firstStr, Ok secondStr ) ->
-                    let
-                        calcs =
-                            [ firstStr, calcExpressionToString expression, secondStr ]
-                                |> String.join " "
-                    in
-                        (EmittedString (cssFunction "calc" [ calcs ]))
+            case ( validate first, validate second ) of
+                ( Ok _, Ok _ ) ->
+                    EmittedCalc first calcOperation second
 
                 _ ->
-                    [ "invalid calc value", toString firstArg, toString expression, toString secondArg ]
+                    [ "invalid calc value", toString firstArg, toString calcOperation, toString secondArg ]
                         |> String.join " "
                         |> InvalidValue
     in
@@ -1004,9 +983,9 @@ calc ((Internal.Value _ first _) as firstArg) expression ((Internal.Value _ seco
     calc (100% + 2px)
 
 -}
-plus : CalcExpression
+plus : CalcOperation
 plus =
-    Addition
+    Internal.Plus
 
 
 {-| Use with calc to subtract lengths from eachother
@@ -1015,9 +994,9 @@ plus =
     calc (100% - 2px)
 
 -}
-minus : CalcExpression
+minus : CalcOperation
 minus =
-    Subtraction
+    Internal.Minus
 
 
 {-| Add two lengths.
@@ -7625,6 +7604,9 @@ fontWeight ((Internal.Value _ emittedValue _) as value) =
 
                 EmittedColor _ ->
                     [ "fontWeight" ++ toString emittedValue ++ " is invalid." ]
+
+                EmittedCalc _ _ _ ->
+                    []
 
                 InvalidValue _ ->
                     []
