@@ -1709,7 +1709,16 @@ tools which express these as e.g. `#abcdef0`, etc.
 -}
 hex : String -> Internal.Value { color : Compatible }
 hex str =
-    Internal.Value [] (EmittedColor (HexColor str)) { color = Compatible }
+    let
+        warnings =
+            case hexToColor str of
+                Ok _ ->
+                    []
+
+                Err error ->
+                    [ error ]
+    in
+        Internal.Value warnings (EmittedColor (HexColor str)) { color = Compatible }
 
 
 {-| Not to be confused with Thelonious Monk or Hieronymus Bosch.
@@ -1750,63 +1759,68 @@ toColor ((Internal.Value _ emittedValue _) as original) =
             Err str
 
         EmittedColor (HexColor str) ->
-            let
-                withoutHash =
-                    if String.startsWith "#" str then
-                        String.dropLeft 1 str
-                    else
-                        str
+            hexToColor str
 
-                toInt =
-                    String.fromList >> String.toLower >> Hex.fromString
+        _ ->
+            Err (toString original ++ " is not a color.")
 
-                error =
-                    [ "Hex color strings must contain exactly 3, 4, 6, or 8 hexadecimal digits, optionally preceded by \"#\"."
-                    , toString str
-                    , "is an invalid hex color string."
-                    , "Please see: https://drafts.csswg.org/css-color/#hex-notation"
-                    ]
-                        |> String.join " "
-                        |> Err
-            in
-                case String.toList withoutHash of
-                    [ r, g, b ] ->
-                        case ( toInt [ r, r ], toInt [ g, g ], toInt [ b, b ] ) of
-                            ( Ok red, Ok green, Ok blue ) ->
-                                Ok (Color.rgb red green blue)
 
-                            _ ->
-                                error
+hexToColor : String -> Result String Color.Color
+hexToColor str =
+    let
+        withoutHash =
+            if String.startsWith "#" str then
+                String.dropLeft 1 str
+            else
+                str
 
-                    [ r, g, b, a ] ->
-                        case ( toInt [ r, r ], toInt [ g, g ], toInt [ b, b ], toInt [ a, a ] ) of
-                            ( Ok red, Ok green, Ok blue, Ok alpha ) ->
-                                Ok (Color.rgba red green blue (toFloat alpha / 255))
+        toInt =
+            String.fromList >> String.toLower >> Hex.fromString
 
-                            _ ->
-                                error
-
-                    [ r1, r2, g1, g2, b1, b2 ] ->
-                        case ( toInt [ r1, r2 ], toInt [ g1, g2 ], toInt [ b1, b2 ] ) of
-                            ( Ok red, Ok green, Ok blue ) ->
-                                Ok (Color.rgb red green blue)
-
-                            _ ->
-                                error
-
-                    [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
-                        case ( toInt [ r1, r2 ], toInt [ g1, g2 ], toInt [ b1, b2 ], toInt [ a1, a2 ] ) of
-                            ( Ok red, Ok green, Ok blue, Ok alpha ) ->
-                                Ok (Color.rgba red green blue (toFloat alpha / 255))
-
-                            _ ->
-                                error
+        error =
+            [ "Hex color strings must contain exactly 3, 4, 6, or 8 hexadecimal digits, optionally preceded by \"#\"."
+            , toString str
+            , "is an invalid hex color string."
+            , "Please see: https://drafts.csswg.org/css-color/#hex-notation"
+            ]
+                |> String.join " "
+                |> Err
+    in
+        case String.toList withoutHash of
+            [ r, g, b ] ->
+                case ( toInt [ r, r ], toInt [ g, g ], toInt [ b, b ] ) of
+                    ( Ok red, Ok green, Ok blue ) ->
+                        Ok (Color.rgb red green blue)
 
                     _ ->
                         error
 
-        _ ->
-            Err (toString original ++ " is not a color.")
+            [ r, g, b, a ] ->
+                case ( toInt [ r, r ], toInt [ g, g ], toInt [ b, b ], toInt [ a, a ] ) of
+                    ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+                        Ok (Color.rgba red green blue (toFloat alpha / 255))
+
+                    _ ->
+                        error
+
+            [ r1, r2, g1, g2, b1, b2 ] ->
+                case ( toInt [ r1, r2 ], toInt [ g1, g2 ], toInt [ b1, b2 ] ) of
+                    ( Ok red, Ok green, Ok blue ) ->
+                        Ok (Color.rgb red green blue)
+
+                    _ ->
+                        error
+
+            [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
+                case ( toInt [ r1, r2 ], toInt [ g1, g2 ], toInt [ b1, b2 ], toInt [ a1, a2 ] ) of
+                    ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+                        Ok (Color.rgba red green blue (toFloat alpha / 255))
+
+                    _ ->
+                        error
+
+            _ ->
+                error
 
 
 
