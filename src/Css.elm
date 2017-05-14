@@ -156,6 +156,8 @@ module Css
         , cm
         , inches
         , pc
+        , Number
+        , Integer
         , Pct
         , Em
         , Ex
@@ -679,7 +681,7 @@ module Css
 
 # Length Units
 
-@docs Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax, Mm, Cm, In, Pt, Pc
+@docs Number, Integer, Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax, Mm, Cm, In, Pt, Pc
 
 
 # Angle
@@ -2686,20 +2688,22 @@ type PcUnits
     = PcUnits
 
 
+{-| -}
+type alias Integer =
+    Internal.Value
+        { lengthOrNumber : Compatible
+        , number : Compatible
+        , fontWeight : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , intOrAuto : Compatible
+        , units : UnitlessInteger
+        }
+
+
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-int :
-    Int
-    ->
-        Internal.Value
-            { fontWeight : Compatible
-            , intOrAuto : Compatible
-            , lengthOrNumber : Compatible
-            , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-            , number : Compatible
-            , units : UnitlessInteger
-            }
+int : Int -> Integer
 int val =
     Internal.Value []
         (EmittedNumber (toFloat val) "")
@@ -2716,18 +2720,20 @@ type UnitlessInteger
     = UnitlessInteger
 
 
+{-| -}
+type alias Number =
+    Internal.Value
+        { lengthOrNumber : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , number : Compatible
+        , units : UnitlessFloat
+        }
+
+
 {-| A unitless decimal number. Useful with properties like [`flexGrow`](#flexGrow)
 which accept unitless numbers.
 -}
-num :
-    Float
-    ->
-        Internal.Value
-            { lengthOrNumber : Compatible
-            , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-            , number : Compatible
-            , units : UnitlessFloat
-            }
+num : Float -> Number
 num val =
     Internal.Value []
         (EmittedNumber val "")
