@@ -3558,7 +3558,7 @@ flex2 (int 1) ((int 1) | (px 10 ))
 flex3 (int 1) (int 1) ((int 1) | (px 10))
 
 -}
-flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatbileC -> Style
+flex3 : Number compatibleA -> Number compatibleB -> LengthOrNumber compatibleC -> Style
 flex3 =
     prop3 "flex"
 
