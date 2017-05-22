@@ -1,4 +1,4 @@
-module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, blockquote, svg, path, rect, circle, ellipse, line, polyline, polygon)
+module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, blockquote, svg, path, rect, circle, ellipse, line, polyline, polygon)
 
 {-| Selectors for HTML elements.
 
@@ -12,7 +12,7 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 @docs div, hr, li, main_, ol, p, ul, pre, blockquote
 
 # Inline text semantics
-@docs a, code, small, span, strong, i, em
+@docs a, code, small, span, strong, i, em, dl, dt, dd
 
 # Image and multimedia
 @docs img, audio, video, canvas
@@ -201,6 +201,27 @@ ul =
 pre : List Style -> Snippet
 pre =
     typeSelector "pre"
+
+
+{-| Selector for a dl element.
+-}
+dl : List Style -> Snippet
+dl =
+    typeSelector "dl"
+
+
+{-| Selector for a dt element.
+-}
+dt : List Style -> Snippet
+dt =
+    typeSelector "dt"
+
+
+{-| Selector for a dd element.
+-}
+dd : List Style -> Snippet
+dd =
+    typeSelector "dd"
 
 
 
