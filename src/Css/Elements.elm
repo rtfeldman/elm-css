@@ -204,6 +204,8 @@ pre =
 
 
 {-| Selector for a dl element.
+
+    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 -}
 dl : List Style -> Snippet
 dl =
@@ -211,6 +213,8 @@ dl =
 
 
 {-| Selector for a dt element.
+
+    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt
 -}
 dt : List Style -> Snippet
 dt =
@@ -218,6 +222,8 @@ dt =
 
 
 {-| Selector for a dd element.
+
+    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd
 -}
 dd : List Style -> Snippet
 dd =
