@@ -50,6 +50,9 @@ elements =
         , testSelector "p" p
         , testSelector "ul" ul
         , testSelector "pre" pre
+        , testSelector "dd" dd
+        , testSelector "dl" dl
+        , testSelector "dt" dt
         , testSelector "a" a
         , testSelector "code" code
         , testSelector "small" Css.Elements.small
