@@ -10,6 +10,7 @@ import Fixtures
 import Properties
 import Selectors
 import Colors
+import AtRules
 
 
 all : Test
@@ -23,8 +24,6 @@ all =
         , divWidthHeight
         , leftRightTopBottom
         , borders
-        , atRule
-        , nestedAtRule
         , bug99
         , bug140
         , universal
@@ -42,6 +41,7 @@ all =
         , Properties.all
         , Selectors.all
         , Arithmetic.all
+        , AtRules.all
         , backgrounds
         ]
 
@@ -138,78 +138,6 @@ leftRightTopBottom =
         """
     in
         describe "left & right, top & bottom property/value duality test"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
-
-
-atRule : Test
-atRule =
-    let
-        input =
-            Fixtures.atRule
-
-        output =
-            """
-          body {
-              padding: 0;
-          }
-
-          @media print {
-              body {
-                  margin: 2em;
-              }
-          }
-
-          @media screen and ( max-width: 600px ) {
-              body {
-                  margin: 3em;
-              }
-          }
-
-          button {
-              margin: auto;
-          }
-      """
-    in
-        describe "@media test"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
-
-
-nestedAtRule : Test
-nestedAtRule =
-    let
-        input =
-            Fixtures.nestedAtRule
-
-        output =
-            """
-          button {
-              padding: 0;
-          }
-
-          body {
-              margin: auto;
-          }
-
-          @media print {
-              body {
-                  margin: 2em;
-              }
-          }
-
-          a {
-              text-decoration: none;
-          }
-      """
-    in
-        describe "nested @media test"
             [ test "pretty prints the expected output" <|
                 \_ ->
                     outdented (prettyPrint input)

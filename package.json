@@ -37,7 +37,9 @@
   },
   "devDependencies": {
     "chai": "3.4.1",
-    "mocha": "2.3.4"
+    "mocha": "2.3.4",
+    "node-elm-compiler": "2.3.2",
+    "tmp": "0.0.28"
   },
   "engineStrict": true,
   "engines": {
