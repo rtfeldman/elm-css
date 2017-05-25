@@ -1,16 +1,10 @@
-module Selectors exposing (all)
+module Selectors exposing (..)
 
 import Test exposing (..)
 import Expect
 import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (..)
-
-
-all : Test
-all =
-    describe "selectors"
-        [ nonElements, elements ]
 
 
 nonElements : Test
@@ -46,9 +40,7 @@ elements =
         , testSelector "hr" hr
         , testSelector "li" li
         , testSelector "main" main_
-        , testSelector "ol" ol
         , testSelector "p" p
-        , testSelector "ul" ul
         , testSelector "pre" pre
         , testSelector "dd" dd
         , testSelector "dl" dl

@@ -19,9 +19,10 @@ type alias Property =
 {-| A stylesheet. Since they follow such specific rules, the following at-rules
 are specified once rather than intermingled with normal declarations:
 
-* [`@charset`](https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
-* [`@import`](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
-* [`@namespace`](https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace)
+  - [`@charset`](https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
+  - [`@import`](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
+  - [`@namespace`](https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace)
+
 -}
 type alias Stylesheet =
     { charset : Maybe String
@@ -36,15 +37,16 @@ or an [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
 declaration. Since each at-rule works differently, the supported ones are
 enumerated as follows.
 
-* `MediaRule`: an [`@media`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) rule.
-* `SupportsRule`: an [`@supports`](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports) rule.
-* `DocumentRule`: an [`@document`](https://developer.mozilla.org/en-US/docs/Web/CSS/@document) rule.
-* `PageRule`: an [`@page`](https://developer.mozilla.org/en-US/docs/Web/CSS/@page) rule.
-* `FontFace`: an [`@font-face`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face) rule.
-* `Keyframes`: an [`@keyframes`](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes) rule.
-* `Viewport`: an [`@viewport`](https://developer.mozilla.org/en-US/docs/Web/CSS/@viewport) rule.
-* `CounterStyle`: an [`@counter-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/@counter-style) rule.
-* `FontFeatureValues`: an [`@font-feature-values`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-feature-values) rule.
+  - `MediaRule`: an [`@media`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) rule.
+  - `SupportsRule`: an [`@supports`](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports) rule.
+  - `DocumentRule`: an [`@document`](https://developer.mozilla.org/en-US/docs/Web/CSS/@document) rule.
+  - `PageRule`: an [`@page`](https://developer.mozilla.org/en-US/docs/Web/CSS/@page) rule.
+  - `FontFace`: an [`@font-face`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face) rule.
+  - `Keyframes`: an [`@keyframes`](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes) rule.
+  - `Viewport`: an [`@viewport`](https://developer.mozilla.org/en-US/docs/Web/CSS/@viewport) rule.
+  - `CounterStyle`: an [`@counter-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/@counter-style) rule.
+  - `FontFeatureValues`: an [`@font-feature-values`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-feature-values) rule.
+
 -}
 type Declaration
     = StyleBlockDeclaration StyleBlock

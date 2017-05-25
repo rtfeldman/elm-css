@@ -1,17 +1,10 @@
-module Colors exposing (all)
+module Colors exposing (..)
 
 import Css exposing (..)
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer)
 import Hex
 import Test exposing (..)
-
-
-all : Test
-all =
-    describe "colors"
-        [ hexTests
-        ]
 
 
 hexTests : Test

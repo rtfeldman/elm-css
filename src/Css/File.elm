@@ -3,6 +3,7 @@ module Css.File exposing (compile, compiler, toFileStructure, CssFileStructure, 
 {-| Functions for writing CSS files from elm-css.
 
 @docs compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
+
 -}
 
 import Css exposing (Stylesheet)
@@ -39,24 +40,20 @@ compile =
 
 {-| Create a program that compiles an elm-css stylesheet to a CSS file.
 
-    port module Stylesheets exposing (..)
-
     import Css.File exposing (CssFileStructure, CssCompilerProgram)
     import HomepageCss as Homepage
 
-
     port files : CssFileStructure -> Cmd msg
-
 
     fileStructure : CssFileStructure
     fileStructure =
         Css.File.toFileStructure
             [ ( "homepage.css", Css.File.compile [ Homepage.css ] ) ]
 
-
     main : CssCompilerProgram
     main =
         Css.File.compiler files fileStructure
+
 -}
 compiler : (CssFileStructure -> Cmd Never) -> CssFileStructure -> CssCompilerProgram
 compiler filesPort structure =
@@ -70,6 +67,7 @@ compiler filesPort structure =
 {-| A prorgam that compiles a CSS file.
 
 See [`compiler`](#compiler).
+
 -}
 type alias CssCompilerProgram =
     Program Never () Never
