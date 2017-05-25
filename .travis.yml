@@ -35,7 +35,7 @@ install:
   - nvm use $TARGET_NODE_VERSION
   - node --version
   - npm --version
-  - npm install -g elm-use elm-test@beta
+  - npm install -g elm-use elm-test
   - elm-use $ELM_VERSION
   - mv $(npm config get prefix)/bin/elm-make $(npm config get prefix)/bin/elm-make-old
   - printf '%s\n\n' '#!/bin/bash' 'echo "Running elm-make with sysconfcpus -n 2"' '$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 elm-make-old "$@"' > $(npm config get prefix)/bin/elm-make
