@@ -730,8 +730,7 @@ import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure
 import Css.Internal as Internal
     exposing
-        ( getWarnings
-        , getValue
+        ( valueToString
         , EmittedValue
             ( EmittedString
             , EmittedNumber
@@ -741,7 +740,6 @@ import Css.Internal as Internal
             )
         , CalcOperation
         , ColorDescriptor(RgbColor, RgbaColor, HexColor, HslColor, HslaColor, InvalidColor)
-        , emittedValueToString
         , cssFunction
         , numberToString
         )
@@ -886,7 +884,7 @@ type alias Color =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias Length compatible units =
-    Internal.Value
+    Internal.Value units
         { compatible
             | length : Compatible
             , lengthOrAuto : Compatible
@@ -894,7 +892,6 @@ type alias Length compatible units =
             , lengthOrNone : Compatible
             , lengthOrMinMaxDimension : Compatible
             , lengthOrNoneOrMinMaxDimension : Compatible
-            , units : units
         }
 
 
@@ -937,7 +934,7 @@ calc :
             , lengthOrNumberOrAutoOrNoneOrContent : Compatible
             , textIndent : Compatible
             }
-calc ((Internal.Value _ first _) as firstArg) calcOperation ((Internal.Value _ second _) as secondArg) =
+calc first calcOperation second =
     let
         validate emittedValue =
             case emittedValue of
@@ -950,17 +947,23 @@ calc ((Internal.Value _ first _) as firstArg) calcOperation ((Internal.Value _ s
                 _ ->
                     Err (toString emittedValue)
 
+        firstEmitted =
+            Internal.emittedValue first
+
+        secondEmitted =
+            Internal.emittedValue second
+
         newEmittedValue =
-            case ( validate first, validate second ) of
+            case ( validate firstEmitted, validate secondEmitted ) of
                 ( Ok _, Ok _ ) ->
-                    EmittedCalc first calcOperation second
+                    EmittedCalc firstEmitted calcOperation secondEmitted
 
                 _ ->
-                    [ "invalid calc value", toString firstArg, toString calcOperation, toString secondArg ]
+                    [ "invalid calc value", toString first, toString calcOperation, toString second ]
                         |> String.join " "
                         |> InvalidValue
     in
-        Internal.Value []
+        Internal.value []
             newEmittedValue
             { length = Compatible
             , lengthOrAuto = Compatible
@@ -1060,18 +1063,18 @@ combineLengths :
     -> Internal.Value compatibility
     -> Internal.Value compatibility
     -> Internal.Value compatibility
-combineLengths operation (Internal.Value _ firstEmitted firstRecord) (Internal.Value _ secondEmitted _) =
+combineLengths operation first second =
     let
         emittedValue =
-            case ( firstEmitted, secondEmitted ) of
+            case ( Internal.emittedValue first, Internal.emittedValue second ) of
                 ( EmittedNumber firstNum firstLabel, EmittedNumber secondNum _ ) ->
                     EmittedNumber (operation firstNum secondNum) firstLabel
 
-                _ ->
+                ( firstValue, _ ) ->
                     -- TODO this should never happen; emit a warning?
-                    firstEmitted
+                    firstValue
     in
-        Internal.Value [] emittedValue firstRecord
+        Internal.value [] emittedValue (Internal.compatible first)
 
 
 
@@ -1104,7 +1107,7 @@ type alias NonMixable =
 -}
 transparent : Internal.Value { color : Compatible }
 transparent =
-    Internal.Value []
+    Internal.value []
         (EmittedString "transparent")
         { color = Compatible }
 
@@ -1114,7 +1117,7 @@ value.
 -}
 currentColor : Internal.Value { color : Compatible }
 currentColor =
-    Internal.Value []
+    Internal.value []
         (EmittedString "currentColor")
         { color = Compatible }
 
@@ -1123,7 +1126,7 @@ currentColor =
 -}
 visible : Internal.Value { overflow : Compatible }
 visible =
-    Internal.Value []
+    Internal.value []
         (EmittedString "visible")
         { overflow = Compatible }
 
@@ -1133,7 +1136,7 @@ This can also represent a `scroll` [`background-attachment`](https://developer.m
 -}
 scroll : Internal.Value { backgroundAttachment : Compatible, overflow : Compatible }
 scroll =
-    Internal.Value []
+    Internal.value []
         (EmittedString "scroll")
         { overflow = Compatible
         , backgroundAttachment = Compatible
@@ -1144,7 +1147,7 @@ scroll =
 -}
 breakWord : Internal.Value { overflowWrap : Compatible }
 breakWord =
-    Internal.Value []
+    Internal.value []
         (EmittedString "break-word")
         { overflowWrap = Compatible }
 
@@ -1153,7 +1156,7 @@ breakWord =
 -}
 both : Internal.Value { resize : Compatible }
 both =
-    Internal.Value []
+    Internal.value []
         (EmittedString "both")
         { resize = Compatible }
 
@@ -1162,7 +1165,7 @@ both =
 -}
 horizontal : Internal.Value { resize : Compatible }
 horizontal =
-    Internal.Value []
+    Internal.value []
         (EmittedString "horizontal")
         { resize = Compatible }
 
@@ -1171,7 +1174,7 @@ horizontal =
 -}
 vertical : Internal.Value { resize : Compatible }
 vertical =
-    Internal.Value []
+    Internal.value []
         (EmittedString "vertical")
         { resize = Compatible }
 
@@ -1278,7 +1281,7 @@ luminosity =
 -}
 paddingBox : Internal.Value { backgroundClip : Compatible }
 paddingBox =
-    Internal.Value []
+    Internal.value []
         (EmittedString "padding-box")
         { backgroundClip = Compatible }
 
@@ -1287,7 +1290,7 @@ paddingBox =
 -}
 url : String -> Internal.Value { backgroundImage : Compatible }
 url urlValue =
-    Internal.Value []
+    Internal.value []
         (EmittedString ("url(" ++ urlValue ++ ")"))
         { backgroundImage = Compatible }
 
@@ -1296,7 +1299,7 @@ url urlValue =
 -}
 cover : Internal.Value { lengthOrAutoOrCoverOrContain : Compatible }
 cover =
-    Internal.Value []
+    Internal.value []
         (EmittedString "cover")
         { lengthOrAutoOrCoverOrContain = Compatible }
 
@@ -1305,7 +1308,7 @@ cover =
 -}
 contain : Internal.Value { lengthOrAutoOrCoverOrContain : Compatible }
 contain =
-    Internal.Value []
+    Internal.value []
         (EmittedString "contain")
         { lengthOrAutoOrCoverOrContain = Compatible }
 
@@ -1317,7 +1320,7 @@ This can also represent a `hidden` [border style](https://developer.mozilla.org/
 -}
 hidden : Internal.Value { borderStyle : Compatible, overflow : Compatible }
 hidden =
-    Internal.Value []
+    Internal.value []
         (EmittedString "hidden")
         { overflow = Compatible
         , borderStyle = Compatible
@@ -1376,7 +1379,7 @@ unset :
         , units : IncompatibleUnits
         }
 unset =
-    Internal.Value [] (EmittedString "unset") initialVal
+    Internal.value [] (EmittedString "unset") initialVal
 
 
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
@@ -1431,7 +1434,7 @@ inherit :
         , units : IncompatibleUnits
         }
 inherit =
-    Internal.Value [] (EmittedString "inherit") initialVal
+    Internal.value [] (EmittedString "inherit") initialVal
 
 
 {-| The [`initial`](https://developer.mozilla.org/en-US/docs/Web/CSS/initial) value.
@@ -1486,7 +1489,7 @@ initial :
         , units : IncompatibleUnits
         }
 initial =
-    Internal.Value [] (EmittedString "initial") initialVal
+    Internal.value [] (EmittedString "initial") initialVal
 
 
 initialVal :
@@ -1611,7 +1614,7 @@ rgb red green blue =
             else
                 []
     in
-        Internal.Value warnings
+        Internal.value warnings
             (EmittedColor (RgbColor red green blue))
             { color = Compatible }
 
@@ -1645,7 +1648,7 @@ rgba red green blue alpha =
             else
                 []
     in
-        Internal.Value warnings
+        Internal.value warnings
             (EmittedColor (RgbaColor red green blue alpha))
             { color = Compatible }
 
@@ -1670,7 +1673,7 @@ hsl hue saturation lightness =
             else
                 []
     in
-        Internal.Value warnings
+        Internal.value warnings
             (EmittedColor (HslColor hue saturation lightness))
             { color = Compatible }
 
@@ -1697,7 +1700,7 @@ hsla hue saturation lightness alpha =
             else
                 []
     in
-        Internal.Value warnings
+        Internal.value warnings
             (EmittedColor (HslaColor hue saturation lightness alpha))
             { color = Compatible }
 
@@ -1718,14 +1721,14 @@ hex str =
                 Err error ->
                     [ error ]
     in
-        Internal.Value warnings (EmittedColor (HexColor str)) { color = Compatible }
+        Internal.value warnings (EmittedColor (HexColor str)) { color = Compatible }
 
 
 {-| Not to be confused with Thelonious Monk or Hieronymus Bosch.
 -}
 erroneousHex : String -> Internal.Value { color : Compatible }
 erroneousHex str =
-    Internal.Value
+    Internal.value
         ([ "Hex color strings must contain exactly 3, 4, 6, or 8 hexadecimal digits, optionally preceded by \"#\"."
          , toString str
          , "is an invalid hex color string."
@@ -1741,8 +1744,8 @@ erroneousHex str =
 {-| Convert to a Color.Color
 -}
 toColor : Internal.Value { r | color : Compatible } -> Result String Color.Color
-toColor ((Internal.Value _ emittedValue _) as original) =
-    case emittedValue of
+toColor original =
+    case Internal.emittedValue original of
         EmittedColor (RgbColor red green blue) ->
             Ok (Color.rgb red green blue)
 
@@ -1831,7 +1834,7 @@ hexToColor str =
 -}
 optimizeSpeed : Internal.Value { textRendering : Compatible }
 optimizeSpeed =
-    Internal.Value []
+    Internal.value []
         (EmittedString "optimizeSpeed")
         { textRendering = Compatible }
 
@@ -1840,7 +1843,7 @@ optimizeSpeed =
 -}
 optimizeLegibility : Internal.Value { textRendering : Compatible }
 optimizeLegibility =
-    Internal.Value []
+    Internal.value []
         (EmittedString "optimizeLegibility")
         { textRendering = Compatible }
 
@@ -1849,7 +1852,7 @@ optimizeLegibility =
 -}
 geometricPrecision : Internal.Value { textRendering : Compatible }
 geometricPrecision =
-    Internal.Value []
+    Internal.value []
         (EmittedString "geometricPrecision")
         { textRendering = Compatible }
 
@@ -1862,7 +1865,7 @@ geometricPrecision =
 -}
 hanging : Internal.Value { textIndent : Compatible }
 hanging =
-    Internal.Value []
+    Internal.value []
         (EmittedString "hanging")
         { textIndent = Compatible }
 
@@ -1871,7 +1874,7 @@ hanging =
 -}
 eachLine : Internal.Value { textIndent : Compatible }
 eachLine =
-    Internal.Value []
+    Internal.value []
         (EmittedString "each-line")
         { textIndent = Compatible }
 
@@ -1884,7 +1887,7 @@ eachLine =
 -}
 mixed : Internal.Value { textOrientation : Compatible }
 mixed =
-    Internal.Value []
+    Internal.value []
         (EmittedString "mixed")
         { textOrientation = Compatible }
 
@@ -1893,7 +1896,7 @@ mixed =
 -}
 upright : Internal.Value { textOrientation : Compatible }
 upright =
-    Internal.Value []
+    Internal.value []
         (EmittedString "upright")
         { textOrientation = Compatible }
 
@@ -1902,7 +1905,7 @@ upright =
 -}
 sideways : Internal.Value { textOrientation : Compatible }
 sideways =
-    Internal.Value []
+    Internal.value []
         (EmittedString "sideways")
         { textOrientation = Compatible }
 
@@ -1915,7 +1918,7 @@ sideways =
 -}
 capitalize : Internal.Value { textTransform : Compatible }
 capitalize =
-    Internal.Value []
+    Internal.value []
         (EmittedString "capitalize")
         { textTransform = Compatible }
 
@@ -1924,7 +1927,7 @@ capitalize =
 -}
 uppercase : Internal.Value { textTransform : Compatible }
 uppercase =
-    Internal.Value []
+    Internal.value []
         (EmittedString "uppercase")
         { textTransform = Compatible }
 
@@ -1933,7 +1936,7 @@ uppercase =
 -}
 lowercase : Internal.Value { textTransform : Compatible }
 lowercase =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lowercase")
         { textTransform = Compatible }
 
@@ -1942,7 +1945,7 @@ lowercase =
 -}
 fullWidth : Internal.Value { textTransform : Compatible }
 fullWidth =
-    Internal.Value []
+    Internal.value []
         (EmittedString "full-width")
         { textTransform = Compatible }
 
@@ -1951,7 +1954,7 @@ fullWidth =
 -}
 ellipsis : Internal.Value { textOverflow : Compatible }
 ellipsis =
-    Internal.Value []
+    Internal.value []
         (EmittedString "ellipsis")
         { textOverflow = Compatible }
 
@@ -1960,7 +1963,7 @@ ellipsis =
 -}
 clip : Internal.Value { textOverflow : Compatible }
 clip =
-    Internal.Value []
+    Internal.value []
         (EmittedString "clip")
         { textOverflow = Compatible }
 
@@ -1973,7 +1976,7 @@ clip =
 -}
 wavy : Internal.Value { textDecorationStyle : Compatible }
 wavy =
-    Internal.Value []
+    Internal.value []
         (EmittedString "wavy")
         { textDecorationStyle = Compatible }
 
@@ -1982,7 +1985,7 @@ wavy =
 -}
 dotted : Internal.Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 dotted =
-    Internal.Value []
+    Internal.value []
         (EmittedString "dotted")
         { borderStyle = Compatible
         , textDecorationStyle = Compatible
@@ -1993,7 +1996,7 @@ dotted =
 -}
 dashed : Internal.Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 dashed =
-    Internal.Value []
+    Internal.value []
         (EmittedString "dashed")
         { borderStyle = Compatible
         , textDecorationStyle = Compatible
@@ -2004,7 +2007,7 @@ dashed =
 -}
 solid : Internal.Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 solid =
-    Internal.Value []
+    Internal.value []
         (EmittedString "solid")
         { borderStyle = Compatible
         , textDecorationStyle = Compatible
@@ -2015,7 +2018,7 @@ solid =
 -}
 double : Internal.Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 double =
-    Internal.Value []
+    Internal.value []
         (EmittedString "double")
         { borderStyle = Compatible
         , textDecorationStyle = Compatible
@@ -2026,7 +2029,7 @@ double =
 -}
 groove : Internal.Value { borderStyle : Compatible }
 groove =
-    Internal.Value []
+    Internal.value []
         (EmittedString "groove")
         { borderStyle = Compatible }
 
@@ -2035,7 +2038,7 @@ groove =
 -}
 ridge : Internal.Value { borderStyle : Compatible }
 ridge =
-    Internal.Value []
+    Internal.value []
         (EmittedString "ridge")
         { borderStyle = Compatible }
 
@@ -2044,7 +2047,7 @@ ridge =
 -}
 inset : Internal.Value { borderStyle : Compatible }
 inset =
-    Internal.Value []
+    Internal.value []
         (EmittedString "inset")
         { borderStyle = Compatible }
 
@@ -2053,7 +2056,7 @@ inset =
 -}
 outset : Internal.Value { borderStyle : Compatible }
 outset =
-    Internal.Value []
+    Internal.value []
         (EmittedString "outset")
         { borderStyle = Compatible }
 
@@ -2066,7 +2069,7 @@ outset =
 -}
 separate : Internal.Value { borderCollapse : Compatible }
 separate =
-    Internal.Value []
+    Internal.value []
         (EmittedString "separate")
         { borderCollapse = Compatible }
 
@@ -2075,7 +2078,7 @@ separate =
 -}
 collapse : Internal.Value { borderCollapse : Compatible }
 collapse =
-    Internal.Value []
+    Internal.value []
         (EmittedString "collapse")
         { borderCollapse = Compatible }
 
@@ -2159,7 +2162,7 @@ lengthConverter :
             , units : a
             }
 lengthConverter units unitLabel numericValue =
-    Internal.Value []
+    Internal.value []
         (EmittedNumber numericValue unitLabel)
         { units = units
         , length = Compatible
@@ -2205,7 +2208,7 @@ zero :
         , lengthOrAutoOrCoverOrContain : Compatible
         }
 zero =
-    Internal.Value []
+    Internal.value []
         (EmittedNumber 0 "")
         { length = Compatible
         , lengthOrNumber = Compatible
@@ -2705,7 +2708,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> Integer
 int val =
-    Internal.Value []
+    Internal.value []
         (EmittedNumber (toFloat val) "")
         { lengthOrNumber = Compatible
         , number = Compatible
@@ -2735,7 +2738,7 @@ which accept unitless numbers.
 -}
 num : Float -> Number
 num val =
-    Internal.Value []
+    Internal.value []
         (EmittedNumber val "")
         { lengthOrNumber = Compatible
         , number = Compatible
@@ -2781,7 +2784,7 @@ angleConverter :
     -> number
     -> Internal.Value { angle : Compatible, angleOrDirection : Compatible }
 angleConverter suffix num =
-    Internal.Value []
+    Internal.value []
         (EmittedString ((numberToString num) ++ suffix))
         { angle = Compatible
         , angleOrDirection = Compatible
@@ -2834,7 +2837,7 @@ matrix :
     -> number
     -> Internal.Value { transform : Compatible }
 matrix a b c d tx ty =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "matrix" (List.map numberToString [ a, b, c, d, tx, ty ])))
         { transform = Compatible }
 
@@ -2863,7 +2866,7 @@ matrix3d :
     -> number
     -> Internal.Value { transform : Compatible }
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "matrix3d" (List.map numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])))
         { transform = Compatible }
 
@@ -2875,7 +2878,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 -}
 perspective : number -> Internal.Value { transform : Compatible }
 perspective l =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "perspective" [ numberToString l ]))
         { transform = Compatible }
 
@@ -2886,9 +2889,9 @@ perspective l =
 
 -}
 rotate : Internal.Value compatible -> Internal.Value { transform : Compatible }
-rotate (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "rotate" [ emittedValueToString value ]))
+rotate val =
+    Internal.value []
+        (EmittedString (cssFunction "rotate" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -2898,9 +2901,9 @@ rotate (Internal.Value _ value _) =
 
 -}
 rotateX : Internal.Value compatible -> Internal.Value { transform : Compatible }
-rotateX (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "rotateX" [ emittedValueToString value ]))
+rotateX value =
+    Internal.value []
+        (EmittedString (cssFunction "rotateX" [ valueToString value ]))
         { transform = Compatible }
 
 
@@ -2910,9 +2913,9 @@ rotateX (Internal.Value _ value _) =
 
 -}
 rotateY : Internal.Value compatible -> Internal.Value { transform : Compatible }
-rotateY (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "rotateY" [ emittedValueToString value ]))
+rotateY value =
+    Internal.value []
+        (EmittedString (cssFunction "rotateY" [ valueToString value ]))
         { transform = Compatible }
 
 
@@ -2922,9 +2925,9 @@ rotateY (Internal.Value _ value _) =
 
 -}
 rotateZ : Internal.Value compatible -> Internal.Value { transform : Compatible }
-rotateZ (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "rotateZ" [ emittedValueToString value ]))
+rotateZ val =
+    Internal.value []
+        (EmittedString (cssFunction "rotateZ" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -2939,13 +2942,13 @@ rotate3d :
     -> number
     -> Internal.Value compatible
     -> Internal.Value { transform : Compatible }
-rotate3d x y z (Internal.Value _ value _) =
+rotate3d x y z val =
     let
         coordsAsStrings =
             List.map numberToString [ x, y, z ]
     in
-        Internal.Value []
-            (EmittedString (cssFunction "rotate3d" (coordsAsStrings ++ [ emittedValueToString value ])))
+        Internal.value []
+            (EmittedString (cssFunction "rotate3d" (coordsAsStrings ++ [ valueToString val ])))
             { transform = Compatible }
 
 
@@ -2957,7 +2960,7 @@ rotate3d x y z (Internal.Value _ value _) =
 -}
 scale : number -> Internal.Value { transform : Compatible }
 scale x =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "scale" [ numberToString x ]))
         { transform = Compatible }
 
@@ -2970,7 +2973,7 @@ scale x =
 -}
 scale2 : number -> number -> Internal.Value { transform : Compatible }
 scale2 x y =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "scale" (List.map numberToString [ x, y ])))
         { transform = Compatible }
 
@@ -2982,7 +2985,7 @@ scale2 x y =
 -}
 scaleX : number -> Internal.Value { transform : Compatible }
 scaleX x =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "scaleX" [ numberToString x ]))
         { transform = Compatible }
 
@@ -2994,7 +2997,7 @@ scaleX x =
 -}
 scaleY : number -> Internal.Value { transform : Compatible }
 scaleY y =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "scaleY" [ numberToString y ]))
         { transform = Compatible }
 
@@ -3010,7 +3013,7 @@ scale3d :
     -> number
     -> Internal.Value { transform : Compatible }
 scale3d x y z =
-    Internal.Value []
+    Internal.value []
         (EmittedString (cssFunction "scale3d" (List.map numberToString [ x, y, z ])))
         { transform = Compatible }
 
@@ -3022,9 +3025,9 @@ scale3d x y z =
 
 -}
 skew : Internal.Value compatible -> Internal.Value { transform : Compatible }
-skew (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "skew" [ emittedValueToString value ]))
+skew val =
+    Internal.value []
+        (EmittedString (cssFunction "skew" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -3038,9 +3041,9 @@ skew2 :
     Internal.Value compatible
     -> Internal.Value compatible1
     -> Internal.Value { transform : Compatible }
-skew2 (Internal.Value _ ax _) (Internal.Value _ ay _) =
-    Internal.Value []
-        (EmittedString (cssFunction "skew" [ emittedValueToString ax, emittedValueToString ay ]))
+skew2 ax ay =
+    Internal.value []
+        (EmittedString (cssFunction "skew" [ valueToString ax, valueToString ay ]))
         { transform = Compatible }
 
 
@@ -3050,9 +3053,9 @@ skew2 (Internal.Value _ ax _) (Internal.Value _ ay _) =
 
 -}
 skewX : Internal.Value compatible -> Internal.Value { transform : Compatible }
-skewX (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "skewX" [ emittedValueToString value ]))
+skewX val =
+    Internal.value []
+        (EmittedString (cssFunction "skewX" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -3062,9 +3065,9 @@ skewX (Internal.Value _ value _) =
 
 -}
 skewY : Internal.Value compatible -> Internal.Value { transform : Compatible }
-skewY (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "skewY" [ emittedValueToString value ]))
+skewY val =
+    Internal.value []
+        (EmittedString (cssFunction "skewY" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -3077,9 +3080,9 @@ skewY (Internal.Value _ value _) =
 translate :
     Internal.Value compatible
     -> Internal.Value { transform : Compatible }
-translate (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "translate" [ emittedValueToString value ]))
+translate val =
+    Internal.value []
+        (EmittedString (cssFunction "translate" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -3093,9 +3096,9 @@ translate2 :
     Internal.Value compatible
     -> Internal.Value compatible1
     -> Internal.Value { transform : Compatible }
-translate2 (Internal.Value _ tx _) (Internal.Value _ ty _) =
-    Internal.Value []
-        (EmittedString (cssFunction "translate" [ emittedValueToString tx, emittedValueToString ty ]))
+translate2 tx ty =
+    Internal.value []
+        (EmittedString (cssFunction "translate" [ valueToString tx, valueToString ty ]))
         { transform = Compatible }
 
 
@@ -3107,9 +3110,9 @@ translate2 (Internal.Value _ tx _) (Internal.Value _ ty _) =
 translateX :
     Internal.Value compatible
     -> Internal.Value { transform : Compatible }
-translateX (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "translateX" [ emittedValueToString value ]))
+translateX val =
+    Internal.value []
+        (EmittedString (cssFunction "translateX" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -3121,9 +3124,9 @@ translateX (Internal.Value _ value _) =
 translateY :
     Internal.Value compatible
     -> Internal.Value { transform : Compatible }
-translateY (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "translateY" [ emittedValueToString value ]))
+translateY val =
+    Internal.value []
+        (EmittedString (cssFunction "translateY" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -3135,9 +3138,9 @@ translateY (Internal.Value _ value _) =
 translateZ :
     Internal.Value compatible
     -> Internal.Value { transform : Compatible }
-translateZ (Internal.Value _ value _) =
-    Internal.Value []
-        (EmittedString (cssFunction "translateZ" [ emittedValueToString value ]))
+translateZ val =
+    Internal.value []
+        (EmittedString (cssFunction "translateZ" [ valueToString val ]))
         { transform = Compatible }
 
 
@@ -3151,9 +3154,9 @@ translate3d :
     -> Internal.Value compatible1
     -> Internal.Value compatible2
     -> Internal.Value { transform : Compatible }
-translate3d (Internal.Value _ tx _) (Internal.Value _ ty _) (Internal.Value _ tz _) =
-    Internal.Value []
-        (EmittedString (cssFunction "translate3d" [ emittedValueToString tx, emittedValueToString ty, emittedValueToString tz ]))
+translate3d tx ty tz =
+    Internal.value []
+        (EmittedString (cssFunction "translate3d" [ valueToString tx, valueToString ty, valueToString tz ]))
         { transform = Compatible }
 
 
@@ -3198,7 +3201,7 @@ transform only =
 -}
 fillBox : Internal.Value { transformBox : Compatible }
 fillBox =
-    Internal.Value []
+    Internal.value []
         (EmittedString "fill-box")
         { transformBox = Compatible }
 
@@ -3208,7 +3211,7 @@ Can also be used as `content-box` value for the [`background-clip`](https://deve
 -}
 contentBox : Internal.Value { backgroundClip : Compatible, boxSizing : Compatible }
 contentBox =
-    Internal.Value []
+    Internal.value []
         (EmittedString "content-box")
         { boxSizing = Compatible
         , backgroundClip = Compatible
@@ -3220,7 +3223,7 @@ Can also be used as `border-box` value for the [`background-clip`](https://devel
 -}
 borderBox : Internal.Value { backgroundClip : Compatible, boxSizing : Compatible }
 borderBox =
-    Internal.Value []
+    Internal.value []
         (EmittedString "border-box")
         { boxSizing = Compatible
         , backgroundClip = Compatible
@@ -3231,7 +3234,7 @@ borderBox =
 -}
 viewBox : Internal.Value { transformBox : Compatible }
 viewBox =
-    Internal.Value []
+    Internal.value []
         (EmittedString "view-box")
         { transformBox = Compatible }
 
@@ -3257,7 +3260,7 @@ boxSizing =
 -}
 preserve3d : Internal.Value { transformStyle : Compatible }
 preserve3d =
-    Internal.Value []
+    Internal.value []
         (EmittedString "preserve-3d")
         { transformStyle = Compatible }
 
@@ -3266,7 +3269,7 @@ preserve3d =
 -}
 flat : Internal.Value { transformStyle : Compatible }
 flat =
-    Internal.Value []
+    Internal.value []
         (EmittedString "flat")
         { transformStyle = Compatible }
 
@@ -3296,7 +3299,7 @@ inside :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 inside =
-    Internal.Value []
+    Internal.value []
         (EmittedString "inside")
         { listStylePosition = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3310,7 +3313,7 @@ outside :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 outside =
-    Internal.Value []
+    Internal.value []
         (EmittedString "outside")
         { listStylePosition = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3335,7 +3338,7 @@ disc :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 disc =
-    Internal.Value []
+    Internal.value []
         (EmittedString "disc")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3349,7 +3352,7 @@ circle :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 circle =
-    Internal.Value []
+    Internal.value []
         (EmittedString "circle")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3363,7 +3366,7 @@ square :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 square =
-    Internal.Value []
+    Internal.value []
         (EmittedString "square")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3377,7 +3380,7 @@ decimal :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 decimal =
-    Internal.Value []
+    Internal.value []
         (EmittedString "decimal")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3391,7 +3394,7 @@ decimalLeadingZero :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 decimalLeadingZero =
-    Internal.Value []
+    Internal.value []
         (EmittedString "decimal-leading-zero")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3405,7 +3408,7 @@ lowerRoman :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 lowerRoman =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lower-roman")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3419,7 +3422,7 @@ upperRoman :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 upperRoman =
-    Internal.Value []
+    Internal.value []
         (EmittedString "upper-roman")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3433,7 +3436,7 @@ lowerGreek :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 lowerGreek =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lower-greek")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3447,7 +3450,7 @@ upperGreek :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 upperGreek =
-    Internal.Value []
+    Internal.value []
         (EmittedString "upper-greek")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3461,7 +3464,7 @@ lowerAlpha :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 lowerAlpha =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lower-alpha")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3475,7 +3478,7 @@ upperAlpha :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 upperAlpha =
-    Internal.Value []
+    Internal.value []
         (EmittedString "upper-alpha")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3489,7 +3492,7 @@ lowerLatin :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 lowerLatin =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lower-latin")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3503,7 +3506,7 @@ upperLatin :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 upperLatin =
-    Internal.Value []
+    Internal.value []
         (EmittedString "upper-latin")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3517,7 +3520,7 @@ arabicIndic :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 arabicIndic =
-    Internal.Value []
+    Internal.value []
         (EmittedString "arabic-indic")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3531,7 +3534,7 @@ armenian :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 armenian =
-    Internal.Value []
+    Internal.value []
         (EmittedString "armenian")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3545,7 +3548,7 @@ bengali :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 bengali =
-    Internal.Value []
+    Internal.value []
         (EmittedString "bengali")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3559,7 +3562,7 @@ cjkEarthlyBranch :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 cjkEarthlyBranch =
-    Internal.Value []
+    Internal.value []
         (EmittedString "cjk-earthly-branch")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3573,7 +3576,7 @@ cjkHeavenlyStem :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 cjkHeavenlyStem =
-    Internal.Value []
+    Internal.value []
         (EmittedString "cjk-heavenly-stem")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3587,7 +3590,7 @@ devanagari :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 devanagari =
-    Internal.Value []
+    Internal.value []
         (EmittedString "devanagari")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3601,7 +3604,7 @@ georgian :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 georgian =
-    Internal.Value []
+    Internal.value []
         (EmittedString "georgian")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3615,7 +3618,7 @@ gujarati :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 gujarati =
-    Internal.Value []
+    Internal.value []
         (EmittedString "gujarati")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3629,7 +3632,7 @@ gurmukhi :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 gurmukhi =
-    Internal.Value []
+    Internal.value []
         (EmittedString "gurmukhi")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3643,7 +3646,7 @@ kannada :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 kannada =
-    Internal.Value []
+    Internal.value []
         (EmittedString "kannada")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3657,7 +3660,7 @@ khmer :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 khmer =
-    Internal.Value []
+    Internal.value []
         (EmittedString "khmer")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3671,7 +3674,7 @@ lao :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 lao =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lao")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3685,7 +3688,7 @@ malayalam :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 malayalam =
-    Internal.Value []
+    Internal.value []
         (EmittedString "malayalam")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3699,7 +3702,7 @@ myanmar :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 myanmar =
-    Internal.Value []
+    Internal.value []
         (EmittedString "myanmar")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3713,7 +3716,7 @@ oriya :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 oriya =
-    Internal.Value []
+    Internal.value []
         (EmittedString "oriya")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3727,7 +3730,7 @@ telugu :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 telugu =
-    Internal.Value []
+    Internal.value []
         (EmittedString "telugu")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3741,7 +3744,7 @@ thai :
         , listStyleTypeOrPositionOrImage : Compatible
         }
 thai =
-    Internal.Value []
+    Internal.value []
         (EmittedString "thai")
         { listStyleType = Compatible
         , listStyleTypeOrPositionOrImage = Compatible
@@ -3988,7 +3991,7 @@ content :
         , lengthOrNumberOrAutoOrNoneOrContent : Compatible
         }
 content =
-    Internal.Value []
+    Internal.value []
         (EmittedString "content")
         { flexBasis = Compatible
         , lengthOrNumberOrAutoOrNoneOrContent = Compatible
@@ -4000,7 +4003,7 @@ flex-wrap property.
 -}
 wrap : Internal.Value { flexDirectionOrWrap : Compatible, flexWrap : Compatible }
 wrap =
-    Internal.Value []
+    Internal.value []
         (EmittedString "wrap")
         { flexWrap = Compatible
         , flexDirectionOrWrap = Compatible
@@ -4012,7 +4015,7 @@ flex-wrap property.
 -}
 wrapReverse : Internal.Value { flexDirectionOrWrap : Compatible, flexWrap : Compatible }
 wrapReverse =
-    Internal.Value []
+    Internal.value []
         (EmittedString "wrap-reverse")
         { flexWrap = Compatible
         , flexDirectionOrWrap = Compatible
@@ -4066,7 +4069,7 @@ flex-direction property.
 -}
 row : Internal.Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 row =
-    Internal.Value []
+    Internal.value []
         (EmittedString "row")
         flexCompatibility
 
@@ -4083,7 +4086,7 @@ flex-direction property.
 -}
 rowReverse : Internal.Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 rowReverse =
-    Internal.Value [] (EmittedString "row-reverse") flexCompatibility
+    Internal.value [] (EmittedString "row-reverse") flexCompatibility
 
 
 {-| The[`column`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
@@ -4091,7 +4094,7 @@ flex-direction property.
 -}
 column : Internal.Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 column =
-    Internal.Value [] (EmittedString "column") flexCompatibility
+    Internal.value [] (EmittedString "column") flexCompatibility
 
 
 {-| The[`column-reverse`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
@@ -4099,7 +4102,7 @@ flex-direction property.
 -}
 columnReverse : Internal.Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 columnReverse =
-    Internal.Value [] (EmittedString "column-reverse") flexCompatibility
+    Internal.value [] (EmittedString "column-reverse") flexCompatibility
 
 
 
@@ -4111,7 +4114,7 @@ text decoration line.
 -}
 underline : Internal.Value { textDecorationLine : Compatible }
 underline =
-    Internal.Value []
+    Internal.value []
         (EmittedString "underline")
         { textDecorationLine = Compatible }
 
@@ -4121,7 +4124,7 @@ text decoration line.
 -}
 overline : Internal.Value { textDecorationLine : Compatible }
 overline =
-    Internal.Value []
+    Internal.value []
         (EmittedString "overline")
         { textDecorationLine = Compatible }
 
@@ -4131,7 +4134,7 @@ text decoration line.
 -}
 lineThrough : Internal.Value { textDecorationLine : Compatible }
 lineThrough =
-    Internal.Value []
+    Internal.value []
         (EmittedString "line-through")
         { textDecorationLine = Compatible }
 
@@ -4144,7 +4147,7 @@ lineThrough =
 -}
 repeatX : Internal.Value { backgroundRepeatShorthand : Compatible }
 repeatX =
-    Internal.Value []
+    Internal.value []
         (EmittedString "repeat-x")
         { backgroundRepeatShorthand = Compatible }
 
@@ -4153,7 +4156,7 @@ repeatX =
 -}
 repeatY : Internal.Value { backgroundRepeatShorthand : Compatible }
 repeatY =
-    Internal.Value []
+    Internal.value []
         (EmittedString "repeat-y")
         { backgroundRepeatShorthand = Compatible }
 
@@ -4166,7 +4169,7 @@ repeat :
         , backgroundRepeatShorthand : Compatible
         }
 repeat =
-    Internal.Value []
+    Internal.value []
         (EmittedString "repeat")
         { backgroundRepeat = Compatible
         , backgroundRepeatShorthand = Compatible
@@ -4181,7 +4184,7 @@ space :
         , backgroundRepeatShorthand : Compatible
         }
 space =
-    Internal.Value []
+    Internal.value []
         (EmittedString "space")
         { backgroundRepeat = Compatible
         , backgroundRepeatShorthand = Compatible
@@ -4196,7 +4199,7 @@ round :
         , backgroundRepeatShorthand : Compatible
         }
 round =
-    Internal.Value []
+    Internal.value []
         (EmittedString "round")
         { backgroundRepeat = Compatible
         , backgroundRepeatShorthand = Compatible
@@ -4211,7 +4214,7 @@ noRepeat :
         , backgroundRepeatShorthand : Compatible
         }
 noRepeat =
-    Internal.Value []
+    Internal.value []
         (EmittedString "no-repeat")
         { backgroundRepeat = Compatible
         , backgroundRepeatShorthand = Compatible
@@ -4222,7 +4225,7 @@ noRepeat =
 -}
 local : Internal.Value { backgroundAttachment : Compatible }
 local =
-    Internal.Value []
+    Internal.value []
         (EmittedString "local")
         { backgroundAttachment = Compatible }
 
@@ -4253,7 +4256,7 @@ linearGradient stop1 stop2 stops =
                 |> collectStops
                 |> cssFunction "linear-gradient"
     in
-        Internal.Value []
+        Internal.value []
             (EmittedString val)
             { backgroundImage = Compatible
             , listStyleTypeOrPositionOrImage = Compatible
@@ -4276,15 +4279,15 @@ linearGradient2 :
             { backgroundImage : Compatible
             , listStyleTypeOrPositionOrImage : Compatible
             }
-linearGradient2 (Internal.Value _ dir _) stop1 stop2 stops =
+linearGradient2 dir stop1 stop2 stops =
     let
         val =
             ([ stop1, stop2 ] ++ stops)
                 |> collectStops
-                |> (::) ("to " ++ emittedValueToString dir)
+                |> (::) ("to " ++ valueToString dir)
                 |> cssFunction "linear-gradient"
     in
-        Internal.Value []
+        Internal.value []
             (EmittedString val)
             { backgroundImage = Compatible
             , listStyleTypeOrPositionOrImage = Compatible
@@ -4298,9 +4301,9 @@ collectStops =
     List.map <|
         \( c, len ) ->
             len
-                |> Maybe.map (String.cons ' ' << getValue)
+                |> Maybe.map (String.cons ' ' << valueToString)
                 |> Maybe.withDefault ""
-                |> String.append (getValue c)
+                |> String.append (valueToString c)
 
 
 {-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
@@ -4321,7 +4324,7 @@ stop2 c len =
 -}
 toTop : Internal.Value { angleOrDirection : Compatible }
 toTop =
-    Internal.Value []
+    Internal.value []
         (EmittedString "top")
         { angleOrDirection = Compatible }
 
@@ -4330,7 +4333,7 @@ toTop =
 -}
 toTopRight : Internal.Value { angleOrDirection : Compatible }
 toTopRight =
-    Internal.Value []
+    Internal.value []
         (EmittedString "top right")
         { angleOrDirection = Compatible }
 
@@ -4339,7 +4342,7 @@ toTopRight =
 -}
 toRight : Internal.Value { angleOrDirection : Compatible }
 toRight =
-    Internal.Value []
+    Internal.value []
         (EmittedString "right")
         { angleOrDirection = Compatible }
 
@@ -4348,7 +4351,7 @@ toRight =
 -}
 toBottomRight : Internal.Value { angleOrDirection : Compatible }
 toBottomRight =
-    Internal.Value []
+    Internal.value []
         (EmittedString "bottom right")
         { angleOrDirection = Compatible }
 
@@ -4357,7 +4360,7 @@ toBottomRight =
 -}
 toBottom : Internal.Value { angleOrDirection : Compatible }
 toBottom =
-    Internal.Value []
+    Internal.value []
         (EmittedString "bottom")
         { angleOrDirection = Compatible }
 
@@ -4366,7 +4369,7 @@ toBottom =
 -}
 toBottomLeft : Internal.Value { angleOrDirection : Compatible }
 toBottomLeft =
-    Internal.Value []
+    Internal.value []
         (EmittedString "bottom left")
         { angleOrDirection = Compatible }
 
@@ -4375,7 +4378,7 @@ toBottomLeft =
 -}
 toLeft : Internal.Value { angleOrDirection : Compatible }
 toLeft =
-    Internal.Value []
+    Internal.value []
         (EmittedString "left")
         { angleOrDirection = Compatible }
 
@@ -4384,7 +4387,7 @@ toLeft =
 -}
 toTopLeft : Internal.Value { angleOrDirection : Compatible }
 toTopLeft =
-    Internal.Value []
+    Internal.value []
         (EmittedString "top left")
         { angleOrDirection = Compatible }
 
@@ -4396,7 +4399,7 @@ toTopLeft =
 {-| -}
 block : Internal.Value { display : Compatible }
 block =
-    Internal.Value []
+    Internal.value []
         (EmittedString "block")
         { display = Compatible }
 
@@ -4404,7 +4407,7 @@ block =
 {-| -}
 inlineBlock : Internal.Value { display : Compatible }
 inlineBlock =
-    Internal.Value []
+    Internal.value []
         (EmittedString "inline-block")
         { display = Compatible }
 
@@ -4413,7 +4416,7 @@ inlineBlock =
 -}
 inlineFlex : Internal.Value { display : Compatible }
 inlineFlex =
-    Internal.Value []
+    Internal.value []
         (EmittedString "inline-flex")
         { display = Compatible }
 
@@ -4421,7 +4424,7 @@ inlineFlex =
 {-| -}
 inline : Internal.Value { display : Compatible }
 inline =
-    Internal.Value []
+    Internal.value []
         (EmittedString "inline")
         { display = Compatible }
 
@@ -4430,7 +4433,7 @@ inline =
 -}
 table : Internal.Value { display : Compatible }
 table =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table")
         { display = Compatible }
 
@@ -4439,7 +4442,7 @@ table =
 -}
 inlineTable : Internal.Value { display : Compatible }
 inlineTable =
-    Internal.Value []
+    Internal.value []
         (EmittedString "inline-table")
         { display = Compatible }
 
@@ -4448,7 +4451,7 @@ inlineTable =
 -}
 tableRow : Internal.Value { display : Compatible }
 tableRow =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-row")
         { display = Compatible }
 
@@ -4457,7 +4460,7 @@ tableRow =
 -}
 tableCell : Internal.Value { display : Compatible }
 tableCell =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-cell")
         { display = Compatible }
 
@@ -4466,7 +4469,7 @@ tableCell =
 -}
 tableColumn : Internal.Value { display : Compatible }
 tableColumn =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-column")
         { display = Compatible }
 
@@ -4475,7 +4478,7 @@ tableColumn =
 -}
 tableCaption : Internal.Value { display : Compatible }
 tableCaption =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-caption")
         { display = Compatible }
 
@@ -4484,7 +4487,7 @@ tableCaption =
 -}
 tableRowGroup : Internal.Value { display : Compatible }
 tableRowGroup =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-row-group")
         { display = Compatible }
 
@@ -4493,7 +4496,7 @@ tableRowGroup =
 -}
 tableColumnGroup : Internal.Value { display : Compatible }
 tableColumnGroup =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-column-group")
         { display = Compatible }
 
@@ -4502,7 +4505,7 @@ tableColumnGroup =
 -}
 tableHeaderGroup : Internal.Value { display : Compatible }
 tableHeaderGroup =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-header-group")
         { display = Compatible }
 
@@ -4511,7 +4514,7 @@ tableHeaderGroup =
 -}
 tableFooterGroup : Internal.Value { display : Compatible }
 tableFooterGroup =
-    Internal.Value []
+    Internal.value []
         (EmittedString "table-footer-group")
         { display = Compatible }
 
@@ -4519,7 +4522,7 @@ tableFooterGroup =
 {-| -}
 listItem : Internal.Value { display : Compatible }
 listItem =
-    Internal.Value []
+    Internal.value []
         (EmittedString "list-item")
         { display = Compatible }
 
@@ -4527,7 +4530,7 @@ listItem =
 {-| -}
 inlineListItem : Internal.Value { display : Compatible }
 inlineListItem =
-    Internal.Value []
+    Internal.value []
         (EmittedString "inline-list-item")
         { display = Compatible }
 
@@ -4552,7 +4555,7 @@ none :
         , textTransform : Compatible
         }
 none =
-    Internal.Value []
+    Internal.value []
         (EmittedString "none")
         { cursor = Compatible
         , none = Compatible
@@ -4587,7 +4590,7 @@ auto :
         , intOrAuto : Compatible
         }
 auto =
-    Internal.Value []
+    Internal.value []
         (EmittedString "auto")
         { cursor = Compatible
         , flexBasis = Compatible
@@ -4610,7 +4613,7 @@ noWrap :
         , whiteSpace : Compatible
         }
 noWrap =
-    Internal.Value []
+    Internal.value []
         (EmittedString "nowrap")
         { whiteSpace = Compatible
         , flexWrap = Compatible
@@ -4694,33 +4697,33 @@ position =
 
 
 prop1 : String -> Internal.Value a -> Style
-prop1 key (Internal.Value _ arg _) =
-    property key (emittedValueToString arg)
+prop1 key arg =
+    property key (valueToString arg)
 
 
 prop2 : String -> Internal.Value a -> Internal.Value b -> Style
-prop2 key (Internal.Value _ argA _) (Internal.Value _ argB _) =
-    property key (String.join " " (List.map emittedValueToString [ argA, argB ]))
+prop2 key argA argB =
+    property key (String.join " " [ valueToString argA, valueToString argB ])
 
 
 prop3 : String -> Internal.Value a -> Internal.Value b -> Internal.Value c -> Style
-prop3 key (Internal.Value _ argA _) (Internal.Value _ argB _) (Internal.Value _ argC _) =
-    property key (String.join " " (List.map emittedValueToString [ argA, argB, argC ]))
+prop3 key argA argB argC =
+    property key (String.join " " [ valueToString argA, valueToString argB, valueToString argC ])
 
 
 prop4 : String -> Internal.Value a -> Internal.Value b -> Internal.Value c -> Internal.Value d -> Style
-prop4 key (Internal.Value _ argA _) (Internal.Value _ argB _) (Internal.Value _ argC _) (Internal.Value _ argD _) =
-    property key (String.join " " (List.map emittedValueToString [ argA, argB, argC, argD ]))
+prop4 key argA argB argC argD =
+    property key (String.join " " [ valueToString argA, valueToString argB, valueToString argC, valueToString argD ])
 
 
 prop5 : String -> Internal.Value a -> Internal.Value b -> Internal.Value c -> Internal.Value d -> Internal.Value e -> Style
-prop5 key (Internal.Value _ argA _) (Internal.Value _ argB _) (Internal.Value _ argC _) (Internal.Value _ argD _) (Internal.Value _ argE _) =
-    property key (String.join " " (List.map emittedValueToString [ argA, argB, argC, argD, argE ]))
+prop5 key argA argB argC argD argE =
+    property key (String.join " " [ valueToString argA, valueToString argB, valueToString argC, valueToString argD, valueToString argE ])
 
 
 prop6 : String -> Internal.Value a -> Internal.Value b -> Internal.Value c -> Internal.Value d -> Internal.Value e -> Internal.Value f -> Style
-prop6 key (Internal.Value _ argA _) (Internal.Value _ argB _) (Internal.Value _ argC _) (Internal.Value _ argD _) (Internal.Value _ argE _) (Internal.Value _ argF _) =
-    property key (String.join " " (List.map emittedValueToString [ argA, argB, argC, argD, argE, argF ]))
+prop6 key argA argB argC argD argE argF =
+    property key (String.join " " [ valueToString argA, valueToString argB, valueToString argC, valueToString argD, valueToString argE, valueToString argF ])
 
 
 {-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
@@ -4758,8 +4761,8 @@ float fn =
 
 -}
 textDecorationColor : Internal.Value compatibility -> Style
-textDecorationColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "text-decoration-color" (emittedValueToString emittedValue)
+textDecorationColor val =
+    propertyWithWarnings (Internal.warnings val) "text-decoration-color" (valueToString val)
 
 
 {-| Sets ['text-emphasis-color'](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color)
@@ -4768,8 +4771,8 @@ textDecorationColor (Internal.Value warnings emittedValue _) =
 
 -}
 textEmphasisColor : Internal.Value compatibility -> Style
-textEmphasisColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "text-emphasis-color" (emittedValueToString emittedValue)
+textEmphasisColor val =
+    propertyWithWarnings (Internal.warnings val) "text-emphasis-color" (valueToString val)
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
@@ -5574,7 +5577,7 @@ maxContent :
         , minMaxDimension : Compatible
         }
 maxContent =
-    Internal.Value [] (EmittedString "max-content") dimensionsCompatibility
+    Internal.value [] (EmittedString "max-content") dimensionsCompatibility
 
 
 {-| The `min-content` value for
@@ -5590,7 +5593,7 @@ minContent :
         , minMaxDimension : Compatible
         }
 minContent =
-    Internal.Value [] (EmittedString "min-content") dimensionsCompatibility
+    Internal.value [] (EmittedString "min-content") dimensionsCompatibility
 
 
 {-| The `fit-content` value for
@@ -5606,7 +5609,7 @@ fitContent :
         , minMaxDimension : Compatible
         }
 fitContent =
-    Internal.Value [] (EmittedString "fit-content") dimensionsCompatibility
+    Internal.value [] (EmittedString "fit-content") dimensionsCompatibility
 
 
 {-| The `fill-available` value for
@@ -5622,7 +5625,7 @@ fillAvailable :
         , minMaxDimension : Compatible
         }
 fillAvailable =
-    Internal.Value []
+    Internal.value []
         (EmittedString "fill-available")
         dimensionsCompatibility
 
@@ -5650,7 +5653,7 @@ dimensionsCompatibility =
 -}
 static : Internal.Value { position : Compatible }
 static =
-    Internal.Value []
+    Internal.value []
         (EmittedString "static")
         { position = Compatible }
 
@@ -5663,7 +5666,7 @@ This can also represent a `fixed` [`background-attachment`](https://developer.mo
 -}
 fixed : Internal.Value { backgroundAttachment : Compatible, position : Compatible }
 fixed =
-    Internal.Value []
+    Internal.value []
         (EmittedString "fixed")
         { position = Compatible
         , backgroundAttachment = Compatible
@@ -5677,7 +5680,7 @@ fixed =
 -}
 sticky : Internal.Value { position : Compatible }
 sticky =
-    Internal.Value []
+    Internal.value []
         (EmittedString "sticky")
         { position = Compatible }
 
@@ -5689,7 +5692,7 @@ sticky =
 -}
 relative : Internal.Value { position : Compatible }
 relative =
-    Internal.Value []
+    Internal.value []
         (EmittedString "relative")
         { position = Compatible }
 
@@ -5701,7 +5704,7 @@ relative =
 -}
 absolute : Internal.Value { position : Compatible }
 absolute =
-    Internal.Value []
+    Internal.value []
         (EmittedString "absolute")
         { position = Compatible }
 
@@ -5714,31 +5717,31 @@ absolute =
 {-| -}
 serif : Internal.Value { fontFamily : Compatible }
 serif =
-    Internal.Value [] (EmittedString "serif") { fontFamily = Compatible }
+    Internal.value [] (EmittedString "serif") { fontFamily = Compatible }
 
 
 {-| -}
 sansSerif : Internal.Value { fontFamily : Compatible }
 sansSerif =
-    Internal.Value [] (EmittedString "sans-serif") { fontFamily = Compatible }
+    Internal.value [] (EmittedString "sans-serif") { fontFamily = Compatible }
 
 
 {-| -}
 monospace : Internal.Value { fontFamily : Compatible }
 monospace =
-    Internal.Value [] (EmittedString "monospace") { fontFamily = Compatible }
+    Internal.value [] (EmittedString "monospace") { fontFamily = Compatible }
 
 
 {-| -}
 cursive : Internal.Value { fontFamily : Compatible }
 cursive =
-    Internal.Value [] (EmittedString "cursive") { fontFamily = Compatible }
+    Internal.value [] (EmittedString "cursive") { fontFamily = Compatible }
 
 
 {-| -}
 fantasy : Internal.Value { fontFamily : Compatible }
 fantasy =
-    Internal.Value [] (EmittedString "fantasy") { fontFamily = Compatible }
+    Internal.value [] (EmittedString "fantasy") { fontFamily = Compatible }
 
 
 
@@ -5748,55 +5751,55 @@ fantasy =
 {-| -}
 xxSmall : Internal.Value { fontSize : Compatible }
 xxSmall =
-    Internal.Value [] (EmittedString "xx-small") { fontSize = Compatible }
+    Internal.value [] (EmittedString "xx-small") { fontSize = Compatible }
 
 
 {-| -}
 xSmall : Internal.Value { fontSize : Compatible }
 xSmall =
-    Internal.Value [] (EmittedString "x-small") { fontSize = Compatible }
+    Internal.value [] (EmittedString "x-small") { fontSize = Compatible }
 
 
 {-| -}
 small : Internal.Value { fontSize : Compatible }
 small =
-    Internal.Value [] (EmittedString "small") { fontSize = Compatible }
+    Internal.value [] (EmittedString "small") { fontSize = Compatible }
 
 
 {-| -}
 medium : Internal.Value { fontSize : Compatible }
 medium =
-    Internal.Value [] (EmittedString "medium") { fontSize = Compatible }
+    Internal.value [] (EmittedString "medium") { fontSize = Compatible }
 
 
 {-| -}
 large : Internal.Value { fontSize : Compatible }
 large =
-    Internal.Value [] (EmittedString "large") { fontSize = Compatible }
+    Internal.value [] (EmittedString "large") { fontSize = Compatible }
 
 
 {-| -}
 xLarge : Internal.Value { fontSize : Compatible }
 xLarge =
-    Internal.Value [] (EmittedString "x-large") { fontSize = Compatible }
+    Internal.value [] (EmittedString "x-large") { fontSize = Compatible }
 
 
 {-| -}
 xxLarge : Internal.Value { fontSize : Compatible }
 xxLarge =
-    Internal.Value [] (EmittedString "xx-large") { fontSize = Compatible }
+    Internal.value [] (EmittedString "xx-large") { fontSize = Compatible }
 
 
 {-| -}
 smaller : Internal.Value { fontSize : Compatible }
 smaller =
-    Internal.Value [] (EmittedString "smaller") { fontSize = Compatible }
+    Internal.value [] (EmittedString "smaller") { fontSize = Compatible }
 
 
 {-| -}
 larger : Internal.Value { fontSize : Compatible }
 larger =
-    Internal.Value [] (EmittedString "larger") { fontSize = Compatible }
+    Internal.value [] (EmittedString "larger") { fontSize = Compatible }
 
 
 
@@ -5812,7 +5815,7 @@ normal :
         , overflowWrap : Compatible
         }
 normal =
-    Internal.Value []
+    Internal.value []
         (EmittedString "normal")
         { fontStyle = Compatible
         , fontWeight = Compatible
@@ -5824,13 +5827,13 @@ normal =
 {-| -}
 italic : Internal.Value { fontStyle : Compatible }
 italic =
-    Internal.Value [] (EmittedString "italic") { fontStyle = Compatible }
+    Internal.value [] (EmittedString "italic") { fontStyle = Compatible }
 
 
 {-| -}
 oblique : Internal.Value { fontStyle : Compatible }
 oblique =
-    Internal.Value [] (EmittedString "oblique") { fontStyle = Compatible }
+    Internal.value [] (EmittedString "oblique") { fontStyle = Compatible }
 
 
 
@@ -5840,7 +5843,7 @@ oblique =
 {-| -}
 bold : Internal.Value { fontWeight : Compatible }
 bold =
-    Internal.Value []
+    Internal.value []
         (EmittedString "bold")
         { fontWeight = Compatible }
 
@@ -5848,7 +5851,7 @@ bold =
 {-| -}
 lighter : Internal.Value { fontWeight : Compatible }
 lighter =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lighter")
         { fontWeight = Compatible }
 
@@ -5856,7 +5859,7 @@ lighter =
 {-| -}
 bolder : Internal.Value { fontWeight : Compatible }
 bolder =
-    Internal.Value []
+    Internal.value []
         (EmittedString "bolder")
         { fontWeight = Compatible }
 
@@ -5869,37 +5872,37 @@ bolder =
 {-| -}
 smallCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 smallCaps =
-    Internal.Value [] (EmittedString "small-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
+    Internal.value [] (EmittedString "small-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
 allSmallCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 allSmallCaps =
-    Internal.Value [] (EmittedString "all-small-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
+    Internal.value [] (EmittedString "all-small-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
 petiteCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 petiteCaps =
-    Internal.Value [] (EmittedString "petite-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
+    Internal.value [] (EmittedString "petite-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
 allPetiteCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 allPetiteCaps =
-    Internal.Value [] (EmittedString "all-petite-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
+    Internal.value [] (EmittedString "all-petite-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
 unicase : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 unicase =
-    Internal.Value [] (EmittedString "unicase") { fontVariant = Compatible, fontVariantCaps = Compatible }
+    Internal.value [] (EmittedString "unicase") { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 {-| -}
 titlingCaps : Internal.Value { fontVariant : Compatible, fontVariantCaps : Compatible }
 titlingCaps =
-    Internal.Value [] (EmittedString "titling-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
+    Internal.value [] (EmittedString "titling-caps") { fontVariant = Compatible, fontVariantCaps = Compatible }
 
 
 
@@ -5909,7 +5912,7 @@ titlingCaps =
 {-| -}
 commonLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 commonLigatures =
-    Internal.Value []
+    Internal.value []
         (EmittedString "common-ligatures")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5919,7 +5922,7 @@ commonLigatures =
 {-| -}
 noCommonLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noCommonLigatures =
-    Internal.Value []
+    Internal.value []
         (EmittedString "no-common-ligatures")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5929,7 +5932,7 @@ noCommonLigatures =
 {-| -}
 discretionaryLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 discretionaryLigatures =
-    Internal.Value []
+    Internal.value []
         (EmittedString "discretionary-ligatures")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5939,7 +5942,7 @@ discretionaryLigatures =
 {-| -}
 noDiscretionaryLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noDiscretionaryLigatures =
-    Internal.Value []
+    Internal.value []
         (EmittedString "no-discretionary-ligatures")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5949,7 +5952,7 @@ noDiscretionaryLigatures =
 {-| -}
 historicalLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 historicalLigatures =
-    Internal.Value []
+    Internal.value []
         (EmittedString "historical-ligatures")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5959,7 +5962,7 @@ historicalLigatures =
 {-| -}
 noHistoricalLigatures : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noHistoricalLigatures =
-    Internal.Value []
+    Internal.value []
         (EmittedString "no-historical-ligatures")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5969,7 +5972,7 @@ noHistoricalLigatures =
 {-| -}
 contextual : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 contextual =
-    Internal.Value []
+    Internal.value []
         (EmittedString "context")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5979,7 +5982,7 @@ contextual =
 {-| -}
 noContextual : Internal.Value { fontVariant : Compatible, fontVariantLigatures : Compatible }
 noContextual =
-    Internal.Value []
+    Internal.value []
         (EmittedString "no-contextual")
         { fontVariant = Compatible
         , fontVariantLigatures = Compatible
@@ -5993,7 +5996,7 @@ noContextual =
 {-| -}
 liningNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 liningNums =
-    Internal.Value []
+    Internal.value []
         (EmittedString "lining-nums")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6003,7 +6006,7 @@ liningNums =
 {-| -}
 oldstyleNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 oldstyleNums =
-    Internal.Value []
+    Internal.value []
         (EmittedString "oldstyle-nums")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6013,7 +6016,7 @@ oldstyleNums =
 {-| -}
 proportionalNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 proportionalNums =
-    Internal.Value []
+    Internal.value []
         (EmittedString "proportional-nums")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6023,7 +6026,7 @@ proportionalNums =
 {-| -}
 tabularNums : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 tabularNums =
-    Internal.Value []
+    Internal.value []
         (EmittedString "tabular-nums")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6033,7 +6036,7 @@ tabularNums =
 {-| -}
 diagonalFractions : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 diagonalFractions =
-    Internal.Value []
+    Internal.value []
         (EmittedString "diagonal-fractions")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6043,7 +6046,7 @@ diagonalFractions =
 {-| -}
 stackedFractions : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 stackedFractions =
-    Internal.Value []
+    Internal.value []
         (EmittedString "stacked-fractions")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6053,7 +6056,7 @@ stackedFractions =
 {-| -}
 ordinal : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 ordinal =
-    Internal.Value []
+    Internal.value []
         (EmittedString "ordinal")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6063,7 +6066,7 @@ ordinal =
 {-| -}
 slashedZero : Internal.Value { fontVariant : Compatible, fontVariantNumeric : Compatible }
 slashedZero =
-    Internal.Value []
+    Internal.value []
         (EmittedString "slashed-zero")
         { fontVariant = Compatible
         , fontVariantNumeric = Compatible
@@ -6119,7 +6122,7 @@ featureTag2 tag value =
                 |> List.filter Tuple.first
                 |> List.map Tuple.second
     in
-        Internal.Value warnings
+        Internal.value warnings
             (EmittedString ((toString tag) ++ " " ++ (toString value)))
             { featureTagValue = Compatible }
 
@@ -6603,8 +6606,8 @@ borderImageWidth4 =
 
 -}
 borderBlockStartColor : Internal.Value compatibility -> Style
-borderBlockStartColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-block-start-color" (emittedValueToString emittedValue)
+borderBlockStartColor val =
+    propertyWithWarnings (Internal.warnings val) "border-block-start-color" (valueToString val)
 
 
 {-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
@@ -6613,8 +6616,8 @@ borderBlockStartColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderBottomColor : Internal.Value compatibility -> Style
-borderBottomColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-bottom-color" (emittedValueToString emittedValue)
+borderBottomColor val =
+    propertyWithWarnings (Internal.warnings val) "border-bottom-color" (valueToString val)
 
 
 {-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color)
@@ -6623,8 +6626,8 @@ borderBottomColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderInlineStartColor : Internal.Value compatibility -> Style
-borderInlineStartColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-inline-start-color" (emittedValueToString emittedValue)
+borderInlineStartColor val =
+    propertyWithWarnings (Internal.warnings val) "border-inline-start-color" (valueToString val)
 
 
 {-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color)
@@ -6633,8 +6636,8 @@ borderInlineStartColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderInlineEndColor : Internal.Value compatibility -> Style
-borderInlineEndColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-inline-end-color" (emittedValueToString emittedValue)
+borderInlineEndColor val =
+    propertyWithWarnings (Internal.warnings val) "border-inline-end-color" (valueToString val)
 
 
 {-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
@@ -6643,8 +6646,8 @@ borderInlineEndColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderLeftColor : Internal.Value compatibility -> Style
-borderLeftColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-left-color" (emittedValueToString emittedValue)
+borderLeftColor val =
+    propertyWithWarnings (Internal.warnings val) "border-left-color" (valueToString val)
 
 
 {-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
@@ -6653,8 +6656,8 @@ borderLeftColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderRightColor : Internal.Value compatibility -> Style
-borderRightColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-right-color" (emittedValueToString emittedValue)
+borderRightColor val =
+    propertyWithWarnings (Internal.warnings val) "border-right-color" (valueToString val)
 
 
 {-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
@@ -6663,8 +6666,8 @@ borderRightColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderTopColor : Internal.Value compatibility -> Style
-borderTopColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-top-color" (emittedValueToString emittedValue)
+borderTopColor val =
+    propertyWithWarnings (Internal.warnings val) "border-top-color" (valueToString val)
 
 
 {-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color)
@@ -6673,8 +6676,8 @@ borderTopColor (Internal.Value warnings emittedValue _) =
 
 -}
 borderBlockEndColor : Internal.Value compatibility -> Style
-borderBlockEndColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-block-end-color" (emittedValueToString emittedValue)
+borderBlockEndColor val =
+    propertyWithWarnings (Internal.warnings val) "border-block-end-color" (valueToString val)
 
 
 {-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style)
@@ -7076,8 +7079,8 @@ borderSpacing2 =
 
 -}
 borderColor : Internal.Value { r | color : Compatible } -> Style
-borderColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "border-color" (emittedValueToString emittedValue)
+borderColor val =
+    propertyWithWarnings (Internal.warnings val) "border-color" (valueToString val)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -7092,13 +7095,13 @@ borderColor2 :
     Internal.Value { r | color : Compatible }
     -> Internal.Value { r | color : Compatible }
     -> Style
-borderColor2 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) =
+borderColor2 c1 c2 =
     let
         warnings =
-            c1warnings ++ c2warnings
+            Internal.warnings c1 ++ Internal.warnings c2
 
         value =
-            String.join " " [ emittedValueToString c1, emittedValueToString c2 ]
+            String.join " " [ valueToString c1, valueToString c2 ]
     in
         propertyWithWarnings warnings "border-color" value
 
@@ -7116,13 +7119,13 @@ borderColor3 :
     -> Internal.Value { r | color : Compatible }
     -> Internal.Value { r | color : Compatible }
     -> Style
-borderColor3 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) (Internal.Value c3warnings c3 _) =
+borderColor3 c1 c2 c3 =
     let
         warnings =
-            c1warnings ++ c2warnings ++ c3warnings
+            Internal.warnings c1 ++ Internal.warnings c2 ++ Internal.warnings c3
 
         value =
-            String.join " " [ emittedValueToString c1, emittedValueToString c2, emittedValueToString c3 ]
+            String.join " " [ valueToString c1, valueToString c2, valueToString c3 ]
     in
         propertyWithWarnings warnings "border-color" value
 
@@ -7141,13 +7144,13 @@ borderColor4 :
     -> Internal.Value { r | color : Compatible }
     -> Internal.Value { r | color : Compatible }
     -> Style
-borderColor4 (Internal.Value c1warnings c1 _) (Internal.Value c2warnings c2 _) (Internal.Value c3warnings c3 _) (Internal.Value c4warnings c4 _) =
+borderColor4 c1 c2 c3 c4 =
     let
         warnings =
-            c1warnings ++ c2warnings ++ c3warnings ++ c4warnings
+            Internal.warnings c1 ++ Internal.warnings c2 ++ Internal.warnings c3 ++ Internal.warnings c4
 
         value =
-            String.join " " [ emittedValueToString c1, emittedValueToString c2, emittedValueToString c3, emittedValueToString c4 ]
+            String.join " " [ valueToString c1, valueToString c2, valueToString c3, valueToString c4 ]
     in
         propertyWithWarnings warnings "border-color" value
 
@@ -7184,8 +7187,8 @@ outline3 =
 
 -}
 outlineColor : Internal.Value compatibility -> Style
-outlineColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "outline-color" (emittedValueToString emittedValue)
+outlineColor val =
+    propertyWithWarnings (Internal.warnings val) "outline-color" (valueToString val)
 
 
 {-| Sets [`outline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width)
@@ -7268,8 +7271,8 @@ whiteSpace =
 
 {-| -}
 backgroundColor : Internal.Value compatibility -> Style
-backgroundColor (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "background-color" (emittedValueToString emittedValue)
+backgroundColor val =
+    propertyWithWarnings (Internal.warnings val) "background-color" (valueToString val)
 
 
 {-| Sets ['background-repeat'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat)
@@ -7408,8 +7411,8 @@ backgroundSize2 =
 
 {-| -}
 color : Internal.Value compatibility -> Style
-color (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "color" (emittedValueToString emittedValue)
+color val =
+    propertyWithWarnings (Internal.warnings val) "color" (valueToString val)
 
 
 {-| -}
@@ -7497,8 +7500,8 @@ letterSpacing =
 
 {-| -}
 src : Internal.Value compatible -> String
-src (Internal.Value _ emittedValue _) =
-    toString emittedValue
+src =
+    Internal.valueToString
 
 
 {-| -}
@@ -7545,8 +7548,8 @@ fontFamilies =
 
 -}
 fontFeatureSettings : Internal.Value compatibility -> Style
-fontFeatureSettings (Internal.Value warnings emittedValue _) =
-    propertyWithWarnings warnings "font-feature-settings" (emittedValueToString emittedValue)
+fontFeatureSettings val =
+    propertyWithWarnings (Internal.warnings val) "font-feature-settings" (valueToString val)
 
 
 {-| Sets [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings)
@@ -7560,10 +7563,10 @@ fontFeatureSettingsList :
 fontFeatureSettingsList featureTagValues =
     let
         value =
-            featureTagValues |> List.map getValue |> String.join ", "
+            featureTagValues |> List.map valueToString |> String.join ", "
 
         warnings =
-            featureTagValues |> List.map getWarnings |> List.concat
+            featureTagValues |> List.map Internal.warnings |> List.concat
     in
         propertyWithWarnings warnings "font-feature-settings" value
 
@@ -7596,10 +7599,10 @@ fontStyle =
 
 -}
 fontWeight : Internal.Value compatible -> Style
-fontWeight ((Internal.Value _ emittedValue _) as value) =
+fontWeight val =
     let
         warnings =
-            case emittedValue of
+            case Internal.emittedValue val of
                 EmittedString _ ->
                     -- This means it was one of the string keywords, e.g. "bold"
                     []
@@ -7617,7 +7620,7 @@ fontWeight ((Internal.Value _ emittedValue _) as value) =
                             [ "fontWeight " ++ toString weight ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
 
                 EmittedColor _ ->
-                    [ "fontWeight" ++ toString emittedValue ++ " is invalid." ]
+                    [ "fontWeight" ++ Internal.valueToString val ++ " is invalid." ]
 
                 EmittedCalc _ _ _ ->
                     []
@@ -7625,7 +7628,7 @@ fontWeight ((Internal.Value _ emittedValue _) as value) =
                 InvalidValue _ ->
                     []
     in
-        propertyWithWarnings warnings "font-weight" (emittedValueToString emittedValue)
+        propertyWithWarnings warnings "font-weight" (Internal.valueToString val)
 
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -7712,205 +7715,205 @@ cursor =
 {-| -}
 default : Internal.Value { cursor : Compatible }
 default =
-    Internal.Value [] (EmittedString "default") { cursor = Compatible }
+    Internal.value [] (EmittedString "default") { cursor = Compatible }
 
 
 {-| -}
 crosshair : Internal.Value { cursor : Compatible }
 crosshair =
-    Internal.Value [] (EmittedString "crosshair") { cursor = Compatible }
+    Internal.value [] (EmittedString "crosshair") { cursor = Compatible }
 
 
 {-| -}
 contextMenu : Internal.Value { cursor : Compatible }
 contextMenu =
-    Internal.Value [] (EmittedString "context-menu") { cursor = Compatible }
+    Internal.value [] (EmittedString "context-menu") { cursor = Compatible }
 
 
 {-| -}
 help : Internal.Value { cursor : Compatible }
 help =
-    Internal.Value [] (EmittedString "help") { cursor = Compatible }
+    Internal.value [] (EmittedString "help") { cursor = Compatible }
 
 
 {-| -}
 pointer : Internal.Value { cursor : Compatible }
 pointer =
-    Internal.Value [] (EmittedString "pointer") { cursor = Compatible }
+    Internal.value [] (EmittedString "pointer") { cursor = Compatible }
 
 
 {-| -}
 progress : Internal.Value { cursor : Compatible }
 progress =
-    Internal.Value [] (EmittedString "progress") { cursor = Compatible }
+    Internal.value [] (EmittedString "progress") { cursor = Compatible }
 
 
 {-| -}
 wait : Internal.Value { cursor : Compatible }
 wait =
-    Internal.Value [] (EmittedString "wait") { cursor = Compatible }
+    Internal.value [] (EmittedString "wait") { cursor = Compatible }
 
 
 {-| -}
 cell : Internal.Value { cursor : Compatible }
 cell =
-    Internal.Value [] (EmittedString "cell") { cursor = Compatible }
+    Internal.value [] (EmittedString "cell") { cursor = Compatible }
 
 
 {-| -}
 text : Internal.Value { cursor : Compatible }
 text =
-    Internal.Value [] (EmittedString "text") { cursor = Compatible }
+    Internal.value [] (EmittedString "text") { cursor = Compatible }
 
 
 {-| -}
 verticalText : Internal.Value { cursor : Compatible }
 verticalText =
-    Internal.Value [] (EmittedString "vertical-text") { cursor = Compatible }
+    Internal.value [] (EmittedString "vertical-text") { cursor = Compatible }
 
 
 {-| -}
 cursorAlias : Internal.Value { cursor : Compatible }
 cursorAlias =
-    Internal.Value [] (EmittedString "alias") { cursor = Compatible }
+    Internal.value [] (EmittedString "alias") { cursor = Compatible }
 
 
 {-| -}
 copy : Internal.Value { cursor : Compatible }
 copy =
-    Internal.Value [] (EmittedString "copy") { cursor = Compatible }
+    Internal.value [] (EmittedString "copy") { cursor = Compatible }
 
 
 {-| -}
 move : Internal.Value { cursor : Compatible }
 move =
-    Internal.Value [] (EmittedString "move") { cursor = Compatible }
+    Internal.value [] (EmittedString "move") { cursor = Compatible }
 
 
 {-| -}
 noDrop : Internal.Value { cursor : Compatible }
 noDrop =
-    Internal.Value [] (EmittedString "no-drop") { cursor = Compatible }
+    Internal.value [] (EmittedString "no-drop") { cursor = Compatible }
 
 
 {-| -}
 notAllowed : Internal.Value { cursor : Compatible }
 notAllowed =
-    Internal.Value [] (EmittedString "not-allowed") { cursor = Compatible }
+    Internal.value [] (EmittedString "not-allowed") { cursor = Compatible }
 
 
 {-| -}
 eResize : Internal.Value { cursor : Compatible }
 eResize =
-    Internal.Value [] (EmittedString "e-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "e-resize") { cursor = Compatible }
 
 
 {-| -}
 nResize : Internal.Value { cursor : Compatible }
 nResize =
-    Internal.Value [] (EmittedString "n-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "n-resize") { cursor = Compatible }
 
 
 {-| -}
 neResize : Internal.Value { cursor : Compatible }
 neResize =
-    Internal.Value [] (EmittedString "ne-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "ne-resize") { cursor = Compatible }
 
 
 {-| -}
 nwResize : Internal.Value { cursor : Compatible }
 nwResize =
-    Internal.Value [] (EmittedString "nw-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "nw-resize") { cursor = Compatible }
 
 
 {-| -}
 sResize : Internal.Value { cursor : Compatible }
 sResize =
-    Internal.Value [] (EmittedString "s-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "s-resize") { cursor = Compatible }
 
 
 {-| -}
 seResize : Internal.Value { cursor : Compatible }
 seResize =
-    Internal.Value [] (EmittedString "se-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "se-resize") { cursor = Compatible }
 
 
 {-| -}
 swResize : Internal.Value { cursor : Compatible }
 swResize =
-    Internal.Value [] (EmittedString "sw-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "sw-resize") { cursor = Compatible }
 
 
 {-| -}
 wResize : Internal.Value { cursor : Compatible }
 wResize =
-    Internal.Value [] (EmittedString "w-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "w-resize") { cursor = Compatible }
 
 
 {-| -}
 ewResize : Internal.Value { cursor : Compatible }
 ewResize =
-    Internal.Value [] (EmittedString "ew-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "ew-resize") { cursor = Compatible }
 
 
 {-| -}
 nsResize : Internal.Value { cursor : Compatible }
 nsResize =
-    Internal.Value [] (EmittedString "ns-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "ns-resize") { cursor = Compatible }
 
 
 {-| -}
 neswResize : Internal.Value { cursor : Compatible }
 neswResize =
-    Internal.Value [] (EmittedString "nesw-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "nesw-resize") { cursor = Compatible }
 
 
 {-| -}
 nwseResize : Internal.Value { cursor : Compatible }
 nwseResize =
-    Internal.Value [] (EmittedString "nwse-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "nwse-resize") { cursor = Compatible }
 
 
 {-| -}
 colResize : Internal.Value { cursor : Compatible }
 colResize =
-    Internal.Value [] (EmittedString "col-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "col-resize") { cursor = Compatible }
 
 
 {-| -}
 rowResize : Internal.Value { cursor : Compatible }
 rowResize =
-    Internal.Value [] (EmittedString "row-resize") { cursor = Compatible }
+    Internal.value [] (EmittedString "row-resize") { cursor = Compatible }
 
 
 {-| -}
 allScroll : Internal.Value { cursor : Compatible }
 allScroll =
-    Internal.Value [] (EmittedString "all-scroll") { cursor = Compatible }
+    Internal.value [] (EmittedString "all-scroll") { cursor = Compatible }
 
 
 {-| -}
 zoomIn : Internal.Value { cursor : Compatible }
 zoomIn =
-    Internal.Value [] (EmittedString "zoom-in") { cursor = Compatible }
+    Internal.value [] (EmittedString "zoom-in") { cursor = Compatible }
 
 
 {-| -}
 zoomOut : Internal.Value { cursor : Compatible }
 zoomOut =
-    Internal.Value [] (EmittedString "zoom-out") { cursor = Compatible }
+    Internal.value [] (EmittedString "zoom-out") { cursor = Compatible }
 
 
 {-| -}
 grab : Internal.Value { cursor : Compatible }
 grab =
-    Internal.Value [] (EmittedString "grab") { cursor = Compatible }
+    Internal.value [] (EmittedString "grab") { cursor = Compatible }
 
 
 {-| -}
 grabbing : Internal.Value { cursor : Compatible }
 grabbing =
-    Internal.Value [] (EmittedString "grabbing") { cursor = Compatible }
+    Internal.value [] (EmittedString "grabbing") { cursor = Compatible }
 
 
 
@@ -8758,9 +8761,9 @@ valuesOrNone list =
             if List.isEmpty list then
                 "none"
             else
-                String.join " " (List.map getValue list)
+                String.join " " (List.map valueToString list)
     in
-        Internal.Value [] (EmittedString val) {}
+        Internal.value [] (EmittedString val) {}
 
 
 stringsToValue : List String -> Internal.Value {}
@@ -8772,7 +8775,7 @@ stringsToValue list =
             else
                 String.join ", " list
     in
-        Internal.Value [] (EmittedString val) {}
+        Internal.value [] (EmittedString val) {}
 
 
 {-| Compile the given stylesheets to a CSS string, or to an error

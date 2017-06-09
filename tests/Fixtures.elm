@@ -3,7 +3,7 @@ module Fixtures exposing (..)
 import Css exposing (..)
 import Css.Elements exposing (..)
 import Css.Namespace exposing (namespace)
-import Css.Internal exposing (getValue)
+import Css.Internal
 
 
 type CssClasses
@@ -322,7 +322,7 @@ fontStylesheet =
             , fontFamilies
                 [ qt "Gill Sans Extrabold"
                 , "Helvetica"
-                , getValue sansSerif
+                , Css.Internal.valueToString sansSerif
                 ]
             , fontSize xSmall
             , fontStyle italic

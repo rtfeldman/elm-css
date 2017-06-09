@@ -1,8 +1,26 @@
-module Css.Internal exposing (Value(Value), CalcOperation, EmittedValue(..), ColorDescriptor(..), CalcOperation(..), getValue, getWarnings, emittedValueToString, cssFunction, numberToString)
+module Css.Internal
+    exposing
+        ( Value
+        , CalcOperation
+        , EmittedValue(..)
+        , ColorDescriptor(..)
+        , CalcOperation(..)
+        , valueToString
+        , warnings
+        , cssFunction
+        , compatible
+        , numberToString
+        , value
+        , emittedValue
+        )
 
 
 type Value compatible
-    = Value (List String) EmittedValue compatible
+    = Value
+        { warnings : List String
+        , value : EmittedValue
+        , compatible : compatible
+        }
 
 
 type EmittedValue
@@ -18,9 +36,33 @@ type CalcOperation
     | Plus
 
 
-getValue : Value compatibility -> String
-getValue (Value _ emittedValue _) =
-    emittedValueToString emittedValue
+compatible : Value compatible -> compatible
+compatible (Value record) =
+    record.compatible
+
+
+emittedValue : Value compatible -> EmittedValue
+emittedValue (Value record) =
+    record.value
+
+
+warnings : Value compatible -> List String
+warnings (Value record) =
+    record.warnings
+
+
+value : List String -> EmittedValue -> compatible -> Value compatible
+value warnings value compatible =
+    Value
+        { warnings = warnings
+        , compatible = compatible
+        , value = value
+        }
+
+
+valueToString : Value compatible -> String
+valueToString (Value record) =
+    emittedValueToString record.value
 
 
 emittedValueToString : EmittedValue -> String
@@ -90,11 +132,6 @@ type ColorDescriptor
     | HslaColor Float Float Float Float
     | HslColor Float Float Float
     | InvalidColor String
-
-
-getWarnings : Value compatibility -> List String
-getWarnings (Value warnings _ _) =
-    warnings
 
 
 cssFunction : String -> List String -> String
