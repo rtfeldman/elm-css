@@ -4321,6 +4321,7 @@ auto :
     , value : String
     , lengthOrAutoOrCoverOrContain : Compatible
     , intOrAuto : Compatible
+    , pointerEvents : Compatible
     }
 auto =
     { value = "auto"
@@ -4334,6 +4335,7 @@ auto =
     , lengthOrAutoOrCoverOrContain = Compatible
     , justifyContentOrAuto = Compatible
     , intOrAuto = Compatible
+    , pointerEvents = Compatible
     }
 
 
