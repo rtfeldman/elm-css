@@ -411,13 +411,13 @@ all =
             --, ( pointerEvents boundingBox, "bounding-box" )
             --, ( pointerEvents fill, "fill" )
             , ( pointerEvents none, "none" )
+            , ( pointerEvents painted, "painted" )
+            , ( pointerEvents stroke, "stroke" )
 
-            --, ( pointerEvents painted, "painted" )
-            --, ( pointerEvents stroke, "stroke" )
             --, ( pointerEvents visible, "visible" )
-            --, ( pointerEvents visiblefill, "visiblefill" )
-            --, ( pointerEvents visiblepainted, "visiblepainted" )
-            --, ( pointerEvents visiblestroke, "visiblestroke" )
+            , ( pointerEvents visiblefill, "visiblefill" )
+            , ( pointerEvents visiblepainted, "visiblepainted" )
+            , ( pointerEvents visiblestroke, "visiblestroke" )
             ]
         , testProperty { function = "cursor", property = "cursor" }
             [ ( cursor pointer, "pointer" )
