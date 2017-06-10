@@ -407,8 +407,8 @@ all =
         , testProperty { function = "pointerEvents", property = "pointer-events" }
             [ ( pointerEventsAll, "all" )
             , ( pointerEvents auto, "auto" )
+            , ( pointerEvents boundingBox, "bounding-box" )
 
-            --, ( pointerEvents boundingBox, "bounding-box" )
             --, ( pointerEvents fill, "fill" )
             , ( pointerEvents none, "none" )
             , ( pointerEvents painted, "painted" )
