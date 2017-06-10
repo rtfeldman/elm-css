@@ -405,8 +405,8 @@ all =
             , ( color initial, "initial" )
             ]
         , testProperty { function = "pointerEvents", property = "pointer-events" }
-            [ --( pointerEvents Css.all, "all" )
-              ( pointerEvents auto, "auto" )
+            [ ( pointerEventsAll, "all" )
+            , ( pointerEvents auto, "auto" )
 
             --, ( pointerEvents boundingBox, "bounding-box" )
             --, ( pointerEvents fill, "fill" )
