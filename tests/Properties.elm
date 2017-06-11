@@ -405,19 +405,19 @@ all =
             , ( color initial, "initial" )
             ]
         , testProperty { function = "pointerEvents", property = "pointer-events" }
-            [ ( pointerEventsAll, "all" )
-            , ( pointerEvents auto, "auto" )
-            , ( pointerEvents boundingBox, "bounding-box" )
+            [ ( pointerEvents Css.all, "all" )
+--            , ( pointerEvents auto, "auto" )
+--            , ( pointerEvents boundingBox, "bounding-box" )
 
             --, ( pointerEvents fill, "fill" )
-            , ( pointerEvents none, "none" )
-            , ( pointerEvents painted, "painted" )
-            , ( pointerEvents stroke, "stroke" )
+--            , ( pointerEvents none, "none" )
+--            , ( pointerEvents painted, "painted" )
+--            , ( pointerEvents stroke, "stroke" )
 
-            --, ( pointerEvents visible, "visible" )
-            , ( pointerEvents visiblefill, "visiblefill" )
-            , ( pointerEvents visiblepainted, "visiblepainted" )
-            , ( pointerEvents visiblestroke, "visiblestroke" )
+            --            , ( pointerEvents visible, "visible" )
+--            , ( pointerEvents visiblefill, "visiblefill" )
+--            , ( pointerEvents visiblepainted, "visiblepainted" )
+--            , ( pointerEvents visiblestroke, "visiblestroke" )
             ]
         , testProperty { function = "cursor", property = "cursor" }
             [ ( cursor pointer, "pointer" )

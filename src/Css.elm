@@ -1361,6 +1361,41 @@ type alias LengthOrNumber compatible =
     { compatible | value : String, lengthOrNumber : Compatible }
 
 
+type alias PointerEventsValues =
+    { value : String
+    , pointerEvents : Compatible
+    , all : Compatible
+    , visible : Compatible
+    , fill : Compatible
+    , auto : Compatible
+    , none : Compatible
+    , boundingBox : Compatible
+    , painted : Compatible
+    , stroke : Compatible
+    , visiblefill : Compatible
+    , visiblepainted : Compatible
+    , visiblestroke : Compatible
+    }
+
+
+newPointerEventsValue : PointerEventsValues
+newPointerEventsValue =
+    { value = "abc"
+    , pointerEvents = Compatible
+    , all = Compatible
+    , visible = Compatible
+    , fill = Compatible
+    , auto = Compatible
+    , none = Compatible
+    , boundingBox = Compatible
+    , painted = Compatible
+    , stroke = Compatible
+    , visiblefill = Compatible
+    , visiblepainted = Compatible
+    , visiblestroke = Compatible
+    }
+
+
 type alias ExplicitLength units =
     { value : String
     , numericValue : Float
@@ -7181,9 +7216,9 @@ specifies the mouse cursor displayed when mouse pointer is over an element.
     For `pointer-events: all` use pointerEventsAll.
 
 -}
-pointerEvents : PointerEvents compatible -> Style
-pointerEvents =
-    prop1 "pointer-events"
+pointerEvents : (PointerEventsValues -> Style) -> Style
+pointerEvents fn =
+    getOverloadedProperty "pointer-events" "pointer-events" (fn newPointerEventsValue)
 
 
 {-| All is already taken as a property (similar to displayFlex workaround)
@@ -7193,31 +7228,37 @@ pointerEventsAll =
     property "pointer-events" "all"
 
 
+{-| -}
 painted : PointerEvents {}
 painted =
     { value = "painted", pointerEvents = Compatible }
 
 
+{-| -}
 stroke : PointerEvents {}
 stroke =
     { value = "stroke", pointerEvents = Compatible }
 
 
+{-| -}
 visiblefill : PointerEvents {}
 visiblefill =
     { value = "visiblefill", pointerEvents = Compatible }
 
 
+{-| -}
 visiblepainted : PointerEvents {}
 visiblepainted =
     { value = "visiblepainted", pointerEvents = Compatible }
 
 
+{-| -}
 visiblestroke : PointerEvents {}
 visiblestroke =
     { value = "visiblestroke", pointerEvents = Compatible }
 
 
+{-| -}
 boundingBox : PointerEvents {}
 boundingBox =
     { value = "bounding-box", pointerEvents = Compatible }
