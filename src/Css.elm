@@ -1539,6 +1539,10 @@ type alias PointerEvents compatible =
     { compatible | value : String, pointerEvents : Compatible }
 
 
+type alias PointerEventsToStyle compatible =
+    PointerEvents compatible -> Style
+
+
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>
 -}
 type alias Cursor compatible =
@@ -7221,39 +7225,39 @@ pointerEvents fn =
 
 
 {-| -}
-painted : PointerEvents {}
+painted : PointerEventsToStyle PointerEventsValues
 painted =
-    { value = "painted", pointerEvents = Compatible }
+    prop1 "painted"
 
 
 {-| -}
-stroke : PointerEvents {}
+stroke : PointerEventsToStyle PointerEventsValues
 stroke =
-    { value = "stroke", pointerEvents = Compatible }
+    prop1 "stroke"
 
 
 {-| -}
-visiblefill : PointerEvents {}
+visiblefill : PointerEventsToStyle PointerEventsValues
 visiblefill =
-    { value = "visiblefill", pointerEvents = Compatible }
+    prop1 "visiblefill"
 
 
 {-| -}
-visiblepainted : PointerEvents {}
+visiblepainted : PointerEventsToStyle PointerEventsValues
 visiblepainted =
-    { value = "visiblepainted", pointerEvents = Compatible }
+    prop1 "visiblepainted"
 
 
 {-| -}
-visiblestroke : PointerEvents {}
+visiblestroke : PointerEventsToStyle PointerEventsValues
 visiblestroke =
-    { value = "visiblestroke", pointerEvents = Compatible }
+    prop1 "visiblestroke"
 
 
 {-| -}
-boundingBox : PointerEvents {}
+boundingBox : PointerEventsToStyle PointerEventsValues
 boundingBox =
-    { value = "bounding-box", pointerEvents = Compatible }
+    prop1 "bounding-box"
 
 
 

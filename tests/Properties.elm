@@ -406,18 +406,18 @@ all =
             ]
         , testProperty { function = "pointerEvents", property = "pointer-events" }
             [ ( pointerEvents Css.all, "all" )
---            , ( pointerEvents auto, "auto" )
---            , ( pointerEvents boundingBox, "bounding-box" )
+
+            --            , ( pointerEvents auto, "auto" )
+            , ( pointerEvents boundingBox, "bounding-box" )
 
             --, ( pointerEvents fill, "fill" )
---            , ( pointerEvents none, "none" )
---            , ( pointerEvents painted, "painted" )
---            , ( pointerEvents stroke, "stroke" )
-
-            --            , ( pointerEvents visible, "visible" )
---            , ( pointerEvents visiblefill, "visiblefill" )
---            , ( pointerEvents visiblepainted, "visiblepainted" )
---            , ( pointerEvents visiblestroke, "visiblestroke" )
+            --            , ( pointerEvents none, "none" )
+            , ( pointerEvents painted, "painted" )
+            , ( pointerEvents stroke, "stroke" )
+--            , ( pointerEvents visible, "visible" )
+            , ( pointerEvents visiblefill, "visiblefill" )
+            , ( pointerEvents visiblepainted, "visiblepainted" )
+            , ( pointerEvents visiblestroke, "visiblestroke" )
             ]
         , testProperty { function = "cursor", property = "cursor" }
             [ ( cursor pointer, "pointer" )
