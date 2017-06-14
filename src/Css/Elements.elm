@@ -15,7 +15,7 @@ module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h
 
 # Text content
 
-@docs div, hr, li, main_, ol, p, ul, pre, blockquote
+@docs div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, blockquote
 
 
 # Inline text semantics
