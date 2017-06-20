@@ -61,7 +61,7 @@ module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsMod
 
 function createTmpDir() {
   return new Promise(function (resolve, reject) {
-    tmp.dir(function (err, tmpDirPath) {
+    tmp.dir({ unsafeCleanup: true }, function (err, tmpDirPath) {
       if (err) {
         reject(err);
       } else {
