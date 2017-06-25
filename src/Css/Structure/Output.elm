@@ -45,10 +45,10 @@ prettyPrintStyleBlock (StyleBlock firstSelector otherSelectors properties) =
                 |> List.map selectorToString
                 |> String.join ", "
     in
-        selectorStr
-            ++ " {\n"
-            ++ (prettyPrintProperties properties)
-            ++ "\n}"
+    selectorStr
+        ++ " {\n"
+        ++ prettyPrintProperties properties
+        ++ "\n}"
 
 
 prettyPrintDeclaration : Declaration -> String
@@ -60,14 +60,14 @@ prettyPrintDeclaration declaration =
         MediaRule mediaQueries styleBlocks ->
             let
                 blocks =
-                    (List.map (indent << prettyPrintStyleBlock) styleBlocks)
+                    List.map (indent << prettyPrintStyleBlock) styleBlocks
                         |> String.join "\n\n"
 
                 query =
-                    (List.map (\(MediaQuery str) -> str) mediaQueries)
+                    List.map (\(MediaQuery str) -> str) mediaQueries
                         |> String.join " "
             in
-                "@media " ++ query ++ " {\n" ++ indent blocks ++ "\n}"
+            "@media " ++ query ++ " {\n" ++ indent blocks ++ "\n}"
 
         _ ->
             Debug.crash "not yet implemented :x"
@@ -77,7 +77,7 @@ simpleSelectorSequenceToString : SimpleSelectorSequence -> String
 simpleSelectorSequenceToString simpleSelectorSequence =
     case simpleSelectorSequence of
         TypeSelectorSequence (TypeSelector str) repeatableSimpleSelectors ->
-            (str :: (List.map repeatableSimpleSelectorToString repeatableSimpleSelectors))
+            (str :: List.map repeatableSimpleSelectorToString repeatableSimpleSelectors)
                 |> String.join ""
 
         UniversalSelectorSequence repeatableSimpleSelectors ->
@@ -88,7 +88,7 @@ simpleSelectorSequenceToString simpleSelectorSequence =
                     |> String.join ""
 
         CustomSelector str repeatableSimpleSelectors ->
-            (str :: (List.map repeatableSimpleSelectorToString repeatableSimpleSelectors))
+            (str :: List.map repeatableSimpleSelectorToString repeatableSimpleSelectors)
                 |> String.join ""
 
 
@@ -128,10 +128,10 @@ selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
         pseudoElementsString =
             String.join "" [ Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement) ]
     in
-        segments
-            |> List.filter (not << String.isEmpty)
-            |> String.join " "
-            |> (flip (++)) pseudoElementsString
+    segments
+        |> List.filter (not << String.isEmpty)
+        |> String.join " "
+        |> flip (++) pseudoElementsString
 
 
 combinatorToString : SelectorCombinator -> String
@@ -159,7 +159,7 @@ prettyPrintProperty { key, value, important } =
             else
                 ";"
     in
-        key ++ ": " ++ value ++ suffix
+    key ++ ": " ++ value ++ suffix
 
 
 indent : String -> String

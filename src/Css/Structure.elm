@@ -178,14 +178,14 @@ extendLastSelector selector declarations =
                 newRest =
                     mapLast (appendRepeatableSelector selector) rest
             in
-                [ StyleBlockDeclaration (StyleBlock first newRest properties) ]
+            [ StyleBlockDeclaration (StyleBlock first newRest properties) ]
 
         (MediaRule mediaQueries ((StyleBlock only [] properties) :: [])) :: [] ->
             let
                 newStyleBlock =
                     StyleBlock (appendRepeatableSelector selector only) [] properties
             in
-                [ MediaRule mediaQueries [ newStyleBlock ] ]
+            [ MediaRule mediaQueries [ newStyleBlock ] ]
 
         (MediaRule mediaQueries ((StyleBlock first rest properties) :: [])) :: [] ->
             let
@@ -195,7 +195,7 @@ extendLastSelector selector declarations =
                 newStyleBlock =
                     StyleBlock first newRest properties
             in
-                [ MediaRule mediaQueries [ newStyleBlock ] ]
+            [ MediaRule mediaQueries [ newStyleBlock ] ]
 
         (MediaRule mediaQueries (first :: rest)) :: [] ->
             case extendLastSelector selector [ MediaRule mediaQueries rest ] of
@@ -213,7 +213,7 @@ extendLastSelector selector declarations =
                 newStyleBlock =
                     StyleBlock (appendRepeatableSelector selector only) [] properties
             in
-                [ DocumentRule str1 str2 str3 str4 newStyleBlock ]
+            [ DocumentRule str1 str2 str3 str4 newStyleBlock ]
 
         (DocumentRule str1 str2 str3 str4 (StyleBlock first rest properties)) :: [] ->
             let
@@ -223,7 +223,7 @@ extendLastSelector selector declarations =
                 newStyleBlock =
                     StyleBlock first newRest properties
             in
-                [ DocumentRule str1 str2 str3 str4 newStyleBlock ]
+            [ DocumentRule str1 str2 str3 str4 newStyleBlock ]
 
         (PageRule _ _) :: [] ->
             declarations
@@ -263,9 +263,9 @@ appendToLastSelector f styleBlock =
                 newFirst =
                     f first
             in
-                [ StyleBlock first rest properties
-                , StyleBlock newFirst newRest []
-                ]
+            [ StyleBlock first rest properties
+            , StyleBlock newFirst newRest []
+            ]
 
 
 appendRepeatableToLastSelector : RepeatableSimpleSelector -> StyleBlock -> List StyleBlock
@@ -415,55 +415,55 @@ dropEmptyDeclarations declarations =
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((MediaRule _ styleBlocks) as declaration) :: rest ->
             if List.all (\(StyleBlock _ _ properties) -> List.isEmpty properties) styleBlocks then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((SupportsRule _ otherDeclarations) as declaration) :: rest ->
             if List.isEmpty otherDeclarations then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((DocumentRule _ _ _ _ _) as declaration) :: rest ->
-            declaration :: (dropEmptyDeclarations rest)
+            declaration :: dropEmptyDeclarations rest
 
         ((PageRule _ properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((FontFace properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((Keyframes _ properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((Viewport properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((CounterStyle properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest
 
         ((FontFeatureValues tuples) as declaration) :: rest ->
             if List.all (\( _, properties ) -> List.isEmpty properties) tuples then
                 dropEmptyDeclarations rest
             else
-                declaration :: (dropEmptyDeclarations rest)
+                declaration :: dropEmptyDeclarations rest

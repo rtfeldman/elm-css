@@ -33,7 +33,7 @@ css =
             , padding zero
             , children
                 [ li
-                    [ (display inlineBlock) |> important
+                    [ display inlineBlock |> important
                     , color primaryAccentColor
                     ]
                 ]

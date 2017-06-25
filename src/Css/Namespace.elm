@@ -4,9 +4,9 @@ module Css.Namespace exposing (namespace)
 @docs namespace
 -}
 
-import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
-import Css.Structure as Structure exposing (mapLast, SimpleSelectorSequence(UniversalSelectorSequence, TypeSelectorSequence, CustomSelector), RepeatableSimpleSelector(IdSelector, ClassSelector, PseudoClassSelector))
+import Css.Helpers exposing (identifierToString, toCssIdentifier)
+import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Structure as Structure exposing (RepeatableSimpleSelector(ClassSelector, IdSelector, PseudoClassSelector), SimpleSelectorSequence(CustomSelector, TypeSelectorSequence, UniversalSelectorSequence), mapLast)
 
 
 {-| takes an identifier, namespaces the list of snippets given with that identifier
@@ -48,9 +48,9 @@ applyNamespaceToSelector name (Structure.Selector sequence chain pseudoElement) 
         apply =
             applyNamespaceToSequence name
     in
-        Structure.Selector (apply sequence)
-            (List.map (\( combinator, next ) -> ( combinator, apply next )) chain)
-            pseudoElement
+    Structure.Selector (apply sequence)
+        (List.map (\( combinator, next ) -> ( combinator, apply next )) chain)
+        pseudoElement
 
 
 applyNamespaceToStyle : String -> Style -> Style

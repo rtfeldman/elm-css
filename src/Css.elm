@@ -1,249 +1,98 @@
 module Css
     exposing
-        ( compile
-        , asPairs
-        , Stylesheet
-        , Snippet
-        , Style
-        , Color
-        , MediaQuery
-        , Length
-        , IntOrAuto
-        , stylesheet
-        , each
-        , media
-        , withMedia
-        , withClass
-        , everything
-        , children
-        , descendants
-        , adjacentSiblings
-        , generalSiblings
-        , batch
-        , all
-        , property
-        , selector
-        , important
-        , id
-        , class
-        , (|*|)
+        ( (|*|)
         , (|+|)
         , (|-|)
         , (|/|)
-        , transformStyle
-        , eachLine
-        , transformBox
-        , textOrientation
-        , transform
-        , transforms
-        , currentColor
-        , underline
-        , overline
-        , lineThrough
-        , textDecoration
-        , textDecoration2
-        , textDecoration3
-        , textDecorations
-        , textDecorations2
-        , textDecorations3
-        , textDecorationLine
-        , textDecorationLines
-        , textDecorationStyle
-        , textEmphasisColor
-        , capitalize
-        , uppercase
-        , lowercase
-        , fullWidth
-        , hanging
-        , textIndent
-        , textIndent2
-        , textIndent3
-        , ellipsis
-        , clip
-        , textOverflow
-        , optimizeSpeed
-        , optimizeLegibility
-        , geometricPrecision
-        , textRendering
-        , textTransform
-        , textShadow
-        , textShadow2
-        , textShadow3
-        , textShadow4
-        , boxShadow
-        , boxShadow2
-        , boxShadow3
-        , boxShadow4
-        , boxShadow5
-        , boxShadow6
-        , textAlign
-        , textAlignLast
-        , left
-        , right
-        , center
-        , textJustify
-        , justifyAll
-        , start
-        , end
-        , matchParent
-        , true
-        , verticalAlign
-        , display
-        , opacity
-        , minContent
-        , maxContent
-        , fitContent
-        , fillAvailable
-        , width
-        , minWidth
-        , maxWidth
-        , height
-        , minHeight
-        , maxHeight
-        , padding
-        , padding2
-        , padding3
-        , padding4
-        , paddingTop
-        , paddingBottom
-        , paddingRight
-        , paddingLeft
-        , paddingBlockStart
-        , paddingBlockEnd
-        , paddingInlineStart
-        , paddingInlineEnd
-        , margin
-        , margin2
-        , margin3
-        , margin4
-        , marginTop
-        , marginBottom
-        , marginRight
-        , marginLeft
-        , marginBlockStart
-        , marginBlockEnd
-        , marginInlineStart
-        , marginInlineEnd
-        , boxSizing
-        , overflow
-        , overflowX
-        , overflowY
-        , overflowWrap
-        , whiteSpace
-        , backgroundColor
-        , color
-        , solid
-        , transparent
-        , rgb
-        , rgba
-        , hsl
-        , hsla
-        , hex
-        , zero
-        , pct
-        , px
-        , em
-        , pt
-        , ex
-        , ch
-        , rem
-        , vh
-        , vw
-        , vmin
-        , vmax
-        , mm
-        , cm
-        , inches
-        , pc
-        , Pct
+        , Ch
+        , Cm
+        , Color
+        , ColorStop
+        , ColorValue
         , Em
         , Ex
-        , Ch
-        , Rem
-        , Vh
-        , Vw
-        , Vmin
-        , Vmax
-        , Px
-        , Mm
-        , Cm
+        , FontSize
         , In
-        , Pt
+        , IntOrAuto
+        , Length
+        , MediaQuery
+        , Mm
         , Pc
-        , int
-        , num
-        , borderColor
-        , borderColor2
-        , borderColor3
-        , borderColor4
+        , Pct
+        , Pt
+        , Px
+        , Rem
+        , Snippet
+        , Style
+        , Stylesheet
+        , Vh
+        , Vmax
+        , Vmin
+        , Vw
+        , absolute
+        , active
+        , adjacentSiblings
+        , after
+        , alignItems
+        , alignSelf
+        , all
+        , allPetiteCaps
+        , allScroll
+        , allSmallCaps
+        , any
+        , arabicIndic
+        , armenian
+        , asPairs
+        , auto
+        , backgroundAttachment
+        , backgroundBlendMode
+        , backgroundClip
+        , backgroundColor
+        , backgroundImage
+        , backgroundOrigin
+        , backgroundPosition
+        , backgroundPosition2
+        , backgroundRepeat
+        , backgroundRepeat2
+        , backgroundSize
+        , backgroundSize2
+        , baseline
+        , batch
+        , before
+        , bengali
+        , blink
+        , block
+        , bold
+        , bolder
+        , border
+        , border2
+        , border3
+        , borderBlockEnd
+        , borderBlockEnd2
+        , borderBlockEnd3
+        , borderBlockEndColor
+        , borderBlockEndStyle
+        , borderBlockStart
+        , borderBlockStart2
+        , borderBlockStart3
+        , borderBlockStartColor
+        , borderBlockStartStyle
+        , borderBottom
+        , borderBottom2
+        , borderBottom3
+        , borderBottomColor
         , borderBottomLeftRadius
         , borderBottomLeftRadius2
         , borderBottomRightRadius
         , borderBottomRightRadius2
-        , borderTopLeftRadius
-        , borderTopLeftRadius2
-        , borderTopRightRadius
-        , borderTopRightRadius2
-        , borderRadius
-        , borderRadius2
-        , borderRadius3
-        , borderRadius4
-        , borderWidth
-        , borderWidth2
-        , borderWidth3
-        , borderWidth4
-        , borderBottomWidth
-        , borderInlineEndWidth
-        , borderLeftWidth
-        , borderRightWidth
-        , borderTopWidth
-        , borderBlockEndStyle
-        , borderBlockStartStyle
-        , borderInlineEndStyle
         , borderBottomStyle
-        , borderInlineStartStyle
-        , borderLeftStyle
-        , borderRightStyle
-        , borderTopStyle
-        , borderStyle
-        , borderCollapse
-        , borderBlockStartColor
-        , borderBlockEndColor
-        , borderBottomColor
-        , borderInlineStartColor
-        , borderInlineEndColor
-        , borderLeftColor
-        , borderRightColor
-        , borderTopColor
+        , borderBottomWidth
         , borderBox
-        , contentBox
-        , border
-        , border2
-        , border3
-        , borderTop
-        , borderTop2
-        , borderTop3
-        , borderBottom
-        , borderBottom2
-        , borderBottom3
-        , borderLeft
-        , borderLeft2
-        , borderLeft3
-        , borderRight
-        , borderRight2
-        , borderRight3
-        , borderBlockEnd
-        , borderBlockEnd2
-        , borderBlockEnd3
-        , borderBlockStart
-        , borderBlockStart2
-        , borderBlockStart3
-        , borderInlineEnd
-        , borderInlineEnd2
-        , borderInlineEnd3
-        , borderInlineStart
-        , borderInlineStart2
-        , borderInlineStart3
+        , borderCollapse
+        , borderColor
+        , borderColor2
+        , borderColor3
+        , borderColor4
         , borderImageOutset
         , borderImageOutset2
         , borderImageOutset3
@@ -252,377 +101,528 @@ module Css
         , borderImageWidth2
         , borderImageWidth3
         , borderImageWidth4
-        , scroll
-        , visible
-        , breakWord
+        , borderInlineEnd
+        , borderInlineEnd2
+        , borderInlineEnd3
+        , borderInlineEndColor
+        , borderInlineEndStyle
+        , borderInlineEndWidth
+        , borderInlineStart
+        , borderInlineStart2
+        , borderInlineStart3
+        , borderInlineStartColor
+        , borderInlineStartStyle
+        , borderLeft
+        , borderLeft2
+        , borderLeft3
+        , borderLeftColor
+        , borderLeftStyle
+        , borderLeftWidth
+        , borderRadius
+        , borderRadius2
+        , borderRadius3
+        , borderRadius4
+        , borderRight
+        , borderRight2
+        , borderRight3
+        , borderRightColor
+        , borderRightStyle
+        , borderRightWidth
+        , borderStyle
+        , borderTop
+        , borderTop2
+        , borderTop3
+        , borderTopColor
+        , borderTopLeftRadius
+        , borderTopLeftRadius2
+        , borderTopRightRadius
+        , borderTopRightRadius2
+        , borderTopStyle
+        , borderTopWidth
+        , borderWidth
+        , borderWidth2
+        , borderWidth3
+        , borderWidth4
         , both
-        , horizontal
-        , vertical
-        , block
-        , inlineBlock
-        , inlineFlex
-        , inline
-        , table
-        , inlineTable
-        , tableCell
-        , tableRow
-        , tableColumn
-        , tableCaption
-        , tableRowGroup
-        , tableColumnGroup
-        , tableHeaderGroup
-        , tableFooterGroup
-        , listItem
-        , inlineListItem
-        , none
-        , auto
-        , inherit
-        , initial
-        , unset
-        , noWrap
-        , static
-        , fixed
-        , sticky
-        , relative
-        , absolute
-        , position
-        , float
-        , top
         , bottom
-        , middle
-        , baseline
-        , sub
-        , super
-        , textTop
-        , textBottom
-        , pseudoElement
-        , after
-        , before
-        , firstLetter
-        , firstLine
-        , selection
-        , pseudoClass
-        , active
-        , any
+        , boxShadow
+        , boxShadow2
+        , boxShadow3
+        , boxShadow4
+        , boxShadow5
+        , boxShadow6
+        , boxSizing
+        , breakWord
+        , calc
+        , capitalize
+        , cell
+        , center
+        , ch
         , checked
+        , children
+        , circle
+        , cjkEarthlyBranch
+        , cjkHeavenlyStem
+        , class
+        , clip
+        , cm
+        , colResize
+        , collapse
+        , color
+        , colorBurn
+        , colorDodge
+        , column
+        , columnReverse
+        , commonLigatures
+        , compile
+        , contain
+        , content
+        , contentBox
+        , contextMenu
+        , contextual
+        , copy
+        , cover
+        , crosshair
+        , currentColor
+        , cursive
+        , cursor
+        , cursorAlias
+        , darken
+        , dashed
+        , decimal
+        , decimalLeadingZero
+        , default
+        , deg
+        , descendants
+        , devanagari
+        , diagonalFractions
+        , difference
         , dir
         , disabled
+        , disc
+        , discretionaryLigatures
+        , display
+        , displayFlex
+        , dotted
+        , double
+        , eResize
+        , each
+        , eachLine
+        , ellipsis
+        , em
         , empty
         , enabled
+        , end
+        , everything
+        , ewResize
+        , ex
+        , exclusion
+        , fantasy
+        , featureOff
+        , featureOn
+        , featureTag
+        , featureTag2
+        , fill
+        , fillAvailable
+        , fillBox
         , first
         , firstChild
+        , firstLetter
+        , firstLine
         , firstOfType
-        , fullscreen
+        , fitContent
+        , fixed
+        , flat
+        , flex
+        , flex2
+        , flex3
+        , flexBasis
+        , flexDirection
+        , flexEnd
+        , flexFlow1
+        , flexFlow2
+        , flexGrow
+        , flexShrink
+        , flexStart
+        , flexWrap
+        , float
         , focus
+        , fontFace
+        , fontFamilies
+        , fontFamily
+        , fontFeatureSettings
+        , fontFeatureSettingsList
+        , fontSize
+        , fontStyle
+        , fontVariant
+        , fontVariant2
+        , fontVariant3
+        , fontVariantCaps
+        , fontVariantLigatures
+        , fontVariantNumeric
+        , fontVariantNumeric2
+        , fontVariantNumeric3
+        , fontVariantNumerics
+        , fontWeight
+        , fullWidth
+        , fullscreen
+        , generalSiblings
+        , geometricPrecision
+        , georgian
+        , grab
+        , grabbing
+        , grad
+        , groove
+        , gujarati
+        , gurmukhi
+        , hanging
+        , hardLight
+        , height
+        , help
+        , hex
+        , hidden
+        , historicalLigatures
+        , horizontal
         , hover
-        , visited
+        , hsl
+        , hsla
+        , hue
+        , id
+        , important
+        , inches
         , indeterminate
+        , inherit
+        , initial
+        , inline
+        , inlineBlock
+        , inlineFlex
+        , inlineListItem
+        , inlineTable
+        , inset
+        , inside
+        , int
         , invalid
+        , italic
+        , justifyAll
+        , justifyContent
+        , kannada
+        , khmer
         , lang
+        , lao
+        , large
+        , larger
         , lastChild
         , lastOfType
+        , left
+        , letterSpacing
+        , lighten
+        , lighter
+        , lineHeight
+        , lineThrough
+        , linearGradient
+        , linearGradient2
+        , liningNums
         , link
+        , listItem
+        , listStyle
+        , listStyle2
+        , listStyle3
+        , listStylePosition
+        , listStyleType
+        , local
+        , lowerAlpha
+        , lowerGreek
+        , lowerLatin
+        , lowerRoman
+        , lowercase
+        , luminosity
+        , malayalam
+        , manipulation
+        , margin
+        , margin2
+        , margin3
+        , margin4
+        , marginBlockEnd
+        , marginBlockStart
+        , marginBottom
+        , marginInlineEnd
+        , marginInlineStart
+        , marginLeft
+        , marginRight
+        , marginTop
+        , matchParent
+        , matrix
+        , matrix3d
+        , maxContent
+        , maxHeight
+        , maxWidth
+        , media
+        , mediaQuery
+        , medium
+        , middle
+        , minContent
+        , minHeight
+        , minWidth
+        , minus
+        , mm
+        , monospace
+        , move
+        , multiply
+        , myanmar
+        , nResize
+        , neResize
+        , neswResize
+        , noCommonLigatures
+        , noContextual
+        , noDiscretionaryLigatures
+        , noDrop
+        , noHistoricalLigatures
+        , noRepeat
+        , noWrap
+        , none
+        , normal
+        , notAllowed
+        , nsResize
         , nthChild
         , nthLastChild
         , nthLastOfType
         , nthOfType
+        , num
+        , nwResize
+        , nwseResize
+        , oblique
+        , oldstyleNums
         , onlyChild
         , onlyOfType
+        , opacity
+        , optimizeLegibility
+        , optimizeSpeed
         , optional
+        , order
+        , ordinal
+        , oriya
         , outOfRange
-        , readWrite
-        , required
-        , root
-        , scope
-        , target
-        , valid
-        , hidden
-        , wavy
-        , dotted
-        , dashed
-        , double
-        , groove
-        , ridge
-        , inset
+        , outline
+        , outline3
+        , outlineColor
+        , outlineOffset
+        , outlineStyle
+        , outlineWidth
         , outset
-        , separate
-        , collapse
-        , blink
-        , thin
-        , medium
-        , thick
-        , matrix
-        , matrix3d
+        , outside
+        , overflow
+        , overflowWrap
+        , overflowX
+        , overflowY
+        , overlay
+        , overline
+        , padding
+        , padding2
+        , padding3
+        , padding4
+        , paddingBlockEnd
+        , paddingBlockStart
+        , paddingBottom
+        , paddingBox
+        , paddingInlineEnd
+        , paddingInlineStart
+        , paddingLeft
+        , paddingRight
+        , paddingTop
+        , panDown
+        , panLeft
+        , panRight
+        , panUp
+        , panX
+        , panY
+        , pc
+        , pct
         , perspective
+        , petiteCaps
+        , pinchZoom
+        , plus
+        , pointer
+        , position
+        , preserve3d
+        , print
+        , progress
+        , projection
+        , property
+        , proportionalNums
+        , pseudoClass
+        , pseudoElement
+        , pt
+        , px
+        , qt
+        , rad
+        , readWrite
+        , relative
+        , rem
+        , repeat
+        , repeatX
+        , repeatY
+        , required
+        , resize
+        , rgb
+        , rgba
+        , ridge
+        , right
+        , root
+        , rotate
         , rotate3d
         , rotateX
         , rotateY
         , rotateZ
+        , round
+        , row
+        , rowResize
+        , rowReverse
+        , sResize
+        , sansSerif
+        , saturation
         , scale
         , scale2
         , scale3d
         , scaleX
         , scaleY
+        , scope
+        , screen
+        , screenBlendMode
+        , scroll
+        , seResize
+        , selection
+        , selector
+        , separate
+        , serif
         , skew
         , skew2
         , skewX
         , skewY
+        , slashedZero
+        , small
+        , smallCaps
+        , smaller
+        , softLight
+        , solid
+        , space
+        , spaceAround
+        , spaceBetween
+        , square
+        , src
+        , stackedFractions
+        , start
+        , static
+        , sticky
+        , stop
+        , stop2
+        , stretch
+        , stylesheet
+        , sub
+        , super
+        , swResize
+        , table
+        , tableCaption
+        , tableCell
+        , tableColumn
+        , tableColumnGroup
+        , tableFooterGroup
+        , tableHeaderGroup
+        , tableRow
+        , tableRowGroup
+        , tabularNums
+        , target
+        , telugu
+        , text
+        , textAlign
+        , textAlignLast
+        , textBottom
+        , textDecoration
+        , textDecoration2
+        , textDecoration3
+        , textDecorationLine
+        , textDecorationLines
+        , textDecorationStyle
+        , textDecorations
+        , textDecorations2
+        , textDecorations3
+        , textEmphasisColor
+        , textIndent
+        , textIndent2
+        , textIndent3
+        , textJustify
+        , textOrientation
+        , textOverflow
+        , textRendering
+        , textShadow
+        , textShadow2
+        , textShadow3
+        , textShadow4
+        , textTop
+        , textTransform
+        , thai
+        , thick
+        , thin
+        , titlingCaps
+        , toBottom
+        , toBottomLeft
+        , toBottomRight
+        , toLeft
+        , toRight
+        , toTop
+        , toTopLeft
+        , toTopRight
+        , top
+        , touchAction
+        , transform
+        , transformBox
+        , transformStyle
+        , transforms
         , translate
         , translate2
         , translate3d
         , translateX
         , translateY
         , translateZ
-        , rotate
-        , fillBox
-        , viewBox
-        , flat
-        , preserve3d
-        , deg
-        , rad
-        , grad
+        , transparent
+        , true
         , turn
-        , displayFlex
-        , flex
-        , flex2
-        , flex3
-        , flexBasis
-        , flexDirection
-        , flexFlow1
-        , flexFlow2
-        , flexGrow
-        , flexShrink
-        , flexWrap
-        , order
-        , alignItems
-        , alignSelf
-        , justifyContent
-        , content
-        , wrapReverse
-        , wrap
-        , flexStart
-        , flexEnd
-        , spaceAround
-        , spaceBetween
-        , stretch
-        , row
-        , rowReverse
-        , column
-        , columnReverse
-        , lineHeight
-        , letterSpacing
-        , fontFace
-        , fontFamily
-        , fontSize
-        , fontStyle
-        , fontWeight
-        , fontVariant
-        , fontVariant2
-        , fontVariant3
-        , fontVariantLigatures
-        , fontVariantCaps
-        , fontVariantNumeric
-        , fontVariantNumeric2
-        , fontVariantNumeric3
-        , serif
-        , sansSerif
-        , monospace
-        , cursive
-        , fantasy
-        , xxSmall
-        , xSmall
-        , small
-        , large
-        , xLarge
-        , xxLarge
-        , smaller
-        , larger
-        , normal
-        , italic
-        , oblique
-        , bold
-        , lighter
-        , bolder
-        , smallCaps
-        , allSmallCaps
-        , petiteCaps
-        , allPetiteCaps
-        , unicase
-        , titlingCaps
-        , commonLigatures
-        , noCommonLigatures
-        , discretionaryLigatures
-        , noDiscretionaryLigatures
-        , historicalLigatures
-        , noHistoricalLigatures
-        , contextual
-        , noContextual
-        , liningNums
-        , oldstyleNums
-        , proportionalNums
-        , tabularNums
-        , diagonalFractions
-        , stackedFractions
-        , ordinal
-        , slashedZero
-        , screen
-        , print
-        , projection
         , tv
-        , mediaQuery
-        , src
-        , qt
-        , fontFamilies
-        , fontVariantNumerics
-        , fontFeatureSettings
-        , fontFeatureSettingsList
-        , featureTag
-        , featureTag2
-        , featureOn
-        , featureOff
-        , cursor
-        , default
-        , pointer
-        , crosshair
-        , contextMenu
-        , help
-        , progress
-        , wait
-        , cell
-        , text
-        , verticalText
-        , cursorAlias
-        , copy
-        , move
-        , noDrop
-        , notAllowed
-        , eResize
-        , nResize
-        , neResize
-        , nwResize
-        , sResize
-        , seResize
-        , swResize
-        , wResize
-        , ewResize
-        , nsResize
-        , neswResize
-        , nwseResize
-        , colResize
-        , rowResize
-        , allScroll
-        , zoomIn
-        , zoomOut
-        , grab
-        , grabbing
-        , outline
-        , outline3
-        , outlineColor
-        , outlineWidth
-        , outlineStyle
-        , outlineOffset
-        , resize
-        , fill
-        , ColorValue
-        , FontSize
-        , listStyleType
-        , disc
-        , circle
-        , square
-        , decimal
-        , decimalLeadingZero
-        , lowerRoman
-        , upperRoman
-        , lowerGreek
-        , lowerAlpha
-        , lowerLatin
+        , underline
+        , unicase
+        , unset
         , upperAlpha
         , upperLatin
-        , arabicIndic
-        , armenian
-        , bengali
-        , cjkEarthlyBranch
-        , cjkHeavenlyStem
-        , devanagari
-        , georgian
-        , gujarati
-        , gurmukhi
-        , kannada
-        , khmer
-        , lao
-        , malayalam
-        , myanmar
-        , oriya
-        , telugu
-        , thai
-        , listStylePosition
-        , inside
-        , outside
-        , listStyle
-        , listStyle2
-        , listStyle3
-        , backgroundRepeat
-        , backgroundRepeat2
-        , repeatX
-        , repeatY
-        , repeat
-        , space
-        , round
-        , noRepeat
-        , backgroundAttachment
-        , local
-        , backgroundBlendMode
-        , multiply
-        , overlay
-        , darken
-        , lighten
-        , colorDodge
-        , colorBurn
-        , hardLight
-        , softLight
-        , difference
-        , exclusion
-        , hue
-        , saturation
-        , luminosity
-        , screenBlendMode
-        , backgroundClip
-        , paddingBox
-        , backgroundImage
+        , upperRoman
+        , uppercase
         , url
-        , ColorStop
-        , linearGradient
-        , linearGradient2
-        , stop
-        , stop2
-        , toTop
-        , toTopRight
-        , toRight
-        , toBottomRight
-        , toBottom
-        , toBottomLeft
-        , toLeft
-        , toTopLeft
-        , backgroundPosition
-        , backgroundPosition2
-        , backgroundOrigin
-        , backgroundSize
-        , backgroundSize2
-        , cover
-        , contain
+        , valid
+        , vertical
+        , verticalAlign
+        , verticalText
+        , vh
+        , viewBox
+        , visible
+        , visited
+        , vmax
+        , vmin
+        , vw
+        , wResize
+        , wait
+        , wavy
+        , whiteSpace
+        , width
+        , withClass
+        , withMedia
+        , wrap
+        , wrapReverse
+        , xLarge
+        , xSmall
+        , xxLarge
+        , xxSmall
         , zIndex
-        , calc
-        , plus
-        , minus
-        , touchAction
-        , panX
-        , panLeft
-        , panRight
-        , panY
-        , panUp
-        , panDown
-        , pinchZoom
-        , manipulation
+        , zero
+        , zoomIn
+        , zoomOut
         )
 
 {-| Functions for building stylesheets.
@@ -735,14 +735,14 @@ deprecated or discouraged.
 
 -}
 
-import Css.Helpers exposing (toCssIdentifier, identifierToString)
-import Css.Preprocess.Resolve as Resolve
+import Color
+import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
+import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
+import Hex
 import String
 import Tuple
-import Hex
-import Color
 
 
 {-| -}
@@ -809,7 +809,7 @@ cssFunction : String -> List String -> String
 cssFunction funcName args =
     funcName
         ++ "("
-        ++ (String.join ", " args)
+        ++ String.join ", " args
         ++ ")"
 
 
@@ -1200,13 +1200,13 @@ type alias TouchAction compatible =
 {-| The css [calc](https://developer.mozilla.org/en/docs/Web/CSS/calc) function.
 
     almostPct100 =
-        (calc (pct 100) minus (px 2))
+        calc (pct 100) minus (px 2)
 
 
     -- calc(100vh - (2px + 2rem))
 
     screenMinusBorderAndFooter =
-        (calc (vh 100) minus (calc (px 2) plus (rem 2)))
+        calc (vh 100) minus (calc (px 2) plus (rem 2))
 
     myWidth =
         width almostPct100
@@ -1236,20 +1236,20 @@ calc first expression second =
         value =
             cssFunction "calc" [ calcs ]
     in
-        { value = value
-        , length = Compatible
-        , lengthOrAuto = Compatible
-        , lengthOrNumber = Compatible
-        , lengthOrNone = Compatible
-        , lengthOrMinMaxDimension = Compatible
-        , lengthOrNoneOrMinMaxDimension = Compatible
-        , textIndent = Compatible
-        , flexBasis = Compatible
-        , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-        , fontSize = Compatible
-        , lengthOrAutoOrCoverOrContain = Compatible
-        , calc = Compatible
-        }
+    { value = value
+    , length = Compatible
+    , lengthOrAuto = Compatible
+    , lengthOrNumber = Compatible
+    , lengthOrNone = Compatible
+    , lengthOrMinMaxDimension = Compatible
+    , lengthOrNoneOrMinMaxDimension = Compatible
+    , textIndent = Compatible
+    , flexBasis = Compatible
+    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    , fontSize = Compatible
+    , lengthOrAutoOrCoverOrContain = Compatible
+    , calc = Compatible
+    }
 
 
 {-| Use with calc to add lengths together
@@ -1335,7 +1335,7 @@ combineLengths operation first second =
                 |> List.filter (not << String.isEmpty)
                 |> String.join ""
     in
-        { first | value = value, numericValue = numericValue }
+    { first | value = value, numericValue = numericValue }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
@@ -1918,24 +1918,24 @@ rgb red green blue =
                     || (blue > 255)
             then
                 [ "RGB color values must be between 0 and 255. rgb("
-                    ++ (toString red)
+                    ++ toString red
                     ++ ", "
-                    ++ (toString green)
+                    ++ toString green
                     ++ ", "
-                    ++ (toString blue)
+                    ++ toString blue
                     ++ ") is not valid."
                 ]
             else
                 []
     in
-        { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
-        , color = Compatible
-        , warnings = warnings
-        , red = red
-        , green = green
-        , blue = blue
-        , alpha = 1
-        }
+    { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
+    , color = Compatible
+    , warnings = warnings
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = 1
+    }
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
@@ -1955,26 +1955,26 @@ rgba red green blue alpha =
                     || (alpha > 1)
             then
                 [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba("
-                    ++ (toString red)
+                    ++ toString red
                     ++ ", "
-                    ++ (toString green)
+                    ++ toString green
                     ++ ", "
-                    ++ (toString blue)
+                    ++ toString blue
                     ++ ", "
-                    ++ (toString alpha)
+                    ++ toString alpha
                     ++ ") is not valid."
                 ]
             else
                 []
     in
-        { value = cssFunction "rgba" ((List.map numberToString [ red, green, blue ]) ++ [ numberToString alpha ])
-        , color = Compatible
-        , warnings = warnings
-        , red = red
-        , green = green
-        , blue = blue
-        , alpha = alpha
-        }
+    { value = cssFunction "rgba" (List.map numberToString [ red, green, blue ] ++ [ numberToString alpha ])
+    , color = Compatible
+    , warnings = warnings
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = alpha
+    }
 
 
 {-| [HSL color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl())
@@ -2006,7 +2006,7 @@ hsl hue saturation lightness =
             else
                 []
     in
-        hslaToRgba value warnings hue saturation lightness 1
+    hslaToRgba value warnings hue saturation lightness 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -2041,7 +2041,7 @@ hsla hue saturation lightness alpha =
             else
                 []
     in
-        hslaToRgba value warnings hue saturation lightness alpha
+    hslaToRgba value warnings hue saturation lightness alpha
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -2058,21 +2058,21 @@ hex str =
             else
                 str
     in
-        case String.toList withoutHash of
-            [ r, g, b ] ->
-                validHex str ( r, r ) ( g, g ) ( b, b ) ( 'f', 'f' )
+    case String.toList withoutHash of
+        [ r, g, b ] ->
+            validHex str ( r, r ) ( g, g ) ( b, b ) ( 'f', 'f' )
 
-            [ r, g, b, a ] ->
-                validHex str ( r, r ) ( g, g ) ( b, b ) ( a, a )
+        [ r, g, b, a ] ->
+            validHex str ( r, r ) ( g, g ) ( b, b ) ( a, a )
 
-            [ r1, r2, g1, g2, b1, b2 ] ->
-                validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( 'f', 'f' )
+        [ r1, r2, g1, g2, b1, b2 ] ->
+            validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( 'f', 'f' )
 
-            [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
-                validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 )
+        [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
+            validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 )
 
-            _ ->
-                erroneousHex str
+        _ ->
+            erroneousHex str
 
 
 validHex : String -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> Color
@@ -2088,19 +2088,19 @@ validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
             , toResult [ a1, a2 ]
             )
     in
-        case results of
-            ( Ok red, Ok green, Ok blue, Ok alpha ) ->
-                { value = withPrecedingHash str
-                , color = Compatible
-                , red = red
-                , green = green
-                , blue = blue
-                , alpha = toFloat alpha / 255
-                , warnings = []
-                }
+    case results of
+        ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+            { value = withPrecedingHash str
+            , color = Compatible
+            , red = red
+            , green = green
+            , blue = blue
+            , alpha = toFloat alpha / 255
+            , warnings = []
+            }
 
-            _ ->
-                erroneousHex str
+        _ ->
+            erroneousHex str
 
 
 withPrecedingHash : String -> String
@@ -2139,14 +2139,14 @@ hslaToRgba value warnings hue saturation lightness hslAlpha =
             Color.hsla hue saturation lightness hslAlpha
                 |> Color.toRgb
     in
-        { value = value
-        , color = Compatible
-        , red = red
-        , green = green
-        , blue = blue
-        , alpha = alpha
-        , warnings = warnings
-        }
+    { value = value
+    , color = Compatible
+    , red = red
+    , green = green
+    , blue = blue
+    , alpha = alpha
+    , warnings = warnings
+    }
 
 
 
@@ -2462,7 +2462,7 @@ true =
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
 lengthConverter units unitLabel numericValue =
-    { value = (numberToString numericValue) ++ unitLabel
+    { value = numberToString numericValue ++ unitLabel
     , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
@@ -2840,7 +2840,7 @@ type IncompatibleUnits
 
 angleConverter : String -> number -> AngleOrDirection (Angle {})
 angleConverter suffix num =
-    { value = (numberToString num) ++ suffix
+    { value = numberToString num ++ suffix
     , angle = Compatible
     , angleOrDirection = Compatible
     }
@@ -2973,9 +2973,9 @@ rotate3d x y z { value } =
         coordsAsStrings =
             List.map numberToString [ x, y, z ]
     in
-        { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
-        , transform = Compatible
-        }
+    { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
+    , transform = Compatible
+    }
 
 
 {-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
@@ -5693,8 +5693,8 @@ featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
     let
         potentialWarnings =
-            [ ( (String.length tag) /= 4, "Feature tags must be exactly 4 characters long. " ++ tag ++ " is invalid." )
-            , ( value < 0, "Feature values cannot be negative. " ++ (toString value) ++ " is invalid." )
+            [ ( String.length tag /= 4, "Feature tags must be exactly 4 characters long. " ++ tag ++ " is invalid." )
+            , ( value < 0, "Feature values cannot be negative. " ++ toString value ++ " is invalid." )
             ]
 
         warnings =
@@ -5702,10 +5702,10 @@ featureTag2 tag value =
                 |> List.filter Tuple.first
                 |> List.map Tuple.second
     in
-        { value = (toString tag) ++ " " ++ (toString value)
-        , featureTagValue = Compatible
-        , warnings = warnings
-        }
+    { value = toString tag ++ " " ++ toString value
+    , featureTagValue = Compatible
+    , warnings = warnings
+    }
 
 
 
@@ -6626,7 +6626,7 @@ borderColor2 c1 c2 =
         value =
             String.join " " [ c1.value, c2.value ]
     in
-        propertyWithWarnings warnings "border-color" value
+    propertyWithWarnings warnings "border-color" value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6646,7 +6646,7 @@ borderColor3 c1 c2 c3 =
         value =
             String.join " " [ c1.value, c2.value, c3.value ]
     in
-        propertyWithWarnings warnings "border-color" value
+    propertyWithWarnings warnings "border-color" value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6666,7 +6666,7 @@ borderColor4 c1 c2 c3 c4 =
         value =
             String.join " " [ c1.value, c2.value, c3.value, c4.value ]
     in
-        propertyWithWarnings warnings "border-color" value
+    propertyWithWarnings warnings "border-color" value
 
 
 {-| Sets [`outline`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
@@ -6953,13 +6953,13 @@ media mediaQueries snippets =
 
                 (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
                     -- nest the media queries
-                    (Preprocess.MediaRule (mediaQueries ++ nestedMediaQueries) styleBlocks)
+                    Preprocess.MediaRule (mediaQueries ++ nestedMediaQueries) styleBlocks
                         :: nestedMediaRules rest
 
                 first :: rest ->
                     first :: nestedMediaRules rest
     in
-        Preprocess.Snippet (mediaRuleFromStyleBlocks :: (nestedMediaRules snippetDeclarations))
+    Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
 
 
 {-| -}
@@ -7060,7 +7060,7 @@ fontFeatureSettingsList featureTagValues =
         warnings =
             featureTagValues |> List.map .warnings |> List.concat
     in
-        propertyWithWarnings warnings "font-feature-settings" value
+    propertyWithWarnings warnings "font-feature-settings" value
 
 
 {-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
@@ -7108,7 +7108,7 @@ fontWeight { value } =
             else
                 [ "fontWeight " ++ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
     in
-        propertyWithWarnings warnings "font-weight" value
+    propertyWithWarnings warnings "font-weight" value
 
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -7553,7 +7553,7 @@ animationNames identifiers =
                 |> List.map (identifierToString "")
                 |> String.join ", "
     in
-        property "animation-name" value
+    property "animation-name" value
 
 
 {-| A stylesheet.
@@ -7628,8 +7628,8 @@ makeSnippet styles sequence =
         selector =
             Structure.Selector sequence [] Nothing
     in
-        [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
-            |> Preprocess.Snippet
+    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
+        |> Preprocess.Snippet
 
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
@@ -7807,7 +7807,7 @@ checked =
 -}
 dir : Directionality -> List Style -> Style
 dir directionality =
-    pseudoClass ("dir(" ++ (directionalityToString directionality) ++ ")")
+    pseudoClass ("dir(" ++ directionalityToString directionality ++ ")")
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
@@ -8211,10 +8211,10 @@ each snippetCreators styles =
                     [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest styles) ]
                         |> Preprocess.Snippet
     in
-        List.map ((|>) []) snippetCreators
-            |> List.concatMap unwrapSnippet
-            |> collectSelectors
-            |> selectorsToSnippet
+    List.map ((|>) []) snippetCreators
+        |> List.concatMap unwrapSnippet
+        |> collectSelectors
+        |> selectorsToSnippet
 
 
 numberToString : number -> String
@@ -8229,7 +8229,7 @@ stringToInt str =
 
 numericalPercentageToString : number -> String
 numericalPercentageToString value =
-    value |> (*) 100 |> numberToString |> (flip (++)) "%"
+    value |> (*) 100 |> numberToString |> flip (++) "%"
 
 
 valuesOrNone : List (Value compatible) -> Value {}
@@ -8263,7 +8263,7 @@ collectSelectors declarations =
             []
 
         (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
-            (firstSelector :: otherSelectors) ++ (collectSelectors rest)
+            (firstSelector :: otherSelectors) ++ collectSelectors rest
 
         _ :: rest ->
             collectSelectors rest

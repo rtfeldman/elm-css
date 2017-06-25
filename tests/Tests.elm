@@ -1,15 +1,15 @@
 module Tests exposing (..)
 
-import Test exposing (..)
-import Expect exposing (Expectation)
-import Css exposing (Stylesheet)
-import TestUtil exposing (outdented, prettyPrint)
 import Arithmetic
+import Colors
 import Compile
+import Css exposing (Stylesheet)
+import Expect exposing (Expectation)
 import Fixtures
 import Properties
 import Selectors
-import Colors
+import Test exposing (..)
+import TestUtil exposing (outdented, prettyPrint)
 
 
 unstyledDiv : Test
@@ -21,12 +21,12 @@ unstyledDiv =
         output =
             ""
     in
-        describe "unstyled div"
-            [ test "pretty prints nothing, because the stylesheet had no properties." <|
-                \_ ->
-                    prettyPrint input
-                        |> Expect.equal (output)
-            ]
+    describe "unstyled div"
+        [ test "pretty prints nothing, because the stylesheet had no properties." <|
+            \_ ->
+                prettyPrint input
+                    |> Expect.equal output
+        ]
 
 
 divWidthHeight : Test
@@ -38,12 +38,12 @@ divWidthHeight =
         expected =
             "div {\n    width: 32%;\n    height: 50px;\n}"
     in
-        describe "basic div with fixed width and height"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    prettyPrint actual
-                        |> Expect.equal expected
-            ]
+    describe "basic div with fixed width and height"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                prettyPrint actual
+                    |> Expect.equal expected
+        ]
 
 
 simpleEach : Test
@@ -70,12 +70,12 @@ simpleEach =
             }
       """
     in
-        describe "simple each function test"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "simple each function test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 leftRightTopBottom : Test
@@ -103,12 +103,12 @@ leftRightTopBottom =
             }
         """
     in
-        describe "left & right, top & bottom property/value duality test"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "left & right, top & bottom property/value duality test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 atRule : Test
@@ -140,12 +140,12 @@ atRule =
           }
       """
     in
-        describe "@media test"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "@media test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 nestedAtRule : Test
@@ -175,12 +175,12 @@ nestedAtRule =
           }
       """
     in
-        describe "nested @media test"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "nested @media test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 {-| Regression test for <https://github.com/rtfeldman/elm-css/issues/140>
@@ -202,12 +202,12 @@ input::after, select::after, textarea::after {
 }
             """
     in
-        describe "`each` with pseudo classes"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "`each` with pseudo classes"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 {-| Regression test for <https://github.com/rtfeldman/elm-css/issues/99>
@@ -236,12 +236,12 @@ article > nav {
     margin: 3%;
 }        """
     in
-        describe "Parents do not print duplicate rules for each child."
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "Parents do not print duplicate rules for each child."
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 borders : Test
@@ -263,12 +263,12 @@ borders =
             }
         """
     in
-        describe "Borders test"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "Borders test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 multiDescendent : Test
@@ -313,12 +313,12 @@ multiDescendent =
             }
         """
     in
-        describe "Multi-descendent stylesheet"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "Multi-descendent stylesheet"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 universal : Test
@@ -343,12 +343,12 @@ universal =
           }
         """
     in
-        describe "Universal selector stylesheet"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "Universal selector stylesheet"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 multiSelector : Test
@@ -371,12 +371,12 @@ multiSelector =
           }
         """
     in
-        describe "Multi-selector stylesheet"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "Multi-selector stylesheet"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 keyValue : Test
@@ -393,12 +393,12 @@ keyValue =
           }
         """
     in
-        describe "Custom key-value properties"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "Custom key-value properties"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 underlineOnHoverStyle : Test
@@ -418,12 +418,12 @@ underlineOnHoverStyle =
             }
             """
     in
-        describe "underline on hover link (style)"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "underline on hover link (style)"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 underlineOnHoverManual : Test
@@ -443,12 +443,12 @@ underlineOnHoverManual =
             }
             """
     in
-        describe "underline on hover link (manual)"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "underline on hover link (manual)"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 greenOnHoverStyle : Test
@@ -468,12 +468,12 @@ greenOnHoverStyle =
             }
             """
     in
-        describe "green on hover (style)"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "green on hover (style)"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 transformsStyle : Test
@@ -497,12 +497,12 @@ transformsStyle =
             }
             """
     in
-        describe "transforms"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "transforms"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 fonts : Test
@@ -527,12 +527,12 @@ fonts =
             }
             """
     in
-        describe "fonts"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "fonts"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 weightWarning : Test
@@ -546,12 +546,12 @@ weightWarning =
             Invalid Stylesheet:
             fontWeight 22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
     in
-        describe "fontWeightWarning"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "fontWeightWarning"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 hexWarning : Test
@@ -600,12 +600,12 @@ pseudoElements =
             }
             """
     in
-        describe "pseudo elements"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "pseudo elements"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 pseudoClasses : Test
@@ -642,12 +642,12 @@ pseudoClasses =
             }
             """
     in
-        describe "pseudo classes"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "pseudo classes"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 backgrounds : Test
@@ -700,9 +700,9 @@ backgrounds =
             }
         """
     in
-        describe "borders"
-            [ test "pretty prints the expected output" <|
-                \_ ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "borders"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]

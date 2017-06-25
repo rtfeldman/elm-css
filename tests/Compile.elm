@@ -1,11 +1,11 @@
 module Compile exposing (..)
 
-import Test exposing (..)
-import Expect
-import Fuzz exposing (Fuzzer, tuple3, tuple4)
-import TestUtil exposing (..)
 import CompileFixtures
 import Css exposing (..)
+import Expect
+import Fuzz exposing (Fuzzer, tuple3, tuple4)
+import Test exposing (..)
+import TestUtil exposing (..)
 
 
 getRgbaWarnings : ( Int, Int, Int, Float ) -> Int
@@ -64,12 +64,12 @@ unstyledDiv =
         output =
             ""
     in
-        describe "unstyled div"
-            [ test "pretty prints the expected output" <|
-                \() ->
-                    prettyPrint input
-                        |> Expect.equal output
-            ]
+    describe "unstyled div"
+        [ test "pretty prints the expected output" <|
+            \() ->
+                prettyPrint input
+                    |> Expect.equal output
+        ]
 
 
 dreamwriter : Test
@@ -113,12 +113,12 @@ dreamwriter =
             }
         """
     in
-        describe "Sample stylesheet from Dreamwriter"
-            [ test "pretty prints the expected output" <|
-                \() ->
-                    outdented (prettyPrint input)
-                        |> Expect.equal (outdented output)
-            ]
+    describe "Sample stylesheet from Dreamwriter"
+        [ test "pretty prints the expected output" <|
+            \() ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 compileTest : Test
@@ -141,16 +141,16 @@ compileTest =
             }
             """
     in
-        describe "compiles multiple stylesheets"
-            [ test "compile output" <|
-                \() ->
-                    input
-                        |> .css
-                        |> outdented
-                        |> Expect.equal (outdented output)
-            , test "compile warnings" <|
-                \() ->
-                    input
-                        |> .warnings
-                        |> Expect.equal []
-            ]
+    describe "compiles multiple stylesheets"
+        [ test "compile output" <|
+            \() ->
+                input
+                    |> .css
+                    |> outdented
+                    |> Expect.equal (outdented output)
+        , test "compile warnings" <|
+            \() ->
+                input
+                    |> .warnings
+                    |> Expect.equal []
+        ]

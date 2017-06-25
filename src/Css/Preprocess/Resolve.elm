@@ -4,10 +4,10 @@ module Css.Preprocess.Resolve exposing (compile)
 Structure data structures and gathering warnings along the way.
 -}
 
-import String
-import Css.Preprocess as Preprocess exposing (SnippetDeclaration, Snippet(Snippet), Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
+import String
 import Tuple
 
 
@@ -17,9 +17,9 @@ compile styles =
         results =
             List.map compile1 styles
     in
-        { warnings = List.concatMap .warnings results
-        , css = String.join "\n\n" (List.map .css results)
-        }
+    { warnings = List.concatMap .warnings results
+    , css = String.join "\n\n" (List.map .css results)
+    }
 
 
 compile1 : Preprocess.Stylesheet -> { warnings : List String, css : String }
@@ -28,9 +28,9 @@ compile1 sheet =
         ( structureStylesheet, warnings ) =
             toStructure sheet
     in
-        { warnings = warnings
-        , css = Output.prettyPrint (Structure.dropEmpty structureStylesheet)
-        }
+    { warnings = warnings
+    , css = Output.prettyPrint (Structure.dropEmpty structureStylesheet)
+    }
 
 
 type alias DeclarationsAndWarnings =
@@ -48,16 +48,16 @@ resolveMediaRule mediaQueries styleBlocks =
                 { declarations, warnings } =
                     expandStyleBlock styleBlock
             in
-                { declarations = List.map (toMediaRule mediaQueries) declarations
-                , warnings = warnings
-                }
+            { declarations = List.map (toMediaRule mediaQueries) declarations
+            , warnings = warnings
+            }
 
         results =
             List.map handleStyleBlock styleBlocks
     in
-        { warnings = List.concatMap .warnings results
-        , declarations = List.concatMap .declarations results
-        }
+    { warnings = List.concatMap .warnings results
+    , declarations = List.concatMap .declarations results
+    }
 
 
 resolveSupportsRule : String -> List Snippet -> DeclarationsAndWarnings
@@ -66,9 +66,9 @@ resolveSupportsRule str snippets =
         { declarations, warnings } =
             extract (List.concatMap unwrapSnippet snippets)
     in
-        { declarations = [ Structure.SupportsRule str declarations ]
-        , warnings = warnings
-        }
+    { declarations = [ Structure.SupportsRule str declarations ]
+    , warnings = warnings
+    }
 
 
 resolveDocumentRule : String -> String -> String -> String -> Preprocess.StyleBlock -> DeclarationsAndWarnings
@@ -78,10 +78,10 @@ resolveDocumentRule str1 str2 str3 str4 styleBlock =
         { declarations, warnings } =
             expandStyleBlock styleBlock
     in
-        { declarations =
-            List.map (toDocumentRule str1 str2 str3 str4) declarations
-        , warnings = warnings
-        }
+    { declarations =
+        List.map (toDocumentRule str1 str2 str3 str4) declarations
+    , warnings = warnings
+    }
 
 
 toMediaRule : List Structure.MediaQuery -> Structure.Declaration -> Structure.Declaration
@@ -125,9 +125,9 @@ resolvePageRule str pageRuleProperties =
         ( warnings, properties ) =
             extractWarnings pageRuleProperties
     in
-        { declarations = [ Structure.PageRule str properties ]
-        , warnings = warnings
-        }
+    { declarations = [ Structure.PageRule str properties ]
+    , warnings = warnings
+    }
 
 
 resolveFontFace : List Preprocess.Property -> DeclarationsAndWarnings
@@ -136,9 +136,9 @@ resolveFontFace fontFaceProperties =
         ( warnings, properties ) =
             extractWarnings fontFaceProperties
     in
-        { declarations = [ Structure.FontFace properties ]
-        , warnings = warnings
-        }
+    { declarations = [ Structure.FontFace properties ]
+    , warnings = warnings
+    }
 
 
 resolveKeyframes : String -> List Structure.KeyframeProperty -> DeclarationsAndWarnings
@@ -154,9 +154,9 @@ resolveViewport viewportProperties =
         ( warnings, properties ) =
             extractWarnings viewportProperties
     in
-        { declarations = [ Structure.Viewport properties ]
-        , warnings = warnings
-        }
+    { declarations = [ Structure.Viewport properties ]
+    , warnings = warnings
+    }
 
 
 resolveCounterStyle : List Preprocess.Property -> DeclarationsAndWarnings
@@ -165,9 +165,9 @@ resolveCounterStyle counterStyleProperties =
         ( warnings, properties ) =
             extractWarnings counterStyleProperties
     in
-        { declarations = [ Structure.Viewport properties ]
-        , warnings = warnings
-        }
+    { declarations = [ Structure.Viewport properties ]
+    , warnings = warnings
+    }
 
 
 resolveFontFeatureValues : List ( String, List Preprocess.Property ) -> DeclarationsAndWarnings
@@ -186,14 +186,14 @@ resolveFontFeatureValues tuples =
                         ( nextWarnings, nextTuples ) =
                             expandTuples rest
                     in
-                        ( warnings ++ nextWarnings, ( str, properties ) :: nextTuples )
+                    ( warnings ++ nextWarnings, ( str, properties ) :: nextTuples )
 
         ( warnings, newTuples ) =
             expandTuples tuples
     in
-        { declarations = [ Structure.FontFeatureValues newTuples ]
-        , warnings = warnings
-        }
+    { declarations = [ Structure.FontFeatureValues newTuples ]
+    , warnings = warnings
+    }
 
 
 toDeclarations : SnippetDeclaration -> DeclarationsAndWarnings
@@ -244,9 +244,9 @@ concatDeclarationsAndWarnings declarationsAndWarnings =
                 result =
                     concatDeclarationsAndWarnings rest
             in
-                { declarations = declarations ++ result.declarations
-                , warnings = warnings ++ result.warnings
-                }
+            { declarations = declarations ++ result.declarations
+            , warnings = warnings ++ result.warnings
+            }
 
 
 extract : List SnippetDeclaration -> DeclarationsAndWarnings
@@ -263,9 +263,9 @@ extract snippetDeclarations =
                 { declarations, warnings } =
                     toDeclarations first
             in
-                { declarations = declarations ++ nextResult.declarations
-                , warnings = warnings ++ nextResult.warnings
-                }
+            { declarations = declarations ++ nextResult.declarations
+            , warnings = warnings ++ nextResult.warnings
+            }
 
 
 applyStyles : List Style -> List Structure.Declaration -> DeclarationsAndWarnings
@@ -284,9 +284,9 @@ applyStyles styles declarations =
                         |> Structure.appendProperty property
                         |> applyStyles rest
             in
-                { declarations = result.declarations
-                , warnings = warnings ++ result.warnings
-                }
+            { declarations = result.declarations
+            , warnings = warnings ++ result.warnings
+            }
 
         (ExtendSelector selector nestedStyles) :: rest ->
             applyNestedStylesToLast
@@ -309,7 +309,7 @@ applyStyles styles declarations =
                         Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors nestedStyles) ->
                             let
                                 newSelectors =
-                                    (collectSelectors declarations)
+                                    collectSelectors declarations
                                         |> List.concatMap (\originalSelector -> List.map (chain originalSelector) (firstSelector :: otherSelectors))
 
                                 newDeclarations =
@@ -321,8 +321,8 @@ applyStyles styles declarations =
                                             [ Structure.StyleBlockDeclaration (Structure.StyleBlock first rest [])
                                             ]
                             in
-                                [ applyStyles nestedStyles newDeclarations ]
-                                    |> concatDeclarationsAndWarnings
+                            [ applyStyles nestedStyles newDeclarations ]
+                                |> concatDeclarationsAndWarnings
 
                         Preprocess.MediaRule mediaQueries styleBlocks ->
                             resolveMediaRule mediaQueries styleBlocks
@@ -352,11 +352,11 @@ applyStyles styles declarations =
                         Preprocess.FontFeatureValues tuples ->
                             resolveFontFeatureValues tuples
             in
-                snippets
-                    |> List.concatMap unwrapSnippet
-                    |> List.map expandDeclaration
-                    |> (++) [ applyStyles rest declarations ]
-                    |> concatDeclarationsAndWarnings
+            snippets
+                |> List.concatMap unwrapSnippet
+                |> List.map expandDeclaration
+                |> (++) [ applyStyles rest declarations ]
+                |> concatDeclarationsAndWarnings
 
         (Preprocess.WithPseudoElement pseudoElement nestedStyles) :: rest ->
             applyNestedStylesToLast
@@ -377,10 +377,10 @@ applyStyles styles declarations =
                                 |> Structure.MediaRule mediaQueries
                             ]
             in
-                [ applyStyles rest declarations
-                , applyStyles nestedStyles newDeclarations
-                ]
-                    |> concatDeclarationsAndWarnings
+            [ applyStyles rest declarations
+            , applyStyles nestedStyles newDeclarations
+            ]
+                |> concatDeclarationsAndWarnings
 
         (Preprocess.ApplyStyles otherStyles) :: rest ->
             declarations
@@ -411,9 +411,9 @@ applyNestedStylesToLast nestedStyles rest f declarations =
                 result =
                     applyStyles nestedStyles declarationsAndWarnings.declarations
             in
-                { warnings = declarationsAndWarnings.warnings ++ result.warnings
-                , declarations = result.declarations
-                }
+            { warnings = declarationsAndWarnings.warnings ++ result.warnings
+            , declarations = result.declarations
+            }
 
         initialResult =
             lastDeclaration declarations
@@ -452,9 +452,9 @@ applyNestedStylesToLast nestedStyles rest f declarations =
                 _ ->
                     declarations
     in
-        { warnings = initialResult.warnings ++ nextResult.warnings
-        , declarations = newDeclarations ++ (withoutParent initialResult.declarations) ++ (withoutParent nextResult.declarations)
-        }
+    { warnings = initialResult.warnings ++ nextResult.warnings
+    , declarations = newDeclarations ++ withoutParent initialResult.declarations ++ withoutParent nextResult.declarations
+    }
 
 
 lastDeclaration : List Structure.Declaration -> Maybe (List Structure.Declaration)
@@ -484,13 +484,13 @@ toStructure { charset, imports, namespaces, snippets } =
                 |> List.concatMap unwrapSnippet
                 |> extract
     in
-        ( { charset = charset
-          , imports = imports
-          , namespaces = namespaces
-          , declarations = declarations
-          }
-        , warnings
-        )
+    ( { charset = charset
+      , imports = imports
+      , namespaces = namespaces
+      , declarations = declarations
+      }
+    , warnings
+    )
 
 
 toDocumentRule : String -> String -> String -> String -> Structure.Declaration -> Structure.Declaration
@@ -523,7 +523,7 @@ collectSelectors declarations =
             []
 
         (Structure.StyleBlockDeclaration (Structure.StyleBlock firstSelector otherSelectors _)) :: rest ->
-            (firstSelector :: otherSelectors) ++ (collectSelectors rest)
+            (firstSelector :: otherSelectors) ++ collectSelectors rest
 
         _ :: rest ->
             collectSelectors rest

@@ -1,4 +1,4 @@
-module Css.Elements exposing (typeSelector, html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time, div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, a, code, small, span, strong, i, em, q, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, blockquote, svg, path, rect, circle, ellipse, line, polyline, polygon)
+module Css.Elements exposing (a, article, aside, audio, blockquote, body, button, canvas, caption, circle, code, col, colgroup, dd, div, dl, dt, ellipse, em, fieldset, footer, form, h1, h2, h3, h4, h5, h6, header, hr, html, i, img, input, label, legend, li, line, main_, menu, nav, ol, optgroup, option, p, path, polygon, polyline, pre, progress, q, rect, section, select, small, span, strong, svg, table, tbody, td, textarea, tfoot, th, thead, time, tr, typeSelector, ul, video)
 
 {-| Selectors for HTML elements.
 
@@ -44,7 +44,7 @@ module Css.Elements exposing (typeSelector, html, body, article, header, footer,
 
 -}
 
-import Css.Preprocess exposing (Style, Snippet(Snippet), StyleBlock(StyleBlock), SnippetDeclaration(StyleBlockDeclaration))
+import Css.Preprocess exposing (Snippet(Snippet), SnippetDeclaration(StyleBlockDeclaration), Style, StyleBlock(StyleBlock))
 import Css.Structure as Structure
 
 
@@ -70,8 +70,8 @@ typeSelector selectorStr styles =
         selector =
             Structure.Selector sequence [] Nothing
     in
-        [ StyleBlockDeclaration (StyleBlock selector [] styles) ]
-            |> Snippet
+    [ StyleBlockDeclaration (StyleBlock selector [] styles) ]
+        |> Snippet
 
 
 

@@ -1,4 +1,4 @@
-module Css.File exposing (compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram)
+module Css.File exposing (CssCompilerProgram, CssFileStructure, compile, compiler, toFileStructure)
 
 {-| Functions for writing CSS files from elm-css.
 
@@ -28,7 +28,7 @@ toFileStructure stylesheets =
         asTuple ( filename, { css, warnings } ) =
             { success = List.isEmpty warnings, filename = filename, content = css }
     in
-        List.map asTuple stylesheets
+    List.map asTuple stylesheets
 
 
 {-| Convenience re-export of Css.compile
@@ -40,7 +40,7 @@ compile =
 
 {-| Create a program that compiles an elm-css stylesheet to a CSS file.
 
-    import Css.File exposing (CssFileStructure, CssCompilerProgram)
+    import Css.File exposing (CssCompilerProgram, CssFileStructure)
     import HomepageCss as Homepage
 
     port files : CssFileStructure -> Cmd msg

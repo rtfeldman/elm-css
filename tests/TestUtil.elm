@@ -1,8 +1,8 @@
 module TestUtil exposing (..)
 
-import String
 import Css exposing (Snippet, rgb, rgba)
 import Fuzz exposing (Fuzzer)
+import String
 
 
 outdented : String -> String
@@ -20,10 +20,10 @@ prettyPrint sheet =
         { warnings, css } =
             Css.compile [ sheet ]
     in
-        if List.isEmpty warnings then
-            css
-        else
-            "Invalid Stylesheet:\n" ++ (String.join "\n" warnings)
+    if List.isEmpty warnings then
+        css
+    else
+        "Invalid Stylesheet:\n" ++ String.join "\n" warnings
 
 
 validRgbValue : Fuzzer Int

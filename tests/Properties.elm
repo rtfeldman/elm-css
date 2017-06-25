@@ -1,11 +1,11 @@
 module Properties exposing (all)
 
-import Test exposing (..)
-import Expect
-import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (p)
 import Css.Namespace exposing (namespace)
+import Expect
+import Test exposing (..)
+import TestUtil exposing (prettyPrint)
 
 
 all : Test
@@ -597,11 +597,11 @@ testProperty { function, property } modifierPairs =
 expectPropertyWorks : String -> ( Style, String ) -> Test
 expectPropertyWorks propertyName ( style, expectedStr ) =
     describe (propertyName ++ ": " ++ expectedStr)
-        [ (test ("emitted as expected")) <|
+        [ test "emitted as expected" <|
             \() ->
                 prettyPrint ((stylesheet << namespace "test") [ p [ style ] ])
                     |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-        , (test ("can be converted to a key-value pair")) <|
+        , test "can be converted to a key-value pair" <|
             \() ->
                 [ ( propertyName, expectedStr ) ]
                     |> Expect.equal (asPairs [ style ])

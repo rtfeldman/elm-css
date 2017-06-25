@@ -1,6 +1,6 @@
 port module Stylesheets exposing (..)
 
-import Css.File exposing (CssFileStructure, CssCompilerProgram)
+import Css.File exposing (CssCompilerProgram, CssFileStructure)
 import MyCss
 
 

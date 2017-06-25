@@ -1,8 +1,8 @@
 module Main exposing (main)
 
 import Html exposing (Html)
-import MyCss
 import Html.CssHelpers
+import MyCss
 
 
 { id, class, classList } =

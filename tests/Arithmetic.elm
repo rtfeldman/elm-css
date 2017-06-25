@@ -1,9 +1,9 @@
 module Arithmetic exposing (all)
 
-import Test exposing (..)
-import Fuzz
+import Css exposing ((|*|), (|+|), (|-|), (|/|), em)
 import Expect
-import Css exposing (em, (|+|), (|*|), (|/|), (|-|))
+import Fuzz
+import Test exposing (..)
 
 
 all : Test

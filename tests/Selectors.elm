@@ -1,10 +1,10 @@
 module Selectors exposing (..)
 
-import Test exposing (..)
-import Expect
-import TestUtil exposing (prettyPrint)
 import Css exposing (..)
 import Css.Elements exposing (..)
+import Expect
+import Test exposing (..)
+import TestUtil exposing (prettyPrint)
 
 
 nonElements : Test
@@ -85,7 +85,7 @@ elements =
 
 testSelector : String -> (List Style -> Snippet) -> Test
 testSelector expectedOutput applySelector =
-    (test (expectedOutput ++ " selector")) <|
+    test (expectedOutput ++ " selector") <|
         \() ->
             prettyPrint (stylesheet [ applySelector [ display none ] ])
                 |> Expect.equal (expectedOutput ++ " {\n    display: none;\n}")

@@ -33,7 +33,7 @@ unstyledDiv =
 dreamwriter : Stylesheet
 dreamwriter =
     (stylesheet << namespace "dreamwriter")
-        [ (each [ html, body ])
+        [ each [ html, body ]
             [ width (pct 100)
             , height (pct 100)
             , boxSizing borderBox
@@ -50,8 +50,8 @@ dreamwriter =
                     ]
                 ]
             ]
-        , (class Hidden) [ (display none) |> important ]
-        , (id Page)
+        , class Hidden [ display none |> important ]
+        , id Page
             [ width (pct 100)
             , height (pct 100)
             , boxSizing borderBox

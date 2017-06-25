@@ -36,7 +36,7 @@ atRule : Stylesheet
 atRule =
     (stylesheet << namespace "homepage")
         [ body [ padding zero ]
-        , (media [ print ]) [ body [ margin (Css.em 2) ] ]
+        , media [ print ] [ body [ margin (Css.em 2) ] ]
         , mediaQuery "screen and ( max-width: 600px )"
             [ body [ margin (Css.em 3) ] ]
         , button [ margin auto ]
@@ -49,7 +49,7 @@ nestedAtRule =
         [ button [ padding zero ]
         , body
             [ margin auto
-            , (withMedia [ print ]) [ margin (Css.em 2) ]
+            , withMedia [ print ] [ margin (Css.em 2) ]
             ]
         , a [ textDecoration none ]
         ]
@@ -90,7 +90,7 @@ simpleEach =
             [ width (px 30)
             , height (Css.em 2)
             ]
-        , (each [ html, body ])
+        , each [ html, body ]
             [ boxSizing borderBox
             , display none
             ]
@@ -104,7 +104,7 @@ simpleEach =
 multiDescendent : Stylesheet
 multiDescendent =
     stylesheet
-        [ (each [ html, body ])
+        [ each [ html, body ]
             [ boxSizing borderBox
             , display none
             , children
@@ -114,7 +114,7 @@ multiDescendent =
                     ]
                 ]
             ]
-        , (each [ h1, h2 ])
+        , each [ h1, h2 ]
             [ padding zero
             , margin zero
             , children
@@ -165,8 +165,8 @@ multiSelector : Stylesheet
 multiSelector =
     (stylesheet << namespace "multiSelector")
         [ div
-            [ (withClass Page)
-                [ (withClass Hidden)
+            [ withClass Page
+                [ withClass Hidden
                     [ display none
                     , width (pct 100)
                     , height (pct 100)
@@ -185,7 +185,7 @@ keyValue =
     stylesheet
         [ body
             [ property "-webkit-font-smoothing" "none"
-            , (property "-moz-font-smoothing" "none") |> important
+            , property "-moz-font-smoothing" "none" |> important
             ]
         ]
 

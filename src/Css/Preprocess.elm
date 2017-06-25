@@ -4,7 +4,7 @@ module Css.Preprocess exposing (..)
 the data structures found in this module.
 -}
 
-import Css.Structure as Structure exposing (mapLast, concatMapLast)
+import Css.Structure as Structure exposing (concatMapLast, mapLast)
 
 
 stylesheet : List Snippet -> Stylesheet
@@ -144,10 +144,10 @@ toPropertyPairs styles =
             []
 
         (AppendProperty property) :: rest ->
-            (propertyToPair property) :: (toPropertyPairs rest)
+            propertyToPair property :: toPropertyPairs rest
 
         (ApplyStyles styles) :: rest ->
-            (toPropertyPairs styles) ++ (toPropertyPairs rest)
+            toPropertyPairs styles ++ toPropertyPairs rest
 
         _ :: rest ->
             toPropertyPairs rest
@@ -162,4 +162,4 @@ propertyToPair property =
             else
                 property.value
     in
-        ( property.key, value )
+    ( property.key, value )
