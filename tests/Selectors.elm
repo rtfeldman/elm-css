@@ -35,7 +35,10 @@ elements =
         , testSelector "h5" h5
         , testSelector "h6" h6
         , testSelector "nav" nav
+        , testSelector "menu" menu
         , testSelector "section" section
+        , testSelector "aside" aside
+        , testSelector "time" time
         , testSelector "div" div
         , testSelector "hr" hr
         , testSelector "li" li
@@ -52,6 +55,7 @@ elements =
         , testSelector "strong" strong
         , testSelector "i" i
         , testSelector "em" Css.Elements.em
+        , testSelector "q" q
         , testSelector "img" img
         , testSelector "audio" audio
         , testSelector "video" video

@@ -1,4 +1,4 @@
-module Css.Elements exposing (typeSelector, html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, section, div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, a, code, small, span, strong, i, em, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, blockquote, svg, path, rect, circle, ellipse, line, polyline, polygon)
+module Css.Elements exposing (typeSelector, html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time, div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, a, code, small, span, strong, i, em, q, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, blockquote, svg, path, rect, circle, ellipse, line, polyline, polygon)
 
 {-| Selectors for HTML elements.
 
@@ -10,7 +10,7 @@ module Css.Elements exposing (typeSelector, html, body, article, header, footer,
 
 # Content sectioning
 
-@docs article, header, footer, h1, h2, h3, h4, h5, h6, nav, section
+@docs article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time
 
 
 # Text content
@@ -20,7 +20,7 @@ module Css.Elements exposing (typeSelector, html, body, article, header, footer,
 
 # Inline text semantics
 
-@docs a, code, small, span, strong, i, em
+@docs a, code, small, span, strong, i, em, q
 
 
 # Image and multimedia
@@ -166,11 +166,32 @@ nav =
     typeSelector "nav"
 
 
+{-| Selector for a [menu](https://developer.mozilla.org/en/docs/Web/HTML/Element/menu) element.
+-}
+menu : List Style -> Snippet
+menu =
+    typeSelector "menu"
+
+
 {-| Selector for a section element.
 -}
 section : List Style -> Snippet
 section =
     typeSelector "section"
+
+
+{-| Selector for a [aside](https://developer.mozilla.org/en/docs/Web/HTML/Element/aside) element.
+-}
+aside : List Style -> Snippet
+aside =
+    typeSelector "aside"
+
+
+{-| Selector for a [time](https://developer.mozilla.org/en/docs/Web/HTML/Element/time) element.
+-}
+time : List Style -> Snippet
+time =
+    typeSelector "time"
 
 
 
@@ -314,6 +335,13 @@ i =
 em : List Style -> Snippet
 em =
     typeSelector "em"
+
+
+{-| Selector for a [q](https://developer.mozilla.org/en/docs/Web/HTML/Element/q) element.
+-}
+q : List Style -> Snippet
+q =
+    typeSelector "q"
 
 
 
