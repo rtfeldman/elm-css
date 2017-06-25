@@ -1,11 +1,11 @@
-module Css.Elements exposing (html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time, div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, a, code, small, span, strong, i, em, q, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, blockquote, svg, path, rect, circle, ellipse, line, polyline, polygon)
+module Css.Elements exposing (typeSelector, html, body, article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time, div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, a, code, small, span, strong, i, em, q, img, audio, video, canvas, caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr, button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea, blockquote, svg, path, rect, circle, ellipse, line, polyline, polygon)
 
 {-| Selectors for HTML elements.
 
 
 # Basic elements
 
-@docs html, body
+@docs typeSelector, html, body
 
 
 # Content sectioning
@@ -48,6 +48,19 @@ import Css.Preprocess exposing (Style, Snippet(Snippet), StyleBlock(StyleBlock),
 import Css.Structure as Structure
 
 
+{-| Define a custom element.
+
+    stylesheet
+      [ typeSelector "aside" [ display block ]
+      ]
+
+...outputs
+
+    aside {
+        display: block;
+    }
+
+-}
 typeSelector : String -> List Style -> Snippet
 typeSelector selectorStr styles =
     let
