@@ -37,37 +37,42 @@ namespaceToString ( prefix, str ) =
         ++ "\""
 
 
-prettyPrintStyleBlock : StyleBlock -> String
-prettyPrintStyleBlock (StyleBlock firstSelector otherSelectors properties) =
+prettyPrintStyleBlock : String -> StyleBlock -> String
+prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors properties) =
     let
         selectorStr =
             (firstSelector :: otherSelectors)
                 |> List.map selectorToString
                 |> String.join ", "
     in
-    selectorStr
-        ++ " {\n"
-        ++ prettyPrintProperties properties
-        ++ "\n}"
+    String.join ""
+        [ selectorStr
+        , " {\n"
+        , indentLevel
+        , prettyPrintProperties properties
+        , "\n"
+        , indentLevel
+        , "}"
+        ]
 
 
 prettyPrintDeclaration : Declaration -> String
 prettyPrintDeclaration declaration =
     case declaration of
         StyleBlockDeclaration styleBlock ->
-            prettyPrintStyleBlock styleBlock
+            prettyPrintStyleBlock noIndent styleBlock
 
         MediaRule mediaQueries styleBlocks ->
             let
                 blocks =
-                    List.map (indent << prettyPrintStyleBlock) styleBlocks
+                    List.map (indent << prettyPrintStyleBlock spaceIndent) styleBlocks
                         |> String.join "\n\n"
 
                 query =
                     List.map (\(MediaQuery str) -> str) mediaQueries
                         |> String.join " "
             in
-            "@media " ++ query ++ " {\n" ++ indent blocks ++ "\n}"
+            "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
         _ ->
             Debug.crash "not yet implemented :x"
@@ -162,9 +167,21 @@ prettyPrintProperty { key, value, important } =
     key ++ ": " ++ value ++ suffix
 
 
+{-| Indent the given string with 4 spaces
+-}
 indent : String -> String
 indent str =
-    "    " ++ str
+    spaceIndent ++ str
+
+
+spaceIndent : String
+spaceIndent =
+    "    "
+
+
+noIndent : String
+noIndent =
+    ""
 
 
 prettyPrintProperties : List Property -> String
