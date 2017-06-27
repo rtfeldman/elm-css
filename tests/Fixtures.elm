@@ -392,6 +392,18 @@ pseudoClassStylesheet =
         ]
 
 
+mediaQueryIndentation : Stylesheet
+mediaQueryIndentation =
+    (stylesheet << namespace "")
+        [ mediaQuery "(max-width: 515px)"
+            [ class "mdl-layout__header"
+                [ children
+                    [ class "mdl-layout-icon" [ display none ] ]
+                ]
+            ]
+        ]
+
+
 backgrounds : Stylesheet
 backgrounds =
     (stylesheet << namespace "background-test")
