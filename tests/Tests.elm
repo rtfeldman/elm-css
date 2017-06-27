@@ -706,3 +706,20 @@ backgrounds =
                 outdented (prettyPrint input)
                     |> Expect.equal (outdented output)
         ]
+
+
+bug280 : Test
+bug280 =
+    let
+        input =
+            Fixtures.mediaQueryIndentation
+
+        actual =
+            "@media (max-width: 515px) {\n    .mdl-layout__header > .mdl-layout-icon {\n        display: none;\n    }\n}"
+    in
+    describe "bug280"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                prettyPrint input
+                    |> Expect.equal actual
+        ]
