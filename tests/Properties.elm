@@ -588,6 +588,9 @@ all =
         , testProperty { function = "important", property = "background-color" }
             [ ( backgroundColor (rgb 129 20 100) |> important, "rgb(129, 20, 100) !important" )
             ]
+        , testProperty { function = "whiteSpace", property = "white-space" }
+            [ ( whiteSpace noWrap, "nowrap" )
+            ]
         ]
 
 
