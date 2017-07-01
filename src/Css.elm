@@ -5410,8 +5410,18 @@ larger =
 -- Styles --
 
 
+type alias Normal =
+    { value : String
+    , warnings : List String
+    , fontStyle : Compatible
+    , fontWeight : Compatible
+    , featureTagValue : Compatible
+    , overflowWrap : Compatible
+    }
+
+
 {-| -}
-normal : Wrap (FontStyleOrFeatureTagValue (FontWeight {}))
+normal : Normal
 normal =
     { value = "normal"
     , warnings = []
