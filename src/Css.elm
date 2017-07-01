@@ -5417,6 +5417,7 @@ type alias Normal =
     , fontWeight : Compatible
     , featureTagValue : Compatible
     , overflowWrap : Compatible
+    , whiteSpace : Compatible
     }
 
 
@@ -5429,6 +5430,7 @@ normal =
     , fontWeight = Compatible
     , featureTagValue = Compatible
     , overflowWrap = Compatible
+    , whiteSpace = Compatible
     }
 
 
