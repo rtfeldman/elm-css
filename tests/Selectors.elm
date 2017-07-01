@@ -44,7 +44,7 @@ elements =
         , testSelector "li" li
         , testSelector "main" main_
         , testSelector "p" p
-        , testSelector "pre" pre
+        , testSelector "pre" Css.Elements.pre
         , testSelector "dd" dd
         , testSelector "dl" dl
         , testSelector "dt" dt

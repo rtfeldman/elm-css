@@ -600,6 +600,9 @@ all =
             , ( whiteSpace inherit, "inherit" )
             , ( whiteSpace normal, "normal" )
             , ( whiteSpace noWrap, "nowrap" )
+            , ( whiteSpace pre, "pre" )
+            , ( whiteSpace preWrap, "pre-wrap" )
+            , ( whiteSpace preLine, "pre-line" )
             ]
         ]
 
