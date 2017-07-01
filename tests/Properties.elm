@@ -589,7 +589,10 @@ all =
             [ ( backgroundColor (rgb 129 20 100) |> important, "rgb(129, 20, 100) !important" )
             ]
         , testProperty { function = "whiteSpace", property = "white-space" }
-            [ ( whiteSpace noWrap, "nowrap" )
+            [ ( whiteSpace initial, "initial" )
+            , ( whiteSpace unset, "unset" )
+            , ( whiteSpace inherit, "inherit" )
+            , ( whiteSpace noWrap, "nowrap" )
             ]
         ]
 

@@ -1825,6 +1825,7 @@ type alias BasicProperty =
     , lengthOrAutoOrCoverOrContain : Compatible
     , intOrAuto : Compatible
     , touchAction : Compatible
+    , whiteSpace : Compatible
     }
 
 
@@ -1899,6 +1900,7 @@ initial =
     , lengthOrAutoOrCoverOrContain = Compatible
     , intOrAuto = Compatible
     , touchAction = Compatible
+    , whiteSpace = Compatible
     }
 
 
