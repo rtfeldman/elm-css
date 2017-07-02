@@ -32,7 +32,6 @@ var KNOWN_MODULES =
     "Css"
   ];
 
-// elmModuleName is optional, and is by default inferred based on the filename.
 module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort, pathToMake) {
 
   var originalWorkingDir = process.cwd();
