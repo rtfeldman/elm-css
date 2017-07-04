@@ -204,16 +204,11 @@ button.fancyButtonLarge {
     font-size: 24px;
     padding: 30px;
 }
-
-button#fancyButtonSignUp {
-    font-weight: bold;
-    color: #aaffbb;
-}
 ```
 
 Note that although you *can* structure your styles like this, it is generally a bad idea because it increases specificity.
 
-It’s best to [keep specificity as low as possible](https://css-tricks.com/strategies-keeping-css-specificity-low/); the above example would be easier to maintain if it did not mention `button` at all, and instead declared only class selectors and ID selectors.
+It’s best to [keep specificity as low as possible](https://css-tricks.com/strategies-keeping-css-specificity-low/); the above example using `withClass` might be easier to maintain if it did not mention `button` at all, and instead was declared using only a class selector.
 
 Now let’s say we want several things to have underlines on hover only. Piece of cake!
 
