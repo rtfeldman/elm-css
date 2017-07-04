@@ -38,7 +38,7 @@ stylesheet { name = "homepage" }
       , width (pct 100)
       ]
 
-  , (.) MenuItem
+  , class MenuItem
       [ fontFamilies [ "Georgia", "serif" ]
       , fontWeight bold
       ]
@@ -61,11 +61,11 @@ body {
 
 There are a few things to note here.
 
-First, notice that `(.) MenuItem` compiled to `.homepageMenuItem`. This breaks
+First, notice that `class MenuItem` compiled to `.homepageMenuItem`. This breaks
 down into three pieces: the selector `.`, the namespace `homepage`, and the
 class name `MenuItem`.
 
-1. The `(.)` represents a [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors),
+1. The `class` represents a [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors),
 which is where the `.` at the start of `.homepageMenuItem` came from.
 2. Passing `{ name = "homepage" }` to `stylesheet` specified that `"homepage"` will be prepended to all classes, IDs, and animation names in this stylesheet. This namespacing concept comes from
 [CSS Modules](https://github.com/css-modules/css-modules), and it makes your styles portable by guarding against naming collisions with other stylesheets. Even if you have another stylesheet on the page with a `MenuItem` class, as long as it has a different namespace, their generated class names will not overlap.
@@ -84,12 +84,12 @@ stylesheet { name = "homepage" }
       , width (pct 100)
       ]
 
-  , (.) MenuItem
+  , class MenuItem
       [ fontFamily [ "Georgia", "serif" ]
       , fontWeight bold
       ]
 
-  , (#) Welcome
+  , id Welcome
       [ textAlign center
       , color (rgb 10 11 12)
       ]
@@ -115,7 +115,7 @@ body {
 }
 ```
 
-As with `(.) MenuItem`, when you use `(#) Welcome`, `elm-css` calls `toString` on the union type `Welcome` before prepending `"homepage"` from the `namespace` and `"#"` from the `#` operator to arrive at `#homepageMenuItem`.
+As with `class MenuItem`, when you use `id Welcome`, `elm-css` calls `toString` on the union type `Welcome` before prepending `"homepage"` from the `namespace` and `"#"` from the `id` function to arrive at `#homepageMenuItem`.
 
 Note that `rgb` is a normal Elm function, so you call it as `(rgb 10 11 12)`
 in order to get the output of `rgb(10, 11, 12)`.
@@ -133,12 +133,12 @@ stylesheet { name = "homepage" }
       , width (pct 100)
       ]
 
-  , (.) MenuItem
+  , class MenuItem
       [ fontFamily [ "Georgia", "serif" ]
       , color (rgb 10 11 12)
       ]
 
-  , (#) Welcome
+  , id Welcome
       [ textAlign center ]
 
   , a
@@ -219,7 +219,7 @@ Now let’s say we want several things to have underlines on hover only. Piece o
 
 ```elm
 stylesheet { name = "example" }
-  [ each [ a, button, (.) FancyThing ]
+  [ each [ a, button, class FancyThing ]
       [ textDecoration none
 
       , hover
