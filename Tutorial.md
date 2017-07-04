@@ -39,7 +39,7 @@ stylesheet { name = "homepage" }
       ]
 
   , (.) MenuItem
-      [ fontFamilies [ "Georga", "serif" ]
+      [ fontFamilies [ "Georgia", "serif" ]
       , fontWeight bold
       ]
   ]
@@ -85,7 +85,7 @@ stylesheet { name = "homepage" }
       ]
 
   , (.) MenuItem
-      [ fontFamily [ "Georga", "serif" ]
+      [ fontFamily [ "Georgia", "serif" ]
       , fontWeight bold
       ]
 
@@ -134,7 +134,7 @@ stylesheet { name = "homepage" }
       ]
 
   , (.) MenuItem
-      [ fontFamily [ "Georga", "serif" ]
+      [ fontFamily [ "Georgia", "serif" ]
       , color (rgb 10 11 12)
       ]
 
