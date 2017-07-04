@@ -158,6 +158,9 @@ $ elm-css src/Stylesheets.elm
 $ less homepage.css
 ```
 
+A gentle introduction to some of the features of `elm-css` is also available in
+[the tutorial](Tutorial.md).
+
 ### Examples
 
 There are a few examples to check out!
