@@ -5,7 +5,7 @@
 Let’s start by defining a width and padding for our `<body>` element.
 
 ```elm
-stylesheet { name = "homepage" }
+(stylesheet << namespace "homepage")
   [ body
       [ padding (px 30)
       , width (pct 100)
@@ -32,14 +32,14 @@ Next let’s define a font for our menu items.
 ```elm
 type CssClasses = MenuItem | Thumbnail | Sidebar
 
-stylesheet { name = "homepage" }
+(stylesheet << namespace "homepage")
   [ body
       [ padding (px 30)
       , width (pct 100)
       ]
 
-  , (.) MenuItem
-      [ fontFamilies [ "Georga", "serif" ]
+  , class MenuItem
+      [ fontFamilies [ "Georgia", "serif" ]
       , fontWeight bold
       ]
   ]
@@ -61,13 +61,13 @@ body {
 
 There are a few things to note here.
 
-First, notice that `(.) MenuItem` compiled to `.homepageMenuItem`. This breaks
+First, notice that `class MenuItem` compiled to `.homepageMenuItem`. This breaks
 down into three pieces: the selector `.`, the namespace `homepage`, and the
 class name `MenuItem`.
 
-1. The `(.)` represents a [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors),
+1. The `class` represents a [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors),
 which is where the `.` at the start of `.homepageMenuItem` came from.
-2. Passing `{ name = "homepage" }` to `stylesheet` specified that `"homepage"` will be prepended to all classes, IDs, and animation names in this stylesheet. This namespacing concept comes from
+2. Composing (the `<<` operator) the `namespace "homepage"` with `stylesheet` specified that `"homepage"` will be prepended to all classes, IDs, and animation names in this stylesheet. This namespacing concept comes from
 [CSS Modules](https://github.com/css-modules/css-modules), and it makes your styles portable by guarding against naming collisions with other stylesheets. Even if you have another stylesheet on the page with a `MenuItem` class, as long as it has a different namespace, their generated class names will not overlap.
 3. Finally, `MenuItem` represents the class selector itself. Note that we used a [union type](http://elm-lang.org/guide/model-the-problem) to represent the class instead of a string like `"MenuItem"`. Using a union type for class names means accidental misspellings will result in compiler errors, and makes it easier to refactor stylesheet code that is shared with view code.
 
@@ -78,18 +78,18 @@ type CssClasses = MenuItem | Thumbnail | Sidebar
 
 type CssIds = Welcome | Footer | Hero
 
-stylesheet { name = "homepage" }
+(stylesheet << namespace "homepage")
   [ body
       [ padding (px 30)
       , width (pct 100)
       ]
 
-  , (.) MenuItem
-      [ fontFamily [ "Georga", "serif" ]
+  , class MenuItem
+      [ fontFamily [ "Georgia", "serif" ]
       , fontWeight bold
       ]
 
-  , (#) Welcome
+  , id Welcome
       [ textAlign center
       , color (rgb 10 11 12)
       ]
@@ -115,7 +115,7 @@ body {
 }
 ```
 
-As with `(.) MenuItem`, when you use `(#) Welcome`, `elm-css` calls `toString` on the union type `Welcome` before prepending `"homepage"` from the `namespace` and `"#"` from the `#` operator to arrive at `#homepageMenuItem`.
+As with `class MenuItem`, when you use `id Welcome`, `elm-css` calls `toString` on the union type `Welcome` before prepending `"homepage"` from the `namespace` and `"#"` from the `id` function to arrive at `#homepageMenuItem`.
 
 Note that `rgb` is a normal Elm function, so you call it as `(rgb 10 11 12)`
 in order to get the output of `rgb(10, 11, 12)`.
@@ -127,18 +127,18 @@ type CssClasses = MenuItem | Thumbnail | Sidebar
 
 type CssIds = Welcome | Footer | Hero
 
-stylesheet { name = "homepage" }
+(stylesheet << namespace "homepage")
   [ body
       [ padding (px 30)
       , width (pct 100)
       ]
 
-  , (.) MenuItem
-      [ fontFamily [ "Georga", "serif" ]
+  , class MenuItem
+      [ fontFamily [ "Georgia", "serif" ]
       , color (rgb 10 11 12)
       ]
 
-  , (#) Welcome
+  , id Welcome
       [ textAlign center ]
 
   , a
@@ -181,7 +181,7 @@ a:hover {
 You can also use `withClass` to add classes. For example:
 
 ```elm
-stylesheet { name = "fancyButton" }
+(stylesheet << namespace "fancyButton")
   [ button
       [ padding (px 5)
 
@@ -204,22 +204,17 @@ button.fancyButtonLarge {
     font-size: 24px;
     padding: 30px;
 }
-
-button#fancyButtonSignUp {
-    font-weight: bold;
-    color: #aaffbb;
-}
 ```
 
 Note that although you *can* structure your styles like this, it is generally a bad idea because it increases specificity.
 
-It’s best to [keep specificity as low as possible](https://css-tricks.com/strategies-keeping-css-specificity-low/); the above example would be easier to maintain if it did not mention `button` at all, and instead declared only class selectors and ID selectors.
+It’s best to [keep specificity as low as possible](https://css-tricks.com/strategies-keeping-css-specificity-low/); the above example using `withClass` might be easier to maintain if it did not mention `button` at all, and instead was declared using only a class selector.
 
 Now let’s say we want several things to have underlines on hover only. Piece of cake!
 
 ```elm
-stylesheet { name = "example" }
-  [ each [ a, button, (.) FancyThing ]
+(stylesheet << namespace "example")
+  [ each [ a, button, class FancyThing ]
       [ textDecoration none
 
       , hover
@@ -259,7 +254,7 @@ button:hover {
 Now let’s take things up a notch or two.
 
 ```elm
-stylesheet { name = "homepage" }
+(stylesheet << namespace "homepage")
   [ withMedia [ print ]
       [ body
           [ width (px 1280) ]
