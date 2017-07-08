@@ -585,6 +585,9 @@ all =
             , ( borderRadius3 (em 4) (px 2) (pct 5), "4em 2px 5%" )
             , ( borderRadius4 (em 4) (px 2) (pct 5) (px 3), "4em 2px 5% 3px" )
             ]
+        , testProperty { function = "important", property = "background-color" }
+            [ ( backgroundColor (rgb 129 20 100) |> important, "rgb(129, 20, 100) !important" )
+            ]
         ]
 
 
