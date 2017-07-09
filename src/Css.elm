@@ -4,31 +4,101 @@ module Css
         , (|+|)
         , (|-|)
         , (|/|)
+        , AlignItems
+        , All
+        , Angle
+        , AngleOrDirection
+        , BackgroundAttachment
+        , BackgroundBlendMode
+        , BackgroundClip
+        , BackgroundImage
+        , BackgroundOrigin
+        , BackgroundRepeat
+        , BackgroundRepeatShorthand
+        , BasicProperty
+        , BorderCollapse
+        , BorderStyle
+        , BoxSizing
+        , Calc
+        , CalcExpression
         , Ch
         , Cm
         , Color
         , ColorStop
         , ColorValue
+        , Cursor
+        , Directionality
+        , Display
         , Em
         , Ex
+        , ExplicitLength
+        , FeatureTagValue
+        , FlexBasis
+        , FlexDirection
+        , FlexDirectionOrWrap
+        , FlexWrap
+        , FontFamily
         , FontSize
+        , FontStyle
+        , FontStyleOrFeatureTagValue
+        , FontVariant
+        , FontVariantCaps
+        , FontVariantLigatures
+        , FontVariantNumeric
+        , FontWeight
+        , ImportType
         , In
+        , IncompatibleUnits
         , IntOrAuto
+        , JustifyContent
         , Length
+        , LengthOrAuto
+        , LengthOrAutoOrCoverOrContain
+        , LengthOrMinMaxDimension
+        , LengthOrNone
+        , LengthOrNoneOrMinMaxDimension
+        , LengthOrNumber
+        , LengthOrNumberOrAutoOrNoneOrContent
+        , ListStyle
+        , ListStylePosition
+        , ListStyleType
         , MediaQuery
+        , MinMaxDimension
         , Mm
+        , NonMixable
+        , None
+        , Number
+        , Outline
+        , Overflow
         , Pc
         , Pct
+        , Position
         , Pt
         , Px
         , Rem
+        , Resize
         , Snippet
         , Style
         , Stylesheet
+        , TextDecorationLine
+        , TextDecorationStyle
+        , TextIndent
+        , TextOrientation
+        , TextOverflow
+        , TextRendering
+        , TextTransform
+        , TouchAction
+        , Transform
+        , TransformBox
+        , TransformStyle
+        , Value
+        , VerticalAlign
         , Vh
         , Vmax
         , Vmin
         , Vw
+        , WhiteSpace
+        , Wrap
         , absolute
         , active
         , adjacentSiblings
