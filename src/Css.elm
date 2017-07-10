@@ -513,6 +513,9 @@ module Css
         , plus
         , pointer
         , position
+        , pre
+        , preLine
+        , preWrap
         , preserve3d
         , print
         , progress
@@ -1895,6 +1898,7 @@ type alias BasicProperty =
     , lengthOrAutoOrCoverOrContain : Compatible
     , intOrAuto : Compatible
     , touchAction : Compatible
+    , whiteSpace : Compatible
     }
 
 
@@ -1969,6 +1973,7 @@ initial =
     , lengthOrAutoOrCoverOrContain = Compatible
     , intOrAuto = Compatible
     , touchAction = Compatible
+    , whiteSpace = Compatible
     }
 
 
@@ -5478,8 +5483,19 @@ larger =
 -- Styles --
 
 
+type alias Normal =
+    { value : String
+    , warnings : List String
+    , fontStyle : Compatible
+    , fontWeight : Compatible
+    , featureTagValue : Compatible
+    , overflowWrap : Compatible
+    , whiteSpace : Compatible
+    }
+
+
 {-| -}
-normal : Wrap (FontStyleOrFeatureTagValue (FontWeight {}))
+normal : Normal
 normal =
     { value = "normal"
     , warnings = []
@@ -5487,6 +5503,7 @@ normal =
     , fontWeight = Compatible
     , featureTagValue = Compatible
     , overflowWrap = Compatible
+    , whiteSpace = Compatible
     }
 
 
@@ -7588,6 +7605,46 @@ textDecorationLines =
 textDecorationStyle : TextDecorationStyle compatible -> Style
 textDecorationStyle =
     prop1 "text-decoration-style"
+
+
+
+{- WHITE-SPACE -}
+
+
+{-| The `pre` [`white-space`](https://developer.mozilla.org/en-US/docs/Web/CSS/white-space) value.
+
+    whiteSpace pre
+
+-}
+pre : WhiteSpace {}
+pre =
+    { value = "pre"
+    , whiteSpace = Compatible
+    }
+
+
+{-| The `pre-wrap` [`white-space`](https://developer.mozilla.org/en-US/docs/Web/CSS/white-space) value.
+
+    whiteSpace preWrap
+
+-}
+preWrap : WhiteSpace {}
+preWrap =
+    { value = "pre-wrap"
+    , whiteSpace = Compatible
+    }
+
+
+{-| The `pre-line` [`white-space`](https://developer.mozilla.org/en-US/docs/Web/CSS/white-space) value.
+
+    whiteSpace preLine
+
+-}
+preLine : WhiteSpace {}
+preLine =
+    { value = "pre-line"
+    , whiteSpace = Compatible
+    }
 
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)

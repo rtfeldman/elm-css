@@ -229,6 +229,9 @@ all =
             , ( overflowY hidden, "hidden" )
             , ( overflowY scroll, "scroll" )
             ]
+        , testProperty { function = "overflowWrap", property = "overflow-wrap" }
+            [ ( overflowWrap normal, "normal" )
+            ]
         , testProperty { function = "overflow", property = "overflow" }
             [ ( overflow initial, "initial" )
             , ( overflow unset, "unset" )
@@ -365,6 +368,9 @@ all =
             , ( fontWeight (int 700), "700" )
             , ( fontWeight (int 800), "800" )
             , ( fontWeight (int 900), "900" )
+            ]
+        , testProperty { function = "fontStyle", property = "font-style" }
+            [ ( fontStyle normal, "normal" )
             ]
         , testProperty { function = "fontFeatureSettings", property = "font-feature-settings" }
             [ ( fontFeatureSettings (featureTag "smcp"), "\"smcp\" 1" )
@@ -587,6 +593,16 @@ all =
             ]
         , testProperty { function = "important", property = "background-color" }
             [ ( backgroundColor (rgb 129 20 100) |> important, "rgb(129, 20, 100) !important" )
+            ]
+        , testProperty { function = "whiteSpace", property = "white-space" }
+            [ ( whiteSpace initial, "initial" )
+            , ( whiteSpace unset, "unset" )
+            , ( whiteSpace inherit, "inherit" )
+            , ( whiteSpace normal, "normal" )
+            , ( whiteSpace noWrap, "nowrap" )
+            , ( whiteSpace pre, "pre" )
+            , ( whiteSpace preWrap, "pre-wrap" )
+            , ( whiteSpace preLine, "pre-line" )
             ]
         ]
 
