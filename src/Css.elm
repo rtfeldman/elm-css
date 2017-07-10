@@ -5516,7 +5516,7 @@ type alias Normal =
 
 
 {-| -}
-normal : Normal
+normal : Wrap (FontStyleOrFeatureTagValue (FontWeight {}))
 normal =
     { value = "normal"
     , warnings = []
@@ -5524,7 +5524,6 @@ normal =
     , fontWeight = Compatible
     , featureTagValue = Compatible
     , overflowWrap = Compatible
-    , whiteSpace = Compatible
     }
 
 
