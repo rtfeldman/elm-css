@@ -709,6 +709,8 @@ module Css
 @docs listStyle, listStyle2, listStyle3
 @docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
+@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Directionality, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Position, Resize, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
+
 
 # Style
 
@@ -937,22 +939,27 @@ getOverloadedProperty functionName desiredKey style =
             getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
 
 
+{-| -}
 type alias Value compatible =
     { compatible | value : String }
 
 
+{-| -}
 type alias All compatible =
     { compatible | value : String, all : Compatible }
 
 
+{-| -}
 type alias Number compatible =
     { compatible | value : String, number : Compatible }
 
 
+{-| -}
 type alias None compatible =
     { compatible | value : String, none : Compatible }
 
 
+{-| -}
 type alias MinMaxDimension compatible =
     { compatible
         | value : String
@@ -966,6 +973,7 @@ type alias MinMaxDimension compatible =
 {- FONTS -}
 
 
+{-| -}
 type alias ImportType compatible =
     { compatible | value : String, import_ : Compatible }
 
@@ -986,22 +994,27 @@ type alias FontSize compatible =
     { compatible | value : String, fontSize : Compatible }
 
 
+{-| -}
 type alias FontStyle compatible =
     { compatible | value : String, fontStyle : Compatible }
 
 
+{-| -}
 type alias FontStyleOrFeatureTagValue compatible =
     { compatible | value : String, warnings : List String, fontStyle : Compatible, featureTagValue : Compatible }
 
 
+{-| -}
 type alias FontWeight compatible =
     { compatible | value : String, fontWeight : Compatible }
 
 
+{-| -}
 type alias FontVariant compatible =
     { compatible | value : String, fontVariant : Compatible }
 
 
+{-| -}
 type alias FontVariantLigatures compatible =
     { compatible
         | value : String
@@ -1010,6 +1023,7 @@ type alias FontVariantLigatures compatible =
     }
 
 
+{-| -}
 type alias FontVariantCaps compatible =
     { compatible
         | value : String
@@ -1018,6 +1032,7 @@ type alias FontVariantCaps compatible =
     }
 
 
+{-| -}
 type alias FontVariantNumeric compatible =
     { compatible
         | value : String
@@ -1086,6 +1101,7 @@ type alias FlexDirection compatible =
     { compatible | value : String, flexDirection : Compatible }
 
 
+{-| -}
 type alias FlexDirectionOrWrap compatible =
     { compatible | value : String, flexDirectionOrWrap : Compatible }
 
@@ -1160,6 +1176,7 @@ type alias BackgroundRepeat compatible =
     { compatible | value : String, backgroundRepeat : Compatible, backgroundRepeatShorthand : Compatible }
 
 
+{-| -}
 type alias BackgroundRepeatShorthand compatible =
     { compatible | value : String, backgroundRepeatShorthand : Compatible }
 
@@ -1249,6 +1266,7 @@ type alias CalculatedLength =
     }
 
 
+{-| -}
 type CalcExpression
     = Addition
     | Subtraction
@@ -1441,6 +1459,7 @@ type alias LengthOrNumber compatible =
     { compatible | value : String, lengthOrNumber : Compatible }
 
 
+{-| -}
 type alias ExplicitLength units =
     { value : String
     , numericValue : Float
@@ -1847,6 +1866,7 @@ hidden =
     }
 
 
+{-| -}
 type alias BasicProperty =
     { value : String
     , all : Compatible
@@ -2905,6 +2925,7 @@ lengthForOverloadedProperty =
     lengthConverter IncompatibleUnits "" 0
 
 
+{-| -}
 type IncompatibleUnits
     = IncompatibleUnits
 
@@ -5495,7 +5516,7 @@ type alias Normal =
 
 
 {-| -}
-normal : Normal
+normal : Wrap (FontStyleOrFeatureTagValue (FontWeight {}))
 normal =
     { value = "normal"
     , warnings = []
@@ -5503,7 +5524,6 @@ normal =
     , fontWeight = Compatible
     , featureTagValue = Compatible
     , overflowWrap = Compatible
-    , whiteSpace = Compatible
     }
 
 
@@ -7867,6 +7887,7 @@ propertyWithWarnings warnings key value =
 -- Pseudo-Classes --
 
 
+{-| -}
 type Directionality
     = Ltr
     | Rtl

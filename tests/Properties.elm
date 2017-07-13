@@ -598,7 +598,6 @@ all =
             [ ( whiteSpace initial, "initial" )
             , ( whiteSpace unset, "unset" )
             , ( whiteSpace inherit, "inherit" )
-            , ( whiteSpace normal, "normal" )
             , ( whiteSpace noWrap, "nowrap" )
             , ( whiteSpace pre, "pre" )
             , ( whiteSpace preWrap, "pre-wrap" )
