@@ -261,6 +261,10 @@ borders =
             a {
                 border: 10px solid;
             }
+
+            table {
+                border-spacing: 10px;
+            }
         """
     in
     describe "Borders test"

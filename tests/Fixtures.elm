@@ -219,6 +219,7 @@ borders =
             , borderImageOutset2 (int 3) (Css.em 4)
             ]
         , a [ border2 (px 10) solid ]
+        , Css.Elements.table [ borderSpacing (px 10) ]
         ]
 
 
