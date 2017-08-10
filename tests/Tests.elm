@@ -582,20 +582,20 @@ pseudoElements =
 
         output =
             """
-            #Page {
+            #pseudoElementsPage {
                 margin: 10px;
                 color: #aaa;
             }
 
-            #Page::before {
+            #pseudoElementsPage::before {
                 color: #fff;
             }
 
-            #Page::after {
+            #pseudoElementsPage::after {
                 color: #000;
             }
 
-            #Page::-webkit-scrollbar {
+            #pseudoElementsPage::-webkit-scrollbar {
                 display: none;
             }
             """
@@ -616,28 +616,28 @@ pseudoClasses =
 
         output =
             """
-            #Page {
+            #pseudoClassesPage {
                 color: #fff;
                 background-color: #aaa;
             }
 
-            #Page:hover {
+            #pseudoClassesPage:hover {
                 margin-top: 10px;
             }
 
-            #Page:hover:focus {
+            #pseudoClassesPage:hover:focus {
                 color: #000;
             }
 
-            #Page:first {
+            #pseudoClassesPage:first {
                 font-size: 3em;
             }
 
-            #Page:disabled {
+            #pseudoClassesPage:disabled {
                 margin-top: 20px;
             }
 
-            #Page:any-link {
+            #pseudoClassesPage:any-link {
                 color: #f00;
             }
             """
