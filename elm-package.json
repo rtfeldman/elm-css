@@ -10,6 +10,7 @@
         "Css",
         "Css.Colors",
         "Css.Elements",
+        "Css.Media",
         "Css.File",
         "Css.Namespace"
     ],

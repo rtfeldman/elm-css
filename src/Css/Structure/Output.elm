@@ -70,7 +70,7 @@ prettyPrintDeclaration declaration =
 
                 query =
                     List.map (\(MediaQuery str) -> str) mediaQueries
-                        |> String.join " "
+                        |> String.join ",\n"
             in
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
