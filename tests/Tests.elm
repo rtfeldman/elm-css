@@ -112,6 +112,78 @@ leftRightTopBottom =
         ]
 
 
+atRule : Test
+atRule =
+    let
+        input =
+            Fixtures.atRule
+
+        output =
+            """
+          body {
+              padding: 0;
+          }
+
+          @media print {
+              body {
+                  margin: 2em;
+              }
+          }
+
+          @media screen and ( max-width: 600px ) {
+              body {
+                  margin: 3em;
+              }
+          }
+
+          button {
+              margin: auto;
+          }
+      """
+    in
+    describe "@media test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+nestedAtRule : Test
+nestedAtRule =
+    let
+        input =
+            Fixtures.nestedAtRule
+
+        output =
+            """
+          button {
+              padding: 0;
+          }
+
+          body {
+              margin: auto;
+          }
+
+          @media print {
+              body {
+                  margin: 2em;
+              }
+          }
+
+          a {
+              text-decoration: none;
+          }
+      """
+    in
+    describe "nested @media test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
 {-| Regression test for <https://github.com/rtfeldman/elm-css/issues/140>
 -}
 bug140 : Test
