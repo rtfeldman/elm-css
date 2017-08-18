@@ -1,26 +1,29 @@
 module Css.Internal
     exposing
-        ( Value
-        , CalcOperation
-        , EmittedValue(..)
+        ( CalcOperation(..)
         , ColorDescriptor(..)
-        , CalcOperation(..)
-        , valueToString
-        , warnings
+        , EmittedValue(..)
+        , Value
         , cssFunction
-        , compatible
+        , emittedValue
         , numberToString
         , value
-        , emittedValue
+        , valueToString
+        , warnings
         )
 
 
-type Value compatible
+type Value a
     = Value
         { warnings : List String
         , value : EmittedValue
-        , compatible : compatible
         }
+        (Compatibility a)
+
+
+type alias Compatibility a =
+    { cursor : a
+    }
 
 
 type EmittedValue
@@ -36,32 +39,26 @@ type CalcOperation
     | Plus
 
 
-compatible : Value compatible -> compatible
-compatible (Value record) =
-    record.compatible
-
-
-emittedValue : Value compatible -> EmittedValue
-emittedValue (Value record) =
+emittedValue : Value a -> EmittedValue
+emittedValue (Value record _) =
     record.value
 
 
 warnings : Value compatible -> List String
-warnings (Value record) =
+warnings (Value record _) =
     record.warnings
 
 
-value : List String -> EmittedValue -> compatible -> Value compatible
-value warnings value compatible =
+value : List String -> EmittedValue -> Compatibility a -> Value a
+value warnings value =
     Value
         { warnings = warnings
-        , compatible = compatible
         , value = value
         }
 
 
 valueToString : Value compatible -> String
-valueToString (Value record) =
+valueToString (Value record _) =
     emittedValueToString record.value
 
 
@@ -92,7 +89,7 @@ emittedValueToString emittedValue =
                     cssFunction "rgb" (List.map numberToString [ red, green, blue ])
 
                 RgbaColor red green blue alpha ->
-                    cssFunction "rgba" ((List.map numberToString [ red, green, blue ]) ++ [ numberToString alpha ])
+                    cssFunction "rgba" (List.map numberToString [ red, green, blue ] ++ [ numberToString alpha ])
 
                 HslColor hue saturation lightness ->
                     cssFunction "hsl"
@@ -138,7 +135,7 @@ cssFunction : String -> List String -> String
 cssFunction funcName args =
     funcName
         ++ "("
-        ++ (String.join ", " args)
+        ++ String.join ", " args
         ++ ")"
 
 
@@ -149,7 +146,7 @@ numberToString num =
 
 numericalPercentageToString : number -> String
 numericalPercentageToString value =
-    value |> (*) 100 |> numberToString |> (flip (++)) "%"
+    value |> (*) 100 |> numberToString |> flip (++) "%"
 
 
 calcOperationToSring : CalcOperation -> String
