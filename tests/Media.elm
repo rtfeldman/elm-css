@@ -215,7 +215,7 @@ testMedia =
                 }
             }
 
-            @media only screen and (max-width: 600px) {
+            @media only (screen and (max-width: 600px)) {
                 body {
                     margin: 3em;
                 }
@@ -225,13 +225,13 @@ testMedia =
                 margin: auto;
             }
 
-            @media only screen and color and (pointer: fine) and (scan: interlace) and grid {
+            @media only (screen and (color and ((pointer: fine) and ((scan: interlace) and grid)))) {
                 p {
                     color: #FF0000;
                 }
             }
 
-            @media not screen and color {
+            @media not (screen and color) {
                 p {
                     color: #000000;
                 }
@@ -307,7 +307,7 @@ testWithMedia =
                 color: #333333;
             }
 
-            @media only print or monochrome {
+            @media only (print or monochrome) {
                body {
                    color: #000000;
                }
@@ -327,7 +327,7 @@ testWithMedia =
                max-width: 800px;
             }
 
-            @media only screen and (max-width: 375px) or screen and (max-height: 667px) {
+            @media only ((screen and (max-width: 375px)) or (screen and (max-height: 667px))) {
                 .homepageContainer {
                     max-width: 300px;
                 }

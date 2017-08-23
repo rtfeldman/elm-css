@@ -110,12 +110,10 @@ mediaQueryToString mediaQuery =
             "speech"
 
         And first second ->
-            [ mediaQueryToString first, mediaQueryToString second ]
-                |> String.join " and "
+            "(" ++ mediaQueryToString first ++ " and " ++ mediaQueryToString second ++ ")"
 
         Or first second ->
-            [ mediaQueryToString first, mediaQueryToString second ]
-                |> String.join " or "
+            "(" ++ mediaQueryToString first ++ " or " ++ mediaQueryToString second ++ ")"
 
         Not mediaQuery ->
             let
