@@ -9,11 +9,6 @@ import Test exposing (Test, describe, test, todo)
 import TestUtil exposing (outdented, prettyPrint)
 
 
-noMediaQuery : Test
-noMediaQuery =
-    todo "if you give no media queries, no @media is emitted"
-
-
 mediaTypes : Test
 mediaTypes =
     describe "media types"
@@ -260,6 +255,32 @@ testMedia =
 
 type CssClasses
     = Container
+
+
+nots : Test
+nots =
+    describe "not"
+        [ test "two nots cancel each other out" <|
+            \_ ->
+                let
+                    input =
+                        stylesheet
+                            [ media (Media.not (Media.not (and screen print)))
+                                [ body [ margin (Css.em 5) ] ]
+                            ]
+
+                    output =
+                        """
+                        @media only (screen and print) {
+                            body {
+                                margin: 5em;
+                            }
+                        }
+                        """
+                in
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
 
 
 testWithMedia : Test
