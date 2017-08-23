@@ -10,6 +10,7 @@ module Css.Media
         , Interlace
         , Landscape
         , MediaQuery
+        , MediaType
         , OptionalPaged
         , P3
         , Paged
@@ -92,9 +93,9 @@ module Css.Media
 @docs Bits
 
 
-# Basics
+# Data Structures
 
-@docs MediaQuery, MediaQuery
+@docs MediaQuery, MediaType
 
 
 # Query constructors
@@ -171,6 +172,15 @@ returned by the `or` function.
 -}
 type alias MediaQuery =
     Structure.MediaQuery
+
+
+{-| A media type.
+
+<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types>
+
+-}
+type alias MediaType =
+    Structure.MediaType
 
 
 type alias Value compatible =

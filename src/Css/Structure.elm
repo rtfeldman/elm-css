@@ -77,11 +77,6 @@ type StyleBlock
     = StyleBlock Selector (List Selector) (List Property)
 
 
-{-| A media type. There are 7 possible combinations of these.
-
-<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types>
-
--}
 type MediaType
     = All
     | Print
