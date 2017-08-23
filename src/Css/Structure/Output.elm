@@ -71,13 +71,21 @@ prettyPrintDeclaration declaration =
                 query =
                     List.map mediaQueryToString mediaQueries
                         |> String.join ",\n"
+
+                prefix =
+                    if String.startsWith "not " query then
+                        ""
+                    else
+                        -- Always emit `only` when we don't have `not`,
+                        -- because without it, older browsers can
+                        -- break, and with it, they'll ignore this declaration. The only
+                        -- downside is emitting extra characters. (That said,
+                        -- `only` and `not` are mutually exclusive.)
+                        --
+                        -- https://stackoverflow.com/questions/8549529/what-is-the-difference-between-screen-and-only-screen-in-media-queries/14168210#14168210
+                        "only "
             in
-            -- Always emit `only` because without it, older browsers can
-            -- break, and with it, they'll ignore this declaration. The only
-            -- downside is emitting extra characters.
-            --
-            -- https://stackoverflow.com/questions/8549529/what-is-the-difference-between-screen-and-only-screen-in-media-queries/14168210#14168210
-            "@media only " ++ query ++ " {\n" ++ blocks ++ "\n}"
+            "@media " ++ prefix ++ query ++ " {\n" ++ blocks ++ "\n}"
 
         _ ->
             Debug.crash "not yet implemented :x"
