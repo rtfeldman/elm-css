@@ -162,7 +162,7 @@ testUnparameterizedFeature featureName component =
             "\n    p {\n        background-color: #FF0000;\n"
 
         expected =
-            "@media only (" ++ featureName ++ ") {" ++ expectedBody ++ "    }\n}"
+            "@media only " ++ featureName ++ " {" ++ expectedBody ++ "    }\n}"
     in
     test ("pretty prints the expected boolean output" ++ featureName ++ " media feature") <| \() -> Expect.equal expected actual
 
@@ -225,13 +225,13 @@ testMedia =
                 margin: auto;
             }
 
-            @media only screen and (color) and (pointer: fine) and (scan: interlace) and (grid) {
+            @media only screen and color and (pointer: fine) and (scan: interlace) and grid {
                 p {
                     color: #FF0000;
                 }
             }
 
-            @media not screen and (color) {
+            @media not screen and color {
                 p {
                     color: #000000;
                 }
@@ -307,7 +307,7 @@ testWithMedia =
                 color: #333333;
             }
 
-            @media only print or (monochrome) {
+            @media only print or monochrome {
                body {
                    color: #000000;
                }

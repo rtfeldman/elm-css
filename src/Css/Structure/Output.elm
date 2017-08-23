@@ -139,7 +139,7 @@ mediaFeatureToString mediaFeature =
             "(" ++ mediaFeature.key ++ ": " ++ value ++ ")"
 
         Nothing ->
-            "(" ++ mediaFeature.key ++ ")"
+            mediaFeature.key
 
 
 simpleSelectorSequenceToString : SimpleSelectorSequence -> String
