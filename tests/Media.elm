@@ -209,13 +209,13 @@ testMedia =
                 padding: 0;
             }
 
-            @media print {
+            @media only print {
                 body {
                     margin: 2em;
                 }
             }
 
-            @media screen and (max-width: 600px) {
+            @media only screen and (max-width: 600px) {
                 body {
                     margin: 3em;
                 }
@@ -225,8 +225,7 @@ testMedia =
                 margin: auto;
             }
 
-            @media screen and (color) and (pointer: fine) and (scan: interlace),
-            (grid) {
+            @media only screen and (color) and (pointer: fine) and (scan: interlace) and (grid) {
                 p {
                     color: #FF0000;
                 }
@@ -235,12 +234,6 @@ testMedia =
             @media not screen and (color) {
                 p {
                     color: #000000;
-                }
-            }
-
-            @media only speech and (any-pointer: fine) {
-                p {
-                    display: block;
                 }
             }
             """
@@ -314,8 +307,7 @@ testWithMedia =
                 color: #333333;
             }
 
-            @media print,
-            (monochrome) {
+            @media only print or (monochrome) {
                body {
                    color: #000000;
                }
@@ -325,7 +317,7 @@ testWithMedia =
                color: #FF0000;
             }
 
-            @media print {
+            @media only print {
                a {
                    text-decoration: none;
                }
@@ -335,8 +327,7 @@ testWithMedia =
                max-width: 800px;
             }
 
-            @media screen and (max-width: 375px),
-            screen and (max-height: 667px) {
+            @media only screen and (max-width: 375px) or screen and (max-height: 667px) {
                 .homepageContainer {
                     max-width: 300px;
                 }
@@ -362,8 +353,7 @@ testMediaQuery =
 
         output =
             """
-            @media tv,
-            screen and (scan: interlace) {
+            @media only tv, screen and (scan: interlace) {
                 body {
                     background-color: #FFFFFF;
                 }
@@ -396,7 +386,7 @@ testWithMediaQuery =
                 font-size: 12px;
             }
 
-            @media screen and (min-device-width: 600px),
+            @media only screen and (min-device-width: 600px),
             screen and (min-width: 600px) {
                 body {
                     font-size: 14px;
