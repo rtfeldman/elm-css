@@ -4,7 +4,7 @@ module Css.Preprocess exposing (..)
 the data structures found in this module.
 -}
 
-import Css.Structure as Structure exposing (concatMapLast, mapLast)
+import Css.Structure as Structure exposing (MediaQuery, concatMapLast, mapLast)
 
 
 stylesheet : List Snippet -> Stylesheet
@@ -26,7 +26,7 @@ type alias Property =
 
 type alias Stylesheet =
     { charset : Maybe String
-    , imports : List ( String, List Structure.MediaQuery )
+    , imports : List ( String, List MediaQuery )
     , namespaces : List ( String, String )
     , snippets : List Snippet
     }
@@ -37,7 +37,7 @@ type Style
     | ExtendSelector Structure.RepeatableSimpleSelector (List Style)
     | NestSnippet Structure.SelectorCombinator (List Snippet)
     | WithPseudoElement Structure.PseudoElement (List Style)
-    | WithMedia (List Structure.MediaQuery) (List Style)
+    | WithMedia (List MediaQuery) (List Style)
     | ApplyStyles (List Style)
 
 
@@ -47,7 +47,7 @@ type Snippet
 
 type SnippetDeclaration
     = StyleBlockDeclaration StyleBlock
-    | MediaRule (List Structure.MediaQuery) (List StyleBlock)
+    | MediaRule (List MediaQuery) (List StyleBlock)
     | SupportsRule String (List Snippet)
     | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
@@ -58,15 +58,11 @@ type SnippetDeclaration
     | FontFeatureValues (List ( String, List Property ))
 
 
-type MediaQuery
-    = MediaQuery (Maybe Structure.MediaQuery)
-
-
 type StyleBlock
     = StyleBlock Structure.Selector (List Structure.Selector) (List Style)
 
 
-toMediaRule : List Structure.MediaQuery -> Structure.Declaration -> Structure.Declaration
+toMediaRule : List MediaQuery -> Structure.Declaration -> Structure.Declaration
 toMediaRule mediaQueries declaration =
     case declaration of
         Structure.StyleBlockDeclaration structureStyleBlock ->
@@ -167,8 +163,3 @@ propertyToPair property =
                 property.value
     in
     ( property.key, value )
-
-
-unwrapMediaQuery : MediaQuery -> Maybe Structure.MediaQuery
-unwrapMediaQuery (MediaQuery maybeQuery) =
-    maybeQuery

@@ -1,35 +1,30 @@
 module Media exposing (..)
 
-import Compile
 import Css exposing (..)
 import Css.Elements exposing (a, body, button, p)
 import Css.Media as Media exposing (..)
 import Css.Namespace exposing (namespace)
 import Expect
-import Test exposing (..)
+import Test exposing (Test, describe, test, todo)
 import TestUtil exposing (outdented, prettyPrint)
 
 
-none =
+noMediaQuery : Test
+noMediaQuery =
     todo "if you give no media queries, no @media is emitted"
 
 
+mediaTypes : Test
 mediaTypes =
     describe "media types"
         [ testMediaType "all" Media.all
         , testMediaType "screen" screen
         , testMediaType "print" print
         , testMediaType "speech" speech
-        , testMediaType "aural" aural
-        , testMediaType "embossed" embossed
-        , testMediaType "braille" braille
-        , testMediaType "handheld" handheld
-        , testMediaType "tv" tv
-        , testMediaType "tty" tty
-        , testMediaType "projection" projection
         ]
 
 
+testMediaType : String -> MediaQuery -> Test
 testMediaType str component =
     let
         actual =
@@ -39,12 +34,13 @@ testMediaType str component =
             "\n    p {\n        background-color: #FF0000;\n"
 
         expected =
-            "@media " ++ str ++ " {" ++ expectedBody ++ "    }\n}"
+            "@media only " ++ str ++ " {" ++ expectedBody ++ "    }\n}"
     in
     describe (str ++ " media type")
         [ test "pretty prints the expected output" <| \() -> Expect.equal expected actual ]
 
 
+mediaFeatures : Test
 mediaFeatures =
     describe "media features"
         [ testFeature "min-width"
@@ -110,7 +106,7 @@ mediaFeatures =
             ]
         , testFeature "min-color"
             [ ( minColor (bits 8), "8" ) ]
-        , testBooleanFeature "color" Media.color
+        , testUnparameterizedFeature "color" Media.color
         , testFeature "max-color"
             [ ( maxColor (bits 24), "24" ) ]
         , testFeature "min-color-index"
@@ -121,7 +117,7 @@ mediaFeatures =
             [ ( maxColorIndex (int 16777216), "16777216" ) ]
         , testFeature "min-monochrome"
             [ ( minMonochrome (bits 1), "1" ) ]
-        , testBooleanFeature "monochrome" monochrome
+        , testUnparameterizedFeature "monochrome" monochrome
         , testFeature "max-monochrome"
             [ ( maxMonochrome (bits 4), "4" ) ]
         , testFeature "color-gamut"
@@ -155,14 +151,14 @@ mediaFeatures =
         ]
 
 
-testFeature : String -> List ( MediaQueryComponent, String ) -> Test
+testFeature : String -> List ( MediaQuery, String ) -> Test
 testFeature featureName modifierPairs =
     describe (featureName ++ " media feature")
         (List.indexedMap (expectFeatureWorks featureName) modifierPairs)
 
 
-testBooleanFeature : String -> MediaQueryComponent -> Test
-testBooleanFeature featureName component =
+testUnparameterizedFeature : String -> MediaQuery -> Test
+testUnparameterizedFeature featureName component =
     let
         actual =
             prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery component ])
@@ -171,12 +167,12 @@ testBooleanFeature featureName component =
             "\n    p {\n        background-color: #FF0000;\n"
 
         expected =
-            "@media (" ++ featureName ++ ") {" ++ expectedBody ++ "    }\n}"
+            "@media only (" ++ featureName ++ ") {" ++ expectedBody ++ "    }\n}"
     in
     test ("pretty prints the expected boolean output" ++ featureName ++ " media feature") <| \() -> Expect.equal expected actual
 
 
-expectFeatureWorks : String -> Int -> ( MediaQueryComponent, String ) -> Test
+expectFeatureWorks : String -> Int -> ( MediaQuery, String ) -> Test
 expectFeatureWorks featureName n ( component, expectedStr ) =
     let
         actual =
@@ -186,29 +182,30 @@ expectFeatureWorks featureName n ( component, expectedStr ) =
             "\n    p {\n        background-color: #FF0000;\n"
 
         expected =
-            "@media (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
+            "@media only (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
     in
     test ("pretty prints the expected feature output for:" ++ featureName ++ toString n) <| \() -> Expect.equal expected actual
 
 
-basicMediaQuery component =
-    media [ component ] [ p [ backgroundColor (hex "FF0000") ] ]
+basicMediaQuery : MediaQuery -> Snippet
+basicMediaQuery query =
+    media query [ p [ backgroundColor (hex "FF0000") ] ]
 
 
+testMedia : Test
 testMedia =
     let
         input =
             (stylesheet << namespace "homepage")
                 [ body [ padding zero ]
-                , media [ print ] [ body [ margin (Css.em 2) ] ]
-                , media [ screen, Media.maxWidth (px 600) ]
+                , media print [ body [ margin (Css.em 2) ] ]
+                , media (and screen (Media.maxWidth (px 600)))
                     [ body [ margin (Css.em 3) ] ]
                 , button [ margin auto ]
                 , media
-                    [ screen, Media.color, Media.pointer fine, scan interlace, or, grid ]
+                    (and screen (and Media.color (and (Media.pointer fine) (and (scan interlace) grid))))
                     [ p [ Css.color (hex "FF0000") ] ]
-                , media [ Media.not, screen, Media.color ] [ p [ Css.color (hex "000000") ] ]
-                , media [ Media.only, speech, anyPointer fine ] [ p [ display block ] ]
+                , media (Media.not (and screen Media.color)) [ p [ Css.color (hex "000000") ] ]
                 ]
 
         output =
@@ -273,7 +270,7 @@ testWithMedia =
                 [ button [ padding zero ]
                 , body
                     [ Css.color (hex "333333")
-                    , withMedia [ print, or, monochrome ] [ Css.color (hex "000000") ]
+                    , withMedia [ or print monochrome ] [ Css.color (hex "000000") ]
                     ]
                 , a
                     [ Css.color (hex "FF0000")
@@ -281,7 +278,7 @@ testWithMedia =
                     ]
                 , class Container
                     [ Css.maxWidth (px 800)
-                    , withMedia [ screen, Media.maxWidth (px 375), or, screen, Media.maxHeight (px 667) ]
+                    , withMedia [ or (and screen (Media.maxWidth (px 375))) (and screen (Media.maxHeight (px 667))) ]
                         [ Css.maxWidth (px 300) ]
                     ]
                 ]

@@ -147,7 +147,7 @@ module Css.Media
 -}
 
 import Css
-import Css.Preprocess as Preprocess exposing (Style, unwrapMediaQuery, unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 
 
@@ -170,7 +170,7 @@ returned by the `or` function.
 
 -}
 type alias MediaQuery =
-    Preprocess.MediaQuery
+    Structure.MediaQuery
 
 
 type alias Value compatible =
@@ -200,64 +200,52 @@ The above code translates into the following css.
 
 -}
 media :
-    List MediaQuery
+    MediaQuery
     -> List Css.Snippet
     -> Css.Snippet
-media mediaQueries snippets =
-    if List.isEmpty mediaQueries then
-        -- No media queries were provided; treat the style block as if
-        -- were ordinary and not inside a media query at all. In other
-        -- words, concat the snippets together and call it a day.
-        snippets
-            |> List.concatMap unwrapSnippet
-            |> Preprocess.Snippet
-    else
-        let
-            snippetDeclarations : List Preprocess.SnippetDeclaration
-            snippetDeclarations =
-                List.concatMap unwrapSnippet snippets
+media query snippets =
+    let
+        snippetDeclarations : List Preprocess.SnippetDeclaration
+        snippetDeclarations =
+            List.concatMap unwrapSnippet snippets
 
-            extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
-            extractStyleBlocks declarations =
-                case declarations of
-                    [] ->
-                        []
+        extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
+        extractStyleBlocks declarations =
+            case declarations of
+                [] ->
+                    []
 
-                    (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
-                        styleBlock :: extractStyleBlocks rest
+                (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
+                    styleBlock :: extractStyleBlocks rest
 
-                    first :: rest ->
-                        extractStyleBlocks rest
+                first :: rest ->
+                    extractStyleBlocks rest
 
-            mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
-            mediaRuleFromStyleBlocks =
-                Preprocess.MediaRule (List.filterMap unwrapMediaQuery mediaQueries)
-                    (extractStyleBlocks snippetDeclarations)
+        mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
+        mediaRuleFromStyleBlocks =
+            Preprocess.MediaRule [ query ]
+                (extractStyleBlocks snippetDeclarations)
 
-            nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
-            nestedMediaRules declarations =
-                case declarations of
-                    [] ->
-                        []
+        nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
+        nestedMediaRules declarations =
+            case declarations of
+                [] ->
+                    []
 
-                    (Preprocess.StyleBlockDeclaration _) :: rest ->
-                        -- These will already have been handled previously, with appropriate
-                        -- bundling, so don't create duplicates here.
-                        nestedMediaRules rest
+                (Preprocess.StyleBlockDeclaration _) :: rest ->
+                    -- These will already have been handled previously, with appropriate
+                    -- bundling, so don't create duplicates here.
+                    nestedMediaRules rest
 
-                    (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
-                        let
-                            allQueries =
-                                List.filterMap unwrapMediaQuery mediaQueries ++ nestedMediaQueries
-                        in
-                        -- nest the media queries
-                        Preprocess.MediaRule allQueries styleBlocks
-                            :: nestedMediaRules rest
+                (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
+                    -- nest the media queries
+                    Preprocess.MediaRule (query :: nestedMediaQueries) styleBlocks
+                        :: nestedMediaRules rest
 
-                    first :: rest ->
-                        first :: nestedMediaRules rest
-        in
-        Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
+                first :: rest ->
+                    first :: nestedMediaRules rest
+    in
+    Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
 
 
 {-| Manually specify a media query using a List of strings.
@@ -278,14 +266,7 @@ The above code translates into the following css.
 -}
 mediaQuery : List String -> List Css.Snippet -> Css.Snippet
 mediaQuery stringQueries snippets =
-    media (List.map toCustomQuery stringQueries) snippets
-
-
-toCustomQuery : String -> MediaQuery
-toCustomQuery stringQuery =
-    Structure.CustomQuery stringQuery
-        |> Just
-        |> Preprocess.MediaQuery
+    media (Structure.CustomQuery (String.join ", " stringQueries)) snippets
 
 
 {-| Combines media query components into media queries that are nested under selectors.
@@ -307,7 +288,7 @@ toCustomQuery stringQuery =
 -}
 withMedia : List MediaQuery -> List Css.Style -> Css.Style
 withMedia queries =
-    Preprocess.WithMedia (List.filterMap unwrapMediaQuery queries)
+    Preprocess.WithMedia queries
 
 
 {-| Manually specify a media query that is nested under an element or class
@@ -346,30 +327,20 @@ withMediaQuery queries =
 
 -}
 not : MediaQuery -> MediaQuery
-not mediaQuery =
-    case mediaQuery of
-        Preprocess.MediaQuery Nothing ->
-            mediaQuery
-
-        Preprocess.MediaQuery (Just query) ->
-            Not query
-                |> Just
-                |> Preprocess.MediaQuery
+not =
+    Not
 
 
 {-| Combine media queries, where matching either query should apply the following CSS properties.
 
-    media [ and [ screen, print ] ] [ ... ]
+    media (and screen print) [ ... ]
 
 The rule above will apply to both screens and printers.
 
 -}
-and : List MediaQuery -> MediaQuery
-and queries =
-    queries
-        |> List.filterMap unwrapMediaQuery
-        |> connectWith Structure.And
-        |> Preprocess.MediaQuery
+and : MediaQuery -> MediaQuery -> MediaQuery
+and =
+    Structure.And
 
 
 {-| Combine media queries, where matching either query should apply the following CSS properties.
@@ -379,12 +350,9 @@ and queries =
 The rule above will apply to either screens or printers.
 
 -}
-or : List MediaQuery -> MediaQuery
-or queries =
-    queries
-        |> List.filterMap unwrapMediaQuery
-        |> connectWith Structure.Or
-        |> Preprocess.MediaQuery
+or : MediaQuery -> MediaQuery -> MediaQuery
+or =
+    Structure.Or
 
 
 connectWith :
@@ -413,7 +381,7 @@ connectWith connect queries =
 -}
 all : MediaQuery
 all =
-    fromMediaType Structure.All
+    TypeQuery Structure.All
 
 
 {-| Media type for printers
@@ -423,14 +391,7 @@ all =
 -}
 print : MediaQuery
 print =
-    fromMediaType Structure.Print
-
-
-fromMediaType : Structure.MediaType -> MediaQuery
-fromMediaType mediaType =
-    TypeQuery mediaType
-        |> Just
-        |> Preprocess.MediaQuery
+    TypeQuery Structure.Print
 
 
 {-| Media type for any device not matched by print or speech.
@@ -440,7 +401,7 @@ fromMediaType mediaType =
 -}
 screen : MediaQuery
 screen =
-    fromMediaType Structure.Screen
+    TypeQuery Structure.Screen
 
 
 {-| Media type for screenreaders and similar devices that read out a page
@@ -450,7 +411,7 @@ screen =
 -}
 speech : MediaQuery
 speech =
-    fromMediaType Structure.Speech
+    TypeQuery Structure.Speech
 
 
 
@@ -1119,12 +1080,8 @@ scripting value =
 feature : String -> Value a -> MediaQuery
 feature key { value } =
     Structure.FeatureQuery { key = key, value = Just value }
-        |> Just
-        |> Preprocess.MediaQuery
 
 
 unparameterizedFeature : String -> MediaQuery
 unparameterizedFeature key =
     Structure.FeatureQuery { key = key, value = Nothing }
-        |> Just
-        |> Preprocess.MediaQuery

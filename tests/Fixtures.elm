@@ -37,7 +37,7 @@ atRule : Stylesheet
 atRule =
     (stylesheet << namespace "homepage")
         [ body [ padding zero ]
-        , media [ print ] [ body [ margin (Css.em 2) ] ]
+        , media print [ body [ margin (Css.em 2) ] ]
         , mediaQuery [ "screen and ( max-width: 600px )" ]
             [ body [ margin (Css.em 3) ] ]
         , button [ margin auto ]
