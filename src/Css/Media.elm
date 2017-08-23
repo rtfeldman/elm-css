@@ -194,14 +194,14 @@ type alias Value compatible =
 {-| Combines media query components into media queries.
 
     (stylesheet << namespace "homepage")
-        [  media [ screen, Media.minWidth (px 300), Media.maxWidth (px 800) ]
+        [  media (and screen (Media.minWidth (px 300))
                [ footer [ Css.maxWidth (px 300) ] ]
         ]
 
 The above code translates into the following css.
 
 ```css
-@media screen and (min-width: 300px) and (max-width: 800px) {
+@media screen and (min-width: 300px) {
     footer {
         max-width: 300px;
     }
@@ -333,7 +333,7 @@ withMediaQuery queries =
 
 {-| Media modifier to negate a query
 
-    media [ not, screen, color ] [ body [ Css.color (hex "000000") ] ]
+    media (not screen) [ body [ Css.color (hex "000000") ] ]
 
 -}
 not : MediaQuery -> MediaQuery
@@ -355,7 +355,7 @@ and =
 
 {-| Combine media queries, where matching either query should apply the following CSS properties.
 
-    media [ or [ screen, print ] ] [ ... ]
+    media (or screen print) [ ... ]
 
 The rule above will apply to either screens or printers.
 
@@ -396,7 +396,7 @@ all =
 
 {-| Media type for printers
 
-    media [ print ] [ a [ color (hex 000000), textDecoration none ] ]
+    media print [ a [ color (hex 000000), textDecoration none ] ]
 
 -}
 print : MediaQuery
@@ -406,7 +406,7 @@ print =
 
 {-| Media type for any device not matched by print or speech.
 
-    media [ screen, maxWidth (px 600) ] [ (.) MobileNav display none ]
+    media (and screen (maxWidth (px 600)) [ Css.class mobileNav display none ]
 
 -}
 screen : MediaQuery
@@ -416,7 +416,7 @@ screen =
 
 {-| Media type for screenreaders and similar devices that read out a page
 
-    media [ not, speech ] [ (.) SROnly [ display none ] ]
+    media (not speech) [ Css.class screenReaderOnly [ display none ] ]
 
 -}
 speech : MediaQuery
@@ -438,7 +438,7 @@ type alias AbsoluteLength compatible =
 {-| Media feature [`min-width`](https://drafts.csswg.org/mediaqueries/#width)
 Queries the width of the output device.
 
-    media [ Media.minWidth (px 600) ] [ (.) Container [ Css.maxWidth (px 500) ] ]
+    media (Media.minWidth (px 600)) [ Css.class Container [ Css.maxWidth (px 500) ] ]
 
 -}
 minWidth : AbsoluteLength compatible -> MediaQuery
@@ -448,7 +448,7 @@ minWidth value =
 
 {-| Media feature [`width`](https://drafts.csswg.org/mediaqueries/#width)
 
-    media [ Media.width (px 200) ] [ ... ]
+    media (Media.width (px 200)) [ ... ]
 
 -}
 width : AbsoluteLength compatible -> MediaQuery
@@ -458,7 +458,7 @@ width value =
 
 {-| Media feature [`max-width`](https://drafts.csswg.org/mediaqueries/#width)
 
-    media [ Media.maxWidth (px 800) ] [ (.) MobileNav [ display none] ]
+    media (Media.maxWidth (px 800)) [ Css.class MobileNav [ display none] ]
 
 -}
 maxWidth : AbsoluteLength compatible -> MediaQuery
@@ -468,7 +468,7 @@ maxWidth value =
 
 {-| Media feature [`min-height`](https://drafts.csswg.org/mediaqueries/#height)
 
-    media [ Media.minHeight(px 400) ] [ (.) TopBanner [ display block] ]
+    media (Media.minHeight(px 400)) [ Css.class TopBanner [ display block] ]
 
 -}
 minHeight : AbsoluteLength compatible -> MediaQuery
@@ -485,7 +485,7 @@ height value =
 
 {-| Media feature [`max-height`](https://drafts.csswg.org/mediaqueries/#height)
 
-    media [ Media.maxHeight(px 399) ] [ (.) TopBanner [ display none] ]
+    media (Media.maxHeight(px 399)) [ Css.class TopBanner [ display none] ]
 
 -}
 maxHeight : AbsoluteLength compatible -> MediaQuery
@@ -511,7 +511,7 @@ ratio numerator denominator =
 
 {-| Media feature [`min-aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
 
-    media [ minAspectRatio (ratio 1 1) ] [ ... ]
+    media (minAspectRatio (ratio 1 1)) [ ... ]
 
 -}
 minAspectRatio : Ratio -> MediaQuery
@@ -521,7 +521,7 @@ minAspectRatio value =
 
 {-| Media feature [`aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
 
-    media [ aspectRatio (ratio 16 10) ] [ ... ]
+    media (aspectRatio (ratio 16 10)) [ ... ]
 
 -}
 aspectRatio : Ratio -> MediaQuery
@@ -531,7 +531,7 @@ aspectRatio value =
 
 {-| Media feature [`max-aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
 
-    media [ maxAspectRatio (ratio 16 9) ] [ ... ]
+    media (maxAspectRatio (ratio 16 9)) [ ... ]
 
 -}
 maxAspectRatio : Ratio -> MediaQuery
@@ -618,7 +618,7 @@ dppx value =
 {-| Media feature [`min-resolution`](https://drafts.csswg.org/mediaqueries/#resolution).
 Describes the resolution of the output device.
 
-    media [ minResolution (dpi 600) ] [ (.) HiResImg [ display block ] ]
+    media (minResolution (dpi 600)) [ Css.class HiResImg [ display block ] ]
 
 -}
 minResolution : Resolution -> MediaQuery
@@ -629,7 +629,7 @@ minResolution value =
 {-| Media feature [`resolution`](https://drafts.csswg.org/mediaqueries/#resolution)
 Describes the resolution of the output device.
 
-    media [ resolution (dppx 2) ] [ img [ width (pct 50) ] ]
+    media (resolution (dppx 2)) [ img [ width (pct 50) ] ]
 
 -}
 resolution : Resolution -> MediaQuery
@@ -640,7 +640,7 @@ resolution value =
 {-| Media feature [`max-resolution`](https://drafts.csswg.org/mediaqueries/#resolution)
 Describes the resolution of the output device.
 
-    media [ maxResolution (dpcm 65) ] [ (.) HiResImg [ display none ] ]
+    media (maxResolution (dpcm 65)) [ Css.class HiResImg [ display none ] ]
 
 -}
 maxResolution : Resolution -> MediaQuery
@@ -798,7 +798,7 @@ bits value =
 {-| Media Feature [`min-nncolor`](https://drafts.csswg.org/mediaqueries/#color)
 Queries the user agent's bits per color channel
 
-    media [ screen, minColor (bits 256) ] [ a [ Css.color (hex "D9534F") ] ]
+    media (screen (minColor (bits 256))) [ a [ Css.color (hex "D9534F") ] ]
 
 -}
 minColor : Bits -> MediaQuery
@@ -808,7 +808,7 @@ minColor value =
 
 {-| Media feature [`color`](https://drafts.csswg.org/mediaqueries/#color)
 
-    media [ not, color ] [ body [Css.color (hex "000000")] ]
+    media (not color) [ body [Css.color (hex "000000")] ]
 
 -}
 color : MediaQuery
@@ -819,7 +819,7 @@ color =
 {-| Media feature [`max-color`](https://drafts.csswg.org/mediaqueries/#color)
 Queries the user agent's bits per color channel
 
-    media [ screen, maxColor (bits 8) ] [ a [ Css.color (hex "FF0000") ] ]
+    media (and screen (maxColor (bits 8))) [ a [ Css.color (hex "FF0000") ] ]
 
 -}
 maxColor : Bits -> MediaQuery
@@ -854,7 +854,7 @@ maxMonochrome value =
 {-| Media feature [`color-index`](https://drafts.csswg.org/mediaqueries/#color-index)
 Queries the number of colors in the user agent's color lookup table.
 
-    media [ screen, colorIndex (int 16777216) ] [ a [ Css.color (hex "D9534F") ] ]
+    media (and screen (colorIndex (int 16777216))) [ a [ Css.color (hex "D9534F") ] ]
 
 -}
 colorIndex : Number a -> MediaQuery
@@ -865,7 +865,7 @@ colorIndex value =
 {-| Media Feature [`min-color-index`](https://drafts.csswg.org/mediaqueries/nn#color-index)
 Queries the number of colors in the user agent's color lookup table.
 
-    media [screen, minColorIndex (int 16777216)] [ a [ Css.color (hex "D9534F")] ]
+    media (and screen (minColorIndex (int 16777216))) [ a [ Css.color (hex "D9534F")] ]
 
 -}
 minColorIndex : Number a -> MediaQuery
@@ -876,7 +876,7 @@ minColorIndex value =
 {-| Media feature [`max-color-index`](https://drafts.csswg.org/mediaqueries/#color-index).
 Queries the number of colors in the user agent's color lookup table.
 
-    media [screen, maxColorIndex (int 256)] [ a [ Css.color (hex "FF0000")] ]
+    media (and screen (maxColorIndex (int 256))) [ a [ Css.color (hex "FF0000")] ]
 
 -}
 maxColorIndex : Number a -> MediaQuery
@@ -927,7 +927,7 @@ rec2020 =
 {-| Media feature [`color-gamut`](https://drafts.csswg.org/mediaqueries/#color-gamut).
 Describes the approximate range of colors supported by the user agent and device.
 
-    media [screen, colorGamut rec2020] [ (.) HiColorImg [ display block ] ]
+    media (and screen (colorGamut rec2020)) [ Css.class HiColorImg [ display block ] ]
 
 -}
 colorGamut : ColorGamut a -> MediaQuery
@@ -975,7 +975,7 @@ Queries the presence and accuracy of a pointing device, such as a mouse, touchsc
 Reflects the capabilities of the primary input mechanism.
 Accepts `none`, `fine`, and `coarse`.
 
-    media [ Media.pointer coarse ] [ a [ display block, Css.height (px 24) ] ]
+    media (Media.pointer coarse) [ a [ display block, Css.height (px 24) ] ]
 
 -}
 pointer : PointerDevice a -> MediaQuery
@@ -988,7 +988,7 @@ Queries the presence and accuracy of a pointing device, such as a mouse, touchsc
 Reflects the capabilities of the most capable input mechanism.
 Accepts `none`, `fine`, and `coarse`.
 
-    media [ anyPointer coarse ] [ a [ display block, Css.height (px 24) ] ]
+    media (anyPointer coarse) [ a [ display block, Css.height (px 24) ] ]
 
 -}
 anyPointer : PointerDevice a -> MediaQuery
@@ -1018,7 +1018,7 @@ canHover =
 Queries the if the user agent's primary input mechanism has the ability to hover over elements.
 Accepts `none` or `canHover`.
 
-    media [ Media.hover canHover ] [ a [ Css.hover [ textDecoration underline] ] ]
+    media (Media.hover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
 hover : HoverCapability a -> MediaQuery
@@ -1030,7 +1030,7 @@ hover value =
 Queries the if any of user agent's input mechanisms have the ability to hover over elements
 Accepts `none` or `canHover`.
 
-    media [ anyHover canHover ] [ a [ Css.hover [ textDecoration underline] ] ]
+    media (anyHover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
 anyHover : HoverCapability a -> MediaQuery
@@ -1075,7 +1075,7 @@ enabled =
 for querying the user agents support for scripting languages like JavaScript.
 Accepts `none`, `initialOnly`, and `enabled`.
 
-    media [scripting none] [ (.) NoScript [ display block ] ]
+    media (scripting none) [ Css.class NoScript [ display block ] ]
 
 -}
 scripting : ScriptingSupport a -> MediaQuery
