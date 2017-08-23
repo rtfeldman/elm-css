@@ -72,20 +72,26 @@ prettyPrintDeclaration declaration =
                     List.map mediaQueryToString mediaQueries
                         |> String.join ",\n"
 
-                prefix =
+                finalQuery =
                     if String.startsWith "not " query then
-                        ""
+                        -- Media queries can start with `only` or they can start
+                        -- with `not`, but they can't start with both.
+                        -- See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#Pseudo-BNF
+                        query
                     else
                         -- Always emit `only` when we don't have `not`,
-                        -- because without it, older browsers can
-                        -- break, and with it, they'll ignore this declaration. The only
-                        -- downside is emitting extra characters. (That said,
-                        -- `only` and `not` are mutually exclusive.)
+                        -- because without `only`, older browsers can
+                        -- break, and with `only`, they'll ignore this declaration
+                        -- instead of breaking.
+                        --
+                        -- The one downside is emitting extra characters, but if
+                        -- every @media is followed by either `not` or `only`,
+                        -- they will gzip very well.
                         --
                         -- https://stackoverflow.com/questions/8549529/what-is-the-difference-between-screen-and-only-screen-in-media-queries/14168210#14168210
-                        "only "
+                        "only " ++ query
             in
-            "@media " ++ prefix ++ query ++ " {\n" ++ blocks ++ "\n}"
+            "@media " ++ finalQuery ++ " {\n" ++ blocks ++ "\n}"
 
         _ ->
             Debug.crash "not yet implemented :x"
