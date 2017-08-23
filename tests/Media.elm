@@ -10,6 +10,10 @@ import Test exposing (..)
 import TestUtil exposing (outdented, prettyPrint)
 
 
+none =
+    todo "if you give no media queries, no @media is emitted"
+
+
 mediaTypes =
     describe "media types"
         [ testMediaType "all" Media.all

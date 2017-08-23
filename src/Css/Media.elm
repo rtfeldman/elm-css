@@ -10,7 +10,6 @@ module Css.Media
         , Interlace
         , Landscape
         , MediaQuery
-        , MediaQueryComponent
         , OptionalPaged
         , P3
         , Paged
@@ -22,12 +21,11 @@ module Css.Media
         , SRGB
         , Slow
         , all
+        , and
         , anyHover
         , anyPointer
         , aspectRatio
-        , aural
         , bits
-        , braille
         , canHover
         , coarse
         , color
@@ -36,12 +34,10 @@ module Css.Media
         , dpcm
         , dpi
         , dppx
-        , embossed
         , enabled
         , fast
         , fine
         , grid
-        , handheld
         , height
         , hover
         , initialOnly
@@ -65,7 +61,6 @@ module Css.Media
         , minWidth
         , monochrome
         , not
-        , only
         , optionalPaged
         , or
         , orientation
@@ -77,7 +72,6 @@ module Css.Media
         , portrait
         , print
         , progressive
-        , projection
         , ratio
         , rec2020
         , resolution
@@ -87,8 +81,6 @@ module Css.Media
         , slow
         , speech
         , srgb
-        , tty
-        , tv
         , update
         , width
         , withMedia
@@ -102,7 +94,7 @@ module Css.Media
 
 # Basics
 
-@docs MediaQueryComponent, MediaQuery
+@docs MediaQuery, MediaQuery
 
 
 # Query constructors
@@ -112,13 +104,12 @@ module Css.Media
 
 # Query composition
 
-@docs only, not, or
+@docs not, or, and
 
 
 # Media Types
 
-@docs all, screen, print, speech, aural, braille, embossed, tv, tty
-@docs handheld, projection
+@docs all, screen, print, speech
 
 
 # Viewport, Page Dimensions Media Features
@@ -156,16 +147,8 @@ module Css.Media
 -}
 
 import Css
-import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Style, unwrapMediaQuery, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
-
-
-{-| The basic unit of a media query. Includes all media modifiers,
-media types, media features, and the `or` separator.
-Components are put together in lists, which are given to the media function.
--}
-type alias MediaQueryComponent =
-    Structure.MediaQueryComponent
 
 
 {-| One query of a media rule. A media rule can have multiple queries.
@@ -182,12 +165,12 @@ The CSS below contains 1 rule, with 2 queries.
 The above rule roughly translates as:
 _If the device is a printer or is a monoschrome screen, the body color is black._
 
-In elm-css, queries are joined into rules using a special `MediaQueryComponent`
+In elm-css, queries are joined into rules using a special `MediaQuery`
 returned by the `or` function.
 
 -}
 type alias MediaQuery =
-    Structure.MediaQuery
+    Preprocess.MediaQuery
 
 
 type alias Value compatible =
@@ -216,14 +199,70 @@ The above code translates into the following css.
 ```
 
 -}
-media : List MediaQueryComponent -> List Css.Snippet -> Css.Snippet
-media components snippets =
-    mediaQuery (componentsToStringQueries components) snippets
+media :
+    List MediaQuery
+    -> List Css.Snippet
+    -> Css.Snippet
+media mediaQueries snippets =
+    if List.isEmpty mediaQueries then
+        -- No media queries were provided; treat the style block as if
+        -- were ordinary and not inside a media query at all. In other
+        -- words, concat the snippets together and call it a day.
+        snippets
+            |> List.concatMap unwrapSnippet
+            |> Preprocess.Snippet
+    else
+        let
+            snippetDeclarations : List Preprocess.SnippetDeclaration
+            snippetDeclarations =
+                List.concatMap unwrapSnippet snippets
+
+            extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
+            extractStyleBlocks declarations =
+                case declarations of
+                    [] ->
+                        []
+
+                    (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
+                        styleBlock :: extractStyleBlocks rest
+
+                    first :: rest ->
+                        extractStyleBlocks rest
+
+            mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
+            mediaRuleFromStyleBlocks =
+                Preprocess.MediaRule (List.filterMap unwrapMediaQuery mediaQueries)
+                    (extractStyleBlocks snippetDeclarations)
+
+            nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
+            nestedMediaRules declarations =
+                case declarations of
+                    [] ->
+                        []
+
+                    (Preprocess.StyleBlockDeclaration _) :: rest ->
+                        -- These will already have been handled previously, with appropriate
+                        -- bundling, so don't create duplicates here.
+                        nestedMediaRules rest
+
+                    (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
+                        let
+                            allQueries =
+                                List.filterMap unwrapMediaQuery mediaQueries ++ nestedMediaQueries
+                        in
+                        -- nest the media queries
+                        Preprocess.MediaRule allQueries styleBlocks
+                            :: nestedMediaRules rest
+
+                    first :: rest ->
+                        first :: nestedMediaRules rest
+        in
+        Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
 
 
 {-| Manually specify a media query using a List of strings.
 
-    mediaQuery ["screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
+    mediaQuery [ "screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
         [ body [ fontSize (px 14)] ]
 
 The above code translates into the following css.
@@ -239,58 +278,21 @@ The above code translates into the following css.
 -}
 mediaQuery : List String -> List Css.Snippet -> Css.Snippet
 mediaQuery stringQueries snippets =
-    let
-        mediaQueries =
-            List.map (\q -> Structure.MediaQuery q) stringQueries
+    media (List.map toCustomQuery stringQueries) snippets
 
-        snippetDeclarations : List Preprocess.SnippetDeclaration
-        snippetDeclarations =
-            List.concatMap unwrapSnippet snippets
 
-        extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
-        extractStyleBlocks declarations =
-            case declarations of
-                [] ->
-                    []
-
-                (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
-                    styleBlock :: extractStyleBlocks rest
-
-                first :: rest ->
-                    extractStyleBlocks rest
-
-        mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
-        mediaRuleFromStyleBlocks =
-            Preprocess.MediaRule mediaQueries
-                (extractStyleBlocks snippetDeclarations)
-
-        nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
-        nestedMediaRules declarations =
-            case declarations of
-                [] ->
-                    []
-
-                (Preprocess.StyleBlockDeclaration _) :: rest ->
-                    -- These will already have been handled previously, with appropriate
-                    -- bundling, so don't create duplicates here.
-                    nestedMediaRules rest
-
-                (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
-                    -- nest the media queries
-                    Preprocess.MediaRule (mediaQueries ++ nestedMediaQueries) styleBlocks
-                        :: nestedMediaRules rest
-
-                first :: rest ->
-                    first :: nestedMediaRules rest
-    in
-    Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
+toCustomQuery : String -> MediaQuery
+toCustomQuery stringQuery =
+    Structure.CustomQuery stringQuery
+        |> Just
+        |> Preprocess.MediaQuery
 
 
 {-| Combines media query components into media queries that are nested under selectors.
 
     (stylesheet << namespace "homepage")
         [ footer
-            [ widthmedia [ screen, Media.minWidth (px 300), Media.maxWidth (px 800) ]
+            [ withMedia [ screen, Media.minWidth (px 300), Media.maxWidth (px 800) ]
                 [ Css.maxWidth (px 300) ]
         ]
 
@@ -303,19 +305,16 @@ mediaQuery stringQueries snippets =
 ```
 
 -}
-withMedia : List MediaQueryComponent -> List Css.Style -> Css.Style
-withMedia components =
-    components
-        |> componentsToStringQueries
-        |> List.map (\q -> Structure.MediaQuery q)
-        |> Preprocess.WithMedia
+withMedia : List MediaQuery -> List Css.Style -> Css.Style
+withMedia queries =
+    Preprocess.WithMedia (List.filterMap unwrapMediaQuery queries)
 
 
 {-| Manually specify a media query that is nested under an element or class
 using a List of strings.
 
     body
-      [ mediaQuery ["screen and (min-width: 320px)", "screen and (max-height: 400px)"
+      [ withMediaQuery [ "screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
           [ fontSize (px 14px) ]
       ]
 
@@ -333,7 +332,7 @@ The above code translates into the following css.
 withMediaQuery : List String -> List Css.Style -> Css.Style
 withMediaQuery queries =
     queries
-        |> List.map (\q -> Structure.MediaQuery q)
+        |> List.map Structure.CustomQuery
         |> Preprocess.WithMedia
 
 
@@ -341,36 +340,69 @@ withMediaQuery queries =
 {--Query Composition--}
 
 
-{-| Media modifier to force old browsers to ignore a media query they won't understand.
-
-    media [ only, screen, minResolution (dppx 2) ] [ ... ]
-
--}
-only : MediaQueryComponent
-only =
-    PrependMediaModifier (MediaModifier "only")
-
-
 {-| Media modifier to negate a query
 
     media [ not, screen, color ] [ body [ Css.color (hex "000000") ] ]
 
 -}
-not : MediaQueryComponent
-not =
-    PrependMediaModifier (MediaModifier "not")
+not : MediaQuery -> MediaQuery
+not mediaQuery =
+    case mediaQuery of
+        Preprocess.MediaQuery Nothing ->
+            mediaQuery
+
+        Preprocess.MediaQuery (Just query) ->
+            Not query
+                |> Just
+                |> Preprocess.MediaQuery
 
 
 {-| Combine media queries, where matching either query should apply the following CSS properties.
 
-    media [ screen, or, print ] [ ... ]
+    media [ and [ screen, print ] ] [ ... ]
+
+The rule above will apply to both screens and printers.
+
+-}
+and : List MediaQuery -> MediaQuery
+and queries =
+    queries
+        |> List.filterMap unwrapMediaQuery
+        |> connectWith Structure.And
+        |> Preprocess.MediaQuery
+
+
+{-| Combine media queries, where matching either query should apply the following CSS properties.
+
+    media [ or [ screen, print ] ] [ ... ]
 
 The rule above will apply to either screens or printers.
 
 -}
-or : MediaQueryComponent
-or =
-    AppendOrSeparator MediaOrSeparator
+or : List MediaQuery -> MediaQuery
+or queries =
+    queries
+        |> List.filterMap unwrapMediaQuery
+        |> connectWith Structure.Or
+        |> Preprocess.MediaQuery
+
+
+connectWith :
+    (Structure.MediaQuery -> Structure.MediaQuery -> Structure.MediaQuery)
+    -> List Structure.MediaQuery
+    -> Maybe Structure.MediaQuery
+connectWith connect queries =
+    case queries of
+        [] ->
+            Nothing
+
+        first :: rest ->
+            case connectWith connect rest of
+                Nothing ->
+                    Just first
+
+                Just second ->
+                    Just (connect first second)
 
 
 
@@ -379,9 +411,9 @@ or =
 
 {-| Media type for all devices. This is assumed by default if no other media type is specified.
 -}
-all : MediaQueryComponent
+all : MediaQuery
 all =
-    Structure.AppendMediaType (Structure.MediaType "all")
+    fromMediaType Structure.All
 
 
 {-| Media type for printers
@@ -389,9 +421,16 @@ all =
     media [ print ] [ a [ color (hex 000000), textDecoration none ] ]
 
 -}
-print : MediaQueryComponent
+print : MediaQuery
 print =
-    Structure.AppendMediaType (Structure.MediaType "print")
+    fromMediaType Structure.Print
+
+
+fromMediaType : Structure.MediaType -> MediaQuery
+fromMediaType mediaType =
+    TypeQuery mediaType
+        |> Just
+        |> Preprocess.MediaQuery
 
 
 {-| Media type for any device not matched by print or speech.
@@ -399,9 +438,9 @@ print =
     media [ screen, maxWidth (px 600) ] [ (.) MobileNav display none ]
 
 -}
-screen : MediaQueryComponent
+screen : MediaQuery
 screen =
-    Structure.AppendMediaType (Structure.MediaType "screen")
+    fromMediaType Structure.Screen
 
 
 {-| Media type for screenreaders and similar devices that read out a page
@@ -409,58 +448,9 @@ screen =
     media [ not, speech ] [ (.) SROnly [ display none ] ]
 
 -}
-speech : MediaQueryComponent
+speech : MediaQuery
 speech =
-    Structure.AppendMediaType (Structure.MediaType "speech")
-
-
-{-| Media type aural devices. Will be deprecated in CSS 4 Media queries.
--}
-aural : MediaQueryComponent
-aural =
-    Structure.AppendMediaType (Structure.MediaType "aural")
-
-
-{-| Media type for TTY devices (text terminals). Will be deprecated in CSS 4 Media queries.
--}
-tty : MediaQueryComponent
-tty =
-    Structure.AppendMediaType (Structure.MediaType "tty")
-
-
-{-| Media type for televisions. Will be deprecated in CSS 4 Media queries.
--}
-tv : MediaQueryComponent
-tv =
-    Structure.AppendMediaType (Structure.MediaType "tv")
-
-
-{-| Media type for projectors. Will be deprecated in CSS 4 Media queries.
--}
-projection : MediaQueryComponent
-projection =
-    Structure.AppendMediaType (Structure.MediaType "projection")
-
-
-{-| Media type for paged braille readers. Will be deprecated in CSS 4 Media queries.
--}
-embossed : MediaQueryComponent
-embossed =
-    Structure.AppendMediaType (Structure.MediaType "embossed")
-
-
-{-| Media type braille devices. Will be deprecated in CSS 4 Media queries.
--}
-braille : MediaQueryComponent
-braille =
-    Structure.AppendMediaType (Structure.MediaType "braille")
-
-
-{-| Media type handheld devices. Will be deprecated in CSS 4 Media queries.
--}
-handheld : MediaQueryComponent
-handheld =
-    Structure.AppendMediaType (Structure.MediaType "handheld")
+    fromMediaType Structure.Speech
 
 
 
@@ -480,7 +470,7 @@ Queries the width of the output device.
     media [ Media.minWidth (px 600) ] [ (.) Container [ Css.maxWidth (px 500) ] ]
 
 -}
-minWidth : AbsoluteLength compatible -> MediaQueryComponent
+minWidth : AbsoluteLength compatible -> MediaQuery
 minWidth value =
     feature "min-width" value
 
@@ -490,7 +480,7 @@ minWidth value =
     media [ Media.width (px 200) ] [ ... ]
 
 -}
-width : AbsoluteLength compatible -> MediaQueryComponent
+width : AbsoluteLength compatible -> MediaQuery
 width value =
     feature "width" value
 
@@ -500,7 +490,7 @@ width value =
     media [ Media.maxWidth (px 800) ] [ (.) MobileNav [ display none] ]
 
 -}
-maxWidth : AbsoluteLength compatible -> MediaQueryComponent
+maxWidth : AbsoluteLength compatible -> MediaQuery
 maxWidth value =
     feature "max-width" value
 
@@ -510,14 +500,14 @@ maxWidth value =
     media [ Media.minHeight(px 400) ] [ (.) TopBanner [ display block] ]
 
 -}
-minHeight : AbsoluteLength compatible -> MediaQueryComponent
+minHeight : AbsoluteLength compatible -> MediaQuery
 minHeight value =
     feature "min-height" value
 
 
 {-| Media feature [`height`](https://drafts.csswg.org/mediaqueries/#height)
 -}
-height : AbsoluteLength compatible -> MediaQueryComponent
+height : AbsoluteLength compatible -> MediaQuery
 height value =
     feature "height" value
 
@@ -527,7 +517,7 @@ height value =
     media [ Media.maxHeight(px 399) ] [ (.) TopBanner [ display none] ]
 
 -}
-maxHeight : AbsoluteLength compatible -> MediaQueryComponent
+maxHeight : AbsoluteLength compatible -> MediaQuery
 maxHeight value =
     feature "max-height" value
 
@@ -553,7 +543,7 @@ ratio numerator denominator =
     media [ minAspectRatio (ratio 1 1) ] [ ... ]
 
 -}
-minAspectRatio : Ratio -> MediaQueryComponent
+minAspectRatio : Ratio -> MediaQuery
 minAspectRatio value =
     feature "min-aspect-ratio" value
 
@@ -563,7 +553,7 @@ minAspectRatio value =
     media [ aspectRatio (ratio 16 10) ] [ ... ]
 
 -}
-aspectRatio : Ratio -> MediaQueryComponent
+aspectRatio : Ratio -> MediaQuery
 aspectRatio value =
     feature "aspect-ratio" value
 
@@ -573,7 +563,7 @@ aspectRatio value =
     media [ maxAspectRatio (ratio 16 9) ] [ ... ]
 
 -}
-maxAspectRatio : Ratio -> MediaQueryComponent
+maxAspectRatio : Ratio -> MediaQuery
 maxAspectRatio value =
     feature "max-aspect-ratio" value
 
@@ -609,7 +599,7 @@ portrait =
 {-| Media feature [`orientation`](https://drafts.csswg.org/mediaqueries/#orientation).
 Accepts `portrait` or `landscape`.
 -}
-orientation : Orientation a -> MediaQueryComponent
+orientation : Orientation a -> MediaQuery
 orientation value =
     feature "orientation" value
 
@@ -660,7 +650,7 @@ Describes the resolution of the output device.
     media [ minResolution (dpi 600) ] [ (.) HiResImg [ display block ] ]
 
 -}
-minResolution : Resolution -> MediaQueryComponent
+minResolution : Resolution -> MediaQuery
 minResolution value =
     feature "min-resolution" value
 
@@ -671,7 +661,7 @@ Describes the resolution of the output device.
     media [ resolution (dppx 2) ] [ img [ width (pct 50) ] ]
 
 -}
-resolution : Resolution -> MediaQueryComponent
+resolution : Resolution -> MediaQuery
 resolution value =
     feature "resolution" value
 
@@ -682,7 +672,7 @@ Describes the resolution of the output device.
     media [ maxResolution (dpcm 65) ] [ (.) HiResImg [ display none ] ]
 
 -}
-maxResolution : Resolution -> MediaQueryComponent
+maxResolution : Resolution -> MediaQuery
 maxResolution value =
     feature "max-resolution" value
 
@@ -718,7 +708,7 @@ interlace =
 {-| Media feature [`scan`](https://drafts.csswg.org/mediaqueries/#scan).
 Queries scanning process of the device. Accepts `innterlace` (some TVs) or `progressive` (most things).
 -}
-scan : ScanningProcess a -> MediaQueryComponent
+scan : ScanningProcess a -> MediaQuery
 scan value =
     feature "scan" value
 
@@ -726,9 +716,9 @@ scan value =
 {-| Media feature [`grid`](https://drafts.csswg.org/mediaqueries/#grid).
 Queries whether the output device is a grid or bitmap.
 -}
-grid : MediaQueryComponent
+grid : MediaQuery
 grid =
-    booleanFeature "grid"
+    unparameterizedFeature "grid"
 
 
 type alias UpdateFrequency a =
@@ -762,7 +752,7 @@ fast =
 {-| Media feature [`update`](https://drafts.csswg.org/mediaqueries/#update)
 The update frequency of the device. Accepts `none`, `slow`, or `fast`
 -}
-update : UpdateFrequency a -> MediaQueryComponent
+update : UpdateFrequency a -> MediaQuery
 update value =
     feature "update" value
 
@@ -798,7 +788,7 @@ optionalPaged =
 {-| Media feature [`overflow-block`](https://drafts.csswg.org/mediaqueries/#overflow-block)
 Describes the behavior of the device when content overflows the initial containing block in the block axis.
 -}
-overflowBlock : BlockAxisOverflow a -> MediaQueryComponent
+overflowBlock : BlockAxisOverflow a -> MediaQuery
 overflowBlock value =
     feature "overflow-block" value
 
@@ -810,7 +800,7 @@ type alias InlineAxisOverflow a =
 {-| Media feature [`overflow-inline`](https://drafts.csswg.org/mediaqueries/#overflow-inline).
 Describes the behavior of the device when content overflows the initial containing block in the inline axis.
 -}
-overflowInline : InlineAxisOverflow a -> MediaQueryComponent
+overflowInline : InlineAxisOverflow a -> MediaQuery
 overflowInline value =
     feature "overflow-inline" value
 
@@ -840,7 +830,7 @@ Queries the user agent's bits per color channel
     media [ screen, minColor (bits 256) ] [ a [ Css.color (hex "D9534F") ] ]
 
 -}
-minColor : Bits -> MediaQueryComponent
+minColor : Bits -> MediaQuery
 minColor value =
     feature "min-color" value
 
@@ -850,9 +840,9 @@ minColor value =
     media [ not, color ] [ body [Css.color (hex "000000")] ]
 
 -}
-color : MediaQueryComponent
+color : MediaQuery
 color =
-    booleanFeature "color"
+    unparameterizedFeature "color"
 
 
 {-| Media feature [`max-color`](https://drafts.csswg.org/mediaqueries/#color)
@@ -861,7 +851,7 @@ Queries the user agent's bits per color channel
     media [ screen, maxColor (bits 8) ] [ a [ Css.color (hex "FF0000") ] ]
 
 -}
-maxColor : Bits -> MediaQueryComponent
+maxColor : Bits -> MediaQuery
 maxColor value =
     feature "max-color" value
 
@@ -871,21 +861,21 @@ maxColor value =
     media [ monochrome ] [ body [Css.color (hex "000000")] ]
 
 -}
-monochrome : MediaQueryComponent
+monochrome : MediaQuery
 monochrome =
-    booleanFeature "monochrome"
+    unparameterizedFeature "monochrome"
 
 
 {-| Media Feature [`min-monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
 -}
-minMonochrome : Bits -> MediaQueryComponent
+minMonochrome : Bits -> MediaQuery
 minMonochrome value =
     feature "min-monochrome" value
 
 
 {-| Media feature [`max-monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
 -}
-maxMonochrome : Bits -> MediaQueryComponent
+maxMonochrome : Bits -> MediaQuery
 maxMonochrome value =
     feature "max-monochrome" value
 
@@ -896,7 +886,7 @@ Queries the number of colors in the user agent's color lookup table.
     media [ screen, colorIndex (int 16777216) ] [ a [ Css.color (hex "D9534F") ] ]
 
 -}
-colorIndex : Number a -> MediaQueryComponent
+colorIndex : Number a -> MediaQuery
 colorIndex value =
     feature "color-index" value
 
@@ -907,7 +897,7 @@ Queries the number of colors in the user agent's color lookup table.
     media [screen, minColorIndex (int 16777216)] [ a [ Css.color (hex "D9534F")] ]
 
 -}
-minColorIndex : Number a -> MediaQueryComponent
+minColorIndex : Number a -> MediaQuery
 minColorIndex value =
     feature "min-color-index" value
 
@@ -918,7 +908,7 @@ Queries the number of colors in the user agent's color lookup table.
     media [screen, maxColorIndex (int 256)] [ a [ Css.color (hex "FF0000")] ]
 
 -}
-maxColorIndex : Number a -> MediaQueryComponent
+maxColorIndex : Number a -> MediaQuery
 maxColorIndex value =
     feature "max-color-index" value
 
@@ -969,7 +959,7 @@ Describes the approximate range of colors supported by the user agent and device
     media [screen, colorGamut rec2020] [ (.) HiColorImg [ display block ] ]
 
 -}
-colorGamut : ColorGamut a -> MediaQueryComponent
+colorGamut : ColorGamut a -> MediaQuery
 colorGamut value =
     feature "color-gamut" value
 
@@ -1017,7 +1007,7 @@ Accepts `none`, `fine`, and `coarse`.
     media [ Media.pointer coarse ] [ a [ display block, Css.height (px 24) ] ]
 
 -}
-pointer : PointerDevice a -> MediaQueryComponent
+pointer : PointerDevice a -> MediaQuery
 pointer value =
     feature "pointer" value
 
@@ -1030,7 +1020,7 @@ Accepts `none`, `fine`, and `coarse`.
     media [ anyPointer coarse ] [ a [ display block, Css.height (px 24) ] ]
 
 -}
-anyPointer : PointerDevice a -> MediaQueryComponent
+anyPointer : PointerDevice a -> MediaQuery
 anyPointer value =
     feature "any-pointer" value
 
@@ -1060,7 +1050,7 @@ Accepts `none` or `canHover`.
     media [ Media.hover canHover ] [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
-hover : HoverCapability a -> MediaQueryComponent
+hover : HoverCapability a -> MediaQuery
 hover value =
     feature "hover" value
 
@@ -1072,7 +1062,7 @@ Accepts `none` or `canHover`.
     media [ anyHover canHover ] [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
-anyHover : HoverCapability a -> MediaQueryComponent
+anyHover : HoverCapability a -> MediaQuery
 anyHover value =
     feature "any-hover" value
 
@@ -1117,104 +1107,24 @@ Accepts `none`, `initialOnly`, and `enabled`.
     media [scripting none] [ (.) NoScript [ display block ] ]
 
 -}
-scripting : ScriptingSupport a -> MediaQueryComponent
+scripting : ScriptingSupport a -> MediaQuery
 scripting value =
     feature "scripting" value
 
 
 
-{--Private Helper functions--}
+-- PRIVATE HELPERS --
 
 
-feature : String -> Value a -> MediaQueryComponent
-feature key arg =
-    Structure.AppendMediaFeature { key = key, value = Just arg.value }
+feature : String -> Value a -> MediaQuery
+feature key { value } =
+    Structure.FeatureQuery { key = key, value = Just value }
+        |> Just
+        |> Preprocess.MediaQuery
 
 
-booleanFeature : String -> MediaQueryComponent
-booleanFeature key =
-    Structure.AppendMediaFeature { key = key, value = Nothing }
-
-
-componentsToStringQueries : List MediaQueryComponent -> List String
-componentsToStringQueries components =
-    components
-        |> List.foldr splitOnOr []
-        |> List.map buildQuery
-
-
-splitOnOr : MediaQueryComponent -> List (List MediaQueryComponent) -> List (List MediaQueryComponent)
-splitOnOr item splitLists =
-    case item of
-        AppendOrSeparator _ ->
-            [] :: splitLists
-
-        _ ->
-            case List.head splitLists of
-                Nothing ->
-                    [ item ] :: splitLists
-
-                Just head ->
-                    (item :: head) :: List.drop 1 splitLists
-
-
-buildQuery : List MediaQueryComponent -> String
-buildQuery components =
-    let
-        start =
-            components
-                |> List.filter notFeature
-                |> List.map componentToString
-                |> String.join " "
-
-        end =
-            components
-                |> List.filter isFeature
-                |> List.map componentToString
-                |> String.join " and "
-    in
-    if String.isEmpty start || String.isEmpty end then
-        start ++ end
-    else
-        start ++ " and " ++ end
-
-
-notFeature : MediaQueryComponent -> Bool
-notFeature component =
-    Basics.not (isFeature component)
-
-
-isFeature : MediaQueryComponent -> Bool
-isFeature component =
-    case component of
-        AppendMediaFeature _ ->
-            True
-
-        _ ->
-            False
-
-
-componentToString : MediaQueryComponent -> String
-componentToString component =
-    case component of
-        PrependMediaModifier (MediaModifier modifier) ->
-            modifier
-
-        AppendMediaType (MediaType mediaType) ->
-            mediaType
-
-        AppendMediaFeature mediaFeature ->
-            featureToString mediaFeature
-
-        AppendOrSeparator _ ->
-            Debug.crash "should never get here"
-
-
-featureToString : MediaFeature -> String
-featureToString mediaFeature =
-    case mediaFeature.value of
-        Just value ->
-            "(" ++ mediaFeature.key ++ ": " ++ value ++ ")"
-
-        Nothing ->
-            "(" ++ mediaFeature.key ++ ")"
+unparameterizedFeature : String -> MediaQuery
+unparameterizedFeature key =
+    Structure.FeatureQuery { key = key, value = Nothing }
+        |> Just
+        |> Preprocess.MediaQuery

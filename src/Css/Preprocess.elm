@@ -58,6 +58,10 @@ type SnippetDeclaration
     | FontFeatureValues (List ( String, List Property ))
 
 
+type MediaQuery
+    = MediaQuery (Maybe Structure.MediaQuery)
+
+
 type StyleBlock
     = StyleBlock Structure.Selector (List Structure.Selector) (List Style)
 
@@ -163,3 +167,8 @@ propertyToPair property =
                 property.value
     in
     ( property.key, value )
+
+
+unwrapMediaQuery : MediaQuery -> Maybe Structure.MediaQuery
+unwrapMediaQuery (MediaQuery maybeQuery) =
+    maybeQuery
