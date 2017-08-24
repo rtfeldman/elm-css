@@ -77,16 +77,11 @@ type StyleBlock
     = StyleBlock Selector (List Selector) (List Property)
 
 
-{-| A media modifier. It can be `not` or `only`
--}
-type MediaModifier
-    = MediaModifier String
-
-
-{-| A media type. It can be things like all, screen, screen, speech
--}
 type MediaType
-    = MediaType String
+    = All
+    | Print
+    | Screen
+    | Speech
 
 
 {-| A media feature.
@@ -95,25 +90,15 @@ type alias MediaFeature =
     { key : String, value : Maybe String }
 
 
-{-| In an or in a media query, rendered as a `,`
--}
-type MediaOrSeparator
-    = MediaOrSeparator
-
-
 {-| The components that make up a media query
 -}
-type MediaQueryComponent
-    = PrependMediaModifier MediaModifier
-    | AppendMediaType MediaType
-    | AppendMediaFeature MediaFeature
-    | AppendOrSeparator MediaOrSeparator
-
-
-{-| A media query.
--}
 type MediaQuery
-    = MediaQuery String
+    = FeatureQuery MediaFeature
+    | TypeQuery MediaType
+    | And MediaQuery MediaQuery
+    | Or MediaQuery MediaQuery
+    | Not MediaQuery
+    | CustomQuery String
 
 
 {-| A [CSS3 Selector](https://www.w3.org/TR/css3-selectors/). All selectors

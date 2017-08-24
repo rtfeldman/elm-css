@@ -69,13 +69,81 @@ prettyPrintDeclaration declaration =
                         |> String.join "\n\n"
 
                 query =
-                    List.map (\(MediaQuery str) -> str) mediaQueries
+                    List.map mediaQueryToString mediaQueries
                         |> String.join ",\n"
+
+                finalQuery =
+                    if String.startsWith "not " query then
+                        -- Media queries can start with `only` or they can start
+                        -- with `not`, but they can't start with both.
+                        -- See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#Pseudo-BNF
+                        query
+                    else
+                        -- Always emit `only` when we don't have `not`,
+                        -- because without `only`, older browsers can
+                        -- break, and with `only`, they'll ignore this declaration
+                        -- instead of breaking.
+                        --
+                        -- The one downside is emitting extra characters, but if
+                        -- every @media is followed by either `not` or `only`,
+                        -- they will gzip very well.
+                        --
+                        -- https://stackoverflow.com/questions/8549529/what-is-the-difference-between-screen-and-only-screen-in-media-queries/14168210#14168210
+                        "only " ++ query
             in
-            "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
+            "@media " ++ finalQuery ++ " {\n" ++ blocks ++ "\n}"
 
         _ ->
             Debug.crash "not yet implemented :x"
+
+
+mediaQueryToString : MediaQuery -> String
+mediaQueryToString mediaQuery =
+    case mediaQuery of
+        FeatureQuery mediaFeature ->
+            mediaFeatureToString mediaFeature
+
+        TypeQuery All ->
+            "all"
+
+        TypeQuery Print ->
+            "print"
+
+        TypeQuery Screen ->
+            "screen"
+
+        TypeQuery Speech ->
+            "speech"
+
+        And first second ->
+            "(" ++ mediaQueryToString first ++ " and " ++ mediaQueryToString second ++ ")"
+
+        Or first second ->
+            "(" ++ mediaQueryToString first ++ " or " ++ mediaQueryToString second ++ ")"
+
+        Not mediaQuery ->
+            let
+                str =
+                    mediaQueryToString mediaQuery
+            in
+            -- If it already had a "not " prefix, negate it by dropping that prefix.
+            if String.startsWith "not " str then
+                String.dropLeft 4 str
+            else
+                "not " ++ str
+
+        CustomQuery str ->
+            str
+
+
+mediaFeatureToString : MediaFeature -> String
+mediaFeatureToString mediaFeature =
+    case mediaFeature.value of
+        Just value ->
+            "(" ++ mediaFeature.key ++ ": " ++ value ++ ")"
+
+        Nothing ->
+            mediaFeature.key
 
 
 simpleSelectorSequenceToString : SimpleSelectorSequence -> String
