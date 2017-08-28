@@ -78,26 +78,23 @@ type StyleBlock
 
 
 type MediaType
-    = All
-    | Print
+    = Print
     | Screen
     | Speech
 
 
-{-| A media feature.
+{-| A media feature expression.
 -}
-type alias MediaFeature =
-    { key : String, value : Maybe String }
+type alias MediaExpression =
+    { feature : String, value : Maybe String }
 
 
 {-| The components that make up a media query
 -}
 type MediaQuery
-    = FeatureQuery MediaFeature
-    | TypeQuery MediaType
-    | And MediaQuery MediaQuery
-    | Or MediaQuery MediaQuery
-    | Not MediaQuery
+    = AllQuery (List MediaExpression)
+    | OnlyQuery MediaType (List MediaExpression)
+    | NotQuery MediaType (List MediaExpression)
     | CustomQuery String
 
 

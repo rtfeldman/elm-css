@@ -130,7 +130,7 @@ atRule =
               }
           }
 
-          @media only screen and ( max-width: 600px ) {
+          @media screen and ( max-width: 600px ) {
               body {
                   margin: 3em;
               }
@@ -716,7 +716,7 @@ bug280 =
             Fixtures.mediaQueryIndentation
 
         actual =
-            "@media only (max-width: 515px) {\n    .mdl-layout__header > .mdl-layout-icon {\n        display: none;\n    }\n}"
+            "@media (max-width: 515px) {\n    .mdl-layout__header > .mdl-layout-icon {\n        display: none;\n    }\n}"
     in
     describe "bug280"
         [ test "pretty prints the expected output" <|

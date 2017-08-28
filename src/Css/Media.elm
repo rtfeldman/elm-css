@@ -4,6 +4,7 @@ module Css.Media
         , CanHover
         , Coarse
         , Enabled
+        , Expression
         , Fast
         , Fine
         , InitialOnly
@@ -22,7 +23,6 @@ module Css.Media
         , SRGB
         , Slow
         , all
-        , and
         , anyHover
         , anyPointer
         , aspectRatio
@@ -62,8 +62,8 @@ module Css.Media
         , minWidth
         , monochrome
         , not
+        , only
         , optionalPaged
-        , or
         , orientation
         , overflowBlock
         , overflowInline
@@ -95,7 +95,7 @@ module Css.Media
 
 # Data Structures
 
-@docs MediaQuery, MediaType
+@docs MediaQuery, MediaType, Expression
 
 
 # Query constructors
@@ -105,7 +105,7 @@ module Css.Media
 
 # Query composition
 
-@docs not, or, and
+@docs not, all, only
 
 
 # Media Types
@@ -164,7 +164,7 @@ The CSS below contains 1 rule, with 2 queries.
 ```
 
 The above rule roughly translates as:
-_If the device is a printer or is a monoschrome screen, the body color is black._
+_If the device is a printer or is a monochrome screen, the body color is black._
 
 In elm-css, queries are joined into rules using a special `MediaQuery`
 returned by the `or` function.
@@ -181,6 +181,18 @@ type alias MediaQuery =
 -}
 type alias MediaType =
     Structure.MediaType
+
+
+{-| A media expression.
+
+An expression is a media feature with an optional value, which resolves to
+either true or false.
+
+<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types>
+
+-}
+type alias Expression =
+    Structure.MediaExpression
 
 
 type alias Value compatible =
@@ -210,10 +222,10 @@ The above code translates into the following css.
 
 -}
 media :
-    MediaQuery
+    List MediaQuery
     -> List Css.Snippet
     -> Css.Snippet
-media query snippets =
+media queries snippets =
     let
         snippetDeclarations : List Preprocess.SnippetDeclaration
         snippetDeclarations =
@@ -233,7 +245,7 @@ media query snippets =
 
         mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
         mediaRuleFromStyleBlocks =
-            Preprocess.MediaRule [ query ]
+            Preprocess.MediaRule queries
                 (extractStyleBlocks snippetDeclarations)
 
         nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
@@ -249,7 +261,7 @@ media query snippets =
 
                 (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
                     -- nest the media queries
-                    Preprocess.MediaRule (query :: nestedMediaQueries) styleBlocks
+                    Preprocess.MediaRule (List.append queries nestedMediaQueries) styleBlocks
                         :: nestedMediaRules rest
 
                 first :: rest ->
@@ -276,7 +288,7 @@ The above code translates into the following css.
 -}
 mediaQuery : List String -> List Css.Snippet -> Css.Snippet
 mediaQuery stringQueries snippets =
-    media (Structure.CustomQuery (String.join ", " stringQueries)) snippets
+    media (List.map Structure.CustomQuery stringQueries) snippets
 
 
 {-| Combines media query components into media queries that are nested under selectors.
@@ -331,38 +343,28 @@ withMediaQuery queries =
 {--Query Composition--}
 
 
+{-| Media type for all devices. This is assumed by default if no other media type is specified.
+-}
+all : List Expression -> MediaQuery
+all =
+    AllQuery
+
+
+{-| Media type for one device.
+-}
+only : MediaType -> List Expression -> MediaQuery
+only =
+    OnlyQuery
+
+
 {-| Media modifier to negate a query
 
     media (not screen) [ body [ Css.color (hex "000000") ] ]
 
 -}
-not : MediaQuery -> MediaQuery
+not : MediaType -> List Expression -> MediaQuery
 not =
-    Not
-
-
-{-| Combine media queries, where matching either query should apply the following CSS properties.
-
-    media (and screen print) [ ... ]
-
-The rule above will apply to both screens and printers.
-
--}
-and : MediaQuery -> MediaQuery -> MediaQuery
-and =
-    Structure.And
-
-
-{-| Combine media queries, where matching either query should apply the following CSS properties.
-
-    media (or screen print) [ ... ]
-
-The rule above will apply to either screens or printers.
-
--}
-or : MediaQuery -> MediaQuery -> MediaQuery
-or =
-    Structure.Or
+    NotQuery
 
 
 connectWith :
@@ -387,21 +389,14 @@ connectWith connect queries =
 {--Media Types --}
 
 
-{-| Media type for all devices. This is assumed by default if no other media type is specified.
--}
-all : MediaQuery
-all =
-    TypeQuery Structure.All
-
-
 {-| Media type for printers
 
     media print [ a [ color (hex 000000), textDecoration none ] ]
 
 -}
-print : MediaQuery
+print : MediaType
 print =
-    TypeQuery Structure.Print
+    Structure.Print
 
 
 {-| Media type for any device not matched by print or speech.
@@ -409,9 +404,9 @@ print =
     media (and screen (maxWidth (px 600)) [ Css.class mobileNav display none ]
 
 -}
-screen : MediaQuery
+screen : MediaType
 screen =
-    TypeQuery Structure.Screen
+    Structure.Screen
 
 
 {-| Media type for screenreaders and similar devices that read out a page
@@ -419,9 +414,9 @@ screen =
     media (not speech) [ Css.class screenReaderOnly [ display none ] ]
 
 -}
-speech : MediaQuery
+speech : MediaType
 speech =
-    TypeQuery Structure.Speech
+    Structure.Speech
 
 
 
@@ -441,7 +436,7 @@ Queries the width of the output device.
     media (Media.minWidth (px 600)) [ Css.class Container [ Css.maxWidth (px 500) ] ]
 
 -}
-minWidth : AbsoluteLength compatible -> MediaQuery
+minWidth : AbsoluteLength compatible -> Expression
 minWidth value =
     feature "min-width" value
 
@@ -451,7 +446,7 @@ minWidth value =
     media (Media.width (px 200)) [ ... ]
 
 -}
-width : AbsoluteLength compatible -> MediaQuery
+width : AbsoluteLength compatible -> Expression
 width value =
     feature "width" value
 
@@ -461,7 +456,7 @@ width value =
     media (Media.maxWidth (px 800)) [ Css.class MobileNav [ display none] ]
 
 -}
-maxWidth : AbsoluteLength compatible -> MediaQuery
+maxWidth : AbsoluteLength compatible -> Expression
 maxWidth value =
     feature "max-width" value
 
@@ -471,14 +466,14 @@ maxWidth value =
     media (Media.minHeight(px 400)) [ Css.class TopBanner [ display block] ]
 
 -}
-minHeight : AbsoluteLength compatible -> MediaQuery
+minHeight : AbsoluteLength compatible -> Expression
 minHeight value =
     feature "min-height" value
 
 
 {-| Media feature [`height`](https://drafts.csswg.org/mediaqueries/#height)
 -}
-height : AbsoluteLength compatible -> MediaQuery
+height : AbsoluteLength compatible -> Expression
 height value =
     feature "height" value
 
@@ -488,7 +483,7 @@ height value =
     media (Media.maxHeight(px 399)) [ Css.class TopBanner [ display none] ]
 
 -}
-maxHeight : AbsoluteLength compatible -> MediaQuery
+maxHeight : AbsoluteLength compatible -> Expression
 maxHeight value =
     feature "max-height" value
 
@@ -514,7 +509,7 @@ ratio numerator denominator =
     media (minAspectRatio (ratio 1 1)) [ ... ]
 
 -}
-minAspectRatio : Ratio -> MediaQuery
+minAspectRatio : Ratio -> Expression
 minAspectRatio value =
     feature "min-aspect-ratio" value
 
@@ -524,7 +519,7 @@ minAspectRatio value =
     media (aspectRatio (ratio 16 10)) [ ... ]
 
 -}
-aspectRatio : Ratio -> MediaQuery
+aspectRatio : Ratio -> Expression
 aspectRatio value =
     feature "aspect-ratio" value
 
@@ -534,7 +529,7 @@ aspectRatio value =
     media (maxAspectRatio (ratio 16 9)) [ ... ]
 
 -}
-maxAspectRatio : Ratio -> MediaQuery
+maxAspectRatio : Ratio -> Expression
 maxAspectRatio value =
     feature "max-aspect-ratio" value
 
@@ -570,7 +565,7 @@ portrait =
 {-| Media feature [`orientation`](https://drafts.csswg.org/mediaqueries/#orientation).
 Accepts `portrait` or `landscape`.
 -}
-orientation : Orientation a -> MediaQuery
+orientation : Orientation a -> Expression
 orientation value =
     feature "orientation" value
 
@@ -621,7 +616,7 @@ Describes the resolution of the output device.
     media (minResolution (dpi 600)) [ Css.class HiResImg [ display block ] ]
 
 -}
-minResolution : Resolution -> MediaQuery
+minResolution : Resolution -> Expression
 minResolution value =
     feature "min-resolution" value
 
@@ -632,7 +627,7 @@ Describes the resolution of the output device.
     media (resolution (dppx 2)) [ img [ width (pct 50) ] ]
 
 -}
-resolution : Resolution -> MediaQuery
+resolution : Resolution -> Expression
 resolution value =
     feature "resolution" value
 
@@ -643,7 +638,7 @@ Describes the resolution of the output device.
     media (maxResolution (dpcm 65)) [ Css.class HiResImg [ display none ] ]
 
 -}
-maxResolution : Resolution -> MediaQuery
+maxResolution : Resolution -> Expression
 maxResolution value =
     feature "max-resolution" value
 
@@ -679,7 +674,7 @@ interlace =
 {-| Media feature [`scan`](https://drafts.csswg.org/mediaqueries/#scan).
 Queries scanning process of the device. Accepts `innterlace` (some TVs) or `progressive` (most things).
 -}
-scan : ScanningProcess a -> MediaQuery
+scan : ScanningProcess a -> Expression
 scan value =
     feature "scan" value
 
@@ -687,7 +682,7 @@ scan value =
 {-| Media feature [`grid`](https://drafts.csswg.org/mediaqueries/#grid).
 Queries whether the output device is a grid or bitmap.
 -}
-grid : MediaQuery
+grid : Expression
 grid =
     unparameterizedFeature "grid"
 
@@ -723,7 +718,7 @@ fast =
 {-| Media feature [`update`](https://drafts.csswg.org/mediaqueries/#update)
 The update frequency of the device. Accepts `none`, `slow`, or `fast`
 -}
-update : UpdateFrequency a -> MediaQuery
+update : UpdateFrequency a -> Expression
 update value =
     feature "update" value
 
@@ -759,7 +754,7 @@ optionalPaged =
 {-| Media feature [`overflow-block`](https://drafts.csswg.org/mediaqueries/#overflow-block)
 Describes the behavior of the device when content overflows the initial containing block in the block axis.
 -}
-overflowBlock : BlockAxisOverflow a -> MediaQuery
+overflowBlock : BlockAxisOverflow a -> Expression
 overflowBlock value =
     feature "overflow-block" value
 
@@ -771,7 +766,7 @@ type alias InlineAxisOverflow a =
 {-| Media feature [`overflow-inline`](https://drafts.csswg.org/mediaqueries/#overflow-inline).
 Describes the behavior of the device when content overflows the initial containing block in the inline axis.
 -}
-overflowInline : InlineAxisOverflow a -> MediaQuery
+overflowInline : InlineAxisOverflow a -> Expression
 overflowInline value =
     feature "overflow-inline" value
 
@@ -801,7 +796,7 @@ Queries the user agent's bits per color channel
     media (screen (minColor (bits 256))) [ a [ Css.color (hex "D9534F") ] ]
 
 -}
-minColor : Bits -> MediaQuery
+minColor : Bits -> Expression
 minColor value =
     feature "min-color" value
 
@@ -811,7 +806,7 @@ minColor value =
     media (not color) [ body [Css.color (hex "000000")] ]
 
 -}
-color : MediaQuery
+color : Expression
 color =
     unparameterizedFeature "color"
 
@@ -822,7 +817,7 @@ Queries the user agent's bits per color channel
     media (and screen (maxColor (bits 8))) [ a [ Css.color (hex "FF0000") ] ]
 
 -}
-maxColor : Bits -> MediaQuery
+maxColor : Bits -> Expression
 maxColor value =
     feature "max-color" value
 
@@ -832,21 +827,21 @@ maxColor value =
     media [ monochrome ] [ body [Css.color (hex "000000")] ]
 
 -}
-monochrome : MediaQuery
+monochrome : Expression
 monochrome =
     unparameterizedFeature "monochrome"
 
 
 {-| Media Feature [`min-monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
 -}
-minMonochrome : Bits -> MediaQuery
+minMonochrome : Bits -> Expression
 minMonochrome value =
     feature "min-monochrome" value
 
 
 {-| Media feature [`max-monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
 -}
-maxMonochrome : Bits -> MediaQuery
+maxMonochrome : Bits -> Expression
 maxMonochrome value =
     feature "max-monochrome" value
 
@@ -857,7 +852,7 @@ Queries the number of colors in the user agent's color lookup table.
     media (and screen (colorIndex (int 16777216))) [ a [ Css.color (hex "D9534F") ] ]
 
 -}
-colorIndex : Number a -> MediaQuery
+colorIndex : Number a -> Expression
 colorIndex value =
     feature "color-index" value
 
@@ -868,7 +863,7 @@ Queries the number of colors in the user agent's color lookup table.
     media (and screen (minColorIndex (int 16777216))) [ a [ Css.color (hex "D9534F")] ]
 
 -}
-minColorIndex : Number a -> MediaQuery
+minColorIndex : Number a -> Expression
 minColorIndex value =
     feature "min-color-index" value
 
@@ -879,7 +874,7 @@ Queries the number of colors in the user agent's color lookup table.
     media (and screen (maxColorIndex (int 256))) [ a [ Css.color (hex "FF0000")] ]
 
 -}
-maxColorIndex : Number a -> MediaQuery
+maxColorIndex : Number a -> Expression
 maxColorIndex value =
     feature "max-color-index" value
 
@@ -930,7 +925,7 @@ Describes the approximate range of colors supported by the user agent and device
     media (and screen (colorGamut rec2020)) [ Css.class HiColorImg [ display block ] ]
 
 -}
-colorGamut : ColorGamut a -> MediaQuery
+colorGamut : ColorGamut a -> Expression
 colorGamut value =
     feature "color-gamut" value
 
@@ -978,7 +973,7 @@ Accepts `none`, `fine`, and `coarse`.
     media (Media.pointer coarse) [ a [ display block, Css.height (px 24) ] ]
 
 -}
-pointer : PointerDevice a -> MediaQuery
+pointer : PointerDevice a -> Expression
 pointer value =
     feature "pointer" value
 
@@ -991,7 +986,7 @@ Accepts `none`, `fine`, and `coarse`.
     media (anyPointer coarse) [ a [ display block, Css.height (px 24) ] ]
 
 -}
-anyPointer : PointerDevice a -> MediaQuery
+anyPointer : PointerDevice a -> Expression
 anyPointer value =
     feature "any-pointer" value
 
@@ -1021,7 +1016,7 @@ Accepts `none` or `canHover`.
     media (Media.hover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
-hover : HoverCapability a -> MediaQuery
+hover : HoverCapability a -> Expression
 hover value =
     feature "hover" value
 
@@ -1033,7 +1028,7 @@ Accepts `none` or `canHover`.
     media (anyHover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
-anyHover : HoverCapability a -> MediaQuery
+anyHover : HoverCapability a -> Expression
 anyHover value =
     feature "any-hover" value
 
@@ -1078,7 +1073,7 @@ Accepts `none`, `initialOnly`, and `enabled`.
     media (scripting none) [ Css.class NoScript [ display block ] ]
 
 -}
-scripting : ScriptingSupport a -> MediaQuery
+scripting : ScriptingSupport a -> Expression
 scripting value =
     feature "scripting" value
 
@@ -1087,11 +1082,11 @@ scripting value =
 -- PRIVATE HELPERS --
 
 
-feature : String -> Value a -> MediaQuery
+feature : String -> Value a -> Expression
 feature key { value } =
-    Structure.FeatureQuery { key = key, value = Just value }
+    { feature = key, value = Just value }
 
 
-unparameterizedFeature : String -> MediaQuery
+unparameterizedFeature : String -> Expression
 unparameterizedFeature key =
-    Structure.FeatureQuery { key = key, value = Nothing }
+    { feature = key, value = Nothing }
