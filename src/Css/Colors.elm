@@ -1,4 +1,4 @@
-module Css.Colors exposing (aqua, black, blue, fuchsia, gray, green, lime, maroon, navy, olive, orange, purple, red, silver, teal, yellow)
+module Css.Colors exposing (aqua, black, blue, fuchsia, gray, green, lime, maroon, navy, olive, orange, purple, red, silver, teal, white, yellow)
 
 {-| A nicer default set of colors than the ones CSS ships with. Color codes taken from [clrs.cc](http://clrs.cc).
 
@@ -18,7 +18,7 @@ module Css.Colors exposing (aqua, black, blue, fuchsia, gray, green, lime, maroo
 
 # Colors
 
-@docs navy, blue, aqua, teal, olive, green, lime, yellow, orange, red, maroon, fuchsia, purple, black, gray, silver
+@docs navy, blue, aqua, teal, olive, green, lime, yellow, orange, red, maroon, fuchsia, purple, black, gray, silver, white
 
 -}
 
@@ -135,3 +135,10 @@ gray =
 silver : Color
 silver =
     hex "dddddd"
+
+
+{-| <img src="https://dummyimage.com/1x1/ffffff/ffffff.png" width="504px" height="40px">
+-}
+white : Color
+white =
+    hex "ffffff"
