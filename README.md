@@ -2,7 +2,10 @@
 
 # elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
 
-`elm-css` lets you define CSS in Elm, like so:
+`elm-css` lets you define CSS in Elm. (For an Elm styling system that is a
+complete departure from CSS, check out [style-elements](http://package.elm-lang.org/packages/mdgriffith/style-elements/latest).)
+
+Here's an example of how to define some `elm-css` styles:
 
 ```elm
 module MyCss exposing (..)
