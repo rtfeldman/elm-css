@@ -88,9 +88,7 @@ module Css.Media
         , withMediaQuery
         )
 
-{-| Functions for composing.
-
-@docs Bits
+{-| Functions for building `@media` queries.
 
 
 # Data Structures
@@ -98,19 +96,19 @@ module Css.Media
 @docs MediaQuery, MediaType, Expression
 
 
-# Query constructors
+# `@media` rule constructors
 
 @docs media, withMedia, mediaQuery, withMediaQuery
 
 
-# Query composition
+# Query constructors
 
-@docs not, all, only
+@docs all, only, not
 
 
 # Media Types
 
-@docs all, screen, print, speech
+@docs screen, print, speech
 
 
 # Viewport, Page Dimensions Media Features
@@ -188,7 +186,13 @@ type alias MediaType =
 An expression is a media feature with an optional value, which resolves to
 either true or false.
 
-<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types>
+In the media query `screen and (min-width: 768px)`,
+
+  - `screen` is a media type,
+  - `min-width` is a media feature, and
+  - `(min-width: 768px)` is an expression.
+
+<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features>
 
 -}
 type alias Expression =
@@ -200,17 +204,17 @@ type alias Value compatible =
 
 
 
-{--Query constructors--}
+{--Rule constructors--}
 
 
-{-| Combines media query components into media queries.
+{-| Combines media queries into a `@media` rule.
 
     (stylesheet << namespace "homepage")
-        [  media (and screen (Media.minWidth (px 300))
+        [  media [ only screen [ Media.minWidth (px 300) ] ]
                [ footer [ Css.maxWidth (px 300) ] ]
         ]
 
-The above code translates into the following css.
+The above code translates into the following CSS.
 
 ```css
 @media screen and (min-width: 300px) {
@@ -270,15 +274,15 @@ media queries snippets =
     Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
 
 
-{-| Manually specify a media query using a List of strings.
+{-| Manually specify a `@media` rule using a List of strings.
 
     mediaQuery [ "screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
         [ body [ fontSize (px 14)] ]
 
-The above code translates into the following css.
+The above code translates into the following CSS.
 
 ```css
-@media screen and (min-width: 320px), screen and (min-height: 400px) {
+@media screen and (min-width: 320px), screen and (max-height: 400px) {
     body {
         font-size: 14px;
     }
@@ -291,16 +295,18 @@ mediaQuery stringQueries snippets =
     media (List.map Structure.CustomQuery stringQueries) snippets
 
 
-{-| Combines media query components into media queries that are nested under selectors.
+{-| Combines media queries that are nested under selectors into a `@media` rule.
 
     (stylesheet << namespace "homepage")
         [ footer
-            [ withMedia [ screen, Media.minWidth (px 300), Media.maxWidth (px 800) ]
+            [ withMedia [ only screen [ Media.minWidth (px 300), Media.maxWidth (px 800) ] ]
                 [ Css.maxWidth (px 300) ]
         ]
 
+The above code translates into the following CSS.
+
 ```css
-@media screen and (min-width: 300px) and (max-width: 800px) {
+@media only screen and (min-width: 300px) and (max-width: 800px) {
     footer {
         max-width: 300px;
     }
@@ -313,7 +319,7 @@ withMedia queries =
     Preprocess.WithMedia queries
 
 
-{-| Manually specify a media query that is nested under an element or class
+{-| Manually specify a `@media` rule that is nested under an element or class
 using a List of strings.
 
     body
@@ -321,10 +327,10 @@ using a List of strings.
           [ fontSize (px 14px) ]
       ]
 
-The above code translates into the following css.
+The above code translates into the following CSS.
 
 ```css
-@media screen and (min-width: 320px), screen and (min-height: 400px) {
+@media screen and (min-width: 320px), screen and (max-height: 400px) {
     body {
         font-size: 14px;
     }
@@ -340,26 +346,67 @@ withMediaQuery queries =
 
 
 
-{--Query Composition--}
+{--Query Constructors--}
 
 
-{-| Media type for all devices. This is assumed by default if no other media type is specified.
+{-| Build a media query that will match all media types.
+
+The supplied `expressions` are combined with `and`.
+
+    media [ all [ color, landscape ] ]
+        [ body [ Css.color (hex "ff0000") ] ]
+
+The above code translates into the following CSS.
+
+```css
+@media (color) and (landscape) {
+    body {
+        color: #ff0000;
+    }
+}
+```
+
 -}
 all : List Expression -> MediaQuery
 all =
     AllQuery
 
 
-{-| Media type for one device.
+{-| Build a media query matching a single media type.
+
+    media [ only screen [ minWidth (px 320), portrait ] ]
+        [ body [ Css.color (hex "ff0000") ] ]
+
+The above code translates into the following CSS.
+
+```css
+@media only screen and (min-width: 320px) and (portrait) {
+    body {
+        color: #ff0000;
+    }
+}
+```
+
 -}
 only : MediaType -> List Expression -> MediaQuery
 only =
     OnlyQuery
 
 
-{-| Media modifier to negate a query
+{-| Build a negated media query.
 
-    media (not screen) [ body [ Css.color (hex "000000") ] ]
+    media [ not screen [] ]
+        [ body [ Css.color (hex "ff0000") ] ]
+
+The above code translates into the following CSS.
+
+```css
+@media not screen {
+    body {
+        color: #ff0000;
+    }
+}
+```
 
 -}
 not : MediaType -> List Expression -> MediaQuery
