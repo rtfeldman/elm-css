@@ -6,6 +6,16 @@ elm-css DSL, collecting warnings, or
 -}
 
 
+{-| For typing
+-}
+type Compatible
+    = Compatible
+
+
+type alias Number compatible =
+    { compatible | value : String, number : Compatible }
+
+
 {-| A property consisting of a key, a value, and a flag for whether or not
 the property is `!important`.
 -}
@@ -67,10 +77,25 @@ type StyleBlock
     = StyleBlock Selector (List Selector) (List Property)
 
 
-{-| A media query.
+type MediaType
+    = Print
+    | Screen
+    | Speech
+
+
+{-| A media feature expression.
+-}
+type alias MediaExpression =
+    { feature : String, value : Maybe String }
+
+
+{-| The components that make up a media query
 -}
 type MediaQuery
-    = MediaQuery String
+    = AllQuery (List MediaExpression)
+    | OnlyQuery MediaType (List MediaExpression)
+    | NotQuery MediaType (List MediaExpression)
+    | CustomQuery String
 
 
 {-| A [CSS3 Selector](https://www.w3.org/TR/css3-selectors/). All selectors

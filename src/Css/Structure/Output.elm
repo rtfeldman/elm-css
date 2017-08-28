@@ -69,13 +69,65 @@ prettyPrintDeclaration declaration =
                         |> String.join "\n\n"
 
                 query =
-                    List.map (\(MediaQuery str) -> str) mediaQueries
-                        |> String.join " "
+                    List.map mediaQueryToString mediaQueries
+                        |> String.join ",\n"
             in
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
         _ ->
             Debug.crash "not yet implemented :x"
+
+
+mediaQueryToString : MediaQuery -> String
+mediaQueryToString mediaQuery =
+    let
+        prefixWith : String -> MediaType -> List MediaExpression -> String
+        prefixWith str mediaType expressions =
+            str
+                ++ " "
+                ++ String.join " and "
+                    (mediaTypeToString mediaType
+                        :: List.map mediaExpressionToString expressions
+                    )
+    in
+    case mediaQuery of
+        AllQuery expressions ->
+            expressions
+                |> List.map mediaExpressionToString
+                |> String.join " and "
+
+        OnlyQuery mediaType expressions ->
+            prefixWith "only" mediaType expressions
+
+        NotQuery mediaType expressions ->
+            prefixWith "not" mediaType expressions
+
+        CustomQuery str ->
+            str
+
+
+mediaTypeToString : MediaType -> String
+mediaTypeToString mediaType =
+    case mediaType of
+        Print ->
+            "print"
+
+        Screen ->
+            "screen"
+
+        Speech ->
+            "speech"
+
+
+mediaExpressionToString : MediaExpression -> String
+mediaExpressionToString expression =
+    "("
+        ++ expression.feature
+        ++ (expression.value
+                |> Maybe.map ((++) ": ")
+                |> Maybe.withDefault ""
+           )
+        ++ ")"
 
 
 simpleSelectorSequenceToString : SimpleSelectorSequence -> String

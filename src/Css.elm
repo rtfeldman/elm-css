@@ -26,6 +26,7 @@ module Css
         , Color
         , ColorStop
         , ColorValue
+        , Compatible
         , Cursor
         , Directionality
         , Display
@@ -62,7 +63,6 @@ module Css
         , ListStyle
         , ListStylePosition
         , ListStyleType
-        , MediaQuery
         , MinMaxDimension
         , Mm
         , NonMixable
@@ -429,8 +429,6 @@ module Css
         , maxContent
         , maxHeight
         , maxWidth
-        , media
-        , mediaQuery
         , medium
         , middle
         , minContent
@@ -520,9 +518,7 @@ module Css
         , preLine
         , preWrap
         , preserve3d
-        , print
         , progress
-        , projection
         , property
         , proportionalNums
         , pseudoClass
@@ -562,7 +558,6 @@ module Css
         , scaleX
         , scaleY
         , scope
-        , screen
         , screenBlendMode
         , scroll
         , seResize
@@ -661,7 +656,6 @@ module Css
         , transparent
         , true
         , turn
-        , tv
         , underline
         , unicase
         , unset
@@ -687,7 +681,6 @@ module Css
         , whiteSpace
         , width
         , withClass
-        , withMedia
         , wrap
         , wrapReverse
         , xLarge
@@ -705,7 +698,7 @@ module Css
 
 # Misc
 
-@docs Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, manipulation, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, panX, panLeft, panRight, panY, panUp, panDown, perspective, petiteCaps, pinchZoom, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
+@docs Compatible, Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, manipulation, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, panX, panLeft, panRight, panY, panUp, panDown, perspective, petiteCaps, pinchZoom, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
@@ -729,14 +722,9 @@ module Css
 @docs children, descendants, adjacentSiblings, generalSiblings
 
 
-# Media Queries
-
-@docs screen, tv, projection, print
-
-
 # Properties
 
-@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, withMedia, each, media, mediaQuery, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, each, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2
 
 
 # Values
@@ -782,11 +770,6 @@ module Css
 @docs pseudoElement, after, before, firstLetter, firstLine, selection
 
 
-# Media Queries
-
-@docs MediaQuery, screen, print, tv, projection
-
-
 # Source
 
 @docs src
@@ -816,15 +799,10 @@ import Color
 import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Preprocess.Resolve as Resolve
-import Css.Structure as Structure
+import Css.Structure as Structure exposing (..)
 import Hex
 import String
 import Tuple
-
-
-{-| -}
-type alias MediaQuery =
-    Structure.MediaQuery
 
 
 {-| -}
@@ -842,40 +820,12 @@ type alias Style =
     Preprocess.Style
 
 
-type Compatible
-    = Compatible
-
-
 type PseudoClass
     = PseudoClass String (List Style)
 
 
 type PseudoElement
     = PseudoElement String (List Style)
-
-
-{-| -}
-screen : MediaQuery
-screen =
-    Structure.MediaQuery "screen"
-
-
-{-| -}
-print : MediaQuery
-print =
-    Structure.MediaQuery "print"
-
-
-{-| -}
-projection : MediaQuery
-projection =
-    Structure.MediaQuery "projection"
-
-
-{-| -}
-tv : MediaQuery
-tv =
-    Structure.MediaQuery "tv"
 
 
 
@@ -939,6 +889,11 @@ getOverloadedProperty functionName desiredKey style =
 
         Preprocess.ApplyStyles (first :: rest) ->
             getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
+
+
+{-| -}
+type alias Compatible =
+    Structure.Compatible
 
 
 {-| -}
@@ -1475,6 +1430,7 @@ type alias ExplicitLength units =
     , lengthOrNoneOrMinMaxDimension : Compatible
     , textIndent : Compatible
     , flexBasis : Compatible
+    , absoluteLength : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , fontSize : Compatible
     , lengthOrAutoOrCoverOrContain : Compatible
@@ -1670,12 +1626,23 @@ visible =
 
 {-| The `scroll` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
 This can also represent a `scroll` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
+It can also be used in the overflow-block and oveflow-line media features.
 -}
-scroll : Overflow (BackgroundAttachment {})
+scroll :
+    { value : String
+    , scroll : Compatible
+    , overflow : Compatible
+    , backgroundAttachment : Compatible
+    , blockAxisOverflow : Compatible
+    , inlineAxisOverflow : Compatible
+    }
 scroll =
     { value = "scroll"
+    , scroll = Compatible
     , overflow = Compatible
     , backgroundAttachment = Compatible
+    , blockAxisOverflow = Compatible
+    , inlineAxisOverflow = Compatible
     }
 
 
@@ -2573,6 +2540,7 @@ lengthConverter units unitLabel numericValue =
     , flexBasis = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , fontSize = Compatible
+    , absoluteLength = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
     , calc = Compatible
     }
@@ -4394,6 +4362,12 @@ none :
     , value : String
     , textTransform : Compatible
     , touchAction : Compatible
+    , updateFrequency : Compatible
+    , blockAxisOverflow : Compatible
+    , inlineAxisOverflow : Compatible
+    , pointerDevice : Compatible
+    , hoverCapability : Compatible
+    , scriptingSupport : Compatible
     }
 none =
     { value = "none"
@@ -4413,6 +4387,12 @@ none =
     , backgroundImage = Compatible
     , textTransform = Compatible
     , touchAction = Compatible
+    , updateFrequency = Compatible
+    , blockAxisOverflow = Compatible
+    , inlineAxisOverflow = Compatible
+    , pointerDevice = Compatible
+    , hoverCapability = Compatible
+    , scriptingSupport = Compatible
     }
 
 
@@ -5518,7 +5498,7 @@ type alias Normal =
 
 
 {-| -}
-normal : Wrap (FontStyleOrFeatureTagValue (FontWeight {}))
+normal : Normal
 normal =
     { value = "normal"
     , warnings = []
@@ -5526,6 +5506,7 @@ normal =
     , fontWeight = Compatible
     , featureTagValue = Compatible
     , overflowWrap = Compatible
+    , whiteSpace = Compatible
     }
 
 
@@ -7016,65 +6997,6 @@ backgroundSize2 =
 color : ColorValue compatible -> Style
 color c =
     propertyWithWarnings c.warnings "color" c.value
-
-
-{-| -}
-mediaQuery : String -> List Snippet -> Snippet
-mediaQuery queryString snippets =
-    media [ Structure.MediaQuery queryString ] snippets
-
-
-{-| -}
-media : List Structure.MediaQuery -> List Snippet -> Snippet
-media mediaQueries snippets =
-    let
-        snippetDeclarations : List Preprocess.SnippetDeclaration
-        snippetDeclarations =
-            List.concatMap unwrapSnippet snippets
-
-        extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
-        extractStyleBlocks declarations =
-            case declarations of
-                [] ->
-                    []
-
-                (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
-                    styleBlock :: extractStyleBlocks rest
-
-                first :: rest ->
-                    extractStyleBlocks rest
-
-        mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
-        mediaRuleFromStyleBlocks =
-            Preprocess.MediaRule mediaQueries
-                (extractStyleBlocks snippetDeclarations)
-
-        nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
-        nestedMediaRules declarations =
-            case declarations of
-                [] ->
-                    []
-
-                (Preprocess.StyleBlockDeclaration _) :: rest ->
-                    -- These will already have been handled previously, with appropriate
-                    -- bundling, so don't create duplicates here.
-                    nestedMediaRules rest
-
-                (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
-                    -- nest the media queries
-                    Preprocess.MediaRule (mediaQueries ++ nestedMediaQueries) styleBlocks
-                        :: nestedMediaRules rest
-
-                first :: rest ->
-                    first :: nestedMediaRules rest
-    in
-    Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
-
-
-{-| -}
-withMedia : List Structure.MediaQuery -> List Style -> Style
-withMedia =
-    Preprocess.WithMedia
 
 
 

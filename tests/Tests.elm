@@ -6,6 +6,7 @@ import Compile
 import Css exposing (Stylesheet)
 import Expect exposing (Expectation)
 import Fixtures
+import Media
 import Properties
 import Selectors
 import Test exposing (..)
@@ -123,7 +124,7 @@ atRule =
               padding: 0;
           }
 
-          @media print {
+          @media only print {
               body {
                   margin: 2em;
               }
@@ -164,7 +165,7 @@ nestedAtRule =
               margin: auto;
           }
 
-          @media print {
+          @media only print {
               body {
                   margin: 2em;
               }
