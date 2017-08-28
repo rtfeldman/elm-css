@@ -12,18 +12,17 @@ import TestUtil exposing (outdented, prettyPrint)
 mediaTypes : Test
 mediaTypes =
     describe "media types"
-        [ testMediaType "all" Media.all
-        , testMediaType "screen" screen
+        [ testMediaType "screen" screen
         , testMediaType "print" print
         , testMediaType "speech" speech
         ]
 
 
-testMediaType : String -> MediaQuery -> Test
-testMediaType str component =
+testMediaType : String -> MediaType -> Test
+testMediaType str mediaType =
     let
         actual =
-            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery component ])
+            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery (only mediaType []) ])
 
         expectedBody =
             "\n    p {\n        background-color: #FF0000;\n"
@@ -146,45 +145,45 @@ mediaFeatures =
         ]
 
 
-testFeature : String -> List ( MediaQuery, String ) -> Test
+testFeature : String -> List ( Expression, String ) -> Test
 testFeature featureName modifierPairs =
     describe (featureName ++ " media feature")
         (List.indexedMap (expectFeatureWorks featureName) modifierPairs)
 
 
-testUnparameterizedFeature : String -> MediaQuery -> Test
+testUnparameterizedFeature : String -> Expression -> Test
 testUnparameterizedFeature featureName component =
     let
         actual =
-            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery component ])
+            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
             "\n    p {\n        background-color: #FF0000;\n"
 
         expected =
-            "@media only " ++ featureName ++ " {" ++ expectedBody ++ "    }\n}"
+            "@media (" ++ featureName ++ ") {" ++ expectedBody ++ "    }\n}"
     in
     test ("pretty prints the expected boolean output" ++ featureName ++ " media feature") <| \() -> Expect.equal expected actual
 
 
-expectFeatureWorks : String -> Int -> ( MediaQuery, String ) -> Test
+expectFeatureWorks : String -> Int -> ( Expression, String ) -> Test
 expectFeatureWorks featureName n ( component, expectedStr ) =
     let
         actual =
-            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery component ])
+            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
             "\n    p {\n        background-color: #FF0000;\n"
 
         expected =
-            "@media only (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
+            "@media (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
     in
     test ("pretty prints the expected feature output for:" ++ featureName ++ toString n) <| \() -> Expect.equal expected actual
 
 
 basicMediaQuery : MediaQuery -> Snippet
 basicMediaQuery query =
-    media query [ p [ backgroundColor (hex "FF0000") ] ]
+    media [ query ] [ p [ backgroundColor (hex "FF0000") ] ]
 
 
 testMedia : Test
@@ -193,14 +192,14 @@ testMedia =
         input =
             (stylesheet << namespace "homepage")
                 [ body [ padding zero ]
-                , media print [ body [ margin (Css.em 2) ] ]
-                , media (and screen (Media.maxWidth (px 600)))
+                , media [ only print [] ] [ body [ margin (Css.em 2) ] ]
+                , media [ only screen [ Media.maxWidth (px 600) ] ]
                     [ body [ margin (Css.em 3) ] ]
                 , button [ margin auto ]
                 , media
-                    (and screen (and Media.color (and (Media.pointer fine) (and (scan interlace) grid))))
+                    [ only screen [ Media.color, Media.pointer fine, scan interlace, grid ] ]
                     [ p [ Css.color (hex "FF0000") ] ]
-                , media (Media.not (and screen Media.color)) [ p [ Css.color (hex "000000") ] ]
+                , media [ Media.not screen [ Media.color ] ] [ p [ Css.color (hex "000000") ] ]
                 ]
 
         output =
@@ -215,7 +214,7 @@ testMedia =
                 }
             }
 
-            @media only (screen and (max-width: 600px)) {
+            @media only screen and (max-width: 600px) {
                 body {
                     margin: 3em;
                 }
@@ -225,13 +224,13 @@ testMedia =
                 margin: auto;
             }
 
-            @media only (screen and (color and ((pointer: fine) and ((scan: interlace) and grid)))) {
+            @media only screen and (color) and (pointer: fine) and (scan: interlace) and (grid) {
                 p {
                     color: #FF0000;
                 }
             }
 
-            @media not (screen and color) {
+            @media not screen and (color) {
                 p {
                     color: #000000;
                 }
@@ -250,32 +249,6 @@ type CssClasses
     = Container
 
 
-nots : Test
-nots =
-    describe "not"
-        [ test "two nots cancel each other out" <|
-            \_ ->
-                let
-                    input =
-                        stylesheet
-                            [ media (Media.not (Media.not (and screen print)))
-                                [ body [ margin (Css.em 5) ] ]
-                            ]
-
-                    output =
-                        """
-                        @media only (screen and print) {
-                            body {
-                                margin: 5em;
-                            }
-                        }
-                        """
-                in
-                outdented (prettyPrint input)
-                    |> Expect.equal (outdented output)
-        ]
-
-
 testWithMedia : Test
 testWithMedia =
     let
@@ -284,15 +257,15 @@ testWithMedia =
                 [ button [ padding zero ]
                 , body
                     [ Css.color (hex "333333")
-                    , withMedia [ or print monochrome ] [ Css.color (hex "000000") ]
+                    , withMedia [ only print [], Media.all [ monochrome ] ] [ Css.color (hex "000000") ]
                     ]
                 , a
                     [ Css.color (hex "FF0000")
-                    , withMedia [ print ] [ textDecoration none ]
+                    , withMedia [ only print [] ] [ textDecoration none ]
                     ]
                 , class Container
                     [ Css.maxWidth (px 800)
-                    , withMedia [ or (and screen (Media.maxWidth (px 375))) (and screen (Media.maxHeight (px 667))) ]
+                    , withMedia [ only screen [ Media.maxWidth (px 375) ], only screen [ Media.maxHeight (px 667) ] ]
                         [ Css.maxWidth (px 300) ]
                     ]
                 ]
@@ -307,7 +280,8 @@ testWithMedia =
                 color: #333333;
             }
 
-            @media only (print or monochrome) {
+            @media only print,
+             (monochrome) {
                body {
                    color: #000000;
                }
@@ -327,7 +301,8 @@ testWithMedia =
                max-width: 800px;
             }
 
-            @media only ((screen and (max-width: 375px)) or (screen and (max-height: 667px))) {
+            @media only screen and (max-width: 375px),
+             only screen and (max-height: 667px) {
                 .homepageContainer {
                     max-width: 300px;
                 }
@@ -353,7 +328,8 @@ testMediaQuery =
 
         output =
             """
-            @media only tv, screen and (scan: interlace) {
+            @media tv,
+             screen and (scan: interlace) {
                 body {
                     background-color: #FFFFFF;
                 }
@@ -386,7 +362,7 @@ testWithMediaQuery =
                 font-size: 12px;
             }
 
-            @media only screen and (min-device-width: 600px),
+            @media screen and (min-device-width: 600px),
             screen and (min-width: 600px) {
                 body {
                     font-size: 14px;

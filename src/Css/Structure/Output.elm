@@ -71,27 +71,8 @@ prettyPrintDeclaration declaration =
                 query =
                     List.map mediaQueryToString mediaQueries
                         |> String.join ",\n"
-
-                finalQuery =
-                    if String.startsWith "not " query then
-                        -- Media queries can start with `only` or they can start
-                        -- with `not`, but they can't start with both.
-                        -- See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#Pseudo-BNF
-                        query
-                    else
-                        -- Always emit `only` when we don't have `not`,
-                        -- because without `only`, older browsers can
-                        -- break, and with `only`, they'll ignore this declaration
-                        -- instead of breaking.
-                        --
-                        -- The one downside is emitting extra characters, but if
-                        -- every @media is followed by either `not` or `only`,
-                        -- they will gzip very well.
-                        --
-                        -- https://stackoverflow.com/questions/8549529/what-is-the-difference-between-screen-and-only-screen-in-media-queries/14168210#14168210
-                        "only " ++ query
             in
-            "@media " ++ finalQuery ++ " {\n" ++ blocks ++ "\n}"
+            "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
         _ ->
             Debug.crash "not yet implemented :x"
@@ -99,51 +80,54 @@ prettyPrintDeclaration declaration =
 
 mediaQueryToString : MediaQuery -> String
 mediaQueryToString mediaQuery =
+    let
+        prefixWith : String -> MediaType -> List MediaExpression -> String
+        prefixWith str mediaType expressions =
+            str
+                ++ " "
+                ++ String.join " and "
+                    (mediaTypeToString mediaType
+                        :: List.map mediaExpressionToString expressions
+                    )
+    in
     case mediaQuery of
-        FeatureQuery mediaFeature ->
-            mediaFeatureToString mediaFeature
+        AllQuery expressions ->
+            expressions
+                |> List.map mediaExpressionToString
+                |> String.join " and "
 
-        TypeQuery All ->
-            "all"
+        OnlyQuery mediaType expressions ->
+            prefixWith "only" mediaType expressions
 
-        TypeQuery Print ->
-            "print"
-
-        TypeQuery Screen ->
-            "screen"
-
-        TypeQuery Speech ->
-            "speech"
-
-        And first second ->
-            "(" ++ mediaQueryToString first ++ " and " ++ mediaQueryToString second ++ ")"
-
-        Or first second ->
-            "(" ++ mediaQueryToString first ++ " or " ++ mediaQueryToString second ++ ")"
-
-        Not mediaQuery ->
-            let
-                str =
-                    mediaQueryToString mediaQuery
-            in
-            -- If it already had a "not " prefix, negate it by dropping that prefix.
-            if String.startsWith "not " str then
-                String.dropLeft 4 str
-            else
-                "not " ++ str
+        NotQuery mediaType expressions ->
+            prefixWith "not" mediaType expressions
 
         CustomQuery str ->
             str
 
 
-mediaFeatureToString : MediaFeature -> String
-mediaFeatureToString mediaFeature =
-    case mediaFeature.value of
-        Just value ->
-            "(" ++ mediaFeature.key ++ ": " ++ value ++ ")"
+mediaTypeToString : MediaType -> String
+mediaTypeToString mediaType =
+    case mediaType of
+        Print ->
+            "print"
 
-        Nothing ->
-            mediaFeature.key
+        Screen ->
+            "screen"
+
+        Speech ->
+            "speech"
+
+
+mediaExpressionToString : MediaExpression -> String
+mediaExpressionToString expression =
+    "("
+        ++ expression.feature
+        ++ (expression.value
+                |> Maybe.map ((++) ": ")
+                |> Maybe.withDefault ""
+           )
+        ++ ")"
 
 
 simpleSelectorSequenceToString : SimpleSelectorSequence -> String
