@@ -4,6 +4,7 @@ const _ = require("lodash"),
   path = require("path"),
   glob = require("glob"),
   findExposedValues = require("./find-exposed-values").findExposedValues,
+  writeMain = require("./generate-main").writeMain,
   writeFile = require("./generate-class-modules").writeFile,
   fs = require("fs-extra");
 
@@ -28,21 +29,36 @@ findExposedValues(
   [cssSourceDir],
   true
 )
-  .then(function(stuff) {
+  .then(function(modules) {
     return Promise.all(
-      stuff.map(function(modul) {
-        return writeFile(
-          path.join(
-            process.cwd(),
-            "css/elm-stuff/generated-code/rtfeldman/elm-css"
-          ),
-          modul
-        );
+      [writeMain(modules)].concat(
+        modules.map(function(modul) {
+          return writeFile(
+            path.join(
+              process.cwd(),
+              "css",
+              "elm-stuff",
+              "generated-code",
+              "rtfeldman",
+              "elm-css"
+            ),
+            modul
+          );
+        })
+      )
+    )
+      .then(function(results) {
+        const mainFilename = results[0];
+
+        console.log("wrote", mainFilename); // TODO run index.js on this file
       })
-    );
+      .catch(function(error) {
+        console.error(error);
+        process.exit(1);
+      });
   })
   .then(function() {
-    console.log("it worked");
+    console.log("Done!");
   })
   .catch(function(error) {
     console.error(error);
