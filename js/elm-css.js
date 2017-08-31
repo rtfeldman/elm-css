@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 //@flow
 
-var elmCss = require("./");
+var elmCss = require("../");
 var program = require("commander");
 var chalk = require("chalk");
-var pkg = require("./package.json");
+var pkg = require("../package.json");
 var sourcePath = null;
 
 program
