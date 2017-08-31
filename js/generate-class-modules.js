@@ -64,9 +64,15 @@ function writeFile(
     [generatedCodeRoot].concat(modul.name.split("."))
   );
   return new Promise(function(resolve, reject) {
-    mkdirp(directory, function(error) {
-      if (error) return reject(error);
-      fs.writeFile(path.join(directory, "Css.elm"), generateModule(modul));
+    mkdirp(directory, function(dirError) {
+      if (dirError) return reject(dirError);
+
+      const filename = path.join(directory, "Css.elm");
+      fs.writeFile(filename, generateModule(modul), function(fileError) {
+        if (fileError) return reject(fileError);
+
+        resolve(filename);
+      });
     });
   });
 }
