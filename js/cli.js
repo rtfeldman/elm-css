@@ -23,7 +23,7 @@ const elmFilePaths = glob.sync("/**/*.elm", {
 findExposedValues(
   ["Css.Class.Class", "Css.Snippet"],
   readElmiPath,
-  "/Users/luke/dev/rtfeldman/elm-css/examples/generated-classes/css/",
+  path.join(process.cwd(), "css"),
   elmFilePaths,
   [cssSourceDir],
   true
