@@ -1,4 +1,4 @@
-module Dreamwriter.Editor exposing (editor)
+module Dreamwriter.Editor exposing (editor, topBar)
 
 import Css exposing (..)
 import Css.Class as Gen exposing (Class)
