@@ -10,6 +10,7 @@ type ModuleDeclaration = {
 const fs = require("fs-extra"),
   mkdirp = require("mkdirp"),
   _ = require("lodash"),
+  classNameForValue = require("./generate-class-modules").classNameForValue,
   path = require("path");
 
 function writeMain(modules /*: Array<ModuleDeclaration> */) {
@@ -19,7 +20,8 @@ function writeMain(modules /*: Array<ModuleDeclaration> */) {
     "elm-stuff",
     "generated-code",
     "rtfeldman",
-    "elm-css"
+    "elm-css",
+    "src"
   );
 
   const contents = generateMain(modules);
@@ -48,7 +50,7 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     .join("\n");
 
   const fileStructure =
-    "fileStructure: CssFileStructure\n" +
+    "fileStructure : Css.File.CssFileStructure\n" +
     "fileStructure =\n" +
     "    Css.File.toFileStructure\n        [ " +
     modules.map(generateModule).join("\n        , ") +
@@ -64,9 +66,38 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
   );
 }
 
+function generatePlainSnippet(moduleName /*: string*/, valueName /*: string*/) {
+  return moduleName + "." + valueName;
+}
+
+function generateClassSnippet(moduleName /*: string*/, valueName /*: string*/) {
+  return null; // TODO actually do this
+}
+
+function generateStylesheet(modul /*: ModuleDeclaration */) {
+  const entries = modul.values.map(function(value) {
+    switch (value.signature) {
+      case "Css.Snippet":
+        return generatePlainSnippet(modul.name, value.name);
+      case "Css.Class.Class":
+        return generateClassSnippet(modul.name, value.name);
+      default:
+        throw Error("Unsupported signature " + value.signature);
+    }
+  });
+
+  // TODO we don't need this _.compact after implementing class snippets
+  return (
+    "Css.File.compile [ Css.stylesheet [ " +
+    _.compact(entries).join(", ") +
+    " ] ]"
+  );
+}
+
 function generateModule(modul /*: ModuleDeclaration */) {
+  const filename = modul.name.replace(".", path.sep) + ".css";
   // ("homepage.css", Css.File.compile[Homepage.css])
-  return "(code for " + modul.name + ")";
+  return '( "' + filename + '", ' + generateStylesheet(modul) + " )";
 }
 
 module.exports = {
