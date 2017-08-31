@@ -4,6 +4,7 @@ const _ = require("lodash"),
   path = require("path"),
   glob = require("glob"),
   findExposedValues = require("./find-exposed-values").findExposedValues,
+  writeFile = require("./generate-class-modules").writeFile,
   fs = require("fs-extra");
 
 const binaryExtension = process.platform === "win32" ? ".exe" : "";
@@ -20,12 +21,30 @@ const elmFilePaths = glob.sync("/**/*.elm", {
 });
 
 findExposedValues(
-  ["Css.Class", "Css.Snippet"],
+  ["Css.Class.Class", "Css.Snippet"],
   readElmiPath,
-  "/home/rtfeldman/code/elm-css/examples/generated-classes/css/",
+  "/Users/luke/dev/rtfeldman/elm-css/examples/generated-classes/css/",
   elmFilePaths,
   [cssSourceDir],
   true
-).then(function(stuff) {
-  console.log("Stuff", JSON.stringify(stuff));
-});
+)
+  .then(function(stuff) {
+    return Promise.all(
+      stuff.map(function(modul) {
+        return writeFile(
+          path.join(
+            process.cwd(),
+            "css/elm-stuff/generated-code/rtfeldman/elm-css"
+          ),
+          modul
+        );
+      })
+    );
+  })
+  .then(function() {
+    console.log("it worked");
+  })
+  .catch(function(error) {
+    console.error(error);
+    process.exit(1);
+  });
