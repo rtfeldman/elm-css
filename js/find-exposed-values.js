@@ -8,10 +8,6 @@ const _ = require("lodash"),
   fs = require("fs-extra"),
   spawn = require("cross-spawn");
 
-// const binaryExtension = process.platform === "win32" ? ".exe" : "";
-// const readElmiPath = path.join(__dirname, "..", "bin", "elm-interface-to-json") +
-//   binaryExtension;
-
 function findExposedValues(
   types /*: Array<string>*/,
   readElmiPath /*: string*/,
