@@ -30,6 +30,6 @@ elmCss(process.cwd(), program.output, program.pathToMake)
     });
   })
   .catch(function(error) {
-    console.log(chalk.red(error));
+    console.error(chalk.red(error));
     process.exit(1);
   });
