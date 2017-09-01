@@ -5,8 +5,10 @@ const fs = require("fs-extra"),
   glob = require("glob");
 
 // Recursively search directories for *.elm files, excluding elm-stuff/
-module.exports = function findElmFiles(filename /*: string */) {
-  var candidates;
+module.exports = function findElmFiles(
+  filename /*: string */
+) /*: Array<string> */ {
+  var candidates /*: Array<string> */;
 
   if (!fs.existsSync(filename)) {
     candidates = [];

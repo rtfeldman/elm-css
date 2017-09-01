@@ -8,6 +8,7 @@ const _ = require("lodash"),
   writeMain = require("./js/generate-main").writeMain,
   writeFile = require("./js/generate-class-modules").writeFile,
   findElmFiles = require("./js/find-elm-files"),
+  compileAll = require("./js/compile-all"),
   fs = require("fs-extra"),
   compile = require("node-elm-compiler").compile,
   extractCssResults = require("./js/extract-css-results.js"),
@@ -42,46 +43,63 @@ module.exports = function(
     "elm-css"
   );
 
-  return findExposedValues(
-    ["Css.Class.Class", "Css.Snippet"],
-    readElmiPath,
-    generatedDir,
-    elmFilePaths,
-    [cssSourceDir],
-    true
-  )
-    .then(function(modules) {
-      const writeClasses = modules.map(function(modul) {
-        return writeFile(path.join(generatedDir, "classes"), modul);
+  mkdirp.sync(generatedDir);
+
+  // Symlink our existing elm-stuff into the generated code,
+  // to avoid re-downloading and recompiling things we already
+  // just downloaded and compiled.
+  var generatedElmStuff = path.join(generatedDir, "elm-stuff");
+
+  if (!fs.existsSync(generatedElmStuff)) {
+    fs.symlinkSync(
+      path.join(cssSourceDir, "elm-stuff"),
+      generatedElmStuff,
+      "junction" // Only affects Windows, but necessary for this to work there. See https://github.com/gulpjs/vinyl-fs/issues/210
+    );
+  }
+
+  return compileAll(pathToMake, elmFilePaths)
+    .then(function() {
+      return findExposedValues(
+        ["Css.Class.Class", "Css.Snippet"],
+        readElmiPath,
+        generatedDir,
+        elmFilePaths,
+        [cssSourceDir],
+        true
+      ).then(function(modules) {
+        const writeClasses = modules.map(function(modul) {
+          return writeFile(path.join(generatedDir, "classes"), modul);
+        });
+
+        const writeMainAndPackage = Promise.all([
+          writeMain(generatedDir, modules)
+          // TODO write ${generatedDir}/elm-package.json AFTER writeMain in the Promise.all list
+        ])
+          .then(function(promiseOutcomes) {
+            const mainFilename = promiseOutcomes[0];
+
+            process.chdir(generatedDir);
+
+            return generateCssFiles(
+              mainFilename,
+              path.join(generatedDir, jsEmitterFilename),
+              outputDir,
+              pathToMake
+            );
+          })
+          .catch(resetWorkingDir);
+
+        return Promise.all([writeMainAndPackage].concat(writeClasses))
+          .then(function(promiseOutcomes) {
+            const mainFilename = promiseOutcomes[0];
+
+            process.chdir(originalWorkingDir);
+
+            return Promise.resolve(mainFilename);
+          })
+          .catch(resetWorkingDir);
       });
-
-      const writeMainAndPackage = Promise.all([
-        writeMain(generatedDir, modules)
-        // TODO write ${generatedDir}/elm-package.json AFTER writeMain in the Promise.all list
-      ])
-        .then(function(promiseOutcomes) {
-          const mainFilename = promiseOutcomes[0];
-
-          process.chdir(generatedDir);
-
-          return generateCssFiles(
-            mainFilename,
-            path.join(generatedDir, jsEmitterFilename),
-            outputDir,
-            pathToMake
-          );
-        })
-        .catch(resetWorkingDir);
-
-      return Promise.all([writeMainAndPackage].concat(writeClasses))
-        .then(function(promiseOutcomes) {
-          const mainFilename = promiseOutcomes[0];
-
-          process.chdir(originalWorkingDir);
-
-          return Promise.resolve(mainFilename);
-        })
-        .catch(resetWorkingDir);
     })
     .catch(resetWorkingDir);
 };
