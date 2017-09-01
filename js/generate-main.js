@@ -41,7 +41,7 @@ function writeMain(modules /*: Array<ModuleDeclaration> */) {
 }
 
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
-  const otherModules = ["Css", "Css.File"];
+  const otherModules = ["Css", "Css.Class", "Css.File"];
   const imports = otherModules
     .concat(_.map(modules, "name"))
     .map(function(importName) {
@@ -58,6 +58,9 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
 
   const end =
     "port files : Css.File.CssFileStructure -> Cmd msg\n\n\n" +
+    "classToSnippet : String -> Css.Class.Class -> Css.Snippet\n" +
+    "classToSnippet str class =\n" +
+    "    classToSnippet str class\n\n\n" + // This is just to make type-checking pass. We'll splice in a useful implementation after emitting.
     "main : Css.File.CssCompilerProgram\n" +
     "main =\n    Css.File.compiler files fileStructure\n";
 
@@ -66,32 +69,23 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
   );
 }
 
-function generatePlainSnippet(moduleName /*: string*/, valueName /*: string*/) {
-  return moduleName + "." + valueName;
-}
-
-function generateClassSnippet(moduleName /*: string*/, valueName /*: string*/) {
-  return null; // TODO actually do this
-}
-
 function generateStylesheet(modul /*: ModuleDeclaration */) {
   const entries = modul.values.map(function(value) {
     switch (value.signature) {
       case "Css.Snippet":
-        return generatePlainSnippet(modul.name, value.name);
+        return modul.name + "." + value.name;
       case "Css.Class.Class":
-        return generateClassSnippet(modul.name, value.name);
+        const className = classNameForValue(modul.name, value.name);
+
+        return (
+          'classToSnippet "' + className + '" ' + modul.name + "." + value.name
+        );
       default:
         throw Error("Unsupported signature " + value.signature);
     }
   });
 
-  // TODO we don't need this _.compact after implementing class snippets
-  return (
-    "Css.File.compile [ Css.stylesheet [ " +
-    _.compact(entries).join(", ") +
-    " ] ]"
-  );
+  return "Css.File.compile [ Css.stylesheet [ " + entries.join(", ") + " ] ]";
 }
 
 function generateModule(modul /*: ModuleDeclaration */) {
