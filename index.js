@@ -25,14 +25,6 @@ module.exports = function(
   pathToMake /*: ?string */
 ) {
   const cssSourceDir = path.join(projectDir, "css");
-  const originalWorkingDir = process.cwd();
-
-  function resetWorkingDir(error) {
-    process.chdir(originalWorkingDir);
-    return Promise.reject(error);
-  }
-
-  process.chdir(projectDir);
 
   const elmFilePaths = findElmFiles(cssSourceDir);
   const generatedDir = path.join(
@@ -58,50 +50,44 @@ module.exports = function(
     );
   }
 
-  return compileAll(pathToMake, elmFilePaths)
-    .then(function() {
-      return findExposedValues(
-        ["Css.Class.Class", "Css.Snippet"],
-        readElmiPath,
-        generatedDir,
-        elmFilePaths,
-        [cssSourceDir],
-        true
-      ).then(function(modules) {
-        const writeClasses = modules.map(function(modul) {
-          return writeFile(path.join(generatedDir, "classes"), modul);
-        });
-
-        const writeMainAndPackage = Promise.all([
-          writeMain(generatedDir, modules)
-          // TODO write ${generatedDir}/elm-package.json AFTER writeMain in the Promise.all list
-        ])
-          .then(function(promiseOutcomes) {
-            const mainFilename = promiseOutcomes[0];
-
-            process.chdir(generatedDir);
-
-            return generateCssFiles(
-              mainFilename,
-              path.join(generatedDir, jsEmitterFilename),
-              outputDir,
-              pathToMake
-            );
-          })
-          .catch(resetWorkingDir);
-
-        return Promise.all([writeMainAndPackage].concat(writeClasses))
-          .then(function(promiseOutcomes) {
-            const mainFilename = promiseOutcomes[0];
-
-            process.chdir(originalWorkingDir);
-
-            return Promise.resolve(mainFilename);
-          })
-          .catch(resetWorkingDir);
+  return compileAll(pathToMake, elmFilePaths).then(function() {
+    return findExposedValues(
+      ["Css.Class.Class", "Css.Snippet"],
+      readElmiPath,
+      generatedDir,
+      elmFilePaths,
+      [cssSourceDir],
+      true
+    ).then(function(modules) {
+      const writeClasses = modules.map(function(modul) {
+        return writeFile(path.join(generatedDir, "classes"), modul);
       });
-    })
-    .catch(resetWorkingDir);
+
+      const writeMainAndPackage = Promise.all([
+        writeMain(generatedDir, modules)
+        // TODO write ${generatedDir}/elm-package.json AFTER writeMain in the Promise.all list
+      ]).then(function(promiseOutcomes) {
+        const mainFilename = promiseOutcomes[0];
+
+        process.chdir(generatedDir);
+
+        return generateCssFiles(
+          mainFilename,
+          path.join(generatedDir, jsEmitterFilename),
+          outputDir,
+          pathToMake
+        );
+      });
+
+      return Promise.all(
+        [writeMainAndPackage].concat(writeClasses)
+      ).then(function(promiseOutcomes) {
+        const mainFilename = promiseOutcomes[0];
+
+        return Promise.resolve(mainFilename);
+      });
+    });
+  });
 };
 
 function generateCssFiles(
