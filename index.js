@@ -5,6 +5,7 @@ const _ = require("lodash"),
   glob = require("glob"),
   mkdirp = require("mkdirp"),
   findExposedValues = require("./js/find-exposed-values").findExposedValues,
+  writeGeneratedElmPackage = require("./js/generate-elm-package"),
   writeMain = require("./js/generate-main").writeMain,
   writeFile = require("./js/generate-class-modules").writeFile,
   findElmFiles = require("./js/find-elm-files"),
@@ -25,22 +26,29 @@ module.exports = function(
   pathToMake /*: ?string */
 ) {
   const cssSourceDir = path.join(projectDir, "css");
+  const cssElmPackageJson = path.join(cssSourceDir, "elm-package.json");
+
+  if (!fs.existsSync(cssElmPackageJson)) {
+    mkdirp.sync(cssSourceDir);
+
+    // TODO do an init here
+  }
 
   const elmFilePaths = findElmFiles(cssSourceDir);
   const generatedDir = path.join(
-    cssSourceDir,
+    projectDir,
     "elm-stuff",
     "generated-code",
     "rtfeldman",
     "elm-css"
   );
 
-  mkdirp.sync(generatedDir);
-
   // Symlink our existing elm-stuff into the generated code,
   // to avoid re-downloading and recompiling things we already
   // just downloaded and compiled.
   var generatedElmStuff = path.join(generatedDir, "elm-stuff");
+
+  mkdirp.sync(generatedDir);
 
   if (!fs.existsSync(generatedElmStuff)) {
     fs.symlinkSync(
@@ -50,7 +58,24 @@ module.exports = function(
     );
   }
 
-  return compileAll(pathToMake, cssSourceDir, elmFilePaths).then(function() {
+  const generatedSrc = path.join(generatedDir, "src");
+  const mainFilename = path.join(generatedSrc, "Main.elm");
+
+  const makeGeneratedSrcDir = new Promise(function(resolve, reject) {
+    mkdirp(generatedSrc, function(error) {
+      if (error) reject(error);
+
+      resolve();
+    });
+  });
+
+  return Promise.all([
+    writeGeneratedElmPackage(generatedDir, generatedSrc, cssSourceDir),
+    makeGeneratedSrcDir,
+    compileAll(pathToMake, cssSourceDir, elmFilePaths)
+  ]).then(function(promiseOutputs) {
+    const repository /*: string */ = promiseOutputs[0];
+
     return findExposedValues(
       ["Css.Class.Class", "Css.Snippet"],
       readElmiPath,
@@ -59,63 +84,41 @@ module.exports = function(
       [cssSourceDir],
       true
     ).then(function(modules) {
-      const writeClasses = modules.map(function(modul) {
-        return writeFile(path.join(generatedDir, "classes"), modul);
-      });
-
-      const writeMainAndPackage = Promise.all([
-        writeMain(generatedDir, modules)
-        // TODO write ${generatedDir}/elm-package.json AFTER writeMain in the Promise.all list
-      ]).then(function(promiseOutcomes) {
-        const mainFilename = promiseOutcomes[0];
-
-        process.chdir(generatedDir);
-
-        return generateCssFiles(
-          mainFilename,
-          path.join(generatedDir, jsEmitterFilename),
-          outputDir,
-          pathToMake
-        );
-      });
-
       return Promise.all(
-        [writeMainAndPackage].concat(writeClasses)
-      ).then(function(promiseOutcomes) {
-        const mainFilename = promiseOutcomes[0];
-
-        return Promise.resolve(mainFilename);
+        [writeMain(mainFilename, modules)].concat(
+          modules.map(function(modul) {
+            return writeFile(path.join(generatedDir, "classes"), modul);
+          })
+        )
+      ).then(function() {
+        return emit(
+          mainFilename,
+          repository,
+          path.join(generatedDir, jsEmitterFilename),
+          generatedDir,
+          pathToMake
+        ).then(writeResults(outputDir));
       });
     });
   });
 };
 
-function generateCssFiles(
-  mainElmFile,
-  emitterDest,
-  outputDir,
-  stylesheetsModule,
-  stylesheetsPort,
-  pathToMake
-) {
-  return emit(mainElmFile, emitterDest, pathToMake).then(
-    writeResults(outputDir)
-  );
-}
-
 function emit(
   src /*: string */,
+  repository /*: string */,
   dest /*: string */,
+  cwd /*: string */,
   pathToMake /*: ?string */
 ) {
   // Compile the js file.
   return compileEmitter(src, {
     output: dest,
     yes: true,
+    cwd: cwd,
     pathToMake: pathToMake
   })
     .then(function() {
-      return hackMain(dest);
+      return hackMain(repository, dest);
     })
     .then(function() {
       return extractCssResults(dest);
