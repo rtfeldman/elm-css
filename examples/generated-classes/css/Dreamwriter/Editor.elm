@@ -1,4 +1,4 @@
-module Dreamwriter.Editor exposing (editor, topBar)
+module Dreamwriter.Editor exposing (editor, headerBar)
 
 import Css exposing (..)
 import Css.Class as Gen exposing (Class)
@@ -10,6 +10,6 @@ editor =
     div [ color (hex "ff0000") ]
 
 
-topBar : Class
-topBar =
+headerBar : Class
+headerBar =
     Gen.class [ color (hex "ccbbaa"), textDecoration none ]
