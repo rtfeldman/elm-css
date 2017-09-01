@@ -30,7 +30,13 @@ function writeMain(
 }
 
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
-  const otherModules = ["Css", "Css.Class", "Css.File", "Json.Decode"]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
+  const otherModules = [
+    "Css",
+    "Css.Class",
+    "Css.File",
+    "Platform",
+    "Json.Decode"
+  ]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
   const imports = otherModules
     .concat(_.map(modules, "name"))
     .map(function(importName) {
@@ -47,11 +53,21 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
 
   const end =
     "port files : Css.File.CssFileStructure -> Cmd msg\n\n\n" +
+    "compiler : (Css.File.CssFileStructure -> Cmd Never) -> (() -> Css.File.CssFileStructure) -> Program () () Never\n" +
+    "compiler filesPort getStructure =\n" +
+    // Note: This must take flags so that `getStructure` is not evaluated on
+    // startup. We need it to be delayed by 1 tick so we have a chance for
+    // hack-main.js to take effect first!
+    "    Platform.programWithFlags\n" +
+    "        { init = \\flags -> ( (), filesPort (getStructure ()) )\n" +
+    "        , update = \\_ _ -> ( (), Cmd.none )\n" +
+    "        , subscriptions = \\_ -> Sub.none\n" +
+    "        }\n\n\n" +
     "classToSnippet : String -> Css.Class.Class -> Css.Snippet\n" +
     "classToSnippet str class =\n" +
     "    classToSnippet str class\n\n\n" + // This is just to make type-checking pass. We'll splice in a useful implementation after emitting.
-    "main : Css.File.CssCompilerProgram\n" +
-    "main =\n    Css.File.compiler files fileStructure\n";
+    "main : Program () () Never\n" +
+    "main =\n    compiler files fileStructure\n";
 
   return ["port module Main exposing (main)", imports, fileStructure, end].join(
     "\n\n\n"

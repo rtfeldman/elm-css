@@ -38,15 +38,27 @@ compile =
     Css.compile
 
 
-{-| DEPRECATED.
+{-| Create a program that compiles an elm-css stylesheet to a CSS file.
+
+    import Css.File exposing (CssCompilerProgram, CssFileStructure)
+    import HomepageCss as Homepage
+
+    port files : CssFileStructure -> Cmd msg
+
+    fileStructure : CssFileStructure
+    fileStructure =
+        Css.File.toFileStructure
+            [ ( "homepage.css", Css.File.compile [ Homepage.css ] ) ]
+
+    main : CssCompilerProgram
+    main =
+        Css.File.compiler files fileStructure
+
 -}
-compiler : (CssFileStructure -> Cmd Never) -> (() -> CssFileStructure) -> CssCompilerProgram
-compiler filesPort getStructure =
-    -- Note: This must take flags so that `getStructure` is not evaluated on
-    -- startup. We need it to be delayed by 1 tick so we have a chance for
-    -- hack-main.js to take effect first!
-    Platform.programWithFlags
-        { init = \flags -> ( (), filesPort (getStructure ()) )
+compiler : (CssFileStructure -> Cmd Never) -> CssFileStructure -> CssCompilerProgram
+compiler filesPort structure =
+    Platform.program
+        { init = ( (), filesPort structure )
         , update = \_ _ -> ( (), Cmd.none )
         , subscriptions = \_ -> Sub.none
         }
@@ -58,4 +70,4 @@ See [`compiler`](#compiler).
 
 -}
 type alias CssCompilerProgram =
-    Program () () Never
+    Program Never () Never
