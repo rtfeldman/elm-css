@@ -4,6 +4,7 @@
 const elmCss = require("../"),
   program = require("commander"),
   chalk = require("chalk"),
+  _ = require("lodash"),
   path = require("path"),
   pkg = require("../package.json");
 
@@ -18,13 +19,14 @@ program
   .option("-m, --pathToMake [pathToMake]", "(optional) path to elm-make")
   .parse(process.argv);
 
+const headline = "elm-css " + pkg.version;
+const bar = _.repeat("-", headline.length);
+
+console.log("\n" + headline + "\n" + bar + "\n");
+
 elmCss(process.cwd(), program.output, program.pathToMake)
   .then(function(results) {
-    console.log(
-      chalk.green(
-        "Successfully generated output! The following css files were created: "
-      )
-    );
+    console.log(chalk.green("Success! I created these css files:"));
     results.forEach(function(result) {
       console.log(chalk.blue("- " + result.filename));
     });
