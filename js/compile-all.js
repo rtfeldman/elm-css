@@ -12,12 +12,14 @@ const compile = require("node-elm-compiler").compile,
 // which we can then read to determine which tests need to be run.
 module.exports = function compileAll(
   pathToMake /*: ?string */,
+  cwd /*: string */,
   testFilePaths /*: Array<string> */
 ) {
   return new Promise(function(resolve, reject) {
     var compileProcess = compile(testFilePaths, {
       output: "/dev/null",
       verbose: false,
+      cwd: cwd,
       yes: true,
       pathToMake: pathToMake,
       warn: true,
