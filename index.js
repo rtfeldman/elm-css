@@ -50,7 +50,7 @@ module.exports = function(
     );
   }
 
-  return compileAll(pathToMake, elmFilePaths).then(function() {
+  return compileAll(pathToMake, cssSourceDir, elmFilePaths).then(function() {
     return findExposedValues(
       ["Css.Class.Class", "Css.Snippet"],
       readElmiPath,
