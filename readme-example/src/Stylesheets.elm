@@ -7,8 +7,8 @@ import MyCss
 port files : CssFileStructure -> Cmd msg
 
 
-fileStructure : CssFileStructure
-fileStructure =
+fileStructure : () -> CssFileStructure
+fileStructure _ =
     Css.File.toFileStructure
         [ ( "index.css", Css.File.compile [ MyCss.css ] ) ]
 

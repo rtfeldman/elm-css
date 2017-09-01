@@ -1,29 +1,31 @@
-module.exports = function(verbose) {
-  var binstall = require("binstall");
-  var path = require("path");
-  var fs = require("fs");
-  var packageInfo = require(path.join(__dirname, "package.json"));
+//@flow
+
+module.exports = function(verbose /*: ?bool */) {
+  const binstall = require("binstall");
+  const path = require("path");
+  const fs = require("fs");
+  const packageInfo = require("./package.json");
 
   // Use major.minor.patch from version string - e.g. "1.2.3" from "1.2.3-alpha"
-  var binVersion = packageInfo.version.match(/^(\d+\.\d+\.\d+).*$/)[1];
+  const binVersion = packageInfo.version.match(/^(\d+\.\d+\.\d+).*$/)[1];
 
   // 'arm', 'ia32', or 'x64'.
-  var arch = process.arch;
+  const arch = process.arch;
 
   // 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
-  var operatingSystem = process.platform;
+  const operatingSystem = process.platform;
 
-  var filename = operatingSystem + "-" + arch + ".tar.gz";
-  var url =
-    "https://dl.bintray.com/elmlang/elm-test/" + binVersion + "/" + filename;
+  const filename = operatingSystem + "-" + arch + ".tar.gz";
+  const url =
+    // TODO upload these binaries
+    "https://dl.bintray.com/elmlang/elm-css/" + binVersion + "/" + filename;
 
-  var binariesDir = path.join(__dirname, "bin");
-  var packageInfo = require(path.join(__dirname, "package.json"));
-  var binaryExtension = process.platform === "win32" ? ".exe" : "";
-  var executablePaths = [
+  const binariesDir = path.join(__dirname, "bin");
+  const binaryExtension = process.platform === "win32" ? ".exe" : "";
+  const executablePaths = [
     path.join(binariesDir, "elm-interface-to-json" + binaryExtension)
   ];
-  var errorMessage =
+  const errorMessage =
     "Unfortunately, there are no elm-test " +
     binVersion +
     " binaries available on your operating system and architecture.\n\nIf you would like to build Elm from source, there are instructions at https://github.com/elm-lang/elm-platform#build-from-source\n";

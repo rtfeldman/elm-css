@@ -7,8 +7,8 @@ import HomepageCss as Homepage
 port files : CssFileStructure -> Cmd msg
 
 
-fileStructure : CssFileStructure
-fileStructure =
+fileStructure : () -> CssFileStructure
+fileStructure _ =
     Css.File.toFileStructure
         [ ( "homepage.css", Css.File.compile [ Homepage.css ] ) ]
 

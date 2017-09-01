@@ -4,7 +4,7 @@
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
   "bin": {
-    "elm-css": "./elm-css.js"
+    "elm-css": "./js/cli.js"
   },
   "directories": {
     "test": "tests"
