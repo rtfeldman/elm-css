@@ -1,66 +1,35 @@
+#!/usr/bin/env node
 //@flow
 
-const _ = require("lodash"),
+const elmCss = require("../"),
+  program = require("commander"),
+  chalk = require("chalk"),
   path = require("path"),
-  glob = require("glob"),
-  findExposedValues = require("./find-exposed-values").findExposedValues,
-  writeMain = require("./generate-main").writeMain,
-  writeFile = require("./generate-class-modules").writeFile,
-  fs = require("fs-extra");
+  pkg = require("../package.json");
 
-const binaryExtension = process.platform === "win32" ? ".exe" : "";
-const readElmiPath =
-  path.join(__dirname, "..", "bin", "elm-interface-to-json") + binaryExtension;
+program
+  .version(pkg.version)
+  .usage("PATH # path to your Stylesheets.elm file")
+  .option(
+    "-o, --output [outputDir]",
+    "(optional) directory in which to write CSS files. Defaults to build/",
+    path.join(process.cwd(), "build")
+  )
+  .option("-m, --pathToMake [pathToMake]", "(optional) path to elm-make")
+  .parse(process.argv);
 
-const cssSourceDir = path.join(process.cwd(), "css");
-// TODO use resolveFilePath from node-test-runner instead
-const elmFilePaths = glob.sync("/**/*.elm", {
-  root: cssSourceDir,
-  nocase: true,
-  ignore: "/**/elm-stuff/**",
-  nodir: true
-});
-
-findExposedValues(
-  ["Css.Class.Class", "Css.Snippet"],
-  readElmiPath,
-  path.join(process.cwd(), "css"),
-  elmFilePaths,
-  [cssSourceDir],
-  true
-)
-  .then(function(modules) {
-    return Promise.all(
-      [writeMain(modules)].concat(
-        modules.map(function(modul) {
-          return writeFile(
-            path.join(
-              process.cwd(),
-              "css",
-              "elm-stuff",
-              "generated-code",
-              "rtfeldman",
-              "elm-css"
-            ),
-            modul
-          );
-        })
+elmCss(process.cwd(), program.output, program.pathToMake)
+  .then(function(results) {
+    console.log(
+      chalk.green(
+        "Successfully generated output! The following css files were created: "
       )
-    )
-      .then(function(results) {
-        const mainFilename = results[0];
-
-        console.log("wrote", mainFilename); // TODO run index.js on this file
-      })
-      .catch(function(error) {
-        console.error(error);
-        process.exit(1);
-      });
-  })
-  .then(function() {
-    console.log("Done!");
+    );
+    results.forEach(function(result) {
+      console.log(chalk.blue("- " + result.filename));
+    });
   })
   .catch(function(error) {
-    console.error(error);
+    console.log(chalk.red(error));
     process.exit(1);
   });

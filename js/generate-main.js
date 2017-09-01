@@ -13,16 +13,12 @@ const fs = require("fs-extra"),
   classNameForValue = require("./generate-class-modules").classNameForValue,
   path = require("path");
 
-function writeMain(modules /*: Array<ModuleDeclaration> */) {
-  const dirname = path.join(
-    process.cwd(),
-    "css",
-    "elm-stuff",
-    "generated-code",
-    "rtfeldman",
-    "elm-css",
-    "src"
-  );
+// TODO also need to write elm-package.json in that directory.
+function writeMain(
+  generatedDir /*:string */,
+  modules /*: Array<ModuleDeclaration> */
+) {
+  const dirname = path.join(generatedDir, "src");
 
   const contents = generateMain(modules);
 
@@ -41,7 +37,7 @@ function writeMain(modules /*: Array<ModuleDeclaration> */) {
 }
 
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
-  const otherModules = ["Css", "Css.Class", "Css.File"];
+  const otherModules = ["Css", "Css.Class", "Css.File", "Json.Decode"]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
   const imports = otherModules
     .concat(_.map(modules, "name"))
     .map(function(importName) {
@@ -50,8 +46,8 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     .join("\n");
 
   const fileStructure =
-    "fileStructure : Css.File.CssFileStructure\n" +
-    "fileStructure =\n" +
+    "fileStructure : () -> Css.File.CssFileStructure\n" +
+    "fileStructure _ =\n" +
     "    Css.File.toFileStructure\n        [ " +
     modules.map(generateModule).join("\n        , ") +
     "\n        ]";
