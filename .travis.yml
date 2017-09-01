@@ -47,6 +47,7 @@ install:
 
 script:
   - elm-format --validate src tests examples readme-example
+  - flow check
   - cd examples
   - elm-make --output=/dev/null --yes
   - cd ../readme-example
