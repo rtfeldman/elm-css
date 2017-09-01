@@ -7,6 +7,7 @@ const _ = require("lodash"),
   findExposedValues = require("./js/find-exposed-values").findExposedValues,
   writeMain = require("./js/generate-main").writeMain,
   writeFile = require("./js/generate-class-modules").writeFile,
+  findElmFiles = require("./js/find-elm-files"),
   fs = require("fs-extra"),
   compile = require("node-elm-compiler").compile,
   extractCssResults = require("./js/extract-css-results.js"),
@@ -32,14 +33,7 @@ module.exports = function(
 
   process.chdir(projectDir);
 
-  // TODO use resolveFilePath from node-test-runner instead
-  const elmFilePaths = glob.sync("/**/*.elm", {
-    root: cssSourceDir,
-    nocase: true,
-    ignore: "/**/elm-stuff/**",
-    nodir: true
-  });
-
+  const elmFilePaths = findElmFiles(cssSourceDir);
   const generatedDir = path.join(
     cssSourceDir,
     "elm-stuff",
