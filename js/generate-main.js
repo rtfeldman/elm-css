@@ -15,23 +15,16 @@ const fs = require("fs-extra"),
 
 // TODO also need to write elm-package.json in that directory.
 function writeMain(
-  generatedDir /*:string */,
+  filename /*:string */,
   modules /*: Array<ModuleDeclaration> */
 ) {
-  const dirname = path.join(generatedDir, "src");
-
   const contents = generateMain(modules);
 
   return new Promise(function(resolve, reject) {
-    mkdirp(dirname, function(dirError) {
-      if (dirError) return reject(dirError);
-      const filename = path.join(dirname, "Main.elm");
+    fs.writeFile(filename, contents, function(error) {
+      if (error) return reject(error);
 
-      fs.writeFile(filename, contents, function(fileError) {
-        if (fileError) return reject(fileError);
-
-        resolve(filename);
-      });
+      resolve(filename);
     });
   });
 }
