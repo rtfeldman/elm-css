@@ -31,7 +31,7 @@
   "homepage": "https://github.com/rtfeldman/elm-css#readme",
   "dependencies": {
     "binstall": "1.2.0",
-    "chalk": "1.1.1",
+    "chalk": "2.1.0",
     "commander": "2.9.0",
     "cross-spawn": "5.1.0",
     "firstline": "1.2.1",
