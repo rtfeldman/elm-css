@@ -32,7 +32,7 @@ var KNOWN_MODULES =
     "Css"
   ];
 
-module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort, pathToMake) {
+module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort, pathToMake, makeProcessOpts) {
 
   var originalWorkingDir = process.cwd();
   process.chdir(projectDir);
@@ -45,7 +45,8 @@ module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsMod
         outputDir,
         stylesheetsModule || "Stylesheets",
         stylesheetsPort || "files",
-        pathToMake
+        pathToMake,
+        makeProcessOpts || {}
       );
     })
     .then(function(result) {
@@ -70,14 +71,14 @@ function createTmpDir() {
   });
 }
 
-function generateCssFiles(stylesheetsPath, emitterDest, outputDir, stylesheetsModule, stylesheetsPort, pathToMake) {
-  return emit(stylesheetsPath, emitterDest, stylesheetsModule, stylesheetsPort, pathToMake)
+function generateCssFiles(stylesheetsPath, emitterDest, outputDir, stylesheetsModule, stylesheetsPort, pathToMake, makeProcessOpts) {
+  return emit(stylesheetsPath, emitterDest, stylesheetsModule, stylesheetsPort, pathToMake, makeProcessOpts)
     .then(writeResults(outputDir));
 }
 
-function emit(src, dest, stylesheetsModule, stylesheetsPort, pathToMake) {
+function emit(src, dest, stylesheetsModule, stylesheetsPort, pathToMake, makeProcessOpts) {
     // Compile the temporary file.
-  return compileEmitter(src, {output: dest, yes: true, pathToMake: pathToMake})
+  return compileEmitter(src, {output: dest, yes: true, pathToMake: pathToMake, processOpts: makeProcessOpts})
     .then(extractCssResults(dest, stylesheetsModule, stylesheetsPort));
 }
 
