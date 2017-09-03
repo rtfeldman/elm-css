@@ -1,8 +1,8 @@
 module Dreamwriter.Sidebar exposing (chapter, menu)
 
 import Css exposing (..)
-import Css.Class as Gen exposing (Class)
 import Css.Elements exposing (..)
+import Css.File exposing (UniqueClass, uniqueClass)
 
 
 menu : Snippet
@@ -10,6 +10,6 @@ menu =
     button [ color (hex "aabbcc"), textDecoration none ]
 
 
-chapter : Class
+chapter : UniqueClass
 chapter =
-    Gen.class [ color (hex "eeeeee"), backgroundColor (hex "aabbcc") ]
+    uniqueClass [ color (hex "eeeeee"), backgroundColor (hex "aabbcc") ]

@@ -1,12 +1,17 @@
-module Css.File exposing (CssCompilerProgram, CssFileStructure, compile, compiler, toFileStructure)
+module Css.File exposing (CssCompilerProgram, CssFileStructure, UniqueClass, compile, compiler, toFileStructure, uniqueClass)
 
 {-| Functions for writing CSS files from elm-css.
 
 @docs compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
 
+
+## Automatically-generated unique classes
+
+@docs UniqueClass, uniqueClass
+
 -}
 
-import Css exposing (Stylesheet)
+import Css exposing (Snippet, Style, Stylesheet)
 
 
 {-| A description of CSS files that will be created by elm-css.
@@ -71,3 +76,18 @@ See [`compiler`](#compiler).
 -}
 type alias CssCompilerProgram =
     Program Never () Never
+
+
+{-| Styles scoped under an automatically-generated class.
+-}
+type UniqueClass
+    = UniqueClass (List Style)
+
+
+{-| Create a style scoped under an automatically-generated class that is
+guaranteed to be unique - at least relative to other class names generated
+using this function!
+-}
+uniqueClass : List Style -> UniqueClass
+uniqueClass =
+    UniqueClass

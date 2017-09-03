@@ -29,7 +29,7 @@ function declarationForValue(moduleName /*: string*/, valueName /*: string */) {
 function declarationsForModule(modul /*: ModuleDeclaration */) {
   return modul.values
     .filter(function(value) {
-      return value.signature === "Css.Class.Class";
+      return value.signature === "Css.File.UniqueClass";
     })
     .map(function(value) {
       return declarationForValue(modul.name, value.name);

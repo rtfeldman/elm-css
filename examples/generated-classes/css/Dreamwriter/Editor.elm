@@ -1,8 +1,8 @@
 module Dreamwriter.Editor exposing (editor, headerBar)
 
 import Css exposing (..)
-import Css.Class as Gen exposing (Class)
 import Css.Elements exposing (..)
+import Css.File exposing (UniqueClass, uniqueClass)
 
 
 editor : Snippet
@@ -10,6 +10,6 @@ editor =
     div [ color (hex "ff0000") ]
 
 
-headerBar : Class
+headerBar : UniqueClass
 headerBar =
-    Gen.class [ color (hex "ccbbaa"), textDecoration none ]
+    uniqueClass [ color (hex "ccbba9"), textDecoration none ]

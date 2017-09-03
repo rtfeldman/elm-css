@@ -77,7 +77,7 @@ module.exports = function(
     const repository /*: string */ = promiseOutputs[0];
 
     return findExposedValues(
-      ["Css.Class.Class", "Css.Snippet"],
+      ["Css.File.UniqueClass", "Css.Snippet"],
       readElmiPath,
       generatedDir,
       elmFilePaths,
