@@ -30,13 +30,7 @@ function writeMain(
 }
 
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
-  const otherModules = [
-    "Css",
-    "Css.Class",
-    "Css.File",
-    "Platform",
-    "Json.Decode"
-  ]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
+  const otherModules = ["Css", "Css.File", "Platform", "Json.Decode"]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
   const imports = otherModules
     .concat(_.map(modules, "name"))
     .map(function(importName) {
@@ -63,7 +57,7 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     "        , update = \\_ _ -> ( (), Cmd.none )\n" +
     "        , subscriptions = \\_ -> Sub.none\n" +
     "        }\n\n\n" +
-    "classToSnippet : String -> Css.Class.Class -> Css.Snippet\n" +
+    "classToSnippet : String -> Css.File.UniqueClass -> Css.Snippet\n" +
     "classToSnippet str class =\n" +
     "    classToSnippet str class\n\n\n" + // This is just to make type-checking pass. We'll splice in a useful implementation after emitting.
     "main : Program () () Never\n" +
@@ -79,7 +73,7 @@ function generateStylesheet(modul /*: ModuleDeclaration */) {
     switch (value.signature) {
       case "Css.Snippet":
         return modul.name + "." + value.name;
-      case "Css.Class.Class":
+      case "Css.File.UniqueClass":
         const className = classNameForValue(modul.name, value.name);
 
         return (
