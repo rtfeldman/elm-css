@@ -15,9 +15,11 @@ function classNameForValue(moduleName /*: string*/, valueName /*: string*/) {
   return moduleName.replace(".", "-") + "-" + valueName;
 }
 
+const allDots = /\./g;
+
 function declarationForValue(moduleName /*: string*/, valueName /*: string */) {
   return (
-    valueName +
+    valueName.replace(allDots, "-") +
     " : Html.Attribute msg\n" +
     valueName +
     ' =\n    Html.Attributes.class "' +
