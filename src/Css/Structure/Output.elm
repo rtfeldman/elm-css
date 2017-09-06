@@ -93,8 +93,9 @@ prettyPrintDeclaration declaration =
             -- https://developer.mozilla.org/en-US/docs/Web/CSS/@viewport
             "@viewport {\n" ++ prettyPrintProperties properties ++ "\n}"
 
-        CounterStyle properties ->
-            Debug.crash "not yet implemented :x"
+        CounterStyle name properties ->
+            -- https://developer.mozilla.org/en-US/docs/Web/CSS/@counter-style
+            "@counter-style " ++ name ++ " {\n" ++ prettyPrintProperties properties ++ "\n}"
 
         FontFeatureValues tuples ->
             Debug.crash "not yet implemented :x"

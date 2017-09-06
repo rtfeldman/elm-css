@@ -95,7 +95,7 @@ toMediaRule mediaQueries declaration =
         Structure.Viewport _ ->
             declaration
 
-        Structure.CounterStyle _ ->
+        Structure.CounterStyle _ _ ->
             declaration
 
         Structure.FontFeatureValues _ ->
@@ -142,13 +142,13 @@ resolveViewport viewportProperties =
     }
 
 
-resolveCounterStyle : List Preprocess.Property -> DeclarationsAndWarnings
-resolveCounterStyle counterStyleProperties =
+resolveCounterStyle : String -> List Preprocess.Property -> DeclarationsAndWarnings
+resolveCounterStyle name counterStyleProperties =
     let
         ( warnings, properties ) =
             extractWarnings counterStyleProperties
     in
-    { declarations = [ Structure.Viewport properties ]
+    { declarations = [ Structure.CounterStyle name properties ]
     , warnings = warnings
     }
 
@@ -203,8 +203,8 @@ toDeclarations snippetDeclaration =
         Preprocess.Viewport viewportProperties ->
             resolveViewport viewportProperties
 
-        Preprocess.CounterStyle counterStyleProperties ->
-            resolveCounterStyle counterStyleProperties
+        Preprocess.CounterStyle name counterStyleProperties ->
+            resolveCounterStyle name counterStyleProperties
 
         Preprocess.FontFeatureValues tuples ->
             resolveFontFeatureValues tuples
@@ -321,8 +321,8 @@ applyStyles styles declarations =
                         Preprocess.Viewport viewportProperties ->
                             resolveViewport viewportProperties
 
-                        Preprocess.CounterStyle counterStyleProperties ->
-                            resolveCounterStyle counterStyleProperties
+                        Preprocess.CounterStyle name counterStyleProperties ->
+                            resolveCounterStyle name counterStyleProperties
 
                         Preprocess.FontFeatureValues tuples ->
                             resolveFontFeatureValues tuples

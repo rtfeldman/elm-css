@@ -135,7 +135,7 @@ applyNamespaceToDeclaration name declaration =
         Preprocess.Viewport _ ->
             declaration
 
-        Preprocess.CounterStyle _ ->
+        Preprocess.CounterStyle _ _ ->
             declaration
 
         Preprocess.FontFeatureValues _ ->

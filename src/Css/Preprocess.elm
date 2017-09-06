@@ -53,7 +53,7 @@ type SnippetDeclaration
     | FontFace (List Property)
     | Keyframes String (List Structure.KeyframeProperty)
     | Viewport (List Property)
-    | CounterStyle (List Property)
+    | CounterStyle String (List Property)
     | FontFeatureValues (List ( String, List Property ))
 
 
@@ -85,7 +85,7 @@ toMediaRule mediaQueries declaration =
         Structure.Viewport _ ->
             declaration
 
-        Structure.CounterStyle _ ->
+        Structure.CounterStyle _ _ ->
             declaration
 
         Structure.FontFeatureValues _ ->

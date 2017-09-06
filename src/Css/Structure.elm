@@ -65,7 +65,7 @@ type Declaration
     | FontFace (List Property)
     | Keyframes String (List KeyframeProperty)
     | Viewport (List Property)
-    | CounterStyle (List Property)
+    | CounterStyle String (List Property)
     | FontFeatureValues (List ( String, List Property ))
 
 
@@ -181,7 +181,7 @@ appendProperty property declarations =
         (Viewport properties) :: [] ->
             Debug.crash "not yet implemented :x"
 
-        (CounterStyle properties) :: [] ->
+        (CounterStyle name properties) :: [] ->
             Debug.crash "not yet implemented :x"
 
         (FontFeatureValues tuples) :: [] ->
@@ -252,7 +252,7 @@ extendLastSelector selector declarations =
         (Viewport _) :: [] ->
             declarations
 
-        (CounterStyle _) :: [] ->
+        (CounterStyle _ _) :: [] ->
             declarations
 
         (FontFeatureValues _) :: [] ->
@@ -334,7 +334,7 @@ concatMapLastStyleBlock update declarations =
         (Viewport _) :: [] ->
             declarations
 
-        (CounterStyle _) :: [] ->
+        (CounterStyle _ _) :: [] ->
             declarations
 
         (FontFeatureValues _) :: [] ->
@@ -463,7 +463,7 @@ dropEmptyDeclarations declarations =
             else
                 declaration :: dropEmptyDeclarations rest
 
-        ((CounterStyle properties) as declaration) :: rest ->
+        ((CounterStyle name properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
             else
