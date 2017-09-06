@@ -166,17 +166,27 @@ appendProperty property declarations =
                 (mapLast (withPropertyAppended property) styleBlocks)
             ]
 
-        -- TODO
-        _ :: [] ->
-            declarations
+        (SupportsRule expression declarations) :: [] ->
+            Debug.crash "not yet implemented :x"
 
-        --| SupportsRule String (List Declaration)
-        --| PageRule String (List Property)
-        --| FontFace (List Property)
-        --| Keyframes String (List KeyframeProperty)
-        --| Viewport (List Property)
-        --| CounterStyle (List Property)
-        --| FontFeatureValues (List ( String, List Property ))
+        (PageRule pageSelectors declarations) :: [] ->
+            Debug.crash "not yet implemented :x"
+
+        (FontFace properties) :: [] ->
+            Debug.crash "not yet implemented :x"
+
+        (Keyframes name keyframeProperties) :: [] ->
+            Debug.crash "not yet implemented :x"
+
+        (Viewport properties) :: [] ->
+            Debug.crash "not yet implemented :x"
+
+        (CounterStyle properties) :: [] ->
+            Debug.crash "not yet implemented :x"
+
+        (FontFeatureValues tuples) :: [] ->
+            Debug.crash "not yet implemented :x"
+
         first :: rest ->
             first :: appendProperty property rest
 
