@@ -12,8 +12,12 @@ const path = require("path"),
   fs = require("fs-extra");
 
 function classNameForValue(moduleName /*: string*/, valueName /*: string*/) {
-  return moduleName.replace(".", "-") + "-" + valueName;
+  return (
+    moduleName.replace(allDots, "-") + "-" + valueName.replace(allDots, "-")
+  );
 }
+
+const allDots = /\./g;
 
 function declarationForValue(moduleName /*: string*/, valueName /*: string */) {
   return (
