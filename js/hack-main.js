@@ -19,9 +19,7 @@ module.exports = function hackMain(
       // nobody can depend on the contents of these values--which they never should!
       const injection =
         namespacer +
-        "Main$classToSnippet = F2(function(className, styles) { return A2(" +
-        namespacer +
-        "Css$class, className, styles._0); });";
+        "Main$classToSnippet = F2(function(className, styles) { return A2(_rtfeldman$elm_css$Css$class, className, styles._0); });";
 
       const newMain = [
         main.slice(0, injectionPoint),
