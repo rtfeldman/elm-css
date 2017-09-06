@@ -2,7 +2,9 @@ module Html.Styled.Internal exposing (Classname, InternalHtml(..), getClassname,
 
 import Css exposing (Style)
 import Dict exposing (Dict)
+import Hex
 import Json.Encode
+import Murmur3
 import VirtualDom exposing (Node, Property)
 
 
@@ -18,7 +20,27 @@ type InternalHtml msg
 
 getClassname : List Style -> Maybe String
 getClassname styles =
-    Debug.crash "TODO hash the class etc"
+    if List.isEmpty styles then
+        Nothing
+    else
+        -- TODO Replace this comically inefficient implementation
+        -- with crawling these union types and building up a hash along the way.
+        styles
+            |> Css.everything
+            |> List.singleton
+            |> Css.stylesheet
+            |> List.singleton
+            |> Css.compile
+            |> .css
+            |> Murmur3.hashString murmurSeed
+            |> Hex.toString
+            |> String.cons '_'
+            |> Just
+
+
+murmurSeed : Int
+murmurSeed =
+    15739
 
 
 unstyle :
