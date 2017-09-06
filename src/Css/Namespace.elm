@@ -123,11 +123,6 @@ applyNamespaceToDeclaration name declaration =
                 |> (\declarations -> [ Snippet declarations ])
                 |> Preprocess.SupportsRule str
 
-        -- TODO give these more descritpive names
-        Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
-            applyNamespaceToStyleBlock name styleBlock
-                |> Preprocess.DocumentRule str1 str2 str3 str4
-
         Preprocess.PageRule _ _ ->
             declaration
 

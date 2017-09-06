@@ -49,7 +49,6 @@ enumerated as follows.
 
   - `MediaRule`: an [`@media`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) rule.
   - `SupportsRule`: an [`@supports`](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports) rule.
-  - `DocumentRule`: an [`@document`](https://developer.mozilla.org/en-US/docs/Web/CSS/@document) rule.
   - `PageRule`: an [`@page`](https://developer.mozilla.org/en-US/docs/Web/CSS/@page) rule.
   - `FontFace`: an [`@font-face`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face) rule.
   - `Keyframes`: an [`@keyframes`](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes) rule.
@@ -62,7 +61,6 @@ type Declaration
     = StyleBlockDeclaration StyleBlock
     | MediaRule (List MediaQuery) (List StyleBlock)
     | SupportsRule String (List Declaration)
-    | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
     | Keyframes String (List KeyframeProperty)
@@ -173,7 +171,6 @@ appendProperty property declarations =
             declarations
 
         --| SupportsRule String (List Declaration)
-        --| DocumentRule String String String String StyleBlock
         --| PageRule String (List Property)
         --| FontFace (List Property)
         --| Keyframes String (List KeyframeProperty)
@@ -232,23 +229,6 @@ extendLastSelector selector declarations =
 
         (SupportsRule str nestedDeclarations) :: [] ->
             [ SupportsRule str (extendLastSelector selector nestedDeclarations) ]
-
-        (DocumentRule str1 str2 str3 str4 (StyleBlock only [] properties)) :: [] ->
-            let
-                newStyleBlock =
-                    StyleBlock (appendRepeatableSelector selector only) [] properties
-            in
-            [ DocumentRule str1 str2 str3 str4 newStyleBlock ]
-
-        (DocumentRule str1 str2 str3 str4 (StyleBlock first rest properties)) :: [] ->
-            let
-                newRest =
-                    mapLast (appendRepeatableSelector selector) rest
-
-                newStyleBlock =
-                    StyleBlock first newRest properties
-            in
-            [ DocumentRule str1 str2 str3 str4 newStyleBlock ]
 
         (PageRule _ _) :: [] ->
             declarations
@@ -331,11 +311,6 @@ concatMapLastStyleBlock update declarations =
 
         (SupportsRule str nestedDeclarations) :: [] ->
             [ SupportsRule str (concatMapLastStyleBlock update nestedDeclarations) ]
-
-        -- TODO give these more descritpive names
-        (DocumentRule str1 str2 str3 str4 styleBlock) :: [] ->
-            update styleBlock
-                |> List.map (DocumentRule str1 str2 str3 str4)
 
         (PageRule _ _) :: [] ->
             declarations
@@ -453,9 +428,6 @@ dropEmptyDeclarations declarations =
                 dropEmptyDeclarations rest
             else
                 declaration :: dropEmptyDeclarations rest
-
-        ((DocumentRule _ _ _ _ _) as declaration) :: rest ->
-            declaration :: dropEmptyDeclarations rest
 
         ((PageRule _ properties) as declaration) :: rest ->
             if List.isEmpty properties then

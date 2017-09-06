@@ -71,19 +71,6 @@ resolveSupportsRule str snippets =
     }
 
 
-resolveDocumentRule : String -> String -> String -> String -> Preprocess.StyleBlock -> DeclarationsAndWarnings
-resolveDocumentRule str1 str2 str3 str4 styleBlock =
-    -- TODO give these more descriptive names
-    let
-        { declarations, warnings } =
-            expandStyleBlock styleBlock
-    in
-    { declarations =
-        List.map (toDocumentRule str1 str2 str3 str4) declarations
-    , warnings = warnings
-    }
-
-
 toMediaRule : List Structure.MediaQuery -> Structure.Declaration -> Structure.Declaration
 toMediaRule mediaQueries declaration =
     case declaration of
@@ -95,10 +82,6 @@ toMediaRule mediaQueries declaration =
 
         Structure.SupportsRule str declarations ->
             Structure.SupportsRule str (List.map (toMediaRule mediaQueries) declarations)
-
-        -- TODO give these more descriptive names
-        Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock ->
-            Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock
 
         Structure.PageRule _ _ ->
             declaration
@@ -207,10 +190,6 @@ toDeclarations snippetDeclaration =
 
         Preprocess.SupportsRule str snippets ->
             resolveSupportsRule str snippets
-
-        -- TODO give these more descriptive names
-        Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
-            resolveDocumentRule str1 str2 str3 str4 styleBlock
 
         Preprocess.PageRule str pageRuleProperties ->
             resolvePageRule str pageRuleProperties
@@ -329,10 +308,6 @@ applyStyles styles declarations =
 
                         Preprocess.SupportsRule str snippets ->
                             resolveSupportsRule str snippets
-
-                        -- TODO give these more descriptive names
-                        Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
-                            resolveDocumentRule str1 str2 str3 str4 styleBlock
 
                         Preprocess.PageRule str pageRuleProperties ->
                             resolvePageRule str pageRuleProperties
@@ -491,17 +466,6 @@ toStructure { charset, imports, namespaces, snippets } =
       }
     , warnings
     )
-
-
-toDocumentRule : String -> String -> String -> String -> Structure.Declaration -> Structure.Declaration
-toDocumentRule str1 str2 str3 str4 declaration =
-    case declaration of
-        Structure.StyleBlockDeclaration structureStyleBlock ->
-            Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock
-
-        _ ->
-            -- TODO do something more interesting here?
-            declaration
 
 
 extractWarnings : List Preprocess.Property -> ( List String, List Structure.Property )

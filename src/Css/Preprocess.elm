@@ -49,7 +49,6 @@ type SnippetDeclaration
     = StyleBlockDeclaration StyleBlock
     | MediaRule (List MediaQuery) (List StyleBlock)
     | SupportsRule String (List Snippet)
-    | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
     | Keyframes String (List Structure.KeyframeProperty)
@@ -73,10 +72,6 @@ toMediaRule mediaQueries declaration =
 
         Structure.SupportsRule str declarations ->
             Structure.SupportsRule str (List.map (toMediaRule mediaQueries) declarations)
-
-        -- TODO give these more descriptive names
-        Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock ->
-            Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock
 
         Structure.PageRule _ _ ->
             declaration
