@@ -50,10 +50,7 @@ module.exports = function(
 
   mkdirp.sync(generatedDir);
 
-  if (
-    !fs.existsSync(generatedElmStuff) &&
-    !fs.lstatSync(generatedElmStuff).isSymbolicLink()
-  ) {
+  if (!fs.existsSync(generatedElmStuff)) {
     fs.symlinkSync(
       path.join(cssSourceDir, "elm-stuff"),
       generatedElmStuff,
