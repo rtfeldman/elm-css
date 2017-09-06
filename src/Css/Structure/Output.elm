@@ -74,7 +74,29 @@ prettyPrintDeclaration declaration =
             in
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
-        _ ->
+        SupportsRule expression declarations ->
+            -- https://developer.mozilla.org/en-US/docs/Web/CSS/@supports
+            "@supports " ++ expression ++ " {\n" ++ prettyPrintDeclaration declaration ++ "\n}"
+
+        PageRule pageSelectors declarations ->
+            -- https://developer.mozilla.org/en-US/docs/Web/CSS/@page
+            "@page " ++ pageSelectors ++ " {\n" ++ prettyPrintDeclaration declaration ++ "\n}"
+
+        FontFace properties ->
+            -- https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face
+            "@font-face {\n" ++ prettyPrintProperties properties ++ "\n}"
+
+        Keyframes name keyframeProperties ->
+            Debug.crash "not yet implemented :x"
+
+        Viewport properties ->
+            -- https://developer.mozilla.org/en-US/docs/Web/CSS/@viewport
+            "@viewport {\n" ++ prettyPrintProperties properties ++ "\n}"
+
+        CounterStyle properties ->
+            Debug.crash "not yet implemented :x"
+
+        FontFeatureValues tuples ->
             Debug.crash "not yet implemented :x"
 
 
