@@ -79,8 +79,7 @@ finishKeyedNode classname allStyles finalChildNodes =
 getStyleNode : String -> Dict Classname (List Style) -> Node msg
 getStyleNode classname styles =
     -- this <style> node will be the first child of the requested one
-    [ ".", classname, "{\n", toDeclaration styles, "\n}" ]
-        |> String.join ""
+    toDeclaration styles
         |> VirtualDom.text
         |> List.singleton
         |> VirtualDom.node "style" []
@@ -259,14 +258,16 @@ class =
 toDeclaration : Dict Classname (List Style) -> String
 toDeclaration dict =
     Dict.toList dict
-        |> List.map toDeclarationHelp
-        |> String.join ""
+        |> List.map snippetFromPair
+        |> Css.stylesheet
+        |> List.singleton
+        |> Css.compile
+        |> .css
 
 
-toDeclarationHelp : ( Classname, List Style ) -> String
-toDeclarationHelp ( classname, styles ) =
+snippetFromPair : ( Classname, List Style ) -> Css.Snippet
+snippetFromPair ( classname, styles ) =
     Css.class classname styles
-        |> Debug.crash "TODO convert from Style to String"
 
 
 {-| returns a String key that is not already one of the keys in the list of
