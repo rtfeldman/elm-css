@@ -87,7 +87,7 @@ module.exports = function(
       return Promise.all(
         [writeMain(mainFilename, modules)].concat(
           modules.map(function(modul) {
-            return writeFile(path.join(generatedDir, "classes"), modul);
+            return writeFile(path.join(generatedDir, "styles"), modul);
           })
         )
       ).then(function() {
