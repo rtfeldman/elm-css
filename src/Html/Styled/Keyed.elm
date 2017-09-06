@@ -22,22 +22,42 @@ removed, etc. Common examples include:
 
 -}
 
+import Css exposing (Style)
 import Html.Styled exposing (Attribute, Html)
+import Html.Styled.Internal as Internal exposing (InternalHtml(..))
 
 
+{-| Works just like `Html.node`, but you add a unique identifier to each child
+node. You want this when you have a list of nodes that is changing: adding
+nodes, removing nodes, etc. In these cases, the unique identifiers help make
+the DOM modifications more efficient.
+-}
 node :
     String
+    -> List Style
     -> List (Attribute msg)
     -> List ( String, Html msg )
     -> Html msg
-node =
 node elemType styles =
     case Internal.getClassname styles of
         Nothing ->
             \attrs children ->
-                 Element Nothing elemType attrs children
+                KeyedElement Nothing elemType attrs children
+
         Just classname ->
-        -- Do this hashing work before returning an anonymous function.
-        -- This way, partially applying this function caches the hashing work.
-        \attrs children ->
-             Element (Just ( classname, styles )) elemType attrs children
+            -- Do this hashing work before returning an anonymous function.
+            -- This way, partially applying this function caches the hashing work.
+            \attrs children ->
+                KeyedElement (Just ( classname, styles )) elemType attrs children
+
+
+{-| -}
+ol : List Style -> List (Attribute msg) -> List ( String, Html msg ) -> Html msg
+ol =
+    node "ol"
+
+
+{-| -}
+ul : List Style -> List (Attribute msg) -> List ( String, Html msg ) -> Html msg
+ul =
+    node "ul"
