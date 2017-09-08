@@ -46,7 +46,7 @@ all =
         , describe "|/|"
             [ fuzzArithmetic3 "it divides" <|
                 \first second third ->
-                    if second == 0 || (first / second) == 0 then
+                    if second == 0 then
                         -- Skip tests of division by zero.
                         Expect.pass
                     else
