@@ -53,7 +53,7 @@ unstyle =
     unstyleWith
         resolve
         VirtualDom.node
-        finishNode
+        toStyleNode
 
 
 unstyleKeyed :
@@ -66,28 +66,28 @@ unstyleKeyed =
     unstyleWith
         resolveKeyed
         VirtualDom.keyedNode
-        finishKeyedNode
+        toKeyedStyleNode
 
 
 
 -- INTERNAL --
 
 
-finishNode :
+toStyleNode :
     String
     -> Dict Classname (List Style)
     -> a
     -> Node msg
-finishNode classname allStyles _ =
+toStyleNode classname allStyles _ =
     getStyleNode classname allStyles
 
 
-finishKeyedNode :
+toKeyedStyleNode :
     String
     -> Dict Classname (List Style)
     -> List ( String, a )
     -> ( String, Node msg )
-finishKeyedNode classname allStyles finalChildNodes =
+toKeyedStyleNode classname allStyles finalChildNodes =
     let
         styleNodeKey =
             getUnusedKey "_" finalChildNodes
@@ -120,7 +120,7 @@ unstyleWith :
     -> List (Property msg)
     -> List keyedOrHtml2
     -> keyedOrHtml3
-unstyleWith resolver toNode finishNode elemType maybePair attributes children =
+unstyleWith resolver toNode createStyleNode elemType maybePair attributes children =
     let
         ( styles, finalAttributes, classname ) =
             case maybePair of
@@ -147,13 +147,13 @@ unstyleWith resolver toNode finishNode elemType maybePair attributes children =
         toNode elemType finalAttributes finalChildNodes
     else
         let
-            finalNode =
-                finishNode classname allStyles finalChildNodes
+            styleNode =
+                createStyleNode classname allStyles finalChildNodes
         in
         toNode
             elemType
             attributes
-            (finalNode :: finalChildNodes)
+            (styleNode :: finalChildNodes)
 
 
 resolve :
