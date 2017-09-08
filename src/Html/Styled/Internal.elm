@@ -274,7 +274,7 @@ resolveKeyed ( key, html ) ( pairs, styles ) =
 
 class : Classname -> Property msg
 class =
-    Json.Encode.string >> VirtualDom.property "class"
+    Json.Encode.string >> VirtualDom.property "className"
 
 
 toDeclaration : Dict Classname (List Style) -> String
