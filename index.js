@@ -51,7 +51,7 @@ module.exports = function(
   mkdirp.sync(generatedDir);
 
   if (
-    !fs.existsSync(generatedElmStuff) &&
+    !fs.existsSync(generatedElmStuff) ||
     !fs.lstatSync(generatedElmStuff).isSymbolicLink()
   ) {
     fs.symlinkSync(
