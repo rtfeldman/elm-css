@@ -23,7 +23,7 @@ module.exports = function compileAll(
       yes: true,
       pathToMake: pathToMake,
       warn: true,
-      processOpts: { stdio: ["ignore", "ignore", "pipe"] }
+      processOpts: { stdio: ["ignore", "ignore", "inherit"] }
     });
 
     compileProcess.on("close", function(exitCode) {
