@@ -2970,12 +2970,12 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 
 {-| The [`perspective()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#perspective()) transform-function.
 
-     transform (perspective 0.5)
+     transform (perspective (px 1000))
 
 -}
-perspective : number -> Transform {}
-perspective l =
-    { value = cssFunction "perspective" [ numberToString l ]
+perspective : LengthOrNone compatible -> Transform {}
+perspective { value } =
+    { value = cssFunction "perspective" [ value ]
     , transform = Compatible
     }
 
