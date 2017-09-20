@@ -1,8 +1,8 @@
-module Dreamwriter.Editor exposing (editor, headerBar)
+module Dreamwriter.Editor exposing (editor, headerBar, purpleCircle)
 
 import Css exposing (..)
 import Css.Elements exposing (..)
-import Css.File exposing (UniqueClass, uniqueClass)
+import Css.File exposing (UniqueClass, UniqueSvgClass, uniqueClass, uniqueSvgClass)
 
 
 editor : Snippet
@@ -13,3 +13,8 @@ editor =
 headerBar : UniqueClass
 headerBar =
     uniqueClass [ color (hex "ccbba9"), textDecoration none ]
+
+
+purpleCircle : UniqueSvgClass
+purpleCircle =
+    uniqueSvgClass [ backgroundColor (hex "ccbba9") ]

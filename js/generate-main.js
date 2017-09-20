@@ -57,7 +57,7 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     "        , update = \\_ _ -> ( (), Cmd.none )\n" +
     "        , subscriptions = \\_ -> Sub.none\n" +
     "        }\n\n\n" +
-    "classToSnippet : String -> Css.File.UniqueClass -> Css.Snippet\n" +
+    "classToSnippet : String -> a -> Css.Snippet\n" +
     "classToSnippet str class =\n" +
     "    classToSnippet str class\n\n\n" + // This is just to make type-checking pass. We'll splice in a useful implementation after emitting.
     "main : Program () () Never\n" +
@@ -74,6 +74,7 @@ function generateStylesheet(modul /*: ModuleDeclaration */) {
       case "Css.Snippet":
         return modul.name + "." + value.name;
       case "Css.File.UniqueClass":
+      case "Css.File.UniqueSvgClass":
         const className = classNameForValue(modul.name, value.name);
 
         return (

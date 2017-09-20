@@ -211,13 +211,13 @@ function filterExposing(pathAndModule) {
           return reject(
             "\n`" +
               pathAndModule.name +
-              "` is a module with top-level Test values which it does not expose:\n\n" +
+              "` is a module with top-level CSS-related values which it does not expose:\n\n" +
               _.difference(pathAndModule.values, newValues)
                 .map(function(test) {
-                  return test + " : Test";
+                  return test;
                 })
                 .join("\n") +
-              "\n\nThese tests will not get run. Please either expose them or move them out of the top level."
+              "\n\nThese will not be used by `elm-css`. Please either expose them or move them out of the top level."
           );
         } else {
           return resolve({ name: pathAndModule.name, values: newValues });

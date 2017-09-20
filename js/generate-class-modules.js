@@ -19,24 +19,45 @@ function classNameForValue(moduleName /*: string*/, valueName /*: string*/) {
 
 const allDots = /\./g;
 
-function declarationForValue(moduleName /*: string*/, valueName /*: string */) {
+function declarationForValue(
+  moduleName /*: string*/,
+  valueName /*: string */,
+  isSvg /*: boolean */
+) {
+  const functionCall = isSvg
+    ? 'Html.attribute "class"'
+    : "Html.Attributes.class";
+
   return (
     valueName +
     " : Html.Attribute msg\n" +
     valueName +
-    ' =\n    Html.Attributes.class "' +
+    " =\n    " +
+    functionCall +
+    ' "' +
     classNameForValue(moduleName, valueName) +
     '"'
   );
 }
 
+function isUniqueSvgClass(signature) {
+  return signature === "Css.File.UniqueSvgClass";
+}
+
 function declarationsForModule(modul /*: ModuleDeclaration */) {
   return modul.values
     .filter(function(value) {
-      return value.signature === "Css.File.UniqueClass";
+      return (
+        value.signature === "Css.File.UniqueClass" ||
+        isUniqueSvgClass(value.signature)
+      );
     })
     .map(function(value) {
-      return declarationForValue(modul.name, value.name);
+      return declarationForValue(
+        modul.name,
+        value.name,
+        isUniqueSvgClass(value.signature)
+      );
     });
 }
 
