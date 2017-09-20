@@ -280,7 +280,7 @@ transformsStylesheet =
                 [ matrix 1 2 3 4 5 6
                 , matrix3d 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
                 ]
-            , transform (perspective 1)
+            , transform (perspective (px 1000))
             , transforms
                 [ rotate (deg 90)
                 , rotateX (rad 3.14)
