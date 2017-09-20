@@ -20,8 +20,7 @@ module.exports = function hackMain(
       const injection =
         namespacer +
         "Main$classToSnippet = F2(function(className, styles) { return A2(" +
-        namespacer +
-        "Css$class, className, styles._0); });";
+        "_rtfeldman$elm_css$Css$class, className, styles._0); });";
 
       const newMain = [
         main.slice(0, injectionPoint),
