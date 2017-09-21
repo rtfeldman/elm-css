@@ -67,7 +67,7 @@ if you write `color "blah"` or `margin (rgb 1 2 3)`, you'll get a type mismatch.
 
 `elm-css` draws inspiration from the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), and [CSS Modules](http://glenmaddern.com/articles/css-modules). It includes popular features like:
 
-* [Mixins](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#mixin)
+* [style batching](http://package.elm-lang.org/packages/rtfeldman/elm-css/11.2.0/Css#Style)
 * [namespaces](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Namespace#namespace)
 * [nested media queries](https://davidwalsh.name/write-media-queries-sass) (and nested selectors in general, like how [Sass](http://sass-lang.com/) does them)
 
@@ -217,7 +217,7 @@ We want `z-index`, but suppose `elm-css` did not implement it. We would define i
 ```elm
 import Css exposing (..)
 
-zIndex : Int -> Mixin
+zIndex : Int -> Style
 zIndex i =
     property "z-index" <| toString i
 ```
