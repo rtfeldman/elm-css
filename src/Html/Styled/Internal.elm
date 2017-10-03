@@ -49,11 +49,17 @@ unstyle :
     -> List (Property msg)
     -> List (InternalHtml msg)
     -> Node msg
-unstyle =
-    unstyleWith
-        resolve
-        VirtualDom.node
-        toStyleNode
+unstyle elemType maybePair attributes children =
+    let
+        ( finalAttributes, finalChildren ) =
+            unstyleWith
+                resolve
+                toStyleNode
+                maybePair
+                attributes
+                children
+    in
+    VirtualDom.node elemType finalAttributes finalChildren
 
 
 unstyleKeyed :
@@ -62,11 +68,17 @@ unstyleKeyed :
     -> List (Property msg)
     -> List ( String, InternalHtml msg )
     -> Node msg
-unstyleKeyed =
-    unstyleWith
-        resolveKeyed
-        VirtualDom.keyedNode
-        toKeyedStyleNode
+unstyleKeyed elemType maybePair attributes children =
+    let
+        ( finalAttributes, finalChildren ) =
+            unstyleWith
+                resolveKeyed
+                toKeyedStyleNode
+                maybePair
+                attributes
+                children
+    in
+    VirtualDom.keyedNode elemType finalAttributes finalChildren
 
 
 
@@ -113,47 +125,38 @@ getStyleNode classname styles =
 
 unstyleWith :
     (keyedOrHtml2 -> ( List keyedOrHtml, Dict Classname (List Style) ) -> ( List keyedOrHtml, Dict Classname (List Style) ))
-    -> (String -> List (Property msg) -> List keyedOrHtml -> keyedOrHtml3)
     -> (String -> Dict Classname (List Style) -> List keyedOrHtml -> keyedOrHtml)
-    -> String
     -> Maybe ( Classname, List Style )
     -> List (Property msg)
     -> List keyedOrHtml2
-    -> keyedOrHtml3
-unstyleWith resolver toNode createStyleNode elemType maybePair attributes children =
-    let
-        ( styles, finalAttributes, classname ) =
-            case maybePair of
-                Just ( classnameFromPair, style ) ->
-                    ( Dict.singleton classnameFromPair style
-                    , class classnameFromPair :: attributes
-                    , classnameFromPair
-                    )
+    -> ( List (Property msg), List keyedOrHtml )
+unstyleWith resolver createStyleNode maybePair attributes children =
+    case maybePair of
+        Just ( classname, style ) ->
+            let
+                ( reversedChildNodes, finalStyles ) =
+                    List.foldl resolver
+                        ( [], Dict.singleton classname style )
+                        children
 
-                Nothing ->
-                    ( Dict.empty
-                    , attributes
-                    , ""
-                    )
+                childNodes =
+                    List.reverse reversedChildNodes
+            in
+            ( class classname :: attributes
+            , if Dict.isEmpty finalStyles then
+                -- If we have no styles to speak of, don't emit a <style>
+                childNodes
+              else
+                createStyleNode classname finalStyles childNodes :: childNodes
+            )
 
-        ( childNodes, allStyles ) =
-            List.foldl resolver ( [], styles ) children
-
-        finalChildNodes =
-            List.reverse childNodes
-    in
-    if Dict.isEmpty allStyles then
-        -- If we have no styles to speak of, don't emit a <style>
-        toNode elemType finalAttributes finalChildNodes
-    else
-        let
-            styleNode =
-                createStyleNode classname allStyles finalChildNodes
-        in
-        toNode
-            elemType
-            finalAttributes
-            (styleNode :: finalChildNodes)
+        Nothing ->
+            ( attributes
+            , children
+                |> List.foldl resolver ( [], Dict.empty )
+                |> Tuple.first
+                |> List.reverse
+            )
 
 
 resolve :
