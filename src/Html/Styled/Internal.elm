@@ -152,7 +152,7 @@ unstyleWith resolver toNode createStyleNode elemType maybePair attributes childr
         in
         toNode
             elemType
-            attributes
+            finalAttributes
             (styleNode :: finalChildNodes)
 
 
