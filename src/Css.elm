@@ -93,8 +93,8 @@ module Css
         , TransformStyle
         , Value
         , VerticalAlign
-        , Visibility
         , Vh
+        , Visibility
         , Vmax
         , Vmin
         , Vw
@@ -102,7 +102,6 @@ module Css
         , Wrap
         , absolute
         , active
-        , adjacentSiblings
         , after
         , alignItems
         , alignSelf
@@ -232,11 +231,9 @@ module Css
         , center
         , ch
         , checked
-        , children
         , circle
         , cjkEarthlyBranch
         , cjkHeavenlyStem
-        , class
         , clip
         , cm
         , colResize
@@ -266,7 +263,6 @@ module Css
         , decimalLeadingZero
         , default
         , deg
-        , descendants
         , devanagari
         , diagonalFractions
         , difference
@@ -286,7 +282,6 @@ module Css
         , empty
         , enabled
         , end
-        , everything
         , ewResize
         , ex
         , exclusion
@@ -339,7 +334,6 @@ module Css
         , fontWeight
         , fullWidth
         , fullscreen
-        , generalSiblings
         , geometricPrecision
         , georgian
         , grab
@@ -360,7 +354,6 @@ module Css
         , hsl
         , hsla
         , hue
-        , id
         , important
         , inches
         , indeterminate
@@ -563,7 +556,6 @@ module Css
         , scroll
         , seResize
         , selection
-        , selector
         , separate
         , serif
         , skew
@@ -712,16 +704,6 @@ module Css
 # Style
 
 @docs Snippet, Style, batch, stylesheet, compile
-
-
-# Statements
-
-@docs class, id, selector, everything
-
-
-# Combinators
-
-@docs children, descendants, adjacentSiblings, generalSiblings
 
 
 # Properties
@@ -1836,6 +1818,7 @@ contain =
 
 This can also represent a `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 As well as a `hidden` [`visibility`](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility#Values).
+
 -}
 hidden : Overflow (BorderStyle (Visibility {}))
 hidden =
@@ -7697,112 +7680,6 @@ batch =
     Preprocess.ApplyStyles
 
 
-{-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
-
-    stylesheet
-        [ id NavBar
-            [ width 960 px
-            , backgroundColor (rgb 123 42 208)
-            ]
-        ]
-
--}
-id : id -> List Style -> Snippet
-id identifier styles =
-    [ Structure.IdSelector (identifierToString "" identifier) ]
-        |> Structure.UniversalSelectorSequence
-        |> makeSnippet styles
-
-
-makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Snippet
-makeSnippet styles sequence =
-    let
-        selector =
-            Structure.Selector sequence [] Nothing
-    in
-    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
-        |> Preprocess.Snippet
-
-
-{-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
-
-    stylesheet
-        [ class LoginFormButton
-            [ fontWeight normal
-            , color (rgb 128 64 32)
-            ]
-        ]
-
--}
-class : class -> List Style -> Snippet
-class class styles =
-    [ Structure.ClassSelector (identifierToString "" class) ]
-        |> Structure.UniversalSelectorSequence
-        |> makeSnippet styles
-
-
-
--- {-| A Style that adds the [Clearfix for Modern Browsers](http://www.cssmojo.com/latest_new_clearfix_so_far/#clearfix-for-modern-browsers)
--- implementation of [clearfix](http://www.cssmojo.com/clearfix_block-formatting-context_and_hasLayout/).
---
--- This works with Internet Explorer 8 and later; if you need
--- to support older browsers, consider using the legacy [Micro Clearfix from 2011](http://nicolasgallagher.com/micro-clearfix-hack/)
--- instead.
--- -}
---clearfix : Style
---clearfix =
---  styles
---    [ after
---        [ content ""
---        , display table
---        , clear both
---        ]
---    ]
-
-
-{-| A custom selector. Use this for things like
-[attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
-and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
-
-    stylesheet "homepage"
-        [ selector "* [lang^=en]"
-            [ textDecoration underline
-            , color (rgb 7 7 7)
-            ]
-        ]
-
--}
-selector : String -> List Style -> Snippet
-selector selectorStr styles =
-    Structure.CustomSelector selectorStr []
-        |> makeSnippet styles
-
-
-{-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
-
-    class Foo
-      [ children
-          [ everything
-              [ color (rgb 14 15 16)
-              , borderRadius (px 5)
-              ]
-          ]
-      ]
-
-...compiles to:
-
-    .Foo > * {
-      color: rgb(14, 15, 16);
-      border-radius: 5px;
-    }
-
--}
-everything : List Style -> Snippet
-everything styles =
-    Structure.UniversalSelectorSequence []
-        |> makeSnippet styles
-
-
 {-| Define a custom property.
 
     stylesheet
@@ -8262,33 +8139,9 @@ blink =
 
 
 {-| -}
-children : List Snippet -> Style
-children =
-    Preprocess.NestSnippet Structure.Child
-
-
-{-| -}
 withClass : class -> List Style -> Style
 withClass class =
     Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
-
-
-{-| -}
-descendants : List Snippet -> Style
-descendants =
-    Preprocess.NestSnippet Structure.Descendant
-
-
-{-| -}
-adjacentSiblings : List Snippet -> Style
-adjacentSiblings =
-    Preprocess.NestSnippet Structure.AdjacentSibling
-
-
-{-| -}
-generalSiblings : List Snippet -> Style
-generalSiblings =
-    Preprocess.NestSnippet Structure.GeneralSibling
 
 
 {-| -}
