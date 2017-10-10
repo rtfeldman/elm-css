@@ -10,7 +10,17 @@ module Css.Foreign
         , selector
         )
 
-{-|
+{-| Avoid using this module!
+
+These global CSS selectors [make code harder to maintain](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284).
+Much like global mutable state, they may appear convenient in the short term,
+but can easily create a mess in the long term. It's best to avoid using them.
+
+That said, sometimes you may be dealing with foreign DOM nodes - ones you do
+not control. (You may be generating them from user-submitted markdown, for
+example.) When you can't add attributes to the DOM nodes in question, global CSS
+selectors may be your only path to styling them. In those situations,
+this module is here to help!
 
 
 # Statements
@@ -24,6 +34,7 @@ module Css.Foreign
 
 -}
 
+import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 

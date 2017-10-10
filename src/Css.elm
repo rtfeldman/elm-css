@@ -781,12 +781,18 @@ deprecated or discouraged.
 
 import Color
 import Css.Helpers exposing (identifierToString, toCssIdentifier)
+import Css.Internal as Internal exposing (Value(..), valueToProperty)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure exposing (..)
 import Hex
 import String
 import Tuple
+
+
+{-| -}
+type alias Value a b c d =
+    Internal.Value a b c d
 
 
 {-| -}
@@ -881,7 +887,7 @@ type alias Compatible =
 
 
 {-| -}
-type alias Value compatible =
+type alias OldValue compatible =
     { compatible | value : String }
 
 
@@ -1544,12 +1550,6 @@ that it will return the desired String as its key, and use that as our value.
 -}
 type alias VerticalAlign a b =
     Length a b -> Style
-
-
-{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>
--}
-type alias Cursor compatible =
-    { compatible | value : String, cursor : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/outline#Values>
@@ -4510,32 +4510,32 @@ position =
 {- Properties -}
 
 
-prop1 : String -> Value a -> Style
+prop1 : String -> OldValue a -> Style
 prop1 key arg =
     property key arg.value
 
 
-prop2 : String -> Value a -> Value b -> Style
+prop2 : String -> OldValue a -> OldValue b -> Style
 prop2 key argA argB =
     property key (String.join " " [ argA.value, argB.value ])
 
 
-prop3 : String -> Value a -> Value b -> Value c -> Style
+prop3 : String -> OldValue a -> OldValue b -> OldValue c -> Style
 prop3 key argA argB argC =
     property key (String.join " " [ argA.value, argB.value, argC.value ])
 
 
-prop4 : String -> Value a -> Value b -> Value c -> Value d -> Style
+prop4 : String -> OldValue a -> OldValue b -> OldValue c -> OldValue d -> Style
 prop4 key argA argB argC argD =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
 
 
-prop5 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Style
+prop5 : String -> OldValue a -> OldValue b -> OldValue c -> OldValue d -> OldValue e -> Style
 prop5 key argA argB argC argD argE =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value ])
 
 
-prop6 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Value f -> Style
+prop6 : String -> OldValue a -> OldValue b -> OldValue c -> OldValue d -> OldValue e -> OldValue f -> Style
 prop6 key argA argB argC argD argE argF =
     property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value, argF.value ])
 
@@ -4730,7 +4730,7 @@ boxShadow2 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow3 : Value a -> Length compatibleB unitsB -> Value c -> Style
+boxShadow3 : OldValue a -> Length compatibleB unitsB -> OldValue c -> Style
 boxShadow3 =
     prop3 "box-shadow"
 
@@ -4751,7 +4751,7 @@ boxShadow3 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow4 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Value d -> Style
+boxShadow4 : OldValue a -> Length compatibleB unitsB -> Length compatibleC unitsC -> OldValue d -> Style
 boxShadow4 =
     prop4 "box-shadow"
 
@@ -4772,7 +4772,7 @@ boxShadow4 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
+boxShadow5 : OldValue a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
 boxShadow5 =
     prop5 "box-shadow"
 
@@ -4793,7 +4793,7 @@ boxShadow5 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow6 : Value a -> Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
+boxShadow6 : OldValue a -> Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
 boxShadow6 =
     prop6 "box-shadow"
 
@@ -7211,12 +7211,27 @@ fontVariantNumerics =
 {- CURSOR PROPERTIES -}
 
 
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>
+-}
+type Cursor
+    = Cursor
+
+
+type alias CursorValue =
+    Internal.Value () () Cursor ()
+
+
 {-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
 specifies the mouse cursor displayed when mouse pointer is over an element.
 -}
-cursor : Cursor compatible -> Style
+cursor : Value a b Cursor d -> Style
 cursor =
-    prop1 "cursor"
+    prop "cursor"
+
+
+prop : String -> Value a b c d -> Style
+prop key val =
+    Preprocess.AppendProperty (valueToProperty key val)
 
 
 
@@ -7224,207 +7239,207 @@ cursor =
 
 
 {-| -}
-default : Cursor {}
+default : CursorValue
 default =
-    { value = "default", cursor = Compatible }
+    StringValue "default"
 
 
 {-| -}
-crosshair : Cursor {}
+crosshair : CursorValue
 crosshair =
-    { value = "crosshair", cursor = Compatible }
+    StringValue "crosshair"
 
 
 {-| -}
-contextMenu : Cursor {}
+contextMenu : CursorValue
 contextMenu =
-    { value = "context-menu", cursor = Compatible }
+    StringValue "context-menu"
 
 
 {-| -}
-help : Cursor {}
+help : CursorValue
 help =
-    { value = "help", cursor = Compatible }
+    StringValue "help"
 
 
 {-| -}
-pointer : Cursor {}
+pointer : CursorValue
 pointer =
-    { value = "pointer", cursor = Compatible }
+    StringValue "pointer"
 
 
 {-| -}
-progress : Cursor {}
+progress : CursorValue
 progress =
-    { value = "progress", cursor = Compatible }
+    StringValue "progress"
 
 
 {-| -}
-wait : Cursor {}
+wait : CursorValue
 wait =
-    { value = "wait", cursor = Compatible }
+    StringValue "wait"
 
 
 {-| -}
-cell : Cursor {}
+cell : CursorValue
 cell =
-    { value = "cell", cursor = Compatible }
+    StringValue "cell"
 
 
 {-| -}
-text : Cursor {}
+text : CursorValue
 text =
-    { value = "text", cursor = Compatible }
+    StringValue "text"
 
 
 {-| -}
-verticalText : Cursor {}
+verticalText : CursorValue
 verticalText =
-    { value = "vertical-text", cursor = Compatible }
+    StringValue "vertical-text"
 
 
 {-| -}
-cursorAlias : Cursor {}
+cursorAlias : CursorValue
 cursorAlias =
-    { value = "alias", cursor = Compatible }
+    StringValue "alias"
 
 
 {-| -}
-copy : Cursor {}
+copy : CursorValue
 copy =
-    { value = "copy", cursor = Compatible }
+    StringValue "copy"
 
 
 {-| -}
-move : Cursor {}
+move : CursorValue
 move =
-    { value = "move", cursor = Compatible }
+    StringValue "move"
 
 
 {-| -}
-noDrop : Cursor {}
+noDrop : CursorValue
 noDrop =
-    { value = "no-drop", cursor = Compatible }
+    StringValue "no-drop"
 
 
 {-| -}
-notAllowed : Cursor {}
+notAllowed : CursorValue
 notAllowed =
-    { value = "not-allowed", cursor = Compatible }
+    StringValue "not-allowed"
 
 
 {-| -}
-eResize : Cursor {}
+eResize : CursorValue
 eResize =
-    { value = "e-resize", cursor = Compatible }
+    StringValue "e-resize"
 
 
 {-| -}
-nResize : Cursor {}
+nResize : CursorValue
 nResize =
-    { value = "n-resize", cursor = Compatible }
+    StringValue "n-resize"
 
 
 {-| -}
-neResize : Cursor {}
+neResize : CursorValue
 neResize =
-    { value = "ne-resize", cursor = Compatible }
+    StringValue "ne-resize"
 
 
 {-| -}
-nwResize : Cursor {}
+nwResize : CursorValue
 nwResize =
-    { value = "nw-resize", cursor = Compatible }
+    StringValue "nw-resize"
 
 
 {-| -}
-sResize : Cursor {}
+sResize : CursorValue
 sResize =
-    { value = "s-resize", cursor = Compatible }
+    StringValue "s-resize"
 
 
 {-| -}
-seResize : Cursor {}
+seResize : CursorValue
 seResize =
-    { value = "se-resize", cursor = Compatible }
+    StringValue "se-resize"
 
 
 {-| -}
-swResize : Cursor {}
+swResize : CursorValue
 swResize =
-    { value = "sw-resize", cursor = Compatible }
+    StringValue "sw-resize"
 
 
 {-| -}
-wResize : Cursor {}
+wResize : CursorValue
 wResize =
-    { value = "w-resize", cursor = Compatible }
+    StringValue "w-resize"
 
 
 {-| -}
-ewResize : Cursor {}
+ewResize : CursorValue
 ewResize =
-    { value = "ew-resize", cursor = Compatible }
+    StringValue "ew-resize"
 
 
 {-| -}
-nsResize : Cursor {}
+nsResize : CursorValue
 nsResize =
-    { value = "ns-resize", cursor = Compatible }
+    StringValue "ns-resize"
 
 
 {-| -}
-neswResize : Cursor {}
+neswResize : CursorValue
 neswResize =
-    { value = "nesw-resize", cursor = Compatible }
+    StringValue "nesw-resize"
 
 
 {-| -}
-nwseResize : Cursor {}
+nwseResize : CursorValue
 nwseResize =
-    { value = "nwse-resize", cursor = Compatible }
+    StringValue "nwse-resize"
 
 
 {-| -}
-colResize : Cursor {}
+colResize : CursorValue
 colResize =
-    { value = "col-resize", cursor = Compatible }
+    StringValue "col-resize"
 
 
 {-| -}
-rowResize : Cursor {}
+rowResize : CursorValue
 rowResize =
-    { value = "row-resize", cursor = Compatible }
+    StringValue "row-resize"
 
 
 {-| -}
-allScroll : Cursor {}
+allScroll : CursorValue
 allScroll =
-    { value = "all-scroll", cursor = Compatible }
+    StringValue "all-scroll"
 
 
 {-| -}
-zoomIn : Cursor {}
+zoomIn : CursorValue
 zoomIn =
-    { value = "zoom-in", cursor = Compatible }
+    StringValue "zoom-in"
 
 
 {-| -}
-zoomOut : Cursor {}
+zoomOut : CursorValue
 zoomOut =
-    { value = "zoom-out", cursor = Compatible }
+    StringValue "zoom-out"
 
 
 {-| -}
-grab : Cursor {}
+grab : CursorValue
 grab =
-    { value = "grab", cursor = Compatible }
+    StringValue "grab"
 
 
 {-| -}
-grabbing : Cursor {}
+grabbing : CursorValue
 grabbing =
-    { value = "grabbing", cursor = Compatible }
+    StringValue "grabbing"
 
 
 
@@ -8178,7 +8193,7 @@ numericalPercentageToString value =
     value |> (*) 100 |> numberToString |> flip (++) "%"
 
 
-valuesOrNone : List (Value compatible) -> Value {}
+valuesOrNone : List (OldValue compatible) -> OldValue {}
 valuesOrNone list =
     if List.isEmpty list then
         { value = "none" }
@@ -8186,7 +8201,7 @@ valuesOrNone list =
         { value = String.join " " (List.map .value list) }
 
 
-stringsToValue : List String -> Value {}
+stringsToValue : List String -> OldValue {}
 stringsToValue list =
     if List.isEmpty list then
         { value = "none" }
