@@ -54,7 +54,8 @@ elmCss(
   program.output,
   program.module,
   program.port,
-  program.pathToMake
+  program.pathToMake,
+  {}
 )
   .then(function(results) {
     console.log(
