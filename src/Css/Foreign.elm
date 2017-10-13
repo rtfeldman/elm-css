@@ -7,12 +7,13 @@ module Css.Foreign
         , everything
         , generalSiblings
         , id
+        , important
         , selector
         )
 
 {-| Avoid using this module!
 
-These global CSS selectors [make code harder to maintain](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284).
+These global CSS features [make code harder to maintain](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284).
 Much like global mutable state, they may appear convenient in the short term,
 but can easily create a mess in the long term. It's best to avoid using them.
 
@@ -23,14 +24,14 @@ selectors may be your only path to styling them. In those situations,
 this module is here to help!
 
 
-# Statements
+# Selectors
 
 @docs class, id, selector, everything
 
 
 # Combinators
 
-@docs children, descendants, adjacentSiblings, generalSiblings
+@docs important, children, descendants, adjacentSiblings, generalSiblings
 
 -}
 
@@ -153,3 +154,11 @@ selector : String -> List Style -> Snippet
 selector selectorStr styles =
     Structure.CustomSelector selectorStr []
         |> makeSnippet styles
+
+
+{-| Transforms the given property by adding !important to the end of its
+declaration.
+-}
+important : Style -> Style
+important =
+    Preprocess.mapLastProperty (\property -> { property | important = True })

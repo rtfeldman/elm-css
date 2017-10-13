@@ -4,41 +4,13 @@ module Css.Internal exposing (..)
 -}
 
 
-{-| Compatible
--}
-type Auto_
-    = Auto_
+type Value cursor color
+    = Value String
 
 
-{-| Compatible
--}
-type None_
-    = None_
-
-
-{-| Compatible
--}
-type Cursor_
-    = Cursor_
-
-
-{-| Incompatible
--}
-type X
-    = X
-
-
-type Value none auto cursor color
-    = StringValue String
-    | NumberValue Float String
-    | ColorValue ColorDescriptor
-    | CalcValue (Value none auto cursor color) CalcOperation (Value none auto cursor color)
-    | Warnings (List String) (Value none auto cursor color)
-    | InvalidValue String
-
-
-type alias CursorValue =
-    Value Auto_ None_ Cursor_ X
+type CalcValue
+    = PlainValue String
+    | CalcValue CalcValue CalcOperation CalcValue
 
 
 type alias Warning =
@@ -50,88 +22,38 @@ type CalcOperation
     | Plus
 
 
-warnings : Value a b c d -> List String
-warnings value =
+calcValueToString : CalcValue -> String
+calcValueToString value =
     case value of
-        Warnings warningList rest ->
-            warningList ++ warnings rest
-
-        CalcValue first _ second ->
-            warnings first ++ warnings second
-
-        _ ->
-            []
-
-
-valueToString : Value a b c d -> String
-valueToString value =
-    case value of
-        NumberValue num unitLabel ->
-            numberToString num ++ unitLabel
-
-        StringValue str ->
+        PlainValue str ->
             str
 
         CalcValue first operation second ->
-            [ valueToString first
+            [ calcValueToString first
             , calcOperationToSring operation
-            , valueToString second
+            , calcValueToString second
             ]
                 |> String.join " "
                 |> List.singleton
                 |> cssFunction "calc"
 
-        ColorValue descriptor ->
-            case descriptor of
-                HexColor str ->
-                    withPrecedingHash str
-
-                RgbColor red green blue ->
-                    cssFunction "rgb" (List.map numberToString [ red, green, blue ])
-
-                RgbaColor red green blue alpha ->
-                    cssFunction "rgba" (List.map numberToString [ red, green, blue ] ++ [ numberToString alpha ])
-
-                HslColor hue saturation lightness ->
-                    cssFunction "hsl"
-                        [ numberToString hue
-                        , numericalPercentageToString saturation
-                        , numericalPercentageToString lightness
-                        ]
-
-                HslaColor hue saturation lightness alpha ->
-                    cssFunction "hsla"
-                        [ numberToString hue
-                        , numericalPercentageToString saturation
-                        , numericalPercentageToString lightness
-                        , numberToString alpha
-                        ]
-
-                InvalidColor str ->
-                    "Invalid color :" ++ str
-
-        Warnings _ rest ->
-            valueToString rest
-
-        InvalidValue str ->
-            -- TODO make it so this never compiles!
-            str
-
 
 valueToProperty :
     String
-    -> Value a b c d
+    -> Value a b
     ->
         { key : String
         , value : String
         , important : Bool
         , warnings : List String
         }
-valueToProperty key val =
+valueToProperty key (Value val) =
     { key = key
-    , value = valueToString val
+    , value = val
     , important = False
-    , warnings = warnings val
+
+    -- TODO warnings is now dead code - remove it!
+    , warnings = []
     }
 
 
