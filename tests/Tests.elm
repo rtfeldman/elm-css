@@ -730,12 +730,16 @@ nestedEach =
         input =
             Fixtures.nestedEach
 
-        actual =
-            "span, span:focus, span:focus:hover {\n    color: #FF0000;\n}"
+        output =
+            """
+            span, span:focus, span:focus:hover, span  span:active {
+                color: #FF0000;
+            }
+            """
     in
     describe "nestedEach"
         [ test "pretty prints the actual output" <|
             \_ ->
-                prettyPrint input
-                    |> Expect.equal actual
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
         ]

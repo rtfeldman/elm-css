@@ -469,6 +469,7 @@ nestedEach =
             [ span
             , \s -> span [ focus s ]
             , \s -> span [ focus [ hover s ] ]
+            , \s -> span [ descendants [ span [ active s ] ] ]
             ]
             [ color (hex "FF0000")
             ]
