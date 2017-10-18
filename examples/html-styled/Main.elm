@@ -1,14 +1,14 @@
 module Main exposing (main)
 
 import Css exposing (..)
-import Html.Attributes as Attr exposing (..)
 import Html.Styled exposing (..)
+import Html.Styled.Attributes as Attr exposing (..)
 import Html.Styled.Lazy exposing (lazy)
 
 
 pageHeader : List (Attribute msg) -> List (Html msg) -> Html msg
 pageHeader =
-    header
+    withCss header
         [ backgroundColor (rgb 90 90 90)
         , boxSizing borderBox
         , padding (px -80)
@@ -18,7 +18,7 @@ pageHeader =
 
 navigation : List (Attribute msg) -> List (Html msg) -> Html msg
 navigation =
-    nav
+    withCss nav
         [ display inlineBlock
         , paddingBottom (px 12)
         ]
@@ -26,7 +26,7 @@ navigation =
 
 navLink : List (Attribute msg) -> List (Html msg) -> Html msg
 navLink =
-    a
+    withCss a
         [ margin (px 12)
         , color (rgb 255 255 255)
         ]
@@ -34,7 +34,7 @@ navLink =
 
 logo : List (Attribute msg) -> List (Html msg) -> Html msg
 logo =
-    img
+    withCss img
         [ display inlineBlock
         , marginLeft (px 150)
         , marginRight (px 80)
@@ -44,7 +44,7 @@ logo =
 
 buyTickets : List (Attribute msg) -> List (Html msg) -> Html msg
 buyTickets =
-    button
+    withCss button
         [ padding (px 16)
         , paddingLeft (px 24)
         , paddingRight (px 24)
@@ -66,17 +66,14 @@ main =
 
 
 view ticketsCaption =
-    div [ backgroundColor (hex "222222") ]
-        []
-        [ header [ backgroundColor (hex "333333"), padding (px 20) ]
-            []
+    div [ css [ backgroundColor (hex "222222") ] ]
+        [ header [ css [ backgroundColor (hex "333333"), padding (px 20) ] ]
             [ logo [ src "assets/logo.png" ] []
             , navigation [] navElems
             , lazy viewBuyTickets ticketsCaption
             ]
         , div []
-            []
-            [ img [] [ src "assets/banner.png" ] [] ]
+            [ img [ src "assets/banner.png" ] [] ]
         ]
 
 
