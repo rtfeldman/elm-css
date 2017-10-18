@@ -459,3 +459,16 @@ backgrounds =
             , backgroundPosition2 (pct 10) zero
             ]
         ]
+
+
+nestedEach : Stylesheet
+nestedEach =
+    (stylesheet << namespace "nested-each")
+        [ each
+            [ span
+            , \s -> span [ focus s ]
+            , \s -> span [ focus [ hover s ] ]
+            ]
+            [ color (hex "FF0000")
+            ]
+        ]
