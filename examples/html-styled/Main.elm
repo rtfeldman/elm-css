@@ -42,22 +42,25 @@ logo =
         ]
 
 
-buyTickets : List (Attribute msg) -> List (Html msg) -> Html msg
-buyTickets =
-    withCss button
-        [ padding (px 16)
-        , paddingLeft (px 24)
-        , paddingRight (px 24)
-        , marginLeft (px 50)
-        , marginRight auto
-        , color (rgb 255 255 255)
-        , backgroundColor (rgb 27 217 130)
-        , verticalAlign middle
-        ]
-
-
+viewBuyTickets : String -> Html msg
 viewBuyTickets caption =
-    buyTickets [] [ text caption ]
+    button
+        [ css
+            [ padding (px 16)
+            , paddingLeft (px 24)
+            , paddingRight (px 24)
+            , marginLeft (px 50)
+            , marginRight auto
+            , color (rgb 255 255 255)
+            , backgroundColor (rgb 27 217 130)
+            , verticalAlign middle
+            , hover
+                [ backgroundColor (rgb 255 255 255)
+                , color (rgb 27 217 130)
+                ]
+            ]
+        ]
+        [ text caption ]
 
 
 main =
@@ -66,7 +69,7 @@ main =
 
 
 view ticketsCaption =
-    div [ css [ backgroundColor (hex "222222") ] ]
+    span [ css [ backgroundColor (hex "222222") ] ]
         [ header [ css [ backgroundColor (hex "333333"), padding (px 20) ] ]
             [ logo [ src "assets/logo.png" ] []
             , navigation [] navElems
@@ -81,11 +84,3 @@ navElems : List (Html msg)
 navElems =
     [ "SPEAKERS", "SCHEDULE", "WORKSHOPS", "VENUE", "BLOG", "CONTACT" ]
         |> List.map (\name -> navLink [] [ text name ])
-
-
-src =
-    Attr.src
-
-
-text =
-    Html.Styled.text
