@@ -728,3 +728,24 @@ bug280 =
                 prettyPrint input
                     |> Expect.equal actual
         ]
+
+
+nestedEach : Test
+nestedEach =
+    let
+        input =
+            Fixtures.nestedEach
+
+        output =
+            """
+            span, span:focus, span:focus:hover, span  span:active {
+                color: #FF0000;
+            }
+            """
+    in
+    describe "nestedEach"
+        [ test "pretty prints the actual output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]

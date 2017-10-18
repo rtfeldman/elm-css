@@ -8355,11 +8355,40 @@ collectSelectors declarations =
         [] ->
             []
 
-        (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
-            (firstSelector :: otherSelectors) ++ collectSelectors rest
+        (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors styles)) :: rest ->
+            (unwrapSelector firstSelector styles :: otherSelectors) ++ collectSelectors rest
 
         _ :: rest ->
             collectSelectors rest
+
+
+unwrapSelector : Selector -> List Style -> Selector
+unwrapSelector (Structure.Selector sequence combinators mPseudo) styles =
+    let
+        unwrapSequenceSelector style s =
+            case style of
+                Preprocess.ExtendSelector nestedSelector evenMoreNestedStyles ->
+                    List.foldr unwrapSequenceSelector (Structure.appendRepeatable nestedSelector s) evenMoreNestedStyles
+
+                -- TODO: in order to combine sequences in `each`, we need to add branches here to accomodate them.
+                _ ->
+                    s
+
+        unwrapCombinatorSelector style cs =
+            case style of
+                Preprocess.NestSnippet combinator snippets ->
+                    List.concatMap (unwrapSnippet >> collectSelectors) snippets
+                        |> List.map (\(Structure.Selector s _ _) -> ( combinator, s ))
+                        |> List.append cs
+
+                -- TODO: in order to combine selectors in `each`, we need to add branches here to accomodate them.
+                _ ->
+                    cs
+    in
+    Structure.Selector
+        (List.foldr unwrapSequenceSelector sequence styles)
+        (List.foldr unwrapCombinatorSelector combinators styles)
+        mPseudo
 
 
 {-| Take a list of styles and return a list of key-value pairs that
