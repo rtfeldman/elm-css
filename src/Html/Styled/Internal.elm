@@ -1,4 +1,4 @@
-module Html.Styled.Internal exposing (Classname, InternalAttribute(..), InternalHtml(..), classProperty, getClassname, mapAttribute, unstyle, unstyleKeyed)
+module Html.Styled.Internal exposing (Classname, InternalAttribute(..), InternalHtml(..), classProperty, extractProperty, getClassname, mapAttribute, unstyle, unstyleKeyed)
 
 import Css exposing (Style)
 import Dict exposing (Dict)

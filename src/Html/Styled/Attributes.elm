@@ -95,6 +95,7 @@ module Html.Styled.Attributes
         , tabindex
         , target
         , title
+        , toUnstyled
         , type_
         , usemap
         , value
@@ -1167,6 +1168,11 @@ withCss :
     -> Html msg
 withCss fn styles attrs children =
     fn (css styles :: attrs) children
+
+
+toUnstyled : Attribute msg -> VirtualDom.Property msg
+toUnstyled =
+    Internal.extractProperty
 
 
 
