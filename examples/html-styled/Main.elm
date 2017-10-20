@@ -65,7 +65,7 @@ viewBuyTickets caption =
 
 main =
     view "BUY TICKETS"
-        |> toUnstyled
+        |> Html.Styled.toUnstyled
 
 
 view ticketsCaption =
