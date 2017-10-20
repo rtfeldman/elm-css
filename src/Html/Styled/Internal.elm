@@ -63,7 +63,7 @@ unstyle elemType attributes children =
             List.foldl accumulateStyles Dict.empty attributes
 
         ( childNodes, styles ) =
-            List.foldl accumulateInternalHtml
+            List.foldr accumulateInternalHtml
                 ( [], initialStyles )
                 children
 
@@ -73,7 +73,7 @@ unstyle elemType attributes children =
         properties =
             List.map extractProperty attributes
     in
-    VirtualDom.node elemType properties (styleNode :: List.reverse childNodes)
+    VirtualDom.node elemType properties (styleNode :: childNodes)
 
 
 unstyleKeyed :
@@ -87,7 +87,7 @@ unstyleKeyed elemType attributes keyedChildren =
             List.foldl accumulateStyles Dict.empty attributes
 
         ( keyedChildNodes, styles ) =
-            List.foldl accumulateKeyedInternalHtml
+            List.foldr accumulateKeyedInternalHtml
                 ( [], initialStyles )
                 keyedChildren
 
@@ -97,7 +97,7 @@ unstyleKeyed elemType attributes keyedChildren =
         properties =
             List.map extractProperty attributes
     in
-    VirtualDom.keyedNode elemType properties (keyedStyleNode :: List.reverse keyedChildNodes)
+    VirtualDom.keyedNode elemType properties (keyedStyleNode :: keyedChildNodes)
 
 
 
@@ -163,12 +163,12 @@ accumulateInternalHtml html ( nodes, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateInternalHtml ( [], combinedStyles ) children
+                    List.foldr accumulateInternalHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.node elemType
                         (List.map extractProperty attributes)
-                        (List.reverse childNodes)
+                        childNodes
             in
             ( vdom :: nodes, finalStyles )
 
@@ -178,12 +178,12 @@ accumulateInternalHtml html ( nodes, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateKeyedInternalHtml ( [], combinedStyles ) children
+                    List.foldr accumulateKeyedInternalHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.keyedNode elemType
                         (List.map extractProperty attributes)
-                        (List.reverse childNodes)
+                        childNodes
             in
             ( vdom :: nodes, finalStyles )
 
@@ -203,12 +203,12 @@ accumulateKeyedInternalHtml ( key, html ) ( pairs, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateInternalHtml ( [], combinedStyles ) children
+                    List.foldr accumulateInternalHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.node elemType
                         (List.map extractProperty attributes)
-                        (List.reverse childNodes)
+                        childNodes
             in
             ( ( key, vdom ) :: pairs, finalStyles )
 
@@ -218,12 +218,12 @@ accumulateKeyedInternalHtml ( key, html ) ( pairs, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateKeyedInternalHtml ( [], combinedStyles ) children
+                    List.foldr accumulateKeyedInternalHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.keyedNode elemType
                         (List.map extractProperty attributes)
-                        (List.reverse childNodes)
+                        childNodes
             in
             ( ( key, vdom ) :: pairs, finalStyles )
 
