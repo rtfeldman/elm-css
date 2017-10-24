@@ -4070,6 +4070,9 @@ linearGradient :
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
 linearGradient stop1 stop2 stops =
+    -- TODO we should make this more permissive, e.g. compatibleA/compatibleB/compatibleC/compatibleD
+    -- the only reason it isn't is that we happen to be using collectStops like this.
+    -- We should just not use collectStops. Same with linearGradient2
     { value =
         [ stop1, stop2 ]
             ++ stops
