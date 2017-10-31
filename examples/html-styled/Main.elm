@@ -1,88 +1,111 @@
 module Main exposing (main)
 
 import Css exposing (..)
+import Html
 import Html.Styled exposing (..)
-import Html.Styled.Attributes exposing (css, href, src, withCss)
+import Html.Styled.Attributes exposing (css, href, src, styled)
+import Html.Styled.Events exposing (onClick)
 
 
-headerFont =
-    batch
-        [ fontFamilies [ "Between1-Regular", "sans-serif" ]
-        , fontSize (px 16)
-        , lineHeight (num 1.2)
+{-| A logo image, with inline styles that change on hover.
+-}
+logo : Html msg
+logo =
+    img
+        [ src "logo.png"
+        , css
+            [ display inlineBlock
+            , padding (px 20)
+            , border3 (px 5) solid (rgb 120 120 120)
+            , borderRadius (px 5)
+            , hover
+                [ borderColor theme.primary
+                , borderRadius (px 10)
+                ]
+            ]
         ]
+        []
 
 
-pageHeader =
-    withCss header
-        [ headerFont
-        , boxSizing borderBox
-        , boxShadow5 inset (px 2) (px 3) (px 4) (hex "333")
-        ]
+{-| A plain old record holding a couple of theme colors.
+-}
+theme : { secondary : Color, primary : Color }
+theme =
+    { primary = hex "55af6a"
+    , secondary = rgb 250 240 230
+    }
 
 
-navigation =
-    withCss nav
-        [ display inlineBlock
-        , height (px 40)
-        , paddingTop (px 40)
-        , paddingBottom (px 12)
-        ]
-
-
-navLink =
-    withCss a
+{-| A reusable button which has some styles pre-applied to it.
+-}
+btn : List (Attribute msg) -> List (Html msg) -> Html msg
+btn =
+    styled button
         [ margin (px 12)
         , color (rgb 250 250 250)
-        ]
-
-
-logo =
-    withCss img
-        [ display inlineBlock
-        , marginLeft (px 40)
-        , marginRight (px 40)
-        , height (px 40)
-        , verticalAlign middle
-        ]
-
-
-reactiveConfColor =
-    hex "55af6a"
-
-
-navElems =
-    [ "SPEAKERS", "WORKSHOPS", "SCHEDULE", "VENUE", "CONTACT", "ABOUT US" ]
-        |> List.map (\name -> navLink [] [ text name ])
-
-
-view =
-    div []
-        [ pageHeader []
-            [ logo [ src "assets/reactive-conf.svg" ] []
-            , navigation [] navElems
-            , span
-                [ css [ color reactiveConfColor ] ]
-                [ text "Oct 25–27, 2017" ]
-            , a
-                [ href "/tickets"
-                , css
-                    [ display inlineBlock
-                    , color (rgb 250 250 250)
-                    , marginLeft (px 50)
-                    , border3 (px 5) solid reactiveConfColor
-                    , padding2 (px 12) (px 16)
-                    , textDecoration none
-                    , headerFont
-                    , hover [ backgroundColor reactiveConfColor ]
-                    ]
-                ]
-                [ text "BUY TICKETS" ]
+        , hover
+            [ backgroundColor theme.primary
+            , textDecoration underline
             ]
-        , div []
-            [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] [] ]
         ]
 
 
+{-| A reusable style. Css.batch combines multiple styles into one, much
+like mixins in CSS preprocessors.
+-}
+paragraphFont : Style
+paragraphFont =
+    Css.batch
+        [ fontFamilies [ "Palatino Linotype", "Georgia", "serif" ]
+        , fontSize (px 16)
+        , fontWeight normal
+        ]
+
+
+{-| Css.property lets you define custom properties, using strings as their values.
+-}
+legacyBorderRadius : String -> Style
+legacyBorderRadius amount =
+    Css.batch
+        [ property "-moz-border-radius" amount
+        , property "-webkit-border-top-left-radius" amount
+        , property "-webkit-border-top-right-radius" amount
+        , property "-webkit-border-bottom-right-radius" amount
+        , property "-webkit-border-bottom-left-radius" amount
+        , property "border-radius" amount
+        ]
+
+
+view : Model -> Html Msg
+view model =
+    nav []
+        [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] []
+        , btn [ onClick DoSomething ] [ text "Click me!" ]
+        ]
+
+
+main : Program Never Model Msg
 main =
-    view |> toUnstyled
+    Html.beginnerProgram
+        { view = view >> toUnstyled
+        , update = update
+        , model = initialModel
+        }
+
+
+update : Msg -> Model -> Model
+update msg model =
+    model
+
+
+type Msg
+    = DoSomething
+
+
+type alias Model =
+    ()
+
+
+initialModel : Model
+initialModel =
+    ()

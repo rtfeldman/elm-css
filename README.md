@@ -8,52 +8,119 @@ complete departure from CSS, check out [style-elements](http://package.elm-lang.
 Here's an example of how to define some `elm-css` styles:
 
 ```elm
-module MyCss exposing (..)
+module MyCss exposing (main)
 
 import Css exposing (..)
-import Css.Elements exposing (body, li)
-import Css.Namespace exposing (namespace)
+import Html
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (css, href, src, styled)
+import Html.Styled.Events exposing (onClick)
 
 
-type CssClasses
-    = NavBar
-
-
-type CssIds
-    = Page
-
-
-css =
-    (stylesheet << namespace "dreamwriter")
-    [ body
-        [ overflowX auto
-        , minWidth (px 1280)
-        ]
-    , id Page
-        [ backgroundColor (rgb 200 128 64)
-        , color (hex "CCFFFF")
-        , width (pct 100)
-        , height (pct 100)
-        , boxSizing borderBox
-        , padding (px 8)
-        , margin zero
-        ]
-    , class NavBar
-        [ margin zero
-        , padding zero
-        , children
-            [ li
-                [ (display inlineBlock) |> important
-                , color primaryAccentColor
+{-| A logo image, with inline styles that change on hover.
+-}
+logo : Html msg
+logo =
+    img
+        [ src "logo.png"
+        , css
+            [ display inlineBlock
+            , padding (px 20)
+            , border3 (px 5) solid (rgb 120 120 120)
+            , borderRadius (px 5)
+            , hover
+                [ borderColor theme.primary
+                , borderRadius (px 10)
                 ]
             ]
+        ]
+        []
+
+
+{-| A plain old record holding a couple of theme colors.
+-}
+theme : { secondary : Color, primary : Color }
+theme =
+    { primary = hex "55af6a"
+    , secondary = rgb 250 240 230
+    }
+
+
+{-| A reusable button which has some styles pre-applied to it.
+-}
+btn : List (Attribute msg) -> List (Html msg) -> Html msg
+btn =
+    styled button
+        [ margin (px 12)
+        , color (rgb 250 250 250)
+        , hover
+            [ backgroundColor theme.primary
+            , textDecoration underline
+            ]
+        ]
+
+
+{-| A reusable style. Css.batch combines multiple styles into one, much
+like mixins in CSS preprocessors.
+-}
+paragraphFont : Style
+paragraphFont =
+    Css.batch
+        [ fontFamilies [ "Palatino Linotype", "Georgia", "serif" ]
+        , fontSize (px 16)
+        , fontWeight normal
+        ]
+
+
+{-| Css.property lets you define custom properties, using strings as their values.
+-}
+legacyBorderRadius : String -> Style
+legacyBorderRadius amount =
+    Css.batch
+        [ property "-moz-border-radius" amount
+        , property "-webkit-border-top-left-radius" amount
+        , property "-webkit-border-top-right-radius" amount
+        , property "-webkit-border-bottom-right-radius" amount
+        , property "-webkit-border-bottom-left-radius" amount
+        , property "border-radius" amount
+        ]
+
+
+view : Model -> Html Msg
+view model =
+    nav []
+        [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] []
+        , btn [ onClick DoSomething ] [ text "Click me!" ]
+        ]
+
+
+main : Program Never Model Msg
+main =
+    Html.beginnerProgram
+        { view = view >> toUnstyled
+        , update = update
+        , model = initialModel
+        }
+```
+
+(See [`examples/readme/`](examples/readme/) to play around with this example.)
+
+The [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css)
+function accepts a list of [`Style`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css)
+values which roughly correspond to [CSS properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
+
+css
+    [ display inlineBlock
+    , padding (px 20)
+    , border3 (px 5) solid (rgb 120 120 120)
+    , borderRadius (px 5)
+    , hover
+        [ borderColor theme.primary
+        , borderRadius (px 10)
         ]
     ]
 
 
-primaryAccentColor =
-    hex "ccffaa"
-```
 
 Here's what you can do with this code:
 

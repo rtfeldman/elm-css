@@ -92,6 +92,7 @@ module Html.Styled.Attributes
         , start
         , step
         , style
+        , styled
         , tabindex
         , target
         , title
@@ -100,7 +101,6 @@ module Html.Styled.Attributes
         , usemap
         , value
         , width
-        , withCss
         , wrap
         )
 
@@ -1160,13 +1160,13 @@ css styles =
         classname
 
 
-withCss :
+styled :
     (List (Attribute msg) -> List (Html msg) -> Html msg)
     -> List Style
     -> List (Attribute msg)
     -> List (Html msg)
     -> Html msg
-withCss fn styles attrs children =
+styled fn styles attrs children =
     fn (css styles :: attrs) children
 
 
