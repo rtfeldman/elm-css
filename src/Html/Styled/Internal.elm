@@ -12,8 +12,7 @@ module Html.Styled.Internal
         , unstyleKeyed
         )
 
-import Css exposing (Style)
-import Css.Preprocess as Preprocess
+import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Dict exposing (Dict)
@@ -36,7 +35,7 @@ type StyledHtml msg
 type InternalAttribute msg
     = InternalAttribute
         (VirtualDom.Property msg)
-        (List Style)
+        (List Preprocess.Style)
         -- classname is "" whenever styles is []
         -- It would be nicer to model this with separate constructors, but the
         -- browser will JIT this better. We will instantiate a *lot* of these.

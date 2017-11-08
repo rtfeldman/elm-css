@@ -89,7 +89,8 @@ add attributes.
 
 This works by using CSS selectors which are [globally scoped and
 bad for maintainability](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284),
-so definitely avoid using this module on DOM structures you control!
+so definitely avoid using this module except when you specifically need to style
+third-party DOM nodes!
 
 
 # Global Styles

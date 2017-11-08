@@ -104,21 +104,18 @@ main =
 
 See [the `Css` module documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css) for an explanation of how this code works.
 
-`elm-css` draws inspiration from the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), [CSS Modules](http://glenmaddern.com/articles/css-modules), and [styled-components](https://www.styled-components.com). It includes popular features like:
+`elm-css` draws inspiration from the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), [CSS Modules](http://glenmaddern.com/articles/css-modules), and [styled-components](https://www.styled-components.com) libraries. It includes features like:
 
-  - [Mixins](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#mixin)
-  - [namespaces](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Namespace#namespace)
-  - [nested media queries](https://davidwalsh.name/write-media-queries-sass) (and nested selectors in general, like how [Sass](http://sass-lang.com/) does them)
+- [locally scoped CSS](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284)
+- [mixins](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#batch)
+- [nested media queries](https://davidwalsh.name/write-media-queries-sass) (as well as pseudo-classes like `:hover` and pseudo-elements like `::after`)
 
 ### Examples
 
-There are a few examples to check out!
-
-  - [json-to-elm](https://github.com/eeue56/json-to-elm) which can see be seen live [here](https://noredink.github.io/json-to-elm)
-  - the [examples](https://github.com/rtfeldman/elm-css/tree/master/examples) folder, which contains a working project with a README
-  - the example above
-
+- A [reusable datepicker](https://github.com/abadi199/datetimepicker) built by Abadi Kurniawan
+- The [website](https://noredink.github.io/json-to-elm) for [json-to-elm](https://github.com/eeue56/json-to-elm)
+- This project's [examples](https://github.com/rtfeldman/elm-css/tree/master/examples) folder
 
 ## Related Projects
 
-* [Elm CSS Normalize](https://github.com/scottcorgan/elm-css-normalize)
+- [Elm CSS Normalize](https://github.com/scottcorgan/elm-css-normalize)

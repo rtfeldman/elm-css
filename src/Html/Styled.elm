@@ -61,6 +61,8 @@ expect to use frequently will be closer to the top.
 
 ## Less Common Elements
 
+@docs details, menu, menuitem, summary
+
 
 ### Less Common Inputs
 
@@ -100,10 +102,12 @@ import Html.Styled.Internal as Internal exposing (Classname, InternalAttribute(.
 import VirtualDom exposing (Node)
 
 
+{-| -}
 type alias Html msg =
     StyledHtml msg
 
 
+{-| -}
 type alias Attribute msg =
     InternalAttribute msg
 
@@ -112,17 +116,20 @@ type alias Attribute msg =
 -- MAKING HTML VALUES --
 
 
+{-| -}
 node : String -> List (Attribute msg) -> List (Html msg) -> Html msg
 node elemType =
     Element elemType
 
 
+{-| -}
 text : String -> Html msg
 text str =
     VirtualDom.text str
         |> Unstyled
 
 
+{-| -}
 map : (a -> b) -> Html a -> Html b
 map transform html =
     case html of
@@ -143,6 +150,7 @@ map transform html =
                 |> Unstyled
 
 
+{-| -}
 toUnstyled : Html msg -> Node msg
 toUnstyled html =
     case html of
@@ -156,6 +164,7 @@ toUnstyled html =
             Internal.unstyleKeyed elemType attributes children
 
 
+{-| -}
 fromUnstyled : Node msg -> StyledHtml msg
 fromUnstyled =
     Internal.Unstyled

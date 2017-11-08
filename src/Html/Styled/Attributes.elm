@@ -105,6 +105,9 @@ module Html.Styled.Attributes
         )
 
 {-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
+The only functions added are `toUnstyled`, `css`, and `styled`:
+
+@docs toUnstyled, css, styled
 
 Helper functions for HTML attributes. They are organized roughly by
 category. Each attribute is labeled with the HTML tags it can be used with, so
@@ -128,9 +131,7 @@ just search the page for `video` if you want video stuff.
 
 ## Input Helpers
 
-@docs accept, acceptCharset, action, autocomplete, autofocus,
-disabled, enctype, formaction, list, maxlength, minlength, method, multiple,
-name, novalidate, pattern, readonly, required, size, for, form
+@docs accept, acceptCharset, action, autocomplete, autofocus, disabled, enctype, formaction, list, maxlength, minlength, method, multiple, name, novalidate, pattern, readonly, required, size, for, form
 
 
 ## Input Ranges
@@ -186,8 +187,8 @@ name, novalidate, pattern, readonly, required, size, for, form
 # Less Common Global Attributes
 
 Attributes that can be attached to any HTML tag but are less commonly used.
-@docs accesskey, contenteditable, contextmenu, dir, draggable, dropzone,
-itemprop, lang, spellcheck, tabindex
+
+@docs accesskey, contenteditable, contextmenu, dir, draggable, dropzone, itemprop, lang, spellcheck, tabindex
 
 
 # Key Generation
@@ -197,11 +198,11 @@ itemprop, lang, spellcheck, tabindex
 
 # Miscellaneous
 
-@docs cite, datetime, pubdate, manifest
+@docs cite, datetime, manifest, pubdate
 
 -}
 
-import Css exposing (Style)
+import Css.Preprocess exposing (Style)
 import Html.Styled exposing (Attribute, Html)
 import Html.Styled.Internal as Internal exposing (InternalAttribute(InternalAttribute))
 import Json.Encode as Json
@@ -1150,6 +1151,7 @@ manifest value =
     attribute "manifest" value
 
 
+{-| -}
 css : List Style -> Attribute msg
 css styles =
     let
@@ -1162,6 +1164,13 @@ css styles =
         classname
 
 
+{-| -}
+toUnstyled : Attribute msg -> VirtualDom.Property msg
+toUnstyled =
+    Internal.extractProperty
+
+
+{-| -}
 styled :
     (List (Attribute msg) -> List (Html msg) -> Html msg)
     -> List Style
@@ -1170,17 +1179,3 @@ styled :
     -> Html msg
 styled fn styles attrs children =
     fn (css styles :: attrs) children
-
-
-toUnstyled : Attribute msg -> VirtualDom.Property msg
-toUnstyled =
-    Internal.extractProperty
-
-
-
-{--TODO: maybe reintroduce once there's a better way to disambiguate imports
-{-| The number of columns a `col` or `colgroup` should span. -}
-span : Int -> Attribute msg
-span n =
-    stringProperty "span" (toString n)
---}
