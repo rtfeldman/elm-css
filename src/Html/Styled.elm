@@ -91,12 +91,12 @@ Html, Attribute, fromUnstyled, toUnstyled, text, node, map
 
 -}
 
-import Html.Styled.Internal as Internal exposing (Classname, InternalAttribute(..), InternalHtml(..))
+import Html.Styled.Internal as Internal exposing (Classname, InternalAttribute(..), StyledHtml(..))
 import VirtualDom exposing (Node)
 
 
 type alias Html msg =
-    InternalHtml msg
+    StyledHtml msg
 
 
 type alias Attribute msg =
@@ -151,7 +151,7 @@ toUnstyled html =
             Internal.unstyleKeyed elemType attributes children
 
 
-fromUnstyled : Node msg -> InternalHtml msg
+fromUnstyled : Node msg -> StyledHtml msg
 fromUnstyled =
     Internal.Unstyled
 

@@ -7,7 +7,7 @@ module Html.Styled.Lazy exposing (lazy, lazy2, lazy3)
 -}
 
 import Html.Styled as Html exposing (Html)
-import Html.Styled.Internal exposing (InternalHtml(Unstyled))
+import Html.Styled.Internal exposing (StyledHtml(Unstyled))
 import VirtualDom exposing (Node)
 
 

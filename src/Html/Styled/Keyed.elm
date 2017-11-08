@@ -23,7 +23,7 @@ removed, etc. Common examples include:
 -}
 
 import Html.Styled exposing (Attribute, Html)
-import Html.Styled.Internal as Internal exposing (InternalHtml(..))
+import Html.Styled.Internal as Internal exposing (StyledHtml(..))
 
 
 {-| Works just like `Html.node`, but you add a unique identifier to each child

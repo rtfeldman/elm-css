@@ -1,4 +1,4 @@
-module Html.Styled.Internal exposing (Classname, InternalAttribute(..), InternalHtml(..), classProperty, extractProperty, getClassname, mapAttribute, unstyle, unstyleKeyed)
+module Html.Styled.Internal exposing (Classname, InternalAttribute(..), StyledHtml(..), classProperty, extractProperty, getClassname, mapAttribute, unstyle, unstyleKeyed)
 
 import Css exposing (Style)
 import Dict exposing (Dict)
@@ -12,9 +12,9 @@ type alias Classname =
     String
 
 
-type InternalHtml msg
-    = Element String (List (InternalAttribute msg)) (List (InternalHtml msg))
-    | KeyedElement String (List (InternalAttribute msg)) (List ( String, InternalHtml msg ))
+type StyledHtml msg
+    = Element String (List (InternalAttribute msg)) (List (StyledHtml msg))
+    | KeyedElement String (List (InternalAttribute msg)) (List ( String, StyledHtml msg ))
     | Unstyled (VirtualDom.Node msg)
 
 
@@ -55,7 +55,7 @@ murmurSeed =
 unstyle :
     String
     -> List (InternalAttribute msg)
-    -> List (InternalHtml msg)
+    -> List (StyledHtml msg)
     -> Node msg
 unstyle elemType attributes children =
     let
@@ -63,7 +63,7 @@ unstyle elemType attributes children =
             List.foldl accumulateStyles Dict.empty attributes
 
         ( childNodes, styles ) =
-            List.foldl accumulateInternalHtml
+            List.foldl accumulateStyledHtml
                 ( [], initialStyles )
                 children
 
@@ -79,7 +79,7 @@ unstyle elemType attributes children =
 unstyleKeyed :
     String
     -> List (InternalAttribute msg)
-    -> List ( String, InternalHtml msg )
+    -> List ( String, StyledHtml msg )
     -> Node msg
 unstyleKeyed elemType attributes keyedChildren =
     let
@@ -87,7 +87,7 @@ unstyleKeyed elemType attributes keyedChildren =
             List.foldl accumulateStyles Dict.empty attributes
 
         ( keyedChildNodes, styles ) =
-            List.foldl accumulateKeyedInternalHtml
+            List.foldl accumulateKeyedStyledHtml
                 ( [], initialStyles )
                 keyedChildren
 
@@ -148,11 +148,11 @@ extractProperty (InternalAttribute val _ _) =
     val
 
 
-accumulateInternalHtml :
-    InternalHtml msg
+accumulateStyledHtml :
+    StyledHtml msg
     -> ( List (Node msg), Dict Classname (List Style) )
     -> ( List (Node msg), Dict Classname (List Style) )
-accumulateInternalHtml html ( nodes, styles ) =
+accumulateStyledHtml html ( nodes, styles ) =
     case html of
         Unstyled vdom ->
             ( vdom :: nodes, styles )
@@ -163,7 +163,7 @@ accumulateInternalHtml html ( nodes, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateInternalHtml ( [], combinedStyles ) children
+                    List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.node elemType
@@ -178,7 +178,7 @@ accumulateInternalHtml html ( nodes, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateKeyedInternalHtml ( [], combinedStyles ) children
+                    List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.keyedNode elemType
@@ -188,11 +188,11 @@ accumulateInternalHtml html ( nodes, styles ) =
             ( vdom :: nodes, finalStyles )
 
 
-accumulateKeyedInternalHtml :
-    ( String, InternalHtml msg )
+accumulateKeyedStyledHtml :
+    ( String, StyledHtml msg )
     -> ( List ( String, Node msg ), Dict Classname (List Style) )
     -> ( List ( String, Node msg ), Dict Classname (List Style) )
-accumulateKeyedInternalHtml ( key, html ) ( pairs, styles ) =
+accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
     case html of
         Unstyled vdom ->
             ( ( key, vdom ) :: pairs, styles )
@@ -203,7 +203,7 @@ accumulateKeyedInternalHtml ( key, html ) ( pairs, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateInternalHtml ( [], combinedStyles ) children
+                    List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.node elemType
@@ -218,7 +218,7 @@ accumulateKeyedInternalHtml ( key, html ) ( pairs, styles ) =
                     List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl accumulateKeyedInternalHtml ( [], combinedStyles ) children
+                    List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.keyedNode elemType
@@ -249,7 +249,7 @@ snippetFromPair ( classname, styles ) =
 
 
 {-| returns a String key that is not already one of the keys in the list of
-key-value pairs. We need this in order to prepend to a list of InternalHtml.Keyed
+key-value pairs. We need this in order to prepend to a list of StyledHtml.Keyed
 nodes with a guaranteed-unique key.
 -}
 getUnusedKey : String -> List ( String, a ) -> String
