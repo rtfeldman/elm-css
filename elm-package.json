@@ -11,8 +11,8 @@
         "Css.Colors",
         "Css.Elements",
         "Css.Media",
-        "Css.File",
-        "Css.Namespace"
+        "DEPRECATED.Css.File",
+        "DEPRECATED.Css.Namespace"
     ],
     "dependencies": {
         "Skinney/murmur3": "2.0.4 <= v < 3.0.0",

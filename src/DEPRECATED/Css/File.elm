@@ -1,6 +1,19 @@
-module Css.File exposing (CssCompilerProgram, CssFileStructure, Stylesheet, compile, compiler, toFileStructure)
+module DEPRECATED.Css.File exposing (CssCompilerProgram, CssFileStructure, Stylesheet, compile, compiler, toFileStructure)
 
-{-| Functions for writing CSS files from elm-css.
+{-|
+
+
+# DEPRECATED
+
+Compiling to .css files is deprecated, and support is planned to be removed in a
+future release (likely sometime in 2018), once [`Html.Styled`](Html-Styled) has
+matured sufficiently. The design goal is for elm-css to offer One Way To Do It,
+and that one way is planned to be `Html.Styled`!
+
+
+## Css.File
+
+Functions for writing CSS files from elm-css.
 
 @docs Stylesheet, compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
 
