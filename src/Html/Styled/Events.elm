@@ -22,7 +22,9 @@ module Html.Styled.Events
         , targetValue
         )
 
-{-| It is often helpful to create an [Union Type] so you can have many different kinds
+{-| Drop-in replacement for the `Html.Events` module from the `elm-lang/html` package.
+
+It is often helpful to create an [Union Type] so you can have many different kinds
 of events as seen in the [TodoMVC] example.
 
 [Union Type]: http://elm-lang.org/learn/Union-Types.elm

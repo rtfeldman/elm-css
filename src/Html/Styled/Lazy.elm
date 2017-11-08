@@ -1,6 +1,6 @@
 module Html.Styled.Lazy exposing (lazy, lazy2, lazy3)
 
-{-|
+{-| Drop-in replacement for the `Html.Lazy` module from the `elm-lang/html` package.
 
 @docs lazy, lazy2, lazy3
 

@@ -11,6 +11,11 @@
         "Css.Colors",
         "Css.Foreign",
         "Css.Media",
+        "Html.Styled",
+        "Html.Styled.Attributes",
+        "Html.Styled.Events",
+        "Html.Styled.Keyed",
+        "Html.Styled.Lazy",
         "DEPRECATED.Css.File",
         "DEPRECATED.Css.Namespace"
     ],

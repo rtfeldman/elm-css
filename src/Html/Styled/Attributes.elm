@@ -104,7 +104,9 @@ module Html.Styled.Attributes
         , wrap
         )
 
-{-| Helper functions for HTML attributes. They are organized roughly by
+{-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
+
+Helper functions for HTML attributes. They are organized roughly by
 category. Each attribute is labeled with the HTML tags it can be used with, so
 just search the page for `video` if you want video stuff.
 

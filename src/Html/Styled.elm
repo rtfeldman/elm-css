@@ -1,9 +1,14 @@
 module Html.Styled exposing (Attribute, Html, a, abbr, address, article, aside, audio, b, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, datalist, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, fromUnstyled, h1, h2, h3, h4, h5, h6, header, hr, i, iframe, img, input, ins, kbd, keygen, label, legend, li, main_, map, mark, math, menu, menuitem, meter, nav, node, object, ol, optgroup, option, output, p, param, pre, progress, q, rp, rt, ruby, s, samp, section, select, small, source, span, strong, sub, summary, sup, table, tbody, td, text, textarea, tfoot, th, thead, time, toUnstyled, tr, track, u, ul, var, video, wbr)
 
-{-| This file is organized roughly in order of popularity. The tags which you'd
+{-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
+The only functions added are `toUnstyled` and `fromUnstyled`:
+
+@docs fromUnstyled, toUnstyled
+
+This file is organized roughly in order of popularity. The tags which you'd
 expect to use frequently will be closer to the top.
 
-Html, Attribute, fromUnstyled, toUnstyled, text, node, map
+@docs Html, Attribute, text, node, map
 
 
 # Tags

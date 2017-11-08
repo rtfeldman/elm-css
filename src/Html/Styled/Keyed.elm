@@ -1,6 +1,8 @@
 module Html.Styled.Keyed exposing (node, ol, ul)
 
-{-| A keyed node helps optimize cases where children are getting added, moved,
+{-| Drop-in replacement for the `Html.Keyed` module from the `elm-lang/html` package.
+
+A keyed node helps optimize cases where children are getting added, moved,
 removed, etc. Common examples include:
 
   - The user can delete items from a list.
