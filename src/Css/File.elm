@@ -1,12 +1,13 @@
-module Css.File exposing (CssCompilerProgram, CssFileStructure, compile, compiler, toFileStructure)
+module Css.File exposing (CssCompilerProgram, CssFileStructure, Stylesheet, compile, compiler, toFileStructure)
 
 {-| Functions for writing CSS files from elm-css.
 
-@docs compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
+@docs Stylesheet, compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
 
 -}
 
-import Css exposing (Stylesheet)
+import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
+import Css.Preprocess.Resolve as Resolve
 
 
 {-| A description of CSS files that will be created by elm-css.
@@ -31,11 +32,12 @@ toFileStructure stylesheets =
     List.map asTuple stylesheets
 
 
-{-| Convenience re-export of Css.compile
+{-| Compile the given stylesheets to a CSS string, or to an error
+message if it could not be compiled.
 -}
 compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
-    Css.compile
+    Resolve.compile
 
 
 {-| Create a program that compiles an elm-css stylesheet to a CSS file.
@@ -71,3 +73,8 @@ See [`compiler`](#compiler).
 -}
 type alias CssCompilerProgram =
     Program Never () Never
+
+
+{-| -}
+type alias Stylesheet =
+    Preprocess.Stylesheet

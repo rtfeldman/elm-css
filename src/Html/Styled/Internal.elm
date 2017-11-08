@@ -1,6 +1,9 @@
 module Html.Styled.Internal exposing (Classname, InternalAttribute(..), StyledHtml(..), classProperty, extractProperty, getClassname, mapAttribute, unstyle, unstyleKeyed)
 
 import Css exposing (Style)
+import Css.Preprocess as Preprocess
+import Css.Preprocess.Resolve as Resolve
+import Css.Structure as Structure
 import Dict exposing (Dict)
 import Hex
 import Json.Encode
@@ -35,16 +38,26 @@ getClassname styles =
     else
         -- TODO Replace this comically inefficient implementation
         -- with crawling these union types and building up a hash along the way.
-        styles
-            |> Css.everything
+        Structure.UniversalSelectorSequence []
+            |> makeSnippet styles
             |> List.singleton
-            |> Css.stylesheet
+            |> Preprocess.stylesheet
             |> List.singleton
-            |> Css.compile
+            |> Resolve.compile
             |> .css
             |> Murmur3.hashString murmurSeed
             |> Hex.toString
             |> String.cons '_'
+
+
+makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Preprocess.Snippet
+makeSnippet styles sequence =
+    let
+        selector =
+            Structure.Selector sequence [] Nothing
+    in
+    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
+        |> Preprocess.Snippet
 
 
 murmurSeed : Int
@@ -237,15 +250,17 @@ toDeclaration : Dict Classname (List Style) -> String
 toDeclaration dict =
     Dict.toList dict
         |> List.map snippetFromPair
-        |> Css.stylesheet
+        |> Preprocess.stylesheet
         |> List.singleton
-        |> Css.compile
+        |> Resolve.compile
         |> .css
 
 
-snippetFromPair : ( Classname, List Style ) -> Css.Snippet
+snippetFromPair : ( Classname, List Style ) -> Preprocess.Snippet
 snippetFromPair ( classname, styles ) =
-    Css.class classname styles
+    [ Structure.ClassSelector classname ]
+        |> Structure.UniversalSelectorSequence
+        |> makeSnippet styles
 
 
 {-| returns a String key that is not already one of the keys in the list of
