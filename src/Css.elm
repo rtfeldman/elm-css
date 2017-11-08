@@ -695,6 +695,203 @@ module Css
 
 {-| Functions for building stylesheets.
 
+    import Css exposing (..)
+    import Html
+    import Html.Styled exposing (..)
+    import Html.Styled.Attributes exposing (css, href, src, styled)
+    import Html.Styled.Events exposing (onClick)
+
+    {-| A logo image, with inline styles that change on hover.
+    -}
+    logo : Html msg
+    logo =
+        img
+            [ src "logo.png"
+            , css
+                [ display inlineBlock
+                , padding (px 20)
+                , border3 (px 5) solid (rgb 120 120 120)
+                , hover
+                    [ borderColor theme.primary
+                    , borderRadius (px 10)
+                    ]
+                ]
+            ]
+            []
+
+    {-| A plain old record holding a couple of theme colors.
+    -}
+    theme : { secondary : Color, primary : Color }
+    theme =
+        { primary = hex "55af6a"
+        , secondary = rgb 250 240 230
+        }
+
+    {-| A reusable button which has some styles pre-applied to it.
+    -}
+    btn : List (Attribute msg) -> List (Html msg) -> Html msg
+    btn =
+        styled button
+            [ margin (px 12)
+            , color (rgb 250 250 250)
+            , hover
+                [ backgroundColor theme.primary
+                , textDecoration underline
+                ]
+            ]
+
+    {-| A reusable style. Css.batch combines multiple styles into one, much
+    like mixins in CSS preprocessors.
+    -}
+    paragraphFont : Style
+    paragraphFont =
+        Css.batch
+            [ fontFamilies [ "Palatino Linotype", "Georgia", "serif" ]
+            , fontSize (px 16)
+            , fontWeight normal
+            ]
+
+    {-| Css.property lets you define custom properties, using strings as their values.
+    -}
+    legacyBorderRadius : String -> Style
+    legacyBorderRadius amount =
+        Css.batch
+            [ property "-moz-border-radius" amount
+            , property "-webkit-border-top-left-radius" amount
+            , property "-webkit-border-top-right-radius" amount
+            , property "-webkit-border-bottom-right-radius" amount
+            , property "-webkit-border-bottom-left-radius" amount
+            , property "border-radius" amount
+            ]
+
+    view : Model -> Html Msg
+    view model =
+        nav []
+            [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] []
+            , btn [ onClick DoSomething ] [ text "Click me!" ]
+            ]
+
+    main : Program Never Model Msg
+    main =
+        Html.beginnerProgram
+            { view = view >> toUnstyled
+            , update = update
+            , model = initialModel
+            }
+
+_See [`examples/readme/`](https://github.com/rtfeldman/elm-css/blob/master/examples/readme) to play around with this example._
+
+The [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css)
+function accepts a list of [`Style`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css)
+values which roughly correspond to [CSS properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
+
+    css
+        [ display inlineBlock
+        , padding (px 20)
+        , border3 (px 5) solid (rgb 120 120 120)
+        , hover
+            [ borderColor theme.primary
+            , borderRadius (px 10)
+            ]
+        ]
+
+Let's take a look at some of these declarations.
+
+    display inlineBlock
+
+This compiles to the CSS declaration `display: inline-block;` -
+
+_Snake-case_ CSS names become _camelCase_ names in elm-css.
+
+The [`Css.display`](#display) function only accepts values that are compatible
+with the CSS `display` property, such as [`inlineBlock`](#inlineBlock), [`flex`](#flex), [`none`](#none), [`inherit`](#inherit), etc.
+If you try to pass `display` an invalid value such as [`pointer`](#pointer), it will not compile!
+
+    padding (px 20)
+
+This compiles to the CSS declaration `padding: 20px;`
+
+Values with units such as [`px`](#px), [`em`](#em), and [`rem`](#rem) are implemented as functions.
+The [`num`](#num) function compiles to unitless numbers; for example, `flexGrow (num 1)` compiles to `flex-grow: 1;`.
+
+[`zero`](#zero) is compatible with declarations that either do or do not expect units, so you can write
+`padding zero` instead of something like `padding (px 0)`. (`padding zero` compiles to `padding: 0;`.)
+
+`elm-css` works hard to prevent invalid styles from being generated; for example,
+if you write `color "blah"` or `margin (rgb 1 2 3)`, you'll get a type mismatch. If you write `(rgb 3000 0 -3)` you'll get a build-time validation error (RGB values must be between 0 and 255) if you try to compile it to a stylesheet.
+
+    border3 (px 5) solid (rgb 120 120 120)
+
+The [`border3`](#border3) function shows a convention in elm-css: when a CSS property supports a variable number of arguments, as is the case with `border`, elm-css commonly provides multiple functions to support those alternatives. For example, [`border`](#border), [`border2`] (#border2), and [`border3`](#border3).
+
+    hover
+        [ borderColor theme.primary
+        , borderRadius (px 10)
+        ]
+
+CSS pseudo-classes like `:hover` are implemented as functions that take a list of declarations.
+
+The above compiles to something like this:
+
+    ._c7f8ba:hover {
+        border-color: #55af6a;
+        border-raidus: 10px;
+    }
+
+Where does that funky classname of `_c7f8ba` come from?
+
+elm-css automatically generates this classname based on the declarations used, and
+uses it to generate a `<style>` element which applies your styles to the page.
+
+When you write this:
+
+    button [ css [ borderRadius (px 10), hover [ textDecoration underline ] ] ]
+        [ text "Reset" ]
+
+The `button` is not a normal `Html` value from the `elm-lang/html` package, but
+a [`Html.Styled`](Html-Styled) value which wraps a normal `Html` value and adds
+styling information. Later, when you call [`toUnstyled`](Html-Styled#toUnstyled)
+to convert this value to a normal `Html` value, it adds two elements to the DOM:
+
+    <button class="df8ab1">Reset<button>
+
+    <style>
+        .df8ab1 {
+            border-raidus: 10px;
+        }
+
+        .df8ab1:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+To sum up what's happening here:
+
+1.  When you define values using the `css` attribute, elm-css generates a classname and some style information.
+2.  That classname gets added to the element receiving the attiibute, and the style information gets stored in the `Html.Styled` value which wraps that element.
+3.  Calling `toUnstyled` converts this `Html.Styled` value to a normal `Html` value which represents both the requested element as well as a `<style>` element
+
+This is how the elm-css `css` attribute is able to support things like
+
+
+#### Missing CSS properties
+
+`elm-css` is still in development. Not all CSS properties have been added yet.
+If you run into this problem, `elm-css` includes the `property` function. It takes
+two `Strings`; the property key, and its value.
+
+**e.g.**
+
+We want `z-index`, but suppose `elm-css` did not implement it. We would define it ourselves:
+
+    import Css exposing (..)
+
+    zIndex : Int -> Mixin
+    zIndex i =
+        property "z-index" <| toString i
+
+Now `zIndex 9999` is available to use inside our `Stylesheet`.
+
 
 # Misc
 
