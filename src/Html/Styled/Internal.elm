@@ -1,4 +1,16 @@
-module Html.Styled.Internal exposing (Classname, InternalAttribute(..), StyledHtml(..), classProperty, extractProperty, getClassname, mapAttribute, unstyle, unstyleKeyed)
+module Html.Styled.Internal
+    exposing
+        ( Classname
+        , InternalAttribute(..)
+        , StyledHtml(..)
+        , classProperty
+        , extractProperty
+        , getClassname
+        , makeSnippet
+        , mapAttribute
+        , unstyle
+        , unstyleKeyed
+        )
 
 import Css exposing (Style)
 import Css.Preprocess as Preprocess

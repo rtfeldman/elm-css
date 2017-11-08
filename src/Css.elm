@@ -8307,19 +8307,6 @@ stringsToValue list =
         { value = String.join ", " (List.map (\s -> s) list) }
 
 
-collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
-collectSelectors declarations =
-    case declarations of
-        [] ->
-            []
-
-        (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
-            (firstSelector :: otherSelectors) ++ collectSelectors rest
-
-        _ :: rest ->
-            collectSelectors rest
-
-
 {-| Take a list of styles and return a list of key-value pairs that
 can then be passed to a `style` attribute.
 

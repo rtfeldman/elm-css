@@ -9,7 +9,7 @@
     "exposed-modules": [
         "Css",
         "Css.Colors",
-        "Css.Elements",
+        "Css.Foreign",
         "Css.Media",
         "DEPRECATED.Css.File",
         "DEPRECATED.Css.Namespace"
