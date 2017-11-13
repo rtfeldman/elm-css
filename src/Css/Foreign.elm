@@ -49,6 +49,8 @@ module Css.Foreign
         , li
         , line
         , main_
+        , media
+        , mediaQuery
         , menu
         , nav
         , ol
@@ -100,7 +102,7 @@ third-party DOM nodes!
 
 # Statements
 
-@docs class, id, selector, everything
+@docs class, id, selector, everything, media, mediaQuery
 
 
 # Combinators
@@ -150,7 +152,15 @@ third-party DOM nodes!
 -}
 
 import Css.Helpers exposing (identifierToString, toCssIdentifier)
-import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration(StyleBlockDeclaration), Style, StyleBlock(StyleBlock))
+import Css.Media exposing (MediaQuery)
+import Css.Preprocess as Preprocess
+    exposing
+        ( Snippet(Snippet)
+        , SnippetDeclaration(StyleBlockDeclaration)
+        , Style
+        , StyleBlock(StyleBlock)
+        , unwrapSnippet
+        )
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Html.Styled
@@ -253,6 +263,94 @@ everything : List Style -> Snippet
 everything styles =
     Structure.UniversalSelectorSequence []
         |> makeSnippet styles
+
+
+{-| Combines media queries into a `@media` rule.
+
+    (stylesheet << namespace "homepage")
+        [  media [ only screen [ Media.minWidth (px 300) ] ]
+               [ footer [ Css.maxWidth (px 300) ] ]
+        ]
+
+The above code translates into the following CSS.
+
+```css
+@media screen and (min-width: 300px) {
+    footer {
+        max-width: 300px;
+    }
+}
+```
+
+-}
+media :
+    List MediaQuery
+    -> List Snippet
+    -> Snippet
+media queries snippets =
+    let
+        snippetDeclarations : List Preprocess.SnippetDeclaration
+        snippetDeclarations =
+            List.concatMap unwrapSnippet snippets
+
+        extractStyleBlocks : List Preprocess.SnippetDeclaration -> List Preprocess.StyleBlock
+        extractStyleBlocks declarations =
+            case declarations of
+                [] ->
+                    []
+
+                (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
+                    styleBlock :: extractStyleBlocks rest
+
+                first :: rest ->
+                    extractStyleBlocks rest
+
+        mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
+        mediaRuleFromStyleBlocks =
+            Preprocess.MediaRule queries
+                (extractStyleBlocks snippetDeclarations)
+
+        nestedMediaRules : List Preprocess.SnippetDeclaration -> List Preprocess.SnippetDeclaration
+        nestedMediaRules declarations =
+            case declarations of
+                [] ->
+                    []
+
+                (Preprocess.StyleBlockDeclaration _) :: rest ->
+                    -- These will already have been handled previously, with appropriate
+                    -- bundling, so don't create duplicates here.
+                    nestedMediaRules rest
+
+                (Preprocess.MediaRule nestedMediaQueries styleBlocks) :: rest ->
+                    -- nest the media queries
+                    Preprocess.MediaRule (List.append queries nestedMediaQueries) styleBlocks
+                        :: nestedMediaRules rest
+
+                first :: rest ->
+                    first :: nestedMediaRules rest
+    in
+    Preprocess.Snippet (mediaRuleFromStyleBlocks :: nestedMediaRules snippetDeclarations)
+
+
+{-| Manually specify a `@media` rule using a List of strings.
+
+    mediaQuery [ "screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
+        [ body [ fontSize (px 14)] ]
+
+The above code translates into the following CSS.
+
+```css
+@media screen and (min-width: 320px), screen and (max-height: 400px) {
+    body {
+        font-size: 14px;
+    }
+}
+```
+
+-}
+mediaQuery : List String -> List Snippet -> Snippet
+mediaQuery stringQueries snippets =
+    media (List.map Structure.CustomQuery stringQueries) snippets
 
 
 {-| -}
