@@ -26,17 +26,13 @@ module Html.Styled.Events
 
 It is often helpful to create an [Union Type] so you can have many different kinds
 of events as seen in the [TodoMVC] example.
-
-[Union Type]: http://elm-lang.org/learn/Union-Types.elm
-[TodoMVC]: https://github.com/evancz/elm-todomvc/blob/master/Todo.elm
+[Union Type]: <http://elm-lang.org/learn/Union-Types.elm>
+[TodoMVC]: <https://github.com/evancz/elm-todomvc/blob/master/Todo.elm>
 
 
 # Mouse Helpers
 
-@docs onClick, onDoubleClick,
-onMouseDown, onMouseUp,
-onMouseEnter, onMouseLeave,
-onMouseOver, onMouseOut
+@docs onClick, onDoubleClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave, onMouseOver, onMouseOut
 
 
 # Form Helpers
