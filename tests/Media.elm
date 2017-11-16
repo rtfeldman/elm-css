@@ -1,9 +1,10 @@
 module Media exposing (..)
 
 import Css exposing (..)
-import Css.Elements exposing (a, body, button, p)
+import Css.Foreign exposing (Snippet, a, body, button, class, media, mediaQuery, p)
 import Css.Media as Media exposing (..)
-import Css.Namespace exposing (namespace)
+import Css.Preprocess exposing (stylesheet)
+import DEPRECATED.Css.Namespace exposing (namespace)
 import Expect
 import Test exposing (Test, describe, test, todo)
 import TestUtil exposing (outdented, prettyPrint)

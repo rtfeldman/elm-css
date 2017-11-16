@@ -1,8 +1,9 @@
 module CompileFixtures exposing (..)
 
 import Css exposing (..)
-import Css.Elements exposing (..)
-import Css.Namespace exposing (namespace)
+import Css.Foreign exposing (..)
+import Css.Preprocess exposing (Stylesheet, stylesheet)
+import DEPRECATED.Css.Namespace exposing (namespace)
 
 
 pageBackground : Color

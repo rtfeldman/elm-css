@@ -1,8 +1,8 @@
 module MyCss exposing (CssClasses(..), CssIds(..), css)
 
 import Css exposing (..)
-import Css.Elements exposing (body, li)
-import Css.Namespace exposing (namespace)
+import Css.Foreign exposing (body, li)
+import DEPRECATED.Css.Namespace exposing (namespace)
 
 
 type CssClasses

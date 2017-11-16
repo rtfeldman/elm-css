@@ -1,14 +1,8 @@
 module Tests exposing (..)
 
-import Arithmetic
-import Colors
-import Compile
-import Css exposing (Stylesheet)
+import Css.Preprocess exposing (Stylesheet)
 import Expect exposing (Expectation)
 import Fixtures
-import Media
-import Properties
-import Selectors
 import Test exposing (..)
 import TestUtil exposing (outdented, prettyPrint)
 

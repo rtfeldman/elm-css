@@ -1,9 +1,10 @@
 module Fixtures exposing (..)
 
 import Css exposing (..)
-import Css.Elements exposing (..)
-import Css.Media exposing (media, mediaQuery, only, print, withMedia)
-import Css.Namespace exposing (namespace)
+import Css.Foreign exposing (..)
+import Css.Media exposing (only, print, withMedia)
+import Css.Preprocess exposing (Stylesheet, stylesheet)
+import DEPRECATED.Css.Namespace exposing (namespace)
 
 
 type CssClasses
@@ -220,7 +221,7 @@ borders =
             , borderImageOutset2 (int 3) (Css.em 4)
             ]
         , a [ border2 (px 10) solid ]
-        , Css.Elements.table [ borderSpacing (px 10) ]
+        , Css.Foreign.table [ borderSpacing (px 10) ]
         ]
 
 

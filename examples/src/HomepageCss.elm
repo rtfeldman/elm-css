@@ -1,8 +1,8 @@
 module HomepageCss exposing (css)
 
 import Css exposing (..)
-import Css.Elements exposing (..)
-import Css.Namespace exposing (namespace)
+import Css.Foreign exposing (..)
+import DEPRECATED.Css.Namespace exposing (namespace)
 import SharedStyles exposing (..)
 
 
