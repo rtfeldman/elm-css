@@ -860,10 +860,36 @@ To sum up what's happening here:
 This is how the `css` attribute is able to support things like `hover` and media
 queries.
 
-`toUnstyled` avoids generating excess `<style>` elements and CSS declarations
-by building up a dictionary of styles you've passed to `css`. It will use
-that dictionary to add a single `<style>` to the DOM with the appropriate
-classname declarations.
+If you give an element multiple `css` attributes, they will stack. This code:
+
+    button
+        [ css [ backgroundColor (hex "FF0000") ]
+        , css [ borderRadius (px 10), hover [ textDecoration underline ] ]
+        ]
+        [ text "Reset" ]
+
+...compiles to this DOM structure:
+
+    <button class="_c34f8b _df8ab1">Reset<button>
+
+    <style>
+        ._c34f8b {
+            background-color: #FF0000;
+        }
+
+        ._df8ab1 {
+            border-radius: 10px;
+        }
+
+        ._df8ab1:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+Note that `toUnstyled` avoids generating excess `<style>` elements and CSS
+declarations by building up a dictionary of styles you've passed to `css`.
+It will use that dictionary to add a single `<style>` to the DOM with the
+appropriate classname declarations.
 
 
 #### Style Reuse

@@ -1151,7 +1151,11 @@ manifest value =
     attribute "manifest" value
 
 
-{-| -}
+{-| Apply styles to an element.
+
+See the [`Css` module documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css) for an overview of how to use this function.
+
+-}
 css : List Style -> Attribute msg
 css styles =
     let
@@ -1168,9 +1172,30 @@ css styles =
 toUnstyled : Attribute msg -> VirtualDom.Property msg
 toUnstyled =
     Internal.extractProperty
+{-| Takes a function that creates an element, and pre-applies styles to it.
 
+    bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
+    bigButton =
+        styled button
+            [ padding (px 30)
+            , fontWeight bold
+            ]
 
-{-| -}
+    view : Model -> Html msg
+    view model =
+        [ text "These two buttons are identical:"
+        , bigButton [] [ text "Hi!" ]
+        , button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
+        ]
+
+    Here, the `bigButton` function we've defined using `styled button` is
+    identical to the normal `button` function, except that it has pre-applied
+    the attribute of `css [ padding (px 30), fontWeight bold ]`.
+
+    You can pass more attributes to `bigButton` as usual (including other `css`
+    attributes). They will be applied after the pre-applied styles.
+
+-}
 styled :
     (List (Attribute msg) -> List (Html msg) -> Html msg)
     -> List Style
