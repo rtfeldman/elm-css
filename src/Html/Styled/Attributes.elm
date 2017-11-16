@@ -96,7 +96,6 @@ module Html.Styled.Attributes
         , tabindex
         , target
         , title
-        , toUnstyled
         , type_
         , usemap
         , value
@@ -105,9 +104,9 @@ module Html.Styled.Attributes
         )
 
 {-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
-The only functions added are `toUnstyled`, `css`, and `styled`:
+The only functions added are `css`, and `styled`:
 
-@docs toUnstyled, css, styled
+@docs css, styled
 
 Helper functions for HTML attributes. They are organized roughly by
 category. Each attribute is labeled with the HTML tags it can be used with, so
@@ -1168,10 +1167,6 @@ css styles =
         classname
 
 
-{-| -}
-toUnstyled : Attribute msg -> VirtualDom.Property msg
-toUnstyled =
-    Internal.extractProperty
 {-| Takes a function that creates an element, and pre-applies styles to it.
 
     bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
