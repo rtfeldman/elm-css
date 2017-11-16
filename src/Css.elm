@@ -8376,7 +8376,7 @@ stringsToValue list =
         { value = String.join ", " (List.map (\s -> s) list) }
 
 
-{-| DEPRECATED in favor of [`Html.Styled.Attributes.css`](Html-Styled-Attributes#css). This function will be removed in the next major release of elm-css.
+{-| **DEPRECATED** in favor of [`Html.Styled.Attributes.css`](Html-Styled-Attributes#css). This function will be removed in the next major release of elm-css.
 
 Take a list of styles and return a list of key-value pairs that
 can then be passed to a `style` attribute.

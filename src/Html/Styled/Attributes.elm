@@ -39,6 +39,7 @@ module Html.Styled.Attributes
         , for
         , form
         , formaction
+        , fromUnstyled
         , headers
         , height
         , hidden
@@ -104,9 +105,9 @@ module Html.Styled.Attributes
         )
 
 {-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
-The only functions added are `css`, and `styled`:
+The only functions added are `css`, `styled`, and `fromUnstyled`:
 
-@docs css, styled
+@docs css, styled, fromUnstyled
 
 Helper functions for HTML attributes. They are organized roughly by
 category. Each attribute is labeled with the HTML tags it can be used with, so
@@ -235,6 +236,12 @@ recommendation is to use this function lightly.
 style : List ( String, String ) -> Attribute msg
 style pairs =
     InternalAttribute (VirtualDom.style pairs) [] ""
+
+
+{-| -}
+fromUnstyled : VirtualDom.Property msg -> Attribute msg
+fromUnstyled prop =
+    InternalAttribute prop [] ""
 
 
 {-| This function makes it easier to build a space-separated class attribute.

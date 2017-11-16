@@ -102,12 +102,25 @@ import Html.Styled.Internal as Internal exposing (Classname, InternalAttribute(.
 import VirtualDom exposing (Node)
 
 
-{-| -}
+{-| Styled [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html).
+
+You can convert from this to the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
+(which is a type alias for [`VirtualDom.Node`](http://package.elm-lang.org/packages/elm-lang/virtual-dom/latest/VirtualDom#Node))
+by using [`toUnstyled`](#toUnstyled).
+
+You can convert the other way using [`fromUnstyled`](#fromUnstyled).
+
+-}
 type alias Html msg =
     StyledHtml msg
 
 
-{-| -}
+{-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css) attribute.
+
+You can obtain one of these from the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
+type by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled)
+
+-}
 type alias Attribute msg =
     InternalAttribute msg
 
