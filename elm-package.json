@@ -1,5 +1,5 @@
 {
-    "version": "11.0.0",
+    "version": "11.2.0",
     "summary": "CSS Preprocessor for Elm",
     "repository": "https://github.com/rtfeldman/elm-css.git",
     "license": "BSD-3-Clause",
@@ -16,6 +16,7 @@
     ],
     "dependencies": {
         "elm-lang/core": "5.0.0 <= v < 6.0.0",
+        "elm-lang/virtual-dom": "2.0.0 <= v < 3.0.0",
         "rtfeldman/elm-css-util": "1.0.2 <= v < 2.0.0",
         "rtfeldman/hex": "1.0.0 <= v < 2.0.0"
     },
