@@ -30,7 +30,12 @@ function writeMain(
 }
 
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
-  const otherModules = ["Css", "Css.File", "Platform", "Json.Decode"]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
+  const otherModules = [
+    "Css",
+    "DEPRECATED.Css.File",
+    "Platform",
+    "Json.Decode"
+  ]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
   const imports = otherModules
     .concat(_.map(modules, "name"))
     .map(function(importName) {
@@ -39,15 +44,15 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     .join("\n");
 
   const fileStructure =
-    "fileStructure : () -> Css.File.CssFileStructure\n" +
+    "fileStructure : () -> DEPRECATED.Css.File.CssFileStructure\n" +
     "fileStructure _ =\n" +
-    "    Css.File.toFileStructure\n        [ " +
+    "    DEPRECATED.Css.File.toFileStructure\n        [ " +
     modules.map(generateModule).join("\n        , ") +
     "\n        ]";
 
   const end =
-    "port files : Css.File.CssFileStructure -> Cmd msg\n\n\n" +
-    "compiler : (Css.File.CssFileStructure -> Cmd Never) -> (() -> Css.File.CssFileStructure) -> Program () () Never\n" +
+    "port files : DEPRECATED.Css.File.CssFileStructure -> Cmd msg\n\n\n" +
+    "compiler : (DEPRECATED.Css.File.CssFileStructure -> Cmd Never) -> (() -> DEPRECATED.Css.File.CssFileStructure) -> Program () () Never\n" +
     "compiler filesPort getStructure =\n" +
     // Note: This must take flags so that `getStructure` is not evaluated on
     // startup. We need it to be delayed by 1 tick so we have a chance for
@@ -71,10 +76,10 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
 function generateStylesheet(modul /*: ModuleDeclaration */) {
   const entries = modul.values.map(function(value) {
     switch (value.signature) {
-      case "Css.Snippet":
+      case "Css.Foreign.Snippet":
         return modul.name + "." + value.name;
-      case "Css.File.UniqueClass":
-      case "Css.File.UniqueSvgClass":
+      case "DEPRECATED.Css.File.UniqueClass":
+      case "DEPRECATED.Css.File.UniqueSvgClass":
         const className = classNameForValue(modul.name, value.name);
 
         return (
@@ -85,12 +90,16 @@ function generateStylesheet(modul /*: ModuleDeclaration */) {
     }
   });
 
-  return "Css.File.compile [ Css.stylesheet [ " + entries.join(", ") + " ] ]";
+  return (
+    "DEPRECATED.Css.File.compile [ Css.stylesheet [ " +
+    entries.join(", ") +
+    " ] ]"
+  );
 }
 
 function generateModule(modul /*: ModuleDeclaration */) {
   const filename = modul.name.replace(".", path.sep) + ".css";
-  // ("homepage.css", Css.File.compile[Homepage.css])
+  // ("homepage.css", DEPRECATED.Css.File.compile[Homepage.css])
   return '( "' + filename + '", ' + generateStylesheet(modul) + " )";
 }
 
