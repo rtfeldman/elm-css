@@ -14,7 +14,7 @@ import Css exposing (Style)
 import Css.Preprocess
 
 
-{-| **DEPRECATED**. Like compiling to .css files, and support for `asPairs` planned to be removed in a
+{-| **DEPRECATED**. Like compiling to .css files, support for `asPairs` is planned to be removed in a
 future release (likely sometime in 2018), once [`Html.Styled`](Html-Styled) has
 matured sufficiently. The design goal is for elm-css to offer One Way To Do It,
 and that one way is planned to be `Html.Styled`!
