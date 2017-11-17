@@ -80,7 +80,7 @@ module.exports = function(
       [
         "DEPRECATED.Css.File.UniqueClass",
         "DEPRECATED.Css.File.UniqueSvgClass",
-        "Css.Snippet"
+        "Css.Foreign.Snippet"
       ],
       readElmiPath,
       generatedDir,

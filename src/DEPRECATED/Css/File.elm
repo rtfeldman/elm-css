@@ -7,6 +7,7 @@ module DEPRECATED.Css.File
         , UniqueSvgClass
         , compile
         , compiler
+        , stylesheet
         , toFileStructure
         , uniqueClass
         , uniqueSvgClass
@@ -27,7 +28,7 @@ and that one way is planned to be `Html.Styled`!
 
 Functions for writing CSS files from elm-css.
 
-@docs Stylesheet, compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
+@docs Stylesheet, stylesheet, compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
 
 
 ## Automatically-generated unique classes
@@ -36,7 +37,7 @@ Functions for writing CSS files from elm-css.
 
 -}
 
-import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Snippet, Style, unwrapSnippet)
 import Css.Preprocess.Resolve as Resolve
 
 
@@ -147,3 +148,18 @@ SVG elements. These will only work with SVGs!
 uniqueSvgClass : List Style -> UniqueSvgClass
 uniqueSvgClass =
     UniqueSvgClass
+
+
+{-| A stylesheet.
+
+    stylesheet
+        [ body
+            [ width (px 960)
+            , color (rgb 7 7 7)
+            ]
+        ]
+
+-}
+stylesheet : List Snippet -> Stylesheet
+stylesheet =
+    Preprocess.stylesheet

@@ -32,6 +32,7 @@ function writeMain(
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
   const otherModules = [
     "Css",
+    "Css.Foreign",
     "DEPRECATED.Css.File",
     "Platform",
     "Json.Decode"
@@ -62,7 +63,7 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     "        , update = \\_ _ -> ( (), Cmd.none )\n" +
     "        , subscriptions = \\_ -> Sub.none\n" +
     "        }\n\n\n" +
-    "classToSnippet : String -> a -> Css.Snippet\n" +
+    "classToSnippet : String -> a -> Css.Foreign.Snippet\n" +
     "classToSnippet str class =\n" +
     "    classToSnippet str class\n\n\n" + // This is just to make type-checking pass. We'll splice in a useful implementation after emitting.
     "main : Program () () Never\n" +
@@ -91,7 +92,7 @@ function generateStylesheet(modul /*: ModuleDeclaration */) {
   });
 
   return (
-    "DEPRECATED.Css.File.compile [ Css.stylesheet [ " +
+    "DEPRECATED.Css.File.compile [ DEPRECATED.Css.File.stylesheet [ " +
     entries.join(", ") +
     " ] ]"
   );
