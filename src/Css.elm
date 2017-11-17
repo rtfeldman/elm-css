@@ -803,12 +803,9 @@ The [`num`](#num) function compiles to unitless numbers; for example, `flexGrow 
 [`zero`](#zero) is compatible with declarations that either do or do not expect units, so you can write
 `padding zero` instead of something like `padding (px 0)`. (`padding zero` compiles to `padding: 0;`.)
 
-`elm-css` works hard to prevent invalid styles from being generated; for example,
-if you write `color "blah"` or `margin (rgb 1 2 3)`, you'll get a type mismatch. If you write `(rgb 3000 0 -3)` you'll get a build-time validation error (RGB values must be between 0 and 255) if you try to compile it to a stylesheet.
-
     border3 (px 5) solid (rgb 120 120 120)
 
-The [`border3`](#border3) function shows a convention in elm-css: when a CSS property supports a variable number of arguments, as is the case with `border`, elm-css commonly provides multiple functions to support those alternatives. For example, [`border`](#border), [`border2`] (#border2), and [`border3`](#border3).
+The [`border3`](#border3) function shows a convention in elm-css: when a CSS property supports a variable number of arguments, as is the case with `border`, elm-css commonly provides multiple functions to support those alternatives. For example, [`border`](#border), [`border2`](#border2), and [`border3`](#border3).
 
     hover
         [ borderColor theme.primary
@@ -892,7 +889,7 @@ It will use that dictionary to add a single `<style>` to the DOM with the
 appropriate classname declarations.
 
 
-#### Style Reuse
+### Style Reuse
 
 The easiest way to reuse styles (like [mixins](http://sass-lang.com/guide#topic-6)
 in other CSS systems) is through [`Style`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#Style)
@@ -935,7 +932,7 @@ You can also use [`Html.Styled.Lazy`](http://package.elm-lang.org/packages/rtfel
 to avoid recomputing both hashes and `Html` nodes.
 
 
-#### Unsupported Properties
+### Unsupported Properties
 
 The CSS spec is, ahem, not small. `elm-css` covers a lot of it, but not all of
 it. Some things are considered too experimental to support, usually because they
