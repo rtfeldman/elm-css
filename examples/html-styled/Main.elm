@@ -1,14 +1,4 @@
-[![Logo](https://raw.githubusercontent.com/rtfeldman/elm-css/c78bacb4420696b8d22d9429616a21c7ab20def3/assets/logo.png)](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest)
-
-# elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
-
-`elm-css` lets you define CSS in Elm. (For an Elm styling system that is a
-complete departure from CSS, check out [style-elements](http://package.elm-lang.org/packages/mdgriffith/style-elements/latest).)
-
-Here's an example of how to define some `elm-css` styles:
-
-```elm
-module MyCss exposing (main)
+module Main exposing (main)
 
 import Css exposing (..)
 import Html
@@ -27,6 +17,7 @@ logo =
             [ display inlineBlock
             , padding (px 20)
             , border3 (px 5) solid (rgb 120 120 120)
+            , borderRadius (px 5)
             , hover
                 [ borderColor theme.primary
                 , borderRadius (px 10)
@@ -100,22 +91,21 @@ main =
         , update = update
         , model = initialModel
         }
-```
 
-See [the `Css` module documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css) for an explanation of how this code works.
 
-`elm-css` draws inspiration from the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), [CSS Modules](http://glenmaddern.com/articles/css-modules), and [styled-components](https://www.styled-components.com) libraries. It includes features like:
+update : Msg -> Model -> Model
+update msg model =
+    model
 
-- [locally scoped CSS](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284)
-- [mixins](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#batch)
-- [nested media queries](https://davidwalsh.name/write-media-queries-sass) (as well as pseudo-classes like `:hover` and pseudo-elements like `::after`)
 
-### Examples
+type Msg
+    = DoSomething
 
-- A [reusable datepicker](https://github.com/abadi199/datetimepicker) built by Abadi Kurniawan
-- The [website](https://noredink.github.io/json-to-elm) for [json-to-elm](https://github.com/eeue56/json-to-elm)
-- This project's [examples](https://github.com/rtfeldman/elm-css/tree/master/examples) folder
 
-## Related Projects
+type alias Model =
+    ()
 
-- [Elm CSS Normalize](https://github.com/scottcorgan/elm-css-normalize)
+
+initialModel : Model
+initialModel =
+    ()

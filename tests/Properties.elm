@@ -1,8 +1,10 @@
 module Properties exposing (all)
 
 import Css exposing (..)
-import Css.Elements exposing (p)
-import Css.Namespace exposing (namespace)
+import Css.Foreign exposing (p)
+import Css.Preprocess exposing (stylesheet)
+import DEPRECATED.Css exposing (asPairs)
+import DEPRECATED.Css.Namespace exposing (namespace)
 import Expect
 import Test exposing (..)
 import TestUtil exposing (prettyPrint)
@@ -426,7 +428,7 @@ all =
             , ( cursor Css.progress, "progress" )
             , ( cursor wait, "wait" )
             , ( cursor cell, "cell" )
-            , ( cursor text, "text" )
+            , ( cursor text_, "text" )
             , ( cursor verticalText, "vertical-text" )
             , ( cursor cursorAlias, "alias" )
             , ( cursor copy, "copy" )

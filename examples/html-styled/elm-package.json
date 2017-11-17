@@ -1,15 +1,17 @@
 {
     "version": "1.0.0",
-    "summary": "Unit tests for elm-css",
-    "repository": "https://github.com/rtfeldman/elm-css.git",
-    "license": "BSD-3-Clause",
+    "summary": "helpful summary of your project, less than 80 characters",
+    "repository": "https://github.com/user/project.git",
+    "license": "BSD3",
     "source-directories": [
         ".",
-        "../src"
+        "../../src"
     ],
     "exposed-modules": [],
     "dependencies": {
-        "elm-community/elm-test": "4.0.0 <= v < 5.0.0",
+        "Skinney/murmur3": "2.0.4 <= v < 3.0.0",
+        "elm-lang/core": "5.1.1 <= v < 6.0.0",
+        "elm-lang/html": "2.0.0 <= v < 3.0.0",
         "Skinney/murmur3": "2.0.4 <= v < 3.0.0",
         "elm-lang/core": "5.0.0 <= v < 6.0.0",
         "elm-lang/virtual-dom": "2.0.0 <= v < 3.0.0",

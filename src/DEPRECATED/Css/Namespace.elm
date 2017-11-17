@@ -1,7 +1,19 @@
-module Css.Namespace exposing (namespace)
+module DEPRECATED.Css.Namespace exposing (namespace)
 
-{-| Namespacing
+{-|
+
+
+# DEPRECATED
+
+`Html.Styled` makes namespacing unnecessary, so please use it instead of This
+module! This module relies on a `Basics.toString` implementation which will no
+longer exist in Elm 0.19, so it will be removed in the next major release of elm-css.
+
+
+## Namespacing
+
 @docs namespace
+
 -}
 
 import Css.Helpers exposing (identifierToString, toCssIdentifier)

@@ -1,9 +1,10 @@
 module Fixtures exposing (..)
 
 import Css exposing (..)
-import Css.Elements exposing (..)
-import Css.Media exposing (media, mediaQuery, only, print, withMedia)
-import Css.Namespace exposing (namespace)
+import Css.Foreign exposing (..)
+import Css.Media exposing (only, print, withMedia)
+import Css.Preprocess exposing (Stylesheet, stylesheet)
+import DEPRECATED.Css.Namespace exposing (namespace)
 
 
 type CssClasses
@@ -220,7 +221,7 @@ borders =
             , borderImageOutset2 (int 3) (Css.em 4)
             ]
         , a [ border2 (px 10) solid ]
-        , Css.Elements.table [ borderSpacing (px 10) ]
+        , Css.Foreign.table [ borderSpacing (px 10) ]
         ]
 
 
@@ -280,7 +281,7 @@ transformsStylesheet =
                 [ matrix 1 2 3 4 5 6
                 , matrix3d 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
                 ]
-            , transform (perspective (px 1000))
+            , transform (perspective 1)
             , transforms
                 [ rotate (deg 90)
                 , rotateX (rad 3.14)

@@ -1,6 +1,7 @@
 module TestUtil exposing (..)
 
-import Css exposing (Snippet, rgb, rgba)
+import Css.Preprocess exposing (Stylesheet)
+import Css.Preprocess.Resolve exposing (compile)
 import Fuzz exposing (Fuzzer)
 import String
 
@@ -14,11 +15,11 @@ outdented str =
         |> String.trim
 
 
-prettyPrint : Css.Stylesheet -> String
+prettyPrint : Stylesheet -> String
 prettyPrint sheet =
     let
         { warnings, css } =
-            Css.compile [ sheet ]
+            compile [ sheet ]
     in
     if List.isEmpty warnings then
         css

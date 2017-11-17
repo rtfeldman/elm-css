@@ -1,6 +1,8 @@
 module Html.Styled.Keyed exposing (node, ol, ul)
 
-{-| A keyed node helps optimize cases where children are getting added, moved,
+{-| Drop-in replacement for the `Html.Keyed` module from the `elm-lang/html` package.
+
+A keyed node helps optimize cases where children are getting added, moved,
 removed, etc. Common examples include:
 
   - The user can delete items from a list.
@@ -22,9 +24,8 @@ removed, etc. Common examples include:
 
 -}
 
-import Css exposing (Style)
 import Html.Styled exposing (Attribute, Html)
-import Html.Styled.Internal as Internal exposing (InternalHtml(..))
+import Html.Styled.Internal as Internal exposing (StyledHtml(..))
 
 
 {-| Works just like `Html.node`, but you add a unique identifier to each child
@@ -34,30 +35,20 @@ the DOM modifications more efficient.
 -}
 node :
     String
-    -> List Style
     -> List (Attribute msg)
     -> List ( String, Html msg )
     -> Html msg
-node elemType styles =
-    case Internal.getClassname styles of
-        Nothing ->
-            \attrs children ->
-                KeyedElement Nothing elemType attrs children
-
-        Just classname ->
-            -- Do this hashing work before returning an anonymous function.
-            -- This way, partially applying this function caches the hashing work.
-            \attrs children ->
-                KeyedElement (Just ( classname, styles )) elemType attrs children
+node elemType =
+    KeyedElement elemType
 
 
 {-| -}
-ol : List Style -> List (Attribute msg) -> List ( String, Html msg ) -> Html msg
+ol : List (Attribute msg) -> List ( String, Html msg ) -> Html msg
 ol =
     node "ol"
 
 
 {-| -}
-ul : List Style -> List (Attribute msg) -> List ( String, Html msg ) -> Html msg
+ul : List (Attribute msg) -> List ( String, Html msg ) -> Html msg
 ul =
     node "ul"

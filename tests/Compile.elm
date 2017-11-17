@@ -2,6 +2,7 @@ module Compile exposing (..)
 
 import CompileFixtures
 import Css exposing (..)
+import Css.Preprocess.Resolve exposing (compile)
 import Expect
 import Fuzz exposing (Fuzzer, tuple3, tuple4)
 import Test exposing (..)

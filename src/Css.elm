@@ -77,9 +77,7 @@ module Css
         , Px
         , Rem
         , Resize
-        , Snippet
         , Style
-        , Stylesheet
         , TextDecorationLine
         , TextDecorationStyle
         , TextIndent
@@ -93,8 +91,8 @@ module Css
         , TransformStyle
         , Value
         , VerticalAlign
-        , Visibility
         , Vh
+        , Visibility
         , Vmax
         , Vmin
         , Vw
@@ -102,7 +100,6 @@ module Css
         , Wrap
         , absolute
         , active
-        , adjacentSiblings
         , after
         , alignItems
         , alignSelf
@@ -113,7 +110,7 @@ module Css
         , any
         , arabicIndic
         , armenian
-        , asPairs
+        , asPairsDEPRECATED
         , auto
         , backgroundAttachment
         , backgroundBlendMode
@@ -232,11 +229,9 @@ module Css
         , center
         , ch
         , checked
-        , children
         , circle
         , cjkEarthlyBranch
         , cjkHeavenlyStem
-        , class
         , clip
         , cm
         , colResize
@@ -247,7 +242,6 @@ module Css
         , column
         , columnReverse
         , commonLigatures
-        , compile
         , contain
         , content
         , contentBox
@@ -266,7 +260,6 @@ module Css
         , decimalLeadingZero
         , default
         , deg
-        , descendants
         , devanagari
         , diagonalFractions
         , difference
@@ -279,14 +272,12 @@ module Css
         , dotted
         , double
         , eResize
-        , each
         , eachLine
         , ellipsis
         , em
         , empty
         , enabled
         , end
-        , everything
         , ewResize
         , ex
         , exclusion
@@ -339,7 +330,6 @@ module Css
         , fontWeight
         , fullWidth
         , fullscreen
-        , generalSiblings
         , geometricPrecision
         , georgian
         , grab
@@ -360,7 +350,6 @@ module Css
         , hsl
         , hsla
         , hue
-        , id
         , important
         , inches
         , indeterminate
@@ -563,7 +552,6 @@ module Css
         , scroll
         , seResize
         , selection
-        , selector
         , separate
         , serif
         , skew
@@ -580,7 +568,7 @@ module Css
         , spaceAround
         , spaceBetween
         , square
-        , src
+        , src_
         , stackedFractions
         , start
         , static
@@ -588,7 +576,6 @@ module Css
         , stop
         , stop2
         , stretch
-        , stylesheet
         , sub
         , super
         , swResize
@@ -604,7 +591,6 @@ module Css
         , tabularNums
         , target
         , telugu
-        , text
         , textAlign
         , textAlignLast
         , textBottom
@@ -630,6 +616,7 @@ module Css
         , textShadow4
         , textTop
         , textTransform
+        , text_
         , thai
         , thick
         , thin
@@ -682,7 +669,6 @@ module Css
         , wavy
         , whiteSpace
         , width
-        , withClass
         , wrap
         , wrapReverse
         , xLarge
@@ -695,38 +681,280 @@ module Css
         , zoomOut
         )
 
-{-| Functions for building stylesheets.
+{-| Define CSS styles in Elm.
+
+    import Css exposing (..)
+    import Html
+    import Html.Styled exposing (..)
+    import Html.Styled.Attributes exposing (css, href, src, styled)
+    import Html.Styled.Events exposing (onClick)
+
+    {-| A logo image, with inline styles that change on hover.
+    -}
+    logo : Html msg
+    logo =
+        img
+            [ src "logo.png"
+            , css
+                [ display inlineBlock
+                , padding (px 20)
+                , border3 (px 5) solid (rgb 120 120 120)
+                , hover
+                    [ borderColor theme.primary
+                    , borderRadius (px 10)
+                    ]
+                ]
+            ]
+            []
+
+    {-| A plain old record holding a couple of theme colors.
+    -}
+    theme : { secondary : Color, primary : Color }
+    theme =
+        { primary = hex "55af6a"
+        , secondary = rgb 250 240 230
+        }
+
+    {-| A reusable button which has some styles pre-applied to it.
+    -}
+    btn : List (Attribute msg) -> List (Html msg) -> Html msg
+    btn =
+        styled button
+            [ margin (px 12)
+            , color (rgb 250 250 250)
+            , hover
+                [ backgroundColor theme.primary
+                , textDecoration underline
+                ]
+            ]
+
+    {-| A reusable style. Css.batch combines multiple styles into one, much
+    like mixins in CSS preprocessors.
+    -}
+    paragraphFont : Style
+    paragraphFont =
+        Css.batch
+            [ fontFamilies [ "Palatino Linotype", "Georgia", "serif" ]
+            , fontSize (px 16)
+            , fontWeight normal
+            ]
+
+    {-| Css.property lets you define custom properties, using strings as their values.
+    -}
+    legacyBorderRadius : String -> Style
+    legacyBorderRadius amount =
+        Css.batch
+            [ property "-moz-border-radius" amount
+            , property "-webkit-border-top-left-radius" amount
+            , property "-webkit-border-top-right-radius" amount
+            , property "-webkit-border-bottom-right-radius" amount
+            , property "-webkit-border-bottom-left-radius" amount
+            , property "border-radius" amount
+            ]
+
+    view : Model -> Html Msg
+    view model =
+        nav []
+            [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] []
+            , btn [ onClick DoSomething ] [ text "Click me!" ]
+            ]
+
+    main : Program Never Model Msg
+    main =
+        Html.beginnerProgram
+            { view = view >> toUnstyled
+            , update = update
+            , model = initialModel
+            }
+
+_See [`examples/readme/`](https://github.com/rtfeldman/elm-css/blob/master/examples/readme) to play around with this example._
+
+The [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css)
+function accepts a list of [`Style`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css)
+values which roughly correspond to [CSS properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference).
+
+    css
+        [ display inlineBlock
+        , padding (px 20)
+        , border3 (px 5) solid (rgb 120 120 120)
+        , hover
+            [ borderColor theme.primary
+            , borderRadius (px 10)
+            ]
+        ]
+
+Let's take a look at some of these declarations.
+
+    display inlineBlock
+
+This compiles to the CSS declaration `display: inline-block;` -
+
+_Snake-case_ CSS names become _camelCase_ names in elm-css.
+
+The [`Css.display`](#display) function only accepts values that are compatible
+with the CSS `display` property, such as [`inlineBlock`](#inlineBlock), [`flex`](#flex), [`none`](#none), [`inherit`](#inherit), etc.
+If you try to pass `display` an invalid value such as [`pointer`](#pointer), it will not compile!
+
+    padding (px 20)
+
+This compiles to the CSS declaration `padding: 20px;`
+
+Values with units such as [`px`](#px), [`em`](#em), and [`rem`](#rem) are implemented as functions.
+The [`num`](#num) function compiles to unitless numbers; for example, `flexGrow (num 1)` compiles to `flex-grow: 1;`.
+
+[`zero`](#zero) is compatible with declarations that either do or do not expect units, so you can write
+`padding zero` instead of something like `padding (px 0)`. (`padding zero` compiles to `padding: 0;`.)
+
+    border3 (px 5) solid (rgb 120 120 120)
+
+The [`border3`](#border3) function shows a convention in elm-css: when a CSS property supports a variable number of arguments, as is the case with `border`, elm-css commonly provides multiple functions to support those alternatives. For example, [`border`](#border), [`border2`](#border2), and [`border3`](#border3).
+
+    hover
+        [ borderColor theme.primary
+        , borderRadius (px 10)
+        ]
+
+CSS pseudo-classes like `:hover` are implemented as functions that take a list of declarations.
+
+The above compiles to something like this:
+
+    ._c7f8ba:hover {
+        border-color: #55af6a;
+        border-raidus: 10px;
+    }
+
+Where does that funky classname of `_c7f8ba` come from?
+
+elm-css automatically generates this classname based on the declarations used, and
+uses it to generate a `<style>` element which applies your styles to the page.
+
+When you write this:
+
+    button [ css [ borderRadius (px 10), hover [ textDecoration underline ] ] ]
+        [ text "Reset" ]
+
+The `button` is not a normal `Html` value from the `elm-lang/html` package, but
+a [`Html.Styled`](Html-Styled) value which wraps a normal `Html` value and adds
+styling information. Later, when you call [`toUnstyled`](Html-Styled#toUnstyled)
+to convert this value to a normal `Html` value, it adds two elements to the DOM:
+
+    <button class="_df8ab1">Reset<button>
+
+    <style>
+        ._df8ab1 {
+            border-radius: 10px;
+        }
+
+        ._df8ab1:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+To sum up what's happening here:
+
+1.  When you define values using the `css` attribute, elm-css generates a classname and some style information.
+2.  That classname gets added to the element receiving the attiibute, and the style information gets stored in the `Html.Styled` value which wraps that element.
+3.  Calling `toUnstyled` converts this `Html.Styled` value to a normal `Html` value which represents both the requested element as well as a `<style>` element
+
+This is how the `css` attribute is able to support things like `hover` and media
+queries.
+
+If you give an element multiple `css` attributes, they will stack. This code:
+
+    button
+        [ css [ backgroundColor (hex "FF0000") ]
+        , css [ borderRadius (px 10), hover [ textDecoration underline ] ]
+        ]
+        [ text "Reset" ]
+
+...compiles to this DOM structure:
+
+    <button class="_c34f8b _df8ab1">Reset<button>
+
+    <style>
+        ._c34f8b {
+            background-color: #FF0000;
+        }
+
+        ._df8ab1 {
+            border-radius: 10px;
+        }
+
+        ._df8ab1:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+Note that `toUnstyled` avoids generating excess `<style>` elements and CSS
+declarations by building up a dictionary of styles you've passed to `css`.
+It will use that dictionary to add a single `<style>` to the DOM with the
+appropriate classname declarations.
 
 
-# Misc
+### Style Reuse
 
-@docs Compatible, Stylesheet, asPairs, absolute, all, allPetiteCaps, allSmallCaps, withClass, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, manipulation, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, panX, panLeft, panRight, panY, panUp, panDown, perspective, petiteCaps, pinchZoom, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
-@docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
-@docs listStylePosition, inside, outside
-@docs listStyle, listStyle2, listStyle3
-@docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+The easiest way to reuse styles (like [mixins](http://sass-lang.com/guide#topic-6)
+in other CSS systems) is through [`Style`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#Style)
+values.
 
-@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Directionality, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
+    greenBorder : Style
+    greenBorder =
+        borderColor green
+
+    bigBold : Style
+    bigBold =
+        Css.batch [ fontWeight bold, fontSize (px 48) ]
+
+    view : Model -> Html Msg
+    view model =
+        button [ css [ bigBold, greenBorder ] ] [ text "Ok" ]
+
+Another way to reuse styles is to compile them to attributes and then to mix
+and match those. This is less flexible than mixing and matching `Style` values,
+but it has a performance benefit: classname hashes are calculated when you call
+the `css` function, so you can avoid redoing that work by calling it at the top level.
+
+    greenBorder : Attribute msg
+    greenBorder =
+        css [ borderColor green ]
+
+    bigBold : Attribute msg
+    bigBold =
+        css [ fontWeight bold, fontSize (px 48) ]
+
+    view : Model -> Html Msg
+    view model =
+        button [ bigBold, greenBorder ] [ text "Ok" ]
+
+The `greenBorder` and `bigBold` attributes above will have their classname hashes
+calculated right when `css` is called, and never again. The button will have a
+green border, a bold font weight, and a font size of 48px.
+
+You can also use [`Html.Styled.Lazy`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#property)
+to avoid recomputing both hashes and `Html` nodes.
+
+
+### Unsupported Properties
+
+The CSS spec is, ahem, not small. `elm-css` covers a lot of it, but not all of
+it. Some things are considered too experimental to support, usually because they
+do not have enough browser support. Others haven't been added yet because, well,
+we haven't gotten around to adding them!
+
+If you need something that `elm-css` does not support right now, the
+[`Css.property`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#property)
+and [`Css.Foreign.selector`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Foreign#selector)
+functions let you define custom properties and selectors, respectively.
 
 
 # Style
 
-@docs Snippet, Style, batch, stylesheet, compile
-
-
-# Statements
-
-@docs class, id, selector, everything
-
-
-# Combinators
-
-@docs children, descendants, adjacentSiblings, generalSiblings
+@docs Style, batch
 
 
 # Properties
 
-@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, each, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
+@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
 
 
 # Values
@@ -744,7 +972,7 @@ module Css
 
 ## Other values
 
-@docs borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
+@docs borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderInlineEndWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBlockEndStyle, borderBlockStartStyle, borderInlineEndStyle, borderBottomStyle, borderInlineStartStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBlockStartColor, borderBlockEndColor, borderBottomColor, borderInlineStartColor, borderInlineEndColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockStart, borderBlockStart2, borderBlockStart3, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineStart, borderInlineStart2, borderInlineStart3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text_, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing
 
 
 # Length
@@ -774,12 +1002,23 @@ module Css
 
 # Source
 
-@docs src
+@docs src_
 
 
 # Quoting
 
 @docs qt
+
+
+# Misc
+
+@docs Compatible, asPairsDEPRECATED, absolute, all, allPetiteCaps, allSmallCaps, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, manipulation, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, panX, panLeft, panRight, panY, panUp, panDown, perspective, petiteCaps, pinchZoom, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse
+@docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
+@docs listStylePosition, inside, outside
+@docs listStyle, listStyle2, listStyle3
+@docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+
+@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Directionality, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
 
 
 # Types
@@ -800,7 +1039,6 @@ deprecated or discouraged.
 import Color
 import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
-import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure exposing (..)
 import Hex
 import String
@@ -808,26 +1046,8 @@ import Tuple
 
 
 {-| -}
-type alias Stylesheet =
-    Preprocess.Stylesheet
-
-
-{-| -}
-type alias Snippet =
-    Preprocess.Snippet
-
-
-{-| -}
 type alias Style =
     Preprocess.Style
-
-
-type PseudoClass
-    = PseudoClass String (List Style)
-
-
-type PseudoElement
-    = PseudoElement String (List Style)
 
 
 
@@ -1834,8 +2054,9 @@ contain =
 
 {-| `hidden` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
 
-This can also represent a `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
-As well as a `hidden` [`visibility`](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility#Values).
+This can also represent a `hidden` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values),
+as well as a `hidden` [`visibility`](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility#Values).
+
 -}
 hidden : Overflow (BorderStyle (Visibility {}))
 hidden =
@@ -2985,12 +3206,12 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 
 {-| The [`perspective()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#perspective()) transform-function.
 
-     transform (perspective (px 1000))
+     transform (perspective 0.5)
 
 -}
-perspective : LengthOrNone compatible -> Transform {}
-perspective { value } =
-    { value = cssFunction "perspective" [ value ]
+perspective : number -> Transform {}
+perspective l =
+    { value = cssFunction "perspective" [ numberToString l ]
     , transform = Compatible
     }
 
@@ -4085,6 +4306,9 @@ linearGradient :
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
 linearGradient stop1 stop2 stops =
+    -- TODO we should make this more permissive, e.g. compatibleA/compatibleB/compatibleC/compatibleD
+    -- the only reason it isn't is that we happen to be using collectStops like this.
+    -- We should just not use collectStops. Same with linearGradient2
     { value =
         [ stop1, stop2 ]
             ++ stops
@@ -7045,8 +7269,8 @@ letterSpacing =
 
 
 {-| -}
-src : ImportType compatible -> String
-src value =
+src_ : ImportType compatible -> String
+src_ value =
     toString value.value
 
 
@@ -7289,8 +7513,8 @@ cell =
 
 
 {-| -}
-text : Cursor {}
-text =
+text_ : Cursor {}
+text_ =
     { value = "text", cursor = Compatible }
 
 
@@ -7648,21 +7872,6 @@ animationNames identifiers =
     property "animation-name" value
 
 
-{-| A stylesheet.
-
-    stylesheet
-        [ body
-            [ width (px 960)
-            , color (rgb 7 7 7)
-            ]
-        ]
-
--}
-stylesheet : List Snippet -> Stylesheet
-stylesheet =
-    Preprocess.stylesheet
-
-
 {-| Create a style from multiple other styles.
 
     underlineOnHover =
@@ -7695,112 +7904,6 @@ stylesheet =
 batch : List Style -> Style
 batch =
     Preprocess.ApplyStyles
-
-
-{-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
-
-    stylesheet
-        [ id NavBar
-            [ width 960 px
-            , backgroundColor (rgb 123 42 208)
-            ]
-        ]
-
--}
-id : id -> List Style -> Snippet
-id identifier styles =
-    [ Structure.IdSelector (identifierToString "" identifier) ]
-        |> Structure.UniversalSelectorSequence
-        |> makeSnippet styles
-
-
-makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Snippet
-makeSnippet styles sequence =
-    let
-        selector =
-            Structure.Selector sequence [] Nothing
-    in
-    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
-        |> Preprocess.Snippet
-
-
-{-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
-
-    stylesheet
-        [ class LoginFormButton
-            [ fontWeight normal
-            , color (rgb 128 64 32)
-            ]
-        ]
-
--}
-class : class -> List Style -> Snippet
-class class styles =
-    [ Structure.ClassSelector (identifierToString "" class) ]
-        |> Structure.UniversalSelectorSequence
-        |> makeSnippet styles
-
-
-
--- {-| A Style that adds the [Clearfix for Modern Browsers](http://www.cssmojo.com/latest_new_clearfix_so_far/#clearfix-for-modern-browsers)
--- implementation of [clearfix](http://www.cssmojo.com/clearfix_block-formatting-context_and_hasLayout/).
---
--- This works with Internet Explorer 8 and later; if you need
--- to support older browsers, consider using the legacy [Micro Clearfix from 2011](http://nicolasgallagher.com/micro-clearfix-hack/)
--- instead.
--- -}
---clearfix : Style
---clearfix =
---  styles
---    [ after
---        [ content ""
---        , display table
---        , clear both
---        ]
---    ]
-
-
-{-| A custom selector. Use this for things like
-[attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
-and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
-
-    stylesheet "homepage"
-        [ selector "* [lang^=en]"
-            [ textDecoration underline
-            , color (rgb 7 7 7)
-            ]
-        ]
-
--}
-selector : String -> List Style -> Snippet
-selector selectorStr styles =
-    Structure.CustomSelector selectorStr []
-        |> makeSnippet styles
-
-
-{-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
-
-    class Foo
-      [ children
-          [ everything
-              [ color (rgb 14 15 16)
-              , borderRadius (px 5)
-              ]
-          ]
-      ]
-
-...compiles to:
-
-    .Foo > * {
-      color: rgb(14, 15, 16);
-      border-radius: 5px;
-    }
-
--}
-everything : List Style -> Snippet
-everything styles =
-    Structure.UniversalSelectorSequence []
-        |> makeSnippet styles
 
 
 {-| Define a custom property.
@@ -8261,55 +8364,6 @@ blink =
     IntentionallyUnsupportedPleaseSeeDocs
 
 
-{-| -}
-children : List Snippet -> Style
-children =
-    Preprocess.NestSnippet Structure.Child
-
-
-{-| -}
-withClass : class -> List Style -> Style
-withClass class =
-    Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
-
-
-{-| -}
-descendants : List Snippet -> Style
-descendants =
-    Preprocess.NestSnippet Structure.Descendant
-
-
-{-| -}
-adjacentSiblings : List Snippet -> Style
-adjacentSiblings =
-    Preprocess.NestSnippet Structure.AdjacentSibling
-
-
-{-| -}
-generalSiblings : List Snippet -> Style
-generalSiblings =
-    Preprocess.NestSnippet Structure.GeneralSibling
-
-
-{-| -}
-each : List (List Style -> Snippet) -> List Style -> Snippet
-each snippetCreators styles =
-    let
-        selectorsToSnippet selectors =
-            case selectors of
-                [] ->
-                    Preprocess.Snippet []
-
-                first :: rest ->
-                    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock first rest styles) ]
-                        |> Preprocess.Snippet
-    in
-    List.map ((|>) []) snippetCreators
-        |> List.concatMap unwrapSnippet
-        |> collectSelectors
-        |> selectorsToSnippet
-
-
 numberToString : number -> String
 numberToString num =
     toString (num + 0)
@@ -8341,39 +8395,20 @@ stringsToValue list =
         { value = String.join ", " (List.map (\s -> s) list) }
 
 
-{-| Compile the given stylesheets to a CSS string, or to an error
-message if it could not be compiled.
--}
-compile : List Stylesheet -> { css : String, warnings : List String }
-compile =
-    Resolve.compile
+{-| **DEPRECATED** in favor of [`Html.Styled.Attributes.css`](Html-Styled-Attributes#css). This function will be removed in the next major release of elm-css.
 
-
-collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
-collectSelectors declarations =
-    case declarations of
-        [] ->
-            []
-
-        (Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors _)) :: rest ->
-            (firstSelector :: otherSelectors) ++ collectSelectors rest
-
-        _ :: rest ->
-            collectSelectors rest
-
-
-{-| Take a list of styles and return a list of key-value pairs that
+Take a list of styles and return a list of key-value pairs that
 can then be passed to a `style` attribute.
 
-    styled = asPairs >> Html.Attributes.style
+    styles = asPairs >> Html.Attributes.style
 
     button
-      [ styled [ position absolute, left (px 5) ] ]
+      [ styles [ position absolute, left (px 5) ] ]
       [ text "Whee!" ]
 
 -}
-asPairs : List Style -> List ( String, String )
-asPairs =
+asPairsDEPRECATED : List Style -> List ( String, String )
+asPairsDEPRECATED =
     Preprocess.toPropertyPairs
 
 

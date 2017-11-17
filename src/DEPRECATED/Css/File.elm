@@ -1,8 +1,34 @@
-module Css.File exposing (CssCompilerProgram, CssFileStructure, UniqueClass, UniqueSvgClass, compile, compiler, toFileStructure, uniqueClass, uniqueSvgClass)
+module DEPRECATED.Css.File
+    exposing
+        ( CssCompilerProgram
+        , CssFileStructure
+        , Stylesheet
+        , UniqueClass
+        , UniqueSvgClass
+        , compile
+        , compiler
+        , stylesheet
+        , toFileStructure
+        , uniqueClass
+        , uniqueSvgClass
+        )
 
-{-| Functions for writing CSS files from elm-css.
+{-|
 
-@docs compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
+
+# DEPRECATED
+
+Compiling to .css files is deprecated, and support is planned to be removed in a
+future release (likely sometime in 2018), once [`Html.Styled`](Html-Styled) has
+matured sufficiently. The design goal is for elm-css to offer One Way To Do It,
+and that one way is planned to be `Html.Styled`!
+
+
+## Css.File
+
+Functions for writing CSS files from elm-css.
+
+@docs Stylesheet, stylesheet, compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
 
 
 ## Automatically-generated unique classes
@@ -11,7 +37,8 @@ module Css.File exposing (CssCompilerProgram, CssFileStructure, UniqueClass, Uni
 
 -}
 
-import Css exposing (Style, Stylesheet)
+import Css.Preprocess as Preprocess exposing (Snippet, Style, unwrapSnippet)
+import Css.Preprocess.Resolve as Resolve
 
 
 {-| A description of CSS files that will be created by elm-css.
@@ -36,11 +63,12 @@ toFileStructure stylesheets =
     List.map asTuple stylesheets
 
 
-{-| Convenience re-export of Css.compile
+{-| Compile the given stylesheets to a CSS string, or to an error
+message if it could not be compiled.
 -}
 compile : List Stylesheet -> { css : String, warnings : List String }
 compile =
-    Css.compile
+    Resolve.compile
 
 
 {-| Create a program that compiles an elm-css stylesheet to a CSS file.
@@ -76,6 +104,11 @@ See [`compiler`](#compiler).
 -}
 type alias CssCompilerProgram =
     Program Never () Never
+
+
+{-| -}
+type alias Stylesheet =
+    Preprocess.Stylesheet
 
 
 {-| Styles scoped under an automatically-generated class.
@@ -115,3 +148,18 @@ SVG elements. These will only work with SVGs!
 uniqueSvgClass : List Style -> UniqueSvgClass
 uniqueSvgClass =
     UniqueSvgClass
+
+
+{-| A stylesheet.
+
+    stylesheet
+        [ body
+            [ width (px 960)
+            , color (rgb 7 7 7)
+            ]
+        ]
+
+-}
+stylesheet : List Snippet -> Stylesheet
+stylesheet =
+    Preprocess.stylesheet

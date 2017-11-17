@@ -1,8 +1,24 @@
-module Html.Styled.Internal exposing (Classname, InternalHtml(..), getClassname, unstyle, unstyleKeyed)
+module Html.Styled.Internal
+    exposing
+        ( Classname
+        , InternalAttribute(..)
+        , StyledHtml(..)
+        , classProperty
+        , extractProperty
+        , getClassname
+        , makeSnippet
+        , mapAttribute
+        , unstyle
+        , unstyleKeyed
+        )
 
-import Css exposing (Style)
+import Css.Preprocess as Preprocess exposing (Style)
+import Css.Preprocess.Resolve as Resolve
+import Css.Structure as Structure
 import Dict exposing (Dict)
+import Hex
 import Json.Encode
+import Murmur3
 import VirtualDom exposing (Node, Property)
 
 
@@ -10,77 +26,127 @@ type alias Classname =
     String
 
 
-type InternalHtml msg
-    = Element (Maybe ( Classname, List Style )) String (List (VirtualDom.Property msg)) (List (InternalHtml msg))
-    | KeyedElement (Maybe ( Classname, List Style )) String (List (VirtualDom.Property msg)) (List ( String, InternalHtml msg ))
+type StyledHtml msg
+    = Element String (List (InternalAttribute msg)) (List (StyledHtml msg))
+    | KeyedElement String (List (InternalAttribute msg)) (List ( String, StyledHtml msg ))
     | Unstyled (VirtualDom.Node msg)
 
 
-getClassname : List Style -> Maybe String
+type InternalAttribute msg
+    = InternalAttribute
+        (VirtualDom.Property msg)
+        (List Preprocess.Style)
+        -- classname is "" whenever styles is []
+        -- It would be nicer to model this with separate constructors, but the
+        -- browser will JIT this better. We will instantiate a *lot* of these.
+        Classname
+
+
+getClassname : List Style -> Classname
 getClassname styles =
-    Debug.crash "TODO hash the class etc"
+    if List.isEmpty styles then
+        ""
+    else
+        -- TODO Replace this comically inefficient implementation
+        -- with crawling these union types and building up a hash along the way.
+        Structure.UniversalSelectorSequence []
+            |> makeSnippet styles
+            |> List.singleton
+            |> Preprocess.stylesheet
+            |> List.singleton
+            |> Resolve.compile
+            |> .css
+            |> Murmur3.hashString murmurSeed
+            |> Hex.toString
+            |> String.cons '_'
+
+
+makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Preprocess.Snippet
+makeSnippet styles sequence =
+    let
+        selector =
+            Structure.Selector sequence [] Nothing
+    in
+    [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
+        |> Preprocess.Snippet
+
+
+murmurSeed : Int
+murmurSeed =
+    15739
 
 
 unstyle :
     String
-    -> Maybe ( Classname, List Style )
-    -> List (Property msg)
-    -> List (InternalHtml msg)
+    -> List (InternalAttribute msg)
+    -> List (StyledHtml msg)
     -> Node msg
-unstyle =
-    unstyleWith
-        resolve
-        VirtualDom.node
-        finishNode
+unstyle elemType attributes children =
+    let
+        initialStyles =
+            List.foldl accumulateStyles Dict.empty attributes
+
+        ( childNodes, styles ) =
+            List.foldl accumulateStyledHtml
+                ( [], initialStyles )
+                children
+
+        styleNode =
+            toStyleNode styles
+
+        properties =
+            List.map extractProperty attributes
+    in
+    VirtualDom.node elemType properties (styleNode :: List.reverse childNodes)
 
 
 unstyleKeyed :
     String
-    -> Maybe ( Classname, List Style )
-    -> List (Property msg)
-    -> List ( String, InternalHtml msg )
+    -> List (InternalAttribute msg)
+    -> List ( String, StyledHtml msg )
     -> Node msg
-unstyleKeyed =
-    unstyleWith
-        resolveKeyed
-        VirtualDom.keyedNode
-        finishKeyedNode
+unstyleKeyed elemType attributes keyedChildren =
+    let
+        initialStyles =
+            List.foldl accumulateStyles Dict.empty attributes
+
+        ( keyedChildNodes, styles ) =
+            List.foldl accumulateKeyedStyledHtml
+                ( [], initialStyles )
+                keyedChildren
+
+        keyedStyleNode =
+            toKeyedStyleNode styles keyedChildNodes
+
+        properties =
+            List.map extractProperty attributes
+    in
+    VirtualDom.keyedNode elemType properties (keyedStyleNode :: List.reverse keyedChildNodes)
 
 
 
 -- INTERNAL --
 
 
-finishNode :
-    String
-    -> Dict Classname (List Style)
-    -> a
-    -> Node msg
-finishNode classname allStyles _ =
-    getStyleNode classname allStyles
-
-
-finishKeyedNode :
-    String
-    -> Dict Classname (List Style)
+toKeyedStyleNode :
+    Dict Classname (List Style)
     -> List ( String, a )
     -> ( String, Node msg )
-finishKeyedNode classname allStyles finalChildNodes =
+toKeyedStyleNode allStyles keyedChildNodes =
     let
         styleNodeKey =
-            getUnusedKey "_" finalChildNodes
+            getUnusedKey "_" keyedChildNodes
 
         finalNode =
-            getStyleNode classname allStyles
+            toStyleNode allStyles
     in
     ( styleNodeKey, finalNode )
 
 
-getStyleNode : String -> Dict Classname (List Style) -> Node msg
-getStyleNode classname styles =
+toStyleNode : Dict Classname (List Style) -> Node msg
+toStyleNode styles =
     -- this <style> node will be the first child of the requested one
-    [ ".", classname, "{\n", toDeclaration styles, "\n}" ]
-        |> String.join ""
+    toDeclaration styles
         |> VirtualDom.text
         |> List.singleton
         |> VirtualDom.node "style" []
@@ -90,162 +156,97 @@ getStyleNode classname styles =
 -- INTERNAL --
 
 
-unstyleWith :
-    (keyedOrHtml2 -> ( List keyedOrHtml, Dict Classname (List Style) ) -> ( List keyedOrHtml, Dict Classname (List Style) ))
-    -> (String -> List (Property msg) -> List keyedOrHtml -> keyedOrHtml3)
-    -> (String -> Dict Classname (List Style) -> List keyedOrHtml -> keyedOrHtml)
-    -> String
-    -> Maybe ( Classname, List Style )
-    -> List (Property msg)
-    -> List keyedOrHtml2
-    -> keyedOrHtml3
-unstyleWith resolver toNode finishNode elemType maybePair attributes children =
-    let
-        ( styles, finalAttributes, classname ) =
-            case maybePair of
-                Just ( classnameFromPair, style ) ->
-                    ( Dict.singleton classnameFromPair style
-                    , class classnameFromPair :: attributes
-                    , classnameFromPair
-                    )
-
-                Nothing ->
-                    ( Dict.empty
-                    , attributes
-                    , ""
-                    )
-
-        ( childNodes, allStyles ) =
-            List.foldl resolver ( [], styles ) children
-
-        finalChildNodes =
-            List.reverse childNodes
-    in
-    if Dict.isEmpty allStyles then
-        -- If we have no styles to speak of, don't emit a <style>
-        toNode elemType finalAttributes finalChildNodes
+accumulateStyles :
+    InternalAttribute msg
+    -> Dict Classname (List Style)
+    -> Dict Classname (List Style)
+accumulateStyles (InternalAttribute property newStyles classname) styles =
+    if List.isEmpty newStyles then
+        styles
     else
-        let
-            finalNode =
-                finishNode classname allStyles finalChildNodes
-        in
-        toNode
-            elemType
-            attributes
-            (finalNode :: finalChildNodes)
+        Dict.insert classname newStyles styles
 
 
-resolve :
-    InternalHtml msg
+extractProperty : InternalAttribute msg -> VirtualDom.Property msg
+extractProperty (InternalAttribute val _ _) =
+    val
+
+
+accumulateStyledHtml :
+    StyledHtml msg
     -> ( List (Node msg), Dict Classname (List Style) )
     -> ( List (Node msg), Dict Classname (List Style) )
-resolve html ( nodes, styles ) =
+accumulateStyledHtml html ( nodes, styles ) =
     case html of
         Unstyled vdom ->
             ( vdom :: nodes, styles )
 
-        Element maybePair elemType attributes children ->
+        Element elemType attributes children ->
             let
-                ( combinedStyles, elemAttributes ) =
-                    case maybePair of
-                        Just ( classname, style ) ->
-                            ( Dict.insert classname style styles
-                            , class classname :: attributes
-                            )
-
-                        Nothing ->
-                            ( styles
-                            , attributes
-                            )
+                combinedStyles =
+                    List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl resolve ( [], combinedStyles ) children
+                    List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.node elemType
-                        elemAttributes
+                        (List.map extractProperty attributes)
                         (List.reverse childNodes)
             in
             ( vdom :: nodes, finalStyles )
 
-        KeyedElement maybePair elemType attributes children ->
+        KeyedElement elemType attributes children ->
             let
-                ( combinedStyles, elemAttributes ) =
-                    case maybePair of
-                        Just ( classname, style ) ->
-                            ( Dict.insert classname style styles
-                            , class classname :: attributes
-                            )
-
-                        Nothing ->
-                            ( styles
-                            , attributes
-                            )
+                combinedStyles =
+                    List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl resolveKeyed ( [], combinedStyles ) children
+                    List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.keyedNode elemType
-                        elemAttributes
+                        (List.map extractProperty attributes)
                         (List.reverse childNodes)
             in
             ( vdom :: nodes, finalStyles )
 
 
-resolveKeyed :
-    ( String, InternalHtml msg )
+accumulateKeyedStyledHtml :
+    ( String, StyledHtml msg )
     -> ( List ( String, Node msg ), Dict Classname (List Style) )
     -> ( List ( String, Node msg ), Dict Classname (List Style) )
-resolveKeyed ( key, html ) ( pairs, styles ) =
+accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
     case html of
         Unstyled vdom ->
             ( ( key, vdom ) :: pairs, styles )
 
-        Element maybePair elemType attributes children ->
+        Element elemType attributes children ->
             let
-                ( combinedStyles, elemAttributes ) =
-                    case maybePair of
-                        Just ( classname, style ) ->
-                            ( Dict.insert classname style styles
-                            , class classname :: attributes
-                            )
-
-                        Nothing ->
-                            ( styles
-                            , attributes
-                            )
+                combinedStyles =
+                    List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl resolve ( [], combinedStyles ) children
+                    List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.node elemType
-                        elemAttributes
+                        (List.map extractProperty attributes)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
 
-        KeyedElement maybePair elemType attributes children ->
+        KeyedElement elemType attributes children ->
             let
-                ( combinedStyles, elemAttributes ) =
-                    case maybePair of
-                        Just ( classname, style ) ->
-                            ( Dict.insert classname style styles
-                            , class classname :: attributes
-                            )
-
-                        Nothing ->
-                            ( styles
-                            , attributes
-                            )
+                combinedStyles =
+                    List.foldl accumulateStyles styles attributes
 
                 ( childNodes, finalStyles ) =
-                    List.foldl resolveKeyed ( [], combinedStyles ) children
+                    List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
                 vdom =
                     VirtualDom.keyedNode elemType
-                        elemAttributes
+                        (List.map extractProperty attributes)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
@@ -253,24 +254,28 @@ resolveKeyed ( key, html ) ( pairs, styles ) =
 
 class : Classname -> Property msg
 class =
-    Json.Encode.string >> VirtualDom.property "class"
+    Json.Encode.string >> VirtualDom.property "className"
 
 
 toDeclaration : Dict Classname (List Style) -> String
 toDeclaration dict =
     Dict.toList dict
-        |> List.map toDeclarationHelp
-        |> String.join ""
+        |> List.map snippetFromPair
+        |> Preprocess.stylesheet
+        |> List.singleton
+        |> Resolve.compile
+        |> .css
 
 
-toDeclarationHelp : ( Classname, List Style ) -> String
-toDeclarationHelp ( classname, styles ) =
-    Css.class classname styles
-        |> Debug.crash "TODO convert from Style to String"
+snippetFromPair : ( Classname, List Style ) -> Preprocess.Snippet
+snippetFromPair ( classname, styles ) =
+    [ Structure.ClassSelector classname ]
+        |> Structure.UniversalSelectorSequence
+        |> makeSnippet styles
 
 
 {-| returns a String key that is not already one of the keys in the list of
-key-value pairs. We need this in order to prepend to a list of InternalHtml.Keyed
+key-value pairs. We need this in order to prepend to a list of StyledHtml.Keyed
 nodes with a guaranteed-unique key.
 -}
 getUnusedKey : String -> List ( String, a ) -> String
@@ -301,3 +306,15 @@ containsKey key pairs =
                 True
             else
                 containsKey key rest
+
+
+{-| Often used with CSS to style elements with common properties.
+-}
+classProperty : String -> VirtualDom.Property msg
+classProperty val =
+    VirtualDom.property "className" (Json.Encode.string val)
+
+
+mapAttribute : (a -> b) -> InternalAttribute a -> InternalAttribute b
+mapAttribute transform (InternalAttribute property styles classname) =
+    InternalAttribute (VirtualDom.mapProperty transform property) styles classname

@@ -1,8 +1,8 @@
 module Dreamwriter.Sidebar exposing (chapter, menu)
 
 import Css exposing (..)
-import Css.Elements exposing (..)
-import Css.File exposing (UniqueClass, uniqueClass)
+import Css.Foreign exposing (..)
+import DEPRECATED.Css.File exposing (UniqueClass, uniqueClass)
 
 
 menu : Snippet
