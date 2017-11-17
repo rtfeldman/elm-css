@@ -1,6 +1,7 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [**12.0.0**](https://github.com/rtfeldman/elm-css/tree/12.0.0) | Add Html.Styled, deprecate Css.Namespace (immediately) and Css.File (eventually), move Css.Elements and others into Css.Foreign, rename `text` to `text_`
 | [**8.1.0**](https://github.com/rtfeldman/elm-css/tree/8.1.0) | Expose some types, fix mixing bugs
 | [**8.0.0**](https://github.com/rtfeldman/elm-css/tree/8.0.0) | Switch from `(#)` and `(.)` to `class` and `id`
 | [**7.0.0**](https://github.com/rtfeldman/elm-css/tree/7.0.0) | Upgrade to Elm 0.18
