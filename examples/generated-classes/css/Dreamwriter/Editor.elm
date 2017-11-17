@@ -1,8 +1,8 @@
 module Dreamwriter.Editor exposing (editor, headerBar, purpleCircle)
 
 import Css exposing (..)
-import Css.Elements exposing (..)
-import Css.File exposing (UniqueClass, UniqueSvgClass, uniqueClass, uniqueSvgClass)
+import Css.Foreign exposing (..)
+import DEPRECATED.Css.File exposing (UniqueClass, UniqueSvgClass, uniqueClass, uniqueSvgClass)
 
 
 editor : Snippet
