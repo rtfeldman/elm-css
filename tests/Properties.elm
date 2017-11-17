@@ -243,6 +243,14 @@ all =
             , ( overflow hidden, "hidden" )
             , ( overflow scroll, "scroll" )
             ]
+        , testProperty { function = "visibility", property = "visibility" }
+            [ ( visibility visible, "visible" )
+            , ( visibility hidden, "hidden" )
+            , ( visibility collapse, "collapse" )
+            , ( visibility initial, "initial" )
+            , ( visibility inherit, "inherit" )
+            , ( visibility unset, "unset" )
+            ]
         , testProperty { function = "textRendering", property = "text-rendering" }
             [ ( textRendering initial, "initial" )
             , ( textRendering unset, "unset" )

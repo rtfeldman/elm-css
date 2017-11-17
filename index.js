@@ -1,250 +1,179 @@
-var fs = require("fs");
-var tmp = require("tmp");
-var path = require("path");
-var compile = require("node-elm-compiler").compile;
-var jsEmitterFilename = "emitter.js";
+//@flow
 
-var KNOWN_MODULES =
-  [
-    "Native",
-    "fullscreen",
-    "embed",
-    "worker",
-    "Basics",
-    "Maybe",
-    "List",
-    "Array",
-    "Char",
-    "Color",
-    "Transform2D",
-    "Text",
-    "Graphics",
-    "Debug",
-    "Result",
-    "Task",
-    "Signal",
-    "String",
-    "Dict",
-    "Json",
-    "Regex",
-    "VirtualDom",
-    "Html",
-    "Css"
-  ];
+const _ = require("lodash"),
+  path = require("path"),
+  glob = require("glob"),
+  mkdirp = require("mkdirp"),
+  findExposedValues = require("./js/find-exposed-values").findExposedValues,
+  writeGeneratedElmPackage = require("./js/generate-elm-package"),
+  writeMain = require("./js/generate-main").writeMain,
+  writeFile = require("./js/generate-class-modules").writeFile,
+  findElmFiles = require("./js/find-elm-files"),
+  compileAll = require("./js/compile-all"),
+  fs = require("fs-extra"),
+  compile = require("node-elm-compiler").compile,
+  extractCssResults = require("./js/extract-css-results.js"),
+  hackMain = require("./js/hack-main.js");
 
-module.exports = function(projectDir, stylesheetsPath, outputDir, stylesheetsModule, stylesheetsPort, pathToMake) {
+const binaryExtension = process.platform === "win32" ? ".exe" : "";
+const readElmiPath =
+  path.join(__dirname, "bin", "elm-interface-to-json") + binaryExtension;
+const jsEmitterFilename = "emitter.js";
 
-  var originalWorkingDir = process.cwd();
-  process.chdir(projectDir);
+module.exports = function(
+  projectDir /*: string*/,
+  outputDir /*: string */,
+  pathToMake /*: ?string */
+) {
+  const cssSourceDir = path.join(projectDir, "css");
+  const cssElmPackageJson = path.join(cssSourceDir, "elm-package.json");
 
-  return createTmpDir()
-    .then(function (tmpDirPath) {
-      return generateCssFiles(
-        stylesheetsPath,
-        path.join(tmpDirPath, jsEmitterFilename),
-        outputDir,
-        stylesheetsModule || "Stylesheets",
-        stylesheetsPort || "files",
-        pathToMake
-      );
-    })
-    .then(function(result) {
-      process.chdir(originalWorkingDir);
-      return result;
-    })
-    .catch(function(err) {
-      process.chdir(originalWorkingDir);
-      throw Error(err);
-    });
-}
+  if (!fs.existsSync(cssElmPackageJson)) {
+    mkdirp.sync(cssSourceDir);
 
-function createTmpDir() {
-  return new Promise(function (resolve, reject) {
-    tmp.dir({ unsafeCleanup: true }, function (err, tmpDirPath) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(tmpDirPath);
-      }
+    // TODO do an init here
+  }
+
+  const elmFilePaths = findElmFiles(cssSourceDir);
+  const generatedDir = path.join(
+    projectDir,
+    "elm-stuff",
+    "generated-code",
+    "rtfeldman",
+    "elm-css"
+  );
+
+  // Symlink our existing elm-stuff into the generated code,
+  // to avoid re-downloading and recompiling things we already
+  // just downloaded and compiled.
+  var generatedElmStuff = path.join(generatedDir, "elm-stuff");
+
+  mkdirp.sync(generatedDir);
+
+  if (!fs.existsSync(generatedElmStuff)) {
+    fs.symlinkSync(
+      path.join(cssSourceDir, "elm-stuff"),
+      generatedElmStuff,
+      "junction" // Only affects Windows, but necessary for this to work there. See https://github.com/gulpjs/vinyl-fs/issues/210
+    );
+  }
+
+  const generatedSrc = path.join(generatedDir, "src");
+  const mainFilename = path.join(generatedSrc, "Main.elm");
+
+  const makeGeneratedSrcDir = new Promise(function(resolve, reject) {
+    mkdirp(generatedSrc, function(error) {
+      if (error) reject(error);
+
+      resolve();
     });
   });
-}
 
-function generateCssFiles(stylesheetsPath, emitterDest, outputDir, stylesheetsModule, stylesheetsPort, pathToMake) {
-  return emit(stylesheetsPath, emitterDest, stylesheetsModule, stylesheetsPort, pathToMake)
-    .then(writeResults(outputDir));
-}
+  return Promise.all([
+    writeGeneratedElmPackage(generatedDir, generatedSrc, cssSourceDir),
+    makeGeneratedSrcDir,
+    compileAll(pathToMake, cssSourceDir, elmFilePaths)
+  ]).then(function(promiseOutputs) {
+    const repository /*: string */ = promiseOutputs[0];
 
-function emit(src, dest, stylesheetsModule, stylesheetsPort, pathToMake) {
-    // Compile the temporary file.
-  return compileEmitter(src, {output: dest, yes: true, pathToMake: pathToMake})
-    .then(extractCssResults(dest, stylesheetsModule, stylesheetsPort));
-}
-
-function suggestModulesNames(Elm){
-  return Object.keys(Elm).filter(function(key){
-    return KNOWN_MODULES.indexOf(key) === -1;
-  })
-}
-
-function missingEntryModuleMessage(stylesheetsModule, Elm){
-  var errorMessage = "I couldn't find the entry module " + stylesheetsModule + ".\n";
-  var suggestions = suggestModulesNames(Elm);
-
-  if (suggestions.length > 1){
-    errorMessage += "\nMaybe you meant one of these: " + suggestions.join(",");
-  } else if (suggestions.length === 1){
-    errorMessage += "\nMaybe you meant: " + suggestions;
-  }
-
-  errorMessage += "\nYou can pass me a different module to use with --module=<moduleName>";
-
-  return errorMessage;
-}
-
-function noPortsMessage(stylesheetsModule, stylesheetsPort){
-  var errorMessage = "The module " + stylesheetsModule + " doesn't expose any ports!\n";
-
-  errorMessage += "\nI was looking for a port called `" + stylesheetsPort + "` but couldn't find it!";
-  errorMessage += "\n\nTry adding something like";
-  errorMessage += `
-port ${stylesheetsPort} : CssFileStructure
-port ${stylesheetsPort} =
-  toFileStructure
-    []
-
-to ${stylesheetsModule}!
-`;
-
-  return errorMessage.trim();
-}
-
-function noMatchingPortMessage(stylesheetsModule, stylesheetsPort, ports){
-  var errorMessage = `The module ${stylesheetsModule} has no port called ${stylesheetsPort}.\n`;
-  errorMessage += "\nI was looking for a port called `" + stylesheetsPort + "` but couldn't find it!";
-
-  var portKeys = Object.keys(ports);
-
-  if (portKeys.length === 1){
-    errorMessage += "\nHowever, I did find the port: " + portKeys[0];
-    errorMessage += "\nMaybe you meant that instead?";
-  } else {
-    errorMessage += "\nHowever, I did find the ports : " + Object.keys(ports).join(",");
-  }
-
-  errorMessage += "\n\nYou can specify which port to use by doing";
-  errorMessage += "\nelm-css -p <port-name>";
-
-  return errorMessage.trim();
-}
-
-/*
-This is a poor man's type error. To get better error messages, might be worth
-considered moving to how elm-static-site does it instead, and use Elm's compiler
-for type errors!
-*/
-function portTypeErrorMessage(stylesheetsModule, stylesheetsPort, portValue){
-  var errorMessage = `
-The type of the port ${stylesheetsPort} was not what I wanted!
-I was expecting a List CssFileStructure but got ${typeof portValue}!
-`;
-
-  return errorMessage.trim();
-}
-
-function extractCssResults(dest, stylesheetsModuleName, stylesheetsPort) {
-  return function () {
-    return new Promise(function (resolve, reject) {
-      var Elm = require(dest);
-
-      /*
-      If you have a nested stylesheet Elm module like "My.Nested.Stylesheet"
-      the resulting Elm object will be like that:
-
-      Elm = {
-        My: {
-          Nested: {
-            Stylesheet: { worker: function () {...} }
-          }
-        }
-      }
-
-      So we need to split the module name on each dot and iterate
-      over the nested objects to reach the targeted one,
-      starting with the Elm object itself
-      */
-      var stylesheetsModule = Elm;
-      var parts = stylesheetsModuleName.split('.');
-
-      parts.forEach(function (part) {
-        if (!stylesheetsModule || !stylesheetsModule[part]){
-          return reject(missingEntryModuleMessage(stylesheetsModuleName, Elm));
-        }
-        stylesheetsModule = stylesheetsModule[part];
-      })
-
-      var worker = stylesheetsModule.worker();
-
-      if (Object.keys(worker.ports).length === 0){
-        return reject(noPortsMessage(stylesheetsModuleName, stylesheetsPort));
-      }
-
-      if (!(stylesheetsPort in worker.ports)){
-        return reject(noMatchingPortMessage(stylesheetsModuleName, stylesheetsPort, worker.ports));
-      }
-
-      worker.ports[stylesheetsPort].subscribe(function (stylesheets) {
-        if (!Array.isArray(stylesheets)){
-          return reject(portTypeErrorMessage(stylesheetsModuleName, stylesheetsPort, stylesheets));
-        }
-
-        var failures = stylesheets.filter(function(result) {
-          return !result.success;
-        });
-
-        return failures.length > 0
-        ? reject(reportFailures(failures))
-        : resolve(stylesheets);
+    return findExposedValues(
+      ["Css.File.UniqueClass", "Css.File.UniqueSvgClass", "Css.Snippet"],
+      readElmiPath,
+      generatedDir,
+      elmFilePaths,
+      [cssSourceDir],
+      true
+    ).then(function(modules) {
+      return Promise.all(
+        [writeMain(mainFilename, modules)].concat(
+          modules.map(function(modul) {
+            return writeFile(path.join(generatedDir, "styles"), modul);
+          })
+        )
+      ).then(function() {
+        return emit(
+          mainFilename,
+          repository,
+          path.join(generatedDir, jsEmitterFilename),
+          generatedDir,
+          pathToMake
+        ).then(writeResults(outputDir));
       });
     });
-  };
+  });
+};
+
+function emit(
+  src /*: string */,
+  repository /*: string */,
+  dest /*: string */,
+  cwd /*: string */,
+  pathToMake /*: ?string */
+) {
+  // Compile the js file.
+  return compileEmitter(src, {
+    output: dest,
+    yes: true,
+    cwd: cwd,
+    pathToMake: pathToMake
+  })
+    .then(function() {
+      return hackMain(repository, dest);
+    })
+    .then(function() {
+      return extractCssResults(dest);
+    });
 }
 
 function writeResults(outputDir) {
   return function(results) {
-    return Promise.all(
-      results.map(writeResult(outputDir))
-    );
+    return Promise.all(results.map(writeResult(outputDir)));
   };
 }
 
 function writeResult(outputDir) {
-  return function (result) {
+  return function(result) {
     return new Promise(function(resolve, reject) {
-      fs.writeFile(path.join(outputDir, result.filename), result.content + "\n", function(err, file) {
-        return err ? reject(err) : resolve(result);
+      const filename = path.join(outputDir, result.filename);
+      // It's important to call path.dirname explicitly,
+      // because result.filename can have directories in it!
+      const directory = path.dirname(filename);
+
+      mkdirp(directory, function(dirError) {
+        if (dirError) return reject(dirError);
+
+        fs.writeFile(filename, result.content + "\n", function(
+          fileError,
+          file
+        ) {
+          if (fileError) return reject(fileError);
+
+          resolve(result);
+        });
       });
     });
-  }
+  };
 }
 
-
 function reportFailures(failures) {
-  return "The following errors occurred during compilation:\n\n" +
-    failures.map(function(result) {
-      return result.filename + ": " + result.content;
-    }).join("\n\n");
+  return (
+    "The following errors occurred during compilation:\n\n" +
+    failures
+      .map(function(result) {
+        return result.filename + ": " + result.content;
+      })
+      .join("\n\n")
+  );
 }
 
 function compileEmitter(src, options) {
   return new Promise(function(resolve, reject) {
-    compile(src, options)
-      .on("close", function(exitCode) {
-        if (exitCode === 0) {
-          resolve();
-        } else {
-          reject("Errored with exit code " + exitCode);
-        }
-      });
+    compile(src, options).on("close", function(exitCode) {
+      if (exitCode === 0) {
+        resolve();
+      } else {
+        reject("Errored with exit code " + exitCode);
+      }
+    });
   });
 }
