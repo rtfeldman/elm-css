@@ -16,6 +16,7 @@
         "Html.Styled.Events",
         "Html.Styled.Keyed",
         "Html.Styled.Lazy",
+        "DEPRECATED.Css",
         "DEPRECATED.Css.File",
         "DEPRECATED.Css.Namespace"
     ],
