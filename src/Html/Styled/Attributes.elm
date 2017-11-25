@@ -204,9 +204,9 @@ Attributes that can be attached to any HTML tag but are less commonly used.
 
 import Css.Preprocess exposing (Style)
 import Html.Styled exposing (Attribute, Html)
-import Html.Styled.Internal as Internal exposing (InternalAttribute(InternalAttribute))
 import Json.Encode as Json
 import VirtualDom
+import VirtualDom.Styled
 
 
 -- This library does not include low, high, or optimum because the idea of a
@@ -234,14 +234,14 @@ recommendation is to use this function lightly.
 
 -}
 style : List ( String, String ) -> Attribute msg
-style pairs =
-    InternalAttribute (VirtualDom.style pairs) [] ""
+style =
+    VirtualDom.style >> fromUnstyled
 
 
 {-| -}
 fromUnstyled : VirtualDom.Property msg -> Attribute msg
-fromUnstyled prop =
-    InternalAttribute prop [] ""
+fromUnstyled =
+    VirtualDom.Styled.unstyledProperty
 
 
 {-| This function makes it easier to build a space-separated class attribute.
@@ -288,8 +288,8 @@ Read more about the difference between properties and attributes [here].
 
 -}
 property : String -> Json.Value -> Attribute msg
-property name val =
-    InternalAttribute (VirtualDom.property name val) [] ""
+property =
+    VirtualDom.Styled.property
 
 
 stringProperty : String -> String -> Attribute msg
@@ -315,15 +315,15 @@ Read more about the difference between properties and attributes [here].
 
 -}
 attribute : String -> String -> Attribute msg
-attribute name val =
-    InternalAttribute (VirtualDom.attribute name val) [] ""
+attribute =
+    VirtualDom.Styled.attribute
 
 
 {-| Transform the messages produced by an `Attribute`.
 -}
 map : (a -> msg) -> Attribute a -> Attribute msg
 map =
-    Internal.mapAttribute
+    VirtualDom.Styled.mapProperty
 
 
 
@@ -1166,12 +1166,12 @@ css : List Style -> Attribute msg
 css styles =
     let
         classname =
-            Internal.getClassname styles
+            VirtualDom.Styled.getClassname styles
+
+        classProperty =
+            VirtualDom.property "className" (Json.string classname)
     in
-    InternalAttribute
-        (Internal.classProperty classname)
-        styles
-        classname
+    VirtualDom.Styled.Property classProperty styles classname
 
 
 {-| Takes a function that creates an element, and pre-applies styles to it.

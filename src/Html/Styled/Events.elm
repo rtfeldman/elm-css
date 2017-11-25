@@ -57,9 +57,9 @@ of events as seen in the [TodoMVC] example.
 -}
 
 import Html.Styled as Html exposing (Attribute)
-import Html.Styled.Internal as Internal exposing (InternalAttribute(InternalAttribute))
 import Json.Decode as Json
 import VirtualDom
+import VirtualDom.Styled
 
 
 -- MOUSE EVENTS
@@ -206,15 +206,15 @@ It really does help!
 
 -}
 on : String -> Json.Decoder msg -> Attribute msg
-on eventName decoder =
-    InternalAttribute (VirtualDom.on eventName decoder) [] ""
+on =
+    VirtualDom.Styled.on
 
 
 {-| Same as `on` but you can set a few options.
 -}
 onWithOptions : String -> Options -> Json.Decoder msg -> Attribute msg
-onWithOptions eventName options decoder =
-    InternalAttribute (VirtualDom.onWithOptions eventName options decoder) [] ""
+onWithOptions =
+    VirtualDom.Styled.onWithOptions
 
 
 {-| Options for an event listener. If `stopPropagation` is true, it means the
