@@ -164,8 +164,8 @@ import Css.Preprocess as Preprocess
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Html.Styled
-import Html.Styled.Internal exposing (makeSnippet)
 import VirtualDom
+import VirtualDom.Styled exposing (makeSnippet)
 
 
 {-| Add global styles to the page. This compiles directly to a `<style>` element.
@@ -180,7 +180,7 @@ global snippets =
         |> VirtualDom.text
         |> List.singleton
         |> VirtualDom.node "style" []
-        |> Html.Styled.Internal.Unstyled
+        |> VirtualDom.Styled.unstyledNode
 
 
 {-| -}
