@@ -1,6 +1,6 @@
 {
     "version": "12.0.0",
-    "summary": "CSS Preprocessor for Elm",
+    "summary": "Typed CSS in Elm.",
     "repository": "https://github.com/rtfeldman/elm-css.git",
     "license": "BSD-3-Clause",
     "source-directories": [
