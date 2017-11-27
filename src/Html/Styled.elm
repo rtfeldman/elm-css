@@ -85,6 +85,7 @@ module Html.Styled
         , source
         , span
         , strong
+        , styled
         , sub
         , summary
         , sup
@@ -108,9 +109,9 @@ module Html.Styled
         )
 
 {-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
-The only functions added are `toUnstyled` and `fromUnstyled`:
+The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
 
-@docs fromUnstyled, toUnstyled
+@docs styled, fromUnstyled, toUnstyled
 
 This file is organized roughly in order of popularity. The tags which you'd
 expect to use frequently will be closer to the top.
@@ -205,6 +206,8 @@ expect to use frequently will be closer to the top.
 
 -}
 
+import Css exposing (Style)
+import Html.Styled.Internal as Internal
 import VirtualDom
 import VirtualDom.Styled
 
@@ -224,8 +227,8 @@ type alias Html msg =
 
 {-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css) attribute.
 
-You can obtain one of these from the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
-type by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled)
+You can obtain one of these from the normal [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
+by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled).
 
 -}
 type alias Attribute msg =
@@ -252,6 +255,40 @@ text =
 map : (a -> b) -> Html a -> Html b
 map =
     VirtualDom.Styled.map
+
+
+{-| Takes a function that creates an element, and pre-applies styles to it.
+
+    bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
+    bigButton =
+        styled button
+            [ padding (px 30)
+            , fontWeight bold
+            ]
+
+    view : Model -> Html msg
+    view model =
+        [ text "These two buttons are identical:"
+        , bigButton [] [ text "Hi!" ]
+        , button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
+        ]
+
+Here, the `bigButton` function we've defined using `styled button` is
+identical to the normal `button` function, except that it has pre-applied
+the attribute of `css [ padding (px 30), fontWeight bold ]`.
+
+You can pass more attributes to `bigButton` as usual (including other `css`
+attributes). They will be applied after the pre-applied styles.
+
+-}
+styled :
+    (List (Attribute msg) -> List (Html msg) -> Html msg)
+    -> List Style
+    -> List (Attribute msg)
+    -> List (Html msg)
+    -> Html msg
+styled fn styles attrs children =
+    fn (Internal.css styles :: attrs) children
 
 
 {-| -}

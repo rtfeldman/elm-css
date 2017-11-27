@@ -93,7 +93,6 @@ module Html.Styled.Attributes
         , start
         , step
         , style
-        , styled
         , tabindex
         , target
         , title
@@ -105,9 +104,9 @@ module Html.Styled.Attributes
         )
 
 {-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
-The only functions added are `css`, `styled`, and `fromUnstyled`:
+The only functions added are `css` and `fromUnstyled`:
 
-@docs css, styled, fromUnstyled
+@docs css, fromUnstyled
 
 Helper functions for HTML attributes. They are organized roughly by
 category. Each attribute is labeled with the HTML tags it can be used with, so
@@ -202,8 +201,9 @@ Attributes that can be attached to any HTML tag but are less commonly used.
 
 -}
 
-import Css.Preprocess exposing (Style)
+import Css exposing (Style)
 import Html.Styled exposing (Attribute, Html)
+import Html.Styled.Internal as Internal
 import Json.Encode as Json
 import VirtualDom
 import VirtualDom.Styled
@@ -1163,46 +1163,5 @@ See the [`Css` module documentation](http://package.elm-lang.org/packages/rtfeld
 
 -}
 css : List Style -> Attribute msg
-css styles =
-    let
-        classname =
-            VirtualDom.Styled.getClassname styles
-
-        classProperty =
-            VirtualDom.property "className" (Json.string classname)
-    in
-    VirtualDom.Styled.Property classProperty styles classname
-
-
-{-| Takes a function that creates an element, and pre-applies styles to it.
-
-    bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
-    bigButton =
-        styled button
-            [ padding (px 30)
-            , fontWeight bold
-            ]
-
-    view : Model -> Html msg
-    view model =
-        [ text "These two buttons are identical:"
-        , bigButton [] [ text "Hi!" ]
-        , button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
-        ]
-
-    Here, the `bigButton` function we've defined using `styled button` is
-    identical to the normal `button` function, except that it has pre-applied
-    the attribute of `css [ padding (px 30), fontWeight bold ]`.
-
-    You can pass more attributes to `bigButton` as usual (including other `css`
-    attributes). They will be applied after the pre-applied styles.
-
--}
-styled :
-    (List (Attribute msg) -> List (Html msg) -> Html msg)
-    -> List Style
-    -> List (Attribute msg)
-    -> List (Html msg)
-    -> Html msg
-styled fn styles attrs children =
-    fn (css styles :: attrs) children
+css =
+    Internal.css
