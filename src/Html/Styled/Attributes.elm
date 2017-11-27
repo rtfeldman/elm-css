@@ -202,7 +202,7 @@ Attributes that can be attached to any HTML tag but are less commonly used.
 
 -}
 
-import Css.Preprocess exposing (Style)
+import Css exposing (Style)
 import Html.Styled exposing (Attribute, Html)
 import Json.Encode as Json
 import VirtualDom
