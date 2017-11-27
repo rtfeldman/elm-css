@@ -224,8 +224,8 @@ type alias Html msg =
 
 {-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css) attribute.
 
-You can obtain one of these from the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
-type by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled)
+You can obtain one of these from the normal [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
+by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled).
 
 -}
 type alias Attribute msg =
