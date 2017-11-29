@@ -51,11 +51,17 @@ module.exports = function(
   mkdirp.sync(generatedDir);
 
   if (!fs.existsSync(generatedElmStuff)) {
-    fs.symlinkSync(
-      path.join(cssSourceDir, "elm-stuff"),
-      generatedElmStuff,
-      "junction" // Only affects Windows, but necessary for this to work there. See https://github.com/gulpjs/vinyl-fs/issues/210
-    );
+    try {
+      fs.symlinkSync(
+        path.join(cssSourceDir, "elm-stuff"),
+        generatedElmStuff,
+        "junction" // Only affects Windows, but necessary for this to work there. See https://github.com/gulpjs/vinyl-fs/issues/210
+      );
+    } catch (err) {
+      // This will blow up on macOS because !fs.existsSync(generatedElmStuff)
+      // fails on macOS for symlinks. Ignore it; if it legit fails, that's
+      // fine; this doesn't *need* to be symlinked. It's just a performance optimization.
+    }
   }
 
   const generatedSrc = path.join(generatedDir, "src");
