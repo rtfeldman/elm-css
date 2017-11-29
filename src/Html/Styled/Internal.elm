@@ -84,7 +84,7 @@ unstyle :
 unstyle elemType attributes children =
     let
         initialStyles =
-            List.foldl accumulateStyles Dict.empty attributes
+            stylesFromAttributes attributes
 
         ( childNodes, styles ) =
             List.foldl accumulateStyledHtml
@@ -108,7 +108,7 @@ unstyleKeyed :
 unstyleKeyed elemType attributes keyedChildren =
     let
         initialStyles =
-            List.foldl accumulateStyles Dict.empty attributes
+            stylesFromAttributes attributes
 
         ( keyedChildNodes, styles ) =
             List.foldl accumulateKeyedStyledHtml
@@ -156,15 +156,27 @@ toStyleNode styles =
 -- INTERNAL --
 
 
-accumulateStyles :
-    InternalAttribute msg
-    -> Dict Classname (List Style)
-    -> Dict Classname (List Style)
-accumulateStyles (InternalAttribute property newStyles classname) styles =
-    if List.isEmpty newStyles then
-        styles
-    else
-        Dict.insert classname newStyles styles
+stylesFromAttributes : List (InternalAttribute msg) -> Dict Classname (List Style)
+stylesFromAttributes attributes =
+    case stylesFromAttributesHelp Nothing attributes of
+        Nothing ->
+            Dict.empty
+
+        Just ( classname, styles ) ->
+            Dict.singleton classname styles
+
+
+stylesFromAttributesHelp :
+    Maybe ( Classname, List Style )
+    -> List (InternalAttribute msg)
+    -> Maybe ( Classname, List Style )
+stylesFromAttributesHelp candidate attributes =
+    case attributes of
+        [] ->
+            candidate
+
+        (InternalAttribute _ styles classname) :: rest ->
+            stylesFromAttributesHelp (Just ( classname, styles )) rest
 
 
 extractProperty : InternalAttribute msg -> VirtualDom.Property msg
@@ -184,7 +196,7 @@ accumulateStyledHtml html ( nodes, styles ) =
         Element elemType attributes children ->
             let
                 combinedStyles =
-                    List.foldl accumulateStyles styles attributes
+                    stylesFromAttributes attributes
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
@@ -199,7 +211,7 @@ accumulateStyledHtml html ( nodes, styles ) =
         KeyedElement elemType attributes children ->
             let
                 combinedStyles =
-                    List.foldl accumulateStyles styles attributes
+                    stylesFromAttributes attributes
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
@@ -224,7 +236,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
         Element elemType attributes children ->
             let
                 combinedStyles =
-                    List.foldl accumulateStyles styles attributes
+                    stylesFromAttributes attributes
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
@@ -239,7 +251,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
         KeyedElement elemType attributes children ->
             let
                 combinedStyles =
-                    List.foldl accumulateStyles styles attributes
+                    stylesFromAttributes attributes
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
