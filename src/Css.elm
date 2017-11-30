@@ -893,8 +893,8 @@ appropriate classname declarations.
 
 ### Style Reuse
 
-The easiest way to reuse styles (like [mixins](http://sass-lang.com/guide#topic-6)
-in other CSS systems) is through [`Style`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#Style)
+To reuse styles (like [mixins](http://sass-lang.com/guide#topic-6)
+in other CSS systems) use [`Style`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#Style)
 values.
 
     greenBorder : Style
@@ -909,10 +909,7 @@ values.
     view model =
         button [ css [ bigBold, greenBorder ] ] [ text "Ok" ]
 
-Another way to reuse styles is to compile them to attributes and then to mix
-and match those. This is less flexible than mixing and matching `Style` values,
-but it has a performance benefit: classname hashes are calculated when you call
-the `css` function, so you can avoid redoing that work by calling it at the top level.
+You cannot reuse styles after compiling them to attributes. This will not work:
 
     greenBorder : Attribute msg
     greenBorder =
@@ -924,14 +921,12 @@ the `css` function, so you can avoid redoing that work by calling it at the top 
 
     view : Model -> Html Msg
     view model =
+        -- Doesn't work!
         button [ bigBold, greenBorder ] [ text "Ok" ]
 
-The `greenBorder` and `bigBold` attributes above will have their classname hashes
-calculated right when `css` is called, and never again. The button will have a
-green border, a bold font weight, and a font size of 48px.
-
-You can also use [`Html.Styled.Lazy`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#property)
-to avoid recomputing both hashes and `Html` nodes.
+In this case, the `bigBold` attribute will be completely ignored in favor of
+the `greenBorder` attribute, because it came last in the attribute list. If you
+want to mix and match styles, use `Style` values!
 
 
 ### Unsupported Properties
