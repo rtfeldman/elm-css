@@ -145,13 +145,13 @@ lazy fn arg =
 
 lazy2 : (a -> b -> VirtualDom.Node msg) -> a -> b -> Node msg
 lazy2 fn arg1 arg2 =
-    VirtualDom.lazy2 (\a b -> fn a b) arg1 arg2
+    VirtualDom.lazy2 fn arg1 arg2
         |> Unstyled
 
 
 lazy3 : (a -> b -> c -> VirtualDom.Node msg) -> a -> b -> c -> Node msg
 lazy3 fn arg1 arg2 arg3 =
-    VirtualDom.lazy3 (\a b c -> fn a b c) arg1 arg2 arg3
+    VirtualDom.lazy3 fn arg1 arg2 arg3
         |> Unstyled
 
 
