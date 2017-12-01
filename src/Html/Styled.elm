@@ -1,9 +1,117 @@
-module Html.Styled exposing (Attribute, Html, a, abbr, address, article, aside, audio, b, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, datalist, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, fromUnstyled, h1, h2, h3, h4, h5, h6, header, hr, i, iframe, img, input, ins, kbd, keygen, label, legend, li, main_, map, mark, math, menu, menuitem, meter, nav, node, object, ol, optgroup, option, output, p, param, pre, progress, q, rp, rt, ruby, s, samp, section, select, small, source, span, strong, sub, summary, sup, table, tbody, td, text, textarea, tfoot, th, thead, time, toUnstyled, tr, track, u, ul, var, video, wbr)
+module Html.Styled
+    exposing
+        ( Attribute
+        , Html
+        , a
+        , abbr
+        , address
+        , article
+        , aside
+        , audio
+        , b
+        , bdi
+        , bdo
+        , blockquote
+        , body
+        , br
+        , button
+        , canvas
+        , caption
+        , cite
+        , code
+        , col
+        , colgroup
+        , datalist
+        , dd
+        , del
+        , details
+        , dfn
+        , div
+        , dl
+        , dt
+        , em
+        , embed
+        , fieldset
+        , figcaption
+        , figure
+        , footer
+        , form
+        , fromUnstyled
+        , h1
+        , h2
+        , h3
+        , h4
+        , h5
+        , h6
+        , header
+        , hr
+        , i
+        , iframe
+        , img
+        , input
+        , ins
+        , kbd
+        , keygen
+        , label
+        , legend
+        , li
+        , main_
+        , map
+        , mark
+        , math
+        , menu
+        , menuitem
+        , meter
+        , nav
+        , node
+        , object
+        , ol
+        , optgroup
+        , option
+        , output
+        , p
+        , param
+        , pre
+        , progress
+        , q
+        , rp
+        , rt
+        , ruby
+        , s
+        , samp
+        , section
+        , select
+        , small
+        , source
+        , span
+        , strong
+        , styled
+        , sub
+        , summary
+        , sup
+        , table
+        , tbody
+        , td
+        , text
+        , textarea
+        , tfoot
+        , th
+        , thead
+        , time
+        , toUnstyled
+        , tr
+        , track
+        , u
+        , ul
+        , var
+        , video
+        , wbr
+        )
 
 {-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
-The only functions added are `toUnstyled` and `fromUnstyled`:
+The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
 
-@docs fromUnstyled, toUnstyled
+@docs styled, fromUnstyled, toUnstyled
 
 This file is organized roughly in order of popularity. The tags which you'd
 expect to use frequently will be closer to the top.
@@ -98,8 +206,10 @@ expect to use frequently will be closer to the top.
 
 -}
 
-import Html.Styled.Internal as Internal exposing (Classname, InternalAttribute(..), StyledHtml(..))
-import VirtualDom exposing (Node)
+import Css exposing (Style)
+import Html.Styled.Internal as Internal
+import VirtualDom
+import VirtualDom.Styled
 
 
 {-| Styled [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html).
@@ -112,17 +222,17 @@ You can convert the other way using [`fromUnstyled`](#fromUnstyled).
 
 -}
 type alias Html msg =
-    StyledHtml msg
+    VirtualDom.Styled.Node msg
 
 
 {-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css) attribute.
 
-You can obtain one of these from the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
-type by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled)
+You can obtain one of these from the normal [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
+by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled).
 
 -}
 type alias Attribute msg =
-    InternalAttribute msg
+    VirtualDom.Styled.Property msg
 
 
 
@@ -131,56 +241,66 @@ type alias Attribute msg =
 
 {-| -}
 node : String -> List (Attribute msg) -> List (Html msg) -> Html msg
-node elemType =
-    Element elemType
+node =
+    VirtualDom.Styled.node
 
 
 {-| -}
 text : String -> Html msg
-text str =
-    VirtualDom.text str
-        |> Unstyled
+text =
+    VirtualDom.Styled.text
 
 
 {-| -}
 map : (a -> b) -> Html a -> Html b
-map transform html =
-    case html of
-        Element classname attributes children ->
-            Element
-                classname
-                (List.map (Internal.mapAttribute transform) attributes)
-                (List.map (map transform) children)
+map =
+    VirtualDom.Styled.map
 
-        KeyedElement classname attributes children ->
-            KeyedElement
-                classname
-                (List.map (Internal.mapAttribute transform) attributes)
-                (List.map (\( key, child ) -> ( key, map transform child )) children)
 
-        Unstyled vdom ->
-            VirtualDom.map transform vdom
-                |> Unstyled
+{-| Takes a function that creates an element, and pre-applies styles to it.
+
+    bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
+    bigButton =
+        styled button
+            [ padding (px 30)
+            , fontWeight bold
+            ]
+
+    view : Model -> Html msg
+    view model =
+        [ text "These two buttons are identical:"
+        , bigButton [] [ text "Hi!" ]
+        , button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
+        ]
+
+Here, the `bigButton` function we've defined using `styled button` is
+identical to the normal `button` function, except that it has pre-applied
+the attribute of `css [ padding (px 30), fontWeight bold ]`.
+
+You can pass more attributes to `bigButton` as usual (including other `css`
+attributes). They will be applied after the pre-applied styles.
+
+-}
+styled :
+    (List (Attribute msg) -> List (Html msg) -> Html msg)
+    -> List Style
+    -> List (Attribute msg)
+    -> List (Html msg)
+    -> Html msg
+styled fn styles attrs children =
+    fn (Internal.css styles :: attrs) children
 
 
 {-| -}
-toUnstyled : Html msg -> Node msg
-toUnstyled html =
-    case html of
-        Unstyled vdom ->
-            vdom
-
-        Element elemType attributes children ->
-            Internal.unstyle elemType attributes children
-
-        KeyedElement elemType attributes children ->
-            Internal.unstyleKeyed elemType attributes children
+toUnstyled : Html msg -> VirtualDom.Node msg
+toUnstyled =
+    VirtualDom.Styled.toUnstyled
 
 
 {-| -}
-fromUnstyled : Node msg -> StyledHtml msg
+fromUnstyled : VirtualDom.Node msg -> Html msg
 fromUnstyled =
-    Internal.Unstyled
+    VirtualDom.Styled.unstyledNode
 
 
 

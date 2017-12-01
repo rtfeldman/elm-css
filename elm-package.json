@@ -16,6 +16,11 @@
         "Html.Styled.Events",
         "Html.Styled.Keyed",
         "Html.Styled.Lazy",
+        "Svg.Styled",
+        "Svg.Styled.Attributes",
+        "Svg.Styled.Events",
+        "Svg.Styled.Keyed",
+        "Svg.Styled.Lazy",
         "DEPRECATED.Css",
         "DEPRECATED.Css.File",
         "DEPRECATED.Css.Namespace"

@@ -25,7 +25,7 @@ removed, etc. Common examples include:
 -}
 
 import Html.Styled exposing (Attribute, Html)
-import Html.Styled.Internal as Internal exposing (StyledHtml(..))
+import VirtualDom.Styled
 
 
 {-| Works just like `Html.node`, but you add a unique identifier to each child
@@ -33,13 +33,9 @@ node. You want this when you have a list of nodes that is changing: adding
 nodes, removing nodes, etc. In these cases, the unique identifiers help make
 the DOM modifications more efficient.
 -}
-node :
-    String
-    -> List (Attribute msg)
-    -> List ( String, Html msg )
-    -> Html msg
-node elemType =
-    KeyedElement elemType
+node : String -> List (Attribute msg) -> List ( String, Html msg ) -> Html msg
+node =
+    VirtualDom.Styled.keyedNode
 
 
 {-| -}
