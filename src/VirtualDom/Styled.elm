@@ -44,7 +44,7 @@ type Property msg
     = Property
         (VirtualDom.Property msg)
         (List Preprocess.Style)
-        -- classname is "" whenever styles is []
+        -- classname is "" when it's not a `css` attribute.
         -- It would be nicer to model this with separate constructors, but the
         -- browser will JIT this better. We will instantiate a *lot* of these.
         Classname
@@ -171,7 +171,11 @@ toUnstyled node =
 getClassname : List Style -> Classname
 getClassname styles =
     if List.isEmpty styles then
-        ""
+        -- NOTE: Styles should always result in a classname, because they
+        -- can be detected later.
+        -- This way img [ css [ foo bar ], css [] ] wipes out the styles
+        -- as expected. (The latter will generate a classname of "_unstyled")
+        "unstyled"
     else
         -- TODO Replace this comically inefficient implementation
         -- with crawling these union types and building up a hash along the way.
@@ -308,7 +312,20 @@ stylesFromPropertiesHelp candidate properties =
             candidate
 
         (Property _ styles classname) :: rest ->
-            stylesFromPropertiesHelp (Just ( classname, styles )) rest
+            let
+                _ =
+                    Debug.log "(styles, classname) = " ( styles, classname )
+            in
+            if String.isEmpty classname then
+                -- This was not a `css` property
+                -- (for example maybe it was `src` for an <img> instead)
+                -- so it's not a new candidate.
+                -- NOTE: Do String.isEmpty classname and not List.isEmpty styles
+                -- so that img [ css [ foo bar ], css [] ] wipes out the styles
+                -- as expected. (The latter will generate a classname of "_unstyled")
+                stylesFromPropertiesHelp candidate rest
+            else
+                stylesFromPropertiesHelp (Just ( classname, styles )) rest
 
 
 extractUnstyledProperty : Property msg -> VirtualDom.Property msg
