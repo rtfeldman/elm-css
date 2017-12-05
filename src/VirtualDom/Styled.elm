@@ -350,8 +350,8 @@ accumulateStyledHtml :
     -> ( List (VirtualDom.Node msg), Dict Classname (List Style) )
 accumulateStyledHtml html ( nodes, styles ) =
     case html of
-        Unstyled vdom ->
-            ( vdom :: nodes, styles )
+        Unstyled node ->
+            ( node :: nodes, styles )
 
         Element elemType properties children ->
             let
@@ -361,12 +361,12 @@ accumulateStyledHtml html ( nodes, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
-                vdom =
+                node =
                     VirtualDom.node elemType
                         (List.map extractUnstyledProperty properties)
                         (List.reverse childNodes)
             in
-            ( vdom :: nodes, finalStyles )
+            ( node :: nodes, finalStyles )
 
         KeyedElement elemType properties children ->
             let
@@ -376,12 +376,12 @@ accumulateStyledHtml html ( nodes, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
-                vdom =
+                node =
                     VirtualDom.keyedNode elemType
                         (List.map extractUnstyledProperty properties)
                         (List.reverse childNodes)
             in
-            ( vdom :: nodes, finalStyles )
+            ( node :: nodes, finalStyles )
 
 
 accumulateKeyedStyledHtml :
