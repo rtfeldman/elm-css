@@ -37,8 +37,7 @@ module Svg.Styled.Events
 
 # Graphical event attributes
 
-@docs onActivate, onClick, onFocusIn, onFocusOut, onMouseDown, onMouseMove,
-onMouseOut, onMouseOver, onMouseUp
+@docs onActivate, onClick, onFocusIn, onFocusOut, onMouseDown, onMouseMove, onMouseOut, onMouseOver, onMouseUp
 
 
 # Custom Events

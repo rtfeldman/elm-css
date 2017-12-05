@@ -120,8 +120,7 @@ The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
 
 # Text
 
-@docs altGlyph, altGlyphDef, altGlyphItem, glyph, glyphRef, textPath, text_,
-tref, tspan
+@docs altGlyph, altGlyphDef, altGlyphItem, glyph, glyphRef, textPath, text_, tref, tspan
 
 
 # Fonts
@@ -136,10 +135,7 @@ tref, tspan
 
 # Filters
 
-@docs feBlend, feColorMatrix, feComponentTransfer, feComposite,
-feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feFlood, feFuncA,
-feFuncB, feFuncG, feFuncR, feGaussianBlur, feImage, feMerge, feMergeNode,
-feMorphology, feOffset, feSpecularLighting, feTile, feTurbulence
+@docs feBlend, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feFlood, feFuncA, feFuncB, feFuncG, feFuncR, feGaussianBlur, feImage, feMerge, feMergeNode, feMorphology, feOffset, feSpecularLighting, feTile, feTurbulence
 
 
 # Light source elements
