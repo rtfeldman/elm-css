@@ -1,7 +1,8 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
-| [**12.0.1**](https://github.com/rtfeldman/elm-css/tree/12.0.1) | Add deprecation warning to upgrade to 13.0.0 for critical bugfixes, improve docs for Css.Foreign
+| [**13.0.0**](https://github.com/rtfeldman/elm-css/tree/13.0.0) | Disallow using multiple `css` attributes in same element, to fix #337. Fix Html.Styled.Lazy (#348). Add Svg.Styled (#339). Improve docs for Css.Foreign (#353).
+| [**12.0.1**](https://github.com/rtfeldman/elm-css/tree/12.0.1) | Add deprecation warning to upgrade to 13.0.0 for critical bugfixes
 | [**12.0.0**](https://github.com/rtfeldman/elm-css/tree/12.0.0) | Add Html.Styled, move Css.Elements and others into Css.Foreign, move Css.stylesheet into Css.File, rename `text` to `text_`, deprecate Css.Namespace (immediately) and Css.File (eventually)
 | [**8.1.0**](https://github.com/rtfeldman/elm-css/tree/8.1.0) | Expose some types, fix mixing bugs
 | [**8.0.0**](https://github.com/rtfeldman/elm-css/tree/8.0.0) | Switch from `(#)` and `(.)` to `class` and `id`
