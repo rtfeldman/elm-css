@@ -1,5 +1,5 @@
 {
-    "version": "12.0.0",
+    "version": "13.0.0",
     "summary": "Typed CSS in Elm.",
     "repository": "https://github.com/rtfeldman/elm-css.git",
     "license": "BSD-3-Clause",
