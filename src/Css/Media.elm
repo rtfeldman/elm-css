@@ -209,17 +209,15 @@ type alias Value compatible =
 
 {-| Combines media queries that are nested under selectors into a `@media` rule.
 
-    (stylesheet << namespace "homepage")
-        [ footer
-            [ withMedia [ only screen [ Media.minWidth (px 300), Media.maxWidth (px 800) ] ]
-                [ Css.maxWidth (px 300) ]
-        ]
+    css
+        [ withMedia [ only screen [ Media.minWidth (px 300), Media.maxWidth (px 800) ] ]
+            [ Css.maxWidth (px 300) ]
 
 The above code translates into the following CSS.
 
 ```css
 @media only screen and (min-width: 300px) and (max-width: 800px) {
-    footer {
+    ._c9f0fd {
         max-width: 300px;
     }
 }

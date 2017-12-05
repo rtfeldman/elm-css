@@ -190,7 +190,7 @@ type alias Snippet =
 
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
 
-    stylesheet
+    global
         [ id NavBar
             [ width 960 px
             , backgroundColor (rgb 123 42 208)
@@ -207,7 +207,7 @@ id identifier styles =
 
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
-    stylesheet
+    global
         [ class LoginFormButton
             [ fontWeight normal
             , color (rgb 128 64 32)
@@ -226,7 +226,7 @@ class class styles =
 [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
 and [universal selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
 
-    stylesheet "homepage"
+    global
         [ selector "* [lang^=en]"
             [ textDecoration underline
             , color (rgb 7 7 7)
@@ -267,7 +267,7 @@ everything styles =
 
 {-| Combines media queries into a `@media` rule.
 
-    (stylesheet << namespace "homepage")
+    global
         [  media [ only screen [ Media.minWidth (px 300) ] ]
                [ footer [ Css.maxWidth (px 300) ] ]
         ]
@@ -404,9 +404,9 @@ each snippetCreators styles =
 
 {-| Define a custom element.
 
-    stylesheet
-      [ typeSelector "aside" [ display block ]
-      ]
+    global
+        [ typeSelector "aside" [ display block ]
+        ]
 
 ...outputs
 

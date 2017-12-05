@@ -2789,16 +2789,11 @@ lengthConverter units unitLabel numericValue =
 
 {-| Convenience length value that compiles to 0 with no units.
 
-    stylesheet
-      [ ul
-          [ padding zero ]
-      ]
+    css [ padding zero ]
 
 ...compiles to:
 
-    ul {
-        padding: 0;
-    }
+    padding: 0;
 
 -}
 zero :
@@ -7897,23 +7892,19 @@ animationNames identifiers =
                 [ textDecoration underline ]
             ]
 
-    stylesheet
-      [ class FancyLink
-          [ color (rgb 128 64 32)
-          , underlineOnHover
-          ]
-      ]
+    css
+        [ color (rgb 128 64 32)
+        , underlineOnHover
+        ]
 
 ...has the same result as:
 
-    stylesheet
-      [ class FancyLink
-          [ color (rgb 128 64 32)
-          , textDecoration none
-          , hover
+    css
+        [ color (rgb 128 64 32)
+        , textDecoration none
+        , hover
             [ textDecoration underline ]
-          ]
-      ]
+        ]
 
 -}
 batch : List Style -> Style
@@ -7923,16 +7914,11 @@ batch =
 
 {-| Define a custom property.
 
-    stylesheet
-      [ body
-          [ property "-webkit-font-smoothing" "none" ]
-      ]
+    css [ property "-webkit-font-smoothing" "none" ]
 
 ...outputs
 
-    body {
-        -webkit-font-smoothing: none;
-    }
+    -webkit-font-smoothing: none;
 
 -}
 property : String -> String -> Style
@@ -7972,16 +7958,19 @@ This can be useful for deprecated pseudo-classes such as `-moz-any-link`, which
 [has been deprecated and removed](https://www.fxsitecompat.com/en-CA/docs/2016/any-link-css-pseudo-class-has-been-unprefixed/)
 in modern browsers.
 
-    stylesheet
-      [ body
-          [ pseudoClass "-moz-any-link" [ color (hex "f00") ] ]
-      ]
+    button
+        [ css [ pseudoClass "-moz-any-link" [ color (hex "f00") ] ] ]
+        [ text "Whee!" ]
 
 ...outputs
 
-    body:-moz-any-link {
-        color: #f00;
-    }
+    <button class="f9fcb2">Whee!</button>
+
+    <style>
+        .f9fcb2:-moz-any-link {
+            color: #f00;
+        }
+    </style>
 
 -}
 pseudoClass : String -> List Style -> Style
@@ -8267,16 +8256,19 @@ valid =
 
 {-| Define a custom pseudo-element.
 
-    stylesheet
-      [ body
-          [ pseudoElement "-webkit-scrollbar" [ display none ] ]
-      ]
+    textarea
+        [ css [ pseudoElement "-webkit-scrollbar" [ display none ] ] ]
+        []
 
 ...outputs
 
-    body::-webkit-scrollbar {
-        display: none;
-    }
+    <textarea class="d84ff7"></textarea>
+
+    <style>
+        .d84ff7::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 
 -}
 pseudoElement : String -> List Style -> Style
@@ -8340,10 +8332,7 @@ CSS specification, and as such are intentionally unsupported.
 Using them is a bad idea, but if the fate of the world depends on it, you can
 fall back on something like this:
 
-    stylesheet
-        [ button
-            [ property "border-left" "thin" ]
-        ]
+    css [ property "border-left" "thin" ]
 
 -}
 thin : IntentionallyUnsupportedPleaseSeeDocs
@@ -8359,10 +8348,7 @@ CSS specification, and as such are intentionally unsupported.
 Using them is a bad idea, but if the fate of the world depends on it, you can
 fall back on something like this:
 
-    stylesheet
-        [ button
-            [ property "border-left" "thick" ]
-        ]
+    css [ property "border-left" "thick" ]
 
 -}
 thick : IntentionallyUnsupportedPleaseSeeDocs

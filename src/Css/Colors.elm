@@ -2,18 +2,11 @@ module Css.Colors exposing (aqua, black, blue, fuchsia, gray, green, lime, maroo
 
 {-| A nicer default set of colors than the ones CSS ships with. Color codes taken from [clrs.cc](http://clrs.cc).
 
-    import Css.Colors exposing (..)
-
-    stylesheet
-      [ button
-          [ backgroundColor blue ]
-      ]
+    css [ backgroundColor blue ]
 
 ...compiles to:
 
-    button {
-        backgroundColor: #0074D9;
-    }
+    backgroundColor: #0074D9;
 
 
 # Colors
