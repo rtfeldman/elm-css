@@ -323,10 +323,6 @@ stylesFromPropertiesHelp candidate properties =
             candidate
 
         (Property _ styles classname) :: rest ->
-            let
-                _ =
-                    Debug.log "(styles, classname) = " ( styles, classname )
-            in
             if String.isEmpty classname then
                 -- This was not a `css` property
                 -- (for example maybe it was `src` for an <img> instead)
