@@ -121,7 +121,7 @@ The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
 # Text
 
 @docs altGlyph, altGlyphDef, altGlyphItem, glyph, glyphRef, textPath, text_,
-    tref, tspan
+tref, tspan
 
 
 # Fonts
@@ -137,9 +137,9 @@ The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
 # Filters
 
 @docs feBlend, feColorMatrix, feComponentTransfer, feComposite,
-    feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feFlood, feFuncA,
-    feFuncB, feFuncG, feFuncR, feGaussianBlur, feImage, feMerge, feMergeNode,
-    feMorphology, feOffset, feSpecularLighting, feTile, feTurbulence
+feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feFlood, feFuncA,
+feFuncB, feFuncG, feFuncR, feGaussianBlur, feImage, feMerge, feMergeNode,
+feMorphology, feOffset, feSpecularLighting, feTile, feTurbulence
 
 
 # Light source elements
@@ -192,6 +192,7 @@ type alias Attribute msg =
 
 You should always be able to use the helper functions already defined in this
 library though!
+
 -}
 node : String -> List (Attribute msg) -> List (Svg msg) -> Svg msg
 node name attrs children =
@@ -247,8 +248,9 @@ containing a rounded rectangle:
     roundRect : Html msg
     roundRect =
         svg
-          [ width "120", height "120", viewBox "0 0 120 120" ]
-          [ rect [ x "10", y "10", width "100", height "100", rx "15", ry "15" ] [] ]
+            [ width "120", height "120", viewBox "0 0 120 120" ]
+            [ rect [ x "10", y "10", width "100", height "100", rx "15", ry "15" ] [] ]
+
 -}
 svg : List (Html.Styled.Attribute msg) -> List (Svg msg) -> Html.Styled.Html msg
 svg =

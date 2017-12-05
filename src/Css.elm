@@ -4654,7 +4654,7 @@ auto :
     , lengthOrAutoOrCoverOrContain : Compatible
     , intOrAuto : Compatible
     , touchAction : Compatible
-    , tableLayout: Compatible
+    , tableLayout : Compatible
     }
 auto =
     { value = "auto"
@@ -5591,6 +5591,7 @@ This can also represent a `fixed` [`background-attachment`](https://developer.mo
     position fixed
 
 This can also be the `fixed` value for [`table-layout`](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout#Values).
+
 -}
 fixed :
     { value : String
