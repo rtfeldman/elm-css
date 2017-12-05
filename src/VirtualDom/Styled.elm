@@ -264,6 +264,17 @@ unstyleKeyed elemType properties keyedChildren =
 -- INTERNAL --
 
 
+accumulateStyles :
+    Property msg
+    -> Dict Classname (List Style)
+    -> Dict Classname (List Style)
+accumulateStyles (Property property newStyles classname) styles =
+    if List.isEmpty newStyles then
+        styles
+    else
+        Dict.insert classname newStyles styles
+
+
 toKeyedStyleNode :
     Dict Classname (List Style)
     -> List ( String, a )
@@ -345,7 +356,7 @@ accumulateStyledHtml html ( nodes, styles ) =
         Element elemType properties children ->
             let
                 combinedStyles =
-                    stylesFromProperties properties
+                    List.foldl accumulateStyles styles properties
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
@@ -360,7 +371,7 @@ accumulateStyledHtml html ( nodes, styles ) =
         KeyedElement elemType properties children ->
             let
                 combinedStyles =
-                    stylesFromProperties properties
+                    List.foldl accumulateStyles styles properties
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
@@ -385,7 +396,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
         Element elemType properties children ->
             let
                 combinedStyles =
-                    stylesFromProperties properties
+                    List.foldl accumulateStyles styles properties
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
@@ -400,7 +411,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
         KeyedElement elemType properties children ->
             let
                 combinedStyles =
-                    stylesFromProperties properties
+                    List.foldl accumulateStyles styles properties
 
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
