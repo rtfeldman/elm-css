@@ -1165,6 +1165,9 @@ See the [`Css` module documentation](http://package.elm-lang.org/packages/rtfeld
 css : List Style -> Attribute msg
 css styles =
     let
+        _ =
+            Debug.log "Please upgrade to elm-css 13.0.0! It includes a critical bugfix for https://github.com/rtfeldman/elm-css/issues/337 which required a breaking change to fix."
+
         classname =
             Internal.getClassname styles
     in
