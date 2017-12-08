@@ -4214,7 +4214,7 @@ linearGradient2 dir stop1 stop2 stops =
         [ stop1, stop2 ]
             ++ stops
             |> collectStops
-            |> (::) ("to " ++ dir.value)
+            |> (::) dir.value
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
@@ -4249,7 +4249,7 @@ stop2 c len =
 -}
 toTop : AngleOrDirection {}
 toTop =
-    { value = "top"
+    { value = "to top"
     , angleOrDirection = Compatible
     }
 
@@ -4258,7 +4258,7 @@ toTop =
 -}
 toTopRight : AngleOrDirection {}
 toTopRight =
-    { value = "top right"
+    { value = "to top right"
     , angleOrDirection = Compatible
     }
 
@@ -4267,7 +4267,7 @@ toTopRight =
 -}
 toRight : AngleOrDirection {}
 toRight =
-    { value = "right"
+    { value = "to right"
     , angleOrDirection = Compatible
     }
 
@@ -4276,7 +4276,7 @@ toRight =
 -}
 toBottomRight : AngleOrDirection {}
 toBottomRight =
-    { value = "bottom right"
+    { value = "to bottom right"
     , angleOrDirection = Compatible
     }
 
@@ -4285,7 +4285,7 @@ toBottomRight =
 -}
 toBottom : AngleOrDirection {}
 toBottom =
-    { value = "bottom"
+    { value = "to bottom"
     , angleOrDirection = Compatible
     }
 
@@ -4294,7 +4294,7 @@ toBottom =
 -}
 toBottomLeft : AngleOrDirection {}
 toBottomLeft =
-    { value = "bottom left"
+    { value = "to bottom left"
     , angleOrDirection = Compatible
     }
 
@@ -4303,7 +4303,7 @@ toBottomLeft =
 -}
 toLeft : AngleOrDirection {}
 toLeft =
-    { value = "left"
+    { value = "to left"
     , angleOrDirection = Compatible
     }
 
@@ -4312,7 +4312,7 @@ toLeft =
 -}
 toTopLeft : AngleOrDirection {}
 toTopLeft =
-    { value = "top left"
+    { value = "to top left"
     , angleOrDirection = Compatible
     }
 
