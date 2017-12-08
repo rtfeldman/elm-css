@@ -737,12 +737,12 @@ bug335 =
         [ test "linearGradient2 does not prepend an angle value with the \"to\" keyword." <|
             \_ ->
                 Expect.false
-                    "Expected compiled angle not to include \"to\""
+                    "Expected compiled angle not to include \"to\"."
                     (String.contains "to" compiledWithAngle)
         , test "linearGradient2 prepend a direction value with the \"to\" keyword." <|
             \_ ->
                 Expect.true
-                    "Expected compiled direction to include \"to\""
+                    "Expected compiled direction to include \"to\"."
                     (String.contains "to" compiledWithDirection)
         ]
 
