@@ -861,7 +861,9 @@ To sum up what's happening here:
 This is how the `css` attribute is able to support things like `hover` and media
 queries.
 
-If you give an element multiple `css` attributes, they will stack. This code:
+If you give an element multiple `css` attributes, they will **not** stack. For
+example, in this code, only the second `css` attiibute will be used. The first
+one will be ignored.
 
     button
         [ css [ backgroundColor (hex "FF0000") ]
@@ -869,15 +871,11 @@ If you give an element multiple `css` attributes, they will stack. This code:
         ]
         [ text "Reset" ]
 
-...compiles to this DOM structure:
+This code compiles to the following DOM structure:
 
-    <button class="_c34f8b _df8ab1">Reset<button>
+    <button class="_df8ab1">Reset<button>
 
     <style>
-        ._c34f8b {
-            background-color: #FF0000;
-        }
-
         ._df8ab1 {
             border-radius: 10px;
         }
@@ -887,9 +885,13 @@ If you give an element multiple `css` attributes, they will stack. This code:
         }
     </style>
 
-Note that `toUnstyled` avoids generating excess `<style>` elements and CSS
+With the exception of [`Lazy`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Lazy),
+you can expect `toUnstyled` to create one `<style>` element **total**, not one
+per element that uses `css`.
+
+`toUnstyled` avoids generating excess `<style>` elements and CSS
 declarations by building up a dictionary of styles you've passed to `css`.
-It will use that dictionary to add a single `<style>` to the DOM with the
+It will use that dictionary to add a single `<style>` to the DOM with all the
 appropriate classname declarations.
 
 
@@ -911,7 +913,9 @@ values.
     view model =
         button [ css [ bigBold, greenBorder ] ] [ text "Ok" ]
 
-You cannot reuse styles after compiling them to attributes. This will not work:
+Because only one `css` attribute per element has any effect, you cannot reuse
+styles after compiling them to attributes. Trying to reuse styles by using
+multiple attributes will not not work:
 
     greenBorder : Attribute msg
     greenBorder =
