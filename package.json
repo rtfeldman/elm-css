@@ -10,7 +10,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "elm-test && cd tests && mocha *.js"
+    "test": "elm-test"
   },
   "repository": {
     "type": "git",
@@ -43,8 +43,7 @@
     "tmp": "0.0.28"
   },
   "devDependencies": {
-    "chai": "3.4.1",
-    "mocha": "2.3.4"
+    "chai": "3.4.1"
   },
   "engineStrict": true,
   "engines": {

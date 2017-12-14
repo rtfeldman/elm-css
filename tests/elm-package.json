@@ -9,9 +9,11 @@
     ],
     "exposed-modules": [],
     "dependencies": {
-        "elm-community/elm-test": "4.0.0 <= v < 5.0.0",
         "Skinney/murmur3": "2.0.4 <= v < 3.0.0",
+        "eeue56/elm-html-test": "5.1.2 <= v < 6.0.0",
+        "elm-community/elm-test": "4.0.0 <= v < 5.0.0",
         "elm-lang/core": "5.0.0 <= v < 6.0.0",
+        "elm-lang/html": "2.0.0 <= v < 3.0.0",
         "elm-lang/virtual-dom": "2.0.0 <= v < 3.0.0",
         "rtfeldman/elm-css-util": "1.0.2 <= v < 2.0.0",
         "rtfeldman/hex": "1.0.0 <= v < 2.0.0"
