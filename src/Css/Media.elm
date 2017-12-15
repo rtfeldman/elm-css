@@ -86,9 +86,7 @@ module Css.Media
         , withMediaQuery
         )
 
-{-| Functions for building `@media` queries.
-
-<https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries>
+{-| Functions for building [`@media` queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries).
 
 
 # Data Structures
