@@ -8,9 +8,9 @@
     ],
     "exposed-modules": [
         "Css",
-        "Css.Colors",
-        "Css.Foreign",
         "Css.Media",
+        "Css.Foreign",
+        "Css.Colors",
         "Html.Styled",
         "Html.Styled.Attributes",
         "Html.Styled.Events",
