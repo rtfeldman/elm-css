@@ -8,6 +8,7 @@
     ],
     "exposed-modules": [
         "Css",
+        "Css.Transitions",
         "Css.Media",
         "Css.Foreign",
         "Css.Colors",
