@@ -1,302 +1,303 @@
 module Css.Transitions
     exposing
-        ( background
-        , backgroundColor
-        , backgroundPosition
-        , backgroundSize
-        , border
-        , borderBottom
-        , borderBottomColor
-        , borderBottomLeftRadius
-        , borderBottomRightRadius
-        , borderBottomWidth
-        , borderColor
-        , borderLeft
-        , borderLeftColor
-        , borderLeftWidth
-        , borderRadius
-        , borderRight
-        , borderRightColor
-        , borderRightWidth
-        , borderTop
-        , borderTopColor
-        , borderTopLeftRadius
-        , borderTopRightRadius
-        , borderTopWidth
-        , borderWidth
-        , bottom
-        , boxShadow
-        , caretColor
-        , clip
-        , clipPath
-        , color
-        , columnCount
-        , columnGap
-        , columnRule
-        , columnRuleColor
-        , columnRuleWidth
-        , columnWidth
-        , columns
-        , filter
-        , flex
-        , flexBasis
-        , flexGrow
-        , flexShrink
-        , font
-        , fontSize
-        , fontSizeAdjust
-        , fontStretch
-        , fontVariationSettings
-        , fontWeight
-        , gridColumnGap
-        , gridGap
-        , gridRowGap
-        , height
-        , left
-        , letterSpacing
-        , lineHeight
-        , margin
-        , marginBottom
-        , marginLeft
-        , marginRight
-        , marginTop
-        , mask
-        , maskPosition
-        , maskSize
-        , maxHeight
-        , maxWidth
-        , minHeight
-        , minWidth
-        , objectPosition
-        , offset
-        , offsetAnchor
-        , offsetDistance
-        , offsetPath
-        , offsetRotate
-        , opacity
-        , order
-        , outline
-        , outlineColor
-        , outlineOffset
-        , outlineWidth
-        , padding
-        , paddingBottom
-        , paddingLeft
-        , paddingRight
-        , paddingTop
-        , right
-        , tabSize
-        , textIndent
-        , textShadow
-        , top
-        , transform
-        , transformOrigin
-        , verticalAlign
-        , visibility
-        , width
-        , wordSpacing
-        , zIndex
-        , transition
+        ( Transition
+        , background
         , background2
-        , backgroundColor2
-        , backgroundPosition2
-        , backgroundSize2
-        , border2
-        , borderBottom2
-        , borderBottomColor2
-        , borderBottomLeftRadius2
-        , borderBottomRightRadius2
-        , borderBottomWidth2
-        , borderColor2
-        , borderLeft2
-        , borderLeftColor2
-        , borderLeftWidth2
-        , borderRadius2
-        , borderRight2
-        , borderRightColor2
-        , borderRightWidth2
-        , borderTop2
-        , borderTopColor2
-        , borderTopLeftRadius2
-        , borderTopRightRadius2
-        , borderTopWidth2
-        , borderWidth2
-        , bottom2
-        , boxShadow2
-        , caretColor2
-        , clip2
-        , clipPath2
-        , color2
-        , columnCount2
-        , columnGap2
-        , columnRule2
-        , columnRuleColor2
-        , columnRuleWidth2
-        , columnWidth2
-        , columns2
-        , filter2
-        , flex2
-        , flexBasis2
-        , flexGrow2
-        , flexShrink2
-        , font2
-        , fontSize2
-        , fontSizeAdjust2
-        , fontStretch2
-        , fontVariationSettings2
-        , fontWeight2
-        , gridColumnGap2
-        , gridGap2
-        , gridRowGap2
-        , height2
-        , left2
-        , letterSpacing2
-        , lineHeight2
-        , margin2
-        , marginBottom2
-        , marginLeft2
-        , marginRight2
-        , marginTop2
-        , mask2
-        , maskPosition2
-        , maskSize2
-        , maxHeight2
-        , maxWidth2
-        , minHeight2
-        , minWidth2
-        , objectPosition2
-        , offset2
-        , offsetAnchor2
-        , offsetDistance2
-        , offsetPath2
-        , offsetRotate2
-        , opacity2
-        , order2
-        , outline2
-        , outlineColor2
-        , outlineOffset2
-        , outlineWidth2
-        , padding2
-        , paddingBottom2
-        , paddingLeft2
-        , paddingRight2
-        , paddingTop2
-        , right2
-        , tabSize2
-        , textIndent2
-        , textShadow2
-        , top2
-        , transform2
-        , transformOrigin2
-        , verticalAlign2
-        , visibility2
-        , width2
-        , wordSpacing2
-        , zIndex2
         , background3
+        , backgroundColor
+        , backgroundColor2
         , backgroundColor3
+        , backgroundPosition
+        , backgroundPosition2
         , backgroundPosition3
+        , backgroundSize
+        , backgroundSize2
         , backgroundSize3
+        , border
+        , border2
         , border3
+        , borderBottom
+        , borderBottom2
         , borderBottom3
+        , borderBottomColor
+        , borderBottomColor2
         , borderBottomColor3
+        , borderBottomLeftRadius
+        , borderBottomLeftRadius2
         , borderBottomLeftRadius3
+        , borderBottomRightRadius
+        , borderBottomRightRadius2
         , borderBottomRightRadius3
+        , borderBottomWidth
+        , borderBottomWidth2
         , borderBottomWidth3
+        , borderColor
+        , borderColor2
         , borderColor3
+        , borderLeft
+        , borderLeft2
         , borderLeft3
+        , borderLeftColor
+        , borderLeftColor2
         , borderLeftColor3
+        , borderLeftWidth
+        , borderLeftWidth2
         , borderLeftWidth3
+        , borderRadius
+        , borderRadius2
         , borderRadius3
+        , borderRight
+        , borderRight2
         , borderRight3
+        , borderRightColor
+        , borderRightColor2
         , borderRightColor3
+        , borderRightWidth
+        , borderRightWidth2
         , borderRightWidth3
+        , borderTop
+        , borderTop2
         , borderTop3
+        , borderTopColor
+        , borderTopColor2
         , borderTopColor3
+        , borderTopLeftRadius
+        , borderTopLeftRadius2
         , borderTopLeftRadius3
+        , borderTopRightRadius
+        , borderTopRightRadius2
         , borderTopRightRadius3
+        , borderTopWidth
+        , borderTopWidth2
         , borderTopWidth3
+        , borderWidth
+        , borderWidth2
         , borderWidth3
+        , bottom
+        , bottom2
         , bottom3
+        , boxShadow
+        , boxShadow2
         , boxShadow3
+        , caretColor
+        , caretColor2
         , caretColor3
+        , clip
+        , clip2
         , clip3
+        , clipPath
+        , clipPath2
         , clipPath3
+        , color
+        , color2
         , color3
+        , columnCount
+        , columnCount2
         , columnCount3
+        , columnGap
+        , columnGap2
         , columnGap3
+        , columnRule
+        , columnRule2
         , columnRule3
+        , columnRuleColor
+        , columnRuleColor2
         , columnRuleColor3
+        , columnRuleWidth
+        , columnRuleWidth2
         , columnRuleWidth3
+        , columnWidth
+        , columnWidth2
         , columnWidth3
+        , columns
+        , columns2
         , columns3
-        , filter3
-        , flex3
-        , flexBasis3
-        , flexGrow3
-        , flexShrink3
-        , font3
-        , fontSize3
-        , fontSizeAdjust3
-        , fontStretch3
-        , fontVariationSettings3
-        , fontWeight3
-        , gridColumnGap3
-        , gridGap3
-        , gridRowGap3
-        , height3
-        , left3
-        , letterSpacing3
-        , lineHeight3
-        , margin3
-        , marginBottom3
-        , marginLeft3
-        , marginRight3
-        , marginTop3
-        , mask3
-        , maskPosition3
-        , maskSize3
-        , maxHeight3
-        , maxWidth3
-        , minHeight3
-        , minWidth3
-        , objectPosition3
-        , offset3
-        , offsetAnchor3
-        , offsetDistance3
-        , offsetPath3
-        , offsetRotate3
-        , opacity3
-        , order3
-        , outline3
-        , outlineColor3
-        , outlineOffset3
-        , outlineWidth3
-        , padding3
-        , paddingBottom3
-        , paddingLeft3
-        , paddingRight3
-        , paddingTop3
-        , right3
-        , tabSize3
-        , textIndent3
-        , textShadow3
-        , top3
-        , transform3
-        , transformOrigin3
-        , verticalAlign3
-        , visibility3
-        , width3
-        , wordSpacing3
-        , zIndex3
-        , ease
-        , linear
-        , easeIn
-        , easeOut
-        , easeInOut
-        , stepStart
-        , stepEnd
         , cubicBezier
+        , ease
+        , easeIn
+        , easeInOut
+        , easeOut
+        , filter
+        , filter2
+        , filter3
+        , flex
+        , flex2
+        , flex3
+        , flexBasis
+        , flexBasis2
+        , flexBasis3
+        , flexGrow
+        , flexGrow2
+        , flexGrow3
+        , flexShrink
+        , flexShrink2
+        , flexShrink3
+        , font
+        , font2
+        , font3
+        , fontSize
+        , fontSize2
+        , fontSize3
+        , fontSizeAdjust
+        , fontSizeAdjust2
+        , fontSizeAdjust3
+        , fontStretch
+        , fontStretch2
+        , fontStretch3
+        , fontVariationSettings
+        , fontVariationSettings2
+        , fontVariationSettings3
+        , fontWeight
+        , fontWeight2
+        , fontWeight3
+        , gridColumnGap
+        , gridColumnGap2
+        , gridColumnGap3
+        , gridGap
+        , gridGap2
+        , gridGap3
+        , gridRowGap
+        , gridRowGap2
+        , gridRowGap3
+        , height
+        , height2
+        , height3
+        , left
+        , left2
+        , left3
+        , letterSpacing
+        , letterSpacing2
+        , letterSpacing3
+        , lineHeight
+        , lineHeight2
+        , lineHeight3
+        , linear
+        , margin
+        , margin2
+        , margin3
+        , marginBottom
+        , marginBottom2
+        , marginBottom3
+        , marginLeft
+        , marginLeft2
+        , marginLeft3
+        , marginRight
+        , marginRight2
+        , marginRight3
+        , marginTop
+        , marginTop2
+        , marginTop3
+        , mask
+        , mask2
+        , mask3
+        , maskPosition
+        , maskPosition2
+        , maskPosition3
+        , maskSize
+        , maskSize2
+        , maskSize3
+        , maxHeight
+        , maxHeight2
+        , maxHeight3
+        , maxWidth
+        , maxWidth2
+        , maxWidth3
+        , minHeight
+        , minHeight2
+        , minHeight3
+        , minWidth
+        , minWidth2
+        , minWidth3
+        , objectPosition
+        , objectPosition2
+        , objectPosition3
+        , offset
+        , offset2
+        , offset3
+        , offsetAnchor
+        , offsetAnchor2
+        , offsetAnchor3
+        , offsetDistance
+        , offsetDistance2
+        , offsetDistance3
+        , offsetPath
+        , offsetPath2
+        , offsetPath3
+        , offsetRotate
+        , offsetRotate2
+        , offsetRotate3
+        , opacity
+        , opacity2
+        , opacity3
+        , order
+        , order2
+        , order3
+        , outline
+        , outline2
+        , outline3
+        , outlineColor
+        , outlineColor2
+        , outlineColor3
+        , outlineOffset
+        , outlineOffset2
+        , outlineOffset3
+        , outlineWidth
+        , outlineWidth2
+        , outlineWidth3
+        , padding
+        , padding2
+        , padding3
+        , paddingBottom
+        , paddingBottom2
+        , paddingBottom3
+        , paddingLeft
+        , paddingLeft2
+        , paddingLeft3
+        , paddingRight
+        , paddingRight2
+        , paddingRight3
+        , paddingTop
+        , paddingTop2
+        , paddingTop3
+        , right
+        , right2
+        , right3
+        , stepEnd
+        , stepStart
+        , tabSize
+        , tabSize2
+        , tabSize3
+        , textIndent
+        , textIndent2
+        , textIndent3
+        , textShadow
+        , textShadow2
+        , textShadow3
+        , top
+        , top2
+        , top3
+        , transform
+        , transform2
+        , transform3
+        , transformOrigin
+        , transformOrigin2
+        , transformOrigin3
+        , transition
+        , verticalAlign
+        , verticalAlign2
+        , verticalAlign3
+        , visibility
+        , visibility2
+        , visibility3
+        , width
+        , width2
+        , width3
+        , wordSpacing
+        , wordSpacing2
+        , wordSpacing3
+        , zIndex
+        , zIndex2
+        , zIndex3
         )
 
 import Css
@@ -354,488 +355,493 @@ cubicBezier f1 f2 f3 f4 =
     CubicBezier f1 f2 f3 f4
 
 
-type alias Transition =
-    ( Animatable, Time.Time, Maybe Time.Time, Maybe TimingFunction )
+type Transition
+    = Transition
+        { animation : Animatable
+        , duration : Time.Time
+        , delay : Maybe Time.Time
+        , timing : Maybe TimingFunction
+        }
 
 
 background3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-background3 duration delay timing =
-    ( Background, duration, Just delay, Just timing )
+background3 =
+    fullTransition Background
 
 
 backgroundColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-backgroundColor3 duration delay timing =
-    ( BackgroundColor, duration, Just delay, Just timing )
+backgroundColor3 =
+    fullTransition BackgroundColor
 
 
 backgroundPosition3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-backgroundPosition3 duration delay timing =
-    ( BackgroundPosition, duration, Just delay, Just timing )
+backgroundPosition3 =
+    fullTransition BackgroundPosition
 
 
 backgroundSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-backgroundSize3 duration delay timing =
-    ( BackgroundSize, duration, Just delay, Just timing )
+backgroundSize3 =
+    fullTransition BackgroundSize
 
 
 border3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-border3 duration delay timing =
-    ( Border, duration, Just delay, Just timing )
+border3 =
+    fullTransition Border
 
 
 borderBottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderBottom3 duration delay timing =
-    ( BorderBottom, duration, Just delay, Just timing )
+borderBottom3 =
+    fullTransition BorderBottom
 
 
 borderBottomColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderBottomColor3 duration delay timing =
-    ( BorderBottomColor, duration, Just delay, Just timing )
+borderBottomColor3 =
+    fullTransition BorderBottomColor
 
 
 borderBottomLeftRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderBottomLeftRadius3 duration delay timing =
-    ( BorderBottomLeftRadius, duration, Just delay, Just timing )
+borderBottomLeftRadius3 =
+    fullTransition BorderBottomLeftRadius
 
 
 borderBottomRightRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderBottomRightRadius3 duration delay timing =
-    ( BorderBottomRightRadius, duration, Just delay, Just timing )
+borderBottomRightRadius3 =
+    fullTransition BorderBottomRightRadius
 
 
 borderBottomWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderBottomWidth3 duration delay timing =
-    ( BorderBottomRightRadius, duration, Just delay, Just timing )
+borderBottomWidth3 =
+    fullTransition BorderBottomRightRadius
 
 
 borderColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderColor3 duration delay timing =
-    ( BorderColor, duration, Just delay, Just timing )
+borderColor3 =
+    fullTransition BorderColor
 
 
 borderLeft3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderLeft3 duration delay timing =
-    ( BorderLeft, duration, Just delay, Just timing )
+borderLeft3 =
+    fullTransition BorderLeft
 
 
 borderLeftColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderLeftColor3 duration delay timing =
-    ( BorderLeftColor, duration, Just delay, Just timing )
+borderLeftColor3 =
+    fullTransition BorderLeftColor
 
 
 borderLeftWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderLeftWidth3 duration delay timing =
-    ( BorderLeftWidth, duration, Just delay, Just timing )
+borderLeftWidth3 =
+    fullTransition BorderLeftWidth
 
 
 borderRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderRadius3 duration delay timing =
-    ( BorderRadius, duration, Just delay, Just timing )
+borderRadius3 =
+    fullTransition BorderRadius
 
 
 borderRight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderRight3 duration delay timing =
-    ( BorderRight, duration, Just delay, Just timing )
+borderRight3 =
+    fullTransition BorderRight
 
 
 borderRightColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderRightColor3 duration delay timing =
-    ( BorderRightColor, duration, Just delay, Just timing )
+borderRightColor3 =
+    fullTransition BorderRightColor
 
 
 borderRightWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderRightWidth3 duration delay timing =
-    ( BorderRightWidth, duration, Just delay, Just timing )
+borderRightWidth3 =
+    fullTransition BorderRightWidth
 
 
 borderTop3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderTop3 duration delay timing =
-    ( BorderTop, duration, Just delay, Just timing )
+borderTop3 =
+    fullTransition BorderTop
 
 
 borderTopColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderTopColor3 duration delay timing =
-    ( BorderTopColor, duration, Just delay, Just timing )
+borderTopColor3 =
+    fullTransition BorderTopColor
 
 
 borderTopLeftRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderTopLeftRadius3 duration delay timing =
-    ( BorderTopLeftRadius, duration, Just delay, Just timing )
+borderTopLeftRadius3 =
+    fullTransition BorderTopLeftRadius
 
 
 borderTopRightRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderTopRightRadius3 duration delay timing =
-    ( BorderTopRightRadius, duration, Just delay, Just timing )
+borderTopRightRadius3 =
+    fullTransition BorderTopRightRadius
 
 
 borderTopWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderTopWidth3 duration delay timing =
-    ( BorderTopWidth, duration, Just delay, Just timing )
+borderTopWidth3 =
+    fullTransition BorderTopWidth
 
 
 borderWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-borderWidth3 duration delay timing =
-    ( BorderWidth, duration, Just delay, Just timing )
+borderWidth3 =
+    fullTransition BorderWidth
 
 
 bottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-bottom3 duration delay timing =
-    ( Bottom, duration, Just delay, Just timing )
+bottom3 =
+    fullTransition Bottom
 
 
 boxShadow3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-boxShadow3 duration delay timing =
-    ( BoxShadow, duration, Just delay, Just timing )
+boxShadow3 =
+    fullTransition BoxShadow
 
 
 caretColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-caretColor3 duration delay timing =
-    ( CaretColor, duration, Just delay, Just timing )
+caretColor3 =
+    fullTransition CaretColor
 
 
 clip3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-clip3 duration delay timing =
-    ( Clip, duration, Just delay, Just timing )
+clip3 =
+    fullTransition Clip
 
 
 clipPath3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-clipPath3 duration delay timing =
-    ( ClipPath, duration, Just delay, Just timing )
+clipPath3 =
+    fullTransition ClipPath
 
 
 color3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-color3 duration delay timing =
-    ( Color, duration, Just delay, Just timing )
+color3 =
+    fullTransition Color
 
 
 columnCount3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-columnCount3 duration delay timing =
-    ( ColumnCount, duration, Just delay, Just timing )
+columnCount3 =
+    fullTransition ColumnCount
 
 
 columnGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-columnGap3 duration delay timing =
-    ( ColumnGap, duration, Just delay, Just timing )
+columnGap3 =
+    fullTransition ColumnGap
 
 
 columnRule3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-columnRule3 duration delay timing =
-    ( ColumnRule, duration, Just delay, Just timing )
+columnRule3 =
+    fullTransition ColumnRule
 
 
 columnRuleColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-columnRuleColor3 duration delay timing =
-    ( ColumnRuleColor, duration, Just delay, Just timing )
+columnRuleColor3 =
+    fullTransition ColumnRuleColor
 
 
 columnRuleWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-columnRuleWidth3 duration delay timing =
-    ( ColumnRuleWidth, duration, Just delay, Just timing )
+columnRuleWidth3 =
+    fullTransition ColumnRuleWidth
 
 
 columnWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-columnWidth3 duration delay timing =
-    ( ColumnWidth, duration, Just delay, Just timing )
+columnWidth3 =
+    fullTransition ColumnWidth
 
 
 columns3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-columns3 duration delay timing =
-    ( Columns, duration, Just delay, Just timing )
+columns3 =
+    fullTransition Columns
 
 
 filter3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-filter3 duration delay timing =
-    ( Filter, duration, Just delay, Just timing )
+filter3 =
+    fullTransition Filter
 
 
 flex3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-flex3 duration delay timing =
-    ( Flex, duration, Just delay, Just timing )
+flex3 =
+    fullTransition Flex
 
 
 flexBasis3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-flexBasis3 duration delay timing =
-    ( FlexBasis, duration, Just delay, Just timing )
+flexBasis3 =
+    fullTransition FlexBasis
 
 
 flexGrow3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-flexGrow3 duration delay timing =
-    ( FlexGrow, duration, Just delay, Just timing )
+flexGrow3 =
+    fullTransition FlexGrow
 
 
 flexShrink3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-flexShrink3 duration delay timing =
-    ( FlexShrink, duration, Just delay, Just timing )
+flexShrink3 =
+    fullTransition FlexShrink
 
 
 font3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-font3 duration delay timing =
-    ( Font, duration, Just delay, Just timing )
+font3 =
+    fullTransition Font
 
 
 fontSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-fontSize3 duration delay timing =
-    ( FontSize, duration, Just delay, Just timing )
+fontSize3 =
+    fullTransition FontSize
 
 
 fontSizeAdjust3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-fontSizeAdjust3 duration delay timing =
-    ( FontSizeAdjust, duration, Just delay, Just timing )
+fontSizeAdjust3 =
+    fullTransition FontSizeAdjust
 
 
 fontStretch3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-fontStretch3 duration delay timing =
-    ( FontStretch, duration, Just delay, Just timing )
+fontStretch3 =
+    fullTransition FontStretch
 
 
 fontVariationSettings3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-fontVariationSettings3 duration delay timing =
-    ( FontVariationSettings, duration, Just delay, Just timing )
+fontVariationSettings3 =
+    fullTransition FontVariationSettings
 
 
 fontWeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-fontWeight3 duration delay timing =
-    ( FontWeight, duration, Just delay, Just timing )
+fontWeight3 =
+    fullTransition FontWeight
 
 
 gridColumnGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-gridColumnGap3 duration delay timing =
-    ( GridColumnGap, duration, Just delay, Just timing )
+gridColumnGap3 =
+    fullTransition GridColumnGap
 
 
 gridGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-gridGap3 duration delay timing =
-    ( GridGap, duration, Just delay, Just timing )
+gridGap3 =
+    fullTransition GridGap
 
 
 gridRowGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-gridRowGap3 duration delay timing =
-    ( GridRowGap, duration, Just delay, Just timing )
+gridRowGap3 =
+    fullTransition GridRowGap
 
 
 height3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-height3 duration delay timing =
-    ( Height, duration, Just delay, Just timing )
+height3 =
+    fullTransition Height
 
 
 left3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-left3 duration delay timing =
-    ( Left, duration, Just delay, Just timing )
+left3 =
+    fullTransition Left
 
 
 letterSpacing3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-letterSpacing3 duration delay timing =
-    ( LetterSpacing, duration, Just delay, Just timing )
+letterSpacing3 =
+    fullTransition LetterSpacing
 
 
 lineHeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-lineHeight3 duration delay timing =
-    ( LineHeight, duration, Just delay, Just timing )
+lineHeight3 =
+    fullTransition LineHeight
 
 
 margin3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-margin3 duration delay timing =
-    ( Margin, duration, Just delay, Just timing )
+margin3 =
+    fullTransition Margin
 
 
 marginBottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-marginBottom3 duration delay timing =
-    ( MarginBottom, duration, Just delay, Just timing )
+marginBottom3 =
+    fullTransition MarginBottom
 
 
 marginLeft3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-marginLeft3 duration delay timing =
-    ( MarginLeft, duration, Just delay, Just timing )
+marginLeft3 =
+    fullTransition MarginLeft
 
 
 marginRight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-marginRight3 duration delay timing =
-    ( MarginRight, duration, Just delay, Just timing )
+marginRight3 =
+    fullTransition MarginRight
 
 
 marginTop3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-marginTop3 duration delay timing =
-    ( MarginTop, duration, Just delay, Just timing )
+marginTop3 =
+    fullTransition MarginTop
 
 
 mask3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-mask3 duration delay timing =
-    ( Mask, duration, Just delay, Just timing )
+mask3 =
+    fullTransition Mask
 
 
 maskPosition3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-maskPosition3 duration delay timing =
-    ( MaskPosition, duration, Just delay, Just timing )
+maskPosition3 =
+    fullTransition MaskPosition
 
 
 maskSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-maskSize3 duration delay timing =
-    ( MaskSize, duration, Just delay, Just timing )
+maskSize3 =
+    fullTransition MaskSize
 
 
 maxHeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-maxHeight3 duration delay timing =
-    ( MaxHeight, duration, Just delay, Just timing )
+maxHeight3 =
+    fullTransition MaxHeight
 
 
 maxWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-maxWidth3 duration delay timing =
-    ( MaxWidth, duration, Just delay, Just timing )
+maxWidth3 =
+    fullTransition MaxWidth
 
 
 minHeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-minHeight3 duration delay timing =
-    ( MinHeight, duration, Just delay, Just timing )
+minHeight3 =
+    fullTransition MinHeight
 
 
 minWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-minWidth3 duration delay timing =
-    ( MinWidth, duration, Just delay, Just timing )
+minWidth3 =
+    fullTransition MinWidth
 
 
 objectPosition3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-objectPosition3 duration delay timing =
-    ( ObjectPosition, duration, Just delay, Just timing )
+objectPosition3 =
+    fullTransition ObjectPosition
 
 
 offset3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-offset3 duration delay timing =
-    ( Offset, duration, Just delay, Just timing )
+offset3 =
+    fullTransition Offset
 
 
 offsetAnchor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-offsetAnchor3 duration delay timing =
-    ( OffsetAnchor, duration, Just delay, Just timing )
+offsetAnchor3 =
+    fullTransition OffsetAnchor
 
 
 offsetDistance3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-offsetDistance3 duration delay timing =
-    ( OffsetDistance, duration, Just delay, Just timing )
+offsetDistance3 =
+    fullTransition OffsetDistance
 
 
 offsetPath3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-offsetPath3 duration delay timing =
-    ( OffsetPath, duration, Just delay, Just timing )
+offsetPath3 =
+    fullTransition OffsetPath
 
 
 offsetRotate3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-offsetRotate3 duration delay timing =
-    ( OffsetRotate, duration, Just delay, Just timing )
+offsetRotate3 =
+    fullTransition OffsetRotate
 
 
 opacity3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-opacity3 duration delay timing =
-    ( Opacity, duration, Just delay, Just timing )
+opacity3 =
+    fullTransition Opacity
 
 
 order3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-order3 duration delay timing =
-    ( Order, duration, Just delay, Just timing )
+order3 =
+    fullTransition Order
 
 
 outline3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-outline3 duration delay timing =
-    ( Outline, duration, Just delay, Just timing )
+outline3 =
+    fullTransition Outline
 
 
 outlineColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-outlineColor3 duration delay timing =
-    ( OutlineColor, duration, Just delay, Just timing )
+outlineColor3 =
+    fullTransition OutlineColor
 
 
 outlineOffset3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-outlineOffset3 duration delay timing =
-    ( OutlineOffset, duration, Just delay, Just timing )
+outlineOffset3 =
+    fullTransition OutlineOffset
 
 
 outlineWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-outlineWidth3 duration delay timing =
-    ( OutlineWidth, duration, Just delay, Just timing )
+outlineWidth3 =
+    fullTransition OutlineWidth
 
 
 padding3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-padding3 duration delay timing =
-    ( Padding, duration, Just delay, Just timing )
+padding3 =
+    fullTransition Padding
 
 
 paddingBottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-paddingBottom3 duration delay timing =
-    ( PaddingBottom, duration, Just delay, Just timing )
+paddingBottom3 =
+    fullTransition PaddingBottom
 
 
 paddingLeft3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-paddingLeft3 duration delay timing =
-    ( PaddingLeft, duration, Just delay, Just timing )
+paddingLeft3 =
+    fullTransition PaddingLeft
 
 
 paddingRight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-paddingRight3 duration delay timing =
-    ( PaddingRight, duration, Just delay, Just timing )
+paddingRight3 =
+    fullTransition PaddingRight
 
 
 paddingTop3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-paddingTop3 duration delay timing =
-    ( PaddingTop, duration, Just delay, Just timing )
+paddingTop3 =
+    fullTransition PaddingTop
 
 
 right3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-right3 duration delay timing =
-    ( Right, duration, Just delay, Just timing )
+right3 =
+    fullTransition Right
 
 
 tabSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-tabSize3 duration delay timing =
-    ( TabSize, duration, Just delay, Just timing )
+tabSize3 =
+    fullTransition TabSize
 
 
 textIndent3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-textIndent3 duration delay timing =
-    ( TextIndent, duration, Just delay, Just timing )
+textIndent3 =
+    fullTransition TextIndent
 
 
 textShadow3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-textShadow3 duration delay timing =
-    ( TextShadow, duration, Just delay, Just timing )
+textShadow3 =
+    fullTransition TextShadow
 
 
 top3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-top3 duration delay timing =
-    ( Top, duration, Just delay, Just timing )
+top3 =
+    fullTransition Top
 
 
 transform3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-transform3 duration delay timing =
-    ( Transform, duration, Just delay, Just timing )
+transform3 =
+    fullTransition Transform
 
 
 transformOrigin3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-transformOrigin3 duration delay timing =
-    ( TransformOrigin, duration, Just delay, Just timing )
+transformOrigin3 =
+    fullTransition TransformOrigin
 
 
 verticalAlign3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-verticalAlign3 duration delay timing =
-    ( VerticalAlign, duration, Just delay, Just timing )
+verticalAlign3 =
+    fullTransition VerticalAlign
 
 
 visibility3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-visibility3 duration delay timing =
-    ( Visibility, duration, Just delay, Just timing )
+visibility3 =
+    fullTransition Visibility
 
 
 width3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-width3 duration delay timing =
-    ( Width, duration, Just delay, Just timing )
+width3 =
+    fullTransition Width
 
 
 wordSpacing3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-wordSpacing3 duration delay timing =
-    ( WordSpacing, duration, Just delay, Just timing )
+wordSpacing3 =
+    fullTransition WordSpacing
 
 
 zIndex3 : Time.Time -> Time.Time -> TimingFunction -> Transition
-zIndex3 duration delay timing =
-    ( ZIndex, duration, Just delay, Just timing )
+zIndex3 =
+    fullTransition ZIndex
 
 
 
@@ -843,483 +849,483 @@ zIndex3 duration delay timing =
 
 
 background2 : Time.Time -> Time.Time -> Transition
-background2 duration delay =
-    ( Background, duration, Just delay, Nothing )
+background2 =
+    durationDelayTransition Background
 
 
 backgroundColor2 : Time.Time -> Time.Time -> Transition
-backgroundColor2 duration delay =
-    ( BackgroundColor, duration, Just delay, Nothing )
+backgroundColor2 =
+    durationDelayTransition BackgroundColor
 
 
 backgroundPosition2 : Time.Time -> Time.Time -> Transition
-backgroundPosition2 duration delay =
-    ( BackgroundPosition, duration, Just delay, Nothing )
+backgroundPosition2 =
+    durationDelayTransition BackgroundPosition
 
 
 backgroundSize2 : Time.Time -> Time.Time -> Transition
-backgroundSize2 duration delay =
-    ( BackgroundSize, duration, Just delay, Nothing )
+backgroundSize2 =
+    durationDelayTransition BackgroundSize
 
 
 border2 : Time.Time -> Time.Time -> Transition
-border2 duration delay =
-    ( Border, duration, Just delay, Nothing )
+border2 =
+    durationDelayTransition Border
 
 
 borderBottom2 : Time.Time -> Time.Time -> Transition
-borderBottom2 duration delay =
-    ( BorderBottom, duration, Just delay, Nothing )
+borderBottom2 =
+    durationDelayTransition BorderBottom
 
 
 borderBottomColor2 : Time.Time -> Time.Time -> Transition
-borderBottomColor2 duration delay =
-    ( BorderBottomColor, duration, Just delay, Nothing )
+borderBottomColor2 =
+    durationDelayTransition BorderBottomColor
 
 
 borderBottomLeftRadius2 : Time.Time -> Time.Time -> Transition
-borderBottomLeftRadius2 duration delay =
-    ( BorderBottomLeftRadius, duration, Just delay, Nothing )
+borderBottomLeftRadius2 =
+    durationDelayTransition BorderBottomLeftRadius
 
 
 borderBottomRightRadius2 : Time.Time -> Time.Time -> Transition
-borderBottomRightRadius2 duration delay =
-    ( BorderBottomRightRadius, duration, Just delay, Nothing )
+borderBottomRightRadius2 =
+    durationDelayTransition BorderBottomRightRadius
 
 
 borderBottomWidth2 : Time.Time -> Time.Time -> Transition
-borderBottomWidth2 duration delay =
-    ( BorderBottomRightRadius, duration, Just delay, Nothing )
+borderBottomWidth2 =
+    durationDelayTransition BorderBottomRightRadius
 
 
 borderColor2 : Time.Time -> Time.Time -> Transition
-borderColor2 duration delay =
-    ( BorderColor, duration, Just delay, Nothing )
+borderColor2 =
+    durationDelayTransition BorderColor
 
 
 borderLeft2 : Time.Time -> Time.Time -> Transition
-borderLeft2 duration delay =
-    ( BorderLeft, duration, Just delay, Nothing )
+borderLeft2 =
+    durationDelayTransition BorderLeft
 
 
 borderLeftColor2 : Time.Time -> Time.Time -> Transition
-borderLeftColor2 duration delay =
-    ( BorderLeftColor, duration, Just delay, Nothing )
+borderLeftColor2 =
+    durationDelayTransition BorderLeftColor
 
 
 borderLeftWidth2 : Time.Time -> Time.Time -> Transition
-borderLeftWidth2 duration delay =
-    ( BorderLeftWidth, duration, Just delay, Nothing )
+borderLeftWidth2 =
+    durationDelayTransition BorderLeftWidth
 
 
 borderRadius2 : Time.Time -> Time.Time -> Transition
-borderRadius2 duration delay =
-    ( BorderRadius, duration, Just delay, Nothing )
+borderRadius2 =
+    durationDelayTransition BorderRadius
 
 
 borderRight2 : Time.Time -> Time.Time -> Transition
-borderRight2 duration delay =
-    ( BorderRight, duration, Just delay, Nothing )
+borderRight2 =
+    durationDelayTransition BorderRight
 
 
 borderRightColor2 : Time.Time -> Time.Time -> Transition
-borderRightColor2 duration delay =
-    ( BorderRightColor, duration, Just delay, Nothing )
+borderRightColor2 =
+    durationDelayTransition BorderRightColor
 
 
 borderRightWidth2 : Time.Time -> Time.Time -> Transition
-borderRightWidth2 duration delay =
-    ( BorderRightWidth, duration, Just delay, Nothing )
+borderRightWidth2 =
+    durationDelayTransition BorderRightWidth
 
 
 borderTop2 : Time.Time -> Time.Time -> Transition
-borderTop2 duration delay =
-    ( BorderTop, duration, Just delay, Nothing )
+borderTop2 =
+    durationDelayTransition BorderTop
 
 
 borderTopColor2 : Time.Time -> Time.Time -> Transition
-borderTopColor2 duration delay =
-    ( BorderTopColor, duration, Just delay, Nothing )
+borderTopColor2 =
+    durationDelayTransition BorderTopColor
 
 
 borderTopLeftRadius2 : Time.Time -> Time.Time -> Transition
-borderTopLeftRadius2 duration delay =
-    ( BorderTopLeftRadius, duration, Just delay, Nothing )
+borderTopLeftRadius2 =
+    durationDelayTransition BorderTopLeftRadius
 
 
 borderTopRightRadius2 : Time.Time -> Time.Time -> Transition
-borderTopRightRadius2 duration delay =
-    ( BorderTopRightRadius, duration, Just delay, Nothing )
+borderTopRightRadius2 =
+    durationDelayTransition BorderTopRightRadius
 
 
 borderTopWidth2 : Time.Time -> Time.Time -> Transition
-borderTopWidth2 duration delay =
-    ( BorderTopWidth, duration, Just delay, Nothing )
+borderTopWidth2 =
+    durationDelayTransition BorderTopWidth
 
 
 borderWidth2 : Time.Time -> Time.Time -> Transition
-borderWidth2 duration delay =
-    ( BorderWidth, duration, Just delay, Nothing )
+borderWidth2 =
+    durationDelayTransition BorderWidth
 
 
 bottom2 : Time.Time -> Time.Time -> Transition
-bottom2 duration delay =
-    ( Bottom, duration, Just delay, Nothing )
+bottom2 =
+    durationDelayTransition Bottom
 
 
 boxShadow2 : Time.Time -> Time.Time -> Transition
-boxShadow2 duration delay =
-    ( BoxShadow, duration, Just delay, Nothing )
+boxShadow2 =
+    durationDelayTransition BoxShadow
 
 
 caretColor2 : Time.Time -> Time.Time -> Transition
-caretColor2 duration delay =
-    ( CaretColor, duration, Just delay, Nothing )
+caretColor2 =
+    durationDelayTransition CaretColor
 
 
 clip2 : Time.Time -> Time.Time -> Transition
-clip2 duration delay =
-    ( Clip, duration, Just delay, Nothing )
+clip2 =
+    durationDelayTransition Clip
 
 
 clipPath2 : Time.Time -> Time.Time -> Transition
-clipPath2 duration delay =
-    ( ClipPath, duration, Just delay, Nothing )
+clipPath2 =
+    durationDelayTransition ClipPath
 
 
 color2 : Time.Time -> Time.Time -> Transition
-color2 duration delay =
-    ( Color, duration, Just delay, Nothing )
+color2 =
+    durationDelayTransition Color
 
 
 columnCount2 : Time.Time -> Time.Time -> Transition
-columnCount2 duration delay =
-    ( ColumnCount, duration, Just delay, Nothing )
+columnCount2 =
+    durationDelayTransition ColumnCount
 
 
 columnGap2 : Time.Time -> Time.Time -> Transition
-columnGap2 duration delay =
-    ( ColumnGap, duration, Just delay, Nothing )
+columnGap2 =
+    durationDelayTransition ColumnGap
 
 
 columnRule2 : Time.Time -> Time.Time -> Transition
-columnRule2 duration delay =
-    ( ColumnRule, duration, Just delay, Nothing )
+columnRule2 =
+    durationDelayTransition ColumnRule
 
 
 columnRuleColor2 : Time.Time -> Time.Time -> Transition
-columnRuleColor2 duration delay =
-    ( ColumnRuleColor, duration, Just delay, Nothing )
+columnRuleColor2 =
+    durationDelayTransition ColumnRuleColor
 
 
 columnRuleWidth2 : Time.Time -> Time.Time -> Transition
-columnRuleWidth2 duration delay =
-    ( ColumnRuleWidth, duration, Just delay, Nothing )
+columnRuleWidth2 =
+    durationDelayTransition ColumnRuleWidth
 
 
 columnWidth2 : Time.Time -> Time.Time -> Transition
-columnWidth2 duration delay =
-    ( ColumnWidth, duration, Just delay, Nothing )
+columnWidth2 =
+    durationDelayTransition ColumnWidth
 
 
 columns2 : Time.Time -> Time.Time -> Transition
-columns2 duration delay =
-    ( Columns, duration, Just delay, Nothing )
+columns2 =
+    durationDelayTransition Columns
 
 
 filter2 : Time.Time -> Time.Time -> Transition
-filter2 duration delay =
-    ( Filter, duration, Just delay, Nothing )
+filter2 =
+    durationDelayTransition Filter
 
 
 flex2 : Time.Time -> Time.Time -> Transition
-flex2 duration delay =
-    ( Flex, duration, Just delay, Nothing )
+flex2 =
+    durationDelayTransition Flex
 
 
 flexBasis2 : Time.Time -> Time.Time -> Transition
-flexBasis2 duration delay =
-    ( FlexBasis, duration, Just delay, Nothing )
+flexBasis2 =
+    durationDelayTransition FlexBasis
 
 
 flexGrow2 : Time.Time -> Time.Time -> Transition
-flexGrow2 duration delay =
-    ( FlexGrow, duration, Just delay, Nothing )
+flexGrow2 =
+    durationDelayTransition FlexGrow
 
 
 flexShrink2 : Time.Time -> Time.Time -> Transition
-flexShrink2 duration delay =
-    ( FlexShrink, duration, Just delay, Nothing )
+flexShrink2 =
+    durationDelayTransition FlexShrink
 
 
 font2 : Time.Time -> Time.Time -> Transition
-font2 duration delay =
-    ( Font, duration, Just delay, Nothing )
+font2 =
+    durationDelayTransition Font
 
 
 fontSize2 : Time.Time -> Time.Time -> Transition
-fontSize2 duration delay =
-    ( FontSize, duration, Just delay, Nothing )
+fontSize2 =
+    durationDelayTransition FontSize
 
 
 fontSizeAdjust2 : Time.Time -> Time.Time -> Transition
-fontSizeAdjust2 duration delay =
-    ( FontSizeAdjust, duration, Just delay, Nothing )
+fontSizeAdjust2 =
+    durationDelayTransition FontSizeAdjust
 
 
 fontStretch2 : Time.Time -> Time.Time -> Transition
-fontStretch2 duration delay =
-    ( FontStretch, duration, Just delay, Nothing )
+fontStretch2 =
+    durationDelayTransition FontStretch
 
 
 fontVariationSettings2 : Time.Time -> Time.Time -> Transition
-fontVariationSettings2 duration delay =
-    ( FontVariationSettings, duration, Just delay, Nothing )
+fontVariationSettings2 =
+    durationDelayTransition FontVariationSettings
 
 
 fontWeight2 : Time.Time -> Time.Time -> Transition
-fontWeight2 duration delay =
-    ( FontWeight, duration, Just delay, Nothing )
+fontWeight2 =
+    durationDelayTransition FontWeight
 
 
 gridColumnGap2 : Time.Time -> Time.Time -> Transition
-gridColumnGap2 duration delay =
-    ( GridColumnGap, duration, Just delay, Nothing )
+gridColumnGap2 =
+    durationDelayTransition GridColumnGap
 
 
 gridGap2 : Time.Time -> Time.Time -> Transition
-gridGap2 duration delay =
-    ( GridGap, duration, Just delay, Nothing )
+gridGap2 =
+    durationDelayTransition GridGap
 
 
 gridRowGap2 : Time.Time -> Time.Time -> Transition
-gridRowGap2 duration delay =
-    ( GridRowGap, duration, Just delay, Nothing )
+gridRowGap2 =
+    durationDelayTransition GridRowGap
 
 
 height2 : Time.Time -> Time.Time -> Transition
-height2 duration delay =
-    ( Height, duration, Just delay, Nothing )
+height2 =
+    durationDelayTransition Height
 
 
 left2 : Time.Time -> Time.Time -> Transition
-left2 duration delay =
-    ( Left, duration, Just delay, Nothing )
+left2 =
+    durationDelayTransition Left
 
 
 letterSpacing2 : Time.Time -> Time.Time -> Transition
-letterSpacing2 duration delay =
-    ( LetterSpacing, duration, Just delay, Nothing )
+letterSpacing2 =
+    durationDelayTransition LetterSpacing
 
 
 lineHeight2 : Time.Time -> Time.Time -> Transition
-lineHeight2 duration delay =
-    ( LineHeight, duration, Just delay, Nothing )
+lineHeight2 =
+    durationDelayTransition LineHeight
 
 
 margin2 : Time.Time -> Time.Time -> Transition
-margin2 duration delay =
-    ( Margin, duration, Just delay, Nothing )
+margin2 =
+    durationDelayTransition Margin
 
 
 marginBottom2 : Time.Time -> Time.Time -> Transition
-marginBottom2 duration delay =
-    ( MarginBottom, duration, Just delay, Nothing )
+marginBottom2 =
+    durationDelayTransition MarginBottom
 
 
 marginLeft2 : Time.Time -> Time.Time -> Transition
-marginLeft2 duration delay =
-    ( MarginLeft, duration, Just delay, Nothing )
+marginLeft2 =
+    durationDelayTransition MarginLeft
 
 
 marginRight2 : Time.Time -> Time.Time -> Transition
-marginRight2 duration delay =
-    ( MarginRight, duration, Just delay, Nothing )
+marginRight2 =
+    durationDelayTransition MarginRight
 
 
 marginTop2 : Time.Time -> Time.Time -> Transition
-marginTop2 duration delay =
-    ( MarginTop, duration, Just delay, Nothing )
+marginTop2 =
+    durationDelayTransition MarginTop
 
 
 mask2 : Time.Time -> Time.Time -> Transition
-mask2 duration delay =
-    ( Mask, duration, Just delay, Nothing )
+mask2 =
+    durationDelayTransition Mask
 
 
 maskPosition2 : Time.Time -> Time.Time -> Transition
-maskPosition2 duration delay =
-    ( MaskPosition, duration, Just delay, Nothing )
+maskPosition2 =
+    durationDelayTransition MaskPosition
 
 
 maskSize2 : Time.Time -> Time.Time -> Transition
-maskSize2 duration delay =
-    ( MaskSize, duration, Just delay, Nothing )
+maskSize2 =
+    durationDelayTransition MaskSize
 
 
 maxHeight2 : Time.Time -> Time.Time -> Transition
-maxHeight2 duration delay =
-    ( MaxHeight, duration, Just delay, Nothing )
+maxHeight2 =
+    durationDelayTransition MaxHeight
 
 
 maxWidth2 : Time.Time -> Time.Time -> Transition
-maxWidth2 duration delay =
-    ( MaxWidth, duration, Just delay, Nothing )
+maxWidth2 =
+    durationDelayTransition MaxWidth
 
 
 minHeight2 : Time.Time -> Time.Time -> Transition
-minHeight2 duration delay =
-    ( MinHeight, duration, Just delay, Nothing )
+minHeight2 =
+    durationDelayTransition MinHeight
 
 
 minWidth2 : Time.Time -> Time.Time -> Transition
-minWidth2 duration delay =
-    ( MinWidth, duration, Just delay, Nothing )
+minWidth2 =
+    durationDelayTransition MinWidth
 
 
 objectPosition2 : Time.Time -> Time.Time -> Transition
-objectPosition2 duration delay =
-    ( ObjectPosition, duration, Just delay, Nothing )
+objectPosition2 =
+    durationDelayTransition ObjectPosition
 
 
 offset2 : Time.Time -> Time.Time -> Transition
-offset2 duration delay =
-    ( Offset, duration, Just delay, Nothing )
+offset2 =
+    durationDelayTransition Offset
 
 
 offsetAnchor2 : Time.Time -> Time.Time -> Transition
-offsetAnchor2 duration delay =
-    ( OffsetAnchor, duration, Just delay, Nothing )
+offsetAnchor2 =
+    durationDelayTransition OffsetAnchor
 
 
 offsetDistance2 : Time.Time -> Time.Time -> Transition
-offsetDistance2 duration delay =
-    ( OffsetDistance, duration, Just delay, Nothing )
+offsetDistance2 =
+    durationDelayTransition OffsetDistance
 
 
 offsetPath2 : Time.Time -> Time.Time -> Transition
-offsetPath2 duration delay =
-    ( OffsetPath, duration, Just delay, Nothing )
+offsetPath2 =
+    durationDelayTransition OffsetPath
 
 
 offsetRotate2 : Time.Time -> Time.Time -> Transition
-offsetRotate2 duration delay =
-    ( OffsetRotate, duration, Just delay, Nothing )
+offsetRotate2 =
+    durationDelayTransition OffsetRotate
 
 
 opacity2 : Time.Time -> Time.Time -> Transition
-opacity2 duration delay =
-    ( Opacity, duration, Just delay, Nothing )
+opacity2 =
+    durationDelayTransition Opacity
 
 
 order2 : Time.Time -> Time.Time -> Transition
-order2 duration delay =
-    ( Order, duration, Just delay, Nothing )
+order2 =
+    durationDelayTransition Order
 
 
 outline2 : Time.Time -> Time.Time -> Transition
-outline2 duration delay =
-    ( Outline, duration, Just delay, Nothing )
+outline2 =
+    durationDelayTransition Outline
 
 
 outlineColor2 : Time.Time -> Time.Time -> Transition
-outlineColor2 duration delay =
-    ( OutlineColor, duration, Just delay, Nothing )
+outlineColor2 =
+    durationDelayTransition OutlineColor
 
 
 outlineOffset2 : Time.Time -> Time.Time -> Transition
-outlineOffset2 duration delay =
-    ( OutlineOffset, duration, Just delay, Nothing )
+outlineOffset2 =
+    durationDelayTransition OutlineOffset
 
 
 outlineWidth2 : Time.Time -> Time.Time -> Transition
-outlineWidth2 duration delay =
-    ( OutlineWidth, duration, Just delay, Nothing )
+outlineWidth2 =
+    durationDelayTransition OutlineWidth
 
 
 padding2 : Time.Time -> Time.Time -> Transition
-padding2 duration delay =
-    ( Padding, duration, Just delay, Nothing )
+padding2 =
+    durationDelayTransition Padding
 
 
 paddingBottom2 : Time.Time -> Time.Time -> Transition
-paddingBottom2 duration delay =
-    ( PaddingBottom, duration, Just delay, Nothing )
+paddingBottom2 =
+    durationDelayTransition PaddingBottom
 
 
 paddingLeft2 : Time.Time -> Time.Time -> Transition
-paddingLeft2 duration delay =
-    ( PaddingLeft, duration, Just delay, Nothing )
+paddingLeft2 =
+    durationDelayTransition PaddingLeft
 
 
 paddingRight2 : Time.Time -> Time.Time -> Transition
-paddingRight2 duration delay =
-    ( PaddingRight, duration, Just delay, Nothing )
+paddingRight2 =
+    durationDelayTransition PaddingRight
 
 
 paddingTop2 : Time.Time -> Time.Time -> Transition
-paddingTop2 duration delay =
-    ( PaddingTop, duration, Just delay, Nothing )
+paddingTop2 =
+    durationDelayTransition PaddingTop
 
 
 right2 : Time.Time -> Time.Time -> Transition
-right2 duration delay =
-    ( Right, duration, Just delay, Nothing )
+right2 =
+    durationDelayTransition Right
 
 
 tabSize2 : Time.Time -> Time.Time -> Transition
-tabSize2 duration delay =
-    ( TabSize, duration, Just delay, Nothing )
+tabSize2 =
+    durationDelayTransition TabSize
 
 
 textIndent2 : Time.Time -> Time.Time -> Transition
-textIndent2 duration delay =
-    ( TextIndent, duration, Just delay, Nothing )
+textIndent2 =
+    durationDelayTransition TextIndent
 
 
 textShadow2 : Time.Time -> Time.Time -> Transition
-textShadow2 duration delay =
-    ( TextShadow, duration, Just delay, Nothing )
+textShadow2 =
+    durationDelayTransition TextShadow
 
 
 top2 : Time.Time -> Time.Time -> Transition
-top2 duration delay =
-    ( Top, duration, Just delay, Nothing )
+top2 =
+    durationDelayTransition Top
 
 
 transform2 : Time.Time -> Time.Time -> Transition
-transform2 duration delay =
-    ( Transform, duration, Just delay, Nothing )
+transform2 =
+    durationDelayTransition Transform
 
 
 transformOrigin2 : Time.Time -> Time.Time -> Transition
-transformOrigin2 duration delay =
-    ( TransformOrigin, duration, Just delay, Nothing )
+transformOrigin2 =
+    durationDelayTransition TransformOrigin
 
 
 verticalAlign2 : Time.Time -> Time.Time -> Transition
-verticalAlign2 duration delay =
-    ( VerticalAlign, duration, Just delay, Nothing )
+verticalAlign2 =
+    durationDelayTransition VerticalAlign
 
 
 visibility2 : Time.Time -> Time.Time -> Transition
-visibility2 duration delay =
-    ( Visibility, duration, Just delay, Nothing )
+visibility2 =
+    durationDelayTransition Visibility
 
 
 width2 : Time.Time -> Time.Time -> Transition
-width2 duration delay =
-    ( Width, duration, Just delay, Nothing )
+width2 =
+    durationDelayTransition Width
 
 
 wordSpacing2 : Time.Time -> Time.Time -> Transition
-wordSpacing2 duration delay =
-    ( WordSpacing, duration, Just delay, Nothing )
+wordSpacing2 =
+    durationDelayTransition WordSpacing
 
 
 zIndex2 : Time.Time -> Time.Time -> Transition
-zIndex2 duration delay =
-    ( ZIndex, duration, Just delay, Nothing )
+zIndex2 =
+    durationDelayTransition ZIndex
 
 
 
@@ -1327,483 +1333,483 @@ zIndex2 duration delay =
 
 
 background : Time.Time -> Transition
-background time =
-    ( Background, time, Nothing, Nothing )
+background =
+    durationTransition Background
 
 
 backgroundColor : Time.Time -> Transition
-backgroundColor time =
-    ( BackgroundColor, time, Nothing, Nothing )
+backgroundColor =
+    durationTransition BackgroundColor
 
 
 backgroundPosition : Time.Time -> Transition
-backgroundPosition time =
-    ( BackgroundPosition, time, Nothing, Nothing )
+backgroundPosition =
+    durationTransition BackgroundPosition
 
 
 backgroundSize : Time.Time -> Transition
-backgroundSize time =
-    ( BackgroundSize, time, Nothing, Nothing )
+backgroundSize =
+    durationTransition BackgroundSize
 
 
 border : Time.Time -> Transition
-border time =
-    ( Border, time, Nothing, Nothing )
+border =
+    durationTransition Border
 
 
 borderBottom : Time.Time -> Transition
-borderBottom time =
-    ( BorderBottom, time, Nothing, Nothing )
+borderBottom =
+    durationTransition BorderBottom
 
 
 borderBottomColor : Time.Time -> Transition
-borderBottomColor time =
-    ( BorderBottomColor, time, Nothing, Nothing )
+borderBottomColor =
+    durationTransition BorderBottomColor
 
 
 borderBottomLeftRadius : Time.Time -> Transition
-borderBottomLeftRadius time =
-    ( BorderBottomLeftRadius, time, Nothing, Nothing )
+borderBottomLeftRadius =
+    durationTransition BorderBottomLeftRadius
 
 
 borderBottomRightRadius : Time.Time -> Transition
-borderBottomRightRadius time =
-    ( BorderBottomRightRadius, time, Nothing, Nothing )
+borderBottomRightRadius =
+    durationTransition BorderBottomRightRadius
 
 
 borderBottomWidth : Time.Time -> Transition
-borderBottomWidth time =
-    ( BorderBottomRightRadius, time, Nothing, Nothing )
+borderBottomWidth =
+    durationTransition BorderBottomRightRadius
 
 
 borderColor : Time.Time -> Transition
-borderColor time =
-    ( BorderColor, time, Nothing, Nothing )
+borderColor =
+    durationTransition BorderColor
 
 
 borderLeft : Time.Time -> Transition
-borderLeft time =
-    ( BorderLeft, time, Nothing, Nothing )
+borderLeft =
+    durationTransition BorderLeft
 
 
 borderLeftColor : Time.Time -> Transition
-borderLeftColor time =
-    ( BorderLeftColor, time, Nothing, Nothing )
+borderLeftColor =
+    durationTransition BorderLeftColor
 
 
 borderLeftWidth : Time.Time -> Transition
-borderLeftWidth time =
-    ( BorderLeftWidth, time, Nothing, Nothing )
+borderLeftWidth =
+    durationTransition BorderLeftWidth
 
 
 borderRadius : Time.Time -> Transition
-borderRadius time =
-    ( BorderRadius, time, Nothing, Nothing )
+borderRadius =
+    durationTransition BorderRadius
 
 
 borderRight : Time.Time -> Transition
-borderRight time =
-    ( BorderRight, time, Nothing, Nothing )
+borderRight =
+    durationTransition BorderRight
 
 
 borderRightColor : Time.Time -> Transition
-borderRightColor time =
-    ( BorderRightColor, time, Nothing, Nothing )
+borderRightColor =
+    durationTransition BorderRightColor
 
 
 borderRightWidth : Time.Time -> Transition
-borderRightWidth time =
-    ( BorderRightWidth, time, Nothing, Nothing )
+borderRightWidth =
+    durationTransition BorderRightWidth
 
 
 borderTop : Time.Time -> Transition
-borderTop time =
-    ( BorderTop, time, Nothing, Nothing )
+borderTop =
+    durationTransition BorderTop
 
 
 borderTopColor : Time.Time -> Transition
-borderTopColor time =
-    ( BorderTopColor, time, Nothing, Nothing )
+borderTopColor =
+    durationTransition BorderTopColor
 
 
 borderTopLeftRadius : Time.Time -> Transition
-borderTopLeftRadius time =
-    ( BorderTopLeftRadius, time, Nothing, Nothing )
+borderTopLeftRadius =
+    durationTransition BorderTopLeftRadius
 
 
 borderTopRightRadius : Time.Time -> Transition
-borderTopRightRadius time =
-    ( BorderTopRightRadius, time, Nothing, Nothing )
+borderTopRightRadius =
+    durationTransition BorderTopRightRadius
 
 
 borderTopWidth : Time.Time -> Transition
-borderTopWidth time =
-    ( BorderTopWidth, time, Nothing, Nothing )
+borderTopWidth =
+    durationTransition BorderTopWidth
 
 
 borderWidth : Time.Time -> Transition
-borderWidth time =
-    ( BorderWidth, time, Nothing, Nothing )
+borderWidth =
+    durationTransition BorderWidth
 
 
 bottom : Time.Time -> Transition
-bottom time =
-    ( Bottom, time, Nothing, Nothing )
+bottom =
+    durationTransition Bottom
 
 
 boxShadow : Time.Time -> Transition
-boxShadow time =
-    ( BoxShadow, time, Nothing, Nothing )
+boxShadow =
+    durationTransition BoxShadow
 
 
 caretColor : Time.Time -> Transition
-caretColor time =
-    ( CaretColor, time, Nothing, Nothing )
+caretColor =
+    durationTransition CaretColor
 
 
 clip : Time.Time -> Transition
-clip time =
-    ( Clip, time, Nothing, Nothing )
+clip =
+    durationTransition Clip
 
 
 clipPath : Time.Time -> Transition
-clipPath time =
-    ( ClipPath, time, Nothing, Nothing )
+clipPath =
+    durationTransition ClipPath
 
 
 color : Time.Time -> Transition
-color time =
-    ( Color, time, Nothing, Nothing )
+color =
+    durationTransition Color
 
 
 columnCount : Time.Time -> Transition
-columnCount time =
-    ( ColumnCount, time, Nothing, Nothing )
+columnCount =
+    durationTransition ColumnCount
 
 
 columnGap : Time.Time -> Transition
-columnGap time =
-    ( ColumnGap, time, Nothing, Nothing )
+columnGap =
+    durationTransition ColumnGap
 
 
 columnRule : Time.Time -> Transition
-columnRule time =
-    ( ColumnRule, time, Nothing, Nothing )
+columnRule =
+    durationTransition ColumnRule
 
 
 columnRuleColor : Time.Time -> Transition
-columnRuleColor time =
-    ( ColumnRuleColor, time, Nothing, Nothing )
+columnRuleColor =
+    durationTransition ColumnRuleColor
 
 
 columnRuleWidth : Time.Time -> Transition
-columnRuleWidth time =
-    ( ColumnRuleWidth, time, Nothing, Nothing )
+columnRuleWidth =
+    durationTransition ColumnRuleWidth
 
 
 columnWidth : Time.Time -> Transition
-columnWidth time =
-    ( ColumnWidth, time, Nothing, Nothing )
+columnWidth =
+    durationTransition ColumnWidth
 
 
 columns : Time.Time -> Transition
-columns time =
-    ( Columns, time, Nothing, Nothing )
+columns =
+    durationTransition Columns
 
 
 filter : Time.Time -> Transition
-filter time =
-    ( Filter, time, Nothing, Nothing )
+filter =
+    durationTransition Filter
 
 
 flex : Time.Time -> Transition
-flex time =
-    ( Flex, time, Nothing, Nothing )
+flex =
+    durationTransition Flex
 
 
 flexBasis : Time.Time -> Transition
-flexBasis time =
-    ( FlexBasis, time, Nothing, Nothing )
+flexBasis =
+    durationTransition FlexBasis
 
 
 flexGrow : Time.Time -> Transition
-flexGrow time =
-    ( FlexGrow, time, Nothing, Nothing )
+flexGrow =
+    durationTransition FlexGrow
 
 
 flexShrink : Time.Time -> Transition
-flexShrink time =
-    ( FlexShrink, time, Nothing, Nothing )
+flexShrink =
+    durationTransition FlexShrink
 
 
 font : Time.Time -> Transition
-font time =
-    ( Font, time, Nothing, Nothing )
+font =
+    durationTransition Font
 
 
 fontSize : Time.Time -> Transition
-fontSize time =
-    ( FontSize, time, Nothing, Nothing )
+fontSize =
+    durationTransition FontSize
 
 
 fontSizeAdjust : Time.Time -> Transition
-fontSizeAdjust time =
-    ( FontSizeAdjust, time, Nothing, Nothing )
+fontSizeAdjust =
+    durationTransition FontSizeAdjust
 
 
 fontStretch : Time.Time -> Transition
-fontStretch time =
-    ( FontStretch, time, Nothing, Nothing )
+fontStretch =
+    durationTransition FontStretch
 
 
 fontVariationSettings : Time.Time -> Transition
-fontVariationSettings time =
-    ( FontVariationSettings, time, Nothing, Nothing )
+fontVariationSettings =
+    durationTransition FontVariationSettings
 
 
 fontWeight : Time.Time -> Transition
-fontWeight time =
-    ( FontWeight, time, Nothing, Nothing )
+fontWeight =
+    durationTransition FontWeight
 
 
 gridColumnGap : Time.Time -> Transition
-gridColumnGap time =
-    ( GridColumnGap, time, Nothing, Nothing )
+gridColumnGap =
+    durationTransition GridColumnGap
 
 
 gridGap : Time.Time -> Transition
-gridGap time =
-    ( GridGap, time, Nothing, Nothing )
+gridGap =
+    durationTransition GridGap
 
 
 gridRowGap : Time.Time -> Transition
-gridRowGap time =
-    ( GridRowGap, time, Nothing, Nothing )
+gridRowGap =
+    durationTransition GridRowGap
 
 
 height : Time.Time -> Transition
-height time =
-    ( Height, time, Nothing, Nothing )
+height =
+    durationTransition Height
 
 
 left : Time.Time -> Transition
-left time =
-    ( Left, time, Nothing, Nothing )
+left =
+    durationTransition Left
 
 
 letterSpacing : Time.Time -> Transition
-letterSpacing time =
-    ( LetterSpacing, time, Nothing, Nothing )
+letterSpacing =
+    durationTransition LetterSpacing
 
 
 lineHeight : Time.Time -> Transition
-lineHeight time =
-    ( LineHeight, time, Nothing, Nothing )
+lineHeight =
+    durationTransition LineHeight
 
 
 margin : Time.Time -> Transition
-margin time =
-    ( Margin, time, Nothing, Nothing )
+margin =
+    durationTransition Margin
 
 
 marginBottom : Time.Time -> Transition
-marginBottom time =
-    ( MarginBottom, time, Nothing, Nothing )
+marginBottom =
+    durationTransition MarginBottom
 
 
 marginLeft : Time.Time -> Transition
-marginLeft time =
-    ( MarginLeft, time, Nothing, Nothing )
+marginLeft =
+    durationTransition MarginLeft
 
 
 marginRight : Time.Time -> Transition
-marginRight time =
-    ( MarginRight, time, Nothing, Nothing )
+marginRight =
+    durationTransition MarginRight
 
 
 marginTop : Time.Time -> Transition
-marginTop time =
-    ( MarginTop, time, Nothing, Nothing )
+marginTop =
+    durationTransition MarginTop
 
 
 mask : Time.Time -> Transition
-mask time =
-    ( Mask, time, Nothing, Nothing )
+mask =
+    durationTransition Mask
 
 
 maskPosition : Time.Time -> Transition
-maskPosition time =
-    ( MaskPosition, time, Nothing, Nothing )
+maskPosition =
+    durationTransition MaskPosition
 
 
 maskSize : Time.Time -> Transition
-maskSize time =
-    ( MaskSize, time, Nothing, Nothing )
+maskSize =
+    durationTransition MaskSize
 
 
 maxHeight : Time.Time -> Transition
-maxHeight time =
-    ( MaxHeight, time, Nothing, Nothing )
+maxHeight =
+    durationTransition MaxHeight
 
 
 maxWidth : Time.Time -> Transition
-maxWidth time =
-    ( MaxWidth, time, Nothing, Nothing )
+maxWidth =
+    durationTransition MaxWidth
 
 
 minHeight : Time.Time -> Transition
-minHeight time =
-    ( MinHeight, time, Nothing, Nothing )
+minHeight =
+    durationTransition MinHeight
 
 
 minWidth : Time.Time -> Transition
-minWidth time =
-    ( MinWidth, time, Nothing, Nothing )
+minWidth =
+    durationTransition MinWidth
 
 
 objectPosition : Time.Time -> Transition
-objectPosition time =
-    ( ObjectPosition, time, Nothing, Nothing )
+objectPosition =
+    durationTransition ObjectPosition
 
 
 offset : Time.Time -> Transition
-offset time =
-    ( Offset, time, Nothing, Nothing )
+offset =
+    durationTransition Offset
 
 
 offsetAnchor : Time.Time -> Transition
-offsetAnchor time =
-    ( OffsetAnchor, time, Nothing, Nothing )
+offsetAnchor =
+    durationTransition OffsetAnchor
 
 
 offsetDistance : Time.Time -> Transition
-offsetDistance time =
-    ( OffsetDistance, time, Nothing, Nothing )
+offsetDistance =
+    durationTransition OffsetDistance
 
 
 offsetPath : Time.Time -> Transition
-offsetPath time =
-    ( OffsetPath, time, Nothing, Nothing )
+offsetPath =
+    durationTransition OffsetPath
 
 
 offsetRotate : Time.Time -> Transition
-offsetRotate time =
-    ( OffsetRotate, time, Nothing, Nothing )
+offsetRotate =
+    durationTransition OffsetRotate
 
 
 opacity : Time.Time -> Transition
-opacity time =
-    ( Opacity, time, Nothing, Nothing )
+opacity =
+    durationTransition Opacity
 
 
 order : Time.Time -> Transition
-order time =
-    ( Order, time, Nothing, Nothing )
+order =
+    durationTransition Order
 
 
 outline : Time.Time -> Transition
-outline time =
-    ( Outline, time, Nothing, Nothing )
+outline =
+    durationTransition Outline
 
 
 outlineColor : Time.Time -> Transition
-outlineColor time =
-    ( OutlineColor, time, Nothing, Nothing )
+outlineColor =
+    durationTransition OutlineColor
 
 
 outlineOffset : Time.Time -> Transition
-outlineOffset time =
-    ( OutlineOffset, time, Nothing, Nothing )
+outlineOffset =
+    durationTransition OutlineOffset
 
 
 outlineWidth : Time.Time -> Transition
-outlineWidth time =
-    ( OutlineWidth, time, Nothing, Nothing )
+outlineWidth =
+    durationTransition OutlineWidth
 
 
 padding : Time.Time -> Transition
-padding time =
-    ( Padding, time, Nothing, Nothing )
+padding =
+    durationTransition Padding
 
 
 paddingBottom : Time.Time -> Transition
-paddingBottom time =
-    ( PaddingBottom, time, Nothing, Nothing )
+paddingBottom =
+    durationTransition PaddingBottom
 
 
 paddingLeft : Time.Time -> Transition
-paddingLeft time =
-    ( PaddingLeft, time, Nothing, Nothing )
+paddingLeft =
+    durationTransition PaddingLeft
 
 
 paddingRight : Time.Time -> Transition
-paddingRight time =
-    ( PaddingRight, time, Nothing, Nothing )
+paddingRight =
+    durationTransition PaddingRight
 
 
 paddingTop : Time.Time -> Transition
-paddingTop time =
-    ( PaddingTop, time, Nothing, Nothing )
+paddingTop =
+    durationTransition PaddingTop
 
 
 right : Time.Time -> Transition
-right time =
-    ( Right, time, Nothing, Nothing )
+right =
+    durationTransition Right
 
 
 tabSize : Time.Time -> Transition
-tabSize time =
-    ( TabSize, time, Nothing, Nothing )
+tabSize =
+    durationTransition TabSize
 
 
 textIndent : Time.Time -> Transition
-textIndent time =
-    ( TextIndent, time, Nothing, Nothing )
+textIndent =
+    durationTransition TextIndent
 
 
 textShadow : Time.Time -> Transition
-textShadow time =
-    ( TextShadow, time, Nothing, Nothing )
+textShadow =
+    durationTransition TextShadow
 
 
 top : Time.Time -> Transition
-top time =
-    ( Top, time, Nothing, Nothing )
+top =
+    durationTransition Top
 
 
 transform : Time.Time -> Transition
-transform time =
-    ( Transform, time, Nothing, Nothing )
+transform =
+    durationTransition Transform
 
 
 transformOrigin : Time.Time -> Transition
-transformOrigin time =
-    ( TransformOrigin, time, Nothing, Nothing )
+transformOrigin =
+    durationTransition TransformOrigin
 
 
 verticalAlign : Time.Time -> Transition
-verticalAlign time =
-    ( VerticalAlign, time, Nothing, Nothing )
+verticalAlign =
+    durationTransition VerticalAlign
 
 
 visibility : Time.Time -> Transition
-visibility time =
-    ( Visibility, time, Nothing, Nothing )
+visibility =
+    durationTransition Visibility
 
 
 width : Time.Time -> Transition
-width time =
-    ( Width, time, Nothing, Nothing )
+width =
+    durationTransition Width
 
 
 wordSpacing : Time.Time -> Transition
-wordSpacing time =
-    ( WordSpacing, time, Nothing, Nothing )
+wordSpacing =
+    durationTransition WordSpacing
 
 
 zIndex : Time.Time -> Transition
-zIndex time =
-    ( ZIndex, time, Nothing, Nothing )
+zIndex =
+    durationTransition ZIndex
 
 
 type Animatable
@@ -2199,7 +2205,7 @@ propToString prop =
 
 timeToString : Time.Time -> String
 timeToString time =
-    (toString time) ++ "ms"
+    toString time ++ "ms"
 
 
 timingFunctionToString : TimingFunction -> String
@@ -2243,10 +2249,10 @@ transition options =
     let
         v =
             List.foldl
-                (\( p, duration, delay, timing ) s ->
+                (\(Transition { animation, duration, delay, timing }) s ->
                     s
                         ++ String.join " "
-                            [ propToString p
+                            [ propToString animation
                             , timeToString duration
                             , Maybe.map timeToString delay
                                 |> Maybe.withDefault ""
@@ -2259,4 +2265,38 @@ transition options =
                 options
                 |> String.slice 0 -1
     in
-        Css.property "transition" v
+    Css.property "transition" v
+
+
+
+-- INTERNAL HELPERS --
+
+
+fullTransition : Animatable -> Time.Time -> Time.Time -> TimingFunction -> Transition
+fullTransition animation duration delay timing =
+    Transition
+        { animation = animation
+        , duration = duration
+        , delay = Just delay
+        , timing = Just timing
+        }
+
+
+durationDelayTransition : Animatable -> Time.Time -> Time.Time -> Transition
+durationDelayTransition animation duration delay =
+    Transition
+        { animation = animation
+        , duration = duration
+        , delay = Just delay
+        , timing = Nothing
+        }
+
+
+durationTransition : Animatable -> Time.Time -> Transition
+durationTransition animation duration =
+    Transition
+        { animation = animation
+        , duration = duration
+        , delay = Nothing
+        , timing = Nothing
+        }
