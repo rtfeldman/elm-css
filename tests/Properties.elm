@@ -615,11 +615,11 @@ all =
             , ( whiteSpace preLine, "pre-line" )
             ]
         , testProperty { function = "tableLayout", property = "table-layout" }
-            [ ( tableLayout inherit, "inherit")
-            , ( tableLayout initial, "initial")
-            , ( tableLayout unset, "unset")
-            , ( tableLayout auto, "auto")
-            , ( tableLayout fixed, "fixed")
+            [ ( tableLayout inherit, "inherit" )
+            , ( tableLayout initial, "initial" )
+            , ( tableLayout unset, "unset" )
+            , ( tableLayout auto, "auto" )
+            , ( tableLayout fixed, "fixed" )
             ]
         ]
 
