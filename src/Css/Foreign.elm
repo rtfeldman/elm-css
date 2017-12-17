@@ -176,7 +176,6 @@ global snippets =
         |> Preprocess.stylesheet
         |> List.singleton
         |> Resolve.compile
-        |> .css
         |> VirtualDom.text
         |> List.singleton
         |> VirtualDom.node "style" []

@@ -185,7 +185,6 @@ getClassname styles =
             |> Preprocess.stylesheet
             |> List.singleton
             |> Resolve.compile
-            |> .css
             |> Murmur3.hashString murmurSeed
             |> Hex.toString
             |> String.cons '_'
@@ -427,7 +426,6 @@ toDeclaration dict =
         |> Preprocess.stylesheet
         |> List.singleton
         |> Resolve.compile
-        |> .css
 
 
 snippetFromPair : ( Classname, List Style ) -> Preprocess.Snippet

@@ -17,14 +17,7 @@ outdented str =
 
 prettyPrint : Stylesheet -> String
 prettyPrint sheet =
-    let
-        { warnings, css } =
-            compile [ sheet ]
-    in
-    if List.isEmpty warnings then
-        css
-    else
-        "Invalid Stylesheet:\n" ++ String.join "\n" warnings
+    compile [ sheet ]
 
 
 validRgbValue : Fuzzer Int

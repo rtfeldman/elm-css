@@ -1038,7 +1038,6 @@ import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 import Hex
 import String
-import Tuple
 
 
 {-| -}
@@ -1088,19 +1087,19 @@ getOverloadedProperty functionName desiredKey style =
             property desiredKey key
 
         Preprocess.ExtendSelector selector _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for selector " ++ toString selector ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-selector")
 
         Preprocess.NestSnippet combinator _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for combinator " ++ toString combinator ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-combinator")
 
         Preprocess.WithPseudoElement pseudoElement _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for pseudo-element setter " ++ toString pseudoElement ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
 
         Preprocess.WithMedia mediaQuery _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for media query " ++ toString mediaQuery ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-media-query")
 
         Preprocess.ApplyStyles [] ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty Style. " ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-empty-Style")
 
         Preprocess.ApplyStyles (only :: []) ->
             getOverloadedProperty functionName desiredKey only
@@ -1176,7 +1175,7 @@ type alias FontStyle compatible =
 
 {-| -}
 type alias FontStyleOrFeatureTagValue compatible =
-    { compatible | value : String, warnings : List String, fontStyle : Compatible, featureTagValue : Compatible }
+    { compatible | value : String, fontStyle : Compatible, featureTagValue : Compatible }
 
 
 {-| -}
@@ -1338,7 +1337,7 @@ type alias WhiteSpace compatible =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values>
 -}
 type alias ColorValue compatible =
-    { compatible | value : String, color : Compatible, warnings : List String }
+    { compatible | value : String, color : Compatible }
 
 
 colorValueForOverloadedProperty : ColorValue NonMixable
@@ -1717,7 +1716,7 @@ type alias TextRendering compatible =
 {-| <https://www.microsoft.com/typography/otspec/featurelist.htm>
 -}
 type alias FeatureTagValue compatible =
-    { compatible | value : String, featureTagValue : Compatible, warnings : List String }
+    { compatible | value : String, featureTagValue : Compatible }
 
 
 {-| Because `left` and `right` are both common properties and common values
@@ -1786,7 +1785,6 @@ transparent : ColorValue NonMixable
 transparent =
     { value = "transparent"
     , color = Compatible
-    , warnings = []
     }
 
 
@@ -1797,7 +1795,6 @@ currentColor : ColorValue NonMixable
 currentColor =
     { value = "currentColor"
     , color = Compatible
-    , warnings = []
     }
 
 
@@ -2068,7 +2065,6 @@ type alias BasicProperty =
     , units : IncompatibleUnits
     , numericValue : Float
     , unitLabel : String
-    , warnings : List String
     , backgroundRepeat : Compatible
     , backgroundRepeatShorthand : Compatible
     , backgroundAttachment : Compatible
@@ -2145,7 +2141,6 @@ initial =
     , units = IncompatibleUnits
     , numericValue = 0
     , unitLabel = ""
-    , warnings = []
     , backgroundRepeat = Compatible
     , backgroundRepeatShorthand = Compatible
     , backgroundAttachment = Compatible
@@ -2165,30 +2160,8 @@ in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
 rgb red green blue =
-    let
-        warnings =
-            if
-                (red < 0)
-                    || (red > 255)
-                    || (green < 0)
-                    || (green > 255)
-                    || (blue < 0)
-                    || (blue > 255)
-            then
-                [ "RGB color values must be between 0 and 255. rgb("
-                    ++ toString red
-                    ++ ", "
-                    ++ toString green
-                    ++ ", "
-                    ++ toString blue
-                    ++ ") is not valid."
-                ]
-            else
-                []
-    in
     { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
     , color = Compatible
-    , warnings = warnings
     , red = red
     , green = green
     , blue = blue
@@ -2200,34 +2173,8 @@ rgb red green blue =
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba red green blue alpha =
-    let
-        warnings =
-            if
-                (red < 0)
-                    || (red > 255)
-                    || (green < 0)
-                    || (green > 255)
-                    || (blue < 0)
-                    || (blue > 255)
-                    || (alpha < 0)
-                    || (alpha > 1)
-            then
-                [ "RGB color values must be between 0 and 255, and the alpha in RGBA must be between 0 and 1. rgba("
-                    ++ toString red
-                    ++ ", "
-                    ++ toString green
-                    ++ ", "
-                    ++ toString blue
-                    ++ ", "
-                    ++ toString alpha
-                    ++ ") is not valid."
-                ]
-            else
-                []
-    in
     { value = cssFunction "rgba" (List.map numberToString [ red, green, blue ] ++ [ numberToString alpha ])
     , color = Compatible
-    , warnings = warnings
     , red = red
     , green = green
     , blue = blue
@@ -2250,21 +2197,8 @@ hsl hue saturation lightness =
 
         value =
             cssFunction "hsl" valuesList
-
-        warnings =
-            if
-                (hue > 360)
-                    || (hue < 0)
-                    || (saturation > 1)
-                    || (saturation < 0)
-                    || (lightness > 1)
-                    || (lightness < 0)
-            then
-                [ "HSL color values must have an H value between 0 and 360 (as in degrees) and S and L values between 0 and 1. " ++ value ++ " is not valid." ]
-            else
-                []
     in
-    hslaToRgba value warnings hue saturation lightness 1
+    hslaToRgba value hue saturation lightness 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -2283,23 +2217,8 @@ hsla hue saturation lightness alpha =
 
         value =
             cssFunction "hsla" valuesList
-
-        warnings =
-            if
-                (hue > 360)
-                    || (hue < 0)
-                    || (saturation > 1)
-                    || (saturation < 0)
-                    || (lightness > 1)
-                    || (lightness < 0)
-                    || (alpha > 1)
-                    || (alpha < 0)
-            then
-                [ "HSLA color values must have an H value between 0 and 360 (as in degrees) and S, L, and A values between 0 and 1. " ++ value ++ " is not valid." ]
-            else
-                []
     in
-    hslaToRgba value warnings hue saturation lightness alpha
+    hslaToRgba value hue saturation lightness alpha
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -2354,7 +2273,6 @@ validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
             , green = green
             , blue = blue
             , alpha = toFloat alpha / 255
-            , warnings = []
             }
 
         _ ->
@@ -2379,19 +2297,11 @@ erroneousHex str =
     , green = 0
     , blue = 0
     , alpha = 1
-    , warnings =
-        [ "Hex color strings must contain exactly 3, 4, 6, or 8 hexadecimal digits, optionally preceded by \"#\"."
-        , toString str
-        , "is an invalid hex color string."
-        , "Please see: https://drafts.csswg.org/css-color/#hex-notation"
-        ]
-            |> String.join " "
-            |> List.singleton
     }
 
 
-hslaToRgba : String -> List String -> Float -> Float -> Float -> Float -> Color
-hslaToRgba value warnings hue saturation lightness hslAlpha =
+hslaToRgba : String -> Float -> Float -> Float -> Float -> Color
+hslaToRgba value hue saturation lightness hslAlpha =
     let
         { red, green, blue, alpha } =
             Color.hsla hue saturation lightness hslAlpha
@@ -2403,7 +2313,6 @@ hslaToRgba value warnings hue saturation lightness hslAlpha =
     , green = green
     , blue = blue
     , alpha = alpha
-    , warnings = warnings
     }
 
 
@@ -4756,7 +4665,7 @@ float fn =
 -}
 textDecorationColor : ColorValue compatible -> Style
 textDecorationColor c =
-    propertyWithWarnings c.warnings "text-decoration-color" c.value
+    property "text-decoration-color" c.value
 
 
 {-| Sets ['text-emphasis-color'](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color)
@@ -4766,7 +4675,7 @@ textDecorationColor c =
 -}
 textEmphasisColor : ColorValue compatible -> Style
 textEmphasisColor c =
-    propertyWithWarnings c.warnings "text-emphasis-color" c.value
+    property "text-emphasis-color" c.value
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
@@ -5692,7 +5601,6 @@ larger =
 
 type alias Normal =
     { value : String
-    , warnings : List String
     , fontStyle : Compatible
     , fontWeight : Compatible
     , featureTagValue : Compatible
@@ -5705,7 +5613,6 @@ type alias Normal =
 normal : Normal
 normal =
     { value = "normal"
-    , warnings = []
     , fontStyle = Compatible
     , fontWeight = Compatible
     , featureTagValue = Compatible
@@ -5985,20 +5892,8 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    let
-        potentialWarnings =
-            [ ( String.length tag /= 4, "Feature tags must be exactly 4 characters long. " ++ tag ++ " is invalid." )
-            , ( value < 0, "Feature values cannot be negative. " ++ toString value ++ " is invalid." )
-            ]
-
-        warnings =
-            potentialWarnings
-                |> List.filter Tuple.first
-                |> List.map Tuple.second
-    in
     { value = toString tag ++ " " ++ toString value
     , featureTagValue = Compatible
-    , warnings = warnings
     }
 
 
@@ -6441,7 +6336,7 @@ borderImageWidth4 =
 -}
 borderBlockStartColor : ColorValue compatible -> Style
 borderBlockStartColor c =
-    propertyWithWarnings c.warnings "border-block-start-color" c.value
+    property "border-block-start-color" c.value
 
 
 {-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
@@ -6451,7 +6346,7 @@ borderBlockStartColor c =
 -}
 borderBottomColor : ColorValue compatible -> Style
 borderBottomColor c =
-    propertyWithWarnings c.warnings "border-bottom-color" c.value
+    property "border-bottom-color" c.value
 
 
 {-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color)
@@ -6461,7 +6356,7 @@ borderBottomColor c =
 -}
 borderInlineStartColor : ColorValue compatible -> Style
 borderInlineStartColor c =
-    propertyWithWarnings c.warnings "border-inline-start-color" c.value
+    property "border-inline-start-color" c.value
 
 
 {-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color)
@@ -6471,7 +6366,7 @@ borderInlineStartColor c =
 -}
 borderInlineEndColor : ColorValue compatible -> Style
 borderInlineEndColor c =
-    propertyWithWarnings c.warnings "border-inline-end-color" c.value
+    property "border-inline-end-color" c.value
 
 
 {-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
@@ -6481,7 +6376,7 @@ borderInlineEndColor c =
 -}
 borderLeftColor : ColorValue compatible -> Style
 borderLeftColor c =
-    propertyWithWarnings c.warnings "border-left-color" c.value
+    property "border-left-color" c.value
 
 
 {-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
@@ -6491,7 +6386,7 @@ borderLeftColor c =
 -}
 borderRightColor : ColorValue compatible -> Style
 borderRightColor c =
-    propertyWithWarnings c.warnings "border-right-color" c.value
+    property "border-right-color" c.value
 
 
 {-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
@@ -6501,7 +6396,7 @@ borderRightColor c =
 -}
 borderTopColor : ColorValue compatible -> Style
 borderTopColor c =
-    propertyWithWarnings c.warnings "border-top-color" c.value
+    property "border-top-color" c.value
 
 
 {-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color)
@@ -6511,7 +6406,7 @@ borderTopColor c =
 -}
 borderBlockEndColor : ColorValue compatible -> Style
 borderBlockEndColor c =
-    propertyWithWarnings c.warnings "border-block-end-color" c.value
+    property "border-block-end-color" c.value
 
 
 {-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style)
@@ -6900,7 +6795,7 @@ borderSpacing2 =
 -}
 borderColor : ColorValue compatible -> Style
 borderColor c =
-    propertyWithWarnings c.warnings "border-color" c.value
+    property "border-color" c.value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6914,13 +6809,10 @@ borderColor c =
 borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Style
 borderColor2 c1 c2 =
     let
-        warnings =
-            c1.warnings ++ c2.warnings
-
         value =
             String.join " " [ c1.value, c2.value ]
     in
-    propertyWithWarnings warnings "border-color" value
+    property "border-color" value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6934,13 +6826,10 @@ borderColor2 c1 c2 =
 borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Style
 borderColor3 c1 c2 c3 =
     let
-        warnings =
-            c1.warnings ++ c2.warnings ++ c3.warnings
-
         value =
             String.join " " [ c1.value, c2.value, c3.value ]
     in
-    propertyWithWarnings warnings "border-color" value
+    property "border-color" value
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6954,13 +6843,10 @@ borderColor3 c1 c2 c3 =
 borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Style
 borderColor4 c1 c2 c3 c4 =
     let
-        warnings =
-            c1.warnings ++ c2.warnings ++ c3.warnings ++ c4.warnings
-
         value =
             String.join " " [ c1.value, c2.value, c3.value, c4.value ]
     in
-    propertyWithWarnings warnings "border-color" value
+    property "border-color" value
 
 
 {-| Sets [`outline`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
@@ -6996,7 +6882,7 @@ outline3 =
 -}
 outlineColor : ColorValue compatible -> Style
 outlineColor c =
-    propertyWithWarnings c.warnings "outline-color" c.value
+    property "outline-color" c.value
 
 
 {-| Sets [`outline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width)
@@ -7086,7 +6972,7 @@ whiteSpace =
 {-| -}
 backgroundColor : ColorValue compatible -> Style
 backgroundColor c =
-    propertyWithWarnings c.warnings "background-color" c.value
+    property "background-color" c.value
 
 
 {-| Sets ['background-repeat'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat)
@@ -7206,7 +7092,7 @@ backgroundSize2 =
 {-| -}
 color : ColorValue compatible -> Style
 color c =
-    propertyWithWarnings c.warnings "color" c.value
+    property "color" c.value
 
 
 
@@ -7283,8 +7169,8 @@ fontFamilies =
 
 -}
 fontFeatureSettings : FeatureTagValue a -> Style
-fontFeatureSettings { value, warnings } =
-    propertyWithWarnings warnings "font-feature-settings" value
+fontFeatureSettings { value } =
+    property "font-feature-settings" value
 
 
 {-| Sets [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings)
@@ -7294,14 +7180,10 @@ fontFeatureSettings { value, warnings } =
 -}
 fontFeatureSettingsList : List (FeatureTagValue a) -> Style
 fontFeatureSettingsList featureTagValues =
-    let
-        value =
-            featureTagValues |> List.map .value |> String.join ", "
-
-        warnings =
-            featureTagValues |> List.map .warnings |> List.concat
-    in
-    propertyWithWarnings warnings "font-feature-settings" value
+    featureTagValues
+        |> List.map .value
+        |> String.join ", "
+        |> property "font-feature-settings"
 
 
 {-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
@@ -7333,23 +7215,7 @@ fontStyle =
 -}
 fontWeight : FontWeight a -> Style
 fontWeight { value } =
-    let
-        validWeight weight =
-            if value /= toString weight then
-                -- This means it was one of the string keywords, e.g. "bold"
-                True
-            else
-                List.range 1 9
-                    |> List.map ((*) 100)
-                    |> List.member weight
-
-        warnings =
-            if validWeight (stringToInt value) then
-                []
-            else
-                [ "fontWeight " ++ value ++ " is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values" ]
-    in
-    propertyWithWarnings warnings "font-weight" value
+    property "font-weight" value
 
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -7877,13 +7743,8 @@ batch =
 
 -}
 property : String -> String -> Style
-property =
-    propertyWithWarnings []
-
-
-propertyWithWarnings : List String -> String -> String -> Style
-propertyWithWarnings warnings key value =
-    { key = key, value = value, important = False, warnings = warnings }
+property key value =
+    { key = key, value = value, important = False }
         |> Preprocess.AppendProperty
 
 

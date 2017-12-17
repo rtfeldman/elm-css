@@ -20,7 +20,6 @@ type alias Property =
     { key : String
     , value : String
     , important : Bool
-    , warnings : List String
     }
 
 
