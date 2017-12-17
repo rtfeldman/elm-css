@@ -4,7 +4,6 @@ import Css exposing (..)
 import Css.Foreign exposing (..)
 import Css.Media exposing (only, print, withMedia)
 import Css.Preprocess exposing (Stylesheet, stylesheet)
-import DEPRECATED.Css.Namespace exposing (namespace)
 
 
 type CssClasses
@@ -36,7 +35,7 @@ divWidthHeight =
 
 atRule : Stylesheet
 atRule =
-    (stylesheet << namespace "homepage")
+    stylesheet
         [ body [ padding zero ]
         , media [ only print [] ] [ body [ margin (Css.em 2) ] ]
         , mediaQuery [ "screen and ( max-width: 600px )" ]
@@ -47,7 +46,7 @@ atRule =
 
 nestedAtRule : Stylesheet
 nestedAtRule =
-    (stylesheet << namespace "homepage")
+    stylesheet
         [ button [ padding zero ]
         , body
             [ margin auto
@@ -147,7 +146,7 @@ multiDescendent =
 
 universal : Stylesheet
 universal =
-    (stylesheet << namespace "universal")
+    stylesheet
         [ everything
             [ display none
             , children
@@ -165,7 +164,7 @@ universal =
 
 multiSelector : Stylesheet
 multiSelector =
-    (stylesheet << namespace "multiSelector")
+    stylesheet
         [ div
             [ withClass Page
                 [ withClass Hidden
@@ -194,7 +193,7 @@ keyValue =
 
 leftRightTopBottom : Stylesheet
 leftRightTopBottom =
-    (stylesheet << namespace "left-right-top-bottom")
+    stylesheet
         [ div
             [ position absolute
             , top (Css.em 2)
@@ -214,7 +213,7 @@ leftRightTopBottom =
 
 borders : Stylesheet
 borders =
-    (stylesheet << namespace "border-test")
+    stylesheet
         [ button
             [ borderLeft3 (px 5) dashed (rgb 11 14 17)
             , borderRight (px 7)
@@ -245,7 +244,7 @@ greenOnHover =
 
 styleGreenOnHoverStylesheet : Stylesheet
 styleGreenOnHoverStylesheet =
-    (stylesheet << namespace "greenOnHoverStylesheetsheet")
+    stylesheet
         [ button
             [ color (rgb 11 22 33)
             , greenOnHover
@@ -255,7 +254,7 @@ styleGreenOnHoverStylesheet =
 
 styleUnderlineOnHoverStylesheet : Stylesheet
 styleUnderlineOnHoverStylesheet =
-    (stylesheet << namespace "underlineOnHoverStylesheetsheet")
+    stylesheet
         [ a
             --[ color (rgb 128 64 32) ]
             [ underlineOnHover ]
@@ -264,7 +263,7 @@ styleUnderlineOnHoverStylesheet =
 
 manualUnderlineOnHoverStylesheet : Stylesheet
 manualUnderlineOnHoverStylesheet =
-    (stylesheet << namespace "underlineOnHoverStylesheetsheet")
+    stylesheet
         [ a
             [ color (rgb 128 127 126)
             , hover [ color (rgb 23 24 25) ]
@@ -274,7 +273,7 @@ manualUnderlineOnHoverStylesheet =
 
 transformsStylesheet : Stylesheet
 transformsStylesheet =
-    (stylesheet << namespace "transformsStylesheet")
+    stylesheet
         [ body
             [ transforms []
             , transforms
@@ -317,7 +316,7 @@ transformsStylesheet =
 
 fontStylesheet : Stylesheet
 fontStylesheet =
-    (stylesheet << namespace "fontStylesheet")
+    stylesheet
         [ body
             [ lineHeight (px 14)
             , fontFamily serif
@@ -345,22 +344,22 @@ fontStylesheet =
 
 fontWeightWarning : Stylesheet
 fontWeightWarning =
-    (stylesheet << namespace "fontWeightWarning") [ body [ fontWeight (int 22) ] ]
+    stylesheet [ body [ fontWeight (int 22) ] ]
 
 
 colorHexWarning : Stylesheet
 colorHexWarning =
-    (stylesheet << namespace "colorHexWarning") [ body [ color (hex "ababah") ] ]
+    stylesheet [ body [ color (hex "ababah") ] ]
 
 
 colorHexAbbrWarning : Stylesheet
 colorHexAbbrWarning =
-    (stylesheet << namespace "colorHexAbbrWarning") [ body [ color (hex "#00i") ] ]
+    stylesheet [ body [ color (hex "#00i") ] ]
 
 
 pseudoElementStylesheet : Stylesheet
 pseudoElementStylesheet =
-    (stylesheet << namespace "pseudoElements")
+    stylesheet
         [ id Page
             [ margin (px 10)
             , before
@@ -376,7 +375,7 @@ pseudoElementStylesheet =
 
 pseudoClassStylesheet : Stylesheet
 pseudoClassStylesheet =
-    (stylesheet << namespace "pseudoClasses")
+    stylesheet
         [ id Page
             [ color (hex "#fff")
             , hover
@@ -397,7 +396,7 @@ pseudoClassStylesheet =
 
 mediaQueryIndentation : Stylesheet
 mediaQueryIndentation =
-    (stylesheet << namespace "")
+    stylesheet
         [ mediaQuery [ "(max-width: 515px)" ]
             [ class "mdl-layout__header"
                 [ children
@@ -409,7 +408,7 @@ mediaQueryIndentation =
 
 backgrounds : Stylesheet
 backgrounds =
-    (stylesheet << namespace "background-test")
+    stylesheet
         [ div
             [ backgroundColor (rgb 128 127 126)
             , backgroundRepeat repeatX
@@ -464,7 +463,7 @@ backgrounds =
 
 nestedEach : Stylesheet
 nestedEach =
-    (stylesheet << namespace "nested-each")
+    stylesheet
         [ each
             [ span
             , \s -> span [ focus s ]

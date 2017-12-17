@@ -358,7 +358,7 @@ multiSelector =
 
         output =
             """
-          div.multiSelectorPage.multiSelectorHidden {
+          div.Page.Hidden {
             display: none;
             width: 100%;
             height: 100%;

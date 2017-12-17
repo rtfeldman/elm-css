@@ -99,7 +99,7 @@ dreamwriter =
               height: 100%;
             }
 
-            .dreamwriterHidden {
+            .Hidden {
               display: none !important;
             }
 
@@ -133,11 +133,11 @@ compileTest =
 
         output =
             """
-            .basic1BasicStyle1 {
+            .BasicStyle1 {
                 display: none;
             }
 
-            .basic2BasicStyle2 {
+            .BasicStyle2 {
                 display: none;
             }
             """

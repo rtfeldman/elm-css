@@ -4,7 +4,6 @@ import Css exposing (..)
 import Css.Foreign exposing (Snippet, a, body, button, class, media, mediaQuery, p)
 import Css.Media as Media exposing (..)
 import Css.Preprocess exposing (stylesheet)
-import DEPRECATED.Css.Namespace exposing (namespace)
 import Expect
 import Test exposing (Test, describe, test, todo)
 import TestUtil exposing (outdented, prettyPrint)
@@ -23,7 +22,7 @@ testMediaType : String -> MediaType -> Test
 testMediaType str mediaType =
     let
         actual =
-            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery (only mediaType []) ])
+            prettyPrint (stylesheet [ basicMediaQuery (only mediaType []) ])
 
         expectedBody =
             "\n    p {\n        background-color: #FF0000;\n"
@@ -156,7 +155,7 @@ testUnparameterizedFeature : String -> Expression -> Test
 testUnparameterizedFeature featureName component =
     let
         actual =
-            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery (Media.all [ component ]) ])
+            prettyPrint (stylesheet [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
             "\n    p {\n        background-color: #FF0000;\n"
@@ -171,7 +170,7 @@ expectFeatureWorks : String -> Int -> ( Expression, String ) -> Test
 expectFeatureWorks featureName n ( component, expectedStr ) =
     let
         actual =
-            prettyPrint ((stylesheet << namespace "test") [ basicMediaQuery (Media.all [ component ]) ])
+            prettyPrint (stylesheet [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
             "\n    p {\n        background-color: #FF0000;\n"
@@ -191,7 +190,7 @@ testMedia : Test
 testMedia =
     let
         input =
-            (stylesheet << namespace "homepage")
+            stylesheet
                 [ body [ padding zero ]
                 , media [ only print [] ] [ body [ margin (Css.em 2) ] ]
                 , media [ only screen [ Media.maxWidth (px 600) ] ]
@@ -254,7 +253,7 @@ testWithMedia : Test
 testWithMedia =
     let
         input =
-            (stylesheet << namespace "homepage")
+            stylesheet
                 [ button [ padding zero ]
                 , body
                     [ Css.color (hex "333333")
@@ -298,13 +297,13 @@ testWithMedia =
                }
             }
 
-            .homepageContainer {
+            .Container {
                max-width: 800px;
             }
 
             @media only screen and (max-width: 375px),
              only screen and (max-height: 667px) {
-                .homepageContainer {
+                .Container {
                     max-width: 300px;
                 }
             }
@@ -322,7 +321,7 @@ testMediaQuery : Test
 testMediaQuery =
     let
         input =
-            (stylesheet << namespace "homepage")
+            stylesheet
                 [ mediaQuery [ "tv", "screen and (scan: interlace)" ]
                     [ body [ backgroundColor (hex "FFFFFF") ] ]
                 ]
@@ -349,7 +348,7 @@ testWithMediaQuery : Test
 testWithMediaQuery =
     let
         input =
-            (stylesheet << namespace "homepage")
+            stylesheet
                 [ body
                     [ fontSize (px 12)
                     , withMediaQuery [ "screen and (min-device-width: 600px)", "screen and (min-width: 600px)" ]
