@@ -3,7 +3,6 @@ module Properties exposing (all)
 import Css exposing (..)
 import Css.Foreign exposing (p)
 import Css.Preprocess exposing (stylesheet)
-import DEPRECATED.Css.Namespace exposing (namespace)
 import Expect
 import Test exposing (..)
 import TestUtil exposing (prettyPrint)
@@ -634,6 +633,6 @@ expectPropertyWorks propertyName ( style, expectedStr ) =
     describe (propertyName ++ ": " ++ expectedStr)
         [ test "emitted as expected" <|
             \() ->
-                prettyPrint ((stylesheet << namespace "test") [ p [ style ] ])
+                prettyPrint (stylesheet [ p [ style ] ])
                     |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
         ]

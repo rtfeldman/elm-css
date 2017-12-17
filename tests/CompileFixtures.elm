@@ -3,7 +3,6 @@ module CompileFixtures exposing (..)
 import Css exposing (..)
 import Css.Foreign exposing (..)
 import Css.Preprocess exposing (Stylesheet, stylesheet)
-import DEPRECATED.Css.Namespace exposing (namespace)
 
 
 pageBackground : Color
@@ -33,7 +32,7 @@ unstyledDiv =
 
 dreamwriter : Stylesheet
 dreamwriter =
-    (stylesheet << namespace "dreamwriter")
+    stylesheet
         [ each [ html, body ]
             [ width (pct 100)
             , height (pct 100)
@@ -66,7 +65,7 @@ dreamwriter =
 
 basicStyle1 : Stylesheet
 basicStyle1 =
-    (stylesheet << namespace "basic1")
+    stylesheet
         [ class BasicStyle1
             [ display none ]
         ]
@@ -74,7 +73,7 @@ basicStyle1 =
 
 basicStyle2 : Stylesheet
 basicStyle2 =
-    (stylesheet << namespace "basic2")
+    stylesheet
         [ class BasicStyle2
             [ display none ]
         ]
