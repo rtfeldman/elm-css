@@ -15,7 +15,7 @@ install:
   - node --version
   - npm --version
   - cd tests
-  - npm install -g elm@0.18.0 elm-test@0.18.11 elm-format@exp
+  - npm install -g elm@0.18.0 elm-test@0.18.12 elm-format@exp
   - npm install
   - elm-package install --yes
 
