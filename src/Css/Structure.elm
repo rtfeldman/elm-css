@@ -16,12 +16,10 @@ type alias Number compatible =
     { compatible | value : String, number : Compatible }
 
 
-{-| A property consisting of a key and a value
+{-| A property consisting of a key:value string.
 -}
-type alias Property =
-    { key : String
-    , value : String
-    }
+type Property
+    = Property String
 
 
 {-| A stylesheet. Since they follow such specific rules, the following at-rules

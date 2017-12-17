@@ -49,7 +49,7 @@ prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors prope
         [ selectorStr
         , " {\n"
         , indentLevel
-        , prettyPrintProperties properties
+        , emitProperties properties
         , "\n"
         , indentLevel
         , "}"
@@ -228,9 +228,9 @@ combinatorToString combinator =
             ""
 
 
-prettyPrintProperty : Property -> String
-prettyPrintProperty { key, value } =
-    key ++ ": " ++ value ++ ";"
+emitProperty : Property -> String
+emitProperty (Property str) =
+    str ++ ";"
 
 
 {-| Indent the given string with 4 spaces
@@ -250,8 +250,8 @@ noIndent =
     ""
 
 
-prettyPrintProperties : List Property -> String
-prettyPrintProperties properties =
+emitProperties : List Property -> String
+emitProperties properties =
     properties
-        |> List.map (indent << prettyPrintProperty)
+        |> List.map (indent << emitProperty)
         |> String.join "\n"
