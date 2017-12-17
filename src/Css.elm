@@ -7758,7 +7758,7 @@ batch =
 -}
 property : String -> String -> Style
 property key value =
-    Property (key ++ ": " ++ value)
+    Property (key ++ ":" ++ value)
         |> Preprocess.AppendProperty
 
 

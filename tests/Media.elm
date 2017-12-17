@@ -25,7 +25,7 @@ testMediaType str mediaType =
             prettyPrint (stylesheet [ basicMediaQuery (only mediaType []) ])
 
         expectedBody =
-            "\n    p {\n        background-color: #FF0000;\n"
+            "\n    p {\n        background-color:#FF0000;\n"
 
         expected =
             "@media only " ++ str ++ " {" ++ expectedBody ++ "    }\n}"
@@ -158,7 +158,7 @@ testUnparameterizedFeature featureName component =
             prettyPrint (stylesheet [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
-            "\n    p {\n        background-color: #FF0000;\n"
+            "\n    p {\n        background-color:#FF0000;\n"
 
         expected =
             "@media (" ++ featureName ++ ") {" ++ expectedBody ++ "    }\n}"
@@ -173,7 +173,7 @@ expectFeatureWorks featureName n ( component, expectedStr ) =
             prettyPrint (stylesheet [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
-            "\n    p {\n        background-color: #FF0000;\n"
+            "\n    p {\n        background-color:#FF0000;\n"
 
         expected =
             "@media (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
@@ -205,34 +205,34 @@ testMedia =
         output =
             """
             body {
-                padding: 0;
+                padding:0;
             }
 
             @media only print {
                 body {
-                    margin: 2em;
+                    margin:2em;
                 }
             }
 
             @media only screen and (max-width: 600px) {
                 body {
-                    margin: 3em;
+                    margin:3em;
                 }
             }
 
             button {
-                margin: auto;
+                margin:auto;
             }
 
             @media only screen and (color) and (pointer: fine) and (scan: interlace) and (grid) {
                 p {
-                    color: #FF0000;
+                    color:#FF0000;
                 }
             }
 
             @media not screen and (color) {
                 p {
-                    color: #000000;
+                    color:#000000;
                 }
             }
             """
@@ -273,38 +273,38 @@ testWithMedia =
         output =
             """
             button {
-                padding: 0;
+                padding:0;
             }
 
             body {
-                color: #333333;
+                color:#333333;
             }
 
             @media only print,
              (monochrome) {
                body {
-                   color: #000000;
+                   color:#000000;
                }
              }
 
             a {
-               color: #FF0000;
+               color:#FF0000;
             }
 
             @media only print {
                a {
-                   text-decoration: none;
+                   text-decoration:none;
                }
             }
 
             .Container {
-               max-width: 800px;
+               max-width:800px;
             }
 
             @media only screen and (max-width: 375px),
              only screen and (max-height: 667px) {
                 .Container {
-                    max-width: 300px;
+                    max-width:300px;
                 }
             }
             """
@@ -331,7 +331,7 @@ testMediaQuery =
             @media tv,
              screen and (scan: interlace) {
                 body {
-                    background-color: #FFFFFF;
+                    background-color:#FFFFFF;
                 }
             }
             """
@@ -359,13 +359,13 @@ testWithMediaQuery =
         output =
             """
             body {
-                font-size: 12px;
+                font-size:12px;
             }
 
             @media screen and (min-device-width: 600px),
             screen and (min-width: 600px) {
                 body {
-                    font-size: 14px;
+                    font-size:14px;
                 }
             }
             """
