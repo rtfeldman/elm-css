@@ -3,7 +3,6 @@ module Properties exposing (all)
 import Css exposing (..)
 import Css.Foreign exposing (p)
 import Css.Preprocess exposing (stylesheet)
-import DEPRECATED.Css exposing (asPairs)
 import DEPRECATED.Css.Namespace exposing (namespace)
 import Expect
 import Test exposing (..)
@@ -637,8 +636,4 @@ expectPropertyWorks propertyName ( style, expectedStr ) =
             \() ->
                 prettyPrint ((stylesheet << namespace "test") [ p [ style ] ])
                     |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
-        , test "can be converted to a key-value pair" <|
-            \() ->
-                [ ( propertyName, expectedStr ) ]
-                    |> Expect.equal (asPairs [ style ])
         ]
