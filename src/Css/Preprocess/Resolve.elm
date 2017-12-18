@@ -290,7 +290,7 @@ applyNestedStylesToLast nestedStyles rest f declarations =
            or an `AppendProperty` after an `ExtendSelector` or `WithPseudoElement`.
         -}
         newDeclarations =
-            case ( List.head nextResult, List.head <| List.reverse declarations ) of
+            case ( List.head nextResult, last declarations ) of
                 ( Just nextResultParent, Just originalParent ) ->
                     List.take (List.length declarations - 1) declarations
                         ++ [ if originalParent /= nextResultParent then
@@ -376,3 +376,16 @@ oneOf maybes =
 
                 Just _ ->
                     maybe
+
+
+last : List a -> Maybe a
+last list =
+    case list of
+        [] ->
+            Nothing
+
+        singleton :: [] ->
+            Just singleton
+
+        first :: rest ->
+            last rest
