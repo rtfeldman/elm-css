@@ -74,8 +74,29 @@ prettyPrintDeclaration declaration =
             in
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
-        _ ->
-            Debug.crash "not yet implemented :x"
+        SupportsRule _ _ ->
+            Debug.crash "TODO"
+
+        DocumentRule _ _ _ _ _ ->
+            Debug.crash "TODO"
+
+        PageRule _ _ ->
+            Debug.crash "TODO"
+
+        FontFace _ ->
+            Debug.crash "TODO"
+
+        Keyframes _ _ ->
+            Debug.crash "TODO"
+
+        Viewport _ ->
+            Debug.crash "TODO"
+
+        CounterStyle _ ->
+            Debug.crash "TODO"
+
+        FontFeatureValues _ ->
+            Debug.crash "TODO"
 
 
 mediaQueryToString : MediaQuery -> String
