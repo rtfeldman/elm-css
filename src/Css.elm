@@ -1,10 +1,6 @@
 module Css
     exposing
-        ( (|*|)
-        , (|+|)
-        , (|-|)
-        , (|/|)
-        , AlignItems
+        ( AlignItems
         , All
         , Angle
         , AngleOrDirection
@@ -977,7 +973,7 @@ functions let you define custom properties and selectors, respectively.
 
 # Length
 
-@docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, (|+|), (|-|), (|*|), (|/|), calc, plus, minus
+@docs Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, calc, plus, minus
 
 
 # Length Units
@@ -1554,50 +1550,6 @@ plus =
 minus : CalcExpression
 minus =
     Subtraction
-
-
-{-| Add two lengths.
-
-    >>> em 2 |+| em 3
-    em 5
-
--}
-(|+|) : Length compatible units -> Length compatible units -> Length compatible units
-(|+|) =
-    combineLengths (+)
-
-
-{-| Subtract two lengths.
-
-    >>> em 7 |-| em 3
-    em 4
-
--}
-(|-|) : Length compatible units -> Length compatible units -> Length compatible units
-(|-|) =
-    combineLengths (-)
-
-
-{-| Divide two lengths.
-
-    >>> em 9 |/| em 2
-    em 4.5
-
--}
-(|/|) : Length compatible units -> Length compatible units -> Length compatible units
-(|/|) =
-    combineLengths (/)
-
-
-{-| Multiply two lengths.
-
-    >>> em 3 |*| em 6
-    em 18
-
--}
-(|*|) : Length compatible units -> Length compatible units -> Length compatible units
-(|*|) =
-    combineLengths (*)
 
 
 combineLengths :
