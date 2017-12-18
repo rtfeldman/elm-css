@@ -272,7 +272,7 @@ applyNestedStylesToLast nestedStyles rest f declarations =
 
         insertStylesToNestedDecl lastDecl =
             Structure.concatMapLastStyleBlock f lastDecl
-                |> List.map (\declaration -> [ declaration ])
+                |> List.map List.singleton
                 |> mapLast handleInitial
                 |> List.concat
 
