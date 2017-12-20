@@ -229,15 +229,8 @@ combinatorToString combinator =
 
 
 prettyPrintProperty : Property -> String
-prettyPrintProperty { key, value, important } =
-    let
-        suffix =
-            if important then
-                " !important;"
-            else
-                ";"
-    in
-    key ++ ": " ++ value ++ suffix
+prettyPrintProperty { key, value } =
+    key ++ ": " ++ value ++ ";"
 
 
 {-| Indent the given string with 4 spaces
