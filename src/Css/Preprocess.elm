@@ -4,7 +4,7 @@ module Css.Preprocess exposing (..)
 the data structures found in this module.
 -}
 
-import Css.Structure as Structure exposing (MediaQuery, concatMapLast, mapLast)
+import Css.Structure as Structure exposing (MediaQuery, Property(Property), concatMapLast, mapLast)
 
 
 stylesheet : List Snippet -> Stylesheet
@@ -13,12 +13,6 @@ stylesheet snippets =
     , imports = []
     , namespaces = []
     , snippets = snippets
-    }
-
-
-type alias Property =
-    { key : String
-    , value : String
     }
 
 
@@ -135,22 +129,17 @@ unwrapSnippet (Snippet declarations) =
     declarations
 
 
-toPropertyPairs : List Style -> List ( String, String )
-toPropertyPairs styles =
+toPropertyStrings : List Style -> List String
+toPropertyStrings styles =
     case styles of
         [] ->
             []
 
-        (AppendProperty property) :: rest ->
-            propertyToPair property :: toPropertyPairs rest
+        (AppendProperty (Property str)) :: rest ->
+            str :: toPropertyStrings rest
 
         (ApplyStyles styles) :: rest ->
-            toPropertyPairs styles ++ toPropertyPairs rest
+            toPropertyStrings styles ++ toPropertyStrings rest
 
         _ :: rest ->
-            toPropertyPairs rest
-
-
-propertyToPair : Property -> ( String, String )
-propertyToPair property =
-    ( property.key, property.value )
+            toPropertyStrings rest

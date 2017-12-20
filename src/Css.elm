@@ -1082,7 +1082,13 @@ Other notes:
 getOverloadedProperty : String -> String -> Style -> Style
 getOverloadedProperty functionName desiredKey style =
     case style of
-        Preprocess.AppendProperty { key } ->
+        Preprocess.AppendProperty (Property str) ->
+            let
+                key =
+                    String.split ":" str
+                        |> List.head
+                        |> Maybe.withDefault ""
+            in
             -- Use the given style's Key as the resulting property's value.
             property desiredKey key
 
@@ -1769,7 +1775,7 @@ declaration.
 -}
 important : Style -> Style
 important =
-    Preprocess.mapLastProperty (\property -> { property | value = makeImportant property.value })
+    Preprocess.mapLastProperty (\(Property str) -> Property (makeImportant str))
 
 
 makeImportant : String -> String
@@ -7752,7 +7758,7 @@ batch =
 -}
 property : String -> String -> Style
 property key value =
-    { key = key, value = value }
+    Property (key ++ ": " ++ value)
         |> Preprocess.AppendProperty
 
 

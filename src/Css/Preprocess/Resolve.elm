@@ -5,7 +5,7 @@ Structure data structures.
 -}
 
 import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
-import Css.Structure as Structure exposing (mapLast)
+import Css.Structure as Structure exposing (Property, mapLast)
 import Css.Structure.Output as Output
 import String
 
@@ -74,7 +74,7 @@ toMediaRule mediaQueries declaration =
             declaration
 
 
-resolveFontFeatureValues : List ( String, List Preprocess.Property ) -> List Structure.Declaration
+resolveFontFeatureValues : List ( String, List Property ) -> List Structure.Declaration
 resolveFontFeatureValues tuples =
     let
         expandTuples tuplesToExpand =
