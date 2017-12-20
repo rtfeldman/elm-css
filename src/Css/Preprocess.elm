@@ -19,7 +19,6 @@ stylesheet snippets =
 type alias Property =
     { key : String
     , value : String
-    , important : Bool
     }
 
 
@@ -154,11 +153,4 @@ toPropertyPairs styles =
 
 propertyToPair : Property -> ( String, String )
 propertyToPair property =
-    let
-        value =
-            if property.important then
-                property.value ++ " !important"
-            else
-                property.value
-    in
-    ( property.key, value )
+    ( property.key, property.value )

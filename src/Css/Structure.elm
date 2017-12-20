@@ -16,12 +16,10 @@ type alias Number compatible =
     { compatible | value : String, number : Compatible }
 
 
-{-| A property consisting of a key, a value, and a flag for whether or not
-the property is `!important`.
+{-| A property consisting of a key and a value
 -}
 type alias Property =
-    { important : Bool
-    , key : String
+    { key : String
     , value : String
     }
 

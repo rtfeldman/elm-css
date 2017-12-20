@@ -1769,7 +1769,15 @@ declaration.
 -}
 important : Style -> Style
 important =
-    Preprocess.mapLastProperty (\property -> { property | important = True })
+    Preprocess.mapLastProperty (\property -> { property | value = makeImportant property.value })
+
+
+makeImportant : String -> String
+makeImportant value =
+    if String.endsWith " !important" (String.toLower value) then
+        value
+    else
+        value ++ " !important"
 
 
 {-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
@@ -7744,7 +7752,7 @@ batch =
 -}
 property : String -> String -> Style
 property key value =
-    { key = key, value = value, important = False }
+    { key = key, value = value }
         |> Preprocess.AppendProperty
 
 
