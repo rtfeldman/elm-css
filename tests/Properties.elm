@@ -634,5 +634,5 @@ expectPropertyWorks propertyName ( style, expectedStr ) =
         [ test "emitted as expected" <|
             \() ->
                 prettyPrint (stylesheet [ p [ style ] ])
-                    |> Expect.equal ("p {\n    " ++ propertyName ++ ": " ++ expectedStr ++ ";\n}")
+                    |> Expect.equal ("p {\n    " ++ propertyName ++ ":" ++ expectedStr ++ ";\n}")
         ]
