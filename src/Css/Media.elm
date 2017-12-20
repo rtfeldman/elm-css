@@ -223,8 +223,8 @@ The above code translates into the following CSS.
 
 -}
 withMedia : List MediaQuery -> List Style -> Style
-withMedia queries =
-    Preprocess.WithMedia queries
+withMedia =
+    Preprocess.WithMedia
 
 
 {-| Manually specify a `@media` rule that is nested under an element or class
