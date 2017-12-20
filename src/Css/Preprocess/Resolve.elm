@@ -231,9 +231,10 @@ applyStyles styles declarations =
                             []
 
                         firstSelector :: otherSelectors ->
-                            [ [ Structure.StyleBlock firstSelector otherSelectors [] ]
+                            Structure.StyleBlock firstSelector otherSelectors []
+                                |> List.singleton
                                 |> Structure.MediaRule mediaQueries
-                            ]
+                                |> List.singleton
             in
             applyStyles rest declarations
                 ++ applyStyles nestedStyles newDeclarations
