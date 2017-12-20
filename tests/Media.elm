@@ -382,6 +382,88 @@ testWithMedia =
         ]
 
 
+bug352 : Test
+bug352 =
+    let
+        input =
+            stylesheet
+                [ button [ padding zero ]
+                , body
+                    [ Css.color (hex "333333")
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                , a
+                    [ Css.color (hex "FF0000")
+                    , withMedia [ only print [] ] [ textDecoration none ]
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                , class Container
+                    [ Css.maxWidth (px 800)
+                    , withMedia [ only screen [ Media.maxWidth (px 375) ], only screen [ Media.maxHeight (px 667) ] ]
+                        [ Css.maxWidth (px 300) ]
+                    , Css.maxHeight (px 600)
+                    ]
+                ]
+
+        output =
+            """
+            button {
+                padding:0;
+            }
+
+            body {
+                color:#333333;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+
+            a {
+               color:#FF0000;
+            }
+
+            @media only screen and (min-width: 600px) {
+               a:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+            }
+
+            @media only print {
+               a {
+                   text-decoration:none;
+               }
+            }
+
+            .Container {
+               max-width:800px;
+               max-height:600px;
+            }
+
+            @media only screen and (max-width: 375px),
+             only screen and (max-height: 667px) {
+               .Container {
+                   max-width:300px;
+               }
+            }
+            """
+    in
+    describe "Regression test for #352"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
 testMediaQuery : Test
 testMediaQuery =
     let
