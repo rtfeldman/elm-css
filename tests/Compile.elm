@@ -1,59 +1,10 @@
 module Compile exposing (..)
 
 import CompileFixtures
-import Css exposing (..)
 import Css.Preprocess.Resolve exposing (compile)
 import Expect
-import Fuzz exposing (Fuzzer, tuple3, tuple4)
 import Test exposing (..)
 import TestUtil exposing (..)
-
-
-getRgbaWarnings : ( Int, Int, Int, Float ) -> Int
-getRgbaWarnings ( red, green, blue, alpha ) =
-    rgba red green blue alpha |> .warnings |> List.length
-
-
-getRgbWarnings : ( Int, Int, Int ) -> Int
-getRgbWarnings ( red, green, blue ) =
-    rgb red green blue |> .warnings |> List.length
-
-
-colorWarnings : Test
-colorWarnings =
-    describe "color warnings"
-        [ describe "rgb"
-            [ fuzz (tuple3 ( validRgbValue, validRgbValue, validRgbValue ))
-                "does not warn when everything is valid"
-                (getRgbWarnings >> Expect.equal 0)
-            , fuzz (tuple3 ( invalidRgbValue, validRgbValue, validRgbValue ))
-                "warns for invalid r values"
-                (getRgbWarnings >> Expect.equal 1)
-            , fuzz (tuple3 ( validRgbValue, invalidRgbValue, validRgbValue ))
-                "warns for invalid g values"
-                (getRgbWarnings >> Expect.equal 1)
-            , fuzz (tuple3 ( validRgbValue, validRgbValue, invalidRgbValue ))
-                "warns for invalid b values"
-                (getRgbWarnings >> Expect.equal 1)
-            ]
-        , describe "rgba"
-            [ fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
-                "does not warn when everything is valid"
-                (getRgbaWarnings >> Expect.equal 0)
-            , fuzz (tuple4 ( invalidRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
-                "warns for invalid r values"
-                (getRgbaWarnings >> Expect.equal 1)
-            , fuzz (tuple4 ( validRgbValue, invalidRgbValue, validRgbValue, validAlphaValue ))
-                "warns for invalid g values"
-                (getRgbaWarnings >> Expect.equal 1)
-            , fuzz (tuple4 ( validRgbValue, validRgbValue, invalidRgbValue, validAlphaValue ))
-                "warns for invalid b values"
-                (getRgbaWarnings >> Expect.equal 1)
-            , fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, invalidAlphaValue ))
-                "warns for invalid a values"
-                (getRgbaWarnings >> Expect.equal 1)
-            ]
-        ]
 
 
 unstyledDiv : Test
@@ -146,12 +97,6 @@ compileTest =
         [ test "compile output" <|
             \() ->
                 input
-                    |> .css
                     |> outdented
                     |> Expect.equal (outdented output)
-        , test "compile warnings" <|
-            \() ->
-                input
-                    |> .warnings
-                    |> Expect.equal []
         ]

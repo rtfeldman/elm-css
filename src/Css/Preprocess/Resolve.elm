@@ -1,87 +1,42 @@
 module Css.Preprocess.Resolve exposing (compile)
 
 {-| Functions responsible for resolving Preprocess data structures into
-Structure data structures and gathering warnings along the way.
+Structure data structures.
 -}
 
 import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
 import String
-import Tuple
 
 
-compile : List Preprocess.Stylesheet -> { warnings : List String, css : String }
+compile : List Preprocess.Stylesheet -> String
 compile styles =
-    let
-        results =
-            List.map compile1 styles
-    in
-    { warnings = List.concatMap .warnings results
-    , css = String.join "\n\n" (List.map .css results)
-    }
+    String.join "\n\n" (List.map compile1 styles)
 
 
-compile1 : Preprocess.Stylesheet -> { warnings : List String, css : String }
+compile1 : Preprocess.Stylesheet -> String
 compile1 sheet =
-    let
-        ( structureStylesheet, warnings ) =
-            toStructure sheet
-    in
-    { warnings = warnings
-    , css = Output.prettyPrint (Structure.dropEmpty structureStylesheet)
-    }
+    Output.prettyPrint (Structure.dropEmpty (toStructure sheet))
 
 
-type alias DeclarationsAndWarnings =
-    { declarations : List Structure.Declaration
-    , warnings : List String
-    }
-
-
-resolveMediaRule : List Structure.MediaQuery -> List Preprocess.StyleBlock -> DeclarationsAndWarnings
+resolveMediaRule : List Structure.MediaQuery -> List Preprocess.StyleBlock -> List Structure.Declaration
 resolveMediaRule mediaQueries styleBlocks =
     let
-        handleStyleBlock : Preprocess.StyleBlock -> DeclarationsAndWarnings
+        handleStyleBlock : Preprocess.StyleBlock -> List Structure.Declaration
         handleStyleBlock styleBlock =
-            let
-                { declarations, warnings } =
-                    expandStyleBlock styleBlock
-            in
-            { declarations = List.map (toMediaRule mediaQueries) declarations
-            , warnings = warnings
-            }
-
-        results =
-            List.map handleStyleBlock styleBlocks
+            List.map (toMediaRule mediaQueries) (expandStyleBlock styleBlock)
     in
-    { warnings = List.concatMap .warnings results
-    , declarations = List.concatMap .declarations results
-    }
+    List.concatMap handleStyleBlock styleBlocks
 
 
-resolveSupportsRule : String -> List Snippet -> DeclarationsAndWarnings
+resolveSupportsRule : String -> List Snippet -> List Structure.Declaration
 resolveSupportsRule str snippets =
     let
-        { declarations, warnings } =
+        declarations =
             extract (List.concatMap unwrapSnippet snippets)
     in
-    { declarations = [ Structure.SupportsRule str declarations ]
-    , warnings = warnings
-    }
-
-
-resolveDocumentRule : String -> String -> String -> String -> Preprocess.StyleBlock -> DeclarationsAndWarnings
-resolveDocumentRule str1 str2 str3 str4 styleBlock =
-    -- TODO give these more descriptive names
-    let
-        { declarations, warnings } =
-            expandStyleBlock styleBlock
-    in
-    { declarations =
-        List.map (toDocumentRule str1 str2 str3 str4) declarations
-    , warnings = warnings
-    }
+    [ Structure.SupportsRule str declarations ]
 
 
 toMediaRule : List Structure.MediaQuery -> Structure.Declaration -> Structure.Declaration
@@ -119,84 +74,24 @@ toMediaRule mediaQueries declaration =
             declaration
 
 
-resolvePageRule : String -> List Preprocess.Property -> DeclarationsAndWarnings
-resolvePageRule str pageRuleProperties =
-    let
-        ( warnings, properties ) =
-            extractWarnings pageRuleProperties
-    in
-    { declarations = [ Structure.PageRule str properties ]
-    , warnings = warnings
-    }
-
-
-resolveFontFace : List Preprocess.Property -> DeclarationsAndWarnings
-resolveFontFace fontFaceProperties =
-    let
-        ( warnings, properties ) =
-            extractWarnings fontFaceProperties
-    in
-    { declarations = [ Structure.FontFace properties ]
-    , warnings = warnings
-    }
-
-
-resolveKeyframes : String -> List Structure.KeyframeProperty -> DeclarationsAndWarnings
-resolveKeyframes str properties =
-    { declarations = [ Structure.Keyframes str properties ]
-    , warnings = []
-    }
-
-
-resolveViewport : List Preprocess.Property -> DeclarationsAndWarnings
-resolveViewport viewportProperties =
-    let
-        ( warnings, properties ) =
-            extractWarnings viewportProperties
-    in
-    { declarations = [ Structure.Viewport properties ]
-    , warnings = warnings
-    }
-
-
-resolveCounterStyle : List Preprocess.Property -> DeclarationsAndWarnings
-resolveCounterStyle counterStyleProperties =
-    let
-        ( warnings, properties ) =
-            extractWarnings counterStyleProperties
-    in
-    { declarations = [ Structure.Viewport properties ]
-    , warnings = warnings
-    }
-
-
-resolveFontFeatureValues : List ( String, List Preprocess.Property ) -> DeclarationsAndWarnings
+resolveFontFeatureValues : List ( String, List Preprocess.Property ) -> List Structure.Declaration
 resolveFontFeatureValues tuples =
     let
         expandTuples tuplesToExpand =
             case tuplesToExpand of
                 [] ->
-                    ( [], [] )
+                    []
 
-                ( str, tupleProperties ) :: rest ->
-                    let
-                        ( warnings, properties ) =
-                            extractWarnings tupleProperties
+                properties :: rest ->
+                    properties :: expandTuples rest
 
-                        ( nextWarnings, nextTuples ) =
-                            expandTuples rest
-                    in
-                    ( warnings ++ nextWarnings, ( str, properties ) :: nextTuples )
-
-        ( warnings, newTuples ) =
+        newTuples =
             expandTuples tuples
     in
-    { declarations = [ Structure.FontFeatureValues newTuples ]
-    , warnings = warnings
-    }
+    [ Structure.FontFeatureValues newTuples ]
 
 
-toDeclarations : SnippetDeclaration -> DeclarationsAndWarnings
+toDeclarations : SnippetDeclaration -> List Structure.Declaration
 toDeclarations snippetDeclaration =
     case snippetDeclaration of
         Preprocess.StyleBlockDeclaration styleBlock ->
@@ -210,83 +105,47 @@ toDeclarations snippetDeclaration =
 
         -- TODO give these more descriptive names
         Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
-            resolveDocumentRule str1 str2 str3 str4 styleBlock
+            List.map (toDocumentRule str1 str2 str3 str4) (expandStyleBlock styleBlock)
 
-        Preprocess.PageRule str pageRuleProperties ->
-            resolvePageRule str pageRuleProperties
+        Preprocess.PageRule str properties ->
+            [ Structure.PageRule str properties ]
 
-        Preprocess.FontFace fontFaceProperties ->
-            resolveFontFace fontFaceProperties
+        Preprocess.FontFace properties ->
+            [ Structure.FontFace properties ]
 
         Preprocess.Keyframes str properties ->
-            resolveKeyframes str properties
+            [ Structure.Keyframes str properties ]
 
-        Preprocess.Viewport viewportProperties ->
-            resolveViewport viewportProperties
+        Preprocess.Viewport properties ->
+            [ Structure.Viewport properties ]
 
-        Preprocess.CounterStyle counterStyleProperties ->
-            resolveCounterStyle counterStyleProperties
+        Preprocess.CounterStyle properties ->
+            [ Structure.CounterStyle properties ]
 
         Preprocess.FontFeatureValues tuples ->
             resolveFontFeatureValues tuples
 
 
-concatDeclarationsAndWarnings : List DeclarationsAndWarnings -> DeclarationsAndWarnings
-concatDeclarationsAndWarnings declarationsAndWarnings =
-    case declarationsAndWarnings of
-        [] ->
-            { declarations = []
-            , warnings = []
-            }
-
-        { declarations, warnings } :: rest ->
-            let
-                result =
-                    concatDeclarationsAndWarnings rest
-            in
-            { declarations = declarations ++ result.declarations
-            , warnings = warnings ++ result.warnings
-            }
-
-
-extract : List SnippetDeclaration -> DeclarationsAndWarnings
+extract : List SnippetDeclaration -> List Structure.Declaration
 extract snippetDeclarations =
     case snippetDeclarations of
         [] ->
-            { declarations = [], warnings = [] }
+            []
 
         first :: rest ->
-            let
-                nextResult =
-                    extract rest
-
-                { declarations, warnings } =
-                    toDeclarations first
-            in
-            { declarations = declarations ++ nextResult.declarations
-            , warnings = warnings ++ nextResult.warnings
-            }
+            toDeclarations first ++ extract rest
 
 
-applyStyles : List Style -> List Structure.Declaration -> DeclarationsAndWarnings
+applyStyles : List Style -> List Structure.Declaration -> List Structure.Declaration
 applyStyles styles declarations =
     case styles of
         [] ->
-            { declarations = declarations, warnings = [] }
+            declarations
 
-        (AppendProperty propertyToAppend) :: rest ->
-            let
-                ( warnings, property ) =
-                    extractWarning propertyToAppend
-
-                result =
-                    declarations
-                        |> Structure.appendProperty property
-                        |> applyStyles rest
-            in
-            { declarations = result.declarations
-            , warnings = warnings ++ result.warnings
-            }
+        (AppendProperty property) :: rest ->
+            declarations
+                |> Structure.appendProperty property
+                |> applyStyles rest
 
         (ExtendSelector selector nestedStyles) :: rest ->
             applyNestedStylesToLast
@@ -303,7 +162,7 @@ applyStyles styles declarations =
                         (originalTuples ++ (( selectorCombinator, newSequence ) :: newTuples))
                         (oneOf [ newPseudoElement, originalPseudoElement ])
 
-                expandDeclaration : SnippetDeclaration -> DeclarationsAndWarnings
+                expandDeclaration : SnippetDeclaration -> List Structure.Declaration
                 expandDeclaration declaration =
                     case declaration of
                         Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock firstSelector otherSelectors nestedStyles) ->
@@ -321,8 +180,7 @@ applyStyles styles declarations =
                                             [ Structure.StyleBlockDeclaration (Structure.StyleBlock first rest [])
                                             ]
                             in
-                            [ applyStyles nestedStyles newDeclarations ]
-                                |> concatDeclarationsAndWarnings
+                            applyStyles nestedStyles newDeclarations
 
                         Preprocess.MediaRule mediaQueries styleBlocks ->
                             resolveMediaRule mediaQueries styleBlocks
@@ -332,22 +190,22 @@ applyStyles styles declarations =
 
                         -- TODO give these more descriptive names
                         Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
-                            resolveDocumentRule str1 str2 str3 str4 styleBlock
+                            List.map (toDocumentRule str1 str2 str3 str4) (expandStyleBlock styleBlock)
 
-                        Preprocess.PageRule str pageRuleProperties ->
-                            resolvePageRule str pageRuleProperties
+                        Preprocess.PageRule str properties ->
+                            [ Structure.PageRule str properties ]
 
-                        Preprocess.FontFace fontFaceProperties ->
-                            resolveFontFace fontFaceProperties
+                        Preprocess.FontFace properties ->
+                            [ Structure.FontFace properties ]
 
                         Preprocess.Keyframes str properties ->
-                            resolveKeyframes str properties
+                            [ Structure.Keyframes str properties ]
 
-                        Preprocess.Viewport viewportProperties ->
-                            resolveViewport viewportProperties
+                        Preprocess.Viewport properties ->
+                            [ Structure.Viewport properties ]
 
-                        Preprocess.CounterStyle counterStyleProperties ->
-                            resolveCounterStyle counterStyleProperties
+                        Preprocess.CounterStyle properties ->
+                            [ Structure.CounterStyle properties ]
 
                         Preprocess.FontFeatureValues tuples ->
                             resolveFontFeatureValues tuples
@@ -356,7 +214,7 @@ applyStyles styles declarations =
                 |> List.concatMap unwrapSnippet
                 |> List.map expandDeclaration
                 |> (++) [ applyStyles rest declarations ]
-                |> concatDeclarationsAndWarnings
+                |> List.concat
 
         (Preprocess.WithPseudoElement pseudoElement nestedStyles) :: rest ->
             applyNestedStylesToLast
@@ -377,10 +235,8 @@ applyStyles styles declarations =
                                 |> Structure.MediaRule mediaQueries
                             ]
             in
-            [ applyStyles rest declarations
-            , applyStyles nestedStyles newDeclarations
-            ]
-                |> concatDeclarationsAndWarnings
+            applyStyles rest declarations
+                ++ applyStyles nestedStyles newDeclarations
 
         (Preprocess.ApplyStyles otherStyles) :: rest ->
             declarations
@@ -403,28 +259,22 @@ applyStyles styles declarations =
 -}
 
 
-applyNestedStylesToLast : List Style -> List Style -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> DeclarationsAndWarnings
+applyNestedStylesToLast : List Style -> List Style -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> List Structure.Declaration
 applyNestedStylesToLast nestedStyles rest f declarations =
     let
-        handleInitial declarationsAndWarnings =
-            let
-                result =
-                    applyStyles nestedStyles declarationsAndWarnings.declarations
-            in
-            { warnings = declarationsAndWarnings.warnings ++ result.warnings
-            , declarations = result.declarations
-            }
+        handleInitial declarations =
+            applyStyles nestedStyles declarations
 
         initialResult =
             lastDeclaration declarations
                 |> Maybe.map insertStylesToNestedDecl
-                |> Maybe.withDefault { warnings = [], declarations = [] }
+                |> Maybe.withDefault []
 
         insertStylesToNestedDecl lastDecl =
             Structure.concatMapLastStyleBlock f lastDecl
-                |> List.map (\declaration -> { declarations = [ declaration ], warnings = [] })
+                |> List.map List.singleton
                 |> mapLast handleInitial
-                |> concatDeclarationsAndWarnings
+                |> List.concat
 
         nextResult =
             lastDeclaration declarations
@@ -440,7 +290,7 @@ applyNestedStylesToLast nestedStyles rest f declarations =
            or an `AppendProperty` after an `ExtendSelector` or `WithPseudoElement`.
         -}
         newDeclarations =
-            case ( List.head nextResult.declarations, List.head <| List.reverse declarations ) of
+            case ( List.head nextResult, last declarations ) of
                 ( Just nextResultParent, Just originalParent ) ->
                     List.take (List.length declarations - 1) declarations
                         ++ [ if originalParent /= nextResultParent then
@@ -452,9 +302,7 @@ applyNestedStylesToLast nestedStyles rest f declarations =
                 _ ->
                     declarations
     in
-    { warnings = initialResult.warnings ++ nextResult.warnings
-    , declarations = newDeclarations ++ withoutParent initialResult.declarations ++ withoutParent nextResult.declarations
-    }
+    newDeclarations ++ withoutParent initialResult ++ withoutParent nextResult
 
 
 lastDeclaration : List Structure.Declaration -> Maybe (List Structure.Declaration)
@@ -470,27 +318,25 @@ lastDeclaration declarations =
             lastDeclaration xs
 
 
-expandStyleBlock : Preprocess.StyleBlock -> DeclarationsAndWarnings
+expandStyleBlock : Preprocess.StyleBlock -> List Structure.Declaration
 expandStyleBlock (Preprocess.StyleBlock firstSelector otherSelectors styles) =
     [ Structure.StyleBlockDeclaration (Structure.StyleBlock firstSelector otherSelectors []) ]
         |> applyStyles styles
 
 
-toStructure : Preprocess.Stylesheet -> ( Structure.Stylesheet, List String )
+toStructure : Preprocess.Stylesheet -> Structure.Stylesheet
 toStructure { charset, imports, namespaces, snippets } =
     let
-        { warnings, declarations } =
+        declarations =
             snippets
                 |> List.concatMap unwrapSnippet
                 |> extract
     in
-    ( { charset = charset
-      , imports = imports
-      , namespaces = namespaces
-      , declarations = declarations
-      }
-    , warnings
-    )
+    { charset = charset
+    , imports = imports
+    , namespaces = namespaces
+    , declarations = declarations
+    }
 
 
 toDocumentRule : String -> String -> String -> String -> Structure.Declaration -> Structure.Declaration
@@ -502,18 +348,6 @@ toDocumentRule str1 str2 str3 str4 declaration =
         _ ->
             -- TODO do something more interesting here?
             declaration
-
-
-extractWarnings : List Preprocess.Property -> ( List String, List Structure.Property )
-extractWarnings properties =
-    ( List.concatMap .warnings properties
-    , List.map (\prop -> Tuple.second (extractWarning prop)) properties
-    )
-
-
-extractWarning : Preprocess.Property -> ( List String, Structure.Property )
-extractWarning { warnings, key, value, important } =
-    ( warnings, { key = key, value = value, important = important } )
 
 
 collectSelectors : List Structure.Declaration -> List Structure.Selector
@@ -542,3 +376,16 @@ oneOf maybes =
 
                 Just _ ->
                     maybe
+
+
+last : List a -> Maybe a
+last list =
+    case list of
+        [] ->
+            Nothing
+
+        singleton :: [] ->
+            Just singleton
+
+        first :: rest ->
+            last rest

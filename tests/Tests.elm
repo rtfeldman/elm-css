@@ -1,6 +1,5 @@
 module Tests exposing (..)
 
-import Css.Preprocess exposing (Stylesheet)
 import Expect exposing (Expectation)
 import Fixtures
 import Test exposing (..)
@@ -532,45 +531,6 @@ fonts =
                 outdented (prettyPrint input)
                     |> Expect.equal (outdented output)
         ]
-
-
-weightWarning : Test
-weightWarning =
-    let
-        input =
-            Fixtures.fontWeightWarning
-
-        output =
-            """
-            Invalid Stylesheet:
-            fontWeight 22 is invalid. Valid weights are: 100, 200, 300, 400, 500, 600, 700, 800, 900. Please see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Values"""
-    in
-    describe "fontWeightWarning"
-        [ test "pretty prints the expected output" <|
-            \_ ->
-                outdented (prettyPrint input)
-                    |> Expect.equal (outdented output)
-        ]
-
-
-hexWarning : Test
-hexWarning =
-    describe "invalid hex colors"
-        [ test "prints a warning for an invalid hex color" <|
-            \_ ->
-                expectInvalidStylesheet Fixtures.colorHexWarning
-        , test "prints a warning for an invalid abbreviated hex color" <|
-            \_ ->
-                expectInvalidStylesheet Fixtures.colorHexAbbrWarning
-        ]
-
-
-expectInvalidStylesheet : Stylesheet -> Expectation
-expectInvalidStylesheet stylesheet =
-    stylesheet
-        |> prettyPrint
-        |> String.contains "Invalid Stylesheet"
-        |> Expect.true "Stylesheet was valid, but should have been invalid."
 
 
 pseudoElements : Test
