@@ -488,3 +488,13 @@ dropEmptyDeclarations declarations =
                 dropEmptyDeclarations rest
             else
                 declaration :: dropEmptyDeclarations rest
+
+
+styleBlockToMediaRule : List MediaQuery -> Declaration -> Declaration
+styleBlockToMediaRule mediaQueries declaration =
+    case declaration of
+        StyleBlockDeclaration styleBlock ->
+            MediaRule mediaQueries [ styleBlock ]
+
+        _ ->
+            declaration

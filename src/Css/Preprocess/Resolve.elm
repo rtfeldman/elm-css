@@ -5,7 +5,7 @@ Structure data structures.
 -}
 
 import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
-import Css.Structure as Structure exposing (Property, mapLast)
+import Css.Structure as Structure exposing (Property, mapLast, styleBlockToMediaRule)
 import Css.Structure.Output as Output
 import String
 
@@ -225,19 +225,22 @@ applyStyles styles declarations =
 
         (Preprocess.WithMedia mediaQueries nestedStyles) :: rest ->
             let
-                newDeclarations =
+                extraDeclarations =
                     case collectSelectors declarations of
                         [] ->
                             []
 
                         firstSelector :: otherSelectors ->
                             Structure.StyleBlock firstSelector otherSelectors []
+                                -- Start with a style block
+                                |> Structure.StyleBlockDeclaration
                                 |> List.singleton
-                                |> Structure.MediaRule mediaQueries
-                                |> List.singleton
+                                -- Then apply the nested styles.
+                                |> applyStyles nestedStyles
+                                -- Finally, convert the block into a media rule.
+                                |> List.map (styleBlockToMediaRule mediaQueries)
             in
-            applyStyles rest declarations
-                ++ applyStyles nestedStyles newDeclarations
+            applyStyles rest declarations ++ extraDeclarations
 
         (Preprocess.ApplyStyles otherStyles) :: rest ->
             declarations
