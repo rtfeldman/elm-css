@@ -1,7 +1,7 @@
 module Media exposing (..)
 
 import Css exposing (..)
-import Css.Foreign exposing (Snippet, a, body, button, class, media, mediaQuery, p)
+import Css.Foreign exposing (Snippet, a, body, button, class, li, media, mediaQuery, p, ul)
 import Css.Media as Media exposing (..)
 import Css.Preprocess exposing (stylesheet)
 import Expect
@@ -259,9 +259,25 @@ testWithMedia =
                     [ Css.color (hex "333333")
                     , withMedia [ only print [], Media.all [ monochrome ] ] [ Css.color (hex "000000") ]
                     ]
+                , p
+                    [ withMedia [ only screen [] ] [ textDecoration underline ]
+                    , Css.color (hex "AA0000")
+                    ]
                 , a
-                    [ Css.color (hex "FF0000")
+                    [ withMedia [ only print [] ] [ textDecoration none ]
+                    , withMedia [ only screen [] ] [ textDecoration underline ]
+                    , Css.color (hex "BB0000")
+                    ]
+                , ul
+                    [ Css.color (hex "CC0000")
                     , withMedia [ only print [] ] [ textDecoration none ]
+                    , withMedia [ only screen [] ] [ textDecoration underline ]
+                    ]
+                , li
+                    [ Css.color (hex "DD0000")
+                    , withMedia [ only print [] ] [ textDecoration none ]
+                    , withMedia [ only screen [] ] [ textDecoration underline ]
+                    , Css.backgroundColor (hex "EE0000")
                     ]
                 , class Container
                     [ Css.maxWidth (px 800)
@@ -285,14 +301,63 @@ testWithMedia =
                body {
                    color:#000000;
                }
-             }
+            }
+
+            p {
+                color:#AA0000;
+            }
+
+            @media only screen {
+               p {
+                   text-decoration:underline;
+               }
+            }
 
             a {
-               color:#FF0000;
+                color:#BB0000;
+            }
+
+            @media only screen {
+               a {
+                   text-decoration:underline;
+               }
             }
 
             @media only print {
                a {
+                   text-decoration:none;
+               }
+            }
+
+            ul {
+                color:#CC0000;
+            }
+
+            @media only screen {
+               ul {
+                   text-decoration:underline;
+               }
+            }
+
+            @media only print {
+               ul {
+                   text-decoration:none;
+               }
+            }
+
+            li {
+                color:#DD0000;
+                background-color:#EE0000;
+            }
+
+            @media only screen {
+               li {
+                   text-decoration:underline;
+               }
+            }
+
+            @media only print {
+               li {
                    text-decoration:none;
                }
             }
