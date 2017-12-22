@@ -382,6 +382,145 @@ testWithMedia =
         ]
 
 
+withMediaOutside : Test
+withMediaOutside =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ Css.color (hex "ff0000")
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                ]
+
+        output =
+            """
+            body {
+                color:#ff0000;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the outside"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+withMediaOutsideAndOtherDeclarations : Test
+withMediaOutsideAndOtherDeclarations =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ Css.color (hex "ff0000")
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    , Css.backgroundColor (hex "0000aa")
+                    ]
+                ]
+
+        output =
+            """
+            body {
+                color:#ff0000;
+                background-color:#0000aa;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the outside and other declarations"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+withMediaInside : Test
+withMediaInside =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                        [ nthOfType "2n+1"
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                ]
+
+        output =
+            """
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the inside"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+withMediaInsideAndOtheDeclarations : Test
+withMediaInsideAndOtheDeclarations =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ Css.color (hex "ff0000")
+                    , withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                        [ nthOfType "2n+1"
+                            [ marginRight (px 16) ]
+                        ]
+                    , Css.backgroundColor (hex "0000aa")
+                    ]
+                ]
+
+        output =
+            """
+            body {
+                color:#ff0000;
+                background-color:#0000aa;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the inside and other declarations"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
 bug352 : Test
 bug352 =
     let
