@@ -1,7 +1,7 @@
 module Media exposing (..)
 
 import Css exposing (..)
-import Css.Foreign exposing (Snippet, a, body, button, class, media, mediaQuery, p)
+import Css.Foreign exposing (Snippet, a, body, button, class, li, media, mediaQuery, p, ul)
 import Css.Media as Media exposing (..)
 import Css.Preprocess exposing (stylesheet)
 import Expect
@@ -259,9 +259,25 @@ testWithMedia =
                     [ Css.color (hex "333333")
                     , withMedia [ only print [], Media.all [ monochrome ] ] [ Css.color (hex "000000") ]
                     ]
+                , p
+                    [ withMedia [ only screen [] ] [ textDecoration underline ]
+                    , Css.color (hex "AA0000")
+                    ]
                 , a
-                    [ Css.color (hex "FF0000")
+                    [ withMedia [ only print [] ] [ textDecoration none ]
+                    , withMedia [ only screen [] ] [ textDecoration underline ]
+                    , Css.color (hex "BB0000")
+                    ]
+                , ul
+                    [ Css.color (hex "CC0000")
                     , withMedia [ only print [] ] [ textDecoration none ]
+                    , withMedia [ only screen [] ] [ textDecoration underline ]
+                    ]
+                , li
+                    [ Css.color (hex "DD0000")
+                    , withMedia [ only print [] ] [ textDecoration none ]
+                    , withMedia [ only screen [] ] [ textDecoration underline ]
+                    , Css.backgroundColor (hex "EE0000")
                     ]
                 , class Container
                     [ Css.maxWidth (px 800)
@@ -285,14 +301,63 @@ testWithMedia =
                body {
                    color:#000000;
                }
-             }
+            }
+
+            p {
+                color:#AA0000;
+            }
+
+            @media only screen {
+               p {
+                   text-decoration:underline;
+               }
+            }
 
             a {
-               color:#FF0000;
+                color:#BB0000;
+            }
+
+            @media only screen {
+               a {
+                   text-decoration:underline;
+               }
             }
 
             @media only print {
                a {
+                   text-decoration:none;
+               }
+            }
+
+            ul {
+                color:#CC0000;
+            }
+
+            @media only screen {
+               ul {
+                   text-decoration:underline;
+               }
+            }
+
+            @media only print {
+               ul {
+                   text-decoration:none;
+               }
+            }
+
+            li {
+                color:#DD0000;
+                background-color:#EE0000;
+            }
+
+            @media only screen {
+               li {
+                   text-decoration:underline;
+               }
+            }
+
+            @media only print {
+               li {
                    text-decoration:none;
                }
             }
@@ -310,6 +375,227 @@ testWithMedia =
             """
     in
     describe "nested @media test"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+withMediaOutside : Test
+withMediaOutside =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ Css.color (hex "ff0000")
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                ]
+
+        output =
+            """
+            body {
+                color:#ff0000;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the outside"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+withMediaOutsideAndOtherDeclarations : Test
+withMediaOutsideAndOtherDeclarations =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ Css.color (hex "ff0000")
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    , Css.backgroundColor (hex "0000aa")
+                    ]
+                ]
+
+        output =
+            """
+            body {
+                color:#ff0000;
+                background-color:#0000aa;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the outside and other declarations"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+withMediaInside : Test
+withMediaInside =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                        [ nthOfType "2n+1"
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                ]
+
+        output =
+            """
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the inside"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+withMediaInsideAndOtheDeclarations : Test
+withMediaInsideAndOtheDeclarations =
+    let
+        input =
+            stylesheet
+                [ body
+                    [ Css.color (hex "ff0000")
+                    , withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                        [ nthOfType "2n+1"
+                            [ marginRight (px 16) ]
+                        ]
+                    , Css.backgroundColor (hex "0000aa")
+                    ]
+                ]
+
+        output =
+            """
+            body {
+                color:#ff0000;
+                background-color:#0000aa;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+            """
+    in
+    describe "withMedia on the inside and other declarations"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+bug352 : Test
+bug352 =
+    let
+        input =
+            stylesheet
+                [ button [ padding zero ]
+                , body
+                    [ Css.color (hex "333333")
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                , a
+                    [ Css.color (hex "FF0000")
+                    , withMedia [ only print [] ] [ textDecoration none ]
+                    , nthOfType "2n+1"
+                        [ withMedia [ only screen [ Media.minWidth (px 600) ] ]
+                            [ marginRight (px 16) ]
+                        ]
+                    ]
+                , class Container
+                    [ Css.maxWidth (px 800)
+                    , withMedia [ only screen [ Media.maxWidth (px 375) ], only screen [ Media.maxHeight (px 667) ] ]
+                        [ Css.maxWidth (px 300) ]
+                    , Css.maxHeight (px 600)
+                    ]
+                ]
+
+        output =
+            """
+            button {
+                padding:0;
+            }
+
+            body {
+                color:#333333;
+            }
+
+            @media only screen and (min-width: 600px) {
+               body:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+             }
+
+            a {
+               color:#FF0000;
+            }
+
+            @media only screen and (min-width: 600px) {
+               a:nth-of-type(2n+1) {
+                   margin-right:16px;
+               }
+            }
+
+            @media only print {
+               a {
+                   text-decoration:none;
+               }
+            }
+
+            .Container {
+               max-width:800px;
+               max-height:600px;
+            }
+
+            @media only screen and (max-width: 375px),
+             only screen and (max-height: 667px) {
+               .Container {
+                   max-width:300px;
+               }
+            }
+            """
+    in
+    describe "Regression test for #352"
         [ test "pretty prints the expected output" <|
             \_ ->
                 outdented (prettyPrint input)
