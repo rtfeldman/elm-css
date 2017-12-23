@@ -144,7 +144,7 @@ module Css.Media
 -}
 
 import Css exposing (Style)
-import Css.Preprocess as Preprocess exposing (unwrapSnippet)
+import Css.Preprocess as Preprocess
 import Css.Structure as Structure exposing (..)
 
 
@@ -320,24 +320,6 @@ The above code translates into the following CSS.
 not : MediaType -> List Expression -> MediaQuery
 not =
     NotQuery
-
-
-connectWith :
-    (Structure.MediaQuery -> Structure.MediaQuery -> Structure.MediaQuery)
-    -> List Structure.MediaQuery
-    -> Maybe Structure.MediaQuery
-connectWith connect queries =
-    case queries of
-        [] ->
-            Nothing
-
-        first :: rest ->
-            case connectWith connect rest of
-                Nothing ->
-                    Just first
-
-                Just second ->
-                    Just (connect first second)
 
 
 

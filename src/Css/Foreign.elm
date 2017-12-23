@@ -151,7 +151,7 @@ third-party DOM nodes!
 
 -}
 
-import Css.Helpers exposing (identifierToString, toCssIdentifier)
+import Css.Helpers exposing (identifierToString)
 import Css.Media exposing (MediaQuery)
 import Css.Preprocess as Preprocess
     exposing
@@ -301,7 +301,7 @@ media queries snippets =
                 (Preprocess.StyleBlockDeclaration styleBlock) :: rest ->
                     styleBlock :: extractStyleBlocks rest
 
-                first :: rest ->
+                _ :: rest ->
                     extractStyleBlocks rest
 
         mediaRuleFromStyleBlocks : Preprocess.SnippetDeclaration
