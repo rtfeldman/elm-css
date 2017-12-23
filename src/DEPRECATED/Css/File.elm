@@ -36,7 +36,7 @@ Functions for writing CSS files from elm-css.
 
 -}
 
-import Css.Preprocess as Preprocess exposing (Snippet, Style, unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Snippet, Style)
 import Css.Preprocess.Resolve as Resolve
 
 

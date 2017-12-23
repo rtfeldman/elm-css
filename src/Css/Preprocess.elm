@@ -4,7 +4,7 @@ module Css.Preprocess exposing (..)
 the data structures found in this module.
 -}
 
-import Css.Structure as Structure exposing (MediaQuery, Property, concatMapLast, mapLast)
+import Css.Structure as Structure exposing (MediaQuery, Property, mapLast)
 
 
 stylesheet : List Snippet -> Stylesheet
@@ -138,8 +138,8 @@ toPropertyStrings styles =
         (AppendProperty str) :: rest ->
             str :: toPropertyStrings rest
 
-        (ApplyStyles styles) :: rest ->
-            toPropertyStrings styles ++ toPropertyStrings rest
+        (ApplyStyles otherStyles) :: rest ->
+            toPropertyStrings otherStyles ++ toPropertyStrings rest
 
         _ :: rest ->
             toPropertyStrings rest
