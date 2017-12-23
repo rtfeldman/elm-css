@@ -200,8 +200,8 @@ selectorToString : Selector -> String
 selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
     let
         segments =
-            [ simpleSelectorSequenceToString simpleSelectorSequence ]
-                ++ List.map selectorChainToString chain
+            simpleSelectorSequenceToString simpleSelectorSequence
+                :: List.map selectorChainToString chain
 
         pseudoElementsString =
             String.join "" [ Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement) ]

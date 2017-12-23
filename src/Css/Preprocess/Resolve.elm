@@ -176,8 +176,8 @@ applyStyles styles declarations =
                                         [] ->
                                             []
 
-                                        first :: rest ->
-                                            [ Structure.StyleBlockDeclaration (Structure.StyleBlock first rest [])
+                                        first :: remainder ->
+                                            [ Structure.StyleBlockDeclaration (Structure.StyleBlock first remainder [])
                                             ]
                             in
                             applyStyles nestedStyles newDeclarations
@@ -185,8 +185,8 @@ applyStyles styles declarations =
                         Preprocess.MediaRule mediaQueries styleBlocks ->
                             resolveMediaRule mediaQueries styleBlocks
 
-                        Preprocess.SupportsRule str snippets ->
-                            resolveSupportsRule str snippets
+                        Preprocess.SupportsRule str otherSnippets ->
+                            resolveSupportsRule str otherSnippets
 
                         -- TODO give these more descriptive names
                         Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
@@ -266,9 +266,6 @@ applyStyles styles declarations =
 applyNestedStylesToLast : List Style -> List Style -> (Structure.StyleBlock -> List Structure.StyleBlock) -> List Structure.Declaration -> List Structure.Declaration
 applyNestedStylesToLast nestedStyles rest f declarations =
     let
-        handleInitial declarations =
-            applyStyles nestedStyles declarations
-
         initialResult =
             lastDeclaration declarations
                 |> Maybe.map insertStylesToNestedDecl
@@ -277,7 +274,7 @@ applyNestedStylesToLast nestedStyles rest f declarations =
         insertStylesToNestedDecl lastDecl =
             Structure.concatMapLastStyleBlock f lastDecl
                 |> List.map List.singleton
-                |> mapLast handleInitial
+                |> mapLast (applyStyles nestedStyles)
                 |> List.concat
 
         nextResult =
@@ -391,5 +388,5 @@ last list =
         singleton :: [] ->
             Just singleton
 
-        first :: rest ->
+        _ :: rest ->
             last rest

@@ -133,8 +133,8 @@ onWithOptions eventName options decoder =
 
 
 mapProperty : (a -> b) -> Property a -> Property b
-mapProperty transform (Property property styles classname) =
-    Property (VirtualDom.mapProperty transform property) styles classname
+mapProperty transform (Property prop styles classname) =
+    Property (VirtualDom.mapProperty transform prop) styles classname
 
 
 lazy : (a -> VirtualDom.Node msg) -> a -> Node msg
@@ -267,7 +267,7 @@ accumulateStyles :
     Property msg
     -> Dict Classname (List Style)
     -> Dict Classname (List Style)
-accumulateStyles (Property property newStyles classname) styles =
+accumulateStyles (Property _ newStyles classname) styles =
     if List.isEmpty newStyles then
         styles
     else

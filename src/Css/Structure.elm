@@ -228,8 +228,8 @@ extendLastSelector selector declarations =
                 (MediaRule newMediaQueries newStyleBlocks) :: [] ->
                     [ MediaRule newMediaQueries (first :: newStyleBlocks) ]
 
-                _ as declarations ->
-                    declarations
+                newDeclarations ->
+                    newDeclarations
 
         (SupportsRule str nestedDeclarations) :: [] ->
             [ SupportsRule str (extendLastSelector selector nestedDeclarations) ]
@@ -327,8 +327,8 @@ concatMapLastStyleBlock update declarations =
                 (MediaRule newMediaQueries newStyleBlocks) :: [] ->
                     [ MediaRule newMediaQueries (first :: newStyleBlocks) ]
 
-                _ as declarations ->
-                    declarations
+                newDeclarations ->
+                    newDeclarations
 
         (SupportsRule str nestedDeclarations) :: [] ->
             [ SupportsRule str (concatMapLastStyleBlock update nestedDeclarations) ]
