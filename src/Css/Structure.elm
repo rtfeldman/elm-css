@@ -17,9 +17,14 @@ type alias Number compatible =
 
 
 {-| A property consisting of a key:value string.
+
+Ideally, this would be `type Property = Property String` - but in order to
+reduce allocations, we're doing it as a `type alias` until union types with
+one constructor get unboxed automatically.
+
 -}
-type Property
-    = Property String
+type alias Property =
+    String
 
 
 {-| A stylesheet. Since they follow such specific rules, the following at-rules

@@ -1082,7 +1082,7 @@ Other notes:
 getOverloadedProperty : String -> String -> Style -> Style
 getOverloadedProperty functionName desiredKey style =
     case style of
-        Preprocess.AppendProperty (Property str) ->
+        Preprocess.AppendProperty str ->
             let
                 key =
                     String.split ":" str
@@ -1775,15 +1775,15 @@ declaration.
 -}
 important : Style -> Style
 important =
-    Preprocess.mapLastProperty (\(Property str) -> Property (makeImportant str))
+    Preprocess.mapLastProperty makeImportant
 
 
-makeImportant : String -> String
-makeImportant value =
-    if String.endsWith " !important" (String.toLower value) then
-        value
+makeImportant : Property -> Property
+makeImportant str =
+    if String.endsWith " !important" (String.toLower str) then
+        str
     else
-        value ++ " !important"
+        str ++ " !important"
 
 
 {-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
@@ -7758,7 +7758,7 @@ batch =
 -}
 property : String -> String -> Style
 property key value =
-    Property (key ++ ":" ++ value)
+    (key ++ ":" ++ value)
         |> Preprocess.AppendProperty
 
 
