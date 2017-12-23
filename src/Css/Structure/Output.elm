@@ -229,7 +229,7 @@ combinatorToString combinator =
 
 
 emitProperty : Property -> String
-emitProperty (Property str) =
+emitProperty str =
     str ++ ";"
 
 
