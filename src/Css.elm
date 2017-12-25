@@ -30,6 +30,7 @@ module Css
         , contextMenu
         , copy
         , crosshair
+        , cursor
         , default
         , display
         , displayFlex
@@ -105,6 +106,11 @@ module Css
 {-|
 
 
+## Types
+
+@docs Style, Value, Supported
+
+
 ## General Values
 
 All CSS properties can have the values `unset`, `initial`, and `inherit`.
@@ -170,11 +176,18 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs arabicIndic, armenian
 
 
+## Align-Items
+
+@docs normal, left, right, center, safeCenter, unsafeCenter
+@docs start, selfStart, end, selfEnd, baseline, firstBaseline, lastBaseline
+@docs flexStart, flexEnd
+
+
 ## Shared Values
 
 Multiple CSS properties use these values.
 
-@docs auto, none
+@docs auto, none, zero, url
 
 -}
 
@@ -798,11 +811,23 @@ end =
     Value "end"
 
 
+{-| The[`flex-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
+align-items property.
+
+Can also be used with flex-box's justify-content property to apply the value of flex-start.
+
+-}
 flexStart : Value { provides | flexStart : Supported }
 flexStart =
     Value "flex-start"
 
 
+{-| The[`flex-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
+align-items property.
+
+Can also be used with flex-box's justify-content property to apply the value of flex-end.
+
+-}
 flexEnd : Value { provides | flexEnd : Supported }
 flexEnd =
     Value "flex-end"
