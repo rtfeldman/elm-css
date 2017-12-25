@@ -1,11 +1,13 @@
 module Css
     exposing
-        ( Style
+        ( Color
+        , Style
         , Supported
         , Value
         , absolute
         , active
         , after
+        , alias
         , alignItems
         , alignSelf
         , all
@@ -16,34 +18,74 @@ module Css
         , arabicIndic
         , armenian
         , auto
+        , backgroundColor
         , baseline
+        , cell
         , center
+        , colResize
+        , color
+        , contextMenu
+        , copy
+        , crosshair
+        , default
         , display
         , displayFlex
+        , eResize
         , end
+        , ewResize
         , firstBaseline
         , flexEnd
         , flexStart
+        , grab
+        , grabbing
+        , help
+        , hex
+        , hsl
+        , hsla
         , inherit
         , initial
         , lastBaseline
         , left
+        , move
+        , nResize
+        , neResize
+        , neswResize
+        , noDrop
         , none
         , normal
+        , notAllowed
+        , nsResize
+        , nwResize
+        , nwseResize
         , pct
+        , pointer
+        , progress
         , pseudoClass
         , pseudoElement
         , px
         , revert
+        , rgb
+        , rgba
         , right
+        , rowResize
+        , sResize
         , safeCenter
+        , seResize
         , selfEnd
         , selfStart
         , start
         , stretch
+        , swResize
+        , text
         , unsafeCenter
         , unset
+        , url
+        , verticalText
+        , wResize
+        , wait
         , zero
+        , zoomIn
+        , zoomOut
         )
 
 {-|
@@ -51,14 +93,21 @@ module Css
 
 ## General Values
 
-All CSS properties can have these values.
+All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
-@docs unset, initial, inherit, all, revert, auto, none
+@docs unset, initial, inherit
+
+@docs all, revert
 
 
 ## Numeric Units
 
 @docs zero, px, pct
+
+
+## Color
+
+@docs Color, color, backgroundColor, hex, rgb, rgba, hsl, hsla
 
 
 ## Pseudo-Classes
@@ -93,12 +142,23 @@ All CSS properties can have these values.
 
 ## Cursors
 
-@docs allScroll
+@docs cursor, pointer, default, contextMenu, help, progress, wait, cell
+@docs crosshair, text, verticalText, alias, copy, move, noDrop
+@docs notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
+@docs wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
+@docs neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
 
 
 ## List Style Type
 
 @docs arabicIndic, armenian
+
+
+## Shared Values
+
+Multiple CSS properties use these values.
+
+@docs auto, none
 
 -}
 
@@ -109,14 +169,54 @@ import Css.Structure as Structure
 -- TYPES --
 
 
+{-| A CSS property (such as `color`), or multiple properties grouped into one.
+
+    invisible : Style
+    invisible =
+        display none
+
+This corresponds to the CSS `display: none`.
+
+    boldAndUnderlineOnHover : Style
+    boldAndUnderlineOnHover =
+        hover [ textDecoration underline, fontWeight bold ]
+
+This (roughly) corresponds to the CSS `:hover { text-decoration: underline; font-weight: bold; }`.
+
+You can use `Style` values to reuse styles (like [mixins](http://sass-lang.com/guide#topic-6)
+in other CSS systems). [`batch`](#batch) comes in handy for this!
+
+-}
 type alias Style =
     Preprocess.Style
 
 
-type Value r
+{-| A value that can be passed to a CSS property.
+
+    limeGreen : Value { supports | rgb : Supported }
+    limeGreen =
+        rgb 0 100 44
+
+The type variable value of `{ supports | rgb : Supported }` is there because
+CSS has so many overloaded values. For example, it's important that
+`display none` and `flex none` both compile, yet whereas `display block` should
+compile, `flex block` should not. Having open records in the type variables
+for `Value` makes satisfying these overlapping constraints possible.
+
+For convenience, there are type aliases for certain values which are often
+reused. [`Color`](#Color) is one of these.
+
+    limeGreen : Css.Color
+    limeGreen =
+        rgb 0 100 44
+
+-}
+type Value supports
     = Value String
 
 
+{-| A type used to specify which properties and which values work together.
+-}
 type Supported
     = Supported
 
@@ -186,6 +286,18 @@ revert =
     Value "revert"
 
 
+
+-- SHARED VALUES --
+
+
+{-| The `url` value for the [`cursor`](#cursor) and [`backgroundImage`](#backgroundImage)
+properties.
+-}
+url : String -> Value { provides | url : Supported }
+url str =
+    Value ("url(" ++ ")")
+
+
 {-| The `auto` value used for properties such as [`width`](#width).
 
     width auto
@@ -204,6 +316,131 @@ auto =
 none : Value { provides | none : Supported }
 none =
     Value "none"
+
+
+
+-- COLORS --
+
+
+{-| A color created with [`hex`](#hex), [`rgb`](#rgb), [`rgba`](#rgba),
+[`hsl`](#hsl), or [`hsla`](#hsla). `Color` can be used to annotate values
+returned by any of those functions.
+
+    limeGreen : Css.Color
+    limeGreen =
+        rgb 0 100 44
+
+    rebeccaPurple : Css.Color
+    rebeccaPurple =
+        hex "#663399"
+
+-}
+type alias Color =
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        }
+
+
+color :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        }
+    -> Style
+color (Value val) =
+    AppendProperty ("color:" ++ val)
+
+
+backgroundColor : Value { rgb : Supported } -> Style
+backgroundColor (Value val) =
+    AppendProperty ("background-color:" ++ val)
+
+
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
+in functional notation.
+-}
+rgb : Int -> Int -> Int -> Value { provides | rgb : Supported }
+rgb red green blue =
+    Value <|
+        "rgb("
+            ++ toString red
+            ++ ","
+            ++ toString green
+            ++ ","
+            ++ toString blue
+            ++ ")"
+
+
+{-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
+-}
+rgba : Int -> Int -> Int -> Float -> Value { provides | rgba : Supported }
+rgba red green blue alpha =
+    Value <|
+        "rgba("
+            ++ toString red
+            ++ ","
+            ++ toString green
+            ++ ","
+            ++ toString blue
+            ++ ","
+            ++ toString alpha
+            ++ ")"
+
+
+{-| [HSL color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl())
+`s` and `l` values are expressed as a number between 0 and 1 and are converted
+to the appropriate percentage at compile-time
+-}
+hsl : Float -> Float -> Float -> Value { provides | hsl : Supported }
+hsl hue saturation lightness =
+    Value <|
+        "hsl("
+            ++ toString hue
+            ++ ","
+            ++ toString (saturation * 100)
+            ++ "%,"
+            ++ toString (lightness * 100)
+            ++ "%,"
+            ++ ")"
+
+
+{-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
+`s` and `l` values are expressed as a number between 0 and 1 and are converted
+to the appropriate percentage at compile-time
+-}
+hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
+hsla hue saturation lightness alpha =
+    Value <|
+        "hsl("
+            ++ toString hue
+            ++ ","
+            ++ toString (saturation * 100)
+            ++ "%,"
+            ++ toString (lightness * 100)
+            ++ "%,"
+            ++ toString alpha
+            ++ ")"
+
+
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
+in hexadecimal notation. You can optionally include `#` as the first character,
+for benefits like syntax highlighting in editors, ease of copy/pasting from
+tools which express these as e.g. `#abcdef0`, etc.
+-}
+hex : String -> Value { provides | hex : Supported }
+hex str =
+    Value <|
+        if String.startsWith "#" str then
+            String.dropLeft 1 str
+        else
+            str
 
 
 
@@ -514,27 +751,26 @@ because `Css.left` and `Css.right` are functions!
 -}
 alignSelf :
     Value
-        { accepts
-            | auto : Supported
-            , normal : Supported
-            , stretch : Supported
-            , center : Supported
-            , start : Supported
-            , end : Supported
-            , flexStart : Supported
-            , flexEnd : Supported
-            , selfStart : Supported
-            , selfEnd : Supported
-            , left_ : Supported
-            , right_ : Supported
-            , baseline : Supported
-            , firstBaseline : Supported
-            , lastBaseline : Supported
-            , safeCenter : Supported
-            , unsafeCenter : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
+        { auto : Supported
+        , normal : Supported
+        , stretch : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , selfStart : Supported
+        , selfEnd : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        , safeCenter : Supported
+        , unsafeCenter : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 alignSelf (Value val) =
@@ -559,9 +795,294 @@ allSmallCaps =
 -- CURSOR --
 
 
+{-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+property.
+-}
+cursor :
+    Value
+        { pointer : Supported
+        , auto : Supported
+        , default : Supported
+        , none : Supported
+        , contextMenu : Supported
+        , help : Supported
+        , pointer : Supported
+        , progress : Supported
+        , wait : Supported
+        , cell : Supported
+        , crosshair : Supported
+        , text : Supported
+        , verticalText : Supported
+        , alias : Supported
+        , copy : Supported
+        , move : Supported
+        , noDrop : Supported
+        , notAllowed : Supported
+        , allScroll : Supported
+        , colResize : Supported
+        , rowResize : Supported
+        , nResize : Supported
+        , eResize : Supported
+        , sResize : Supported
+        , wResize : Supported
+        , neResize : Supported
+        , nwResize : Supported
+        , seResize : Supported
+        , swResize : Supported
+        , ewResize : Supported
+        , nsResize : Supported
+        , neswResize : Supported
+        , nwseResize : Supported
+        , zoomIn : Supported
+        , zoomOut : Supported
+        , grab : Supported
+        , grabbing : Supported
+        , url : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+cursor (Value val) =
+    AppendProperty ("cursor:" ++ val)
+
+
+{-| The `pointer` value for the [`cursor`](#cursor) property.
+-}
+pointer : Value { provides | pointer : Supported }
+pointer =
+    Value "pointer"
+
+
+{-| The `default` value for the [`cursor`](#cursor) property.
+-}
+default : Value { provides | default : Supported }
+default =
+    Value "default"
+
+
+{-| The `context-menu` value for the [`cursor`](#cursor) property.
+-}
+contextMenu : Value { provides | contextMenu : Supported }
+contextMenu =
+    Value "context-menu"
+
+
+{-| The `help` value for the [`cursor`](#cursor) property.
+-}
+help : Value { provides | help : Supported }
+help =
+    Value "help"
+
+
+{-| The `progress` value for the [`cursor`](#cursor) property.
+-}
+progress : Value { provides | progress : Supported }
+progress =
+    Value "progress"
+
+
+{-| The `wait` value for the [`cursor`](#cursor) property.
+-}
+wait : Value { provides | wait : Supported }
+wait =
+    Value "wait"
+
+
+{-| The `cell` value for the [`cursor`](#cursor) property.
+-}
+cell : Value { provides | cell : Supported }
+cell =
+    Value "cell"
+
+
+{-| The `crosshair` value for the [`cursor`](#cursor) property.
+-}
+crosshair : Value { provides | crosshair : Supported }
+crosshair =
+    Value "crosshair"
+
+
+{-| The `text` value for the [`cursor`](#cursor) property.
+-}
+text : Value { provides | text : Supported }
+text =
+    Value "text"
+
+
+{-| The `vertical-text` value for the [`cursor`](#cursor) property.
+-}
+verticalText : Value { provides | verticalText : Supported }
+verticalText =
+    Value "vertical-text"
+
+
+{-| The `alias` value for the [`cursor`](#cursor) property.
+-}
+alias : Value { provides | alias : Supported }
+alias =
+    Value "alias"
+
+
+{-| The `copy` value for the [`cursor`](#cursor) property.
+-}
+copy : Value { provides | copy : Supported }
+copy =
+    Value "copy"
+
+
+{-| The `move` value for the [`cursor`](#cursor) property.
+-}
+move : Value { provides | move : Supported }
+move =
+    Value "move"
+
+
+{-| The `no-drop` value for the [`cursor`](#cursor) property.
+-}
+noDrop : Value { provides | noDrop : Supported }
+noDrop =
+    Value "no-drop"
+
+
+{-| The `notAllowed` value for the [`cursor`](#cursor) property.
+-}
+notAllowed : Value { provides | notAllowed : Supported }
+notAllowed =
+    Value "not-allowed"
+
+
+{-| The `all-scroll` value for the [`cursor`](#cursor) property.
+-}
 allScroll : Value { provides | allScroll : Supported }
 allScroll =
     Value "all-scroll"
+
+
+{-| The `col-resize` value for the [`cursor`](#cursor) property.
+-}
+colResize : Value { provides | colResize : Supported }
+colResize =
+    Value "col-resize"
+
+
+{-| The `row-resize` value for the [`cursor`](#cursor) property.
+-}
+rowResize : Value { provides | rowResize : Supported }
+rowResize =
+    Value "row-resize"
+
+
+{-| The `n-resize` value for the [`cursor`](#cursor) property.
+-}
+nResize : Value { provides | nResize : Supported }
+nResize =
+    Value "n-resize"
+
+
+{-| The `e-resize` value for the [`cursor`](#cursor) property.
+-}
+eResize : Value { provides | eResize : Supported }
+eResize =
+    Value "e-resize"
+
+
+{-| The `s-resize` value for the [`cursor`](#cursor) property.
+-}
+sResize : Value { provides | sResize : Supported }
+sResize =
+    Value "s-resize"
+
+
+{-| The `w-resize` value for the [`cursor`](#cursor) property.
+-}
+wResize : Value { provides | wResize : Supported }
+wResize =
+    Value "w-resize"
+
+
+{-| The `ne-resize` value for the [`cursor`](#cursor) property.
+-}
+neResize : Value { provides | neResize : Supported }
+neResize =
+    Value "ne-resize"
+
+
+{-| The `nw-resize` value for the [`cursor`](#cursor) property.
+-}
+nwResize : Value { provides | nwResize : Supported }
+nwResize =
+    Value "nw-resize"
+
+
+{-| The `se-resize` value for the [`cursor`](#cursor) property.
+-}
+seResize : Value { provides | seResize : Supported }
+seResize =
+    Value "se-resize"
+
+
+{-| The `sw-resize` value for the [`cursor`](#cursor) property.
+-}
+swResize : Value { provides | swResize : Supported }
+swResize =
+    Value "sw-resize"
+
+
+{-| The `ew-resize` value for the [`cursor`](#cursor) property.
+-}
+ewResize : Value { provides | ewResize : Supported }
+ewResize =
+    Value "ew-resize"
+
+
+{-| The `ns-resize` value for the [`cursor`](#cursor) property.
+-}
+nsResize : Value { provides | nsResize : Supported }
+nsResize =
+    Value "ns-resize"
+
+
+{-| The `nesw-resize` value for the [`cursor`](#cursor) property.
+-}
+neswResize : Value { provides | neswResize : Supported }
+neswResize =
+    Value "nesw-resize"
+
+
+{-| The `nwse-resize` value for the [`cursor`](#cursor) property.
+-}
+nwseResize : Value { provides | nwseResize : Supported }
+nwseResize =
+    Value "nwse-resize"
+
+
+{-| The `zoom-in` value for the [`cursor`](#cursor) property.
+-}
+zoomIn : Value { provides | zoomIn : Supported }
+zoomIn =
+    Value "zoom-in"
+
+
+{-| The `zoomOut` value for the [`cursor`](#cursor) property.
+-}
+zoomOut : Value { provides | zoomOut : Supported }
+zoomOut =
+    Value "zoomOut"
+
+
+{-| The `grab` value for the [`cursor`](#cursor) property.
+-}
+grab : Value { provides | grab : Supported }
+grab =
+    Value "grab"
+
+
+{-| The `grabbing` value for the [`cursor`](#cursor) property.
+-}
+grabbing : Value { provides | grabbing : Supported }
+grabbing =
+    Value "grabbing"
 
 
 
