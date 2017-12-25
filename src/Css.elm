@@ -1,6 +1,7 @@
 module Css
     exposing
         ( Color
+        , Length
         , Style
         , Supported
         , Value
@@ -22,6 +23,8 @@ module Css
         , baseline
         , cell
         , center
+        , ch
+        , cm
         , colResize
         , color
         , contextMenu
@@ -31,8 +34,10 @@ module Css
         , display
         , displayFlex
         , eResize
+        , em
         , end
         , ewResize
+        , ex
         , firstBaseline
         , flexEnd
         , flexStart
@@ -42,10 +47,12 @@ module Css
         , hex
         , hsl
         , hsla
+        , inches
         , inherit
         , initial
         , lastBaseline
         , left
+        , mm
         , move
         , nResize
         , neResize
@@ -57,12 +64,15 @@ module Css
         , nsResize
         , nwResize
         , nwseResize
+        , pc
         , pct
         , pointer
         , progress
         , pseudoClass
         , pseudoElement
+        , pt
         , px
+        , rem
         , revert
         , rgb
         , rgba
@@ -81,6 +91,10 @@ module Css
         , unset
         , url
         , verticalText
+        , vh
+        , vmax
+        , vmin
+        , vw
         , wResize
         , wait
         , zero
@@ -100,9 +114,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs all, revert
 
 
-## Numeric Units
+## Length Units
 
-@docs zero, px, pct
+@docs Length
+
+@docs pct, em, ex, ch, rem, vh, vw, vmin, vmax, px, mm, cm, inches, pt, pc
 
 
 ## Color
@@ -538,7 +554,49 @@ after =
 
 
 
--- NUMBERS --
+-- LENGTHS --
+
+
+{-| [Length](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) values.
+You can create one of these using:
+
+  - [`pct`](#pct)
+  - [`em`](#em)
+  - [`ex`](#ex)
+  - [`ch`](#ch)
+  - [`rem`](#rem)
+  - [`vh`](#vh)
+  - [`vw`](#vw)
+  - [`vmin`](#vmin)
+  - [`vmax`](#vmax)
+  - [`px`](#px)
+  - [`mm`](#mm)
+  - [`cm`](#cm)
+  - [`inches`](#inches)
+  - [`pt`](#pt)
+  - [`pc`](#pc)
+  - [`zero`](#zero)
+
+-}
+type alias Length =
+    Value
+        { pct : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , zero : Supported
+        }
 
 
 {-| Compiles to 0 with no units.
@@ -552,23 +610,117 @@ after =
 This conveniently lets you avoid doing things like `padding (px 0)`
 
 -}
-zero : Value { provides | px : Supported, pct : Supported }
+zero : Value { provides | zero : Supported }
 zero =
     Value "0"
 
 
-{-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
+{-| Percentage [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) units.
+-}
+pct : Float -> Value { provides | pct : Supported }
+pct value =
+    Value (toString value ++ "%")
+
+
+{-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) length units.
+-}
+em : Float -> Value { provides | em : Supported }
+em value =
+    Value (toString value ++ "em")
+
+
+{-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) length units.
+-}
+ex : Float -> Value { provides | ex : Supported }
+ex value =
+    Value (toString value ++ "ex")
+
+
+{-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) length units.
+-}
+ch : Float -> Value { provides | ch : Supported }
+ch value =
+    Value (toString value ++ "ch")
+
+
+{-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) length units.
+-}
+rem : Float -> Value { provides | rem : Supported }
+rem value =
+    Value (toString value ++ "rem")
+
+
+{-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) length units.
+-}
+vh : Float -> Value { provides | vh : Supported }
+vh value =
+    Value (toString value ++ "vh")
+
+
+{-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) length units.
+-}
+vw : Float -> Value { provides | vw : Supported }
+vw value =
+    Value (toString value ++ "vw")
+
+
+{-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) length units.
+-}
+vmin : Float -> Value { provides | vmin : Supported }
+vmin value =
+    Value (toString value ++ "vmin")
+
+
+{-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) length units.
+-}
+vmax : Float -> Value { provides | vmax : Supported }
+vmax value =
+    Value (toString value ++ "vmax")
+
+
+{-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) length units.
 -}
 px : Float -> Value { provides | px : Supported }
 px value =
     Value (toString value ++ "px")
 
 
-{-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
+{-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) length units.
 -}
-pct : Float -> Value { provides | pct : Supported }
-pct value =
-    Value (toString value ++ "%")
+mm : Float -> Value { provides | mm : Supported }
+mm value =
+    Value (toString value ++ "mm")
+
+
+{-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) length units.
+-}
+cm : Float -> Value { provides | cm : Supported }
+cm value =
+    Value (toString value ++ "cm")
+
+
+{-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
+
+(This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
+
+-}
+inches : Float -> Value { provides | inches : Supported }
+inches value =
+    Value (toString value ++ "inches")
+
+
+{-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) length units.
+-}
+pt : Float -> Value { provides | pt : Supported }
+pt value =
+    Value (toString value ++ "pt")
+
+
+{-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) length units.
+-}
+pc : Float -> Value { provides | pc : Supported }
+pc value =
+    Value (toString value ++ "pc")
 
 
 
