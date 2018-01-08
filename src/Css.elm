@@ -486,6 +486,7 @@ module Css
         , paddingLeft
         , paddingRight
         , paddingTop
+        , painted
         , panDown
         , panLeft
         , panRight
@@ -499,6 +500,9 @@ module Css
         , pinchZoom
         , plus
         , pointer
+        , pointerEvents
+        , pointerEventsVisible
+        , pointerEventsFill
         , position
         , pre
         , preLine
@@ -572,6 +576,7 @@ module Css
         , stop
         , stop2
         , stretch
+        , stroke
         , sub
         , super
         , swResize
@@ -657,6 +662,9 @@ module Css
         , viewBox
         , visibility
         , visible
+        , visibleFill
+        , visiblePainted
+        , visibleStroke
         , visited
         , vmax
         , vmin
@@ -1314,6 +1322,12 @@ type alias JustifyContent a b =
 -}
 type alias Display compatible =
     { compatible | value : String, display : Compatible }
+
+
+{-| <https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events#Values>
+-}
+type alias PointerEvents compatible =
+    { compatible | value : String, pointerEvents : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Values>
@@ -2055,6 +2069,7 @@ type alias BasicProperty =
     , number : Compatible
     , outline : Compatible
     , overflow : Compatible
+    , pointerEvents : Compatible
     , visibility : Compatible
     , textDecorationLine : Compatible
     , textRendering : Compatible
@@ -2152,6 +2167,7 @@ initial =
     , fontWeight = Compatible
     , fontVariant = Compatible
     , outline = Compatible
+    , pointerEvents = Compatible
     , units = IncompatibleUnits
     , numericValue = 0
     , unitLabel = ""
@@ -4472,6 +4488,7 @@ none :
     , listStyleType : Compatible
     , listStyleTypeOrPositionOrImage : Compatible
     , outline : Compatible
+    , pointerEvents : Compatible
     , resize : Compatible
     , textDecorationLine : Compatible
     , transform : Compatible
@@ -4498,6 +4515,7 @@ none =
     , listStyleTypeOrPositionOrImage = Compatible
     , display = Compatible
     , outline = Compatible
+    , pointerEvents = Compatible
     , resize = Compatible
     , transform = Compatible
     , borderStyle = Compatible
@@ -4526,6 +4544,7 @@ auto :
     , value : String
     , lengthOrAutoOrCoverOrContain : Compatible
     , intOrAuto : Compatible
+    , pointerEvents : Compatible
     , touchAction : Compatible
     , tableLayout : Compatible
     }
@@ -4541,6 +4560,7 @@ auto =
     , lengthOrAutoOrCoverOrContain = Compatible
     , justifyContentOrAuto = Compatible
     , intOrAuto = Compatible
+    , pointerEvents = Compatible
     , touchAction = Compatible
     , tableLayout = Compatible
     }
@@ -8337,3 +8357,66 @@ tableLayout (auto | fixed | inherit | initial | unset)
 tableLayout : TableLayout compatible -> Style
 tableLayout =
     prop1 "table-layout"
+
+
+
+{- POINTER-EVENTS PROPERTY -}
+
+
+{-| The [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events#Values)
+property specifies under what circumstances (if any) a particular graphic
+element can become the target of mouse events.
+-}
+pointerEvents : PointerEvents compatible -> Style
+pointerEvents =
+    prop1 "pointer-events"
+
+
+
+{- POINTER-EVENTS VALUES -}
+
+
+{-| -}
+visiblePainted : PointerEvents {}
+visiblePainted =
+    { value = "visiblePainted", pointerEvents = Compatible }
+
+
+{-| -}
+visibleFill : PointerEvents {}
+visibleFill =
+    { value = "visibleFill", pointerEvents = Compatible }
+
+
+{-| -}
+visibleStroke : PointerEvents {}
+visibleStroke =
+    { value = "visibleStroke", pointerEvents = Compatible }
+
+
+{-| -}
+painted : PointerEvents {}
+painted =
+    { value = "painted", pointerEvents = Compatible }
+
+
+{-| `property-events: fill`. This works around the fact that
+[`fill` is already taken](#fill).
+-}
+pointerEventsFill : Style
+pointerEventsFill =
+    property "pointer-events" "fill"
+
+
+{-| `property-events: visible`. This works around the fact that
+[`visible` is already taken](#visible).
+-}
+pointerEventsVisible : Style
+pointerEventsVisible =
+    property "pointer-events" "visible"
+
+
+{-| -}
+stroke : PointerEvents {}
+stroke =
+    { value = "stroke", pointerEvents = Compatible }
