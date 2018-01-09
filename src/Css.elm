@@ -505,8 +505,8 @@ module Css
         , plus
         , pointer
         , pointerEvents
-        , pointerEventsVisible
         , pointerEventsFill
+        , pointerEventsVisible
         , position
         , pre
         , preLine
