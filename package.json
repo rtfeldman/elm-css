@@ -10,7 +10,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "elm-test"
+    "test": "elm-test",
+    "format": "elm-format --elm-version=0.18 src tests examples readme-example"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "tmp": "0.0.28"
   },
   "devDependencies": {
+    "elm-format": "^0.7.0-exp",
     "chai": "3.4.1"
   },
   "engineStrict": true,
