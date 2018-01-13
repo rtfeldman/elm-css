@@ -411,7 +411,7 @@ borderBottomRightRadius3 =
 
 borderBottomWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
 borderBottomWidth3 =
-    fullTransition BorderBottomRightRadius
+    fullTransition BorderBottomWidth
 
 
 borderColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
@@ -895,7 +895,7 @@ borderBottomRightRadius2 =
 
 borderBottomWidth2 : Time.Time -> Time.Time -> Transition
 borderBottomWidth2 =
-    durationDelayTransition BorderBottomRightRadius
+    durationDelayTransition BorderBottomWidth
 
 
 borderColor2 : Time.Time -> Time.Time -> Transition
@@ -1379,7 +1379,7 @@ borderBottomRightRadius =
 
 borderBottomWidth : Time.Time -> Transition
 borderBottomWidth =
-    durationTransition BorderBottomRightRadius
+    durationTransition BorderBottomWidth
 
 
 borderColor : Time.Time -> Transition
