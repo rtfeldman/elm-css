@@ -291,6 +291,21 @@ all =
             -- TODO display: ruby-text-container ;
             -- TODO display: run-in;
             ]
+        , testProperty { function = "pointerEvents", property = "pointer-events" }
+            [ ( pointerEvents auto, "auto" )
+            , ( pointerEvents none, "none" )
+            , ( pointerEvents visiblePainted, "visiblePainted" )
+            , ( pointerEvents visibleFill, "visibleFill" )
+            , ( pointerEvents visibleStroke, "visibleStroke" )
+            , ( pointerEvents visible, "visible" )
+            , ( pointerEvents painted, "painted" )
+            , ( pointerEventsFill, "fill" )
+            , ( pointerEvents stroke, "stroke" )
+            , ( pointerEventsAll, "all" )
+            , ( pointerEvents inherit, "inherit" )
+            , ( pointerEvents initial, "initial" )
+            , ( pointerEvents unset, "unset" )
+            ]
         , testProperty { function = "flex", property = "flex" }
             [ ( flex initial, "initial" )
             , ( flex unset, "unset" )
