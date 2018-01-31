@@ -4198,8 +4198,8 @@ type alias ColorStop compatibleA compatibleB unit =
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
-    linearGradient  (stop2 red <| pct 75%) (stop <| hex "222") []
-    linearGradient  (stop red) (stop <| hex "222") [ stop green, stop blue ]
+    linearGradient (stop2 red <| pct 75) (stop <| hex "222") []
+    linearGradient (stop red) (stop <| hex "222") [ stop green, stop blue ]
 
 -}
 linearGradient :
@@ -4223,8 +4223,8 @@ linearGradient stop1 stop2 stops =
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
-    linearGradient  toBottomLeft (stop2 red <| pct 75%) (stop <| hex "222") []
-    linearGradient  toTop (stop red) (stop <| hex "222") [ stop green, stop blue ]
+    linearGradient2 toBottomLeft (stop2 red <| pct 75) (stop <| hex "222") []
+    linearGradient2 toTop (stop red) (stop <| hex "222") [ stop green, stop blue ]
 
 -}
 linearGradient2 :
