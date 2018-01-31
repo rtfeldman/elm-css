@@ -11,6 +11,7 @@ module Html.Styled
         , b
         , bdi
         , bdo
+        , beginnerProgram
         , blockquote
         , body
         , br
@@ -72,6 +73,8 @@ module Html.Styled
         , p
         , param
         , pre
+        , program
+        , programWithFlags
         , progress
         , q
         , rp
@@ -116,7 +119,15 @@ The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
 This file is organized roughly in order of popularity. The tags which you'd
 expect to use frequently will be closer to the top.
 
+
+# Primitives
+
 @docs Html, Attribute, text, node, map
+
+
+# Programs
+
+@docs beginnerProgram, program, programWithFlags
 
 
 # Tags
@@ -304,7 +315,68 @@ fromUnstyled =
 
 
 
--- TAGS --
+-- CREATING PROGRAMS
+
+
+{-| Create a [`Program`][program] that describes how your whole app works.
+Read about [The Elm Architecture][tea] to learn how to use this. Just do it.
+The additional context is very worthwhile! (Honestly, it is best to just read
+that guide from front to back instead of muddling around and reading it
+piecemeal.)
+[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
+[tea]: <https://guide.elm-lang.org/architecture/>
+-}
+beginnerProgram :
+    { model : model
+    , view : model -> Html msg
+    , update : msg -> model -> model
+    }
+    -> Program Never model msg
+beginnerProgram { model, view, update } =
+    program
+        { init = model ! []
+        , update = \msg model -> update msg model ! []
+        , view = view
+        , subscriptions = \_ -> Sub.none
+        }
+
+
+{-| Create a [`Program`][program] that describes how your whole app works.
+Read about [The Elm Architecture][tea] to learn how to use this. Just do it.
+Commands and subscriptions make way more sense when you work up to them
+gradually and see them in context with examples.
+[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
+[tea]: <https://guide.elm-lang.org/architecture/>
+-}
+program :
+    { init : ( model, Cmd msg )
+    , update : msg -> model -> ( model, Cmd msg )
+    , subscriptions : model -> Sub msg
+    , view : model -> Html msg
+    }
+    -> Program Never model msg
+program config =
+    VirtualDom.program { config | view = config.view >> toUnstyled }
+
+
+{-| Create a [`Program`][program] that describes how your whole app works.
+It works just like `program` but you can provide &ldquo;flags&rdquo; from
+JavaScript to configure your application. Read more about that [here].
+[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
+[here]: <https://guide.elm-lang.org/interop/javascript.html>
+-}
+programWithFlags :
+    { init : flags -> ( model, Cmd msg )
+    , update : msg -> model -> ( model, Cmd msg )
+    , subscriptions : model -> Sub msg
+    , view : model -> Html msg
+    }
+    -> Program flags model msg
+programWithFlags config =
+    VirtualDom.programWithFlags { config | view = config.view >> toUnstyled }
+
+
+
 -- SECTIONS
 
 
