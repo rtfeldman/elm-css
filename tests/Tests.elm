@@ -684,6 +684,29 @@ bug280 =
         ]
 
 
+bug335 : Test
+bug335 =
+    let
+        compiledWithAngle =
+            prettyPrint Fixtures.linearGradientWithAngle
+
+        compiledWithDirection =
+            prettyPrint Fixtures.linearGradientWithDirection
+    in
+    describe "Github Issue #335: https://github.com/rtfeldman/elm-css/issues/335"
+        [ test "linearGradient2 does not prepend an angle value with the \"to\" keyword." <|
+            \_ ->
+                Expect.false
+                    "Expected compiled angle not to include \"to\"."
+                    (String.contains "to" compiledWithAngle)
+        , test "linearGradient2 prepend a direction value with the \"to\" keyword." <|
+            \_ ->
+                Expect.true
+                    "Expected compiled direction to include \"to\"."
+                    (String.contains "to" compiledWithDirection)
+        ]
+
+
 nestedEach : Test
 nestedEach =
     let
