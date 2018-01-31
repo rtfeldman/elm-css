@@ -1,8 +1,9 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
-| [**14.0.0**](https://github.com/rtfeldman/elm-css/tree/14.0.0) | Remove `asPairs`, `Css.Namespace`, and arithmetic operators. Don't report warnings, just emit CSS. Make `Property` opaque and more efficient. Fix `withMedia` nesting bug. (#352)
-* [**13.0.1**](https://github.com/rtfeldman/elm-css/tree/13.0.1) | Remove extraneous Debug.log
+| [**14.0.0** (unreleased)](https://github.com/rtfeldman/elm-css/tree/14.0.0) | Remove `asPairs`, `Css.Namespace`, and arithmetic operators. Don't report warnings, just emit CSS. Make `Property` opaque and more efficient. Fix `withMedia` nesting bug. (#352) Fix bug in `borderBottomWidth` functions. (#380)
+| [**13.1.0**](https://github.com/rtfeldman/elm-css/tree/13.1.0) |
+| [**13.0.1**](https://github.com/rtfeldman/elm-css/tree/13.0.1) | Remove extraneous Debug.log
 | [**13.0.0**](https://github.com/rtfeldman/elm-css/tree/13.0.0) | Disallow using multiple `css` attributes in same element, to fix #337. Fix Html.Styled.Lazy (#348). Add Svg.Styled (#339). Improve docs for Css.Foreign (#353).
 | [**12.0.1**](https://github.com/rtfeldman/elm-css/tree/12.0.1) | Add deprecation warning to upgrade to 13.0.0 for critical bugfixes
 | [**12.0.0**](https://github.com/rtfeldman/elm-css/tree/12.0.0) | Add Html.Styled, move Css.Elements and others into Css.Foreign, move Css.stylesheet into Css.File, rename `text` to `text_`, deprecate Css.Namespace (immediately) and Css.File (eventually)
