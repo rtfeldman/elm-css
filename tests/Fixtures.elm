@@ -477,7 +477,7 @@ nestedEach =
 
 linearGradientWithAngle : Stylesheet
 linearGradientWithAngle =
-    (stylesheet << namespace "linearGradient2Angle")
+    stylesheet
         [ div
             [ backgroundImage <| linearGradient2 (deg 10) (stop <| hex "000") (stop <| hex "222") []
             ]
@@ -486,7 +486,7 @@ linearGradientWithAngle =
 
 linearGradientWithDirection : Stylesheet
 linearGradientWithDirection =
-    (stylesheet << namespace "linearGradient2Direction")
+    stylesheet
         [ div
             [ backgroundImage <| linearGradient2 toBottomLeft (stop <| hex "000") (stop <| hex "222") []
             ]
