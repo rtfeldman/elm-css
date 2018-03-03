@@ -1,0 +1,37 @@
+{
+    "type": "package",
+    "name": "rtfeldman/elm-css",
+    "summary": "Validate data",
+    "license": "BSD-3-Clause",
+    "version": "3.0.1",
+    "exposed-modules": {
+        "Styling": [
+            "Css",
+            "Css.Transitions",
+            "Css.Media",
+            "Css.Colors",
+            "Css.Foreign"
+        ],
+        "Elements": [
+            "Html.Styled",
+            "Html.Styled.Attributes",
+            "Html.Styled.Events",
+            "Html.Styled.Keyed",
+            "Html.Styled.Lazy",
+            "Svg.Styled",
+            "Svg.Styled.Attributes",
+            "Svg.Styled.Events",
+            "Svg.Styled.Keyed",
+            "Svg.Styled.Lazy"
+        ]
+    },
+    "elm-version": "0.19.0 <= v < 0.20.0",
+    "dependencies": {
+        "Skinney/murmur3": "2.0.7 <= v < 3.0.0",
+        "elm-lang/core": "6.0.0 <= v < 7.0.0",
+        "elm-lang/json": "1.0.0 <= v < 2.0.0",
+        "elm-lang/virtual-dom": "3.0.0 <= v < 4.0.0",
+        "rtfeldman/hex": "1.0.0 <= v < 2.0.0"
+    },
+    "test-dependencies": {}
+}
