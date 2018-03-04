@@ -2196,7 +2196,7 @@ in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
 rgb red green blue =
-    { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
+    { value = cssFunction "rgb" (List.map String.fromInt [ red, green, blue ])
     , color = Compatible
     , red = red
     , green = green
@@ -2209,7 +2209,7 @@ rgb red green blue =
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba red green blue alpha =
-    { value = cssFunction "rgba" (List.map numberToString [ red, green, blue ] ++ [ numberToString alpha ])
+    { value = cssFunction "rgba" (List.map String.fromInt [ red, green, blue ] ++ [ String.fromInt alpha ])
     , color = Compatible
     , red = red
     , green = green
@@ -2226,7 +2226,7 @@ hsl : Float -> Float -> Float -> Color
 hsl hue saturation lightness =
     let
         valuesList =
-            [ numberToString hue
+            [ String.fromInt hue
             , numericalPercentageToString saturation
             , numericalPercentageToString lightness
             ]
@@ -2245,10 +2245,10 @@ hsla : Float -> Float -> Float -> Float -> Color
 hsla hue saturation lightness alpha =
     let
         valuesList =
-            [ numberToString hue
+            [ String.fromInt hue
             , numericalPercentageToString saturation
             , numericalPercentageToString lightness
-            , numberToString alpha
+            , String.fromInt alpha
             ]
 
         value =
@@ -2667,7 +2667,7 @@ true =
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
 lengthConverter units unitLabel numericValue =
-    { value = numberToString numericValue ++ unitLabel
+    { value = String.fromInt numericValue ++ unitLabel
     , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
@@ -2991,7 +2991,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
-    { value = numberToString val
+    { value = String.fromInt val
     , lengthOrNumber = Compatible
     , number = Compatible
     , fontWeight = Compatible
@@ -3012,7 +3012,7 @@ which accept unitless numbers.
 -}
 num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
 num val =
-    { value = numberToString val
+    { value = String.fromInt val
     , lengthOrNumber = Compatible
     , number = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
@@ -3042,7 +3042,7 @@ type IncompatibleUnits
 
 angleConverter : String -> number -> AngleOrDirection (Angle {})
 angleConverter suffix num =
-    { value = numberToString num ++ suffix
+    { value = String.fromInt num ++ suffix
     , angle = Compatible
     , angleOrDirection = Compatible
     }
@@ -3087,7 +3087,7 @@ turn =
 -}
 matrix : number -> number -> number -> number -> number -> number -> Transform {}
 matrix a b c d tx ty =
-    { value = cssFunction "matrix" (List.map numberToString [ a, b, c, d, tx, ty ])
+    { value = cssFunction "matrix" (List.map String.fromInt [ a, b, c, d, tx, ty ])
     , transform = Compatible
     }
 
@@ -3099,7 +3099,7 @@ matrix a b c d tx ty =
 -}
 matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-    { value = cssFunction "matrix3d" (List.map numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
+    { value = cssFunction "matrix3d" (List.map String.fromInt [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
     , transform = Compatible
     }
 
@@ -3111,7 +3111,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 -}
 perspective : number -> Transform {}
 perspective l =
-    { value = cssFunction "perspective" [ numberToString l ]
+    { value = cssFunction "perspective" [ String.fromInt l ]
     , transform = Compatible
     }
 
@@ -3173,7 +3173,7 @@ rotate3d : number -> number -> number -> Angle compatible -> Transform {}
 rotate3d x y z { value } =
     let
         coordsAsStrings =
-            List.map numberToString [ x, y, z ]
+            List.map String.fromInt [ x, y, z ]
     in
     { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
     , transform = Compatible
@@ -3188,7 +3188,7 @@ rotate3d x y z { value } =
 -}
 scale : number -> Transform {}
 scale x =
-    { value = cssFunction "scale" [ numberToString x ]
+    { value = cssFunction "scale" [ String.fromInt x ]
     , transform = Compatible
     }
 
@@ -3201,7 +3201,7 @@ scale x =
 -}
 scale2 : number -> number -> Transform {}
 scale2 x y =
-    { value = cssFunction "scale" (List.map numberToString [ x, y ])
+    { value = cssFunction "scale" (List.map String.fromInt [ x, y ])
     , transform = Compatible
     }
 
@@ -3213,7 +3213,7 @@ scale2 x y =
 -}
 scaleX : number -> Transform {}
 scaleX x =
-    { value = cssFunction "scaleX" [ numberToString x ]
+    { value = cssFunction "scaleX" [ String.fromInt x ]
     , transform = Compatible
     }
 
@@ -3225,7 +3225,7 @@ scaleX x =
 -}
 scaleY : number -> Transform {}
 scaleY y =
-    { value = cssFunction "scaleY" [ numberToString y ]
+    { value = cssFunction "scaleY" [ String.fromInt y ]
     , transform = Compatible
     }
 
@@ -3237,7 +3237,7 @@ scaleY y =
 -}
 scale3d : number -> number -> number -> Transform {}
 scale3d x y z =
-    { value = cssFunction "scale3d" (List.map numberToString [ x, y, z ])
+    { value = cssFunction "scale3d" (List.map String.fromInt [ x, y, z ])
     , transform = Compatible
     }
 
@@ -8219,11 +8219,6 @@ from elm-css.
 blink : IntentionallyUnsupportedPleaseSeeDocs
 blink =
     IntentionallyUnsupportedPleaseSeeDocs
-
-
-numberToString : number -> String
-numberToString num =
-    toString (num + 0)
 
 
 stringToInt : String -> Int
