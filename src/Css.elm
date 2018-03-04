@@ -7932,7 +7932,7 @@ stringToInt str =
 
 numericalPercentageToString : number -> String
 numericalPercentageToString value =
-    value |> (*) 100 |> numberToString |> flip (++) "%"
+    String.fromInt (value * 100) ++ "%"
 
 
 valuesOrNone : List (Value compatible) -> Value {}
