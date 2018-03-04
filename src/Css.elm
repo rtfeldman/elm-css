@@ -1014,7 +1014,6 @@ deprecated or discouraged.
 -}
 
 import Color
-import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 import Hex
