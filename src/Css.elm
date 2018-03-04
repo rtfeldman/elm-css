@@ -1040,7 +1040,6 @@ deprecated or discouraged.
 
 -}
 
-import Color
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 import Hex
