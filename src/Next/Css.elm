@@ -23,6 +23,7 @@ module Next.Css
         , batch
         , before
         , bengali
+        , block
         , cell
         , center
         , cjkEarthlyBranch
@@ -46,6 +47,7 @@ module Next.Css
         , georgian
         , grab
         , grabbing
+        , grid
         , gujarati
         , gurmukhi
         , help
@@ -54,6 +56,9 @@ module Next.Css
         , hsla
         , inherit
         , initial
+        , inline
+        , inlineBlock
+        , inlineFlex
         , kannada
         , khmer
         , lao
@@ -95,6 +100,15 @@ module Next.Css
         , start
         , stretch
         , swResize
+        , table
+        , tableCaption
+        , tableCell
+        , tableColumn
+        , tableColumnGroup
+        , tableFooterGroup
+        , tableHeaderGroup
+        , tableRow
+        , tableRowGroup
         , telugu
         , text
         , thai
@@ -154,6 +168,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Display
 
 @docs display, displayFlex
+
+@docs block, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
 
 
 ## Positions
@@ -669,7 +685,6 @@ For `display: flex`, use [`displayFlex`](#displayFlex).
 display :
     Value
         { block : Supported
-        , flex : Supported
         , grid : Supported
         , inline : Supported
         , inlineBlock : Supported
@@ -684,6 +699,7 @@ display :
         , tableHeaderGroup : Supported
         , tableRow : Supported
         , tableRowGroup : Supported
+        , for_display_flex_see_docs_for_displayFlex : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -699,6 +715,104 @@ display (Value val) =
 displayFlex : Style
 displayFlex =
     AppendProperty "display:flex"
+
+
+{-| TODO
+-}
+block : Value { provides | block : Supported }
+block =
+    Value "block"
+
+
+{-| TODO
+-}
+grid : Value { provides | block : Supported }
+grid =
+    Value "grid"
+
+
+{-| TODO
+-}
+inline : Value { provides | inline : Supported }
+inline =
+    Value "inline"
+
+
+{-| TODO
+-}
+inlineBlock : Value { provides | inlineBlock : Supported }
+inlineBlock =
+    Value "inlineBlock"
+
+
+{-| TODO
+-}
+inlineFlex : Value { provides | inlineFlex : Supported }
+inlineFlex =
+    Value "inlineFlex"
+
+
+{-| TODO
+-}
+table : Value { provides | table : Supported }
+table =
+    Value "table"
+
+
+{-| TODO
+-}
+tableCaption : Value { provides | tableCaption : Supported }
+tableCaption =
+    Value "tableCaption"
+
+
+{-| TODO
+-}
+tableCell : Value { provides | tableCell : Supported }
+tableCell =
+    Value "tableCell"
+
+
+{-| TODO
+-}
+tableColumn : Value { provides | tableColumn : Supported }
+tableColumn =
+    Value "tableColumn"
+
+
+{-| TODO
+-}
+tableColumnGroup : Value { provides | tableColumnGroup : Supported }
+tableColumnGroup =
+    Value "tableColumnGroup"
+
+
+{-| TODO
+-}
+tableFooterGroup : Value { provides | tableFooterGroup : Supported }
+tableFooterGroup =
+    Value "tableFooterGroup"
+
+
+{-| TODO
+-}
+tableHeaderGroup : Value { provides | tableHeaderGroup : Supported }
+tableHeaderGroup =
+    Value "tableHeaderGroup"
+
+
+{-| TODO
+-}
+tableRow : Value { provides | tableRow : Supported }
+tableRow =
+    Value "tableRow"
+
+
+{-| TODO
+-}
+tableRowGroup : Value { provides | tableRowGroup : Supported }
+tableRowGroup =
+    Value "tableRowGroup"
 
 
 
