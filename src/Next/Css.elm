@@ -162,7 +162,7 @@ Multiple CSS properties use these values.
 
 -}
 
-import Css.Preprocess as Preprocess exposing (Style(AppendProperty))
+import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
 
 
