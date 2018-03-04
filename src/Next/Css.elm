@@ -92,6 +92,16 @@ module Next.Css
 {-|
 
 
+## CSS Values
+
+@docs Value, Supported
+
+
+## Reusable Styles
+
+@docs Style
+
+
 ## General Values
 
 All CSS properties can have the values `unset`, `initial`, and `inherit`.
@@ -139,6 +149,16 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Font Variants
 
 @docs allPetiteCaps, allSmallCaps
+
+
+# Align Items
+
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+
+
+# Url
+
+@docs url
 
 
 ## Cursors
