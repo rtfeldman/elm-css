@@ -206,10 +206,12 @@ selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
         pseudoElementsString =
             String.join "" [ Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement) ]
     in
-    segments
-        |> List.filter (not << String.isEmpty)
-        |> String.join " "
-        |> flip (++) pseudoElementsString
+    String.append
+        (segments
+            |> List.filter (not << String.isEmpty)
+            |> String.join " "
+        )
+        pseudoElementsString
 
 
 combinatorToString : SelectorCombinator -> String
