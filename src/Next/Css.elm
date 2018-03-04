@@ -27,6 +27,7 @@ module Next.Css
         , contextMenu
         , copy
         , crosshair
+        , cursor
         , default
         , display
         , displayFlex
