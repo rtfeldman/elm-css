@@ -24,6 +24,8 @@ module Next.Css
         , before
         , bengali
         , block
+        , bold
+        , bolder
         , cell
         , center
         , cjkEarthlyBranch
@@ -44,6 +46,8 @@ module Next.Css
         , firstBaseline
         , flexEnd
         , flexStart
+        , fontStyle
+        , fontWeight
         , georgian
         , grab
         , grabbing
@@ -59,11 +63,13 @@ module Next.Css
         , inline
         , inlineBlock
         , inlineFlex
+        , italic
         , kannada
         , khmer
         , lao
         , lastBaseline
         , left
+        , lighter
         , listStyle
         , listStyle2
         , listStyle3
@@ -80,6 +86,7 @@ module Next.Css
         , nsResize
         , nwResize
         , nwseResize
+        , oblique
         , oriya
         , pct
         , pointer
@@ -180,6 +187,20 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Flexbox
 
 @docs alignItems, alignSelf
+
+
+## Font Styles
+
+@docs fontStyle, italic, oblique
+
+[`normal`](#normal) is also a supported font style.
+
+
+## Font Weights
+
+@docs fontWeight, bold, lighter, bolder
+
+[`normal`](#normal) is also a supported font weight.
 
 
 ## Font Variants
@@ -1005,6 +1026,70 @@ alignSelf :
     -> Style
 alignSelf (Value val) =
     AppendProperty ("align-self:" ++ val)
+
+
+
+-- FONT STYLES --
+
+
+{-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
+
+    fontStyle  italic
+
+-}
+fontStyle : Value { normal : Supported, bold : Supported, bolder : Supported, lighter : Supported } -> Style
+fontStyle (Value val) =
+    AppendProperty ("font-style:" ++ val)
+
+
+{-| TODO
+-}
+italic : Value { provides | italic : Supported }
+italic =
+    Value "italic"
+
+
+{-| TODO
+-}
+oblique : Value { provides | oblique : Supported }
+oblique =
+    Value "oblique"
+
+
+
+-- FONT WEIGHTS --
+
+
+{-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
+
+    fontWeight  bold
+    fontWeight  (int 300)
+
+-}
+fontWeight : Value { normal : Supported, bold : Supported, bolder : Supported, lighter : Supported } -> Style
+fontWeight (Value val) =
+    AppendProperty ("font-weight:" ++ val)
+
+
+{-| TODO
+-}
+bold : Value { provides | bold : Supported }
+bold =
+    Value "bold"
+
+
+{-| TODO
+-}
+lighter : Value { provides | lighter : Supported }
+lighter =
+    Value "lighter"
+
+
+{-| TODO
+-}
+bolder : Value { provides | bolder : Supported }
+bolder =
+    Value "bolder"
 
 
 
