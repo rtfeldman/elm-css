@@ -2,7 +2,7 @@ module VirtualDom.Styled
     exposing
         ( Classname
         , Node
-        , Property(Property)
+        , Property(..)
         , attribute
         , attributeNS
         , getClassname

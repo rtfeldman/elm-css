@@ -156,10 +156,10 @@ import Css.Helpers exposing (identifierToString)
 import Css.Media exposing (MediaQuery)
 import Css.Preprocess as Preprocess
     exposing
-        ( Snippet(Snippet)
-        , SnippetDeclaration(StyleBlockDeclaration)
+        ( Snippet(..)
+        , SnippetDeclaration(..)
         , Style
-        , StyleBlock(StyleBlock)
+        , StyleBlock(..)
         , unwrapSnippet
         )
 import Css.Preprocess.Resolve as Resolve
