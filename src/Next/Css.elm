@@ -20,6 +20,7 @@ module Next.Css
         , auto
         , backgroundColor
         , baseline
+        , batch
         , cell
         , center
         , colResize
@@ -99,7 +100,7 @@ module Next.Css
 
 ## Reusable Styles
 
-@docs Style
+@docs Style, batch
 
 
 ## General Values
@@ -240,6 +241,36 @@ type Value supports
 -}
 type Supported
     = Supported
+
+
+{-| Create a style from multiple other styles.
+
+    underlineOnHover =
+        batch
+            [ textDecoration none
+
+            , hover
+                [ textDecoration underline ]
+            ]
+
+    css
+        [ color (rgb 128 64 32)
+        , underlineOnHover
+        ]
+
+...has the same result as:
+
+    css
+        [ color (rgb 128 64 32)
+        , textDecoration none
+        , hover
+            [ textDecoration underline ]
+        ]
+
+-}
+batch : List Style -> Style
+batch =
+    Preprocess.ApplyStyles
 
 
 
