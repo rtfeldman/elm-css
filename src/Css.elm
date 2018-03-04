@@ -1071,16 +1071,16 @@ getOverloadedProperty functionName desiredKey style =
             -- Use the given style's Key as the resulting property's value.
             property desiredKey key
 
-        Preprocess.ExtendSelector selector _ ->
+        Preprocess.ExtendSelector _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-selector")
 
-        Preprocess.NestSnippet combinator _ ->
+        Preprocess.NestSnippet _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-combinator")
 
-        Preprocess.WithPseudoElement pseudoElement _ ->
+        Preprocess.WithPseudoElement _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
 
-        Preprocess.WithMedia mediaQuery _ ->
+        Preprocess.WithMedia _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-media-query")
 
         Preprocess.ApplyStyles [] ->
@@ -1089,7 +1089,7 @@ getOverloadedProperty functionName desiredKey style =
         Preprocess.ApplyStyles (only :: []) ->
             getOverloadedProperty functionName desiredKey only
 
-        Preprocess.ApplyStyles (first :: rest) ->
+        Preprocess.ApplyStyles (_ :: rest) ->
             getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
 
 
@@ -1486,9 +1486,9 @@ Using * and / with calc isn't supported. Use arithmetics from elm instead.
 
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
-calc first expression second =
+calc firstExpr expression secondExpr =
     let
-        grab l =
+        withoutCalcStr l =
             if String.startsWith "calc(" l.value then
                 String.dropLeft 4 l.value
 
@@ -1497,9 +1497,9 @@ calc first expression second =
 
         calcs =
             String.join " "
-                [ grab first
+                [ withoutCalcStr firstExpr
                 , calcExpressionToString expression
-                , grab second
+                , withoutCalcStr secondExpr
                 ]
 
         value =
@@ -1548,13 +1548,13 @@ combineLengths :
     -> { r | numericValue : number, unitLabel : String, value : String }
     -> { r | numericValue : number, unitLabel : String, value : String }
     -> { r | numericValue : number, unitLabel : String, value : String }
-combineLengths operation first second =
+combineLengths operation firstLength secondLength =
     let
         numericValue =
-            operation first.numericValue second.numericValue
+            operation firstLength.numericValue secondLength.numericValue
 
         value =
-            [ toString numericValue
+            [ String.fromInt numericValue
             , first.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
@@ -2198,18 +2198,18 @@ rgba red green blue alpha =
 to the appropriate percentage at compile-time
 -}
 hsl : Float -> Float -> Float -> Color
-hsl hue saturation lightness =
+hsl hueVal saturationVal lightnessVal =
     let
         valuesList =
-            [ String.fromInt hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
+            [ String.fromInt hueVal
+            , numericalPercentageToString saturationVal
+            , numericalPercentageToString lightnessVal
             ]
 
         value =
             cssFunction "hsl" valuesList
     in
-    hslaToRgba value hue saturation lightness 1
+    hslaToRgba value hueVal saturationVal lightnessVal 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -2217,19 +2217,19 @@ hsl hue saturation lightness =
 to the appropriate percentage at compile-time
 -}
 hsla : Float -> Float -> Float -> Float -> Color
-hsla hue saturation lightness alpha =
+hsla hueVal saturationVal lightnessVal alpha =
     let
         valuesList =
-            [ String.fromInt hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
+            [ String.fromInt hueVal
+            , numericalPercentageToString saturationVal
+            , numericalPercentageToString lightnessVal
             , String.fromInt alpha
             ]
 
         value =
             cssFunction "hsla" valuesList
     in
-    hslaToRgba value hue saturation lightness alpha
+    hslaToRgba value hueVal saturationVal lightnessVal alpha
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -2271,14 +2271,16 @@ validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
             String.fromList >> String.toLower >> Hex.fromString
 
         results =
-            ( toResult [ r1, r2 ]
-            , toResult [ g1, g2 ]
-            , toResult [ b1, b2 ]
-            , toResult [ a1, a2 ]
+            ( ( toResult [ r1, r2 ]
+              , toResult [ g1, g2 ]
+              )
+            , ( toResult [ b1, b2 ]
+              , toResult [ a1, a2 ]
+              )
             )
     in
     case results of
-        ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+        ( ( Ok red, Ok green ), ( Ok blue, Ok alpha ) ) ->
             { value = withPrecedingHash str
             , color = Compatible
             , red = red
@@ -2314,18 +2316,13 @@ erroneousHex str =
 
 
 hslaToRgba : String -> Float -> Float -> Float -> Float -> Color
-hslaToRgba value hue saturation lightness hslAlpha =
-    let
-        { red, green, blue, alpha } =
-            Color.hsla hue saturation lightness hslAlpha
-                |> Color.toRgb
-    in
+hslaToRgba value hueVal saturationVal lightnessVal hslAlpha =
     { value = value
     , color = Compatible
-    , red = red
-    , green = green
-    , blue = blue
-    , alpha = alpha
+    , red = 0
+    , green = 0
+    , blue = 0
+    , alpha = 0
     }
 
 
@@ -3017,9 +3014,9 @@ type IncompatibleUnits
 {- ANGLES -}
 
 
-angleConverter : String -> number -> AngleOrDirection (Angle {})
-angleConverter suffix num =
-    { value = String.fromInt num ++ suffix
+angleConverter : String -> Float -> AngleOrDirection (Angle {})
+angleConverter suffix angleVal =
+    { value = String.fromFloat angleVal ++ suffix
     , angle = Compatible
     , angleOrDirection = Compatible
     }
@@ -4182,13 +4179,12 @@ linearGradient :
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
-linearGradient stop1 stop2 stops =
+linearGradient firstStop secondStop otherStops =
     -- TODO we should make this more permissive, e.g. compatibleA/compatibleB/compatibleC/compatibleD
     -- the only reason it isn't is that we happen to be using collectStops like this.
     -- We should just not use collectStops. Same with linearGradient2
     { value =
-        [ stop1, stop2 ]
-            ++ stops
+        ([ firstStop, secondStop ] ++ otherStops)
             |> collectStops
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
@@ -4208,12 +4204,11 @@ linearGradient2 :
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
-linearGradient2 dir stop1 stop2 stops =
+linearGradient2 direction firstStop secondStop otherStops =
     { value =
-        [ stop1, stop2 ]
-            ++ stops
+        ([ firstStop, secondStop ] ++ otherStops)
             |> collectStops
-            |> (::) dir.value
+            |> (::) direction.value
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
@@ -5869,7 +5864,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = toString tag ++ " " ++ toString value
+    { value = String.fromInt tag ++ " " ++ String.fromInt value
     , featureTagValue = Compatible
     }
 
@@ -6885,7 +6880,7 @@ letterSpacing =
 {-| -}
 src_ : ImportType compatible -> String
 src_ value =
-    toString value.value
+    String.fromInt value.value
 
 
 {-| -}
@@ -6902,7 +6897,7 @@ fontFace value =
 -}
 qt : String -> String
 qt str =
-    toString str
+    "\"" ++ str ++ "\""
 
 
 {-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).
@@ -7455,15 +7450,9 @@ Pass `[]` to set `animation-name: none;`
     animationNames [] -- outputs "animation-name: none;"
 
 -}
-animationNames : List animation -> Style
+animationNames : List String -> Style
 animationNames identifiers =
-    let
-        value =
-            identifiers
-                |> List.map (identifierToString "")
-                |> String.join ", "
-    in
-    property "animation-name" value
+    property "animation-name" (String.join ", " identifiers)
 
 
 {-| Create a style from multiple other styles.
