@@ -22,8 +22,11 @@ module Next.Css
         , baseline
         , batch
         , before
+        , bengali
         , cell
         , center
+        , cjkEarthlyBranch
+        , cjkHeavenlyStem
         , colResize
         , color
         , contextMenu
@@ -31,6 +34,7 @@ module Next.Css
         , crosshair
         , cursor
         , default
+        , devanagari
         , display
         , displayFlex
         , eResize
@@ -39,17 +43,28 @@ module Next.Css
         , firstBaseline
         , flexEnd
         , flexStart
+        , georgian
         , grab
         , grabbing
+        , gujarati
+        , gurmukhi
         , help
         , hex
         , hsl
         , hsla
         , inherit
         , initial
+        , kannada
+        , khmer
+        , lao
         , lastBaseline
         , left
+        , listStyle
+        , listStyle2
+        , listStyle3
+        , malayalam
         , move
+        , myanmar
         , nResize
         , neResize
         , neswResize
@@ -60,6 +75,7 @@ module Next.Css
         , nsResize
         , nwResize
         , nwseResize
+        , oriya
         , pct
         , pointer
         , progress
@@ -79,7 +95,9 @@ module Next.Css
         , start
         , stretch
         , swResize
+        , telugu
         , text
+        , thai
         , unsafeCenter
         , unset
         , url
@@ -174,7 +192,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## List Style Type
 
-@docs arabicIndic, armenian
+@docs listStyle, listStyle2, listStyle3
+@docs arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 
 
 ## Shared Values
@@ -1201,3 +1220,247 @@ arabicIndic =
 armenian : Value { provides | armenian : Supported }
 armenian =
     Value "armenian"
+
+
+{-| TODO
+-}
+bengali : Value { provides | bengali : Supported }
+bengali =
+    Value "bengali"
+
+
+{-| TODO
+-}
+cjkEarthlyBranch : Value { provides | cjkEarthlyBranch : Supported }
+cjkEarthlyBranch =
+    Value "cjkEarthlyBranch"
+
+
+{-| TODO
+-}
+cjkHeavenlyStem : Value { provides | cjkHeavenlyStem : Supported }
+cjkHeavenlyStem =
+    Value "cjkHeavenlyStem"
+
+
+{-| TODO
+-}
+devanagari : Value { provides | devanagari : Supported }
+devanagari =
+    Value "devanagari"
+
+
+{-| TODO
+-}
+georgian : Value { provides | georgian : Supported }
+georgian =
+    Value "georgian"
+
+
+{-| TODO
+-}
+gujarati : Value { provides | gujarati : Supported }
+gujarati =
+    Value "gujarati"
+
+
+{-| TODO
+-}
+gurmukhi : Value { provides | gurmukhi : Supported }
+gurmukhi =
+    Value "gurmukhi"
+
+
+{-| TODO
+-}
+kannada : Value { provides | kannada : Supported }
+kannada =
+    Value "kannada"
+
+
+{-| TODO
+-}
+khmer : Value { provides | khmer : Supported }
+khmer =
+    Value "khmer"
+
+
+{-| TODO
+-}
+lao : Value { provides | lao : Supported }
+lao =
+    Value "lao"
+
+
+{-| TODO
+-}
+malayalam : Value { provides | malayalam : Supported }
+malayalam =
+    Value "malayalam"
+
+
+{-| TODO
+-}
+myanmar : Value { provides | myanmar : Supported }
+myanmar =
+    Value "myanmar"
+
+
+{-| TODO
+-}
+oriya : Value { provides | oriya : Supported }
+oriya =
+    Value "oriya"
+
+
+{-| TODO
+-}
+telugu : Value { provides | telugu : Supported }
+telugu =
+    Value "telugu"
+
+
+{-| TODO
+-}
+thai : Value { provides | thai : Supported }
+thai =
+    Value "thai"
+
+
+
+{- LIST STYLE SHORTHAND -}
+
+
+{-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
+-}
+listStyle :
+    Value
+        { armenian : Supported
+        , bengali : Supported
+        , cjkEarthlyBranch : Supported
+        , cjkHeavenlyStem : Supported
+        , devanagari : Supported
+        , georgian : Supported
+        , gujarati : Supported
+        , gurmukhi : Supported
+        , kannada : Supported
+        , khmer : Supported
+        , lao : Supported
+        , malayalam : Supported
+        , myanmar : Supported
+        , oriya : Supported
+        , telugu : Supported
+        , thai : Supported
+        }
+    -> Style
+listStyle (Value val) =
+    AppendProperty ("list-style:" ++ val)
+
+
+{-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
+-}
+listStyle2 :
+    Value
+        { armenian : Supported
+        , bengali : Supported
+        , cjkEarthlyBranch : Supported
+        , cjkHeavenlyStem : Supported
+        , devanagari : Supported
+        , georgian : Supported
+        , gujarati : Supported
+        , gurmukhi : Supported
+        , kannada : Supported
+        , khmer : Supported
+        , lao : Supported
+        , malayalam : Supported
+        , myanmar : Supported
+        , oriya : Supported
+        , telugu : Supported
+        , thai : Supported
+        }
+    ->
+        Value
+            { armenian : Supported
+            , bengali : Supported
+            , cjkEarthlyBranch : Supported
+            , cjkHeavenlyStem : Supported
+            , devanagari : Supported
+            , georgian : Supported
+            , gujarati : Supported
+            , gurmukhi : Supported
+            , kannada : Supported
+            , khmer : Supported
+            , lao : Supported
+            , malayalam : Supported
+            , myanmar : Supported
+            , oriya : Supported
+            , telugu : Supported
+            , thai : Supported
+            }
+    -> Style
+listStyle2 (Value val1) (Value val2) =
+    AppendProperty ("list-style:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
+-}
+listStyle3 :
+    Value
+        { armenian : Supported
+        , bengali : Supported
+        , cjkEarthlyBranch : Supported
+        , cjkHeavenlyStem : Supported
+        , devanagari : Supported
+        , georgian : Supported
+        , gujarati : Supported
+        , gurmukhi : Supported
+        , kannada : Supported
+        , khmer : Supported
+        , lao : Supported
+        , malayalam : Supported
+        , myanmar : Supported
+        , oriya : Supported
+        , telugu : Supported
+        , thai : Supported
+        }
+    ->
+        Value
+            { armenian : Supported
+            , bengali : Supported
+            , cjkEarthlyBranch : Supported
+            , cjkHeavenlyStem : Supported
+            , devanagari : Supported
+            , georgian : Supported
+            , gujarati : Supported
+            , gurmukhi : Supported
+            , kannada : Supported
+            , khmer : Supported
+            , lao : Supported
+            , malayalam : Supported
+            , myanmar : Supported
+            , oriya : Supported
+            , telugu : Supported
+            , thai : Supported
+            }
+    ->
+        Value
+            { armenian : Supported
+            , bengali : Supported
+            , cjkEarthlyBranch : Supported
+            , cjkHeavenlyStem : Supported
+            , devanagari : Supported
+            , georgian : Supported
+            , gujarati : Supported
+            , gurmukhi : Supported
+            , kannada : Supported
+            , khmer : Supported
+            , lao : Supported
+            , malayalam : Supported
+            , myanmar : Supported
+            , oriya : Supported
+            , telugu : Supported
+            , thai : Supported
+            }
+    -> Style
+listStyle3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("list-style:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
