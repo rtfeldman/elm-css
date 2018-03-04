@@ -26,23 +26,36 @@ module Next.Css
         , block
         , bold
         , bolder
+        , boxShadow
+        , boxShadow2
+        , boxShadow3
+        , boxShadow4
+        , boxShadow5
+        , boxShadow6
         , cell
         , center
+        , ch
         , cjkEarthlyBranch
         , cjkHeavenlyStem
+        , cm
         , colResize
         , color
         , contextMenu
         , copy
         , crosshair
         , cursor
+        , dashed
         , default
         , devanagari
         , display
         , displayFlex
+        , dotted
+        , double
         , eResize
+        , em
         , end
         , ewResize
+        , ex
         , firstBaseline
         , flexEnd
         , flexStart
@@ -52,17 +65,21 @@ module Next.Css
         , grab
         , grabbing
         , grid
+        , groove
         , gujarati
         , gurmukhi
         , help
         , hex
         , hsl
         , hsla
+        , inches
         , inherit
         , initial
         , inline
         , inlineBlock
         , inlineFlex
+        , inset
+        , int
         , italic
         , kannada
         , khmer
@@ -74,6 +91,7 @@ module Next.Css
         , listStyle2
         , listStyle3
         , malayalam
+        , mm
         , move
         , myanmar
         , nResize
@@ -84,19 +102,25 @@ module Next.Css
         , normal
         , notAllowed
         , nsResize
+        , num
         , nwResize
         , nwseResize
         , oblique
         , oriya
+        , outset
+        , pc
         , pct
         , pointer
         , progress
         , pseudoClass
         , pseudoElement
+        , pt
         , px
+        , rem
         , revert
         , rgb
         , rgba
+        , ridge
         , right
         , rowResize
         , sResize
@@ -104,6 +128,7 @@ module Next.Css
         , seResize
         , selfEnd
         , selfStart
+        , solid
         , start
         , stretch
         , swResize
@@ -123,8 +148,13 @@ module Next.Css
         , unset
         , url
         , verticalText
+        , vh
+        , vmax
+        , vmin
+        , vw
         , wResize
         , wait
+        , wavy
         , zero
         , zoomIn
         , zoomOut
@@ -154,7 +184,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Numeric Units
 
-@docs zero, px, pct
+@docs zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pt, pc, pct, num, int
 
 
 ## Color
@@ -170,6 +200,16 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Pseudo-Elements
 
 @docs pseudoElement, before, after
+
+
+## Box Shadow
+
+@docs boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6
+
+
+## Border Style
+
+@docs wavy, dotted, dashed, solid, double, groove, ridge, inset, outset
 
 
 ## Display
@@ -673,7 +713,7 @@ before =
 This conveniently lets you avoid doing things like `padding (px 0)`
 
 -}
-zero : Value { provides | px : Supported, pct : Supported }
+zero : Value { provides | zero : Supported }
 zero =
     Value "0"
 
@@ -685,11 +725,651 @@ px value =
     Value (String.fromFloat value ++ "px")
 
 
+{-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
+-}
+em : Float -> Value { provides | em : Supported }
+em value =
+    Value (String.fromFloat value ++ "em")
+
+
+{-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
+-}
+ex : Float -> Value { provides | ex : Supported }
+ex value =
+    Value (String.fromFloat value ++ "ex")
+
+
+{-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
+-}
+ch : Float -> Value { provides | ch : Supported }
+ch value =
+    Value (String.fromFloat value ++ "ch")
+
+
+{-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
+-}
+rem : Float -> Value { provides | rem : Supported }
+rem value =
+    Value (String.fromFloat value ++ "rem")
+
+
+{-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
+-}
+vh : Float -> Value { provides | vh : Supported }
+vh value =
+    Value (String.fromFloat value ++ "vh")
+
+
+{-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
+-}
+vw : Float -> Value { provides | vw : Supported }
+vw value =
+    Value (String.fromFloat value ++ "vw")
+
+
+{-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
+-}
+vmin : Float -> Value { provides | vmin : Supported }
+vmin value =
+    Value (String.fromFloat value ++ "vmin")
+
+
+{-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
+-}
+vmax : Float -> Value { provides | vmax : Supported }
+vmax value =
+    Value (String.fromFloat value ++ "vmax")
+
+
+{-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+-}
+mm : Float -> Value { provides | mm : Supported }
+mm value =
+    Value (String.fromFloat value ++ "mm")
+
+
+{-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
+-}
+cm : Float -> Value { provides | cm : Supported }
+cm value =
+    Value (String.fromFloat value ++ "cm")
+
+
+{-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
+
+(This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
+
+-}
+inches : Float -> Value { provides | inches : Supported }
+inches value =
+    Value (String.fromFloat value ++ "in")
+
+
+{-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
+-}
+pt : Float -> Value { provides | pt : Supported }
+pt value =
+    Value (String.fromFloat value ++ "pt")
+
+
+{-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
+-}
+pc : Float -> Value { provides | pc : Supported }
+pc value =
+    Value (String.fromFloat value ++ "pc")
+
+
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
 pct : Float -> Value { provides | pct : Supported }
 pct value =
     Value (String.fromFloat value ++ "%")
+
+
+{-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
+which accept unitless numbers.
+-}
+num : Float -> Value { provides | num : Supported }
+num value =
+    Value (String.fromFloat value)
+
+
+{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
+which accept either length units or unitless numbers for some properties.
+-}
+int : Int -> Value { provides | int : Supported }
+int value =
+    Value (String.fromInt value)
+
+
+
+-- BOX SHADOW --
+
+
+{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+
+    boxShadow  none
+    boxShadow2 (px 1) (px 2)
+    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+    boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
+    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
+    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
+-}
+boxShadow :
+    Value
+        { none : Supported
+        , px : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , pct : Supported
+        , zero : Supported
+        }
+    -> Style
+boxShadow (Value val) =
+    AppendProperty ("box-shadow:" ++ val)
+
+
+{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+
+    boxShadow  none
+    boxShadow2 (px 1) (px 2)
+    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+    boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
+    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
+    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
+-}
+boxShadow2 :
+    Value
+        { px : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , pct : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    -> Style
+boxShadow2 (Value val1) (Value val2) =
+    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+
+    boxShadow  none
+    boxShadow2 (px 1) (px 2)
+    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+    boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
+    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
+    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
+-}
+boxShadow3 :
+    Value
+        { px : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , pct : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    -> Style
+boxShadow3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+
+    boxShadow  none
+    boxShadow2 (px 1) (px 2)
+    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+    boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
+    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
+    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
+-}
+boxShadow4 :
+    Value
+        { px : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , pct : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    -> Style
+boxShadow4 (Value val1) (Value val2) (Value val3) (Value val4) =
+    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3 ++ " " ++ val4)
+
+
+{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+
+    boxShadow  none
+    boxShadow2 (px 1) (px 2)
+    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+    boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
+    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
+    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
+-}
+boxShadow5 :
+    Value
+        { px : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , pct : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    -> Style
+boxShadow5 (Value val1) (Value val2) (Value val3) (Value val4) (Value val5) =
+    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3 ++ " " ++ val4 ++ " " ++ val5)
+
+
+{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+
+    boxShadow  none
+    boxShadow2 (px 1) (px 2)
+    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+    boxShadow3 (px 1) (px 2) (px 3)
+    boxShadow3 inset (px 2) (px 3)
+    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+    boxShadow4 (px 1) (px 2) (px 3) (px 4)
+    boxShadow4 inset (px 2) (px 3) (px 4)
+    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
+-}
+boxShadow6 :
+    Value
+        { px : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , pct : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    -> Style
+boxShadow6 (Value val1) (Value val2) (Value val3) (Value val4) (Value val5) (Value val6) =
+    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3 ++ " " ++ val4 ++ " " ++ val5 ++ " " ++ val6)
 
 
 
@@ -1663,3 +2343,70 @@ listStyle3 :
     -> Style
 listStyle3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+
+-- BORDER STYLE --
+
+
+{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
+-}
+wavy : Value { provides | wavy : Supported }
+wavy =
+    Value "wavy"
+
+
+{-| A `dotted` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+dotted : Value { provides | dotted : Supported }
+dotted =
+    Value "dotted"
+
+
+{-| A `dashed` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+dashed : Value { provides | dashed : Supported }
+dashed =
+    Value "dashed"
+
+
+{-| A `solid` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+solid : Value { provides | solid : Supported }
+solid =
+    Value "solid"
+
+
+{-| A `double` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+double : Value { provides | double : Supported }
+double =
+    Value "double"
+
+
+{-| A `groove` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+groove : Value { provides | groove : Supported }
+groove =
+    Value "groove"
+
+
+{-| A `ridge` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+ridge : Value { provides | ridge : Supported }
+ridge =
+    Value "ridge"
+
+
+{-| An `inset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+inset : Value { provides | inset : Supported }
+inset =
+    Value "inset"
+
+
+{-| An `outset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+outset : Value { provides | outset : Supported }
+outset =
+    Value "outset"
