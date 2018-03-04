@@ -151,7 +151,6 @@ third-party DOM nodes!
 
 -}
 
-import Css.Helpers exposing (identifierToString)
 import Css.Media exposing (MediaQuery)
 import Css.Preprocess as Preprocess
     exposing
