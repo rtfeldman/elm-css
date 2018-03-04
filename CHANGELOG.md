@@ -1,7 +1,7 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
-| [**14.0.0** (unreleased)](https://github.com/rtfeldman/elm-css/tree/14.0.0) | Remove `asPairs`, `Css.Namespace`, and arithmetic operators. Don't report warnings, just emit CSS. Make `Property` opaque and more efficient. Fix `withMedia` nesting bug. (#352) Fix bug in `borderBottomWidth` functions. (#380)
+| [**14.0.0** (unreleased)](https://github.com/rtfeldman/elm-css/tree/14.0.0) | Remove `asPairs`, `Css.Namespace`, and arithmetic operators. Don't report warnings, just emit CSS. Make `Property` opaque and more efficient. Fix `withMedia` nesting bug. (#352) Fix bug in `borderBottomWidth` functions. (#380) Overhauls `boxShadow` API.
 | [**13.1.1**](https://github.com/rtfeldman/elm-css/tree/13.1.1) | Fix `AngleOrDirection` bug (#356)
 | [**13.1.0**](https://github.com/rtfeldman/elm-css/tree/13.1.0) | Add program, programWithFlags, and beginnerProgram to Html.Styled. (#381)
 | [**13.0.1**](https://github.com/rtfeldman/elm-css/tree/13.0.1) | Remove extraneous Debug.log

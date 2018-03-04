@@ -1,6 +1,7 @@
 module Next.Css
     exposing
-        ( Color
+        ( BoxShadowConfig
+        , Color
         , Style
         , Supported
         , Value
@@ -27,11 +28,6 @@ module Next.Css
         , bold
         , bolder
         , boxShadow
-        , boxShadow2
-        , boxShadow3
-        , boxShadow4
-        , boxShadow5
-        , boxShadow6
         , cell
         , center
         , ch
@@ -46,6 +42,7 @@ module Next.Css
         , cursor
         , dashed
         , default
+        , defaultBoxShadow
         , devanagari
         , display
         , displayFlex
@@ -204,7 +201,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Box Shadow
 
-@docs boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6
+@docs BoxShadowConfig, boxShadow, defaultBoxShadow
 
 
 ## Border Style
@@ -846,83 +843,10 @@ int value =
 -- BOX SHADOW --
 
 
-{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
-
-    boxShadow  none
-    boxShadow2 (px 1) (px 2)
-    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
-    boxShadow3 (px 1) (px 2) (px 3)
-    boxShadow3 inset (px 2) (px 3)
-    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 (px 1) (px 2) (px 3) (px 4)
-    boxShadow4 inset (px 2) (px 3) (px 4)
-    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-
+{-| Configuration for [`boxShadow`](#boxShadow).
 -}
-boxShadow :
-    Value
-        { none : Supported
-        , px : Supported
-        , em : Supported
-        , ex : Supported
-        , ch : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , mm : Supported
-        , cm : Supported
-        , inches : Supported
-        , pt : Supported
-        , pc : Supported
-        , pct : Supported
-        , zero : Supported
-        }
-    -> Style
-boxShadow (Value val) =
-    AppendProperty ("box-shadow:" ++ val)
-
-
-{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
-
-    boxShadow  none
-    boxShadow2 (px 1) (px 2)
-    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
-    boxShadow3 (px 1) (px 2) (px 3)
-    boxShadow3 inset (px 2) (px 3)
-    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 (px 1) (px 2) (px 3) (px 4)
-    boxShadow4 inset (px 2) (px 3) (px 4)
-    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-
--}
-boxShadow2 :
-    Value
-        { px : Supported
-        , em : Supported
-        , ex : Supported
-        , ch : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , mm : Supported
-        , cm : Supported
-        , inches : Supported
-        , pt : Supported
-        , pc : Supported
-        , pct : Supported
-        , zero : Supported
-        }
-    ->
+type alias BoxShadowConfig =
+    { offsetX :
         Value
             { px : Supported
             , em : Supported
@@ -941,435 +865,166 @@ boxShadow2 :
             , pct : Supported
             , zero : Supported
             }
-    -> Style
-boxShadow2 (Value val1) (Value val2) =
-    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2)
+    , offsetY :
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            }
+    , blurRadius :
+        Maybe
+            (Value
+                { px : Supported
+                , em : Supported
+                , ex : Supported
+                , ch : Supported
+                , rem : Supported
+                , vh : Supported
+                , vw : Supported
+                , vmin : Supported
+                , vmax : Supported
+                , mm : Supported
+                , cm : Supported
+                , inches : Supported
+                , pt : Supported
+                , pc : Supported
+                , pct : Supported
+                , zero : Supported
+                }
+            )
+    , spreadRadius :
+        Maybe
+            (Value
+                { px : Supported
+                , em : Supported
+                , ex : Supported
+                , ch : Supported
+                , rem : Supported
+                , vh : Supported
+                , vw : Supported
+                , vmin : Supported
+                , vmax : Supported
+                , mm : Supported
+                , cm : Supported
+                , inches : Supported
+                , pt : Supported
+                , pc : Supported
+                , pct : Supported
+                , zero : Supported
+                }
+            )
+    , color :
+        Maybe
+            (Value
+                { px : Supported
+                , em : Supported
+                , ex : Supported
+                , ch : Supported
+                , rem : Supported
+                , vh : Supported
+                , vw : Supported
+                , vmin : Supported
+                , vmax : Supported
+                , mm : Supported
+                , cm : Supported
+                , inches : Supported
+                , pt : Supported
+                , pc : Supported
+                , pct : Supported
+                , zero : Supported
+                }
+            )
+    , inset : Bool
+    }
 
 
-{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+{-| Default [`boxShadow`](#boxShadow) configuration.
 
-    boxShadow  none
-    boxShadow2 (px 1) (px 2)
-    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
-    boxShadow3 (px 1) (px 2) (px 3)
-    boxShadow3 inset (px 2) (px 3)
-    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 (px 1) (px 2) (px 3) (px 4)
-    boxShadow4 inset (px 2) (px 3) (px 4)
-    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+It is equivalent to the following CSS:
+
+    box-shadow: 0 0;
 
 -}
-boxShadow3 :
-    Value
-        { px : Supported
-        , em : Supported
-        , ex : Supported
-        , ch : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , mm : Supported
-        , cm : Supported
-        , inches : Supported
-        , pt : Supported
-        , pc : Supported
-        , pct : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    -> Style
-boxShadow3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+defaultBoxShadow : BoxShadowConfig
+defaultBoxShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , spreadRadius = Nothing
+    , color = Nothing
+    , inset = False
+    }
 
 
 {-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
 
-    boxShadow  none
-    boxShadow2 (px 1) (px 2)
-    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
-    boxShadow3 (px 1) (px 2) (px 3)
-    boxShadow3 inset (px 2) (px 3)
-    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 (px 1) (px 2) (px 3) (px 4)
-    boxShadow4 inset (px 2) (px 3) (px 4)
-    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+    boxShadow  [] -- "box-shadow: none"
+    boxShadow [ { defaultBoxShadow | offsetX = (px 3), offsetY = (px 5) } -- "box-shadow: 3px 5px"
+
+TODO full example
 
 -}
-boxShadow4 :
-    Value
-        { px : Supported
-        , em : Supported
-        , ex : Supported
-        , ch : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , mm : Supported
-        , cm : Supported
-        , inches : Supported
-        , pt : Supported
-        , pc : Supported
-        , pct : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    -> Style
-boxShadow4 (Value val1) (Value val2) (Value val3) (Value val4) =
-    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3 ++ " " ++ val4)
+boxShadow : List BoxShadowConfig -> Style
+boxShadow configs =
+    let
+        value =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map boxShadowConfigToString
+                        |> String.join ", "
+    in
+    AppendProperty ("box-shadow:" ++ value)
 
 
-{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+boxShadowConfigToString : BoxShadowConfig -> String
+boxShadowConfigToString config =
+    let
+        (Value offsetX) =
+            config.offsetX
 
-    boxShadow  none
-    boxShadow2 (px 1) (px 2)
-    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
-    boxShadow3 (px 1) (px 2) (px 3)
-    boxShadow3 inset (px 2) (px 3)
-    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 (px 1) (px 2) (px 3) (px 4)
-    boxShadow4 inset (px 2) (px 3) (px 4)
-    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+        (Value offsetY) =
+            config.offsetY
 
--}
-boxShadow5 :
-    Value
-        { px : Supported
-        , em : Supported
-        , ex : Supported
-        , ch : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , mm : Supported
-        , cm : Supported
-        , inches : Supported
-        , pt : Supported
-        , pc : Supported
-        , pct : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    -> Style
-boxShadow5 (Value val1) (Value val2) (Value val3) (Value val4) (Value val5) =
-    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3 ++ " " ++ val4 ++ " " ++ val5)
+        blurRadius =
+            case config.blurRadius of
+                Just (Value value) ->
+                    " " ++ value
 
+                Nothing ->
+                    ""
 
-{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+        spreadRadius =
+            case config.spreadRadius of
+                Just (Value value) ->
+                    " " ++ value
 
-    boxShadow  none
-    boxShadow2 (px 1) (px 2)
-    boxShadow3 (px 1) (px 2) (rgb 211 121 112)
-    boxShadow3 (px 1) (px 2) (px 3)
-    boxShadow3 inset (px 2) (px 3)
-    boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
-    boxShadow4 (px 1) (px 2) (px 3) (px 4)
-    boxShadow4 inset (px 2) (px 3) (px 4)
-    boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
-    boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+                Nothing ->
+                    ""
 
--}
-boxShadow6 :
-    Value
-        { px : Supported
-        , em : Supported
-        , ex : Supported
-        , ch : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , mm : Supported
-        , cm : Supported
-        , inches : Supported
-        , pt : Supported
-        , pc : Supported
-        , pct : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            }
-    -> Style
-boxShadow6 (Value val1) (Value val2) (Value val3) (Value val4) (Value val5) (Value val6) =
-    AppendProperty ("box-shadow:" ++ val1 ++ " " ++ val2 ++ " " ++ val3 ++ " " ++ val4 ++ " " ++ val5 ++ " " ++ val6)
+        insetStr =
+            if config.inset then
+                "inset "
+            else
+                ""
+    in
+    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius
 
 
 
