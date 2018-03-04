@@ -806,7 +806,6 @@ cursor :
         , none : Supported
         , contextMenu : Supported
         , help : Supported
-        , pointer : Supported
         , progress : Supported
         , wait : Supported
         , cell : Supported
