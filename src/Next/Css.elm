@@ -370,11 +370,11 @@ rgb : Int -> Int -> Int -> Value { provides | rgb : Supported }
 rgb red green blue =
     Value <|
         "rgb("
-            ++ toString red
+            ++ String.fromInt red
             ++ ","
-            ++ toString green
+            ++ String.fromInt green
             ++ ","
-            ++ toString blue
+            ++ String.fromInt blue
             ++ ")"
 
 
@@ -384,13 +384,13 @@ rgba : Int -> Int -> Int -> Float -> Value { provides | rgba : Supported }
 rgba red green blue alpha =
     Value <|
         "rgba("
-            ++ toString red
+            ++ String.fromInt red
             ++ ","
-            ++ toString green
+            ++ String.fromInt green
             ++ ","
-            ++ toString blue
+            ++ String.fromInt blue
             ++ ","
-            ++ toString alpha
+            ++ String.fromFloat alpha
             ++ ")"
 
 
@@ -402,11 +402,11 @@ hsl : Float -> Float -> Float -> Value { provides | hsl : Supported }
 hsl hue saturation lightness =
     Value <|
         "hsl("
-            ++ toString hue
+            ++ String.fromFloat hue
             ++ ","
-            ++ toString (saturation * 100)
+            ++ String.fromFloat (saturation * 100)
             ++ "%,"
-            ++ toString (lightness * 100)
+            ++ String.fromFloat (lightness * 100)
             ++ "%,"
             ++ ")"
 
@@ -419,13 +419,13 @@ hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
 hsla hue saturation lightness alpha =
     Value <|
         "hsl("
-            ++ toString hue
+            ++ String.fromFloat hue
             ++ ","
-            ++ toString (saturation * 100)
+            ++ String.fromFloat (saturation * 100)
             ++ "%,"
-            ++ toString (lightness * 100)
+            ++ String.fromFloat (lightness * 100)
             ++ "%,"
-            ++ toString alpha
+            ++ String.fromFloat alpha
             ++ ")"
 
 
@@ -561,14 +561,14 @@ zero =
 -}
 px : Float -> Value { provides | px : Supported }
 px value =
-    Value (toString value ++ "px")
+    Value (String.fromFloat value ++ "px")
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
 pct : Float -> Value { provides | pct : Supported }
 pct value =
-    Value (toString value ++ "%")
+    Value (String.fromFloat value ++ "%")
 
 
 
