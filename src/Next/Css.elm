@@ -21,6 +21,7 @@ module Next.Css
         , backgroundColor
         , baseline
         , batch
+        , before
         , cell
         , center
         , colResize
@@ -129,7 +130,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Pseudo-Elements
 
-@docs pseudoElement, after
+@docs pseudoElement, before, after
 
 
 ## Display
@@ -591,6 +592,14 @@ pseudoElement element =
 after : List Style -> Style
 after =
     Preprocess.WithPseudoElement (Structure.PseudoElement "after")
+
+
+{-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
+before : List Style -> Style
+before =
+    pseudoElement "before"
 
 
 
