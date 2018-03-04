@@ -366,6 +366,8 @@ type alias Color =
         }
 
 
+{-| TODO
+-}
 color :
     Value
         { rgb : Supported
@@ -379,6 +381,8 @@ color (Value val) =
     AppendProperty ("color:" ++ val)
 
 
+{-| TODO
+-}
 backgroundColor : Value { rgb : Supported } -> Style
 backgroundColor (Value val) =
     AppendProperty ("background-color:" ++ val)
@@ -642,81 +646,113 @@ displayFlex =
 -- ALIGN-ITEMS VALUES --
 
 
+{-| TODO
+-}
 normal : Value { provides | normal : Supported }
 normal =
     Value "normal"
 
 
+{-| TODO
+-}
 stretch : Value { provides | stretch : Supported }
 stretch =
     Value "stretch"
 
 
+{-| TODO
+-}
 center : Value { provides | center : Supported }
 center =
     Value "center"
 
 
+{-| TODO
+-}
 start : Value { provides | start : Supported }
 start =
     Value "start"
 
 
+{-| TODO
+-}
 end : Value { provides | end : Supported }
 end =
     Value "end"
 
 
+{-| TODO
+-}
 flexStart : Value { provides | flexStart : Supported }
 flexStart =
     Value "flex-start"
 
 
+{-| TODO
+-}
 flexEnd : Value { provides | flexEnd : Supported }
 flexEnd =
     Value "flex-end"
 
 
+{-| TODO
+-}
 selfStart : Value { provides | selfStart : Supported }
 selfStart =
     Value "self-start"
 
 
+{-| TODO
+-}
 selfEnd : Value { provides | selfEnd : Supported }
 selfEnd =
     Value "self-end"
 
 
+{-| TODO
+-}
 left : Value { provides | left : Supported }
 left =
     Value "left"
 
 
+{-| TODO
+-}
 right : Value { provides | right : Supported }
 right =
     Value "right"
 
 
+{-| TODO
+-}
 baseline : Value { provides | baseline : Supported }
 baseline =
     Value "baseline"
 
 
+{-| TODO
+-}
 firstBaseline : Value { provides | firstBaseline : Supported }
 firstBaseline =
     Value "first baseline"
 
 
+{-| TODO
+-}
 lastBaseline : Value { provides | lastBaseline : Supported }
 lastBaseline =
     Value "last baseline"
 
 
+{-| TODO
+-}
 safeCenter : Value { provides | safeCenter : Supported }
 safeCenter =
     Value "safe center"
 
 
+{-| TODO
+-}
 unsafeCenter : Value { provides | unsafeCenter : Supported }
 unsafeCenter =
     Value "unsafe center"
@@ -802,11 +838,15 @@ alignSelf (Value val) =
 -- FONT VARIANTS --
 
 
+{-| TODO
+-}
 allPetiteCaps : Value { provides | allPetiteCaps : Supported }
 allPetiteCaps =
     Value "all-petite-caps"
 
 
+{-| TODO
+-}
 allSmallCaps : Value { provides | allSmallCaps : Supported }
 allSmallCaps =
     Value "all-small-caps"
@@ -1109,11 +1149,15 @@ grabbing =
 -- LIST STYLE TYPE --
 
 
+{-| TODO
+-}
 arabicIndic : Value { provides | arabicIndic : Supported }
 arabicIndic =
     Value "arabic-indic"
 
 
+{-| TODO
+-}
 armenian : Value { provides | armenian : Supported }
 armenian =
     Value "armenian"
