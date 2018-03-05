@@ -3024,28 +3024,28 @@ angleConverter suffix angleVal =
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
 -}
-deg : number -> AngleOrDirection (Angle {})
+deg : Float -> AngleOrDirection (Angle {})
 deg =
     angleConverter "deg"
 
 
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
-grad : number -> AngleOrDirection (Angle {})
+grad : Float -> AngleOrDirection (Angle {})
 grad =
     angleConverter "grad"
 
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
-rad : number -> AngleOrDirection (Angle {})
+rad : Float -> AngleOrDirection (Angle {})
 rad =
     angleConverter "rad"
 
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
-turn : number -> AngleOrDirection (Angle {})
+turn : Float -> AngleOrDirection (Angle {})
 turn =
     angleConverter "turn"
 
