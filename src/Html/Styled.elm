@@ -11,9 +11,7 @@ module Html.Styled
         , b
         , bdi
         , bdo
-        , beginnerProgram
         , blockquote
-        , body
         , br
         , button
         , canvas
@@ -37,7 +35,6 @@ module Html.Styled
         , figure
         , footer
         , form
-        , fromUnstyled
         , h1
         , h2
         , h3
@@ -52,7 +49,6 @@ module Html.Styled
         , input
         , ins
         , kbd
-        , keygen
         , label
         , legend
         , li
@@ -73,8 +69,6 @@ module Html.Styled
         , p
         , param
         , pre
-        , program
-        , programWithFlags
         , progress
         , q
         , rp
@@ -88,7 +82,6 @@ module Html.Styled
         , source
         , span
         , strong
-        , styled
         , sub
         , summary
         , sup
@@ -101,7 +94,6 @@ module Html.Styled
         , th
         , thead
         , time
-        , toUnstyled
         , tr
         , track
         , u
@@ -111,23 +103,13 @@ module Html.Styled
         , wbr
         )
 
-{-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
-The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
-
-@docs styled, fromUnstyled, toUnstyled
-
-This file is organized roughly in order of popularity. The tags which you'd
+{-| This file is organized roughly in order of popularity. The tags which you'd
 expect to use frequently will be closer to the top.
 
 
 # Primitives
 
 @docs Html, Attribute, text, node, map
-
-
-# Programs
-
-@docs beginnerProgram, program, programWithFlags
 
 
 # Tags
@@ -153,7 +135,7 @@ expect to use frequently will be closer to the top.
 @docs ol, ul, li, dl, dt, dd
 
 
-## Emdedded Content
+## Embedded Content
 
 @docs img, iframe, canvas, math
 
@@ -165,7 +147,7 @@ expect to use frequently will be closer to the top.
 
 ## Sections
 
-@docs section, nav, article, aside, header, footer, address, main_, body
+@docs section, nav, article, aside, header, footer, address, main_
 
 
 ## Figures
@@ -180,12 +162,10 @@ expect to use frequently will be closer to the top.
 
 ## Less Common Elements
 
-@docs details, menu, menuitem, summary
-
 
 ### Less Common Inputs
 
-@docs fieldset, legend, label, datalist, optgroup, keygen, output, progress, meter
+@docs fieldset, legend, label, datalist, optgroup, output, progress, meter
 
 
 ### Audio and Video
@@ -215,177 +195,103 @@ expect to use frequently will be closer to the top.
 
 ## Interactive Elements
 
+@docs details, summary, menuitem, menu
+
 -}
 
-import Css exposing (Style)
-import Html.Styled.Internal as Internal
 import VirtualDom
 import VirtualDom.Styled
 
 
-{-| Styled [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html).
+-- CORE TYPES
 
-You can convert from this to the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
-(which is a type alias for [`VirtualDom.Node`](http://package.elm-lang.org/packages/elm-lang/virtual-dom/latest/VirtualDom#Node))
-by using [`toUnstyled`](#toUnstyled).
 
-You can convert the other way using [`fromUnstyled`](#fromUnstyled).
+{-| The core building block used to build up HTML. Here we create an `Html`
+value with no attributes and one child:
+
+    hello : Html msg
+    hello =
+        div [] [ text "Hello!" ]
 
 -}
 type alias Html msg =
     VirtualDom.Styled.Node msg
 
 
-{-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css) attribute.
-
-You can obtain one of these from the normal [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
-by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled).
-
+{-| Set attributes on your `Html`. Learn more in the
+[`Html.Attributes`](Html-Attributes) module.
 -}
 type alias Attribute msg =
-    VirtualDom.Styled.Property msg
+    VirtualDom.Styled.Attribute msg
 
 
 
--- MAKING HTML VALUES --
+-- PRIMITIVES
 
 
-{-| -}
+{-| General way to create HTML nodes. It is used to define all of the helper
+functions in this library.
+
+    div : List (Attribute msg) -> List (Html msg) -> Html msg
+    div attributes children =
+        node "div" attributes children
+
+You can use this to create custom nodes if you need to create something that
+is not covered by the helper functions in this library.
+
+-}
 node : String -> List (Attribute msg) -> List (Html msg) -> Html msg
 node =
     VirtualDom.Styled.node
 
 
-{-| -}
+{-| Just put plain text in the DOM. It will escape the string so that it appears
+exactly as you specify.
+
+    text "Hello World!"
+
+-}
 text : String -> Html msg
 text =
     VirtualDom.Styled.text
 
 
-{-| -}
-map : (a -> b) -> Html a -> Html b
+
+-- NESTING VIEWS
+
+
+{-| Transform the messages produced by some `Html`. In the following example,
+we have `viewButton` that produces `()` messages, and we transform those values
+into `Msg` values in `view`.
+
+    type Msg
+        = Left
+        | Right
+
+    view : model -> Html Msg
+    view model =
+        div []
+            [ map (\_ -> Left) (viewButton "Left")
+            , map (\_ -> Right) (viewButton "Right")
+            ]
+
+    viewButton : String -> Html ()
+    viewButton name =
+        button [ onClick () ] [ text name ]
+
+This should not come in handy too often. Definitely read [this][reuse] before
+deciding if this is what you want.
+
+[reuse]: https://guide.elm-lang.org/reuse/
+
+-}
+map : (a -> msg) -> Html a -> Html msg
 map =
     VirtualDom.Styled.map
 
 
-{-| Takes a function that creates an element, and pre-applies styles to it.
-
-    bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
-    bigButton =
-        styled button
-            [ padding (px 30)
-            , fontWeight bold
-            ]
-
-    view : Model -> Html msg
-    view model =
-        [ text "These two buttons are identical:"
-        , bigButton [] [ text "Hi!" ]
-        , button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
-        ]
-
-Here, the `bigButton` function we've defined using `styled button` is
-identical to the normal `button` function, except that it has pre-applied
-the attribute of `css [ padding (px 30), fontWeight bold ]`.
-
-You can pass more attributes to `bigButton` as usual (including other `css`
-attributes). They will be applied after the pre-applied styles.
-
--}
-styled :
-    (List (Attribute msg) -> List (Html msg) -> Html msg)
-    -> List Style
-    -> List (Attribute msg)
-    -> List (Html msg)
-    -> Html msg
-styled fn styles attrs children =
-    fn (Internal.css styles :: attrs) children
-
-
-{-| -}
-toUnstyled : Html msg -> VirtualDom.Node msg
-toUnstyled =
-    VirtualDom.Styled.toUnstyled
-
-
-{-| -}
-fromUnstyled : VirtualDom.Node msg -> Html msg
-fromUnstyled =
-    VirtualDom.Styled.unstyledNode
-
-
-
--- CREATING PROGRAMS
-
-
-{-| Create a [`Program`][program] that describes how your whole app works.
-Read about [The Elm Architecture][tea] to learn how to use this. Just do it.
-The additional context is very worthwhile! (Honestly, it is best to just read
-that guide from front to back instead of muddling around and reading it
-piecemeal.)
-[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
-[tea]: <https://guide.elm-lang.org/architecture/>
--}
-beginnerProgram :
-    { model : model
-    , view : model -> Html msg
-    , update : msg -> model -> model
-    }
-    -> Program Never model msg
-beginnerProgram { model, view, update } =
-    program
-        { init = model ! []
-        , update = \msg model -> update msg model ! []
-        , view = view
-        , subscriptions = \_ -> Sub.none
-        }
-
-
-{-| Create a [`Program`][program] that describes how your whole app works.
-Read about [The Elm Architecture][tea] to learn how to use this. Just do it.
-Commands and subscriptions make way more sense when you work up to them
-gradually and see them in context with examples.
-[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
-[tea]: <https://guide.elm-lang.org/architecture/>
--}
-program :
-    { init : ( model, Cmd msg )
-    , update : msg -> model -> ( model, Cmd msg )
-    , subscriptions : model -> Sub msg
-    , view : model -> Html msg
-    }
-    -> Program Never model msg
-program config =
-    VirtualDom.program { config | view = config.view >> toUnstyled }
-
-
-{-| Create a [`Program`][program] that describes how your whole app works.
-It works just like `program` but you can provide &ldquo;flags&rdquo; from
-JavaScript to configure your application. Read more about that [here].
-[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
-[here]: <https://guide.elm-lang.org/interop/javascript.html>
--}
-programWithFlags :
-    { init : flags -> ( model, Cmd msg )
-    , update : msg -> model -> ( model, Cmd msg )
-    , subscriptions : model -> Sub msg
-    , view : model -> Html msg
-    }
-    -> Program flags model msg
-programWithFlags config =
-    VirtualDom.programWithFlags { config | view = config.view >> toUnstyled }
-
-
 
 -- SECTIONS
-
-
-{-| Represents the content of an HTML document. There is only one `body`
-element in a document.
--}
-body : List (Attribute msg) -> List (Html msg) -> Html msg
-body =
-    node "body"
 
 
 {-| Defines a section in a document.
@@ -1067,13 +973,6 @@ option =
 textarea : List (Attribute msg) -> List (Html msg) -> Html msg
 textarea =
     node "textarea"
-
-
-{-| Represents a key-pair generator control.
--}
-keygen : List (Attribute msg) -> List (Html msg) -> Html msg
-keygen =
-    node "keygen"
 
 
 {-| Represents the result of a calculation.

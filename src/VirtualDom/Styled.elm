@@ -1,8 +1,8 @@
 module VirtualDom.Styled
     exposing
-        ( Classname
+        ( Attribute(..)
+        , Classname
         , Node
-        , Property(..)
         , attribute
         , attributeNS
         , getClassname
@@ -12,15 +12,16 @@ module VirtualDom.Styled
         , lazy3
         , makeSnippet
         , map
-        , mapProperty
+        , mapAttribute
         , node
+        , nodeNS
         , on
-        , onWithOptions
         , property
+        , style
         , text
         , toUnstyled
+        , unstyledAttribute
         , unstyledNode
-        , unstyledProperty
         )
 
 import Css.Preprocess as Preprocess exposing (Style)
@@ -35,14 +36,16 @@ import VirtualDom
 
 
 type Node msg
-    = Element String (List (Property msg)) (List (Node msg))
-    | KeyedElement String (List (Property msg)) (List ( String, Node msg ))
+    = Node String (List (Attribute msg)) (List (Node msg))
+    | NodeNS String String (List (Attribute msg)) (List (Node msg))
+    | KeyedNode String (List (Attribute msg)) (List ( String, Node msg ))
+    | KeyedNodeNS String String (List (Attribute msg)) (List ( String, Node msg ))
     | Unstyled (VirtualDom.Node msg)
 
 
-type Property msg
-    = Property
-        (VirtualDom.Property msg)
+type Attribute msg
+    = Attribute
+        (VirtualDom.Attribute msg)
         (List Preprocess.Style)
         -- classname is "" when it's not a `css` attribute.
         -- It would be nicer to model this with separate constructors, but the
@@ -54,18 +57,28 @@ type alias Classname =
     String
 
 
-node : String -> List (Property msg) -> List (Node msg) -> Node msg
+node : String -> List (Attribute msg) -> List (Node msg) -> Node msg
 node =
-    Element
+    Node
+
+
+nodeNS : String -> String -> List (Attribute msg) -> List (Node msg) -> Node msg
+nodeNS =
+    NodeNS
 
 
 keyedNode :
     String
-    -> List (Property msg)
+    -> List (Attribute msg)
     -> List ( String, Node msg )
     -> Node msg
 keyedNode =
-    KeyedElement
+    KeyedNode
+
+
+keyedNodeNS : String -> String -> List (Attribute msg) -> List ( String, Node msg ) -> Node msg
+keyedNodeNS =
+    KeyedNodeNS
 
 
 unstyledNode : VirtualDom.Node msg -> Node msg
@@ -78,19 +91,36 @@ text =
     VirtualDom.text >> Unstyled
 
 
+style : String -> String -> Attribute msg
+style key val =
+    Attribute (VirtualDom.style key val) [] ""
+
+
 map : (a -> b) -> Node a -> Node b
-map transform node =
-    case node of
-        Element elemType properties children ->
-            Element
+map transform vdomNode =
+    case vdomNode of
+        Node elemType properties children ->
+            Node
                 elemType
-                (List.map (mapProperty transform) properties)
+                (List.map (mapAttribute transform) properties)
                 (List.map (map transform) children)
 
-        KeyedElement elemType properties children ->
-            KeyedElement
+        NodeNS ns elemType properties children ->
+            NodeNS ns
                 elemType
-                (List.map (mapProperty transform) properties)
+                (List.map (mapAttribute transform) properties)
+                (List.map (map transform) children)
+
+        KeyedNode elemType properties children ->
+            KeyedNode
+                elemType
+                (List.map (mapAttribute transform) properties)
+                (List.map (\( key, child ) -> ( key, map transform child )) children)
+
+        KeyedNodeNS ns elemType properties children ->
+            KeyedNodeNS ns
+                elemType
+                (List.map (mapAttribute transform) properties)
                 (List.map (\( key, child ) -> ( key, map transform child )) children)
 
         Unstyled vdom ->
@@ -98,43 +128,34 @@ map transform node =
                 |> Unstyled
 
 
-property : String -> Json.Encode.Value -> Property msg
+property : String -> Json.Encode.Value -> Attribute msg
 property key value =
-    Property (VirtualDom.property key value) [] ""
+    Attribute (VirtualDom.property key value) [] ""
 
 
-attribute : String -> String -> Property msg
+attribute : String -> String -> Attribute msg
 attribute key value =
-    Property (VirtualDom.attribute key value) [] ""
+    Attribute (VirtualDom.attribute key value) [] ""
 
 
-attributeNS : String -> String -> String -> Property msg
+attributeNS : String -> String -> String -> Attribute msg
 attributeNS namespace key value =
-    Property (VirtualDom.attributeNS namespace key value) [] ""
+    Attribute (VirtualDom.attributeNS namespace key value) [] ""
 
 
-unstyledProperty : VirtualDom.Property msg -> Property msg
-unstyledProperty prop =
-    Property prop [] ""
+unstyledAttribute : VirtualDom.Attribute msg -> Attribute msg
+unstyledAttribute prop =
+    Attribute prop [] ""
 
 
-on : String -> Json.Decode.Decoder msg -> Property msg
-on eventName decoder =
-    Property (VirtualDom.on eventName decoder) [] ""
+on : String -> VirtualDom.Handler msg -> Attribute msg
+on eventName handler =
+    Attribute (VirtualDom.on eventName handler) [] ""
 
 
-onWithOptions :
-    String
-    -> VirtualDom.Options
-    -> Json.Decode.Decoder msg
-    -> Property msg
-onWithOptions eventName options decoder =
-    Property (VirtualDom.onWithOptions eventName options decoder) [] ""
-
-
-mapProperty : (a -> b) -> Property a -> Property b
-mapProperty transform (Property prop styles classname) =
-    Property (VirtualDom.mapProperty transform prop) styles classname
+mapAttribute : (a -> b) -> Attribute a -> Attribute b
+mapAttribute transform (Attribute prop styles classname) =
+    Attribute (VirtualDom.mapAttribute transform prop) styles classname
 
 
 lazy : (a -> VirtualDom.Node msg) -> a -> Node msg
@@ -156,16 +177,22 @@ lazy3 fn arg1 arg2 arg3 =
 
 
 toUnstyled : Node msg -> VirtualDom.Node msg
-toUnstyled node =
-    case node of
-        Unstyled vdom ->
-            vdom
+toUnstyled vdom =
+    case vdom of
+        Unstyled plainNode ->
+            plainNode
 
-        Element elemType properties children ->
+        Node elemType properties children ->
             unstyle elemType properties children
 
-        KeyedElement elemType properties children ->
+        NodeNS ns elemType properties children ->
+            unstyleNS ns elemType properties children
+
+        KeyedNode elemType properties children ->
             unstyleKeyed elemType properties children
+
+        KeyedNodeNS ns elemType properties children ->
+            unstyleKeyedNS ns elemType properties children
 
 
 getClassname : List Style -> Classname
@@ -200,14 +227,37 @@ makeSnippet styles sequence =
         |> Preprocess.Snippet
 
 
-murmurSeed : Int
-murmurSeed =
-    15739
+unstyleNS :
+    String
+    -> String
+    -> List (Attribute msg)
+    -> List (Node msg)
+    -> VirtualDom.Node msg
+unstyleNS ns elemType properties children =
+    let
+        initialStyles =
+            stylesFromProperties properties
+
+        ( childNodes, styles ) =
+            List.foldl accumulateStyledHtml
+                ( [], initialStyles )
+                children
+
+        styleNode =
+            toStyleNode styles
+
+        unstyledProperties =
+            List.map extractUnstyledAttribute properties
+    in
+    VirtualDom.nodeNS ns
+        elemType
+        unstyledProperties
+        (styleNode :: List.reverse childNodes)
 
 
 unstyle :
     String
-    -> List (Property msg)
+    -> List (Attribute msg)
     -> List (Node msg)
     -> VirtualDom.Node msg
 unstyle elemType properties children =
@@ -224,7 +274,7 @@ unstyle elemType properties children =
             toStyleNode styles
 
         unstyledProperties =
-            List.map extractUnstyledProperty properties
+            List.map extractUnstyledAttribute properties
     in
     VirtualDom.node
         elemType
@@ -232,9 +282,38 @@ unstyle elemType properties children =
         (styleNode :: List.reverse childNodes)
 
 
+unstyleKeyedNS :
+    String
+    -> String
+    -> List (Attribute msg)
+    -> List ( String, Node msg )
+    -> VirtualDom.Node msg
+unstyleKeyedNS ns elemType properties keyedChildren =
+    let
+        initialStyles =
+            stylesFromProperties properties
+
+        ( keyedChildNodes, styles ) =
+            List.foldl accumulateKeyedStyledHtml
+                ( [], initialStyles )
+                keyedChildren
+
+        keyedStyleNode =
+            toKeyedStyleNode styles keyedChildNodes
+
+        unstyledProperties =
+            List.map extractUnstyledAttribute properties
+    in
+    VirtualDom.keyedNodeNS
+        ns
+        elemType
+        unstyledProperties
+        (keyedStyleNode :: List.reverse keyedChildNodes)
+
+
 unstyleKeyed :
     String
-    -> List (Property msg)
+    -> List (Attribute msg)
     -> List ( String, Node msg )
     -> VirtualDom.Node msg
 unstyleKeyed elemType properties keyedChildren =
@@ -251,7 +330,7 @@ unstyleKeyed elemType properties keyedChildren =
             toKeyedStyleNode styles keyedChildNodes
 
         unstyledProperties =
-            List.map extractUnstyledProperty properties
+            List.map extractUnstyledAttribute properties
     in
     VirtualDom.keyedNode
         elemType
@@ -264,10 +343,10 @@ unstyleKeyed elemType properties keyedChildren =
 
 
 accumulateStyles :
-    Property msg
+    Attribute msg
     -> Dict Classname (List Style)
     -> Dict Classname (List Style)
-accumulateStyles (Property _ newStyles classname) styles =
+accumulateStyles (Attribute _ newStyles classname) styles =
     if List.isEmpty newStyles then
         styles
     else
@@ -302,7 +381,7 @@ toStyleNode styles =
 -- INTERNAL --
 
 
-stylesFromProperties : List (Property msg) -> Dict Classname (List Style)
+stylesFromProperties : List (Attribute msg) -> Dict Classname (List Style)
 stylesFromProperties properties =
     case stylesFromPropertiesHelp Nothing properties of
         Nothing ->
@@ -314,14 +393,14 @@ stylesFromProperties properties =
 
 stylesFromPropertiesHelp :
     Maybe ( Classname, List Style )
-    -> List (Property msg)
+    -> List (Attribute msg)
     -> Maybe ( Classname, List Style )
 stylesFromPropertiesHelp candidate properties =
     case properties of
         [] ->
             candidate
 
-        (Property _ styles classname) :: rest ->
+        (Attribute _ styles classname) :: rest ->
             if String.isEmpty classname then
                 -- This was not a `css` property
                 -- (for example maybe it was `src` for an <img> instead)
@@ -334,8 +413,8 @@ stylesFromPropertiesHelp candidate properties =
                 stylesFromPropertiesHelp (Just ( classname, styles )) rest
 
 
-extractUnstyledProperty : Property msg -> VirtualDom.Property msg
-extractUnstyledProperty (Property val _ _) =
+extractUnstyledAttribute : Attribute msg -> VirtualDom.Attribute msg
+extractUnstyledAttribute (Attribute val _ _) =
     val
 
 
@@ -345,10 +424,10 @@ accumulateStyledHtml :
     -> ( List (VirtualDom.Node msg), Dict Classname (List Style) )
 accumulateStyledHtml html ( nodes, styles ) =
     case html of
-        Unstyled node ->
-            ( node :: nodes, styles )
+        Unstyled vdomNode ->
+            ( vdomNode :: nodes, styles )
 
-        Element elemType properties children ->
+        Node elemType properties children ->
             let
                 combinedStyles =
                     List.foldl accumulateStyles styles properties
@@ -356,14 +435,30 @@ accumulateStyledHtml html ( nodes, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
-                node =
+                vdomNode =
                     VirtualDom.node elemType
-                        (List.map extractUnstyledProperty properties)
+                        (List.map extractUnstyledAttribute properties)
                         (List.reverse childNodes)
             in
-            ( node :: nodes, finalStyles )
+            ( vdomNode :: nodes, finalStyles )
 
-        KeyedElement elemType properties children ->
+        NodeNS ns elemType properties children ->
+            let
+                combinedStyles =
+                    List.foldl accumulateStyles styles properties
+
+                ( childNodes, finalStyles ) =
+                    List.foldl accumulateStyledHtml ( [], combinedStyles ) children
+
+                vdomNode =
+                    VirtualDom.nodeNS ns
+                        elemType
+                        (List.map extractUnstyledAttribute properties)
+                        (List.reverse childNodes)
+            in
+            ( vdomNode :: nodes, finalStyles )
+
+        KeyedNode elemType properties children ->
             let
                 combinedStyles =
                     List.foldl accumulateStyles styles properties
@@ -371,12 +466,28 @@ accumulateStyledHtml html ( nodes, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
-                node =
+                vdomNode =
                     VirtualDom.keyedNode elemType
-                        (List.map extractUnstyledProperty properties)
+                        (List.map extractUnstyledAttribute properties)
                         (List.reverse childNodes)
             in
-            ( node :: nodes, finalStyles )
+            ( vdomNode :: nodes, finalStyles )
+
+        KeyedNodeNS ns elemType properties children ->
+            let
+                combinedStyles =
+                    List.foldl accumulateStyles styles properties
+
+                ( childNodes, finalStyles ) =
+                    List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
+
+                vdomNode =
+                    VirtualDom.keyedNodeNS ns
+                        elemType
+                        (List.map extractUnstyledAttribute properties)
+                        (List.reverse childNodes)
+            in
+            ( vdomNode :: nodes, finalStyles )
 
 
 accumulateKeyedStyledHtml :
@@ -388,7 +499,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
         Unstyled vdom ->
             ( ( key, vdom ) :: pairs, styles )
 
-        Element elemType properties children ->
+        Node elemType properties children ->
             let
                 combinedStyles =
                     List.foldl accumulateStyles styles properties
@@ -398,12 +509,28 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
 
                 vdom =
                     VirtualDom.node elemType
-                        (List.map extractUnstyledProperty properties)
+                        (List.map extractUnstyledAttribute properties)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
 
-        KeyedElement elemType properties children ->
+        NodeNS ns elemType properties children ->
+            let
+                combinedStyles =
+                    List.foldl accumulateStyles styles properties
+
+                ( childNodes, finalStyles ) =
+                    List.foldl accumulateStyledHtml ( [], combinedStyles ) children
+
+                vdom =
+                    VirtualDom.nodeNS ns
+                        elemType
+                        (List.map extractUnstyledAttribute properties)
+                        (List.reverse childNodes)
+            in
+            ( ( key, vdom ) :: pairs, finalStyles )
+
+        KeyedNode elemType properties children ->
             let
                 combinedStyles =
                     List.foldl accumulateStyles styles properties
@@ -413,7 +540,23 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
 
                 vdom =
                     VirtualDom.keyedNode elemType
-                        (List.map extractUnstyledProperty properties)
+                        (List.map extractUnstyledAttribute properties)
+                        (List.reverse childNodes)
+            in
+            ( ( key, vdom ) :: pairs, finalStyles )
+
+        KeyedNodeNS ns elemType properties children ->
+            let
+                combinedStyles =
+                    List.foldl accumulateStyles styles properties
+
+                ( childNodes, finalStyles ) =
+                    List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
+
+                vdom =
+                    VirtualDom.keyedNodeNS ns
+                        elemType
+                        (List.map extractUnstyledAttribute properties)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
@@ -467,3 +610,8 @@ containsKey key pairs =
                 True
             else
                 containsKey key rest
+
+
+murmurSeed : Int
+murmurSeed =
+    15739

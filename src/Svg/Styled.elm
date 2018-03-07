@@ -44,7 +44,6 @@ module Svg.Styled
         , filter
         , font
         , foreignObject
-        , fromUnstyled
         , g
         , glyph
         , glyphRef
@@ -67,7 +66,6 @@ module Svg.Styled
         , set
         , stop
         , style
-        , styled
         , svg
         , switch
         , symbol
@@ -75,17 +73,13 @@ module Svg.Styled
         , textPath
         , text_
         , title
-        , toUnstyled
         , tref
         , tspan
         , use
         , view
         )
 
-{-| Drop-in replacement for the `Svg` module from the `elm-lang/svg` package.
-The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
-
-@docs styled, fromUnstyled, toUnstyled
+{-|
 
 
 # SVG Nodes
@@ -149,34 +143,27 @@ The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
 
 -}
 
-import Css exposing (Style)
-import Html.Styled
-import Svg.Styled.Internal as Internal
+import Html.Styled as Html
+import Json.Encode as Json
 import VirtualDom
 import VirtualDom.Styled
 
 
-{-| Styled [`Svg`](http://package.elm-lang.org/packages/elm-lang/svg/latest/Svg#Svg).
+{-| The core building block to create SVG. This library is filled with helper
+functions to create these `Svg` values.
 
-You can convert from this to the normal [`Svg`](http://package.elm-lang.org/packages/elm-lang/svg/latest/Svg#Svg) type from [`elm-lang/svg`](http://package.elm-lang.org/packages/elm-lang/svg/latest)
-(which is a type alias for [`VirtualDom.Node`](http://package.elm-lang.org/packages/elm-lang/virtual-dom/latest/VirtualDom#Node))
-by using [`toUnstyled`](#toUnstyled).
-
-You can convert the other way using [`fromUnstyled`](#fromUnstyled).
+This is backed by `VirtualDom.Node` in `evancz/virtual-dom`, but you do not
+need to know any details about that to use this library!
 
 -}
 type alias Svg msg =
     VirtualDom.Styled.Node msg
 
 
-{-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/svg/latest/Svg#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Svg-Styled-Attributes#css) attribute.
-
-You can obtain one of these from the normal [`Attribute`](http://package.elm-lang.org/packages/elm-lang/svg/latest/Svg#Attribute) type from [`elm-lang/svg`](http://package.elm-lang.org/packages/elm-lang/svg/latest)
-by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/svg/latest/Svg-Styled-Attributes#fromUnstyled).
-
+{-| Set attributes on your `Svg`.
 -}
 type alias Attribute msg =
-    VirtualDom.Styled.Property msg
+    VirtualDom.Styled.Attribute msg
 
 
 {-| Create any SVG node. To create a `<rect>` helper function, you would write:
@@ -190,12 +177,14 @@ library though!
 
 -}
 node : String -> List (Attribute msg) -> List (Svg msg) -> Svg msg
-node name attrs children =
-    VirtualDom.Styled.node name (Internal.svgNamespace :: attrs) children
+node =
+    VirtualDom.Styled.nodeNS "http://www.w3.org/2000/svg"
 
 
 {-| A simple text node, no tags at all.
+
 Warning: not to be confused with `text_` which produces the SVG `<text>` tag!
+
 -}
 text : String -> Svg msg
 text =
@@ -209,51 +198,27 @@ map =
     VirtualDom.Styled.map
 
 
-{-| Takes a function that creates an element, and pre-applies styles to it.
--}
-styled :
-    (List (Attribute msg) -> List (Svg msg) -> Svg msg)
-    -> List Style
-    -> List (Attribute msg)
-    -> List (Svg msg)
-    -> Svg msg
-styled fn styles attrs children =
-    fn (Internal.css styles :: attrs) children
-
-
-{-| -}
-toUnstyled : Svg msg -> VirtualDom.Node msg
-toUnstyled =
-    VirtualDom.Styled.toUnstyled
-
-
-{-| -}
-fromUnstyled : VirtualDom.Node msg -> Svg msg
-fromUnstyled =
-    VirtualDom.Styled.unstyledNode
-
-
 {-| The root `<svg>` node for any SVG scene. This example shows a scene
 containing a rounded rectangle:
 
-    import Html.Styled exposing (Html)
-    import Svg.Styled exposing (..)
-    import Svg.Styled.Attributes exposing (..)
+    import Html
+    import Svg exposing (..)
+    import Svg.Attributes exposing (..)
 
-    roundRect : Html msg
+    roundRect : Html.Html msg
     roundRect =
         svg
             [ width "120", height "120", viewBox "0 0 120 120" ]
             [ rect [ x "10", y "10", width "100", height "100", rx "15", ry "15" ] [] ]
 
 -}
-svg : List (Html.Styled.Attribute msg) -> List (Svg msg) -> Html.Styled.Html msg
+svg : List (Html.Attribute msg) -> List (Svg msg) -> Html.Html msg
 svg =
     node "svg"
 
 
 {-| -}
-foreignObject : List (Attribute msg) -> List (Html.Styled.Html msg) -> Svg msg
+foreignObject : List (Attribute msg) -> List (Html.Html msg) -> Svg msg
 foreignObject =
     node "foreignObject"
 
@@ -541,7 +506,9 @@ stop =
 
 {-| The circle element is an SVG basic shape, used to create circles based on
 a center point and a radius.
-circle [ cx "60", cy "60", r "50" ]
+
+    circle [ cx "60", cy "60", r "50" ] []
+
 -}
 circle : List (Attribute msg) -> List (Svg msg) -> Svg msg
 circle =
@@ -581,7 +548,9 @@ polygon =
 {-| The polyline element is an SVG basic shape, used to create a series of
 straight lines connecting several points. Typically a polyline is used to
 create open shapes.
-polyline [ fill "none", stroke "black", points "20,100 40,60 70,80 100,20" ]
+
+    polyline [ fill "none", stroke "black", points "20,100 40,60 70,80 100,20" ] []
+
 -}
 polyline : List (Attribute msg) -> List (Svg msg) -> Svg msg
 polyline =

@@ -27,7 +27,7 @@ For example:
 
 -}
 
-import Html.Styled exposing (Html)
+import Html.Styled as Html exposing (Html)
 import VirtualDom
 import VirtualDom.Styled
 
