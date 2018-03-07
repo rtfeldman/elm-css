@@ -35,6 +35,7 @@ module Svg.Styled.Attributes
         , colorRendering
         , contentScriptType
         , contentStyleType
+        , css
         , cursor
         , cx
         , cy
@@ -72,6 +73,7 @@ module Svg.Styled.Attributes
         , fontWeight
         , format
         , from
+        , fromUnstyled
         , fx
         , fy
         , g1
@@ -255,7 +257,10 @@ module Svg.Styled.Attributes
         , zoomAndPan
         )
 
-{-|
+{-| Drop-in replacement for the `Svg.Attributes` module from the `elm-lang/svg` package.
+The only functions added are `css`, and `fromUnstyled`:
+
+@docs css, fromUnstyled
 
 
 # Regular attributes
@@ -269,8 +274,26 @@ module Svg.Styled.Attributes
 
 -}
 
+import Css exposing (Style)
+import Html.Styled as Html
+import Html.Styled.Internal as Internal
 import Svg.Styled as Svg exposing (Attribute)
+import VirtualDom
 import VirtualDom.Styled exposing (attribute, attributeNS)
+
+
+{-| -}
+fromUnstyled : VirtualDom.Attribute msg -> Attribute msg
+fromUnstyled =
+    VirtualDom.Styled.unstyledAttribute
+
+
+{-| Apply styles to an element.
+See the [`Css` module documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css) for an overview of how to use this function.
+-}
+css : List Style -> Attribute msg
+css =
+    Internal.css
 
 
 
