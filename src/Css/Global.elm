@@ -197,9 +197,9 @@ type alias Snippet =
         ]
 
 -}
-id : id -> List Style -> Snippet
-id identifier styles =
-    [ Structure.IdSelector (identifierToString "" identifier) ]
+id : String -> List Style -> Snippet
+id str styles =
+    [ Structure.IdSelector str ]
         |> Structure.UniversalSelectorSequence
         |> makeSnippet styles
 
@@ -214,9 +214,9 @@ id identifier styles =
         ]
 
 -}
-class : class -> List Style -> Snippet
-class class styles =
-    [ Structure.ClassSelector (identifierToString "" class) ]
+class : String -> List Style -> Snippet
+class className styles =
+    [ Structure.ClassSelector className ]
         |> Structure.UniversalSelectorSequence
         |> makeSnippet styles
 
@@ -398,9 +398,9 @@ div.is-bold {
 ```
 
 -}
-withClass : class -> List Style -> Style
-withClass class =
-    Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
+withClass : String -> List Style -> Style
+withClass str =
+    Preprocess.ExtendSelector (Structure.ClassSelector str)
 
 
 {-| Apply styles to the current selector plus an attribute selector
@@ -565,10 +565,10 @@ typeSelector selectorStr styles =
         sequence =
             Structure.TypeSelectorSequence (Structure.TypeSelector selectorStr) []
 
-        selector =
+        structureSelector =
             Structure.Selector sequence [] Nothing
     in
-    [ StyleBlockDeclaration (StyleBlock selector [] styles) ]
+    [ StyleBlockDeclaration (StyleBlock structureSelector [] styles) ]
         |> Snippet
 
 
