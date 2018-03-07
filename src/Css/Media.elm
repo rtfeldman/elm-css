@@ -119,7 +119,7 @@ module Css.Media
 # Display Quality Media Features
 
 @docs Resolution, dpi, dpcm, dppx, minResolution, resolution, maxResolution
-@docs scan, Progressive, Interlace, progressive, interlace, scan, grid, Slow
+@docs Progressive, Interlace, progressive, interlace, scan, grid, Slow
 @docs Fast, slow, fast, update, Paged, OptionalPaged, paged, optionalPaged
 @docs overflowBlock, overflowInline
 
@@ -438,7 +438,7 @@ type alias Ratio =
 -}
 ratio : Int -> Int -> Ratio
 ratio numerator denominator =
-    { value = toString numerator ++ "/" ++ toString denominator, ratio = Compatible }
+    { value = String.fromInt numerator ++ "/" ++ String.fromInt denominator, ratio = Compatible }
 
 
 {-| Media feature [`min-aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
@@ -524,7 +524,7 @@ type alias Resolution =
 -}
 dpi : Float -> Resolution
 dpi value =
-    { value = toString value ++ "dpi", resolution = Compatible }
+    { value = String.fromFloat value ++ "dpi", resolution = Compatible }
 
 
 {-| `dpcm`: Dots per centimeter. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -534,7 +534,7 @@ dpi value =
 -}
 dpcm : Float -> Resolution
 dpcm value =
-    { value = toString value ++ "dpcm", resolution = Compatible }
+    { value = String.fromFloat value ++ "dpcm", resolution = Compatible }
 
 
 {-| `dppx`: Dots per pixel. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -544,7 +544,7 @@ dpcm value =
 -}
 dppx : Float -> Resolution
 dppx value =
-    { value = toString value ++ "dppx", resolution = Compatible }
+    { value = String.fromFloat value ++ "dppx", resolution = Compatible }
 
 
 {-| Media feature [`min-resolution`](https://drafts.csswg.org/mediaqueries/#resolution).
@@ -724,7 +724,7 @@ type alias Bits =
 -}
 bits : Int -> Bits
 bits value =
-    { value = toString value, bits = Compatible }
+    { value = String.fromInt value, bits = Compatible }
 
 
 {-| Media Feature [`min-nncolor`](https://drafts.csswg.org/mediaqueries/#color)

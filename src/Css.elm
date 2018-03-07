@@ -1572,23 +1572,23 @@ minus =
 
 
 combineLengths :
-    (number -> number -> number)
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
+    (Float -> Float -> Float)
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+    -> { r | numericValue : Float, unitLabel : String, value : String }
 combineLengths operation firstLength secondLength =
     let
         numericValue =
             operation firstLength.numericValue secondLength.numericValue
 
         value =
-            [ String.fromInt numericValue
-            , first.unitLabel
+            [ String.fromFloat numericValue
+            , firstLength.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
                 |> String.join ""
     in
-    { first | value = value, numericValue = numericValue }
+    { firstLength | value = value, numericValue = numericValue }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
@@ -2211,7 +2211,7 @@ rgb red green blue =
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba red green blue alpha =
-    { value = cssFunction "rgba" (List.map String.fromInt [ red, green, blue ] ++ [ String.fromInt alpha ])
+    { value = cssFunction "rgba" (List.map String.fromInt [ red, green, blue ] ++ [ String.fromFloat alpha ])
     , color = Compatible
     , red = red
     , green = green
@@ -2228,7 +2228,7 @@ hsl : Float -> Float -> Float -> Color
 hsl hueVal saturationVal lightnessVal =
     let
         valuesList =
-            [ String.fromInt hueVal
+            [ String.fromFloat hueVal
             , numericalPercentageToString saturationVal
             , numericalPercentageToString lightnessVal
             ]
@@ -2247,10 +2247,10 @@ hsla : Float -> Float -> Float -> Float -> Color
 hsla hueVal saturationVal lightnessVal alpha =
     let
         valuesList =
-            [ String.fromInt hueVal
+            [ String.fromFloat hueVal
             , numericalPercentageToString saturationVal
             , numericalPercentageToString lightnessVal
-            , String.fromInt alpha
+            , String.fromFloat alpha
             ]
 
         value =
@@ -2666,7 +2666,7 @@ true =
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
 lengthConverter units unitLabel numericValue =
-    { value = String.fromInt numericValue ++ unitLabel
+    { value = String.fromFloat numericValue ++ unitLabel
     , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
@@ -3011,7 +3011,7 @@ which accept unitless numbers.
 -}
 num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
 num val =
-    { value = String.fromInt val
+    { value = String.fromFloat val
     , lengthOrNumber = Compatible
     , number = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
@@ -3084,9 +3084,9 @@ turn =
     transform (matrix 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix : number -> number -> number -> number -> number -> number -> Transform {}
+matrix : Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix a b c d tx ty =
-    { value = cssFunction "matrix" (List.map String.fromInt [ a, b, c, d, tx, ty ])
+    { value = cssFunction "matrix" (List.map String.fromFloat [ a, b, c, d, tx, ty ])
     , transform = Compatible
     }
 
@@ -3096,9 +3096,9 @@ matrix a b c d tx ty =
     transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
+matrix3d : Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-    { value = cssFunction "matrix3d" (List.map String.fromInt [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
+    { value = cssFunction "matrix3d" (List.map String.fromFloat [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
     , transform = Compatible
     }
 
@@ -3108,9 +3108,9 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
      transform (perspective 0.5)
 
 -}
-perspective : number -> Transform {}
+perspective : Float -> Transform {}
 perspective l =
-    { value = cssFunction "perspective" [ String.fromInt l ]
+    { value = cssFunction "perspective" [ String.fromFloat l ]
     , transform = Compatible
     }
 
@@ -3168,11 +3168,11 @@ rotateZ { value } =
      transform (rotate3d 1 1 1 (deg 90))
 
 -}
-rotate3d : number -> number -> number -> Angle compatible -> Transform {}
+rotate3d : Float -> Float -> Float -> Angle compatible -> Transform {}
 rotate3d x y z { value } =
     let
         coordsAsStrings =
-            List.map String.fromInt [ x, y, z ]
+            List.map String.fromFloat [ x, y, z ]
     in
     { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
     , transform = Compatible
@@ -3185,9 +3185,9 @@ rotate3d x y z { value } =
      transform (scale2 0.5 0.7)
 
 -}
-scale : number -> Transform {}
+scale : Float -> Transform {}
 scale x =
-    { value = cssFunction "scale" [ String.fromInt x ]
+    { value = cssFunction "scale" [ String.fromFloat x ]
     , transform = Compatible
     }
 
@@ -3198,9 +3198,9 @@ scale x =
      transform (scale2 0.5 0.7)
 
 -}
-scale2 : number -> number -> Transform {}
+scale2 : Float -> Float -> Transform {}
 scale2 x y =
-    { value = cssFunction "scale" (List.map String.fromInt [ x, y ])
+    { value = cssFunction "scale" (List.map String.fromFloat [ x, y ])
     , transform = Compatible
     }
 
@@ -3210,9 +3210,9 @@ scale2 x y =
      transform (scaleX 0.5)
 
 -}
-scaleX : number -> Transform {}
+scaleX : Float -> Transform {}
 scaleX x =
-    { value = cssFunction "scaleX" [ String.fromInt x ]
+    { value = cssFunction "scaleX" [ String.fromFloat x ]
     , transform = Compatible
     }
 
@@ -3222,9 +3222,9 @@ scaleX x =
      transform (scaleY 0.5)
 
 -}
-scaleY : number -> Transform {}
+scaleY : Float -> Transform {}
 scaleY y =
-    { value = cssFunction "scaleY" [ String.fromInt y ]
+    { value = cssFunction "scaleY" [ String.fromFloat y ]
     , transform = Compatible
     }
 
@@ -3234,9 +3234,9 @@ scaleY y =
      transform (scale3d 0.5 0.5 1)
 
 -}
-scale3d : number -> number -> number -> Transform {}
+scale3d : Float -> Float -> Float -> Transform {}
 scale3d x y z =
-    { value = cssFunction "scale3d" (List.map String.fromInt [ x, y, z ])
+    { value = cssFunction "scale3d" (List.map String.fromFloat [ x, y, z ])
     , transform = Compatible
     }
 
@@ -5929,7 +5929,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = String.fromInt tag ++ " " ++ String.fromInt value
+    { value = "\"" ++ tag ++ "\" " ++ String.fromInt value
     , featureTagValue = Compatible
     }
 
@@ -7159,7 +7159,7 @@ letterSpacing =
 {-| -}
 src_ : ImportType compatible -> String
 src_ value =
-    String.fromInt value.value
+    "\"" ++ value.value ++ "\""
 
 
 {-| -}
@@ -7715,7 +7715,7 @@ names, or to set `animation-name: none;`
     animationNames [] -- outputs "animation-name: none;"
 
 -}
-animationName : animation -> Style
+animationName : String -> Style
 animationName identifier =
     animationNames [ identifier ]
 
@@ -8214,12 +8214,12 @@ blink =
 
 stringToInt : String -> Int
 stringToInt str =
-    Result.withDefault 0 <| String.toInt str
+    Maybe.withDefault 0 <| String.toInt str
 
 
-numericalPercentageToString : number -> String
+numericalPercentageToString : Float -> String
 numericalPercentageToString value =
-    String.fromInt (value * 100) ++ "%"
+    String.fromFloat (value * 100) ++ "%"
 
 
 valuesOrNone : List (Value compatible) -> Value {}
