@@ -20,6 +20,7 @@ module Html.Styled.Attributes
         , contextmenu
         , controls
         , coords
+        , css
         , datetime
         , default
         , defaultValue
@@ -32,6 +33,7 @@ module Html.Styled.Attributes
         , for
         , form
         , formaction
+        , fromUnstyled
         , headers
         , height
         , hidden
@@ -90,7 +92,12 @@ module Html.Styled.Attributes
         , wrap
         )
 
-{-| Helper functions for HTML attributes. They are organized roughly by
+{-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
+The only functions added are `css` and `fromUnstyled`:
+
+@docs css, fromUnstyled
+
+Helper functions for HTML attributes. They are organized roughly by
 category. Each attribute is labeled with the HTML tags it can be used with, so
 just search the page for `video` if you want video stuff.
 
@@ -173,10 +180,20 @@ Attributes that can be attached to any HTML tag but are less commonly used.
 
 -}
 
+import Css exposing (Style)
 import Html.Styled as Html exposing (Attribute)
+import Html.Styled.Internal as Internal
 import Json.Encode as Json
 import VirtualDom
 import VirtualDom.Styled
+
+
+{-| Apply styles to an element.
+See the [`Css` module documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css) for an overview of how to use this function.
+-}
+css : List Style -> Attribute msg
+css =
+    Internal.css
 
 
 
@@ -204,6 +221,12 @@ Try the [`css`](#css) function instead.
 style : String -> String -> Attribute msg
 style =
     VirtualDom.Styled.style
+
+
+{-| -}
+fromUnstyled : VirtualDom.Attribute msg -> Attribute msg
+fromUnstyled =
+    VirtualDom.Styled.unstyledAttribute
 
 
 {-| This function makes it easier to build a space-separated class attribute.

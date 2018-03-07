@@ -35,6 +35,7 @@ module Html.Styled
         , figure
         , footer
         , form
+        , fromUnstyled
         , h1
         , h2
         , h3
@@ -82,6 +83,7 @@ module Html.Styled
         , source
         , span
         , strong
+        , styled
         , sub
         , summary
         , sup
@@ -94,6 +96,7 @@ module Html.Styled
         , th
         , thead
         , time
+        , toUnstyled
         , tr
         , track
         , u
@@ -103,7 +106,12 @@ module Html.Styled
         , wbr
         )
 
-{-| This file is organized roughly in order of popularity. The tags which you'd
+{-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
+The only functions added are `toUnstyled`, `fromUnstyled`, and `styled`:
+
+@docs toUnstyled, fromUnstyled, styled
+
+This file is organized roughly in order of popularity. The tags which you'd
 expect to use frequently will be closer to the top.
 
 
@@ -199,6 +207,8 @@ expect to use frequently will be closer to the top.
 
 -}
 
+import Css exposing (Style)
+import Html.Styled.Internal as Internal
 import VirtualDom
 import VirtualDom.Styled
 
@@ -317,6 +327,54 @@ styled :
     -> List Style
     -> List (Attribute a)
     -> List (Html b)
+    -> Html msg
+styled fn styles attrs children =
+    fn (Internal.css styles :: attrs) children
+
+
+{-| -}
+toUnstyled : Html msg -> VirtualDom.Node msg
+toUnstyled =
+    VirtualDom.Styled.toUnstyled
+
+
+{-| -}
+fromUnstyled : VirtualDom.Node msg -> Html msg
+fromUnstyled =
+    VirtualDom.Styled.unstyledNode
+
+
+
+-- STYLING & UNSTYLING --
+
+
+{-| Takes a function that creates an element, and pre-applies styles to it.
+bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
+bigButton =
+styled button
+[ padding (px 30)
+, fontWeight bold
+]
+view : Model -> Html msg
+view model =
+[ text "These two buttons are identical:"
+, bigButton [][ text "Hi!" ]
+, button [ css [ padding (px 30), fontWeight bold ] ][ text "Hi!" ]
+][ text "These two buttons are identical:"
+, bigButton [] [ text "Hi!" ]
+, button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
+]
+Here, the `bigButton` function we've defined using `styled button` is
+identical to the normal `button` function, except that it has pre-applied
+the attribute of `css [ padding (px 30), fontWeight bold ]`.
+You can pass more attributes to `bigButton` as usual (including other `css`
+attributes). They will be applied after the pre-applied styles.
+-}
+styled :
+    (List (Attribute msg) -> List (Html msg) -> Html msg)
+    -> List Style
+    -> List (Attribute msg)
+    -> List (Html msg)
     -> Html msg
 styled fn styles attrs children =
     fn (Internal.css styles :: attrs) children
