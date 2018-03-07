@@ -217,20 +217,22 @@ import VirtualDom.Styled
 -- CORE TYPES
 
 
-{-| The core building block used to build up HTML. Here we create an `Html`
-value with no attributes and one child:
+{-| Styled [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html).
 
-    hello : Html msg
-    hello =
-        div [] [ text "Hello!" ]
+You can convert from this to the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
+(which is a type alias for [`VirtualDom.Node`](http://package.elm-lang.org/packages/elm-lang/virtual-dom/latest/VirtualDom#Node))
+by using [`toUnstyled`](#toUnstyled).
+
+You can convert the other way using [`fromUnstyled`](#fromUnstyled).
 
 -}
 type alias Html msg =
     VirtualDom.Styled.Node msg
 
 
-{-| Set attributes on your `Html`. Learn more in the
-[`Html.Attributes`](Html-Attributes) module.
+{-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css) attribute.
+You can obtain one of these from the normal [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
+by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled).
 -}
 type alias Attribute msg =
     VirtualDom.Styled.Attribute msg

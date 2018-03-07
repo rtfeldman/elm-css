@@ -73,13 +73,17 @@ module Svg.Styled
         , textPath
         , text_
         , title
+        , toUnstyled
         , tref
         , tspan
         , use
         , view
         )
 
-{-|
+{-| Drop-in replacement for the `Svg` module from the `elm-lang/svg` package.
+The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
+
+@docs toUnstyled, fromUnstyled, styled
 
 
 # SVG Nodes
@@ -149,8 +153,11 @@ import VirtualDom
 import VirtualDom.Styled
 
 
-{-| The core building block to create SVG. This library is filled with helper
-functions to create these `Svg` values.
+{-| Styled [`Svg`](http://package.elm-lang.org/packages/elm-lang/svg/latest/Svg#Svg).
+
+You can convert from this to the normal [`Svg`](http://package.elm-lang.org/packages/elm-lang/svg/latest/Svg#Svg) type from [`elm-lang/svg`](http://package.elm-lang.org/packages/elm-lang/svg/latest)
+(which is a type alias for [`VirtualDom.Node`](http://package.elm-lang.org/packages/elm-lang/virtual-dom/latest/VirtualDom#Node))
+by using [`toUnstyled`](#toUnstyled).
 
 This is backed by `VirtualDom.Node` in `evancz/virtual-dom`, but you do not
 need to know any details about that to use this library!
