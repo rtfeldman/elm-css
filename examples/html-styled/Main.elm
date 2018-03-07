@@ -1,5 +1,6 @@
 module Main exposing (main)
 
+import Browser
 import Css exposing (..)
 import Html
 import Html.Styled exposing (..)
@@ -76,26 +77,32 @@ legacyBorderRadius amount =
         ]
 
 
-view : Model -> Html Msg
 view model =
-    nav []
-        [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] []
-        , btn [ onClick DoSomething ] [ text "Click me!" ]
+    { title = "elm-css Demo"
+    , body =
+        [ nav []
+            [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] []
+            , btn [ onClick DoSomething ] [ text "Click me!" ]
+            ]
+            |> toUnstyled
         ]
+    }
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.beginnerProgram
-        { view = view >> toUnstyled
+    Browser.fullscreen
+        { init = \_ -> ( initialModel, Cmd.none )
+        , view = view
+        , onNavigation = Nothing
+        , subscriptions = \_ -> Sub.none
         , update = update
-        , model = initialModel
         }
 
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    model
+    ( model, Cmd.none )
 
 
 type Msg
