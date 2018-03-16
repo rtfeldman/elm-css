@@ -60,6 +60,7 @@ module Css
         , flexStart
         , fontFamilies
         , fontFamily
+        , fontSize
         , fontStyle
         , fontWeight
         , georgian
@@ -85,6 +86,8 @@ module Css
         , kannada
         , khmer
         , lao
+        , large
+        , larger
         , lastBaseline
         , left
         , lighter
@@ -92,6 +95,7 @@ module Css
         , listStyle2
         , listStyle3
         , malayalam
+        , medium
         , mm
         , monospace
         , move
@@ -132,6 +136,8 @@ module Css
         , selfEnd
         , selfStart
         , serif
+        , small
+        , smaller
         , solid
         , start
         , stretch
@@ -160,6 +166,10 @@ module Css
         , wResize
         , wait
         , wavy
+        , xLarge
+        , xSmall
+        , xxLarge
+        , xxSmall
         , zero
         , zoomIn
         , zoomOut
@@ -232,6 +242,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Flexbox
 
 @docs alignItems, alignSelf
+
+
+## Font Size
+
+@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
 
 
 ## Font Family
@@ -1343,6 +1358,141 @@ alignSelf :
     -> Style
 alignSelf (Value val) =
     AppendProperty ("align-self:" ++ val)
+
+
+
+-- FONT SIZE --
+
+
+{-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
+
+    fontSize  xxSmall
+    fontSize  (px 12)
+
+-}
+fontSize :
+    Value
+        { xxSmall : Supported
+        , xSmall : Supported
+        , small : Supported
+        , medium : Supported
+        , large : Supported
+        , xLarge : Supported
+        , xxLarge : Supported
+        , smaller : Supported
+        , larger : Supported
+        , px : Supported
+        , em : Supported
+        , ex : Supported
+        , ch : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , mm : Supported
+        , cm : Supported
+        , inches : Supported
+        , pt : Supported
+        , pc : Supported
+        , pct : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontSize (Value val) =
+    AppendProperty ("font-size:" ++ val)
+
+
+{-| The `xx-small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize xxSmall
+
+-}
+xxSmall : Value { provides | xxSmall : Supported }
+xxSmall =
+    Value "xx-small"
+
+
+{-| The `x-small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize xSmall
+
+-}
+xSmall : Value { provides | xSmall : Supported }
+xSmall =
+    Value "x-small"
+
+
+{-| The `small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize small
+
+-}
+small : Value { provides | small : Supported }
+small =
+    Value "small"
+
+
+{-| The `medium` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize medium
+
+-}
+medium : Value { provides | medium : Supported }
+medium =
+    Value "medium"
+
+
+{-| The `large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize large
+
+-}
+large : Value { provides | large : Supported }
+large =
+    Value "large"
+
+
+{-| The `x-large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize xLarge
+
+-}
+xLarge : Value { provides | xLarge : Supported }
+xLarge =
+    Value "x-large"
+
+
+{-| The `xx-large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize  xxLarge
+
+-}
+xxLarge : Value { provides | xxLarge : Supported }
+xxLarge =
+    Value "xx-large"
+
+
+{-| The `smaller` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize smaller
+
+-}
+smaller : Value { provides | smaller : Supported }
+smaller =
+    Value "smaller"
+
+
+{-| The `larger` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize larger
+
+-}
+larger : Value { provides | larger : Supported }
+larger =
+    Value "larger"
 
 
 
