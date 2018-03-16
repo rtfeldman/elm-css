@@ -62,6 +62,7 @@ module Css
         , fontFamily
         , fontSize
         , fontStyle
+        , fontVariantCaps
         , fontWeight
         , georgian
         , grab
@@ -116,6 +117,7 @@ module Css
         , outset
         , pc
         , pct
+        , petiteCaps
         , pointer
         , progress
         , pseudoClass
@@ -137,6 +139,7 @@ module Css
         , selfStart
         , serif
         , small
+        , smallCaps
         , smaller
         , solid
         , start
@@ -155,6 +158,8 @@ module Css
         , telugu
         , text
         , thai
+        , titlingCaps
+        , unicase
         , unsafeCenter
         , unset
         , url
@@ -268,9 +273,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 [`normal`](#normal) is also a supported font weight.
 
 
-## Font Variants
+## Font Variant Caps
 
-@docs allPetiteCaps, allSmallCaps
+@docs fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
 
 
 # Align Items
@@ -1188,12 +1193,6 @@ tableRowGroup =
 
 
 {-| -}
-normal : Value { provides | normal : Supported }
-normal =
-    Value "normal"
-
-
-{-| -}
 stretch : Value { provides | stretch : Supported }
 stretch =
     Value "stretch"
@@ -1721,19 +1720,107 @@ bolder =
 
 
 
--- FONT VARIANTS --
+-- FONT VARIANT CAPS --
 
 
-{-| -}
+{-| Sets [`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps).
+
+    fontVariantCaps normal
+    fontVariantCaps smallCaps
+    fontVariantCaps allSmallCaps
+    fontVariantCaps petiteCaps
+    fontVariantCaps allPetiteCaps
+    fontVariantCaps unicase
+    fontVariantCaps titlingCaps
+
+-}
+fontVariantCaps :
+    Value
+        { normal : Supported
+        , smallCaps : Supported
+        , smallCaps : Supported
+        , petiteCaps : Supported
+        , allPetiteCaps : Supported
+        , unicase : Supported
+        , titlingCaps : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontVariantCaps (Value str) =
+    AppendProperty ("font-variant-caps:" ++ str)
+
+
+{-| The `normal` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values) or [`align-items` value](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
+
+    fontVariantCaps normal
+    alignItems normal
+
+-}
+normal : Value { provides | normal : Supported }
+normal =
+    Value "normal"
+
+
+{-| The `small-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps smallCaps
+
+-}
+smallCaps : Value { provides | smallCaps : Supported }
+smallCaps =
+    Value "small-caps"
+
+
+{-| The `all-small-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps allSmallCaps
+
+-}
+allSmallCaps : Value { provides | allSmallCaps : Supported }
+allSmallCaps =
+    Value "all-small-caps"
+
+
+{-| The `petite-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps petiteCaps
+
+-}
+petiteCaps : Value { provides | petiteCaps : Supported }
+petiteCaps =
+    Value "petite-caps"
+
+
+{-| The `all-petite-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps allPetiteCaps
+
+-}
 allPetiteCaps : Value { provides | allPetiteCaps : Supported }
 allPetiteCaps =
     Value "all-petite-caps"
 
 
-{-| -}
-allSmallCaps : Value { provides | allSmallCaps : Supported }
-allSmallCaps =
-    Value "all-small-caps"
+{-| The `unicase` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps unicase
+
+-}
+unicase : Value { provides | unicase : Supported }
+unicase =
+    Value "unicase"
+
+
+{-| The `titling-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps titlingCaps
+
+-}
+titlingCaps : Value { provides | titlingCaps : Supported }
+titlingCaps =
+    Value "titling-caps"
 
 
 
