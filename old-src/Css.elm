@@ -958,7 +958,7 @@ functions let you define custom properties and selectors, respectively.
 
 # Properties
 
-@docs property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, pointerEvents, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
+@docs property, flex, flex2, flex3, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlockStart, paddingBlockEnd, paddingInlineStart, paddingInlineEnd, pointerEvents, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
 
 
 # Values
@@ -1016,7 +1016,9 @@ functions let you define custom properties and selectors, respectively.
 
 # Misc
 
-@docs Compatible, absolute, all, allPetiteCaps, allSmallCaps, auto, baseline, block, bold, bolder, border, border2, border3, borderBlockEnd, borderBlockEnd2, borderBlockEnd3, borderBlockEndColor, borderBlockEndStyle, borderBlockStart, borderBlockStart2, borderBlockStart3, borderBlockStartColor, borderBlockStartStyle, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderInlineEnd, borderInlineEnd2, borderInlineEnd3, borderInlineEndColor, borderInlineEndStyle, borderInlineEndWidth, borderInlineStart, borderInlineStart2, borderInlineStart3, borderInlineStartColor, borderInlineStartStyle, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, manipulation, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, panX, panLeft, panRight, panY, panUp, panDown, perspective, petiteCaps, pinchZoom, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tableLayout, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse, pointerEventsAll, pointerEventsFill
+@docs Compatible, all, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundImage, backgroundOrigin, backgroundPosition, backgroundPosition2, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2, both, breakWord, collapse, colorBurn, colorDodge, contain, cover, darken, difference, displayFlex, exclusion, hardLight, hex, horizontal, hsl, hsla, hue, important, inlineListItem, inlineTable, lighten, listItem, local, luminosity, manipulation, multiply, noRepeat, overlay, paddingBox, panDown, panLeft, panRight, panUp, panX, panY, pinchZoom, pointerEventsAll, pointerEventsFill, repeat, repeatX, repeatY, rgb, rgba, round, saturation, screenBlendMode, separate, softLight, space, table, tableCaption, tableCell, tableColumn, tableColumnGroup
+
+@docs url, vertical, transparent, tableRowGroup, tableRow, tableLayout, tableHeaderGroup, tableFooterGroup
 @docs listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 @docs listStylePosition, inside, outside
 @docs listStyle, listStyle2, listStyle3
@@ -1040,8 +1042,6 @@ deprecated or discouraged.
 
 -}
 
-import Color
-import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 import Hex
@@ -1100,16 +1100,16 @@ getOverloadedProperty functionName desiredKey style =
             -- Use the given style's Key as the resulting property's value.
             property desiredKey key
 
-        Preprocess.ExtendSelector selector _ ->
+        Preprocess.ExtendSelector _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-selector")
 
-        Preprocess.NestSnippet combinator _ ->
+        Preprocess.NestSnippet _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-combinator")
 
-        Preprocess.WithPseudoElement pseudoElement _ ->
+        Preprocess.WithPseudoElement _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
 
-        Preprocess.WithMedia mediaQuery _ ->
+        Preprocess.WithMedia _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-media-query")
 
         Preprocess.ApplyStyles [] ->
@@ -1118,7 +1118,7 @@ getOverloadedProperty functionName desiredKey style =
         Preprocess.ApplyStyles (only :: []) ->
             getOverloadedProperty functionName desiredKey only
 
-        Preprocess.ApplyStyles (first :: rest) ->
+        Preprocess.ApplyStyles (_ :: rest) ->
             getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
 
 
@@ -1515,9 +1515,9 @@ Using * and / with calc isn't supported. Use arithmetics from elm instead.
 
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
-calc first expression second =
+calc firstExpr expression secondExpr =
     let
-        grab l =
+        withoutCalcStr l =
             if String.startsWith "calc(" l.value then
                 String.dropLeft 4 l.value
             else
@@ -1525,9 +1525,9 @@ calc first expression second =
 
         calcs =
             String.join " "
-                [ grab first
+                [ withoutCalcStr firstExpr
                 , calcExpressionToString expression
-                , grab second
+                , withoutCalcStr secondExpr
                 ]
 
         value =
@@ -1572,23 +1572,23 @@ minus =
 
 
 combineLengths :
-    (number -> number -> number)
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
-combineLengths operation first second =
+    (Float -> Float -> Float)
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+combineLengths operation firstLength secondLength =
     let
         numericValue =
-            operation first.numericValue second.numericValue
+            operation firstLength.numericValue secondLength.numericValue
 
         value =
-            [ toString numericValue
-            , first.unitLabel
+            [ String.fromFloat numericValue
+            , firstLength.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
                 |> String.join ""
     in
-    { first | value = value, numericValue = numericValue }
+    { firstLength | value = value, numericValue = numericValue }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
@@ -2198,7 +2198,7 @@ in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
 rgb red green blue =
-    { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
+    { value = cssFunction "rgb" (List.map String.fromInt [ red, green, blue ])
     , color = Compatible
     , red = red
     , green = green
@@ -2211,7 +2211,7 @@ rgb red green blue =
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba red green blue alpha =
-    { value = cssFunction "rgba" (List.map numberToString [ red, green, blue ] ++ [ numberToString alpha ])
+    { value = cssFunction "rgba" (List.map String.fromInt [ red, green, blue ] ++ [ String.fromFloat alpha ])
     , color = Compatible
     , red = red
     , green = green
@@ -2225,18 +2225,18 @@ rgba red green blue alpha =
 to the appropriate percentage at compile-time
 -}
 hsl : Float -> Float -> Float -> Color
-hsl hue saturation lightness =
+hsl hueVal saturationVal lightnessVal =
     let
         valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
+            [ String.fromFloat hueVal
+            , numericalPercentageToString saturationVal
+            , numericalPercentageToString lightnessVal
             ]
 
         value =
             cssFunction "hsl" valuesList
     in
-    hslaToRgba value hue saturation lightness 1
+    hslaToRgba value hueVal saturationVal lightnessVal 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -2244,19 +2244,19 @@ hsl hue saturation lightness =
 to the appropriate percentage at compile-time
 -}
 hsla : Float -> Float -> Float -> Float -> Color
-hsla hue saturation lightness alpha =
+hsla hueVal saturationVal lightnessVal alpha =
     let
         valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
-            , numberToString alpha
+            [ String.fromFloat hueVal
+            , numericalPercentageToString saturationVal
+            , numericalPercentageToString lightnessVal
+            , String.fromFloat alpha
             ]
 
         value =
             cssFunction "hsla" valuesList
     in
-    hslaToRgba value hue saturation lightness alpha
+    hslaToRgba value hueVal saturationVal lightnessVal alpha
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -2297,14 +2297,16 @@ validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
             String.fromList >> String.toLower >> Hex.fromString
 
         results =
-            ( toResult [ r1, r2 ]
-            , toResult [ g1, g2 ]
-            , toResult [ b1, b2 ]
-            , toResult [ a1, a2 ]
+            ( ( toResult [ r1, r2 ]
+              , toResult [ g1, g2 ]
+              )
+            , ( toResult [ b1, b2 ]
+              , toResult [ a1, a2 ]
+              )
             )
     in
     case results of
-        ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+        ( ( Ok red, Ok green ), ( Ok blue, Ok alpha ) ) ->
             { value = withPrecedingHash str
             , color = Compatible
             , red = red
@@ -2339,18 +2341,13 @@ erroneousHex str =
 
 
 hslaToRgba : String -> Float -> Float -> Float -> Float -> Color
-hslaToRgba value hue saturation lightness hslAlpha =
-    let
-        { red, green, blue, alpha } =
-            Color.hsla hue saturation lightness hslAlpha
-                |> Color.toRgb
-    in
+hslaToRgba value hueVal saturationVal lightnessVal hslAlpha =
     { value = value
     , color = Compatible
-    , red = red
-    , green = green
-    , blue = blue
-    , alpha = alpha
+    , red = 0
+    , green = 0
+    , blue = 0
+    , alpha = 0
     }
 
 
@@ -2669,7 +2666,7 @@ true =
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
 lengthConverter units unitLabel numericValue =
-    { value = numberToString numericValue ++ unitLabel
+    { value = String.fromFloat numericValue ++ unitLabel
     , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
@@ -2993,7 +2990,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
-    { value = numberToString val
+    { value = String.fromInt val
     , lengthOrNumber = Compatible
     , number = Compatible
     , fontWeight = Compatible
@@ -3014,7 +3011,7 @@ which accept unitless numbers.
 -}
 num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
 num val =
-    { value = numberToString val
+    { value = String.fromFloat val
     , lengthOrNumber = Compatible
     , number = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
@@ -3042,9 +3039,9 @@ type IncompatibleUnits
 {- ANGLES -}
 
 
-angleConverter : String -> number -> AngleOrDirection (Angle {})
-angleConverter suffix num =
-    { value = numberToString num ++ suffix
+angleConverter : String -> Float -> AngleOrDirection (Angle {})
+angleConverter suffix angleVal =
+    { value = String.fromFloat angleVal ++ suffix
     , angle = Compatible
     , angleOrDirection = Compatible
     }
@@ -3052,28 +3049,28 @@ angleConverter suffix num =
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
 -}
-deg : number -> AngleOrDirection (Angle {})
+deg : Float -> AngleOrDirection (Angle {})
 deg =
     angleConverter "deg"
 
 
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
-grad : number -> AngleOrDirection (Angle {})
+grad : Float -> AngleOrDirection (Angle {})
 grad =
     angleConverter "grad"
 
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
-rad : number -> AngleOrDirection (Angle {})
+rad : Float -> AngleOrDirection (Angle {})
 rad =
     angleConverter "rad"
 
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
-turn : number -> AngleOrDirection (Angle {})
+turn : Float -> AngleOrDirection (Angle {})
 turn =
     angleConverter "turn"
 
@@ -3087,9 +3084,9 @@ turn =
     transform (matrix 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix : number -> number -> number -> number -> number -> number -> Transform {}
+matrix : Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix a b c d tx ty =
-    { value = cssFunction "matrix" (List.map numberToString [ a, b, c, d, tx, ty ])
+    { value = cssFunction "matrix" (List.map String.fromFloat [ a, b, c, d, tx, ty ])
     , transform = Compatible
     }
 
@@ -3099,9 +3096,9 @@ matrix a b c d tx ty =
     transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
+matrix3d : Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-    { value = cssFunction "matrix3d" (List.map numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
+    { value = cssFunction "matrix3d" (List.map String.fromFloat [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
     , transform = Compatible
     }
 
@@ -3111,9 +3108,9 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
      transform (perspective 0.5)
 
 -}
-perspective : number -> Transform {}
+perspective : Float -> Transform {}
 perspective l =
-    { value = cssFunction "perspective" [ numberToString l ]
+    { value = cssFunction "perspective" [ String.fromFloat l ]
     , transform = Compatible
     }
 
@@ -3171,11 +3168,11 @@ rotateZ { value } =
      transform (rotate3d 1 1 1 (deg 90))
 
 -}
-rotate3d : number -> number -> number -> Angle compatible -> Transform {}
+rotate3d : Float -> Float -> Float -> Angle compatible -> Transform {}
 rotate3d x y z { value } =
     let
         coordsAsStrings =
-            List.map numberToString [ x, y, z ]
+            List.map String.fromFloat [ x, y, z ]
     in
     { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
     , transform = Compatible
@@ -3188,9 +3185,9 @@ rotate3d x y z { value } =
      transform (scale2 0.5 0.7)
 
 -}
-scale : number -> Transform {}
+scale : Float -> Transform {}
 scale x =
-    { value = cssFunction "scale" [ numberToString x ]
+    { value = cssFunction "scale" [ String.fromFloat x ]
     , transform = Compatible
     }
 
@@ -3201,9 +3198,9 @@ scale x =
      transform (scale2 0.5 0.7)
 
 -}
-scale2 : number -> number -> Transform {}
+scale2 : Float -> Float -> Transform {}
 scale2 x y =
-    { value = cssFunction "scale" (List.map numberToString [ x, y ])
+    { value = cssFunction "scale" (List.map String.fromFloat [ x, y ])
     , transform = Compatible
     }
 
@@ -3213,9 +3210,9 @@ scale2 x y =
      transform (scaleX 0.5)
 
 -}
-scaleX : number -> Transform {}
+scaleX : Float -> Transform {}
 scaleX x =
-    { value = cssFunction "scaleX" [ numberToString x ]
+    { value = cssFunction "scaleX" [ String.fromFloat x ]
     , transform = Compatible
     }
 
@@ -3225,9 +3222,9 @@ scaleX x =
      transform (scaleY 0.5)
 
 -}
-scaleY : number -> Transform {}
+scaleY : Float -> Transform {}
 scaleY y =
-    { value = cssFunction "scaleY" [ numberToString y ]
+    { value = cssFunction "scaleY" [ String.fromFloat y ]
     , transform = Compatible
     }
 
@@ -3237,9 +3234,9 @@ scaleY y =
      transform (scale3d 0.5 0.5 1)
 
 -}
-scale3d : number -> number -> number -> Transform {}
+scale3d : Float -> Float -> Float -> Transform {}
 scale3d x y z =
-    { value = cssFunction "scale3d" (List.map numberToString [ x, y, z ])
+    { value = cssFunction "scale3d" (List.map String.fromFloat [ x, y, z ])
     , transform = Compatible
     }
 
@@ -4207,13 +4204,12 @@ linearGradient :
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
-linearGradient stop1 stop2 stops =
+linearGradient firstStop secondStop otherStops =
     -- TODO we should make this more permissive, e.g. compatibleA/compatibleB/compatibleC/compatibleD
     -- the only reason it isn't is that we happen to be using collectStops like this.
     -- We should just not use collectStops. Same with linearGradient2
     { value =
-        [ stop1, stop2 ]
-            ++ stops
+        ([ firstStop, secondStop ] ++ otherStops)
             |> collectStops
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
@@ -4233,12 +4229,11 @@ linearGradient2 :
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
-linearGradient2 dir stop1 stop2 stops =
+linearGradient2 direction firstStop secondStop otherStops =
     { value =
-        [ stop1, stop2 ]
-            ++ stops
+        ([ firstStop, secondStop ] ++ otherStops)
             |> collectStops
-            |> (::) dir.value
+            |> (::) direction.value
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
@@ -5934,7 +5929,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = toString tag ++ " " ++ toString value
+    { value = "\"" ++ tag ++ "\" " ++ String.fromInt value
     , featureTagValue = Compatible
     }
 
@@ -7164,7 +7159,7 @@ letterSpacing =
 {-| -}
 src_ : ImportType compatible -> String
 src_ value =
-    toString value.value
+    "\"" ++ value.value ++ "\""
 
 
 {-| -}
@@ -7181,7 +7176,7 @@ fontFace value =
 -}
 qt : String -> String
 qt str =
-    toString str
+    "\"" ++ str ++ "\""
 
 
 {-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).
@@ -7720,7 +7715,7 @@ names, or to set `animation-name: none;`
     animationNames [] -- outputs "animation-name: none;"
 
 -}
-animationName : animation -> Style
+animationName : String -> Style
 animationName identifier =
     animationNames [ identifier ]
 
@@ -7734,15 +7729,9 @@ Pass `[]` to set `animation-name: none;`
     animationNames [] -- outputs "animation-name: none;"
 
 -}
-animationNames : List animation -> Style
+animationNames : List String -> Style
 animationNames identifiers =
-    let
-        value =
-            identifiers
-                |> List.map (identifierToString "")
-                |> String.join ", "
-    in
-    property "animation-name" value
+    property "animation-name" (String.join ", " identifiers)
 
 
 {-| Create a style from multiple other styles.
@@ -8223,19 +8212,14 @@ blink =
     IntentionallyUnsupportedPleaseSeeDocs
 
 
-numberToString : number -> String
-numberToString num =
-    toString (num + 0)
-
-
 stringToInt : String -> Int
 stringToInt str =
-    Result.withDefault 0 <| String.toInt str
+    Maybe.withDefault 0 <| String.toInt str
 
 
-numericalPercentageToString : number -> String
+numericalPercentageToString : Float -> String
 numericalPercentageToString value =
-    value |> (*) 100 |> numberToString |> flip (++) "%"
+    String.fromFloat (value * 100) ++ "%"
 
 
 valuesOrNone : List (Value compatible) -> Value {}
