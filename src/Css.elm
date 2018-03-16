@@ -39,6 +39,7 @@ module Css
         , contextMenu
         , copy
         , crosshair
+        , cursive
         , cursor
         , dashed
         , default
@@ -53,9 +54,12 @@ module Css
         , end
         , ewResize
         , ex
+        , fantasy
         , firstBaseline
         , flexEnd
         , flexStart
+        , fontFamilies
+        , fontFamily
         , fontStyle
         , fontWeight
         , georgian
@@ -89,6 +93,7 @@ module Css
         , listStyle3
         , malayalam
         , mm
+        , monospace
         , move
         , myanmar
         , nResize
@@ -122,13 +127,16 @@ module Css
         , rowResize
         , sResize
         , safeCenter
+        , sansSerif
         , seResize
         , selfEnd
         , selfStart
+        , serif
         , solid
         , start
         , stretch
         , swResize
+        , systemUi
         , table
         , tableCaption
         , tableCell
@@ -224,6 +232,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Flexbox
 
 @docs alignItems, alignSelf
+
+
+## Font Family
+
+@docs fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
 
 
 ## Font Styles
@@ -1330,6 +1343,172 @@ alignSelf :
     -> Style
 alignSelf (Value val) =
     AppendProperty ("align-self:" ++ val)
+
+
+
+-- FONT FAMILY --
+
+
+{-| For when your font is one of the six [generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E) - [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive), [`fantasy`](#fantasy), or [`systemUi`](#systemUi).
+
+If you want to refer to a font by its name (like Helvetica or Arial), use [`fontFamilies`](#fontFamilies) instead.
+
+-}
+fontFamily :
+    Value
+        { serif : Supported
+        , sansSerif : Supported
+        , monospace : Supported
+        , cursive : Supported
+        , fantasy : Supported
+        , systemUi : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontFamily (Value genericFont) =
+    AppendProperty ("font-family:" ++ genericFont)
+
+
+{-| The `serif` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E).
+
+    fontFamily serif
+    fontFamilies [ "Gill Sans", "Helvetica" ] serif
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+serif : Value { provides | serif : Supported }
+serif =
+    Value "serif"
+
+
+{-| The `sans-serif` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E).
+
+    fontFamily sansSerif
+    fontFamilies [ "Georgia", "Times" ] sansSerif
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+sansSerif : Value { provides | sansSerif : Supported }
+sansSerif =
+    Value "sans-serif"
+
+
+{-| The `monospace` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+    fontFamily monospace
+    fontFamilies [ "Source Code Pro", "Lucida Console" ] monospace
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+monospace : Value { provides | monospace : Supported }
+monospace =
+    Value "monospace"
+
+
+{-| The `cursive` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+    fontFamily cursive
+    fontFamilies [ "Brush Sript Std", "Lucida Calligraphy" ] cursive
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+cursive : Value { provides | cursive : Supported }
+cursive =
+    Value "cursive"
+
+
+{-| The `fantasy` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+    fontFamily fantasy
+    fontFamilies [ "Herculanum", Harrington" ] fantasy
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+fantasy : Value { provides | fantasy : Supported }
+fantasy =
+    Value "fantasy"
+
+
+{-| The `system-ui` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+You may want to [read more about the system font stack](https://css-tricks.com/snippets/css/system-font-stack/) before using this one.
+
+    fontFamily systemUi
+    fontFamilies [ "", "Segoe UI" ] systemUi
+    fontFamilies [ "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" ] sansSerif
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+systemUi : Value { provides | systemUi : Supported }
+systemUi =
+    Value "system-ui"
+
+
+{-| Define multiple [font families](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
+
+Per the CSS spec, a [generic name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E) must always be at the end of this list. (The generic names are [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).)
+
+    fontFamilies [ "Gill Sans Extrabold", "Helvetica", "Arial" ] sansSerif
+
+This function will automatically wrap each font family in quotation marks unless it is one of the six [generic names]((https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E)) (like `sans-serif`), which must never be quoted.
+
+-}
+fontFamilies :
+    List String
+    ->
+        Value
+            { serif : Supported
+            , sansSerif : Supported
+            , monospace : Supported
+            , cursive : Supported
+            , fantasy : Supported
+            , systemUi : Supported
+            }
+    -> Style
+fontFamilies list (Value genericFont) =
+    case list of
+        [] ->
+            AppendProperty ("font-family:" ++ genericFont)
+
+        fonts ->
+            AppendProperty
+                ("font-family:"
+                    ++ String.join "," (List.map enquoteIfNotGeneric list)
+                    ++ ("," ++ genericFont)
+                )
+
+
+enquoteIfNotGeneric : String -> String
+enquoteIfNotGeneric fontName =
+    case fontName of
+        "serif" ->
+            fontName
+
+        "sans-serif" ->
+            fontName
+
+        "monospace" ->
+            fontName
+
+        "cursive" ->
+            fontName
+
+        "fantasy" ->
+            fontName
+
+        "system-ui" ->
+            fontName
+
+        _ ->
+            "\"" ++ fontName ++ "\""
 
 
 
