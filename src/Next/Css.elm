@@ -520,11 +520,11 @@ rgb : Int -> Int -> Int -> Value { provides | rgb : Supported }
 rgb red green blue =
     Value <|
         "rgb("
-            ++ String.fromInt red
+            ++ toString red
             ++ ","
-            ++ String.fromInt green
+            ++ toString green
             ++ ","
-            ++ String.fromInt blue
+            ++ toString blue
             ++ ")"
 
 
@@ -534,13 +534,13 @@ rgba : Int -> Int -> Int -> Float -> Value { provides | rgba : Supported }
 rgba red green blue alpha =
     Value <|
         "rgba("
-            ++ String.fromInt red
+            ++ toString red
             ++ ","
-            ++ String.fromInt green
+            ++ toString green
             ++ ","
-            ++ String.fromInt blue
+            ++ toString blue
             ++ ","
-            ++ String.fromFloat alpha
+            ++ toString alpha
             ++ ")"
 
 
@@ -552,11 +552,11 @@ hsl : Float -> Float -> Float -> Value { provides | hsl : Supported }
 hsl hue saturation lightness =
     Value <|
         "hsl("
-            ++ String.fromFloat hue
+            ++ toString hue
             ++ ","
-            ++ String.fromFloat (saturation * 100)
+            ++ toString (saturation * 100)
             ++ "%,"
-            ++ String.fromFloat (lightness * 100)
+            ++ toString (lightness * 100)
             ++ "%,"
             ++ ")"
 
@@ -569,13 +569,13 @@ hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
 hsla hue saturation lightness alpha =
     Value <|
         "hsl("
-            ++ String.fromFloat hue
+            ++ toString hue
             ++ ","
-            ++ String.fromFloat (saturation * 100)
+            ++ toString (saturation * 100)
             ++ "%,"
-            ++ String.fromFloat (lightness * 100)
+            ++ toString (lightness * 100)
             ++ "%,"
-            ++ String.fromFloat alpha
+            ++ toString alpha
             ++ ")"
 
 
@@ -719,77 +719,77 @@ zero =
 -}
 px : Float -> Value { provides | px : Supported }
 px value =
-    Value (String.fromFloat value ++ "px")
+    Value (toString value ++ "px")
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
 em : Float -> Value { provides | em : Supported }
 em value =
-    Value (String.fromFloat value ++ "em")
+    Value (toString value ++ "em")
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
 ex : Float -> Value { provides | ex : Supported }
 ex value =
-    Value (String.fromFloat value ++ "ex")
+    Value (toString value ++ "ex")
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
 ch : Float -> Value { provides | ch : Supported }
 ch value =
-    Value (String.fromFloat value ++ "ch")
+    Value (toString value ++ "ch")
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
 rem : Float -> Value { provides | rem : Supported }
 rem value =
-    Value (String.fromFloat value ++ "rem")
+    Value (toString value ++ "rem")
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
 vh : Float -> Value { provides | vh : Supported }
 vh value =
-    Value (String.fromFloat value ++ "vh")
+    Value (toString value ++ "vh")
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
 vw : Float -> Value { provides | vw : Supported }
 vw value =
-    Value (String.fromFloat value ++ "vw")
+    Value (toString value ++ "vw")
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
 vmin : Float -> Value { provides | vmin : Supported }
 vmin value =
-    Value (String.fromFloat value ++ "vmin")
+    Value (toString value ++ "vmin")
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
 vmax : Float -> Value { provides | vmax : Supported }
 vmax value =
-    Value (String.fromFloat value ++ "vmax")
+    Value (toString value ++ "vmax")
 
 
 {-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 mm : Float -> Value { provides | mm : Supported }
 mm value =
-    Value (String.fromFloat value ++ "mm")
+    Value (toString value ++ "mm")
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
 cm : Float -> Value { provides | cm : Supported }
 cm value =
-    Value (String.fromFloat value ++ "cm")
+    Value (toString value ++ "cm")
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
@@ -799,28 +799,28 @@ cm value =
 -}
 inches : Float -> Value { provides | inches : Supported }
 inches value =
-    Value (String.fromFloat value ++ "in")
+    Value (toString value ++ "in")
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
 pt : Float -> Value { provides | pt : Supported }
 pt value =
-    Value (String.fromFloat value ++ "pt")
+    Value (toString value ++ "pt")
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
 pc : Float -> Value { provides | pc : Supported }
 pc value =
-    Value (String.fromFloat value ++ "pc")
+    Value (toString value ++ "pc")
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
 pct : Float -> Value { provides | pct : Supported }
 pct value =
-    Value (String.fromFloat value ++ "%")
+    Value (toString value ++ "%")
 
 
 {-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
@@ -828,7 +828,7 @@ which accept unitless numbers.
 -}
 num : Float -> Value { provides | num : Supported }
 num value =
-    Value (String.fromFloat value)
+    Value (toString value)
 
 
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
@@ -836,7 +836,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> Value { provides | int : Supported }
 int value =
-    Value (String.fromInt value)
+    Value (toString value)
 
 
 
