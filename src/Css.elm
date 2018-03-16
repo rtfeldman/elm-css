@@ -1,4 +1,4 @@
-module Next.Css
+module Css
     exposing
         ( BoxShadowConfig
         , Color
