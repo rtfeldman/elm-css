@@ -491,8 +491,7 @@ type alias Color =
         }
 
 
-{-| TODO
--}
+{-| -}
 color :
     Value
         { rgb : Supported
@@ -506,8 +505,7 @@ color (Value val) =
     AppendProperty ("color:" ++ val)
 
 
-{-| TODO
--}
+{-| -}
 backgroundColor : Value { rgb : Supported } -> Style
 backgroundColor (Value val) =
     AppendProperty ("background-color:" ++ val)
@@ -1073,99 +1071,85 @@ displayFlex =
     AppendProperty "display:flex"
 
 
-{-| TODO
--}
+{-| -}
 block : Value { provides | block : Supported }
 block =
     Value "block"
 
 
-{-| TODO
--}
+{-| -}
 grid : Value { provides | block : Supported }
 grid =
     Value "grid"
 
 
-{-| TODO
--}
+{-| -}
 inline : Value { provides | inline : Supported }
 inline =
     Value "inline"
 
 
-{-| TODO
--}
+{-| -}
 inlineBlock : Value { provides | inlineBlock : Supported }
 inlineBlock =
     Value "inlineBlock"
 
 
-{-| TODO
--}
+{-| -}
 inlineFlex : Value { provides | inlineFlex : Supported }
 inlineFlex =
     Value "inlineFlex"
 
 
-{-| TODO
--}
+{-| -}
 table : Value { provides | table : Supported }
 table =
     Value "table"
 
 
-{-| TODO
--}
+{-| -}
 tableCaption : Value { provides | tableCaption : Supported }
 tableCaption =
     Value "tableCaption"
 
 
-{-| TODO
--}
+{-| -}
 tableCell : Value { provides | tableCell : Supported }
 tableCell =
     Value "tableCell"
 
 
-{-| TODO
--}
+{-| -}
 tableColumn : Value { provides | tableColumn : Supported }
 tableColumn =
     Value "tableColumn"
 
 
-{-| TODO
--}
+{-| -}
 tableColumnGroup : Value { provides | tableColumnGroup : Supported }
 tableColumnGroup =
     Value "tableColumnGroup"
 
 
-{-| TODO
--}
+{-| -}
 tableFooterGroup : Value { provides | tableFooterGroup : Supported }
 tableFooterGroup =
     Value "tableFooterGroup"
 
 
-{-| TODO
--}
+{-| -}
 tableHeaderGroup : Value { provides | tableHeaderGroup : Supported }
 tableHeaderGroup =
     Value "tableHeaderGroup"
 
 
-{-| TODO
--}
+{-| -}
 tableRow : Value { provides | tableRow : Supported }
 tableRow =
     Value "tableRow"
 
 
-{-| TODO
--}
+{-| -}
 tableRowGroup : Value { provides | tableRowGroup : Supported }
 tableRowGroup =
     Value "tableRowGroup"
@@ -1175,106 +1159,91 @@ tableRowGroup =
 -- ALIGN-ITEMS VALUES --
 
 
-{-| TODO
--}
+{-| -}
 normal : Value { provides | normal : Supported }
 normal =
     Value "normal"
 
 
-{-| TODO
--}
+{-| -}
 stretch : Value { provides | stretch : Supported }
 stretch =
     Value "stretch"
 
 
-{-| TODO
--}
+{-| -}
 center : Value { provides | center : Supported }
 center =
     Value "center"
 
 
-{-| TODO
--}
+{-| -}
 start : Value { provides | start : Supported }
 start =
     Value "start"
 
 
-{-| TODO
--}
+{-| -}
 end : Value { provides | end : Supported }
 end =
     Value "end"
 
 
-{-| TODO
--}
+{-| -}
 flexStart : Value { provides | flexStart : Supported }
 flexStart =
     Value "flex-start"
 
 
-{-| TODO
--}
+{-| -}
 flexEnd : Value { provides | flexEnd : Supported }
 flexEnd =
     Value "flex-end"
 
 
-{-| TODO
--}
+{-| -}
 selfStart : Value { provides | selfStart : Supported }
 selfStart =
     Value "self-start"
 
 
-{-| TODO
--}
+{-| -}
 selfEnd : Value { provides | selfEnd : Supported }
 selfEnd =
     Value "self-end"
 
 
-{-| TODO
--}
+{-| -}
 left : Value { provides | left : Supported }
 left =
     Value "left"
 
 
-{-| TODO
--}
+{-| -}
 right : Value { provides | right : Supported }
 right =
     Value "right"
 
 
-{-| TODO
--}
+{-| -}
 baseline : Value { provides | baseline : Supported }
 baseline =
     Value "baseline"
 
 
-{-| TODO
--}
+{-| -}
 firstBaseline : Value { provides | firstBaseline : Supported }
 firstBaseline =
     Value "first baseline"
 
 
-{-| TODO
--}
+{-| -}
 lastBaseline : Value { provides | lastBaseline : Supported }
 lastBaseline =
     Value "last baseline"
 
 
-{-| TODO
--}
+{-| -}
 safeCenter : Value { provides | safeCenter : Supported }
 safeCenter =
     Value "safe center"
@@ -1377,15 +1346,13 @@ fontStyle (Value val) =
     AppendProperty ("font-style:" ++ val)
 
 
-{-| TODO
--}
+{-| -}
 italic : Value { provides | italic : Supported }
 italic =
     Value "italic"
 
 
-{-| TODO
--}
+{-| -}
 oblique : Value { provides | oblique : Supported }
 oblique =
     Value "oblique"
@@ -1406,22 +1373,19 @@ fontWeight (Value val) =
     AppendProperty ("font-weight:" ++ val)
 
 
-{-| TODO
--}
+{-| -}
 bold : Value { provides | bold : Supported }
 bold =
     Value "bold"
 
 
-{-| TODO
--}
+{-| -}
 lighter : Value { provides | lighter : Supported }
 lighter =
     Value "lighter"
 
 
-{-| TODO
--}
+{-| -}
 bolder : Value { provides | bolder : Supported }
 bolder =
     Value "bolder"
@@ -1431,15 +1395,13 @@ bolder =
 -- FONT VARIANTS --
 
 
-{-| TODO
--}
+{-| -}
 allPetiteCaps : Value { provides | allPetiteCaps : Supported }
 allPetiteCaps =
     Value "all-petite-caps"
 
 
-{-| TODO
--}
+{-| -}
 allSmallCaps : Value { provides | allSmallCaps : Supported }
 allSmallCaps =
     Value "all-small-caps"
@@ -1742,120 +1704,103 @@ grabbing =
 -- LIST STYLE TYPE --
 
 
-{-| TODO
--}
+{-| -}
 arabicIndic : Value { provides | arabicIndic : Supported }
 arabicIndic =
     Value "arabic-indic"
 
 
-{-| TODO
--}
+{-| -}
 armenian : Value { provides | armenian : Supported }
 armenian =
     Value "armenian"
 
 
-{-| TODO
--}
+{-| -}
 bengali : Value { provides | bengali : Supported }
 bengali =
     Value "bengali"
 
 
-{-| TODO
--}
+{-| -}
 cjkEarthlyBranch : Value { provides | cjkEarthlyBranch : Supported }
 cjkEarthlyBranch =
     Value "cjkEarthlyBranch"
 
 
-{-| TODO
--}
+{-| -}
 cjkHeavenlyStem : Value { provides | cjkHeavenlyStem : Supported }
 cjkHeavenlyStem =
     Value "cjkHeavenlyStem"
 
 
-{-| TODO
--}
+{-| -}
 devanagari : Value { provides | devanagari : Supported }
 devanagari =
     Value "devanagari"
 
 
-{-| TODO
--}
+{-| -}
 georgian : Value { provides | georgian : Supported }
 georgian =
     Value "georgian"
 
 
-{-| TODO
--}
+{-| -}
 gujarati : Value { provides | gujarati : Supported }
 gujarati =
     Value "gujarati"
 
 
-{-| TODO
--}
+{-| -}
 gurmukhi : Value { provides | gurmukhi : Supported }
 gurmukhi =
     Value "gurmukhi"
 
 
-{-| TODO
--}
+{-| -}
 kannada : Value { provides | kannada : Supported }
 kannada =
     Value "kannada"
 
 
-{-| TODO
--}
+{-| -}
 khmer : Value { provides | khmer : Supported }
 khmer =
     Value "khmer"
 
 
-{-| TODO
--}
+{-| -}
 lao : Value { provides | lao : Supported }
 lao =
     Value "lao"
 
 
-{-| TODO
--}
+{-| -}
 malayalam : Value { provides | malayalam : Supported }
 malayalam =
     Value "malayalam"
 
 
-{-| TODO
--}
+{-| -}
 myanmar : Value { provides | myanmar : Supported }
 myanmar =
     Value "myanmar"
 
 
-{-| TODO
--}
+{-| -}
 oriya : Value { provides | oriya : Supported }
 oriya =
     Value "oriya"
 
 
-{-| TODO
--}
+{-| -}
 telugu : Value { provides | telugu : Supported }
 telugu =
     Value "telugu"
 
 
-{-| TODO
--}
+{-| -}
 thai : Value { provides | thai : Supported }
 thai =
     Value "thai"
