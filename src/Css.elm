@@ -36,7 +36,9 @@ module Css
         , cm
         , colResize
         , color
+        , commonLigatures
         , contextMenu
+        , contextual
         , copy
         , crosshair
         , cursive
@@ -45,6 +47,7 @@ module Css
         , default
         , defaultBoxShadow
         , devanagari
+        , discretionaryLigatures
         , display
         , displayFlex
         , dotted
@@ -63,6 +66,7 @@ module Css
         , fontSize
         , fontStyle
         , fontVariantCaps
+        , fontVariantLigatures
         , fontWeight
         , georgian
         , grab
@@ -73,6 +77,7 @@ module Css
         , gurmukhi
         , help
         , hex
+        , historicalLigatures
         , hsl
         , hsla
         , inches
@@ -104,7 +109,11 @@ module Css
         , nResize
         , neResize
         , neswResize
+        , noCommonLigatures
+        , noContextual
+        , noDiscretionaryLigatures
         , noDrop
+        , noHistoricalLigatures
         , none
         , normal
         , notAllowed
@@ -276,6 +285,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Font Variant Caps
 
 @docs fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
+
+
+## Font Variant Ligatures
+
+@docs fontVariantLigatures , commonLigatures , noCommonLigatures , discretionaryLigatures , noDiscretionaryLigatures , historicalLigatures , noHistoricalLigatures , contextual , noContextual
 
 
 # Align Items
@@ -1752,7 +1766,9 @@ fontVariantCaps (Value str) =
     AppendProperty ("font-variant-caps:" ++ str)
 
 
-{-| The `normal` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values) or [`align-items` value](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
+{-| The `normal` value, which can be used with such properties as
+[`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values)
+and [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
 
     fontVariantCaps normal
     alignItems normal
@@ -1821,6 +1837,117 @@ unicase =
 titlingCaps : Value { provides | titlingCaps : Supported }
 titlingCaps =
     Value "titling-caps"
+
+
+
+-- FONT VARIANT LIGATURES --
+
+
+{-| Sets [`font-variant-ligatures`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures).
+
+    fontVariantLigatures discretionaryLigatures
+    fontVariantLigatures none
+
+-}
+fontVariantLigatures :
+    Value
+        { normal : Supported
+        , none : Supported
+        , commonLigatures : Supported
+        , noCommonLigatures : Supported
+        , discretionaryLigatures : Supported
+        , noDiscretionaryLigatures : Supported
+        , historicalLigatures : Supported
+        , noHistoricalLigatures : Supported
+        , contextual : Supported
+        , noContextual : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontVariantLigatures (Value str) =
+    AppendProperty ("font-variant-ligatures:" ++ str)
+
+
+{-| The `common-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures commonLigatures
+
+-}
+commonLigatures : Value { provides | commonLigatures : Supported }
+commonLigatures =
+    Value "common-ligatures"
+
+
+{-| The `no-common-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noCommonLigatures
+
+-}
+noCommonLigatures : Value { provides | noCommonLigatures : Supported }
+noCommonLigatures =
+    Value "no-common-ligatures"
+
+
+{-| The `discretionary-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures discretionaryLigatures
+
+-}
+discretionaryLigatures : Value { provides | discretionaryLigatures : Supported }
+discretionaryLigatures =
+    Value "discretionary-ligatures"
+
+
+{-| The `no-discretionary-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noDiscretionaryLigatures
+
+-}
+noDiscretionaryLigatures : Value { provides | noDiscretionaryLigatures : Supported }
+noDiscretionaryLigatures =
+    Value "no-discretionary-ligatures"
+
+
+{-| The `historical-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures historicalLigatures
+
+-}
+historicalLigatures : Value { provides | historicalLigatures : Supported }
+historicalLigatures =
+    Value "historical-ligatures"
+
+
+{-| The `no-historical-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noHistoricalLigatures
+
+-}
+noHistoricalLigatures : Value { provides | noHistoricalLigatures : Supported }
+noHistoricalLigatures =
+    Value "no-historical-ligatures"
+
+
+{-| The `contextual` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures contextual
+
+-}
+contextual : Value { provides | contextual : Supported }
+contextual =
+    Value "contextual"
+
+
+{-| The `no-contextual` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noContextual
+
+-}
+noContextual : Value { provides | noContextual : Supported }
+noContextual =
+    Value "no-contextual"
 
 
 
