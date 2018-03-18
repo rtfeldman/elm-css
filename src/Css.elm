@@ -47,6 +47,7 @@ module Css
         , default
         , defaultBoxShadow
         , devanagari
+        , diagonalFractions
         , discretionaryLigatures
         , display
         , displayFlex
@@ -67,6 +68,7 @@ module Css
         , fontStyle
         , fontVariantCaps
         , fontVariantLigatures
+        , fontVariantNumeric
         , fontWeight
         , georgian
         , grab
@@ -97,6 +99,7 @@ module Css
         , lastBaseline
         , left
         , lighter
+        , liningNums
         , listStyle
         , listStyle2
         , listStyle3
@@ -122,6 +125,8 @@ module Css
         , nwResize
         , nwseResize
         , oblique
+        , oldstyleNums
+        , ordinal
         , oriya
         , outset
         , pc
@@ -129,6 +134,7 @@ module Css
         , petiteCaps
         , pointer
         , progress
+        , proportionalNums
         , pseudoClass
         , pseudoElement
         , pt
@@ -147,10 +153,12 @@ module Css
         , selfEnd
         , selfStart
         , serif
+        , slashedZero
         , small
         , smallCaps
         , smaller
         , solid
+        , stackedFractions
         , start
         , stretch
         , swResize
@@ -164,6 +172,7 @@ module Css
         , tableHeaderGroup
         , tableRow
         , tableRowGroup
+        , tabularNums
         , telugu
         , text
         , thai
@@ -290,6 +299,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Font Variant Ligatures
 
 @docs fontVariantLigatures , commonLigatures , noCommonLigatures , discretionaryLigatures , noDiscretionaryLigatures , historicalLigatures , noHistoricalLigatures , contextual , noContextual
+
+
+## Font Variant Numeric
+
+@docs fontVariantNumeric, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
 
 
 # Align Items
@@ -1948,6 +1962,181 @@ contextual =
 noContextual : Value { provides | noContextual : Supported }
 noContextual =
     Value "no-contextual"
+
+
+
+-- FONT VARIANT NUMERIC --
+
+
+{-| Sets [`font-variant-numeric`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric ordinal
+
+See [`fontVariantNumeric4`](#fontVariantNumeric4) for a more advanced version.
+
+There's [a great CSS Tricks article](https://css-tricks.com/almanac/properties/f/font-variant-numeric/)
+on how to use this property! In particular, it may be helpful to note that the
+`font-feature-settings` value can be used to similar effect in older browsers.
+
+-}
+fontVariantNumeric :
+    Value
+        { normal : Supported
+        , ordinal : Supported
+        , slashedZero : Supported
+        , liningNums : Supported
+        , oldstyleNums : Supported
+        , proportionalNums : Supported
+        , tabularNums : Supported
+        , diagonalFractions : Supported
+        , stackedFractions : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontVariantNumeric (Value str) =
+    AppendProperty ("font-variant-numeric:" ++ str)
+
+
+{-| Sets [`font-variant-numeric`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+This one can be tricky to use because many of the options are mutually exclusive.
+For example, `normal` cannot be used with any of the others, so the only way
+to get it from this function is to pass `Nothing` for everything. The other
+arguments are chosen such that you can choose between the mutually exclusive
+values, or leave that value off.
+
+    fontVariantNumeric4 Nothing Nothing Nothing Nothing -- "normal"
+
+    fontVariantNumeric4
+        (Just ordinal)
+        Nothing
+        (Just tabularNums)
+        Nothing
+        -- "ordinal tabular-nums"
+
+See [`fontVariantNumeric`](#fontVariantNumeric) for a more concise version.
+
+There's [a great CSS Tricks article](https://css-tricks.com/almanac/properties/f/font-variant-numeric/)
+on how to use this property! In particular, it may be helpful to note that the
+`font-feature-settings` value can be used to similar effect in older browsers.
+
+-}
+fontVariantNumeric4 :
+    Maybe (Value { ordinal : Supported, slashedZero : Supported })
+    -> Maybe (Value { liningNums : Supported, oldstyleNums : Supported })
+    -> Maybe (Value { proportionalNums : Supported, tabularNums : Supported })
+    -> Maybe (Value { diagonalFractions : Supported, stackedFractions : Supported })
+    -> Style
+fontVariantNumeric4 val1 val2 val3 val4 =
+    let
+        valueStr =
+            case
+                [ maybeValToString val1
+                , maybeValToString val2
+                , maybeValToString val3
+                , maybeValToString val4
+                ]
+                    |> List.filterMap identity
+            of
+                [] ->
+                    "normal"
+
+                strings ->
+                    String.join "," strings
+    in
+    AppendProperty ("font-variant-numeric:" ++ valueStr)
+
+
+maybeValToString : Maybe (Value a) -> Maybe String
+maybeValToString maybeVal =
+    case maybeVal of
+        Just (Value str) ->
+            Just str
+
+        Nothing ->
+            Nothing
+
+
+{-| The `ordinal` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric ordinal
+
+-}
+ordinal : Value { provides | ordinal : Supported }
+ordinal =
+    Value "ordinal"
+
+
+{-| The `slashed-zero` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric slashedZero
+
+-}
+slashedZero : Value { provides | slashedZero : Supported }
+slashedZero =
+    Value "slashed-zero"
+
+
+{-| The `lining-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric liningNums
+
+-}
+liningNums : Value { provides | liningNums : Supported }
+liningNums =
+    Value "lining-nums"
+
+
+{-| The `oldstyle-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric oldstyleNums
+
+-}
+oldstyleNums : Value { provides | oldstyleNums : Supported }
+oldstyleNums =
+    Value "oldstyle-nums"
+
+
+{-| The `proportional-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric proportionalNums
+
+-}
+proportionalNums : Value { provides | proportionalNums : Supported }
+proportionalNums =
+    Value "proportional-nums"
+
+
+{-| The `tabular-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric tabularNums
+
+-}
+tabularNums : Value { provides | tabularNums : Supported }
+tabularNums =
+    Value "tabular-nums"
+
+
+{-| The `diagonal-fractions` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric diagonalFractions
+
+-}
+diagonalFractions : Value { provides | diagonalFractions : Supported }
+diagonalFractions =
+    Value "diagonal-fractions"
+
+
+{-| The `stacked-fractions` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric stackedFractions
+
+-}
+stackedFractions : Value { provides | stackedFractions : Supported }
+stackedFractions =
+    Value "stacked-fractions"
 
 
 
