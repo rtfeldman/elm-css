@@ -19,6 +19,8 @@ module Css
         , arabicIndic
         , armenian
         , auto
+        , backgroundAttachment
+        , backgroundAttachments
         , backgroundColor
         , baseline
         , batch
@@ -60,6 +62,7 @@ module Css
         , ex
         , fantasy
         , firstBaseline
+        , fixed
         , flexEnd
         , flexStart
         , fontFamilies
@@ -103,6 +106,7 @@ module Css
         , listStyle
         , listStyle2
         , listStyle3
+        , local
         , malayalam
         , medium
         , mm
@@ -149,6 +153,7 @@ module Css
         , sResize
         , safeCenter
         , sansSerif
+        , scroll
         , seResize
         , selfEnd
         , selfStart
@@ -238,6 +243,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Pseudo-Elements
 
 @docs pseudoElement, before, after
+
+
+## Background Attachment
+
+@docs backgroundAttachment, backgroundAttachments, scroll, fixed, local
 
 
 ## Box Shadow
@@ -465,7 +475,7 @@ unset =
     Value "unset"
 
 
-{-| An [`all`](https://developer.mozilla.org/en-US/docs/Web/CSS/all) property.
+{-| Sets an [`all`](https://css-tricks.com/almanac/properties/a/all/) property.
 
     all inherit
 
@@ -552,7 +562,13 @@ type alias Color =
         }
 
 
-{-| -}
+{-| Sets [`color`](https://css-tricks.com/almanac/properties/c/color/).
+
+    color (hex "#60b5cc")
+    color (rgb 96 181 204)
+    color (rgba 96 181 204 0.5)
+
+-}
 color :
     Value
         { rgb : Supported
@@ -566,7 +582,13 @@ color (Value val) =
     AppendProperty ("color:" ++ val)
 
 
-{-| -}
+{-| Sets [`background-color`](https://css-tricks.com/almanac/properties/b/background-color/).
+
+    backgroundColor (hex "#60b5cc")
+    backgroundColor (rgb 96 181 204)
+    backgroundColor (rgba 96 181 204 0.5)
+
+-}
 backgroundColor : Value { rgb : Supported } -> Style
 backgroundColor (Value val) =
     AppendProperty ("background-color:" ++ val)
@@ -574,6 +596,9 @@ backgroundColor (Value val) =
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
 in functional notation.
+
+    color (rgb 96 181 204)
+
 -}
 rgb : Int -> Int -> Int -> Value { provides | rgb : Supported }
 rgb red green blue =
@@ -587,7 +612,10 @@ rgb red green blue =
             ++ ")"
 
 
-{-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
+{-| [RGBA color value](https://css-tricks.com/the-power-of-rgba/).
+
+    color (rgba 96 181 204 0.25)
+
 -}
 rgba : Int -> Int -> Int -> Float -> Value { provides | rgba : Supported }
 rgba red green blue alpha =
@@ -603,9 +631,12 @@ rgba red green blue alpha =
             ++ ")"
 
 
-{-| [HSL color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl())
-`s` and `l` values are expressed as a number between 0 and 1 and are converted
-to the appropriate percentage at compile-time
+{-| [HSL color value](https://css-tricks.com/mother-effing-hsl/).
+
+The `s` and `l` values are expressed as a number between 0 and 1 and are converted to the appropriate percentage.
+
+    color (hsl 193 0.51 0.59) -- hsl(193, 51%, 59%)
+
 -}
 hsl : Float -> Float -> Float -> Value { provides | hsl : Supported }
 hsl hue saturation lightness =
@@ -620,9 +651,12 @@ hsl hue saturation lightness =
             ++ ")"
 
 
-{-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
-`s` and `l` values are expressed as a number between 0 and 1 and are converted
-to the appropriate percentage at compile-time
+{-| [HSLA color value](https://css-tricks.com/yay-for-hsla/)
+
+The `s` and `l` values are expressed as a number between 0 and 1 and are converted to the appropriate percentage.
+
+    color (hsla 193 0.51 0.59 0.25) -- hsl(193, 51%, 59%, 0.25)
+
 -}
 hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
 hsla hue saturation lightness alpha =
@@ -638,10 +672,13 @@ hsla hue saturation lightness alpha =
             ++ ")"
 
 
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
-in hexadecimal notation. You can optionally include `#` as the first character,
-for benefits like syntax highlighting in editors, ease of copy/pasting from
-tools which express these as e.g. `#abcdef0`, etc.
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()) in hexadecimal notation.
+
+You can optionally include `#` as the first character, for benefits like syntax highlighting in editors, ease of copy/pasting from tools which express these as e.g. `#abcdef0`, etc.
+
+    color (hex "#60b5cc")
+    color (hex "60b5cc")
+
 -}
 hex : String -> Value { provides | hex : Supported }
 hex str =
@@ -2536,6 +2573,89 @@ telugu =
 thai : Value { provides | thai : Supported }
 thai =
     Value "thai"
+
+
+{-| Sets [`background-attachment`](https://css-tricks.com/almanac/properties/b/background-attachment/).
+
+    backgroundAttachment local
+
+See [`backgroundAttachments`](#backgroundAttachments) to set more than one `background-attachment` value.
+
+-}
+backgroundAttachment :
+    Value
+        { fixed : Supported
+        , scroll : Supported
+        , local : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+backgroundAttachment (Value str) =
+    AppendProperty ("background-attachment:" ++ str)
+
+
+{-| Sets [`background-attachment`](https://css-tricks.com/almanac/properties/b/background-attachment/).
+
+    backgroundAttachments scroll [ fixed, scroll, fixed ]
+
+See [`backgroundAttachment`](#backgroundAttachment) to set a single `background-attachment` value.
+
+-}
+backgroundAttachments :
+    Value
+        { fixed : Supported
+        , scroll : Supported
+        , local : Supported
+        }
+    ->
+        List
+            (Value
+                { fixed : Supported
+                , scroll : Supported
+                , local : Supported
+                }
+            )
+    -> Style
+backgroundAttachments firstValue values =
+    let
+        str =
+            (firstValue :: values)
+                |> List.map (\(Value str) -> str)
+                |> String.join ","
+    in
+    AppendProperty ("background-attachment:" ++ str)
+
+
+{-| The `fixed` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
+
+    backgroundAttachment fixed
+
+-}
+fixed : Value { provides | fixed : Supported }
+fixed =
+    Value "fixed"
+
+
+{-| The `scroll` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
+
+    backgroundAttachment scroll
+
+-}
+scroll : Value { provides | scroll : Supported }
+scroll =
+    Value "scroll"
+
+
+{-| The `local` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
+
+    backgroundAttachment local
+
+-}
+local : Value { provides | local : Supported }
+local =
+    Value "local"
 
 
 
