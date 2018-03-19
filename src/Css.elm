@@ -20,6 +20,8 @@ module Css
         , auto
         , backgroundAttachment
         , backgroundAttachments
+        , backgroundBlendMode
+        , backgroundBlendModes
         , backgroundColor
         , baseline
         , batch
@@ -37,6 +39,9 @@ module Css
         , cm
         , colResize
         , color
+        , colorBurn
+        , colorDodge
+        , color_
         , commonLigatures
         , contextMenu
         , contextual
@@ -44,11 +49,13 @@ module Css
         , crosshair
         , cursive
         , cursor
+        , darken
         , dashed
         , default
         , defaultBoxShadow
         , devanagari
         , diagonalFractions
+        , difference
         , discretionaryLigatures
         , display
         , displayFlex
@@ -59,6 +66,7 @@ module Css
         , end
         , ewResize
         , ex
+        , exclusion
         , fantasy
         , firstBaseline
         , fixed
@@ -79,11 +87,13 @@ module Css
         , groove
         , gujarati
         , gurmukhi
+        , hardLight
         , help
         , hex
         , historicalLigatures
         , hsl
         , hsla
+        , hue
         , inches
         , inherit
         , initial
@@ -100,17 +110,20 @@ module Css
         , larger
         , lastBaseline
         , left
+        , lighten
         , lighter
         , liningNums
         , listStyle
         , listStyle2
         , listStyle3
         , local
+        , luminosity
         , malayalam
         , medium
         , mm
         , monospace
         , move
+        , multiply
         , myanmar
         , nResize
         , neResize
@@ -132,6 +145,7 @@ module Css
         , ordinal
         , oriya
         , outset
+        , overlay
         , pc
         , pct
         , petiteCaps
@@ -152,6 +166,8 @@ module Css
         , sResize
         , safeCenter
         , sansSerif
+        , saturation
+        , screen
         , scroll
         , seResize
         , selfEnd
@@ -161,6 +177,7 @@ module Css
         , small
         , smallCaps
         , smaller
+        , softLight
         , solid
         , stackedFractions
         , start
@@ -247,6 +264,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Background Attachment
 
 @docs backgroundAttachment, backgroundAttachments, scroll, fixed, local
+
+
+## Background Blend Mode
+
+@docs backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
 
 
 ## Box Shadow
@@ -2703,6 +2725,256 @@ scroll =
 local : Value { provides | local : Supported }
 local =
     Value "local"
+
+
+{-| Sets [`background-blend-mode`](https://css-tricks.com/almanac/properties/b/background-blend-mode/).
+
+Note that this takes an argument of [`color_`](#color_), not [`color`](#color)!
+
+    backgroundBlendMode color_
+    backgroundBlendMode darken
+    backgroundBlendMode colorBurn
+
+See [`backgroundBlendModes`](#backgroundBlendModes) to set more than one `background-blend-mode` value.
+
+-}
+backgroundBlendMode :
+    Value
+        { normal : Supported
+        , multiply : Supported
+        , screen : Supported
+        , overlay : Supported
+        , darken : Supported
+        , lighten : Supported
+        , colorDodge : Supported
+        , colorBurn : Supported
+        , hardLight : Supported
+        , softLight : Supported
+        , difference : Supported
+        , exclusion : Supported
+        , hue : Supported
+        , saturation : Supported
+        , color : Supported
+        , luminosity : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+backgroundBlendMode (Value str) =
+    AppendProperty ("background-blend-mode:" ++ str)
+
+
+{-| Sets [`background-blend-mode`](https://css-tricks.com/almanac/properties/b/background-blend-mode/).
+
+Note that this takes an argument of [`color_`](#color_), not [`color`](#color)!
+
+    backgroundBlendMode normal [ darken, color_ ]
+
+See [`backgroundBlendMode`](#backgroundBlendMode) to set a single `background-blend-mode` value.
+
+-}
+backgroundBlendModes :
+    Value
+        { normal : Supported
+        , multiply : Supported
+        , screen : Supported
+        , overlay : Supported
+        , darken : Supported
+        , lighten : Supported
+        , colorDodge : Supported
+        , colorBurn : Supported
+        , hardLight : Supported
+        , softLight : Supported
+        , difference : Supported
+        , exclusion : Supported
+        , hue : Supported
+        , saturation : Supported
+        , color_ : Supported
+        , luminosity : Supported
+        }
+    ->
+        List
+            (Value
+                { normal : Supported
+                , multiply : Supported
+                , screen : Supported
+                , overlay : Supported
+                , darken : Supported
+                , lighten : Supported
+                , colorDodge : Supported
+                , colorBurn : Supported
+                , hardLight : Supported
+                , softLight : Supported
+                , difference : Supported
+                , exclusion : Supported
+                , hue : Supported
+                , saturation : Supported
+                , color_ : Supported
+                , luminosity : Supported
+                }
+            )
+    -> Style
+backgroundBlendModes firstValue values =
+    let
+        str =
+            (firstValue :: values)
+                |> List.map (\(Value str) -> str)
+                |> String.join ","
+    in
+    AppendProperty ("background-blend-mode:" ++ str)
+
+
+{-| The `multiply` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode multiply
+
+-}
+multiply : Value { provides | multiply : Supported }
+multiply =
+    Value "multiply"
+
+
+{-| The `screen` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode screen
+
+-}
+screen : Value { provides | screen : Supported }
+screen =
+    Value "screen"
+
+
+{-| The `overlay` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode overlay
+
+-}
+overlay : Value { provides | overlay : Supported }
+overlay =
+    Value "overlay"
+
+
+{-| The `darken` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode darken
+
+-}
+darken : Value { provides | darken : Supported }
+darken =
+    Value "darken"
+
+
+{-| The `lighten` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode lighten
+
+-}
+lighten : Value { provides | lighten : Supported }
+lighten =
+    Value "lighten"
+
+
+{-| The `color-dodge` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode color-colorDodge
+
+-}
+colorDodge : Value { provides | colorDodge : Supported }
+colorDodge =
+    Value "color-dodge"
+
+
+{-| The `color-burn` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode colorBurn
+
+-}
+colorBurn : Value { provides | colorBurn : Supported }
+colorBurn =
+    Value "color-burn"
+
+
+{-| The `hard-light` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode hardLight
+
+-}
+hardLight : Value { provides | hardLight : Supported }
+hardLight =
+    Value "hard-light"
+
+
+{-| The `soft-light` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode softLight
+
+-}
+softLight : Value { provides | softLight : Supported }
+softLight =
+    Value "soft-light"
+
+
+{-| The `difference` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode difference
+
+-}
+difference : Value { provides | difference : Supported }
+difference =
+    Value "difference"
+
+
+{-| The `exclusion` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode exclusion
+
+-}
+exclusion : Value { provides | exclusion : Supported }
+exclusion =
+    Value "exclusion"
+
+
+{-| The `hue` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode hue
+
+-}
+hue : Value { provides | hue : Supported }
+hue =
+    Value "hue"
+
+
+{-| The `saturation` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode saturation
+
+-}
+saturation : Value { provides | saturation : Supported }
+saturation =
+    Value "saturation"
+
+
+{-| The `color` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode color_
+
+Not to be confused with [`color`](#color).
+
+-}
+color_ : Value { provides | color_ : Supported }
+color_ =
+    Value "color"
+
+
+{-| The `luminosity` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
+
+    backgroundBlendMode luminosity
+
+-}
+luminosity : Value { provides | luminosity : Supported }
+luminosity =
+    Value "luminosity"
 
 
 
