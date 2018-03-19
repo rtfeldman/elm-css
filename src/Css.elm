@@ -15,7 +15,6 @@ module Css
         , allPetiteCaps
         , allScroll
         , allSmallCaps
-        , any
         , arabicIndic
         , armenian
         , auto
@@ -237,7 +236,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Pseudo-Classes
 
-@docs pseudoClass, any, active
+@docs pseudoClass, active
 
 
 ## Pseudo-Elements
