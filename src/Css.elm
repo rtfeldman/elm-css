@@ -693,7 +693,7 @@ hex str =
 -- POSITIONS --
 
 
-{-| An `absolute` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
+{-| An `absolute` [`position`](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/) value.
 
     position absolute
 
@@ -709,7 +709,7 @@ absolute =
 
 {-| Define a custom pseudo-class.
 
-This can be useful for deprecated pseudo-classes such as `-moz-any-link`, which
+This can be useful for deprecated [pseudo-classes](https://css-tricks.com/pseudo-class-selectors/) such as `-moz-any-link`, which
 [has been deprecated and removed](https://www.fxsitecompat.com/en-CA/docs/2016/any-link-css-pseudo-class-has-been-unprefixed/)
 in modern browsers.
 
@@ -733,16 +733,11 @@ pseudoClass pseudoClassName =
     Preprocess.ExtendSelector (Structure.PseudoClassSelector pseudoClassName)
 
 
-{-| An [`:any`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aany)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
--}
-any : String -> List Style -> Style
-any str =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector ("any(" ++ str ++ ")"))
+{-| An [`:active`](https://css-tricks.com/almanac/selectors/a/active/)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
 
+    button [ active [ color (rgb 12 160 190) ] ]
 
-{-| An [`:active`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Aactive)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
 -}
 active : List Style -> Style
 active =
@@ -753,7 +748,7 @@ active =
 -- PSEUDO-ELEMENTS--
 
 
-{-| Define a custom pseudo-element.
+{-| Define a custom [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 
     textarea
         [ css [ pseudoElement "-webkit-scrollbar" [ display none ] ] ]
@@ -775,16 +770,26 @@ pseudoElement element =
     Preprocess.WithPseudoElement (Structure.PseudoElement element)
 
 
-{-| An [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter)
+{-| An [`::after`](https://css-tricks.com/almanac/selectors/a/after-and-before/)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    div [ after [ content "hi!" ] ]
+
+--TODO : Introduce aw way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
+
 -}
 after : List Style -> Style
 after =
     Preprocess.WithPseudoElement (Structure.PseudoElement "after")
 
 
-{-| A [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore)
+{-| A [`::before`](https://css-tricks.com/almanac/selectors/a/after-and-before/)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    div [ before [ content "hi!" ] ]
+
+--TODO : Introduce aw way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
+
 -}
 before : List Style -> Style
 before =
@@ -795,7 +800,7 @@ before =
 -- NUMBERS --
 
 
-{-| Compiles to 0 with no units.
+{-| Compiles to a 0 with no units.
 
     css [ padding zero ]
 
@@ -811,84 +816,119 @@ zero =
     Value "0"
 
 
-{-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
+{-| [`px`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (px 5)
+
 -}
 px : Float -> Value { provides | px : Supported }
 px value =
     Value (toString value ++ "px")
 
 
-{-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
+{-| [`em`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (em 5)
+
 -}
 em : Float -> Value { provides | em : Supported }
 em value =
     Value (toString value ++ "em")
 
 
-{-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
+{-| [`ex`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (ex 5)
+
 -}
 ex : Float -> Value { provides | ex : Supported }
 ex value =
     Value (toString value ++ "ex")
 
 
-{-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
+{-| [`ch`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (ch 5)
+
 -}
 ch : Float -> Value { provides | ch : Supported }
 ch value =
     Value (toString value ++ "ch")
 
 
-{-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
+{-| [`rem`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (rem 5)
+
 -}
 rem : Float -> Value { provides | rem : Supported }
 rem value =
     Value (toString value ++ "rem")
 
 
-{-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
+{-| [`vh`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vh 5)
+
 -}
 vh : Float -> Value { provides | vh : Supported }
 vh value =
     Value (toString value ++ "vh")
 
 
-{-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
+{-| [`vw`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vw 5)
+
 -}
 vw : Float -> Value { provides | vw : Supported }
 vw value =
     Value (toString value ++ "vw")
 
 
-{-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
+{-| [`vmin`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vmin 5)
+
 -}
 vmin : Float -> Value { provides | vmin : Supported }
 vmin value =
     Value (toString value ++ "vmin")
 
 
-{-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
+{-| [`vmax`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vmax 5)
+
 -}
 vmax : Float -> Value { provides | vmax : Supported }
 vmax value =
     Value (toString value ++ "vmax")
 
 
-{-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [`mm`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (mm 5)
+
 -}
 mm : Float -> Value { provides | mm : Supported }
 mm value =
     Value (toString value ++ "mm")
 
 
-{-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
+{-| [`cm`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (cm 5)
+
 -}
 cm : Float -> Value { provides | cm : Supported }
 cm value =
     Value (toString value ++ "cm")
 
 
-{-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
+{-| [`in`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (inches 5)
 
 (This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
 
@@ -898,37 +938,50 @@ inches value =
     Value (toString value ++ "in")
 
 
-{-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
+{-| [`pt`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (pt 5)
+
 -}
 pt : Float -> Value { provides | pt : Supported }
 pt value =
     Value (toString value ++ "pt")
 
 
-{-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
+{-| [`pc`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (pc 5)
+
 -}
 pc : Float -> Value { provides | pc : Supported }
 pc value =
     Value (toString value ++ "pc")
 
 
-{-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
+{-| [`pct`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (pct 5)
+
 -}
 pct : Float -> Value { provides | pct : Supported }
 pct value =
     Value (toString value ++ "%")
 
 
-{-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
-which accept unitless numbers.
+{-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow) which accept unitless numbers.
+
+    flexGrow (num 2)
+
 -}
 num : Float -> Value { provides | num : Supported }
 num value =
     Value (toString value)
 
 
-{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
-which accept either length units or unitless numbers for some properties.
+{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset) which accept either length units or unitless numbers for some properties.
+
+    borderImageOutset (int 3)
+
 -}
 int : Int -> Value { provides | int : Supported }
 int value =
@@ -1065,7 +1118,7 @@ defaultBoxShadow =
     }
 
 
-{-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
+{-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
 
     boxShadow  [] -- "box-shadow: none"
     boxShadow [ { defaultBoxShadow | offsetX = (px 3), offsetY = (px 5) } -- "box-shadow: 3px 5px"
@@ -1127,7 +1180,7 @@ boxShadowConfigToString config =
 -- DISPLAY --
 
 
-{-| The [`display`](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property.
+{-| Sets [`display`](https://css-tricks.com/almanac/properties/d/display/).
 
     display block
 
@@ -1161,8 +1214,10 @@ display (Value val) =
     AppendProperty ("display:" ++ val)
 
 
-{-| `display: flex`. This works around the fact that
-[`flex` is already taken](#flex).
+{-| [`display: flex`](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). This works around the fact that [`flex` is already taken](#flex).
+
+    div [ displayFlex ]
+
 -}
 displayFlex : Style
 displayFlex =
@@ -1341,8 +1396,7 @@ safeCenter =
     Value "safe center"
 
 
-{-| TODO
--}
+{-| -}
 unsafeCenter : Value { provides | unsafeCenter : Supported }
 unsafeCenter =
     Value "unsafe center"
@@ -1352,7 +1406,7 @@ unsafeCenter =
 -- FLEXBOX --
 
 
-{-| Sets [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items).
+{-| Sets [`align-items`](https://css-tricks.com/almanac/properties/a/align-items/).
 
     alignItems firstBaseline
 
@@ -1388,7 +1442,7 @@ alignItems (Value val) =
     AppendProperty ("align-items:" ++ val)
 
 
-{-| Sets [`align-self`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-self).
+{-| Sets [`align-self`](https://css-tricks.com/almanac/properties/a/align-self/).
 
     alignSelf firstBaseline
 
@@ -1428,10 +1482,12 @@ alignSelf (Value val) =
 -- FONT SIZE --
 
 
-{-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
+{-| Sets [`font-size`](https://css-tricks.com/almanac/properties/f/font-size/)
 
     fontSize  xxSmall
     fontSize  (px 12)
+
+Check out [fluid typography](https://css-tricks.com/snippets/css/fluid-typography/) for some cool stuff you can do with this.
 
 -}
 fontSize :
@@ -1666,7 +1722,7 @@ systemUi =
     Value "system-ui"
 
 
-{-| Define multiple [font families](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
+{-| Define multiple [font families](https://css-tricks.com/almanac/properties/f/font-family/).
 
 Per the CSS spec, a [generic name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E) must always be at the end of this list. (The generic names are [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).)
 
@@ -1729,7 +1785,7 @@ enquoteIfNotGeneric fontName =
 -- FONT STYLES --
 
 
-{-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
+{-| Sets [`font-style`](https://css-tricks.com/almanac/properties/f/font-style/)
 
     fontStyle  italic
 
@@ -1755,7 +1811,7 @@ oblique =
 -- FONT WEIGHTS --
 
 
-{-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
+{-| Sets [`font-weight`](https://css-tricks.com/almanac/properties/f/font-weight/)
 
     fontWeight  bold
     fontWeight  (int 300)
@@ -2005,15 +2061,11 @@ noContextual =
 -- FONT VARIANT NUMERIC --
 
 
-{-| Sets [`font-variant-numeric`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+{-| Sets [`font-variant-numeric`](https://css-tricks.com/almanac/properties/f/font-variant-numeric/).
 
     fontVariantNumeric ordinal
 
 See [`fontVariantNumeric4`](#fontVariantNumeric4) for a more advanced version.
-
-There's [a great CSS Tricks article](https://css-tricks.com/almanac/properties/f/font-variant-numeric/)
-on how to use this property! In particular, it may be helpful to note that the
-`font-feature-settings` value can be used to similar effect in older browsers.
 
 -}
 fontVariantNumeric :
@@ -2036,7 +2088,7 @@ fontVariantNumeric (Value str) =
     AppendProperty ("font-variant-numeric:" ++ str)
 
 
-{-| Sets [`font-variant-numeric`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+{-| Sets [`font-variant-numeric`](https://css-tricks.com/almanac/properties/f/font-variant-numeric/).
 
 This one can be tricky to use because many of the options are mutually exclusive.
 For example, `normal` cannot be used with any of the others, so the only way
@@ -2054,10 +2106,6 @@ values, or leave that value off.
         -- "ordinal tabular-nums"
 
 See [`fontVariantNumeric`](#fontVariantNumeric) for a more concise version.
-
-There's [a great CSS Tricks article](https://css-tricks.com/almanac/properties/f/font-variant-numeric/)
-on how to use this property! In particular, it may be helpful to note that the
-`font-feature-settings` value can be used to similar effect in older browsers.
 
 -}
 fontVariantNumeric4 :
@@ -2180,7 +2228,7 @@ stackedFractions =
 -- CURSOR --
 
 
-{-| A [`cursor`](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+{-| A [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
 property.
 -}
 cursor :
@@ -2662,7 +2710,7 @@ local =
 {- LIST STYLE SHORTHAND -}
 
 
-{-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
+{-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
 listStyle :
     Value
@@ -2688,7 +2736,7 @@ listStyle (Value val) =
     AppendProperty ("list-style:" ++ val)
 
 
-{-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
+{-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
 listStyle2 :
     Value
@@ -2733,7 +2781,7 @@ listStyle2 (Value val1) (Value val2) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2)
 
 
-{-| The [`list-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style) shorthand property.
+{-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
 listStyle3 :
     Value
