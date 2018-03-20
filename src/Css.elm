@@ -22,7 +22,11 @@ module Css
         , backgroundAttachments
         , backgroundBlendMode
         , backgroundBlendModes
+        , backgroundClip
+        , backgroundClips
         , backgroundColor
+        , backgroundOrigin
+        , backgroundOrigins
         , baseline
         , batch
         , before
@@ -30,6 +34,7 @@ module Css
         , block
         , bold
         , bolder
+        , borderBox
         , boxShadow
         , cell
         , center
@@ -43,6 +48,7 @@ module Css
         , colorDodge
         , color_
         , commonLigatures
+        , contentBox
         , contextMenu
         , contextual
         , copy
@@ -146,6 +152,7 @@ module Css
         , oriya
         , outset
         , overlay
+        , paddingBox
         , pc
         , pct
         , petiteCaps
@@ -196,6 +203,7 @@ module Css
         , tabularNums
         , telugu
         , text
+        , text_
         , thai
         , titlingCaps
         , unicase
@@ -269,6 +277,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Background Blend Mode
 
 @docs backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
+
+
+## Background Clip and Origin
+
+@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, borderBox, paddingBox, contentBox, text_
 
 
 ## Box Shadow
@@ -2975,6 +2988,176 @@ color_ =
 luminosity : Value { provides | luminosity : Supported }
 luminosity =
     Value "luminosity"
+
+
+
+-- BACKGROUND CLIP --
+
+
+{-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
+
+Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
+
+    backgroundClip text_
+    backgroundClip paddingBox
+    backgroundClip contentBox
+
+See [`backgroundClips`](#backgroundClips) to set more than one `background-clip` value.
+
+-}
+backgroundClip :
+    Value
+        { borderBox : Supported
+        , paddingBox : Supported
+        , contentBox : Supported
+        , text_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+backgroundClip (Value str) =
+    AppendProperty ("background-clip:" ++ str)
+
+
+{-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
+
+Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
+
+    backgroundClips text_ [ borderBox, text_ ]
+
+See [`backgroundClip`](#backgroundClip) to set a single `background-clip` value.
+
+-}
+backgroundClips :
+    Value
+        { borderBox : Supported
+        , paddingBox : Supported
+        , contentBox : Supported
+        , text_ : Supported
+        }
+    ->
+        List
+            (Value
+                { borderBox : Supported
+                , paddingBox : Supported
+                , contentBox : Supported
+                , text_ : Supported
+                }
+            )
+    -> Style
+backgroundClips firstValue values =
+    let
+        str =
+            (firstValue :: values)
+                |> List.map (\(Value str) -> str)
+                |> String.join ","
+    in
+    AppendProperty ("background-clip:" ++ str)
+
+
+{-| The `border-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
+and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+
+    backgroundClip borderBox
+    backgroundOrigin borderBox
+
+-}
+borderBox : Value { provides | borderBox : Supported }
+borderBox =
+    Value "border-box"
+
+
+{-| The `padding-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
+and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+
+    backgroundClip paddingBox
+    backgroundOrigin paddingBox
+
+-}
+paddingBox : Value { provides | paddingBox : Supported }
+paddingBox =
+    Value "padding-box"
+
+
+{-| The `content-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
+and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+
+    backgroundClip contentBox
+    backgroundOrigin contentBox
+
+-}
+contentBox : Value { provides | contentBox : Supported }
+contentBox =
+    Value "content-box"
+
+
+{-| The `text` [`background-clip` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values).
+
+    backgroundClip text_
+
+-}
+text_ : Value { provides | text_ : Supported }
+text_ =
+    Value "text"
+
+
+
+-- BACKGROUND ORIGIN --
+
+
+{-| Sets [`background-origin`](https://css-tricks.com/almanac/properties/b/background-origin/).
+
+    backgroundOrigin paddingBox
+    backgroundOrigin contentBox
+
+See [`backgroundOrigins`](#backgroundOrigins) to set more than one `background-origin` value.
+
+-}
+backgroundOrigin :
+    Value
+        { borderBox : Supported
+        , paddingBox : Supported
+        , contentBox : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+backgroundOrigin (Value str) =
+    AppendProperty ("background-origin:" ++ str)
+
+
+{-| Sets [`background-origin`](https://css-tricks.com/almanac/properties/b/background-origin/).
+
+    backgroundOrigins contentBox [ borderBox, contentBox ]
+
+See [`backgroundOrigin`](#backgroundOrigin`background-origin` value.
+
+-}
+backgroundOrigins :
+    Value
+        { borderBox : Supported
+        , paddingBox : Supported
+        , contentBox : Supported
+        }
+    ->
+        List
+            (Value
+                { borderBox : Supported
+                , paddingBox : Supported
+                , contentBox : Supported
+                }
+            )
+    -> Style
+backgroundOrigins firstValue values =
+    let
+        str =
+            (firstValue :: values)
+                |> List.map (\(Value str) -> str)
+                |> String.join ","
+    in
+    AppendProperty ("background-origin:" ++ str)
 
 
 
