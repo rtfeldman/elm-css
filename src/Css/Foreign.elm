@@ -83,6 +83,7 @@ module Css.Foreign
         , typeSelector
         , ul
         , video
+        , withAttribute
         , withClass
         )
 
@@ -107,7 +108,7 @@ third-party DOM nodes!
 
 # Combinators
 
-@docs children, descendants, adjacentSiblings, generalSiblings, each, withClass
+@docs children, descendants, adjacentSiblings, generalSiblings, each, withAttribute, withClass
 
 
 # Basic elements
@@ -362,6 +363,12 @@ children =
 withClass : class -> List Style -> Style
 withClass class =
     Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
+
+
+{-| -}
+withAttribute : String -> List Style -> Style
+withAttribute attribute =
+    Preprocess.ExtendSelector (Structure.AttributeSelector attribute)
 
 
 {-| -}

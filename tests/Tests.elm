@@ -377,6 +377,31 @@ multiSelector =
         ]
 
 
+attributeCombinator : Test
+attributeCombinator =
+    let
+        input =
+            Fixtures.attributeCombinator
+
+        output =
+            """
+          custom-element-one[data-custom-attribute] {
+            display:none;
+          }
+
+          custom-element-two[data-custom-attribute=value][data-other-attribute] {
+            display:none;
+          }
+            """
+    in
+    describe "withAttribute combinator"
+        [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
 keyValue : Test
 keyValue =
     let
