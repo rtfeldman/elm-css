@@ -182,6 +182,9 @@ repeatableSimpleSelectorToString repeatableSimpleSelector =
         PseudoClassSelector str ->
             ":" ++ str
 
+        AttributeSelector str ->
+            "[" ++ str ++ "]"
+
 
 selectorChainToString : ( SelectorCombinator, SimpleSelectorSequence ) -> String
 selectorChainToString ( combinator, sequence ) =

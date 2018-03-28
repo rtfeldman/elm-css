@@ -181,6 +181,20 @@ multiSelector =
         ]
 
 
+attributeCombinator : Stylesheet
+attributeCombinator =
+    stylesheet
+        [ typeSelector "custom-element-one"
+            [ withAttribute "data-custom-attribute" [ display none ]
+            ]
+        , typeSelector "custom-element-two"
+            [ withAttribute "data-custom-attribute=value"
+                [ withAttribute "data-other-attribute" [ display none ]
+                ]
+            ]
+        ]
+
+
 keyValue : Stylesheet
 keyValue =
     stylesheet

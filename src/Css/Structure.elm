@@ -125,6 +125,7 @@ type RepeatableSimpleSelector
     = ClassSelector String
     | IdSelector String
     | PseudoClassSelector String
+    | AttributeSelector String
 
 
 {-| A type selector. That's what the CSS spec calls them, but it could be
