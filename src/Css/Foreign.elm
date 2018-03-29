@@ -353,43 +353,182 @@ mediaQuery stringQueries snippets =
     media (List.map Structure.CustomQuery stringQueries) snippets
 
 
-{-| -}
+{-| Apply styles in a list of snippets to the direct children of a selector
+
+    typeSelector "div"
+        [ children
+            [ typeSelector "p"
+                [ fontSize (px 14)
+                ]
+            ]
+        ]
+
+The above code translates into the following CSS.
+
+```css
+div > p {
+    font-size: 14px;
+}
+```
+
+-}
 children : List Snippet -> Style
 children =
     Preprocess.NestSnippet Structure.Child
 
 
-{-| -}
+{-| Apply styles to the current selector plus an additional class
+
+    typeSelector "div"
+        [ fontSize (px 14)
+        , withClass "is-bold"
+            [ fontWeight bold
+            ]
+        ]
+
+The above code translates into the following CSS.
+
+```css
+div {
+    font-size: 14px;
+}
+
+div.is-bold {
+    font-weight: bold;
+}
+```
+
+-}
 withClass : class -> List Style -> Style
 withClass class =
     Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
 
 
-{-| -}
+{-| Apply styles to the current selector plus an attribute selector
+
+    typeSelector "div"
+        [ fontSize (px 14)
+        , withAttribute "data-some-attribute"
+            [ display none
+            ]
+        , withAttribute "data-hello=world"
+            [ color red
+            ]
+        ]
+
+The above code translates into the following CSS.
+
+```css
+div {
+    font-size: 14px;
+}
+
+div[data-some-attribute] {
+    display: none;
+}
+
+div[data-hello=world] {
+    color: red;
+}
+```
+
+-}
 withAttribute : String -> List Style -> Style
 withAttribute attribute =
     Preprocess.ExtendSelector (Structure.AttributeSelector attribute)
 
 
-{-| -}
+{-| Apply styles in a list of snippets to the descendants of a selector
+
+    typeSelector "div"
+        [ descendants
+            [ typeSelector "p"
+                [ fontSize (px 14)
+                ]
+            ]
+        ]
+
+The above code translates into the following CSS.
+
+```css
+div p {
+    font-size: 14px;
+}
+```
+
+-}
 descendants : List Snippet -> Style
 descendants =
     Preprocess.NestSnippet Structure.Descendant
 
 
-{-| -}
+{-| Apply styles in a list of snippets to the adjacent siblings of a selector
+
+    typeSelector "div"
+        [ adjacentSiblings
+            [ typeSelector "p"
+                [ fontSize (px 14)
+                ]
+            ]
+        ]
+
+The above code translates into the following CSS.
+
+```css
+div + p {
+    font-size: 14px;
+}
+```
+
+-}
 adjacentSiblings : List Snippet -> Style
 adjacentSiblings =
     Preprocess.NestSnippet Structure.AdjacentSibling
 
 
-{-| -}
+{-| Apply styles in a list of snippets to the general siblings of a selector
+
+    typeSelector "div"
+        [ generalSiblings
+            [ typeSelector "p"
+                [ fontSize (px 14)
+                ]
+            ]
+        ]
+
+The above code translates into the following CSS.
+
+```css
+div ~ p {
+    font-size: 14px;
+}
+```
+
+-}
 generalSiblings : List Snippet -> Style
 generalSiblings =
     Preprocess.NestSnippet Structure.GeneralSibling
 
 
-{-| -}
+{-| Apply a list of styles to multiple selectors
+
+    each [ typeSelector "div", typeSelector "p" ]
+        [ fontSize (px 14)
+        ]
+
+The above code translates into the following CSS.
+
+```css
+div {
+    font-size: 14px;
+}
+
+p {
+    font-size: 14px;
+}
+```
+
+-}
 each : List (List Style -> Snippet) -> List Style -> Snippet
 each snippetCreators styles =
     let
