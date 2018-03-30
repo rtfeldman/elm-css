@@ -1,11 +1,11 @@
 module Transitions exposing (..)
 
+import Css.Foreign exposing (p)
 import Css.Preprocess exposing (stylesheet)
+import Css.Transitions exposing (..)
 import Expect
 import Test exposing (..)
-import Css.Transitions exposing (..)
 import TestUtil exposing (prettyPrint)
-import Css.Foreign exposing (p)
 
 
 testDuration : Test

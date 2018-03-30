@@ -3217,7 +3217,7 @@ transition options =
                 options
                 |> String.slice 0 -1
     in
-        Css.property "transition" v
+    Css.property "transition" v
 
 
 
