@@ -1155,9 +1155,20 @@ defaultBoxShadow =
 {-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
 
     boxShadow  [] -- "box-shadow: none"
-    boxShadow [ { defaultBoxShadow | offsetX = (px 3), offsetY = (px 5) } -- "box-shadow: 3px 5px"
 
-TODO full example
+    -- "box-shadow: 3px 5px #aabbcc"
+    button
+        [ css
+            [ boxShadow
+                [ { defaultBoxShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
 
 -}
 boxShadow : List BoxShadowConfig -> Style
