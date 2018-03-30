@@ -2924,7 +2924,7 @@ propToString prop =
             "border-top-color"
 
         BorderTopLeftRadius ->
-            "border-left-radius"
+            "border-top-left-radius"
 
         BorderTopRightRadius ->
             "border-top-right-radius"
@@ -3217,7 +3217,7 @@ transition options =
                 options
                 |> String.slice 0 -1
     in
-    Css.property "transition" v
+        Css.property "transition" v
 
 
 
