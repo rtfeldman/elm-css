@@ -214,7 +214,10 @@ import VirtualDom.Styled
 -- PRIMITIVES
 
 
-{-| Specify a list of styles.
+{-| Specify a list of styles to be used with the `style` attribute.
+
+**NOTE:** Since you're using `elm-css`, this is probably not what you want!
+Try the [`css`](#css) function instead.
 
     myStyle : Attribute msg
     myStyle =
@@ -227,10 +230,6 @@ import VirtualDom.Styled
     greeting : Html msg
     greeting =
         div [ myStyle ] [ text "Hello!" ]
-
-There is no `Html.Styles` module because best practices for working with HTML
-suggest that this should primarily be specified in CSS files. So the general
-recommendation is to use this function lightly.
 
 -}
 style : List ( String, String ) -> Attribute msg
