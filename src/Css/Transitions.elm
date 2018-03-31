@@ -2924,7 +2924,7 @@ propToString prop =
             "border-top-color"
 
         BorderTopLeftRadius ->
-            "border-left-radius"
+            "border-top-left-radius"
 
         BorderTopRightRadius ->
             "border-top-right-radius"
