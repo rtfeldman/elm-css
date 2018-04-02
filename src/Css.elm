@@ -794,7 +794,7 @@ Let's take a look at some of these declarations.
 
 This compiles to the CSS declaration `display: inline-block;` -
 
-_Kebap-case_ CSS names become _camelCase_ names in elm-css.
+[_Kebab-case_](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles) CSS names become [_camelCase_](https://en.wikipedia.org/wiki/Camel_case) names in elm-css.
 
 The [`Css.display`](#display) function only accepts values that are compatible
 with the CSS `display` property, such as [`inlineBlock`](#inlineBlock), [`flex`](#flex), [`none`](#none), [`inherit`](#inherit), etc.
