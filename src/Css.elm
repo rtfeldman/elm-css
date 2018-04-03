@@ -59,6 +59,7 @@ module Css
         , dashed
         , default
         , defaultBoxShadow
+        , deg
         , devanagari
         , diagonalFractions
         , difference
@@ -89,6 +90,7 @@ module Css
         , georgian
         , grab
         , grabbing
+        , grad
         , grid
         , groove
         , gujarati
@@ -165,6 +167,7 @@ module Css
         , pseudoElement
         , pt
         , px
+        , rad
         , rem
         , revert
         , rgb
@@ -210,6 +213,7 @@ module Css
         , text_
         , thai
         , titlingCaps
+        , turn
         , unicase
         , unsafeCenter
         , unset
@@ -389,6 +393,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 Multiple CSS properties use these values.
 
 @docs auto, none
+
+
+## Angles
+
+@docs deg, grad, rad, turn
 
 -}
 
@@ -3479,3 +3488,55 @@ inset =
 outset : Value { provides | outset : Supported }
 outset =
     Value "outset"
+
+
+
+-- ANGLES --
+
+
+{-| A [`deg` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    deg 360 -- one full circle
+
+    deg 14.23
+
+-}
+deg : Float -> Value { provides | deg : Supported }
+deg degrees =
+    Value (toString degrees ++ "deg")
+
+
+{-| A [`grad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    grad 400 -- one full circle
+
+    grad 38.8
+
+-}
+grad : Float -> Value { provides | grad : Supported }
+grad gradians =
+    Value (toString gradians ++ "grad")
+
+
+{-| A [`rad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    rad 6.2832 -- approximately one full circle
+
+    rad 1
+
+-}
+rad : Float -> Value { provides | rad : Supported }
+rad radians =
+    Value (toString radians ++ "rad")
+
+
+{-| A [`turn` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    turn 1 -- one full circle
+
+    turn 0.25
+
+-}
+turn : Float -> Value { provides | turn : Supported }
+turn turns =
+    Value (toString turns ++ "turn")
