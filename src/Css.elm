@@ -119,6 +119,7 @@ module Css
         , lighten
         , lighter
         , linearGradient
+        , linearGradient2
         , liningNums
         , listStyle
         , listStyle2
@@ -289,7 +290,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs linearGradient, stop, stop2
+@docs linearGradient, linearGradient2, stop, stop2
 
 
 ## Box Shadow
@@ -3183,6 +3184,10 @@ backgroundOrigins firstValue values =
 
     linearGradient (stop red) (stop blue) []
 
+    linearGradient (stop red) (stop blue) [ stop green ]
+
+See also [`linearGradient2`](#linearGradient2) if you don't need to set the angle.
+
 -}
 linearGradient :
     Value { colorStop : Supported }
@@ -3198,6 +3203,32 @@ linearGradient (Value firstStop) (Value secondStop) moreStops =
             String.join "," (firstStop :: secondStop :: peeledStops)
     in
     AppendProperty ("linear-gradient(" ++ stops ++ ")")
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient), providing an angle.
+
+    linearGradient2 (deg 90) (stop red) (stop blue) []
+
+    linearGradient2 (top left) (stop red) (stop blue) []
+
+See also [`linearGradient`](#linearGradient) if you don't need to set the angle.
+
+-}
+linearGradient2 :
+    Value { deg : Supported }
+    -> Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Style
+linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map (\(Value stop) -> stop) moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    AppendProperty ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
 
 
 {-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
