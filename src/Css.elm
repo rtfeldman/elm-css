@@ -214,6 +214,8 @@ module Css
         , text_
         , thai
         , titlingCaps
+        , to
+        , toCorner
         , top
         , turn
         , unicase
@@ -296,7 +298,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs linearGradient, linearGradient2, stop, stop2
+@docs linearGradient, linearGradient2, stop, stop2, to, toCorner
 
 
 ## Box Shadow
@@ -3300,6 +3302,42 @@ stop2 :
     -> Value { supported | colorStop : Supported }
 stop2 (Value color) (Value position) =
     Value (color ++ " " ++ position)
+
+
+{-| Provides the special [`to` side angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+
+    to top
+
+See also [`toCorner`](#to) for a corner.
+
+-}
+to :
+    Value
+        { top : Supported
+        , bottom : Supported
+        , left : Supported
+        , right : Supported
+        }
+    -> Value { supported | to : Supported }
+to (Value direction) =
+    Value ("to " ++ direction)
+
+
+{-| Provides the special [`to` corner angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+
+    toCorner top left
+
+    toCorner bottom right
+
+See also [`to`](#to) for a side.
+
+-}
+toCorner :
+    Value { top : Supported, bottom : Supported }
+    -> Value { left : Supported, right : Supported }
+    -> Value { supported | to : Supported }
+toCorner (Value topBottom) (Value leftRight) =
+    Value ("to " ++ topBottom ++ " " ++ leftRight)
 
 
 
