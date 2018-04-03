@@ -36,6 +36,7 @@ module Css
         , bolder
         , borderBox
         , boxShadow
+        , capitalize
         , cell
         , center
         , ch
@@ -86,6 +87,7 @@ module Css
         , fontVariantLigatures
         , fontVariantNumeric
         , fontWeight
+        , fullWidth
         , georgian
         , grab
         , grabbing
@@ -123,6 +125,7 @@ module Css
         , listStyle2
         , listStyle3
         , local
+        , lowercase
         , luminosity
         , malayalam
         , medium
@@ -204,11 +207,13 @@ module Css
         , telugu
         , text
         , text_
+        , textTransform
         , thai
         , titlingCaps
         , unicase
         , unsafeCenter
         , unset
+        , uppercase
         , url
         , verticalText
         , vh
@@ -3375,3 +3380,50 @@ inset =
 outset : Value { provides | outset : Supported }
 outset =
     Value "outset"
+
+-- TEXT TRANSFORM --
+
+{-| Sets [`text-transform`](https://css-tricks.com/almanac/properties/t/text-transform/).
+
+    textTransform capitalize
+    textTransform uppercase
+
+-}
+textTransform :
+    Value
+        { capitalize : Supported
+        , uppercase : Supported
+        , lowercase : Supported
+        , full-width : Supported
+        , none : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textTransform (Value str) =
+    AppendProperty ("text-transform:" ++ str)
+
+{-| A `capitalize` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+-}
+capitalize : Value { provides | capitalize : Supported }
+capitalize =
+    Value "capitalize"
+
+{-| An `uppercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+-}
+uppercase : Value { provides | uppercase : Supported }
+uppercase =
+    Value "uppercase"
+
+{-| A `lowercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+-}
+lowercase : Value { provides | lowercase : Supported }
+lowercase =
+    Value "lowercase"
+
+{-| A `full-width` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+-}
+fullWidth : Value { provides | fullWidth : Supported }
+fullWidth =
+    Value "full-width"
