@@ -3244,7 +3244,13 @@ See also [`linearGradient`](#linearGradient) if you don't need to set the angle.
 
 -}
 linearGradient2 :
-    Value { deg : Supported }
+    Value
+        { to : Supported
+        , deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
     -> Value { colorStop : Supported }
     -> Value { colorStop : Supported }
     -> List (Value { colorStop : Supported })
