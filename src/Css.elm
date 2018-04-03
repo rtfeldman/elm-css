@@ -118,6 +118,7 @@ module Css
         , left
         , lighten
         , lighter
+        , linearGradient
         , liningNums
         , listStyle
         , listStyle2
@@ -188,6 +189,8 @@ module Css
         , solid
         , stackedFractions
         , start
+        , stop
+        , stop2
         , stretch
         , swResize
         , systemUi
@@ -282,6 +285,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Background Clip and Origin
 
 @docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, borderBox, paddingBox, contentBox, text_
+
+
+## Background Image
+
+@docs linearGradient, stop, stop2
 
 
 ## Box Shadow
@@ -3169,6 +3177,71 @@ backgroundOrigins firstValue values =
                 |> String.join ","
     in
     AppendProperty ("background-origin:" ++ str)
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+
+    linearGradient (stop red) (stop blue) []
+
+-}
+linearGradient :
+    Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Style
+linearGradient (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map (\(Value stop) -> stop) moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    AppendProperty ("linear-gradient(" ++ stops ++ ")")
+
+
+{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+
+    stop red
+
+See also [`stop2`](#stop2) for controlling stop positioning.
+
+-}
+stop : Color -> Value { provides | colorStop : Supported }
+stop (Value color) =
+    Value color
+
+
+{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+
+    stop2 red (px 20)
+
+See also [`stop`](#stop) if you don't need to control the stop position.
+
+-}
+stop2 :
+    Color
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            }
+    -> Value { supported | colorStop : Supported }
+stop2 (Value color) (Value position) =
+    Value (color ++ " " ++ position)
 
 
 
