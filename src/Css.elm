@@ -3222,7 +3222,7 @@ linearGradient :
     Value { colorStop : Supported }
     -> Value { colorStop : Supported }
     -> List (Value { colorStop : Supported })
-    -> Style
+    -> Value { provides | linearGradient : Supported }
 linearGradient (Value firstStop) (Value secondStop) moreStops =
     let
         peeledStops =
@@ -3231,7 +3231,7 @@ linearGradient (Value firstStop) (Value secondStop) moreStops =
         stops =
             String.join "," (firstStop :: secondStop :: peeledStops)
     in
-    AppendProperty ("linear-gradient(" ++ stops ++ ")")
+    Value ("linear-gradient(" ++ stops ++ ")")
 
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient), providing an angle.
@@ -3254,7 +3254,7 @@ linearGradient2 :
     -> Value { colorStop : Supported }
     -> Value { colorStop : Supported }
     -> List (Value { colorStop : Supported })
-    -> Style
+    -> Value { provides | linearGradient : Supported }
 linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
     let
         peeledStops =
@@ -3263,7 +3263,7 @@ linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
         stops =
             String.join "," (firstStop :: secondStop :: peeledStops)
     in
-    AppendProperty ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
+    Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
 
 
 {-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
