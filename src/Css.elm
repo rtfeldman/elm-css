@@ -25,6 +25,7 @@ module Css
         , backgroundClip
         , backgroundClips
         , backgroundColor
+        , backgroundImage
         , backgroundOrigin
         , backgroundOrigins
         , baseline
@@ -297,6 +298,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 
 ## Background Image
+
+@docs backgroundImage
 
 @docs linearGradient, linearGradient2, stop, stop2, to, toCorner
 
@@ -3203,6 +3206,24 @@ backgroundOrigins firstValue values =
                 |> String.join ","
     in
     AppendProperty ("background-origin:" ++ str)
+
+
+{-| Sets [`background-image`](https://css-tricks.com/almanac/properties/b/background-image/).
+
+    backgroundImage (url "http://www.example.com/chicken.jpg")
+
+    backgroundImage (linearGradient (stop red) (stop blue))
+
+-}
+backgroundImage :
+    Value
+        { url : Supported
+        , linearGradient : Supported
+        , none : Supported
+        }
+    -> Style
+backgroundImage (Value value) =
+    AppendProperty ("background-image:" ++ value)
 
 
 
