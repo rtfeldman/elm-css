@@ -35,6 +35,7 @@ module Css
         , bold
         , bolder
         , borderBox
+        , bottom
         , boxShadow
         , cell
         , center
@@ -213,6 +214,7 @@ module Css
         , text_
         , thai
         , titlingCaps
+        , top
         , turn
         , unicase
         , unsafeCenter
@@ -365,7 +367,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, top, bottom, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -1433,6 +1435,18 @@ left =
 right : Value { provides | right : Supported }
 right =
     Value "right"
+
+
+{-| -}
+top : Value { provides | top : Supported }
+top =
+    Value "top"
+
+
+{-| -}
+bottom : Value { provides | bottom : Supported }
+bottom =
+    Value "bottom"
 
 
 {-| -}
