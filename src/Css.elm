@@ -3189,6 +3189,10 @@ backgroundOrigins firstValue values =
     AppendProperty ("background-origin:" ++ str)
 
 
+
+{- GRADIENTS -}
+
+
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
     linearGradient (stop red) (stop blue) []
