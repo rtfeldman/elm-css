@@ -37,7 +37,7 @@ module Css
         , bold
         , bolder
         , borderBox
-        , bottom
+        , bottom_
         , boxShadow
         , cell
         , center
@@ -218,7 +218,7 @@ module Css
         , titlingCaps
         , to
         , toCorner
-        , top
+        , top_
         , turn
         , unicase
         , unsafeCenter
@@ -373,7 +373,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, top, bottom, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -1443,15 +1443,23 @@ right =
     Value "right"
 
 
-{-| -}
-top : Value { provides | top : Supported }
-top =
+{-| The `top` value used in [`color stops`](#stop).
+
+The value is called `top_` instead of `top` because [`top` is already a function](#top).
+
+-}
+top_ : Value { provides | top_ : Supported }
+top_ =
     Value "top"
 
 
-{-| -}
-bottom : Value { provides | bottom : Supported }
-bottom =
+{-| The `bottom` value value used in [`color stops`](#stop).
+
+The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
+
+-}
+bottom_ : Value { provides | bottom_ : Supported }
+bottom_ =
     Value "bottom"
 
 
@@ -3295,7 +3303,7 @@ linearGradient (Value firstStop) (Value secondStop) moreStops =
 
     linearGradient2 (deg 90) (stop red) (stop blue) []
 
-    linearGradient2 (top left) (stop red) (stop blue) []
+    linearGradient2 (top_ left) (stop red) (stop blue) []
 
 See also [`linearGradient`](#linearGradient) if you don't need to set the angle.
 
@@ -3369,15 +3377,17 @@ stop2 (Value color) (Value position) =
 
 {-| Provides the special [`to` side angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
 
-    to top
+    to top_
 
 See also [`toCorner`](#to) for a corner.
+
+**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
 
 -}
 to :
     Value
-        { top : Supported
-        , bottom : Supported
+        { top_ : Supported
+        , bottom_ : Supported
         , left : Supported
         , right : Supported
         }
@@ -3388,15 +3398,17 @@ to (Value direction) =
 
 {-| Provides the special [`to` corner angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
 
-    toCorner top left
+    toCorner top_ left
 
-    toCorner bottom right
+    toCorner bottom_ right
 
 See also [`to`](#to) for a side.
 
+**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
+
 -}
 toCorner :
-    Value { top : Supported, bottom : Supported }
+    Value { top_ : Supported, bottom_ : Supported }
     -> Value { left : Supported, right : Supported }
     -> Value { supported | to : Supported }
 toCorner (Value topBottom) (Value leftRight) =
