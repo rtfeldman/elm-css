@@ -124,7 +124,6 @@ module Css
         , lighten
         , lighter
         , linearGradient
-        , linearGradient2
         , liningNums
         , listStyle
         , listStyle2
@@ -302,7 +301,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 @docs backgroundImage, backgroundImages
 
-@docs linearGradient, linearGradient2, stop, stop2, to, toCorner
+@docs linearGradient, stop, stop2, to, toCorner
 
 
 ## Box Shadow
@@ -3284,39 +3283,12 @@ backgroundImages (Value first) rest =
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
-    linearGradient (stop red) (stop blue) []
+    linearGradient (to top) (stop red) (stop blue) []
 
-    linearGradient (stop red) (stop blue) [ stop green ]
-
-See also [`linearGradient2`](#linearGradient2) if you don't need to set the angle.
+    linearGradient (to top) (stop red) (stop blue) [ stop green ]
 
 -}
 linearGradient :
-    Value { colorStop : Supported }
-    -> Value { colorStop : Supported }
-    -> List (Value { colorStop : Supported })
-    -> Value { provides | linearGradient : Supported }
-linearGradient (Value firstStop) (Value secondStop) moreStops =
-    let
-        peeledStops =
-            List.map (\(Value stop) -> stop) moreStops
-
-        stops =
-            String.join "," (firstStop :: secondStop :: peeledStops)
-    in
-    Value ("linear-gradient(" ++ stops ++ ")")
-
-
-{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient), providing an angle.
-
-    linearGradient2 (deg 90) (stop red) (stop blue) []
-
-    linearGradient2 (toCorner top_ left_) (stop red) (stop blue) []
-
-See also [`linearGradient`](#linearGradient) if you don't need to set the angle.
-
--}
-linearGradient2 :
     Value
         { to : Supported
         , deg : Supported
@@ -3328,7 +3300,7 @@ linearGradient2 :
     -> Value { colorStop : Supported }
     -> List (Value { colorStop : Supported })
     -> Value { provides | linearGradient : Supported }
-linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
+linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
     let
         peeledStops =
             List.map (\(Value stop) -> stop) moreStops
