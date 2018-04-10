@@ -1433,7 +1433,7 @@ selfEnd =
 
 {-| The `left` value used for alignment.
 
-The value is called `left_` instead of `left` because [`left` is already a function](left).
+The value is called `left_` instead of `left` because [`left` is already a function](#left).
 
 -}
 left_ : Value { provides | left_ : Supported }
@@ -1443,7 +1443,7 @@ left_ =
 
 {-| The `right` value used for alignment.
 
-The value is called `right_` instead of `right` because [`right` is already a function](right).
+The value is called `right_` instead of `right` because [`right` is already a function](#right).
 
 -}
 right_ : Value { provides | right_ : Supported }
