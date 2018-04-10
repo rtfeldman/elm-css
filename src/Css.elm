@@ -3281,7 +3281,7 @@ backgroundImages (Value first) rest =
 {- GRADIENTS -}
 
 
-{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+{-| Sets [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
 
     linearGradient (to top) (stop red) (stop blue) []
 
@@ -3312,7 +3312,7 @@ linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
     Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
 
 
-{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
 
     linearGradient (to top) (stop red) (stop blue) []
 
@@ -3324,7 +3324,7 @@ stop (Value color) =
     Value color
 
 
-{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
 
     linearGradient (to top) (stop2 red (px 20)) (stop blue) []
 
@@ -3357,7 +3357,7 @@ stop2 (Value color) (Value position) =
     Value (color ++ " " ++ position)
 
 
-{-| Provides the special [`to` side angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+{-| Provides the special [`to` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
 
     linearGradient (to top_) (stop red) (stop blue) []
 
@@ -3380,7 +3380,7 @@ to (Value direction) =
     Value ("to " ++ direction)
 
 
-{-| Provides the special [`to` corner angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+{-| Provides the special [`to` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
 
     linearGradient (toCorner top_ left_) (stop red) (stop blue) []
 
