@@ -3230,7 +3230,7 @@ backgroundOrigins firstValue values =
 
     backgroundImage (linearGradient (stop red) (stop blue))
 
-See also [`backgroundImage`](#backgroundImage) if you need multiple images.
+See also [`backgroundImages`](#backgroundImages) if you need multiple images.
 
 -}
 backgroundImage :
