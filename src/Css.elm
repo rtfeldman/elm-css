@@ -3385,9 +3385,11 @@ stop2 (Value color) (Value position) =
 
 {-| Provides the special [`to` side angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
 
-    to top_
+    linearGradient (to top_) (stop red) (stop blue) []
 
-See also [`toCorner`](#to) for a corner.
+If you want your gradient to go to a corner, use [`toCorner`](#toCorner):
+
+    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
 
 **Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
 
@@ -3406,9 +3408,13 @@ to (Value direction) =
 
 {-| Provides the special [`to` corner angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
 
-    toCorner top_ left_
+    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
 
-    toCorner bottom_ right_
+    linearGradient (toCorner bottom_ right_) (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`to`](#to):
+
+    linearGradient (to top_) (stop red) (stop blue) []
 
 See also [`to`](#to) for a side.
 
