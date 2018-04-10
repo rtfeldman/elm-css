@@ -176,7 +176,7 @@ module Css
         , rgb
         , rgba
         , ridge
-        , right
+        , right_
         , rowResize
         , sResize
         , safeCenter
@@ -373,7 +373,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -1433,7 +1433,7 @@ selfEnd =
 
 {-| The `left` value used for alignment.
 
-The value is called `left_` instead of `left` because [`left` is already a funciton](left).
+The value is called `left_` instead of `left` because [`left` is already a function](left).
 
 -}
 left_ : Value { provides | left_ : Supported }
@@ -1441,9 +1441,13 @@ left_ =
     Value "left"
 
 
-{-| -}
-right : Value { provides | right : Supported }
-right =
+{-| The `right` value used for alignment.
+
+The value is called `right_` instead of `right` because [`right` is already a function](right).
+
+-}
+right_ : Value { provides | right_ : Supported }
+right_ =
     Value "right"
 
 
@@ -3393,7 +3397,7 @@ to :
         { top_ : Supported
         , bottom_ : Supported
         , left_ : Supported
-        , right : Supported
+        , right_ : Supported
         }
     -> Value { supported | to : Supported }
 to (Value direction) =
@@ -3404,7 +3408,7 @@ to (Value direction) =
 
     toCorner top_ left_
 
-    toCorner bottom_ right
+    toCorner bottom_ right_
 
 See also [`to`](#to) for a side.
 
@@ -3413,7 +3417,7 @@ See also [`to`](#to) for a side.
 -}
 toCorner :
     Value { top_ : Supported, bottom_ : Supported }
-    -> Value { left_ : Supported, right : Supported }
+    -> Value { left_ : Supported, right_ : Supported }
     -> Value { supported | to : Supported }
 toCorner (Value topBottom) (Value leftRight) =
     Value ("to " ++ topBottom ++ " " ++ leftRight)
