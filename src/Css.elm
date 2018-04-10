@@ -3295,6 +3295,7 @@ linearGradient :
         , grad : Supported
         , rad : Supported
         , turn : Supported
+        , zero : Supported
         }
     -> Value { colorStop : Supported }
     -> Value { colorStop : Supported }
@@ -3334,21 +3335,22 @@ stop2 :
     Color
     ->
         Value
-            { px : Supported
+            { ch : Supported
+            , cm : Supported
             , em : Supported
             , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
             , inches : Supported
-            , pt : Supported
+            , mm : Supported
             , pc : Supported
             , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
             }
     -> Value { supported | colorStop : Supported }
 stop2 (Value color) (Value position) =
