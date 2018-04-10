@@ -120,7 +120,7 @@ module Css
         , large
         , larger
         , lastBaseline
-        , left
+        , left_
         , lighten
         , lighter
         , linearGradient
@@ -373,7 +373,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -1431,9 +1431,13 @@ selfEnd =
     Value "self-end"
 
 
-{-| -}
-left : Value { provides | left : Supported }
-left =
+{-| The `left` value used for alignment.
+
+The value is called `left_` instead of `left` because [`left` is already a funciton](left).
+
+-}
+left_ : Value { provides | left_ : Supported }
+left_ =
     Value "left"
 
 
@@ -3303,7 +3307,7 @@ linearGradient (Value firstStop) (Value secondStop) moreStops =
 
     linearGradient2 (deg 90) (stop red) (stop blue) []
 
-    linearGradient2 (top_ left) (stop red) (stop blue) []
+    linearGradient2 (toCorner top_ left_) (stop red) (stop blue) []
 
 See also [`linearGradient`](#linearGradient) if you don't need to set the angle.
 
@@ -3388,7 +3392,7 @@ to :
     Value
         { top_ : Supported
         , bottom_ : Supported
-        , left : Supported
+        , left_ : Supported
         , right : Supported
         }
     -> Value { supported | to : Supported }
@@ -3398,7 +3402,7 @@ to (Value direction) =
 
 {-| Provides the special [`to` corner angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
 
-    toCorner top_ left
+    toCorner top_ left_
 
     toCorner bottom_ right
 
@@ -3409,7 +3413,7 @@ See also [`to`](#to) for a side.
 -}
 toCorner :
     Value { top_ : Supported, bottom_ : Supported }
-    -> Value { left : Supported, right : Supported }
+    -> Value { left_ : Supported, right : Supported }
     -> Value { supported | to : Supported }
 toCorner (Value topBottom) (Value leftRight) =
     Value ("to " ++ topBottom ++ " " ++ leftRight)
