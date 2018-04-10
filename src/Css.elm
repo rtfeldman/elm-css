@@ -3341,7 +3341,7 @@ linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
 
 {-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
 
-    stop red
+    linearGradient (to top) (stop red) (stop blue) []
 
 See also [`stop2`](#stop2) for controlling stop positioning.
 
@@ -3353,7 +3353,7 @@ stop (Value color) =
 
 {-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
 
-    stop2 red (px 20)
+    linearGradient (to top) (stop2 red (px 20)) (stop blue) []
 
 See also [`stop`](#stop) if you don't need to control the stop position.
 
