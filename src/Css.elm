@@ -386,6 +386,12 @@ Multiple CSS properties use these values.
 
 @docs auto, none
 
+
+## Text Transform
+
+@docs textTransform
+@docs capitalize, uppercase, lowercase, fullWidth
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
