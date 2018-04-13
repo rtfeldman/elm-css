@@ -96,6 +96,7 @@ module Css
         , hardLight
         , help
         , hex
+        , hidden
         , historicalLigatures
         , hsl
         , hsla
@@ -151,6 +152,9 @@ module Css
         , ordinal
         , oriya
         , outset
+        , overflow
+        , overflowX
+        , overflowY
         , overlay
         , paddingBox
         , pc
@@ -212,6 +216,7 @@ module Css
         , url
         , verticalText
         , vh
+        , visible
         , vmax
         , vmin
         , vw
@@ -380,6 +385,12 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 Multiple CSS properties use these values.
 
 @docs auto, none
+
+
+## Overflow
+
+@docs overflow, overflowX, overflowY
+@docs hidden, visible
 
 -}
 
@@ -567,6 +578,62 @@ auto =
 none : Value { provides | none : Supported }
 none =
     Value "none"
+
+
+{-| -}
+hidden : Value { provides | hidden : Supported }
+hidden =
+    Value "hidden"
+
+
+{-| -}
+visible : Value { provides | visible : Supported }
+visible =
+    Value "visible"
+
+
+{-| The `scroll` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
+
+This can also represent a `scroll` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
+
+-}
+scroll : Value { provides | scroll : Supported }
+scroll =
+    Value "scroll"
+
+
+
+-- OVERFLOW --
+
+
+type alias Overflow =
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+
+
+{-| -}
+overflow : Overflow -> Style
+overflow (Value val) =
+    AppendProperty ("overflow:" ++ val)
+
+
+{-| -}
+overflowX : Overflow -> Style
+overflowX (Value val) =
+    AppendProperty ("overflow-x:" ++ val)
+
+
+{-| -}
+overflowY : Overflow -> Style
+overflowY (Value val) =
+    AppendProperty ("overflow-y:" ++ val)
 
 
 
@@ -2729,16 +2796,6 @@ backgroundAttachments firstValue values =
 fixed : Value { provides | fixed : Supported }
 fixed =
     Value "fixed"
-
-
-{-| The `scroll` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
-
-    backgroundAttachment scroll
-
--}
-scroll : Value { provides | scroll : Supported }
-scroll =
-    Value "scroll"
 
 
 {-| The `local` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
