@@ -36,6 +36,7 @@ module Css
         , bolder
         , borderBox
         , boxShadow
+        , breakWord
         , cell
         , center
         , ch
@@ -153,6 +154,7 @@ module Css
         , oriya
         , outset
         , overflow
+        , overflowWrap
         , overflowX
         , overflowY
         , overlay
@@ -391,6 +393,9 @@ Multiple CSS properties use these values.
 
 @docs overflow, overflowX, overflowY
 @docs hidden, visible
+
+@docs overflowWrap
+@docs breakWord
 
 -}
 
@@ -634,6 +639,26 @@ overflowX (Value val) =
 overflowY : Overflow -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
+
+
+{-| -}
+overflowWrap :
+    Value
+        { breakWord : Supported
+        , normal : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowWrap (Value val) =
+    AppendProperty ("overflow-wrap:" ++ val)
+
+
+{-| -}
+breakWord : Value { provides | breakWord : Supported }
+breakWord =
+    Value "break-word"
 
 
 
