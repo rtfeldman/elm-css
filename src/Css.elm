@@ -2,6 +2,7 @@ module Css
     exposing
         ( BoxShadowConfig
         , Color
+        , Overflow
         , Style
         , Supported
         , Value
@@ -387,12 +388,13 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 Multiple CSS properties use these values.
 
 @docs auto, none
+@docs hidden, visible
 
 
 ## Overflow
 
+@docs Overflow
 @docs overflow, overflowX, overflowY
-@docs hidden, visible
 
 @docs overflowWrap
 @docs breakWord
@@ -585,21 +587,34 @@ none =
     Value "none"
 
 
-{-| -}
+{-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`border style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
+
+    visibility hidden
+    overflow hidden
+    borderStyle hidden
+
+-}
 hidden : Value { provides | hidden : Supported }
 hidden =
     Value "hidden"
 
 
-{-| -}
+{-| The `visible` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events).
+
+    visibility visible
+    overflow visible
+    pointerEvents visible
+
+-}
 visible : Value { provides | visible : Supported }
 visible =
     Value "visible"
 
 
-{-| The `scroll` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
+{-| The `scroll` value used for properties such as [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) and [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment).
 
-This can also represent a `scroll` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
+    overflow scroll
+    backgroundAttachment scroll
 
 -}
 scroll : Value { provides | scroll : Supported }
@@ -611,6 +626,7 @@ scroll =
 -- OVERFLOW --
 
 
+{-| -}
 type alias Overflow =
     Value
         { visible : Supported
@@ -623,25 +639,51 @@ type alias Overflow =
         }
 
 
-{-| -}
+{-| Sets [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflow visible
+    overflow hidden
+    overflow scroll
+    overflow auto
+
+-}
 overflow : Overflow -> Style
 overflow (Value val) =
     AppendProperty ("overflow:" ++ val)
 
 
-{-| -}
+{-| Sets [`overflow-x`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflowX visible
+    overflowX hidden
+    overflowX scroll
+    overflowX auto
+
+-}
 overflowX : Overflow -> Style
 overflowX (Value val) =
     AppendProperty ("overflow-x:" ++ val)
 
 
-{-| -}
+{-| Sets [`overflow-y`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflowY visible
+    overflowY hidden
+    overflowY scroll
+    overflowY auto
+
+-}
 overflowY : Overflow -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
 
 
-{-| -}
+{-| Sets [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
+
+    overflowWrap breakWord
+    overflowWrap normal
+
+-}
 overflowWrap :
     Value
         { breakWord : Supported
@@ -655,7 +697,8 @@ overflowWrap (Value val) =
     AppendProperty ("overflow-wrap:" ++ val)
 
 
-{-| -}
+{-| The `break-word` value for the [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/) property.
+-}
 breakWord : Value { provides | breakWord : Supported }
 breakWord =
     Value "break-word"
