@@ -2,7 +2,6 @@ module Css
     exposing
         ( BoxShadowConfig
         , Color
-        , Overflow
         , Style
         , Supported
         , Value
@@ -393,7 +392,6 @@ Multiple CSS properties use these values.
 
 ## Overflow
 
-@docs Overflow
 @docs overflow, overflowX, overflowY
 
 @docs overflowWrap
@@ -626,8 +624,15 @@ scroll =
 -- OVERFLOW --
 
 
-{-| -}
-type alias Overflow =
+{-| Sets [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflow visible
+    overflow hidden
+    overflow scroll
+    overflow auto
+
+-}
+overflow :
     Value
         { visible : Supported
         , hidden : Supported
@@ -637,17 +642,7 @@ type alias Overflow =
         , initial : Supported
         , unset : Supported
         }
-
-
-{-| Sets [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/).
-
-    overflow visible
-    overflow hidden
-    overflow scroll
-    overflow auto
-
--}
-overflow : Overflow -> Style
+    -> Style
 overflow (Value val) =
     AppendProperty ("overflow:" ++ val)
 
@@ -660,7 +655,17 @@ overflow (Value val) =
     overflowX auto
 
 -}
-overflowX : Overflow -> Style
+overflowX :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
 overflowX (Value val) =
     AppendProperty ("overflow-x:" ++ val)
 
@@ -673,7 +678,17 @@ overflowX (Value val) =
     overflowY auto
 
 -}
-overflowY : Overflow -> Style
+overflowY :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
 
