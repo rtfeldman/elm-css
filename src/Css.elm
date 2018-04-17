@@ -39,6 +39,7 @@ module Css
         , borderBox
         , bottom_
         , boxShadow
+        , breakWord
         , cell
         , center
         , ch
@@ -101,6 +102,7 @@ module Css
         , hardLight
         , help
         , hex
+        , hidden
         , historicalLigatures
         , hsl
         , hsla
@@ -157,6 +159,10 @@ module Css
         , ordinal
         , oriya
         , outset
+        , overflow
+        , overflowWrap
+        , overflowX
+        , overflowY
         , overlay
         , paddingBox
         , pc
@@ -225,6 +231,7 @@ module Css
         , url
         , verticalText
         , vh
+        , visible
         , vmax
         , vmin
         , vw
@@ -400,6 +407,15 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 Multiple CSS properties use these values.
 
 @docs auto, none
+@docs hidden, visible
+
+
+## Overflow
+
+@docs overflow, overflowX, overflowY
+
+@docs overflowWrap
+@docs breakWord
 
 
 ## Angles
@@ -592,6 +608,140 @@ auto =
 none : Value { provides | none : Supported }
 none =
     Value "none"
+
+
+{-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`border style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
+
+    visibility hidden
+    overflow hidden
+    borderStyle hidden
+
+-}
+hidden : Value { provides | hidden : Supported }
+hidden =
+    Value "hidden"
+
+
+{-| The `visible` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events).
+
+    visibility visible
+    overflow visible
+    pointerEvents visible
+
+-}
+visible : Value { provides | visible : Supported }
+visible =
+    Value "visible"
+
+
+{-| The `scroll` value used for properties such as [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) and [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment).
+
+    overflow scroll
+    backgroundAttachment scroll
+
+-}
+scroll : Value { provides | scroll : Supported }
+scroll =
+    Value "scroll"
+
+
+
+-- OVERFLOW --
+
+
+{-| Sets [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflow visible
+    overflow hidden
+    overflow scroll
+    overflow auto
+
+-}
+overflow :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflow (Value val) =
+    AppendProperty ("overflow:" ++ val)
+
+
+{-| Sets [`overflow-x`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflowX visible
+    overflowX hidden
+    overflowX scroll
+    overflowX auto
+
+-}
+overflowX :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowX (Value val) =
+    AppendProperty ("overflow-x:" ++ val)
+
+
+{-| Sets [`overflow-y`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflowY visible
+    overflowY hidden
+    overflowY scroll
+    overflowY auto
+
+-}
+overflowY :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowY (Value val) =
+    AppendProperty ("overflow-y:" ++ val)
+
+
+{-| Sets [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
+
+    overflowWrap breakWord
+    overflowWrap normal
+
+-}
+overflowWrap :
+    Value
+        { breakWord : Supported
+        , normal : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowWrap (Value val) =
+    AppendProperty ("overflow-wrap:" ++ val)
+
+
+{-| The `break-word` value for the [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/) property.
+-}
+breakWord : Value { provides | breakWord : Supported }
+breakWord =
+    Value "break-word"
 
 
 
@@ -2782,16 +2932,6 @@ backgroundAttachments firstValue values =
 fixed : Value { provides | fixed : Supported }
 fixed =
     Value "fixed"
-
-
-{-| The `scroll` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
-
-    backgroundAttachment scroll
-
--}
-scroll : Value { provides | scroll : Supported }
-scroll =
-    Value "scroll"
 
 
 {-| The `local` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
