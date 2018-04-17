@@ -3400,7 +3400,7 @@ textTransform :
         { capitalize : Supported
         , uppercase : Supported
         , lowercase : Supported
-        , full-width : Supported
+        , fullWidth : Supported
         , none : Supported
         , initial : Supported
         , inherit : Supported
@@ -3411,24 +3411,36 @@ textTransform (Value str) =
     AppendProperty ("text-transform:" ++ str)
 
 {-| A `capitalize` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform capitalize
+
 -}
 capitalize : Value { provides | capitalize : Supported }
 capitalize =
     Value "capitalize"
 
 {-| An `uppercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform uppercase
+
 -}
 uppercase : Value { provides | uppercase : Supported }
 uppercase =
     Value "uppercase"
 
 {-| A `lowercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform lowercase
+
 -}
 lowercase : Value { provides | lowercase : Supported }
 lowercase =
     Value "lowercase"
 
 {-| A `full-width` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform fullWidth
+
 -}
 fullWidth : Value { provides | fullWidth : Supported }
 fullWidth =
