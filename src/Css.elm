@@ -3786,7 +3786,7 @@ textTransform (Value str) =
     AppendProperty ("text-transform:" ++ str)
 
 
-{-| A `capitalize` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+{-| A `capitalize` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
 
     textTransform capitalize
 
@@ -3796,7 +3796,7 @@ capitalize =
     Value "capitalize"
 
 
-{-| An `uppercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+{-| An `uppercase` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
 
     textTransform uppercase
 
@@ -3806,7 +3806,7 @@ uppercase =
     Value "uppercase"
 
 
-{-| A `lowercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+{-| A `lowercase` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
 
     textTransform lowercase
 
@@ -3816,7 +3816,7 @@ lowercase =
     Value "lowercase"
 
 
-{-| A `full-width` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+{-| A `full-width` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
 
     textTransform fullWidth
 
