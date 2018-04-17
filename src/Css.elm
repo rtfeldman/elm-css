@@ -35,6 +35,7 @@ module Css
         , bold
         , bolder
         , borderBox
+        , bottom
         , boxShadow
         , cell
         , center
@@ -59,6 +60,7 @@ module Css
         , dashed
         , default
         , defaultBoxShadow
+        , deg
         , devanagari
         , diagonalFractions
         , difference
@@ -89,6 +91,7 @@ module Css
         , georgian
         , grab
         , grabbing
+        , grad
         , grid
         , groove
         , gujarati
@@ -118,6 +121,8 @@ module Css
         , left
         , lighten
         , lighter
+        , linearGradient
+        , linearGradient2
         , liningNums
         , listStyle
         , listStyle2
@@ -163,6 +168,7 @@ module Css
         , pseudoElement
         , pt
         , px
+        , rad
         , rem
         , revert
         , rgb
@@ -188,6 +194,8 @@ module Css
         , solid
         , stackedFractions
         , start
+        , stop
+        , stop2
         , stretch
         , swResize
         , systemUi
@@ -206,6 +214,10 @@ module Css
         , text_
         , thai
         , titlingCaps
+        , to
+        , toCorner
+        , top
+        , turn
         , unicase
         , unsafeCenter
         , unset
@@ -284,6 +296,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, borderBox, paddingBox, contentBox, text_
 
 
+## Background Image
+
+@docs linearGradient, linearGradient2, stop, stop2, to, toCorner
+
+
 ## Box Shadow
 
 @docs BoxShadowConfig, boxShadow, defaultBoxShadow
@@ -352,7 +369,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, top, bottom, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -380,6 +397,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 Multiple CSS properties use these values.
 
 @docs auto, none
+
+
+## Angles
+
+@docs deg, grad, rad, turn
 
 -}
 
@@ -1415,6 +1437,18 @@ left =
 right : Value { provides | right : Supported }
 right =
     Value "right"
+
+
+{-| -}
+top : Value { provides | top : Supported }
+top =
+    Value "top"
+
+
+{-| -}
+bottom : Value { provides | bottom : Supported }
+bottom =
+    Value "bottom"
 
 
 {-| -}
@@ -3172,6 +3206,147 @@ backgroundOrigins firstValue values =
 
 
 
+{- GRADIENTS -}
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+
+    linearGradient (stop red) (stop blue) []
+
+    linearGradient (stop red) (stop blue) [ stop green ]
+
+See also [`linearGradient2`](#linearGradient2) if you don't need to set the angle.
+
+-}
+linearGradient :
+    Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map (\(Value stop) -> stop) moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ stops ++ ")")
+
+
+{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient), providing an angle.
+
+    linearGradient2 (deg 90) (stop red) (stop blue) []
+
+    linearGradient2 (top left) (stop red) (stop blue) []
+
+See also [`linearGradient`](#linearGradient) if you don't need to set the angle.
+
+-}
+linearGradient2 :
+    Value
+        { to : Supported
+        , deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map (\(Value stop) -> stop) moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
+
+
+{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+
+    stop red
+
+See also [`stop2`](#stop2) for controlling stop positioning.
+
+-}
+stop : Color -> Value { provides | colorStop : Supported }
+stop (Value color) =
+    Value color
+
+
+{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+
+    stop2 red (px 20)
+
+See also [`stop`](#stop) if you don't need to control the stop position.
+
+-}
+stop2 :
+    Color
+    ->
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            }
+    -> Value { supported | colorStop : Supported }
+stop2 (Value color) (Value position) =
+    Value (color ++ " " ++ position)
+
+
+{-| Provides the special [`to` side angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+
+    to top
+
+See also [`toCorner`](#to) for a corner.
+
+-}
+to :
+    Value
+        { top : Supported
+        , bottom : Supported
+        , left : Supported
+        , right : Supported
+        }
+    -> Value { supported | to : Supported }
+to (Value direction) =
+    Value ("to " ++ direction)
+
+
+{-| Provides the special [`to` corner angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+
+    toCorner top left
+
+    toCorner bottom right
+
+See also [`to`](#to) for a side.
+
+-}
+toCorner :
+    Value { top : Supported, bottom : Supported }
+    -> Value { left : Supported, right : Supported }
+    -> Value { supported | to : Supported }
+toCorner (Value topBottom) (Value leftRight) =
+    Value ("to " ++ topBottom ++ " " ++ leftRight)
+
+
+
 {- LIST STYLE SHORTHAND -}
 
 
@@ -3375,3 +3550,55 @@ inset =
 outset : Value { provides | outset : Supported }
 outset =
     Value "outset"
+
+
+
+-- ANGLES --
+
+
+{-| A [`deg` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    deg 360 -- one full circle
+
+    deg 14.23
+
+-}
+deg : Float -> Value { provides | deg : Supported }
+deg degrees =
+    Value (toString degrees ++ "deg")
+
+
+{-| A [`grad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    grad 400 -- one full circle
+
+    grad 38.8
+
+-}
+grad : Float -> Value { provides | grad : Supported }
+grad gradians =
+    Value (toString gradians ++ "grad")
+
+
+{-| A [`rad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    rad 6.2832 -- approximately one full circle
+
+    rad 1
+
+-}
+rad : Float -> Value { provides | rad : Supported }
+rad radians =
+    Value (toString radians ++ "rad")
+
+
+{-| A [`turn` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    turn 1 -- one full circle
+
+    turn 0.25
+
+-}
+turn : Float -> Value { provides | turn : Supported }
+turn turns =
+    Value (toString turns ++ "turn")
