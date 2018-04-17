@@ -25,6 +25,8 @@ module Css
         , backgroundClip
         , backgroundClips
         , backgroundColor
+        , backgroundImage
+        , backgroundImages
         , backgroundOrigin
         , backgroundOrigins
         , baseline
@@ -35,7 +37,7 @@ module Css
         , bold
         , bolder
         , borderBox
-        , bottom
+        , bottom_
         , boxShadow
         , cell
         , center
@@ -118,11 +120,10 @@ module Css
         , large
         , larger
         , lastBaseline
-        , left
+        , left_
         , lighten
         , lighter
         , linearGradient
-        , linearGradient2
         , liningNums
         , listStyle
         , listStyle2
@@ -174,7 +175,7 @@ module Css
         , rgb
         , rgba
         , ridge
-        , right
+        , right_
         , rowResize
         , sResize
         , safeCenter
@@ -216,7 +217,7 @@ module Css
         , titlingCaps
         , to
         , toCorner
-        , top
+        , top_
         , turn
         , unicase
         , unsafeCenter
@@ -298,7 +299,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs linearGradient, linearGradient2, stop, stop2, to, toCorner
+@docs backgroundImage, backgroundImages
+
+@docs linearGradient, stop, stop2, to, toCorner
 
 
 ## Box Shadow
@@ -369,7 +372,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, top, bottom, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -1427,27 +1430,43 @@ selfEnd =
     Value "self-end"
 
 
-{-| -}
-left : Value { provides | left : Supported }
-left =
+{-| The `left` value used for alignment.
+
+The value is called `left_` instead of `left` because [`left` is already a function](#left).
+
+-}
+left_ : Value { provides | left_ : Supported }
+left_ =
     Value "left"
 
 
-{-| -}
-right : Value { provides | right : Supported }
-right =
+{-| The `right` value used for alignment.
+
+The value is called `right_` instead of `right` because [`right` is already a function](#right).
+
+-}
+right_ : Value { provides | right_ : Supported }
+right_ =
     Value "right"
 
 
-{-| -}
-top : Value { provides | top : Supported }
-top =
+{-| The `top` value used in [`color stops`](#stop).
+
+The value is called `top_` instead of `top` because [`top` is already a function](#top).
+
+-}
+top_ : Value { provides | top_ : Supported }
+top_ =
     Value "top"
 
 
-{-| -}
-bottom : Value { provides | bottom : Supported }
-bottom =
+{-| The `bottom` value value used in [`color stops`](#stop).
+
+The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
+
+-}
+bottom_ : Value { provides | bottom_ : Supported }
+bottom_ =
     Value "bottom"
 
 
@@ -3205,57 +3224,84 @@ backgroundOrigins firstValue values =
     AppendProperty ("background-origin:" ++ str)
 
 
+{-| Sets [`background-image`](https://css-tricks.com/almanac/properties/b/background-image/).
+
+    backgroundImage (url "http://www.example.com/chicken.jpg")
+
+    backgroundImage (linearGradient (stop red) (stop blue))
+
+See also [`backgroundImages`](#backgroundImages) if you need multiple images.
+
+-}
+backgroundImage :
+    Value
+        { url : Supported
+        , linearGradient : Supported
+        , none : Supported
+        }
+    -> Style
+backgroundImage (Value value) =
+    AppendProperty ("background-image:" ++ value)
+
+
+{-| Sets [`background-image`](https://css-tricks.com/almanac/properties/b/background-image/) for multiple images.
+
+    backgroundImages
+        (linearGradient (stop red) (stop blue))
+        [ url "http://www.example.com/chicken.jpg" ]
+
+See also [`backgroundImage`](#backgroundImage) if you need only one.
+
+-}
+backgroundImages :
+    Value
+        { url : Supported
+        , linearGradient : Supported
+        }
+    ->
+        List
+            (Value
+                { url : Supported
+                , linearGradient : Supported
+                }
+            )
+    -> Style
+backgroundImages (Value first) rest =
+    let
+        peeled =
+            List.map (\(Value value) -> value) rest
+
+        values =
+            String.join "," (first :: peeled)
+    in
+    AppendProperty ("background-image:" ++ values)
+
+
 
 {- GRADIENTS -}
 
 
-{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
+{-| Sets [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
 
-    linearGradient (stop red) (stop blue) []
+    linearGradient (to top) (stop red) (stop blue) []
 
-    linearGradient (stop red) (stop blue) [ stop green ]
-
-See also [`linearGradient2`](#linearGradient2) if you don't need to set the angle.
+    linearGradient (to top) (stop red) (stop blue) [ stop green ]
 
 -}
 linearGradient :
-    Value { colorStop : Supported }
-    -> Value { colorStop : Supported }
-    -> List (Value { colorStop : Supported })
-    -> Value { provides | linearGradient : Supported }
-linearGradient (Value firstStop) (Value secondStop) moreStops =
-    let
-        peeledStops =
-            List.map (\(Value stop) -> stop) moreStops
-
-        stops =
-            String.join "," (firstStop :: secondStop :: peeledStops)
-    in
-    Value ("linear-gradient(" ++ stops ++ ")")
-
-
-{-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient), providing an angle.
-
-    linearGradient2 (deg 90) (stop red) (stop blue) []
-
-    linearGradient2 (top left) (stop red) (stop blue) []
-
-See also [`linearGradient`](#linearGradient) if you don't need to set the angle.
-
--}
-linearGradient2 :
     Value
         { to : Supported
         , deg : Supported
         , grad : Supported
         , rad : Supported
         , turn : Supported
+        , zero : Supported
         }
     -> Value { colorStop : Supported }
     -> Value { colorStop : Supported }
     -> List (Value { colorStop : Supported })
     -> Value { provides | linearGradient : Supported }
-linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
+linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
     let
         peeledStops =
             List.map (\(Value stop) -> stop) moreStops
@@ -3266,9 +3312,9 @@ linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
     Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
 
 
-{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
 
-    stop red
+    linearGradient (to top) (stop red) (stop blue) []
 
 See also [`stop2`](#stop2) for controlling stop positioning.
 
@@ -3278,9 +3324,9 @@ stop (Value color) =
     Value color
 
 
-{-| Provides a stop for a [gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient).
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
 
-    stop2 red (px 20)
+    linearGradient (to top) (stop2 red (px 20)) (stop blue) []
 
 See also [`stop`](#stop) if you don't need to control the stop position.
 
@@ -3289,58 +3335,69 @@ stop2 :
     Color
     ->
         Value
-            { px : Supported
+            { ch : Supported
+            , cm : Supported
             , em : Supported
             , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
             , inches : Supported
-            , pt : Supported
+            , mm : Supported
             , pc : Supported
             , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
             }
     -> Value { supported | colorStop : Supported }
 stop2 (Value color) (Value position) =
     Value (color ++ " " ++ position)
 
 
-{-| Provides the special [`to` side angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+{-| Provides the special [`to` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
 
-    to top
+    linearGradient (to top_) (stop red) (stop blue) []
 
-See also [`toCorner`](#to) for a corner.
+If you want your gradient to go to a corner, use [`toCorner`](#toCorner):
+
+    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
+
+**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
 
 -}
 to :
     Value
-        { top : Supported
-        , bottom : Supported
-        , left : Supported
-        , right : Supported
+        { top_ : Supported
+        , bottom_ : Supported
+        , left_ : Supported
+        , right_ : Supported
         }
     -> Value { supported | to : Supported }
 to (Value direction) =
     Value ("to " ++ direction)
 
 
-{-| Provides the special [`to` corner angle](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient) for gradients.
+{-| Provides the special [`to` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
 
-    toCorner top left
+    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
 
-    toCorner bottom right
+    linearGradient (toCorner bottom_ right_) (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`to`](#to):
+
+    linearGradient (to top_) (stop red) (stop blue) []
 
 See also [`to`](#to) for a side.
 
+**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
+
 -}
 toCorner :
-    Value { top : Supported, bottom : Supported }
-    -> Value { left : Supported, right : Supported }
+    Value { top_ : Supported, bottom_ : Supported }
+    -> Value { left_ : Supported, right_ : Supported }
     -> Value { supported | to : Supported }
 toCorner (Value topBottom) (Value leftRight) =
     Value ("to " ++ topBottom ++ " " ++ leftRight)
