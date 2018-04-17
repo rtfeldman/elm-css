@@ -39,8 +39,8 @@ module Css
         , borderBox
         , bottom_
         , boxShadow
-        , capitalize
         , breakWord
+        , capitalize
         , cell
         , center
         , ch
@@ -221,8 +221,8 @@ module Css
         , tabularNums
         , telugu
         , text
-        , text_
         , textTransform
+        , text_
         , thai
         , titlingCaps
         , to
@@ -3759,7 +3759,10 @@ outset : Value { provides | outset : Supported }
 outset =
     Value "outset"
 
+
+
 -- TEXT TRANSFORM --
+
 
 {-| Sets [`text-transform`](https://css-tricks.com/almanac/properties/t/text-transform/).
 
@@ -3782,6 +3785,7 @@ textTransform :
 textTransform (Value str) =
     AppendProperty ("text-transform:" ++ str)
 
+
 {-| A `capitalize` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 
     textTransform capitalize
@@ -3790,6 +3794,7 @@ textTransform (Value str) =
 capitalize : Value { provides | capitalize : Supported }
 capitalize =
     Value "capitalize"
+
 
 {-| An `uppercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 
@@ -3800,6 +3805,7 @@ uppercase : Value { provides | uppercase : Supported }
 uppercase =
     Value "uppercase"
 
+
 {-| A `lowercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 
     textTransform lowercase
@@ -3809,6 +3815,7 @@ lowercase : Value { provides | lowercase : Supported }
 lowercase =
     Value "lowercase"
 
+
 {-| A `full-width` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
 
     textTransform fullWidth
@@ -3817,6 +3824,8 @@ lowercase =
 fullWidth : Value { provides | fullWidth : Supported }
 fullWidth =
     Value "full-width"
+
+
 
 -- ANGLES --
 
@@ -3867,4 +3876,3 @@ rad radians =
 turn : Float -> Value { provides | turn : Supported }
 turn turns =
     Value (toString turns ++ "turn")
-
