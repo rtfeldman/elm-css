@@ -39,6 +39,7 @@ module Css
         , borderBox
         , bottom_
         , boxShadow
+        , capitalize
         , breakWord
         , cell
         , center
@@ -91,6 +92,7 @@ module Css
         , fontVariantLigatures
         , fontVariantNumeric
         , fontWeight
+        , fullWidth
         , georgian
         , grab
         , grabbing
@@ -131,6 +133,7 @@ module Css
         , listStyle2
         , listStyle3
         , local
+        , lowercase
         , luminosity
         , malayalam
         , medium
@@ -219,6 +222,7 @@ module Css
         , telugu
         , text
         , text_
+        , textTransform
         , thai
         , titlingCaps
         , to
@@ -228,6 +232,7 @@ module Css
         , unicase
         , unsafeCenter
         , unset
+        , uppercase
         , url
         , verticalText
         , vh
@@ -421,6 +426,12 @@ Multiple CSS properties use these values.
 ## Angles
 
 @docs deg, grad, rad, turn
+
+
+## Text Transform
+
+@docs textTransform
+@docs capitalize, uppercase, lowercase, fullWidth
 
 -}
 
@@ -3748,7 +3759,64 @@ outset : Value { provides | outset : Supported }
 outset =
     Value "outset"
 
+-- TEXT TRANSFORM --
 
+{-| Sets [`text-transform`](https://css-tricks.com/almanac/properties/t/text-transform/).
+
+    textTransform capitalize
+    textTransform uppercase
+
+-}
+textTransform :
+    Value
+        { capitalize : Supported
+        , uppercase : Supported
+        , lowercase : Supported
+        , fullWidth : Supported
+        , none : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textTransform (Value str) =
+    AppendProperty ("text-transform:" ++ str)
+
+{-| A `capitalize` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform capitalize
+
+-}
+capitalize : Value { provides | capitalize : Supported }
+capitalize =
+    Value "capitalize"
+
+{-| An `uppercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform uppercase
+
+-}
+uppercase : Value { provides | uppercase : Supported }
+uppercase =
+    Value "uppercase"
+
+{-| A `lowercase` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform lowercase
+
+-}
+lowercase : Value { provides | lowercase : Supported }
+lowercase =
+    Value "lowercase"
+
+{-| A `full-width` [text transform](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform).
+
+    textTransform fullWidth
+
+-}
+fullWidth : Value { provides | fullWidth : Supported }
+fullWidth =
+    Value "full-width"
 
 -- ANGLES --
 
@@ -3799,3 +3867,4 @@ rad radians =
 turn : Float -> Value { provides | turn : Supported }
 turn turns =
     Value (toString turns ++ "turn")
+
