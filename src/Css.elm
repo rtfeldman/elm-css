@@ -25,6 +25,8 @@ module Css
         , backgroundClip
         , backgroundClips
         , backgroundColor
+        , backgroundImage
+        , backgroundImages
         , backgroundOrigin
         , backgroundOrigins
         , baseline
@@ -35,8 +37,10 @@ module Css
         , bold
         , bolder
         , borderBox
+        , bottom_
         , boxShadow
         , capitalize
+        , breakWord
         , cell
         , center
         , ch
@@ -60,6 +64,7 @@ module Css
         , dashed
         , default
         , defaultBoxShadow
+        , deg
         , devanagari
         , diagonalFractions
         , difference
@@ -91,6 +96,7 @@ module Css
         , georgian
         , grab
         , grabbing
+        , grad
         , grid
         , groove
         , gujarati
@@ -98,6 +104,7 @@ module Css
         , hardLight
         , help
         , hex
+        , hidden
         , historicalLigatures
         , hsl
         , hsla
@@ -117,9 +124,10 @@ module Css
         , large
         , larger
         , lastBaseline
-        , left
+        , left_
         , lighten
         , lighter
+        , linearGradient
         , liningNums
         , listStyle
         , listStyle2
@@ -154,6 +162,10 @@ module Css
         , ordinal
         , oriya
         , outset
+        , overflow
+        , overflowWrap
+        , overflowX
+        , overflowY
         , overlay
         , paddingBox
         , pc
@@ -166,12 +178,13 @@ module Css
         , pseudoElement
         , pt
         , px
+        , rad
         , rem
         , revert
         , rgb
         , rgba
         , ridge
-        , right
+        , right_
         , rowResize
         , sResize
         , safeCenter
@@ -191,6 +204,8 @@ module Css
         , solid
         , stackedFractions
         , start
+        , stop
+        , stop2
         , stretch
         , swResize
         , systemUi
@@ -210,6 +225,10 @@ module Css
         , textTransform
         , thai
         , titlingCaps
+        , to
+        , toCorner
+        , top_
+        , turn
         , unicase
         , unsafeCenter
         , unset
@@ -217,6 +236,7 @@ module Css
         , url
         , verticalText
         , vh
+        , visible
         , vmax
         , vmin
         , vw
@@ -289,6 +309,13 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, borderBox, paddingBox, contentBox, text_
 
 
+## Background Image
+
+@docs backgroundImage, backgroundImages
+
+@docs linearGradient, stop, stop2, to, toCorner
+
+
 ## Box Shadow
 
 @docs BoxShadowConfig, boxShadow, defaultBoxShadow
@@ -357,7 +384,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left, right, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -385,6 +412,20 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 Multiple CSS properties use these values.
 
 @docs auto, none
+@docs hidden, visible
+
+
+## Overflow
+
+@docs overflow, overflowX, overflowY
+
+@docs overflowWrap
+@docs breakWord
+
+
+## Angles
+
+@docs deg, grad, rad, turn
 
 
 ## Text Transform
@@ -578,6 +619,140 @@ auto =
 none : Value { provides | none : Supported }
 none =
     Value "none"
+
+
+{-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`border style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
+
+    visibility hidden
+    overflow hidden
+    borderStyle hidden
+
+-}
+hidden : Value { provides | hidden : Supported }
+hidden =
+    Value "hidden"
+
+
+{-| The `visible` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events).
+
+    visibility visible
+    overflow visible
+    pointerEvents visible
+
+-}
+visible : Value { provides | visible : Supported }
+visible =
+    Value "visible"
+
+
+{-| The `scroll` value used for properties such as [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) and [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment).
+
+    overflow scroll
+    backgroundAttachment scroll
+
+-}
+scroll : Value { provides | scroll : Supported }
+scroll =
+    Value "scroll"
+
+
+
+-- OVERFLOW --
+
+
+{-| Sets [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflow visible
+    overflow hidden
+    overflow scroll
+    overflow auto
+
+-}
+overflow :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflow (Value val) =
+    AppendProperty ("overflow:" ++ val)
+
+
+{-| Sets [`overflow-x`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflowX visible
+    overflowX hidden
+    overflowX scroll
+    overflowX auto
+
+-}
+overflowX :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowX (Value val) =
+    AppendProperty ("overflow-x:" ++ val)
+
+
+{-| Sets [`overflow-y`](https://css-tricks.com/almanac/properties/o/overflow/).
+
+    overflowY visible
+    overflowY hidden
+    overflowY scroll
+    overflowY auto
+
+-}
+overflowY :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowY (Value val) =
+    AppendProperty ("overflow-y:" ++ val)
+
+
+{-| Sets [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
+
+    overflowWrap breakWord
+    overflowWrap normal
+
+-}
+overflowWrap :
+    Value
+        { breakWord : Supported
+        , normal : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowWrap (Value val) =
+    AppendProperty ("overflow-wrap:" ++ val)
+
+
+{-| The `break-word` value for the [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/) property.
+-}
+breakWord : Value { provides | breakWord : Supported }
+breakWord =
+    Value "break-word"
 
 
 
@@ -1416,16 +1591,44 @@ selfEnd =
     Value "self-end"
 
 
-{-| -}
-left : Value { provides | left : Supported }
-left =
+{-| The `left` value used for alignment.
+
+The value is called `left_` instead of `left` because [`left` is already a function](#left).
+
+-}
+left_ : Value { provides | left_ : Supported }
+left_ =
     Value "left"
 
 
-{-| -}
-right : Value { provides | right : Supported }
-right =
+{-| The `right` value used for alignment.
+
+The value is called `right_` instead of `right` because [`right` is already a function](#right).
+
+-}
+right_ : Value { provides | right_ : Supported }
+right_ =
     Value "right"
+
+
+{-| The `top` value used in [`color stops`](#stop).
+
+The value is called `top_` instead of `top` because [`top` is already a function](#top).
+
+-}
+top_ : Value { provides | top_ : Supported }
+top_ =
+    Value "top"
+
+
+{-| The `bottom` value value used in [`color stops`](#stop).
+
+The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
+
+-}
+bottom_ : Value { provides | bottom_ : Supported }
+bottom_ =
+    Value "bottom"
 
 
 {-| -}
@@ -2742,16 +2945,6 @@ fixed =
     Value "fixed"
 
 
-{-| The `scroll` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
-
-    backgroundAttachment scroll
-
--}
-scroll : Value { provides | scroll : Supported }
-scroll =
-    Value "scroll"
-
-
 {-| The `local` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
 
     backgroundAttachment local
@@ -3182,6 +3375,185 @@ backgroundOrigins firstValue values =
     AppendProperty ("background-origin:" ++ str)
 
 
+{-| Sets [`background-image`](https://css-tricks.com/almanac/properties/b/background-image/).
+
+    backgroundImage (url "http://www.example.com/chicken.jpg")
+
+    backgroundImage (linearGradient (stop red) (stop blue))
+
+See also [`backgroundImages`](#backgroundImages) if you need multiple images.
+
+-}
+backgroundImage :
+    Value
+        { url : Supported
+        , linearGradient : Supported
+        , none : Supported
+        }
+    -> Style
+backgroundImage (Value value) =
+    AppendProperty ("background-image:" ++ value)
+
+
+{-| Sets [`background-image`](https://css-tricks.com/almanac/properties/b/background-image/) for multiple images.
+
+    backgroundImages
+        (linearGradient (stop red) (stop blue))
+        [ url "http://www.example.com/chicken.jpg" ]
+
+See also [`backgroundImage`](#backgroundImage) if you need only one.
+
+-}
+backgroundImages :
+    Value
+        { url : Supported
+        , linearGradient : Supported
+        }
+    ->
+        List
+            (Value
+                { url : Supported
+                , linearGradient : Supported
+                }
+            )
+    -> Style
+backgroundImages (Value first) rest =
+    let
+        peeled =
+            List.map (\(Value value) -> value) rest
+
+        values =
+            String.join "," (first :: peeled)
+    in
+    AppendProperty ("background-image:" ++ values)
+
+
+
+{- GRADIENTS -}
+
+
+{-| Sets [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
+
+    linearGradient (to top) (stop red) (stop blue) []
+
+    linearGradient (to top) (stop red) (stop blue) [ stop green ]
+
+-}
+linearGradient :
+    Value
+        { to : Supported
+        , deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        , zero : Supported
+        }
+    -> Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map (\(Value stop) -> stop) moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient (to top) (stop red) (stop blue) []
+
+See also [`stop2`](#stop2) for controlling stop positioning.
+
+-}
+stop : Color -> Value { provides | colorStop : Supported }
+stop (Value color) =
+    Value color
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient (to top) (stop2 red (px 20)) (stop blue) []
+
+See also [`stop`](#stop) if you don't need to control the stop position.
+
+-}
+stop2 :
+    Color
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Value { supported | colorStop : Supported }
+stop2 (Value color) (Value position) =
+    Value (color ++ " " ++ position)
+
+
+{-| Provides the special [`to` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient (to top_) (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toCorner`](#toCorner):
+
+    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
+
+**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
+
+-}
+to :
+    Value
+        { top_ : Supported
+        , bottom_ : Supported
+        , left_ : Supported
+        , right_ : Supported
+        }
+    -> Value { supported | to : Supported }
+to (Value direction) =
+    Value ("to " ++ direction)
+
+
+{-| Provides the special [`to` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
+
+    linearGradient (toCorner bottom_ right_) (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`to`](#to):
+
+    linearGradient (to top_) (stop red) (stop blue) []
+
+See also [`to`](#to) for a side.
+
+**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
+
+-}
+toCorner :
+    Value { top_ : Supported, bottom_ : Supported }
+    -> Value { left_ : Supported, right_ : Supported }
+    -> Value { supported | to : Supported }
+toCorner (Value topBottom) (Value leftRight) =
+    Value ("to " ++ topBottom ++ " " ++ leftRight)
+
+
 
 {- LIST STYLE SHORTHAND -}
 
@@ -3445,3 +3817,54 @@ lowercase =
 fullWidth : Value { provides | fullWidth : Supported }
 fullWidth =
     Value "full-width"
+
+-- ANGLES --
+
+
+{-| A [`deg` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    deg 360 -- one full circle
+
+    deg 14.23
+
+-}
+deg : Float -> Value { provides | deg : Supported }
+deg degrees =
+    Value (toString degrees ++ "deg")
+
+
+{-| A [`grad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    grad 400 -- one full circle
+
+    grad 38.8
+
+-}
+grad : Float -> Value { provides | grad : Supported }
+grad gradians =
+    Value (toString gradians ++ "grad")
+
+
+{-| A [`rad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    rad 6.2832 -- approximately one full circle
+
+    rad 1
+
+-}
+rad : Float -> Value { provides | rad : Supported }
+rad radians =
+    Value (toString radians ++ "rad")
+
+
+{-| A [`turn` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    turn 1 -- one full circle
+
+    turn 0.25
+
+-}
+turn : Float -> Value { provides | turn : Supported }
+turn turns =
+    Value (toString turns ++ "turn")
+
