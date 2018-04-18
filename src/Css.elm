@@ -3483,6 +3483,7 @@ backgroundPosition :
         , zero : Supported
         , left_ : Supported
         , right_ : Supported
+        , center : Supported
         }
     -> Style
 backgroundPosition (Value horiz) =
@@ -3522,6 +3523,7 @@ backgroundPosition2 :
         , zero : Supported
         , left_ : Supported
         , right_ : Supported
+        , center : Supported
         }
     ->
         Value
@@ -3543,6 +3545,7 @@ backgroundPosition2 :
             , zero : Supported
             , top_ : Supported
             , bottom_ : Supported
+            , center : Supported
             }
     -> Style
 backgroundPosition2 (Value horiz) (Value vert) =
