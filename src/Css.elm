@@ -31,6 +31,7 @@ module Css
         , backgroundOrigins
         , backgroundPosition
         , backgroundPosition2
+        , backgroundPosition4
         , baseline
         , batch
         , before
@@ -318,7 +319,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4
 
 @docs linearGradient, stop, stop2, to, toCorner
 
@@ -3462,6 +3463,11 @@ direction instead, use [`backgroundPosition2`](#backgroundPosition2) like this:
 
     backgroundPosition zero (px 45)
 
+If you need to set the offsets from the right or bottom, use
+[`backgroundPosition4`](#backgroundPosition4) like this:
+
+    backgroundPosition4 right (px 20) bottom (pct 25)
+
 -}
 backgroundPosition :
     Value
@@ -3501,6 +3507,11 @@ order, same as CSS.) If you need only the horizontal, you can use
 [`backgroundPosition`](#backgroundPosition) instead:
 
     backgroundPosition left
+
+If you need to set the offsets from the right or bottom, use
+[`backgroundPosition4`](#backgroundPosition4) like this:
+
+    backgroundPosition4 right (px 20) bottom (pct 25)
 
 -}
 backgroundPosition2 :
@@ -3550,6 +3561,81 @@ backgroundPosition2 :
     -> Style
 backgroundPosition2 (Value horiz) (Value vert) =
     AppendProperty ("background-position:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
+
+    backgroundPosition4 right (px 20) bottom (pct 30)
+
+The four-argument form of background position takes sides, then offsets. So the
+example above would position the background image 20px from the rith, and 30%
+from the bottom.
+
+See also [`backgroundPosition`](#backgroundPosition) for horizontal alignment and
+[`backgroundPosition2`](#backgroundPosition2) for horizontal (from left) and
+vertical (from top) alignment.
+
+-}
+backgroundPosition4 :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { top_ : Supported
+            , bottom_ : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
+    AppendProperty
+        ("background-position:"
+            ++ horiz
+            ++ " "
+            ++ horizAmount
+            ++ " "
+            ++ vert
+            ++ " "
+            ++ vertAmount
+        )
 
 
 
