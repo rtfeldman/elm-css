@@ -44,6 +44,7 @@ module Css
         , boxShadow
         , breakWord
         , capitalize
+        , captionSide
         , cell
         , center
         , ch
@@ -468,6 +469,11 @@ Multiple CSS properties use these values.
 ## Border Spacing
 
 @docs borderSpacing, borderSpacing2
+
+
+## Caption Side
+
+@docs captionSide
 
 -}
 
@@ -4153,3 +4159,26 @@ borderSpacing2 :
     -> Style
 borderSpacing2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-spacing:" ++ horizontal ++ " " ++ vertical)
+
+
+
+-- CAPTION SIDE --
+
+
+{-| Sets [`caption-side`](https://css-tricks.com/almanac/properties/c/caption-side/).
+
+    captionSide top_
+    captionSide bottom_
+
+-}
+captionSide :
+    Value
+        { top_ : Supported
+        , bottom_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+captionSide (Value str) =
+    AppendProperty ("caption-side:" ++ str)
