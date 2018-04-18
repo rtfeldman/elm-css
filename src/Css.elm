@@ -3567,8 +3567,8 @@ backgroundPosition2 (Value horiz) (Value vert) =
 
     backgroundPosition4 right (px 20) bottom (pct 30)
 
-The four-argument form of background position takes sides, then offsets. So the
-example above would position the background image 20px from the rith, and 30%
+The four-argument form of background position alternates sides and offets. So the
+example above would position the background image 20px from the right, and 30%
 from the bottom.
 
 See also [`backgroundPosition`](#backgroundPosition) for horizontal alignment and
