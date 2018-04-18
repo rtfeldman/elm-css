@@ -38,6 +38,8 @@ module Css
         , bolder
         , borderBox
         , borderCollapse
+        , borderSpacing
+        , borderSpacing2
         , bottom_
         , boxShadow
         , breakWord
@@ -461,6 +463,11 @@ Multiple CSS properties use these values.
 
 @docs borderCollapse
 @docs collapse, separate
+
+
+## Border Spacing
+
+@docs borderSpacing, borderSpacing2
 
 -}
 
@@ -4058,3 +4065,91 @@ collapse =
 separate : Value { provides | separate : Supported }
 separate =
     Value "separate"
+
+
+
+-- BORDER SPACING --
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing).
+
+    borderSpacing zero
+    borderSpacing (px 5)
+
+-}
+borderSpacing :
+    Value
+        { zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+borderSpacing (Value str) =
+    AppendProperty ("border-spacing:" ++ str)
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing), defining horizontal and vertical spacing separately.
+
+    borderSpacing2 (cm 1) (em 2)
+
+-}
+borderSpacing2 :
+    Value
+        { zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { zero : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            , initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+    -> Style
+borderSpacing2 (Value horizontal) (Value vertical) =
+    AppendProperty ("border-spacing:" ++ horizontal ++ " " ++ vertical)
