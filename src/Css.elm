@@ -3797,7 +3797,7 @@ textOrientation :
         , unset : Supported
         }
     -> Style
-textOrientation (Value  str) =
+textOrientation (Value str) =
     AppendProperty ("text-orientation:" ++ str)
 
 
