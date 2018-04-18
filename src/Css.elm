@@ -30,6 +30,7 @@ module Css
         , backgroundOrigin
         , backgroundOrigins
         , backgroundPosition
+        , backgroundPosition2
         , baseline
         , batch
         , before
@@ -317,7 +318,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2
 
 @docs linearGradient, stop, stop2, to, toCorner
 
@@ -3482,6 +3483,66 @@ backgroundPosition :
     -> Style
 backgroundPosition (Value horiz) =
     AppendProperty ("background-position:" ++ horiz)
+
+
+{-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
+
+    backgroundPosition left top
+
+    backgroundPosition (px 45) (pct 50)
+
+`backgroundPosition2` sets both the horizontal and vertical directions (in that
+order, same as CSS.) If you need only the horizontal, you can use
+[`backgroundPosition`](#backgroundPosition) instead:
+
+    backgroundPosition left
+
+-}
+backgroundPosition2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , left_ : Supported
+        , right_ : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            }
+    -> Style
+backgroundPosition2 (Value horiz) (Value vert) =
+    AppendProperty ("background-position:" ++ horiz ++ " " ++ vert)
 
 
 
