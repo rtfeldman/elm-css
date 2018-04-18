@@ -80,6 +80,7 @@ module Css
         , double
         , eResize
         , em
+        , emptyCells
         , end
         , ewResize
         , ex
@@ -111,6 +112,7 @@ module Css
         , help
         , hex
         , hidden
+        , hide
         , historicalLigatures
         , hsl
         , hsla
@@ -205,6 +207,7 @@ module Css
         , selfStart
         , separate
         , serif
+        , show
         , slashedZero
         , small
         , smallCaps
@@ -474,6 +477,12 @@ Multiple CSS properties use these values.
 ## Caption Side
 
 @docs captionSide
+
+
+## Empty Cells
+
+@docs emptyCells
+@docs show, hide
 
 -}
 
@@ -4182,3 +4191,46 @@ captionSide :
     -> Style
 captionSide (Value str) =
     AppendProperty ("caption-side:" ++ str)
+
+
+
+-- EMPTY CELLS --
+
+
+{-| Sets [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/).
+
+    emptyCells show
+    emptyCells hide
+
+-}
+emptyCells :
+    Value
+        { show : Supported
+        , hide : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+emptyCells (Value str) =
+    AppendProperty ("empty-cells:" ++ str)
+
+
+{-| A `show` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells show
+
+-}
+show : Value { provides | show : Supported }
+show =
+    Value "show"
+
+
+{-| A `hide` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells hide
+
+-}
+hide : Value { provides | hide : Supported }
+hide =
+    Value "hide"
