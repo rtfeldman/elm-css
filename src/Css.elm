@@ -3447,6 +3447,10 @@ backgroundImages (Value first) rest =
     AppendProperty ("background-image:" ++ values)
 
 
+
+-- BACKGROUND POSITION --
+
+
 {-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
 
     backgroundPosition left
