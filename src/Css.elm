@@ -228,6 +228,7 @@ module Css
         , tableColumnGroup
         , tableFooterGroup
         , tableHeaderGroup
+        , tableLayout
         , tableRow
         , tableRowGroup
         , tabularNums
@@ -483,6 +484,11 @@ Multiple CSS properties use these values.
 
 @docs emptyCells
 @docs show, hide
+
+
+## Table Layout
+
+@docs tableLayout
 
 -}
 
@@ -4234,3 +4240,26 @@ show =
 hide : Value { provides | hide : Supported }
 hide =
     Value "hide"
+
+
+
+-- TABLE LAYOUT --
+
+
+{-| Sets [`table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
+
+    tableLayout auto
+    tableLayout fixed
+
+-}
+tableLayout :
+    Value
+        { auto : Supported
+        , fixed : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+tableLayout (Value str) =
+    AppendProperty ("table-layout:" ++ str)
