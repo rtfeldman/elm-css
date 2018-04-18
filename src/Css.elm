@@ -437,6 +437,7 @@ Multiple CSS properties use these values.
 @docs textRendering
 @docs geometricPrecision, optimizeLegibility, optimizeSpeed
 
+
 ## Text Transform
 
 @docs textTransform
@@ -3790,7 +3791,7 @@ textRendering :
         , unset : Supported
         }
     -> Style
-textRendering (Value  str) =
+textRendering (Value str) =
     AppendProperty ("text-rendering:" ++ str)
 
 
@@ -3809,8 +3810,8 @@ geometricPrecision =
     textRendering optimizeLegibility
 
 -}
-optimizeLegibility: Value { provides | optimizeLegibility : Supported }
-optimizeLegibility=
+optimizeLegibility : Value { provides | optimizeLegibility : Supported }
+optimizeLegibility =
     Value "optimizeLegibility"
 
 
