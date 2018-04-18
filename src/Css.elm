@@ -3454,7 +3454,7 @@ backgroundImages (Value first) rest =
 
 {-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
 
-    backgroundPosition left
+    backgroundPosition left_
 
     backgroundPosition (px 45)
 
@@ -3466,7 +3466,7 @@ direction instead, use [`backgroundPosition2`](#backgroundPosition2) like this:
 If you need to set the offsets from the right or bottom, use
 [`backgroundPosition4`](#backgroundPosition4) like this:
 
-    backgroundPosition4 right (px 20) bottom (pct 25)
+    backgroundPosition4 right_ (px 20) bottom_ (pct 25)
 
 -}
 backgroundPosition :
@@ -3498,7 +3498,7 @@ backgroundPosition (Value horiz) =
 
 {-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
 
-    backgroundPosition2 left top
+    backgroundPosition2 left_ top_
 
     backgroundPosition2 (px 45) (pct 50)
 
@@ -3506,12 +3506,12 @@ backgroundPosition (Value horiz) =
 order, same as CSS.) If you need only the horizontal, you can use
 [`backgroundPosition`](#backgroundPosition) instead:
 
-    backgroundPosition left
+    backgroundPosition left_
 
 If you need to set the offsets from the right or bottom, use
 [`backgroundPosition4`](#backgroundPosition4) like this:
 
-    backgroundPosition4 right (px 20) bottom (pct 25)
+    backgroundPosition4 right_ (px 20) bottom_ (pct 25)
 
 -}
 backgroundPosition2 :
@@ -3565,7 +3565,7 @@ backgroundPosition2 (Value horiz) (Value vert) =
 
 {-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
 
-    backgroundPosition4 right (px 20) bottom (pct 30)
+    backgroundPosition4 right_ (px 20) bottom_ (pct 30)
 
 The four-argument form of background position alternates sides and offets. So the
 example above would position the background image 20px from the right, and 30%
