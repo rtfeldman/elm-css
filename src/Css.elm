@@ -145,6 +145,7 @@ module Css
         , luminosity
         , malayalam
         , medium
+        , middle
         , mm
         , monospace
         , move
@@ -219,6 +220,8 @@ module Css
         , stop
         , stop2
         , stretch
+        , sub
+        , super
         , swResize
         , systemUi
         , table
@@ -234,8 +237,10 @@ module Css
         , tabularNums
         , telugu
         , text
+        , textBottom
         , textOrientation
         , textRendering
+        , textTop
         , textTransform
         , text_
         , thai
@@ -249,6 +254,7 @@ module Css
         , unset
         , uppercase
         , url
+        , verticalAlign
         , verticalText
         , vh
         , visible
@@ -489,6 +495,12 @@ Multiple CSS properties use these values.
 ## Table Layout
 
 @docs tableLayout
+
+
+## Vertical Align
+
+@docs verticalAlign
+@docs sub, super, textTop, textBottom, middle
 
 -}
 
@@ -4263,3 +4275,98 @@ tableLayout :
     -> Style
 tableLayout (Value str) =
     AppendProperty ("table-layout:" ++ str)
+
+
+
+-- VERTICAL ALIGN
+
+
+{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
+
+    verticalAlign textBottom
+    verticalAlign (em 1)
+
+-}
+verticalAlign :
+    Value
+        { baseline : Supported
+        , sub : Supported
+        , super : Supported
+        , textTop : Supported
+        , textBottom : Supported
+        , middle : Supported
+        , top_ : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+verticalAlign (Value str) =
+    AppendProperty ("vertical-align:" ++ str)
+
+
+{-| A `sub` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign sub
+
+-}
+sub : Value { provides | sub : Supported }
+sub =
+    Value "sub"
+
+
+{-| A `super` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign super
+
+-}
+super : Value { provides | super : Supported }
+super =
+    Value "super"
+
+
+{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textTop
+
+-}
+textTop : Value { provides | textTop : Supported }
+textTop =
+    Value "text-top"
+
+
+{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textBottom
+
+-}
+textBottom : Value { provides | textBottom : Supported }
+textBottom =
+    Value "text-bottom"
+
+
+{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign middle
+
+-}
+middle : Value { provides | middle : Supported }
+middle =
+    Value "middle"
