@@ -3492,9 +3492,9 @@ backgroundPosition (Value horiz) =
 
 {-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
 
-    backgroundPosition left top
+    backgroundPosition2 left top
 
-    backgroundPosition (px 45) (pct 50)
+    backgroundPosition2 (px 45) (pct 50)
 
 `backgroundPosition2` sets both the horizontal and vertical directions (in that
 order, same as CSS.) If you need only the horizontal, you can use
