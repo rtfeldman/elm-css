@@ -146,6 +146,7 @@ module Css
         , malayalam
         , medium
         , middle
+        , mixed
         , mm
         , monospace
         , move
@@ -209,6 +210,7 @@ module Css
         , separate
         , serif
         , show
+        , sideways
         , slashedZero
         , small
         , smallCaps
@@ -253,6 +255,7 @@ module Css
         , unsafeCenter
         , unset
         , uppercase
+        , upright
         , url
         , verticalAlign
         , verticalText
