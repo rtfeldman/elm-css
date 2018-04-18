@@ -224,6 +224,7 @@ module Css
         , tabularNums
         , telugu
         , text
+        , textOrientation
         , textRendering
         , textTransform
         , text_
@@ -430,6 +431,12 @@ Multiple CSS properties use these values.
 ## Angles
 
 @docs deg, grad, rad, turn
+
+
+## Text Orientation
+
+@docs textOrientation
+@docs mixed, sideways, upright
 
 
 ## Text Rendering
@@ -3768,6 +3775,60 @@ inset =
 outset : Value { provides | outset : Supported }
 outset =
     Value "outset"
+
+
+
+-- TEXT ORIENTATION --
+
+
+{-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
+
+    textOrientation sideways
+    textOrientation upright
+
+-}
+textOrientation :
+    Value
+        { mixed : Supported
+        , sideways : Supported
+        , upright : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textOrientation (Value  str) =
+    AppendProperty ("text-orientation:" ++ str)
+
+
+{-| A `mixed` value for the [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation) property.
+
+    textOrientation mixed
+
+-}
+mixed : Value { provides | mixed : Supported }
+mixed =
+    Value "mixed"
+
+
+{-| A `sideways` value for the [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation) property.
+
+    textOrientation sideways
+
+-}
+sideways : Value { provides | sideways : Supported }
+sideways =
+    Value "sideways"
+
+
+{-| A `upright` value for the [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation) property.
+
+    textOrientation upright
+
+-}
+upright : Value { provides | upright : Supported }
+upright =
+    Value "upright"
 
 
 
