@@ -29,6 +29,7 @@ module Css
         , backgroundImages
         , backgroundOrigin
         , backgroundOrigins
+        , backgroundPosition
         , baseline
         , batch
         , before
@@ -316,7 +317,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages
+@docs backgroundImage, backgroundImages, backgroundPosition
 
 @docs linearGradient, stop, stop2, to, toCorner
 
@@ -3443,6 +3444,44 @@ backgroundImages (Value first) rest =
             String.join "," (first :: peeled)
     in
     AppendProperty ("background-image:" ++ values)
+
+
+{-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
+
+    backgroundPosition left
+
+    backgroundPosition (px 45)
+
+`backgroundPosition` sets the horizontal direction. If you need the vertical
+direction instead, use [`backgroundPosition2`](#backgroundPosition2) like this:
+
+    backgroundPosition zero (px 45)
+
+-}
+backgroundPosition :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , left_ : Supported
+        , right_ : Supported
+        }
+    -> Style
+backgroundPosition (Value horiz) =
+    AppendProperty ("background-position:" ++ horiz)
 
 
 
