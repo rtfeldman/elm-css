@@ -37,6 +37,7 @@ module Css
         , bold
         , bolder
         , borderBox
+        , borderCollapse
         , bottom_
         , boxShadow
         , breakWord
@@ -48,6 +49,7 @@ module Css
         , cjkHeavenlyStem
         , cm
         , colResize
+        , collapse
         , color
         , colorBurn
         , colorDodge
@@ -198,6 +200,7 @@ module Css
         , seResize
         , selfEnd
         , selfStart
+        , separate
         , serif
         , slashedZero
         , small
@@ -449,6 +452,15 @@ Multiple CSS properties use these values.
 
 @docs textTransform
 @docs capitalize, uppercase, lowercase, fullWidth
+
+
+# Tables
+
+
+## Border Collapse
+
+@docs borderCollapse
+@docs collapse, separate
 
 -}
 
@@ -4002,3 +4014,47 @@ rad radians =
 turn : Float -> Value { provides | turn : Supported }
 turn turns =
     Value (toString turns ++ "turn")
+
+
+
+-- TABLES --
+-- BORDER COLLAPSE --
+
+
+{-| Sets [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/).
+
+    borderCollapse collapse
+    borderCollapse separate
+
+-}
+borderCollapse :
+    Value
+        { collapse : Supported
+        , separate : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+borderCollapse (Value str) =
+    AppendProperty ("border-collapse:" ++ str)
+
+
+{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
+
+    borderCollapse collapse
+
+-}
+collapse : Value { provides | collapse : Supported }
+collapse =
+    Value "collapse"
+
+
+{-| A `separate` value for the [`border-separate`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
+
+    borderCollapse separate
+
+-}
+separate : Value { provides | separate : Supported }
+separate =
+    Value "separate"
