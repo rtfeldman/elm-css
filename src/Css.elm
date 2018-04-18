@@ -93,6 +93,7 @@ module Css
         , fontVariantNumeric
         , fontWeight
         , fullWidth
+        , geometricPrecision
         , georgian
         , grab
         , grabbing
@@ -159,6 +160,8 @@ module Css
         , nwseResize
         , oblique
         , oldstyleNums
+        , optimizeLegibility
+        , optimizeSpeed
         , ordinal
         , oriya
         , outset
@@ -221,6 +224,7 @@ module Css
         , tabularNums
         , telugu
         , text
+        , textRendering
         , textTransform
         , text_
         , thai
@@ -427,6 +431,11 @@ Multiple CSS properties use these values.
 
 @docs deg, grad, rad, turn
 
+
+## Text Rendering
+
+@docs textRendering
+@docs geometricPrecision, optimizeLegibility, optimizeSpeed
 
 ## Text Transform
 
@@ -3758,6 +3767,61 @@ inset =
 outset : Value { provides | outset : Supported }
 outset =
     Value "outset"
+
+
+
+-- TEXT RENDERING --
+
+
+{-| Sets [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/).
+
+    textRendering geometricPrecision
+    textRendering optimizeSpeed
+
+-}
+textRendering :
+    Value
+        { auto : Supported
+        , geometricPrecision : Supported
+        , optimizeLegibility : Supported
+        , optimizeSpeed : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textRendering (Value  str) =
+    AppendProperty ("text-rendering:" ++ str)
+
+
+{-| A `geometricPrecision` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering geometricPrecision
+
+-}
+geometricPrecision : Value { provides | geometricPrecision : Supported }
+geometricPrecision =
+    Value "geometricPrecision"
+
+
+{-| An `optimizeLegibility` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering optimizeLegibility
+
+-}
+optimizeLegibility: Value { provides | optimizeLegibility : Supported }
+optimizeLegibility=
+    Value "optimizeLegibility"
+
+
+{-| An `optimizeSpeed` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering optimizeSpeed
+
+-}
+optimizeSpeed : Value { provides | optimizeSpeed : Supported }
+optimizeSpeed =
+    Value "optimizeSpeed"
 
 
 
