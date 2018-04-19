@@ -37,10 +37,14 @@ module Css
         , bold
         , bolder
         , borderBox
+        , borderCollapse
+        , borderSpacing
+        , borderSpacing2
         , bottom_
         , boxShadow
         , breakWord
         , capitalize
+        , captionSide
         , cell
         , center
         , ch
@@ -48,6 +52,7 @@ module Css
         , cjkHeavenlyStem
         , cm
         , colResize
+        , collapse
         , color
         , colorBurn
         , colorDodge
@@ -75,6 +80,7 @@ module Css
         , double
         , eResize
         , em
+        , emptyCells
         , end
         , ewResize
         , ex
@@ -106,6 +112,7 @@ module Css
         , help
         , hex
         , hidden
+        , hide
         , historicalLigatures
         , hsl
         , hsla
@@ -138,6 +145,8 @@ module Css
         , luminosity
         , malayalam
         , medium
+        , middle
+        , mixed
         , mm
         , monospace
         , move
@@ -198,7 +207,10 @@ module Css
         , seResize
         , selfEnd
         , selfStart
+        , separate
         , serif
+        , show
+        , sideways
         , slashedZero
         , small
         , smallCaps
@@ -210,6 +222,8 @@ module Css
         , stop
         , stop2
         , stretch
+        , sub
+        , super
         , swResize
         , systemUi
         , table
@@ -219,13 +233,16 @@ module Css
         , tableColumnGroup
         , tableFooterGroup
         , tableHeaderGroup
+        , tableLayout
         , tableRow
         , tableRowGroup
         , tabularNums
         , telugu
         , text
+        , textBottom
         , textOrientation
         , textRendering
+        , textTop
         , textTransform
         , text_
         , thai
@@ -238,7 +255,9 @@ module Css
         , unsafeCenter
         , unset
         , uppercase
+        , upright
         , url
+        , verticalAlign
         , verticalText
         , vh
         , visible
@@ -449,6 +468,42 @@ Multiple CSS properties use these values.
 
 @docs textTransform
 @docs capitalize, uppercase, lowercase, fullWidth
+
+
+# Tables
+
+
+## Border Collapse
+
+@docs borderCollapse
+@docs collapse, separate
+
+
+## Border Spacing
+
+@docs borderSpacing, borderSpacing2
+
+
+## Caption Side
+
+@docs captionSide
+
+
+## Empty Cells
+
+@docs emptyCells
+@docs show, hide
+
+
+## Table Layout
+
+@docs tableLayout
+
+
+## Vertical Align
+
+@docs verticalAlign
+@docs sub, super, textTop, textBottom, middle
 
 -}
 
@@ -4002,3 +4057,319 @@ rad radians =
 turn : Float -> Value { provides | turn : Supported }
 turn turns =
     Value (toString turns ++ "turn")
+
+
+
+-- TABLES --
+-- BORDER COLLAPSE --
+
+
+{-| Sets [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/).
+
+    borderCollapse collapse
+    borderCollapse separate
+
+-}
+borderCollapse :
+    Value
+        { collapse : Supported
+        , separate : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+borderCollapse (Value str) =
+    AppendProperty ("border-collapse:" ++ str)
+
+
+{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
+
+    borderCollapse collapse
+
+-}
+collapse : Value { provides | collapse : Supported }
+collapse =
+    Value "collapse"
+
+
+{-| A `separate` value for the [`border-separate`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
+
+    borderCollapse separate
+
+-}
+separate : Value { provides | separate : Supported }
+separate =
+    Value "separate"
+
+
+
+-- BORDER SPACING --
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing).
+
+    borderSpacing zero
+    borderSpacing (px 5)
+
+-}
+borderSpacing :
+    Value
+        { zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+borderSpacing (Value str) =
+    AppendProperty ("border-spacing:" ++ str)
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing), defining horizontal and vertical spacing separately.
+
+    borderSpacing2 (cm 1) (em 2)
+
+-}
+borderSpacing2 :
+    Value
+        { zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { zero : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            , initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+    -> Style
+borderSpacing2 (Value horizontal) (Value vertical) =
+    AppendProperty ("border-spacing:" ++ horizontal ++ " " ++ vertical)
+
+
+
+-- CAPTION SIDE --
+
+
+{-| Sets [`caption-side`](https://css-tricks.com/almanac/properties/c/caption-side/).
+
+    captionSide top_
+    captionSide bottom_
+
+-}
+captionSide :
+    Value
+        { top_ : Supported
+        , bottom_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+captionSide (Value str) =
+    AppendProperty ("caption-side:" ++ str)
+
+
+
+-- EMPTY CELLS --
+
+
+{-| Sets [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/).
+
+    emptyCells show
+    emptyCells hide
+
+-}
+emptyCells :
+    Value
+        { show : Supported
+        , hide : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+emptyCells (Value str) =
+    AppendProperty ("empty-cells:" ++ str)
+
+
+{-| A `show` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells show
+
+-}
+show : Value { provides | show : Supported }
+show =
+    Value "show"
+
+
+{-| A `hide` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells hide
+
+-}
+hide : Value { provides | hide : Supported }
+hide =
+    Value "hide"
+
+
+
+-- TABLE LAYOUT --
+
+
+{-| Sets [`table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
+
+    tableLayout auto
+    tableLayout fixed
+
+-}
+tableLayout :
+    Value
+        { auto : Supported
+        , fixed : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+tableLayout (Value str) =
+    AppendProperty ("table-layout:" ++ str)
+
+
+
+-- VERTICAL ALIGN
+
+
+{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
+
+    verticalAlign textBottom
+    verticalAlign (em 1)
+
+-}
+verticalAlign :
+    Value
+        { baseline : Supported
+        , sub : Supported
+        , super : Supported
+        , textTop : Supported
+        , textBottom : Supported
+        , middle : Supported
+        , top_ : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+verticalAlign (Value str) =
+    AppendProperty ("vertical-align:" ++ str)
+
+
+{-| A `sub` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign sub
+
+-}
+sub : Value { provides | sub : Supported }
+sub =
+    Value "sub"
+
+
+{-| A `super` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign super
+
+-}
+super : Value { provides | super : Supported }
+super =
+    Value "super"
+
+
+{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textTop
+
+-}
+textTop : Value { provides | textTop : Supported }
+textTop =
+    Value "text-top"
+
+
+{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textBottom
+
+-}
+textBottom : Value { provides | textBottom : Supported }
+textBottom =
+    Value "text-bottom"
+
+
+{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign middle
+
+-}
+middle : Value { provides | middle : Supported }
+middle =
+    Value "middle"
