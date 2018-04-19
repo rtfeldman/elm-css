@@ -29,6 +29,9 @@ module Css
         , backgroundImages
         , backgroundOrigin
         , backgroundOrigins
+        , backgroundPosition
+        , backgroundPosition2
+        , backgroundPosition4
         , baseline
         , batch
         , before
@@ -335,7 +338,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4
 
 @docs linearGradient, stop, stop2, to, toCorner
 
@@ -3498,6 +3501,196 @@ backgroundImages (Value first) rest =
             String.join "," (first :: peeled)
     in
     AppendProperty ("background-image:" ++ values)
+
+
+
+-- BACKGROUND POSITION --
+
+
+{-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
+
+    backgroundPosition left_
+
+    backgroundPosition (px 45)
+
+`backgroundPosition` sets the horizontal direction. If you need the vertical
+direction instead, use [`backgroundPosition2`](#backgroundPosition2) like this:
+
+    backgroundPosition zero (px 45)
+
+If you need to set the offsets from the right or bottom, use
+[`backgroundPosition4`](#backgroundPosition4) like this:
+
+    backgroundPosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+backgroundPosition :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        }
+    -> Style
+backgroundPosition (Value horiz) =
+    AppendProperty ("background-position:" ++ horiz)
+
+
+{-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
+
+    backgroundPosition2 left_ top_
+
+    backgroundPosition2 (px 45) (pct 50)
+
+`backgroundPosition2` sets both the horizontal and vertical directions (in that
+order, same as CSS.) If you need only the horizontal, you can use
+[`backgroundPosition`](#backgroundPosition) instead:
+
+    backgroundPosition left_
+
+If you need to set the offsets from the right or bottom, use
+[`backgroundPosition4`](#backgroundPosition4) like this:
+
+    backgroundPosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+backgroundPosition2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , center : Supported
+            }
+    -> Style
+backgroundPosition2 (Value horiz) (Value vert) =
+    AppendProperty ("background-position:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
+
+    backgroundPosition4 right_ (px 20) bottom_ (pct 30)
+
+The four-argument form of background position alternates sides and offets. So the
+example above would position the background image 20px from the right, and 30%
+from the bottom.
+
+See also [`backgroundPosition`](#backgroundPosition) for horizontal alignment and
+[`backgroundPosition2`](#backgroundPosition2) for horizontal (from left) and
+vertical (from top) alignment.
+
+-}
+backgroundPosition4 :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { top_ : Supported
+            , bottom_ : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
+    AppendProperty
+        ("background-position:"
+            ++ horiz
+            ++ " "
+            ++ horizAmount
+            ++ " "
+            ++ vert
+            ++ " "
+            ++ vertAmount
+        )
 
 
 
