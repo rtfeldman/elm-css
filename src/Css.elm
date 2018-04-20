@@ -129,6 +129,7 @@ module Css
         , inset
         , int
         , italic
+        , justify
         , kannada
         , khmer
         , lao
@@ -147,6 +148,7 @@ module Css
         , lowercase
         , luminosity
         , malayalam
+        , matchParent
         , medium
         , middle
         , mixed
@@ -242,6 +244,7 @@ module Css
         , tabularNums
         , telugu
         , text
+        , textAlign
         , textBottom
         , textOrientation
         , textRendering
@@ -4566,3 +4569,47 @@ textBottom =
 middle : Value { provides | middle : Supported }
 middle =
     Value "middle"
+
+
+{-| Sets [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
+
+    textAlign left_
+    textAlign justfy
+
+-}
+textAlign :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        , justify : Supported
+        , start : Supported
+        , end : Supported
+        , matchParent : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textAlign (Value str) =
+    AppendProperty ("text-align:" ++ str)
+
+
+{-| A `justify` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
+
+    textAlign justify
+
+-}
+justify : Value { provides | justify : Supported }
+justify =
+    Value "justify"
+
+
+{-| A `match-parent` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
+
+    textAlign matchParent
+
+-}
+matchParent : Value { provides | matchParent : Supported }
+matchParent =
+    Value "match-parent"
