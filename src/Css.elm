@@ -76,6 +76,7 @@ module Css
         , devanagari
         , diagonalFractions
         , difference
+        , direction
         , discretionaryLigatures
         , display
         , displayFlex
@@ -145,6 +146,7 @@ module Css
         , listStyle3
         , local
         , lowercase
+        , ltr
         , luminosity
         , malayalam
         , medium
@@ -201,6 +203,7 @@ module Css
         , ridge
         , right_
         , rowResize
+        , rtl
         , sResize
         , safeCenter
         , sansSerif
@@ -4566,3 +4569,42 @@ textBottom =
 middle : Value { provides | middle : Supported }
 middle =
     Value "middle"
+
+
+{-| Sets [`direction`](https://css-tricks.com/almanac/properties/d/direction/)
+
+    direction ltr
+    direction rtl
+
+-}
+direction :
+    Value
+        { rtl : Supported
+        , ltr : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+direction (Value str) =
+    AppendProperty ("direction:" ++ str)
+
+
+{-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction ltr
+
+-}
+ltr : Value { provides | ltr : Supported }
+ltr =
+    Value "ltr"
+
+
+{-| A `rtl` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction rtl
+
+-}
+rtl : Value { provides | rtl : Supported }
+rtl =
+    Value "rtl"
