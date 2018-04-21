@@ -467,6 +467,16 @@ Multiple CSS properties use these values.
 @docs deg, grad, rad, turn
 
 
+## Direction
+
+@docs direction, ltr, rtl
+
+
+## Text Align
+
+@docs justify, matchParent, textAlign
+
+
 ## Text Orientation
 
 @docs textOrientation
