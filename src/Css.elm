@@ -43,6 +43,7 @@ module Css
         , borderCollapse
         , borderSpacing
         , borderSpacing2
+        , bottom
         , bottom_
         , boxShadow
         , breakWord
@@ -137,6 +138,7 @@ module Css
         , large
         , larger
         , lastBaseline
+        , left
         , left_
         , lighten
         , lighter
@@ -205,6 +207,7 @@ module Css
         , rgb
         , rgba
         , ridge
+        , right
         , right_
         , rowResize
         , rtl
@@ -268,6 +271,7 @@ module Css
         , toTop
         , toTopLeft
         , toTopRight
+        , top
         , top_
         , turn
         , unicase
@@ -379,7 +383,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Positions
 
-@docs position, zIndex
+@docs position, top, right, bottom, left, zIndex
 
 @docs absolute, fixed, relative, static, sticky
 
