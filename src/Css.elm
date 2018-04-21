@@ -256,8 +256,14 @@ module Css
         , text_
         , thai
         , titlingCaps
-        , to
-        , toCorner
+        , toBottom
+        , toBottomLeft
+        , toBottomRight
+        , toLeft
+        , toRight
+        , toTop
+        , toTopLeft
+        , toTopRight
         , top_
         , turn
         , unicase
@@ -346,7 +352,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 @docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4
 
-@docs linearGradient, stop, stop2, to, toCorner
+@docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 
 ## Box Shadow
@@ -3779,50 +3785,124 @@ stop2 (Value color) (Value position) =
     Value (color ++ " " ++ position)
 
 
-{-| Provides the special [`to` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+{-| Provides the [`to bottom` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
 
-    linearGradient (to top_) (stop red) (stop blue) []
+    linearGradient toBottom (stop red) (stop blue) []
 
-If you want your gradient to go to a corner, use [`toCorner`](#toCorner):
+If you want your gradient to go to a corner, use [`toBottomLeft`](#toBottomLeft) or [`toBottomRight`](#toBottomRight):
 
-    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
-
-**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
-
--}
-to :
-    Value
-        { top_ : Supported
-        , bottom_ : Supported
-        , left_ : Supported
-        , right_ : Supported
-        }
-    -> Value { supported | to : Supported }
-to (Value direction) =
-    Value ("to " ++ direction)
-
-
-{-| Provides the special [`to` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient (toCorner top_ left_) (stop red) (stop blue) []
-
-    linearGradient (toCorner bottom_ right_) (stop red) (stop blue) []
-
-If you want your gradient to go to a side, use [`to`](#to):
-
-    linearGradient (to top_) (stop red) (stop blue) []
-
-See also [`to`](#to) for a side.
-
-**Note:** This function accepts `top_`, `bottom_`, `left_`, and `right_`, because the plain versions (e.g. [`top`](#top)) are position functions!
+    linearGradient toBottomLeft (stop red) (stop blue) []
+    linearGradient toBottomRight (stop red) (stop blue) []
 
 -}
-toCorner :
-    Value { top_ : Supported, bottom_ : Supported }
-    -> Value { left_ : Supported, right_ : Supported }
-    -> Value { supported | to : Supported }
-toCorner (Value topBottom) (Value leftRight) =
-    Value ("to " ++ topBottom ++ " " ++ leftRight)
+toBottom : Value { provides | provides : Supported }
+toBottom =
+    Value "to bottom"
+
+
+{-| Provides the [`to bottom left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toLeft`](#toLeft) instead:
+
+    linearGradient toBottom (stop red) (stop blue) []
+    linearGradient toLeft (stop red) (stop blue) []
+
+-}
+toBottomLeft : Value { provides | toBottomLeft : Supported }
+toBottomLeft =
+    Value "to bottom left"
+
+
+{-| Provides the [`to bottom right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toRight`](#toRight) instead:
+
+    linearGradient toBottom (stop red) (stop blue) []
+    linearGradient toRight (stop red) (stop blue) []
+
+-}
+toBottomRight : Value { provides | toBottomRight : Supported }
+toBottomRight =
+    Value "to bottom right"
+
+
+{-| Provides the [`to left` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toBottomLeft`](#toBottomLeft):
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+-}
+toLeft : Value { provides | toLeft : Supported }
+toLeft =
+    Value "to left"
+
+
+{-| Provides the [`to right` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toRight (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopRight`](#toTopRight) or [`toBottomRight`](#toBottomRight):
+
+    linearGradient toTopRight (stop red) (stop blue) []
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+-}
+toRight : Value { provides | toRight : Supported }
+toRight =
+    Value "to right"
+
+
+{-| Provides the [`to top` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTop (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toTopRight`](#toTopRight):
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+    linearGradient toTopRight (stop red) (stop blue) []
+
+-}
+toTop : Value { provides | toTop : Supported }
+toTop =
+    Value "to top"
+
+
+{-| Provides the [`to top left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toLeft`](#toLeft) instead:
+
+    linearGradient toTop (stop red) (stop blue) []
+    linearGradient toLeft (stop red) (stop blue) []
+
+-}
+toTopLeft : Value { provides | toTopLeft : Supported }
+toTopLeft =
+    Value "to top left"
+
+
+{-| Provides the [`to top right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTopRight (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toRight`](#toRight) instead:
+
+    linearGradient toTop (stop red) (stop blue) []
+    linearGradient toRight (stop red) (stop blue) []
+
+-}
+toTopRight : Value { provides | toTopRight : Supported }
+toTopRight =
+    Value "to top right"
 
 
 
