@@ -76,6 +76,7 @@ module Css
         , devanagari
         , diagonalFractions
         , difference
+        , direction
         , discretionaryLigatures
         , display
         , displayFlex
@@ -146,6 +147,7 @@ module Css
         , listStyle3
         , local
         , lowercase
+        , ltr
         , luminosity
         , malayalam
         , matchParent
@@ -203,6 +205,7 @@ module Css
         , ridge
         , right_
         , rowResize
+        , rtl
         , sResize
         , safeCenter
         , sansSerif
@@ -4571,6 +4574,25 @@ middle =
     Value "middle"
 
 
+{-| Sets [`direction`](https://css-tricks.com/almanac/properties/d/direction/)
+
+    direction ltr
+    direction rtl
+
+-}
+direction :
+    Value
+        { rtl : Supported
+        , ltr : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+direction (Value str) =
+    AppendProperty ("direction:" ++ str)
+
+
 {-| Sets [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
 
     textAlign left_
@@ -4613,3 +4635,24 @@ justify =
 matchParent : Value { provides | matchParent : Supported }
 matchParent =
     Value "match-parent"
+
+
+
+{-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction ltr
+
+-}
+ltr : Value { provides | ltr : Supported }
+ltr =
+    Value "ltr"
+
+
+{-| A `rtl` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction rtl
+
+-}
+rtl : Value { provides | rtl : Supported }
+rtl =
+    Value "rtl"
