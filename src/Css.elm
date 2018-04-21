@@ -290,6 +290,7 @@ module Css
         , xSmall
         , xxLarge
         , xxSmall
+        , zIndex
         , zero
         , zoomIn
         , zoomOut
@@ -378,7 +379,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Positions
 
-@docs position
+@docs position, zIndex
 
 @docs absolute, fixed, relative, static, sticky
 
@@ -1234,6 +1235,25 @@ static =
 sticky : Value { provides | sticky : Supported }
 sticky =
     Value "sticky"
+
+
+{-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
+
+    zIndex (num 10)
+    zIndex auto
+
+-}
+zIndex :
+    Value
+        { num : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+zIndex (Value val) =
+    AppendProperty ("z-index:" ++ val)
 
 
 
