@@ -1021,7 +1021,7 @@ hex str =
 -- POSITIONS --
 
 
-{-| Sets the [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) of an element.
+{-| Sets the [`position`](https://css-tricks.com/almanac/properties/p/position/) of an element.
 
     position absolute
     position relative
@@ -1199,9 +1199,11 @@ right (Value val) =
     AppendProperty ("right:" ++ val)
 
 
-{-| An [`absolute` `position`](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/) value.
+{-| An [`absolute` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative).
 
     position absolute
+
+The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](<https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/>
 
 -}
 absolute : Value { provides | absolute : Supported }
@@ -1209,7 +1211,7 @@ absolute =
     Value "absolute"
 
 
-{-| A [`fixed` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#fixed)
+{-| A [`fixed` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values)
 or [`fixed` `background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
 or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/)
 
@@ -1217,15 +1219,19 @@ or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-la
     backgroundAttachment fixed
     tableLayout fixed
 
+The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/)
+
 -}
 fixed : Value { provides | fixed : Supported }
 fixed =
     Value "fixed"
 
 
-{-| A [`relative` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative)
+{-| A [`relative` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values).
 
     position relative
+
+The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
 
 -}
 relative : Value { provides | relative : Supported }
@@ -1233,9 +1239,11 @@ relative =
     Value "relative"
 
 
-{-| A [`static` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#static)
+{-| A [`static` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values).
 
     position static
+
+This is the default `position` value. See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
 
 -}
 static : Value { provides | static : Supported }
@@ -1243,9 +1251,11 @@ static =
     Value "static"
 
 
-{-| A [`sticky` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky)
+{-| A [`sticky` `position`](https://css-tricks.com/position-sticky-2/)
 
     position sticky
+
+The default `position` value is [`static`](#static). See also [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
 
 -}
 sticky : Value { provides | sticky : Supported }
@@ -1253,10 +1263,12 @@ sticky =
     Value "sticky"
 
 
-{-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
+{-| Sets [`z-index`](https://css-tricks.com/almanac/properties/z/z-index/)
 
     zIndex (num 10)
     zIndex auto
+
+**NOTE:** Z-index is not as simple as it looks! Make sure to read about [stacking contexts](https://css-tricks.com/css-stacking-contexts/) if you're not already familiar with them.
 
 -}
 zIndex :
