@@ -9,11 +9,16 @@ elm-css DSL, collecting warnings, or
 {-| For typing
 -}
 type Compatible
-    = Compatible
+    = Compatible Never
+
+
+{-| -}
+type Value compatible
+    = Value String
 
 
 type alias Number compatible =
-    { compatible | value : String, number : Compatible }
+    Value { compatible | number : Compatible }
 
 
 {-| A property consisting of a key:value string.

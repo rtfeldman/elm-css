@@ -337,7 +337,7 @@ fontStylesheet =
             , fontFamilies
                 [ qt "Gill Sans Extrabold"
                 , "Helvetica"
-                , .value sansSerif
+                , "sans-serif"
                 ]
             , fontSize xSmall
             , fontStyle italic

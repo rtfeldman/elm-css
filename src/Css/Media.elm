@@ -1,27 +1,21 @@
 module Css.Media
     exposing
-        ( Bits
-        , CanHover
-        , Coarse
-        , Enabled
+        ( AbsoluteLength
+        , Bits
+        , BlockAxisOverflow
+        , ColorGamut
         , Expression
-        , Fast
-        , Fine
-        , InitialOnly
-        , Interlace
-        , Landscape
+        , HoverCapability
+        , InlineAxisOverflow
         , MediaQuery
         , MediaType
-        , OptionalPaged
-        , P3
-        , Paged
-        , Portrait
-        , Progressive
+        , Orientation
+        , PointerDevice
         , Ratio
-        , Rec2020
         , Resolution
-        , SRGB
-        , Slow
+        , ScanningProcess
+        , ScriptingSupport
+        , UpdateFrequency
         , all
         , anyHover
         , anyPointer
@@ -111,35 +105,35 @@ module Css.Media
 
 # Viewport, Page Dimensions Media Features
 
-@docs minWidth, width, maxWidth, minHeight, height, maxHeight, Ratio, ratio
-@docs minAspectRatio, aspectRatio, maxAspectRatio, Landscape, Portrait
-@docs landscape, portrait, orientation
+@docs AbsoluteLength, minWidth, width, maxWidth, minHeight, height, maxHeight
+@docs Ratio, ratio, maxAspectRatio, minAspectRatio, aspectRatio
+@docs Orientation, landscape, portrait, orientation
 
 
 # Display Quality Media Features
 
 @docs Resolution, dpi, dpcm, dppx, minResolution, resolution, maxResolution
-@docs scan, Progressive, Interlace, progressive, interlace, scan, grid, Slow
-@docs Fast, slow, fast, update, Paged, OptionalPaged, paged, optionalPaged
-@docs overflowBlock, overflowInline
+@docs ScanningProcess, scan, progressive, interlace, scan, grid
+@docs UpdateFrequency, slow, fast, update, paged, optionalPaged
+@docs BlockAxisOverflow, InlineAxisOverflow, overflowBlock, overflowInline
 
 
 # Color Media Features
 
 @docs Bits, bits, minColor, color, maxColor, minMonochrome, monochrome
-@docs maxMonochrome, minColorIndex, colorIndex, maxColorIndex, SRGB, P3
-@docs Rec2020, srgb, p3, rec2020, colorGamut
+@docs maxColorIndex, maxMonochrome, minColorIndex, colorIndex
+@docs ColorGamut, srgb, p3, rec2020, colorGamut
 
 
 # Interaction Media Features
 
-@docs Fine, Coarse, fine, coarse, pointer, anyPointer, CanHover, canHover
-@docs hover, anyHover
+@docs PointerDevice, fine, coarse, pointer, anyPointer, canHover
+@docs HoverCapability, hover, anyHover
 
 
 # Scripting Media Features
 
-@docs InitialOnly, Enabled, initialOnly, enabled, scripting
+@docs ScriptingSupport, initialOnly, enabled, scripting
 
 -}
 
@@ -195,10 +189,6 @@ In the media query `screen and (min-width: 768px)`,
 -}
 type alias Expression =
     Structure.MediaExpression
-
-
-type alias Value compatible =
-    { compatible | value : String }
 
 
 
@@ -364,7 +354,7 @@ speech =
 (percent, vh, vw, and so on), such as px, pt, cm, em, rem, and so on.
 -}
 type alias AbsoluteLength compatible =
-    { compatible | value : String, absoluteLength : Compatible }
+    Value { compatible | absoluteLength : Compatible }
 
 
 {-| Media feature [`min-width`](https://drafts.csswg.org/mediaqueries/#width)
@@ -374,8 +364,8 @@ Queries the width of the output device.
 
 -}
 minWidth : AbsoluteLength compatible -> Expression
-minWidth value =
-    feature "min-width" value
+minWidth =
+    feature "min-width"
 
 
 {-| Media feature [`width`](https://drafts.csswg.org/mediaqueries/#width)
@@ -384,8 +374,8 @@ minWidth value =
 
 -}
 width : AbsoluteLength compatible -> Expression
-width value =
-    feature "width" value
+width =
+    feature "width"
 
 
 {-| Media feature [`max-width`](https://drafts.csswg.org/mediaqueries/#width)
@@ -394,8 +384,8 @@ width value =
 
 -}
 maxWidth : AbsoluteLength compatible -> Expression
-maxWidth value =
-    feature "max-width" value
+maxWidth =
+    feature "max-width"
 
 
 {-| Media feature [`min-height`](https://drafts.csswg.org/mediaqueries/#height)
@@ -404,15 +394,15 @@ maxWidth value =
 
 -}
 minHeight : AbsoluteLength compatible -> Expression
-minHeight value =
-    feature "min-height" value
+minHeight =
+    feature "min-height"
 
 
 {-| Media feature [`height`](https://drafts.csswg.org/mediaqueries/#height)
 -}
 height : AbsoluteLength compatible -> Expression
-height value =
-    feature "height" value
+height =
+    feature "height"
 
 
 {-| Media feature [`max-height`](https://drafts.csswg.org/mediaqueries/#height)
@@ -421,13 +411,13 @@ height value =
 
 -}
 maxHeight : AbsoluteLength compatible -> Expression
-maxHeight value =
-    feature "max-height" value
+maxHeight =
+    feature "max-height"
 
 
 {-| -}
 type alias Ratio =
-    { value : String, ratio : Compatible }
+    Value { ratio : Compatible }
 
 
 {-| Create a ratio.
@@ -438,7 +428,7 @@ type alias Ratio =
 -}
 ratio : Int -> Int -> Ratio
 ratio numerator denominator =
-    { value = toString numerator ++ "/" ++ toString denominator, ratio = Compatible }
+    Value (toString numerator ++ "/" ++ toString denominator)
 
 
 {-| Media feature [`min-aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
@@ -447,8 +437,8 @@ ratio numerator denominator =
 
 -}
 minAspectRatio : Ratio -> Expression
-minAspectRatio value =
-    feature "min-aspect-ratio" value
+minAspectRatio =
+    feature "min-aspect-ratio"
 
 
 {-| Media feature [`aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
@@ -457,8 +447,8 @@ minAspectRatio value =
 
 -}
 aspectRatio : Ratio -> Expression
-aspectRatio value =
-    feature "aspect-ratio" value
+aspectRatio =
+    feature "aspect-ratio"
 
 
 {-| Media feature [`max-aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
@@ -467,44 +457,35 @@ aspectRatio value =
 
 -}
 maxAspectRatio : Ratio -> Expression
-maxAspectRatio value =
-    feature "max-aspect-ratio" value
-
-
-type alias Orientation a =
-    { a | value : String, orientation : Compatible }
+maxAspectRatio =
+    feature "max-aspect-ratio"
 
 
 {-| -}
-type alias Landscape =
-    { value : String, orientation : Compatible }
-
-
-{-| -}
-type alias Portrait =
-    { value : String, orientation : Compatible }
+type alias Orientation compatible =
+    Value { compatible | orientation : Compatible }
 
 
 {-| CSS value [`landscape`](https://drafts.csswg.org/mediaqueries/#valdef-media-orientation-portrait)
 -}
-landscape : Landscape
+landscape : Orientation {}
 landscape =
-    { value = "landscape", orientation = Compatible }
+    Value "landscape"
 
 
 {-| CSS value [`portrait`](https://drafts.csswg.org/mediaqueries/#valdef-media-orientation-portrait)
 -}
-portrait : Portrait
+portrait : Orientation {}
 portrait =
-    { value = "portrait", orientation = Compatible }
+    Value "portrait"
 
 
 {-| Media feature [`orientation`](https://drafts.csswg.org/mediaqueries/#orientation).
 Accepts `portrait` or `landscape`.
 -}
-orientation : Orientation a -> Expression
-orientation value =
-    feature "orientation" value
+orientation : Orientation compatible -> Expression
+orientation =
+    feature "orientation"
 
 
 
@@ -513,8 +494,8 @@ orientation value =
 
 {-| Display Resolution. <https://www.w3.org/TR/css3-values/#resolution-value>
 -}
-type alias Resolution =
-    { value : String, resolution : Compatible }
+type alias Resolution compatible =
+    Value { compatible | resolution : Compatible }
 
 
 {-| `dpi`: Dots per inch. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -522,9 +503,9 @@ type alias Resolution =
     dpi 166
 
 -}
-dpi : Float -> Resolution
+dpi : Float -> Resolution {}
 dpi value =
-    { value = toString value ++ "dpi", resolution = Compatible }
+    Value (toString value ++ "dpi")
 
 
 {-| `dpcm`: Dots per centimeter. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -532,9 +513,9 @@ dpi value =
     dpcm 65
 
 -}
-dpcm : Float -> Resolution
+dpcm : Float -> Resolution {}
 dpcm value =
-    { value = toString value ++ "dpcm", resolution = Compatible }
+    Value (toString value ++ "dpcm")
 
 
 {-| `dppx`: Dots per pixel. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -542,9 +523,9 @@ dpcm value =
     dppx 1.5
 
 -}
-dppx : Float -> Resolution
+dppx : Float -> Resolution {}
 dppx value =
-    { value = toString value ++ "dppx", resolution = Compatible }
+    Value (toString value ++ "dppx")
 
 
 {-| Media feature [`min-resolution`](https://drafts.csswg.org/mediaqueries/#resolution).
@@ -553,9 +534,9 @@ Describes the resolution of the output device.
     media (minResolution (dpi 600)) [ Css.class HiResImg [ display block ] ]
 
 -}
-minResolution : Resolution -> Expression
-minResolution value =
-    feature "min-resolution" value
+minResolution : Resolution compatible -> Expression
+minResolution =
+    feature "min-resolution"
 
 
 {-| Media feature [`resolution`](https://drafts.csswg.org/mediaqueries/#resolution)
@@ -564,9 +545,9 @@ Describes the resolution of the output device.
     media (resolution (dppx 2)) [ img [ width (pct 50) ] ]
 
 -}
-resolution : Resolution -> Expression
-resolution value =
-    feature "resolution" value
+resolution : Resolution compatible -> Expression
+resolution =
+    feature "resolution"
 
 
 {-| Media feature [`max-resolution`](https://drafts.csswg.org/mediaqueries/#resolution)
@@ -575,45 +556,36 @@ Describes the resolution of the output device.
     media (maxResolution (dpcm 65)) [ Css.class HiResImg [ display none ] ]
 
 -}
-maxResolution : Resolution -> Expression
-maxResolution value =
-    feature "max-resolution" value
-
-
-type alias ScanningProcess a =
-    { a | value : String, scanningProcess : Compatible }
+maxResolution : Resolution compatible -> Expression
+maxResolution =
+    feature "max-resolution"
 
 
 {-| -}
-type alias Progressive =
-    { value : String, scanningProcess : Compatible }
-
-
-{-| -}
-type alias Interlace =
-    { value : String, scanningProcess : Compatible }
+type alias ScanningProcess compatible =
+    Value { compatible | scanningProcess : Compatible }
 
 
 {-| CSS value [`progressive`](https://drafts.csswg.org/mediaqueries/#valdef-media-scan-progressive)
 -}
-progressive : Progressive
+progressive : ScanningProcess {}
 progressive =
-    { value = "progressive", scanningProcess = Compatible }
+    Value "progressive"
 
 
 {-| CSS value [`interlace`](https://drafts.csswg.org/mediaqueries/#valdef-media-scan-interlace)
 -}
-interlace : Interlace
+interlace : ScanningProcess {}
 interlace =
-    { value = "interlace", scanningProcess = Compatible }
+    Value "interlace"
 
 
 {-| Media feature [`scan`](https://drafts.csswg.org/mediaqueries/#scan).
 Queries scanning process of the device. Accepts `innterlace` (some TVs) or `progressive` (most things).
 -}
-scan : ScanningProcess a -> Expression
-scan value =
-    feature "scan" value
+scan : ScanningProcess compatible -> Expression
+scan =
+    feature "scan"
 
 
 {-| Media feature [`grid`](https://drafts.csswg.org/mediaqueries/#grid).
@@ -624,88 +596,71 @@ grid =
     unparameterizedFeature "grid"
 
 
-type alias UpdateFrequency a =
-    { a | value : String, updateFrequency : Compatible }
-
-
 {-| -}
-type alias Slow =
-    { value : String, updateFrequency : Compatible }
-
-
-{-| -}
-type alias Fast =
-    { value : String, updateFrequency : Compatible }
+type alias UpdateFrequency compatible =
+    Value { compatible | updateFrequency : Compatible }
 
 
 {-| CSS value [`slow`](https://drafts.csswg.org/mediaqueries/#valdef-media-update-slow)
 -}
-slow : Slow
+slow : UpdateFrequency {}
 slow =
-    { value = "slow", updateFrequency = Compatible }
+    Value "slow"
 
 
 {-| CSS value [`fast`](https://drafts.csswg.org/mediaqueries/#valdef-media-update-fast)
 -}
-fast : Fast
+fast : UpdateFrequency {}
 fast =
-    { value = "fast", updateFrequency = Compatible }
+    Value "fast"
 
 
 {-| Media feature [`update`](https://drafts.csswg.org/mediaqueries/#update)
 The update frequency of the device. Accepts `none`, `slow`, or `fast`
 -}
-update : UpdateFrequency a -> Expression
-update value =
-    feature "update" value
-
-
-type alias BlockAxisOverflow a =
-    { a | value : String, blockAxisOverflow : Compatible }
+update : UpdateFrequency compatible -> Expression
+update =
+    feature "update"
 
 
 {-| -}
-type alias Paged =
-    { value : String, blockAxisOverflow : Compatible }
-
-
-{-| -}
-type alias OptionalPaged =
-    { value : String, blockAxisOverflow : Compatible }
+type alias BlockAxisOverflow compatible =
+    Value { compatible | blockAxisOverflow : Compatible }
 
 
 {-| CSS value [`paged`](https://drafts.csswg.org/mediaqueries/#valdef-media-overflow-block-paged)
 -}
-paged : Paged
+paged : BlockAxisOverflow {}
 paged =
-    { value = "paged", blockAxisOverflow = Compatible }
+    Value "paged"
 
 
 {-| CSS value [`optional-paged`](https://drafts.csswg.org/mediaqueries/#valdef-media-overflow-block-optional-paged)
 -}
-optionalPaged : OptionalPaged
+optionalPaged : BlockAxisOverflow {}
 optionalPaged =
-    { value = "optional-paged", blockAxisOverflow = Compatible }
+    Value "optional-paged"
 
 
 {-| Media feature [`overflow-block`](https://drafts.csswg.org/mediaqueries/#overflow-block)
 Describes the behavior of the device when content overflows the initial containing block in the block axis.
 -}
-overflowBlock : BlockAxisOverflow a -> Expression
-overflowBlock value =
-    feature "overflow-block" value
+overflowBlock : BlockAxisOverflow compatible -> Expression
+overflowBlock =
+    feature "overflow-block"
 
 
-type alias InlineAxisOverflow a =
-    { a | value : String, inlineAxisOverflow : Compatible }
+{-| -}
+type alias InlineAxisOverflow compatible =
+    Value { compatible | inlineAxisOverflow : Compatible }
 
 
 {-| Media feature [`overflow-inline`](https://drafts.csswg.org/mediaqueries/#overflow-inline).
 Describes the behavior of the device when content overflows the initial containing block in the inline axis.
 -}
-overflowInline : InlineAxisOverflow a -> Expression
-overflowInline value =
-    feature "overflow-inline" value
+overflowInline : InlineAxisOverflow compatible -> Expression
+overflowInline =
+    feature "overflow-inline"
 
 
 
@@ -714,7 +669,7 @@ overflowInline value =
 
 {-| -}
 type alias Bits =
-    { value : String, bits : Compatible }
+    Value { bits : Compatible }
 
 
 {-| Get a bumber of bits
@@ -724,7 +679,7 @@ type alias Bits =
 -}
 bits : Int -> Bits
 bits value =
-    { value = toString value, bits = Compatible }
+    Value (toString value)
 
 
 {-| Media Feature [`min-nncolor`](https://drafts.csswg.org/mediaqueries/#color)
@@ -734,8 +689,8 @@ Queries the user agent's bits per color channel
 
 -}
 minColor : Bits -> Expression
-minColor value =
-    feature "min-color" value
+minColor =
+    feature "min-color"
 
 
 {-| Media feature [`color`](https://drafts.csswg.org/mediaqueries/#color)
@@ -755,8 +710,8 @@ Queries the user agent's bits per color channel
 
 -}
 maxColor : Bits -> Expression
-maxColor value =
-    feature "max-color" value
+maxColor =
+    feature "max-color"
 
 
 {-| Media feature [`monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
@@ -772,15 +727,15 @@ monochrome =
 {-| Media Feature [`min-monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
 -}
 minMonochrome : Bits -> Expression
-minMonochrome value =
-    feature "min-monochrome" value
+minMonochrome =
+    feature "min-monochrome"
 
 
 {-| Media feature [`max-monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
 -}
 maxMonochrome : Bits -> Expression
-maxMonochrome value =
-    feature "max-monochrome" value
+maxMonochrome =
+    feature "max-monochrome"
 
 
 {-| Media feature [`color-index`](https://drafts.csswg.org/mediaqueries/#color-index)
@@ -789,9 +744,9 @@ Queries the number of colors in the user agent's color lookup table.
     media (and screen (colorIndex (int 16777216))) [ a [ Css.color (hex "D9534F") ] ]
 
 -}
-colorIndex : Number a -> Expression
-colorIndex value =
-    feature "color-index" value
+colorIndex : Number compatible -> Expression
+colorIndex =
+    feature "color-index"
 
 
 {-| Media Feature [`min-color-index`](https://drafts.csswg.org/mediaqueries/nn#color-index)
@@ -800,9 +755,9 @@ Queries the number of colors in the user agent's color lookup table.
     media (and screen (minColorIndex (int 16777216))) [ a [ Css.color (hex "D9534F")] ]
 
 -}
-minColorIndex : Number a -> Expression
-minColorIndex value =
-    feature "min-color-index" value
+minColorIndex : Number compatible -> Expression
+minColorIndex =
+    feature "min-color-index"
 
 
 {-| Media feature [`max-color-index`](https://drafts.csswg.org/mediaqueries/#color-index).
@@ -811,49 +766,35 @@ Queries the number of colors in the user agent's color lookup table.
     media (and screen (maxColorIndex (int 256))) [ a [ Css.color (hex "FF0000")] ]
 
 -}
-maxColorIndex : Number a -> Expression
-maxColorIndex value =
-    feature "max-color-index" value
-
-
-type alias ColorGamut a =
-    { a | value : String, colorGamut : Compatible }
+maxColorIndex : Number compatible -> Expression
+maxColorIndex =
+    feature "max-color-index"
 
 
 {-| -}
-type alias SRGB =
-    { value : String, colorGamut : Compatible }
-
-
-{-| -}
-type alias P3 =
-    { value : String, colorGamut : Compatible }
-
-
-{-| -}
-type alias Rec2020 =
-    { value : String, colorGamut : Compatible }
+type alias ColorGamut compatible =
+    Value { compatible | colorGamut : Compatible }
 
 
 {-| CSS value [`srgb`](https://drafts.csswg.org/mediaqueries/#valdef-media-color-gamut-srgb)
 -}
-srgb : SRGB
+srgb : ColorGamut {}
 srgb =
-    { value = "srgb", colorGamut = Compatible }
+    Value "srgb"
 
 
 {-| CSS value [`p3`](https://drafts.csswg.org/mediaqueries/#valdef-media-color-gamut-p3)
 -}
-p3 : P3
+p3 : ColorGamut {}
 p3 =
-    { value = "p3", colorGamut = Compatible }
+    Value "p3"
 
 
 {-| CSS value [`rec2020`](https://drafts.csswg.org/mediaqueries/#valdef-media-color-gamut-rec2020)
 -}
-rec2020 : Rec2020
+rec2020 : ColorGamut {}
 rec2020 =
-    { value = "rec2020", colorGamut = Compatible }
+    Value "rec2020"
 
 
 {-| Media feature [`color-gamut`](https://drafts.csswg.org/mediaqueries/#color-gamut).
@@ -862,9 +803,9 @@ Describes the approximate range of colors supported by the user agent and device
     media (and screen (colorGamut rec2020)) [ Css.class HiColorImg [ display block ] ]
 
 -}
-colorGamut : ColorGamut a -> Expression
-colorGamut value =
-    feature "color-gamut" value
+colorGamut : ColorGamut compatible -> Expression
+colorGamut =
+    feature "color-gamut"
 
 
 
@@ -874,32 +815,22 @@ colorGamut value =
 {-| Describes the presence and accuracy of a pointing device such as a mouse
 <https://drafts.csswg.org/mediaqueries/#pointer>
 -}
-type alias PointerDevice a =
-    { a | value : String, pointerDevice : Compatible }
-
-
-{-| -}
-type alias Fine =
-    { value : String, pointerDevice : Compatible }
-
-
-{-| -}
-type alias Coarse =
-    { value : String, pointerDevice : Compatible }
+type alias PointerDevice compatible =
+    Value { compatible | pointerDevice : Compatible }
 
 
 {-| CSS Value [`fine`](https://drafts.csswg.org/mediaqueries/#valdef-media-pointer-fine)
 -}
-fine : Fine
+fine : PointerDevice {}
 fine =
-    { value = "fine", pointerDevice = Compatible }
+    Value "fine"
 
 
 {-| CSS Value [`coarse`](https://drafts.csswg.org/mediaqueries/#valdef-media-pointer-coarse)
 -}
-coarse : Coarse
+coarse : PointerDevice {}
 coarse =
-    { value = "coarse", pointerDevice = Compatible }
+    Value "coarse"
 
 
 {-| Media feature [`pointer`](https://drafts.csswg.org/mediaqueries/#pointer)
@@ -910,9 +841,9 @@ Accepts `none`, `fine`, and `coarse`.
     media (Media.pointer coarse) [ a [ display block, Css.height (px 24) ] ]
 
 -}
-pointer : PointerDevice a -> Expression
-pointer value =
-    feature "pointer" value
+pointer : PointerDevice compatible -> Expression
+pointer =
+    feature "pointer"
 
 
 {-| Media feature [`any-pointer`](https://drafts.csswg.org/mediaqueries/#any-input)
@@ -923,27 +854,22 @@ Accepts `none`, `fine`, and `coarse`.
     media (anyPointer coarse) [ a [ display block, Css.height (px 24) ] ]
 
 -}
-anyPointer : PointerDevice a -> Expression
-anyPointer value =
-    feature "any-pointer" value
+anyPointer : PointerDevice compatible -> Expression
+anyPointer =
+    feature "any-pointer"
 
 
 {-| -}
-type alias HoverCapability a =
-    { a | value : String, hoverCapability : Compatible }
-
-
-{-| -}
-type alias CanHover =
-    { value : String, hoverCapability : Compatible }
+type alias HoverCapability compatible =
+    Value { compatible | hoverCapability : Compatible }
 
 
 {-| The value [`hover`](https://drafts.csswg.org/mediaqueries/#valdef-media-hover-hover).
 Named `canHover` to avoid conflict with the media feature of the same name
 -}
-canHover : CanHover
+canHover : HoverCapability {}
 canHover =
-    { value = "hover", hoverCapability = Compatible }
+    Value "hover"
 
 
 {-| Media feature [`hover`](https://drafts.csswg.org/mediaqueries/#hover).
@@ -953,9 +879,9 @@ Accepts `none` or `canHover`.
     media (Media.hover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
-hover : HoverCapability a -> Expression
-hover value =
-    feature "hover" value
+hover : HoverCapability compatible -> Expression
+hover =
+    feature "hover"
 
 
 {-| Media feature [`any-hover`](https://drafts.csswg.org/mediaqueries/#any-input)
@@ -965,9 +891,9 @@ Accepts `none` or `canHover`.
     media (anyHover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
 
 -}
-anyHover : HoverCapability a -> Expression
-anyHover value =
-    feature "any-hover" value
+anyHover : HoverCapability compatible -> Expression
+anyHover =
+    feature "any-hover"
 
 
 
@@ -975,32 +901,22 @@ anyHover value =
 
 
 {-| -}
-type alias ScriptingSupport a =
-    { a | value : String, scriptingSupport : Compatible }
-
-
-{-| -}
-type alias InitialOnly =
-    { value : String, scriptingSupport : Compatible }
-
-
-{-| -}
-type alias Enabled =
-    { value : String, scriptingSupport : Compatible }
+type alias ScriptingSupport compatible =
+    Value { compatible | scriptingSupport : Compatible }
 
 
 {-| CSS value [`initial-only`](https://drafts.csswg.org/mediaqueries/#valdef-media-scripting-initial-only).
 -}
-initialOnly : InitialOnly
+initialOnly : ScriptingSupport {}
 initialOnly =
-    { value = "initial-only", scriptingSupport = Compatible }
+    Value "initial-only"
 
 
 {-| CSS value [`enabled`](https://drafts.csswg.org/mediaqueries/#valdef-media-scripting-enabled).
 -}
-enabled : Enabled
+enabled : ScriptingSupport {}
 enabled =
-    { value = "enabled", scriptingSupport = Compatible }
+    Value "enabled"
 
 
 {-| The [`scripting`](https://drafts.csswg.org/mediaqueries/#scripting) media feature
@@ -1010,9 +926,9 @@ Accepts `none`, `initialOnly`, and `enabled`.
     media (scripting none) [ Css.class NoScript [ display block ] ]
 
 -}
-scripting : ScriptingSupport a -> Expression
-scripting value =
-    feature "scripting" value
+scripting : ScriptingSupport compatible -> Expression
+scripting =
+    feature "scripting"
 
 
 
@@ -1020,7 +936,7 @@ scripting value =
 
 
 feature : String -> Value a -> Expression
-feature key { value } =
+feature key (Value value) =
     { feature = key, value = Just value }
 
 

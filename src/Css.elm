@@ -61,7 +61,6 @@ module Css
         , ListStyleType
         , MinMaxDimension
         , Mm
-        , NonMixable
         , None
         , Number
         , Outline
@@ -1022,7 +1021,7 @@ functions let you define custom properties and selectors, respectively.
 @docs listStyle, listStyle2, listStyle3
 @docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
-@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Directionality, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
+@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Directionality, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
 
 
 # Types
@@ -1040,11 +1039,9 @@ deprecated or discouraged.
 
 -}
 
-import Color
-import Css.Helpers exposing (identifierToString, toCssIdentifier)
-import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
-import Css.Structure as Structure exposing (..)
-import Hex
+import Css.Helpers exposing (identifierToString)
+import Css.Preprocess as Preprocess
+import Css.Structure as Structure exposing (Property, Value(Value))
 import String
 
 
@@ -1129,32 +1126,32 @@ type alias Compatible =
 
 {-| -}
 type alias Value compatible =
-    { compatible | value : String }
+    Structure.Value compatible
 
 
 {-| -}
 type alias All compatible =
-    { compatible | value : String, all : Compatible }
+    Value { compatible | all : Compatible }
 
 
 {-| -}
 type alias Number compatible =
-    { compatible | value : String, number : Compatible }
+    Structure.Number compatible
 
 
 {-| -}
 type alias None compatible =
-    { compatible | value : String, none : Compatible }
+    Value { compatible | none : Compatible }
 
 
 {-| -}
 type alias MinMaxDimension compatible =
-    { compatible
-        | value : String
-        , minMaxDimension : Compatible
-        , lengthOrMinMaxDimension : Compatible
-        , lengthOrNoneOrMinMaxDimension : Compatible
-    }
+    Value
+        { compatible
+            | minMaxDimension : Compatible
+            , lengthOrMinMaxDimension : Compatible
+            , lengthOrNoneOrMinMaxDimension : Compatible
+        }
 
 
 
@@ -1163,141 +1160,141 @@ type alias MinMaxDimension compatible =
 
 {-| -}
 type alias ImportType compatible =
-    { compatible | value : String, import_ : Compatible }
+    Value { compatible | import_ : Compatible }
 
 
 type alias FontFace compatible =
-    { compatible | value : String, fontFace : Compatible }
+    Value { compatible | fontFace : Compatible }
 
 
 {-| A font family
 -}
 type alias FontFamily compatible =
-    { compatible | value : String, fontFamily : Compatible }
+    Value { compatible | fontFamily : Compatible }
 
 
 {-| A font size
 -}
 type alias FontSize compatible =
-    { compatible | value : String, fontSize : Compatible }
+    Value { compatible | fontSize : Compatible }
 
 
 {-| -}
 type alias FontStyle compatible =
-    { compatible | value : String, fontStyle : Compatible }
+    Value { compatible | fontStyle : Compatible }
 
 
 {-| -}
 type alias FontStyleOrFeatureTagValue compatible =
-    { compatible | value : String, fontStyle : Compatible, featureTagValue : Compatible }
+    Value { compatible | fontStyle : Compatible, featureTagValue : Compatible }
 
 
 {-| -}
 type alias FontWeight compatible =
-    { compatible | value : String, fontWeight : Compatible }
+    Value { compatible | fontWeight : Compatible }
 
 
 {-| -}
 type alias FontVariant compatible =
-    { compatible | value : String, fontVariant : Compatible }
+    Value { compatible | fontVariant : Compatible }
 
 
 {-| -}
 type alias FontVariantLigatures compatible =
-    { compatible
-        | value : String
-        , fontVariant : Compatible
-        , fontVariantLigatures : Compatible
-    }
+    Value
+        { compatible
+            | fontVariant : Compatible
+            , fontVariantLigatures : Compatible
+        }
 
 
 {-| -}
 type alias FontVariantCaps compatible =
-    { compatible
-        | value : String
-        , fontVariant : Compatible
-        , fontVariantCaps : Compatible
-    }
+    Value
+        { compatible
+            | fontVariant : Compatible
+            , fontVariantCaps : Compatible
+        }
 
 
 {-| -}
 type alias FontVariantNumeric compatible =
-    { compatible
-        | value : String
-        , fontVariant : Compatible
-        , fontVariantNumeric : Compatible
-    }
+    Value
+        { compatible
+            | fontVariant : Compatible
+            , fontVariantNumeric : Compatible
+        }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/visibility#Values>
 -}
 type alias Visibility compatible =
-    { compatible | value : String, visibility : Compatible }
+    Value { compatible | visibility : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Values>
 -}
 type alias TextDecorationLine compatible =
-    { compatible | value : String, textDecorationLine : Compatible }
+    Value { compatible | textDecorationLine : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing#Values>
 -}
 type alias BoxSizing compatible =
-    { compatible | value : String, boxSizing : Compatible }
+    Value { compatible | boxSizing : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values>
 -}
 type alias Overflow compatible =
-    { compatible | value : String, overflow : Compatible }
+    Value { compatible | overflow : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap#Values>
 -}
 type alias Wrap compatible =
-    { compatible | value : String, overflowWrap : Compatible }
+    Value { compatible | overflowWrap : Compatible }
 
 
 {-| <https://developer.mozilla.org/en/docs/Web/CSS/resize#Values>
 -}
 type alias Resize compatible =
-    { compatible | value : String, resize : Compatible }
+    Value { compatible | resize : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex#Values>
 -}
 type alias LengthOrNumberOrAutoOrNoneOrContent compatible =
-    { compatible | value : String, lengthOrNumberOrAutoOrNoneOrContent : Compatible }
+    Value { compatible | lengthOrNumberOrAutoOrNoneOrContent : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/z-index>
 -}
 type alias IntOrAuto compatible =
-    { compatible | value : String, intOrAuto : Compatible }
+    Value { compatible | intOrAuto : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values>
 -}
 type alias FlexBasis compatible =
-    { compatible | value : String, flexBasis : Compatible }
+    Value { compatible | flexBasis : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values>
 -}
 type alias FlexWrap compatible =
-    { compatible | value : String, flexWrap : Compatible }
+    Value { compatible | flexWrap : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values>
 -}
 type alias FlexDirection compatible =
-    { compatible | value : String, flexDirection : Compatible }
+    Value { compatible | flexDirection : Compatible }
 
 
 {-| -}
 type alias FlexDirectionOrWrap compatible =
-    { compatible | value : String, flexDirectionOrWrap : Compatible }
+    Value { compatible | flexDirectionOrWrap : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values>
@@ -1321,76 +1318,76 @@ type alias JustifyContent a b =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values>
 -}
 type alias Display compatible =
-    { compatible | value : String, display : Compatible }
+    Value { compatible | display : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events#Values>
 -}
 type alias PointerEvents compatible =
-    { compatible | value : String, pointerEvents : Compatible }
+    Value { compatible | pointerEvents : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#Values>
 -}
 type alias ListStyleType compatible =
-    { compatible | value : String, listStyleType : Compatible }
+    Value { compatible | listStyleType : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position#Values>
 -}
 type alias ListStylePosition compatible =
-    { compatible | value : String, listStylePosition : Compatible }
+    Value { compatible | listStylePosition : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#Values>
 -}
 type alias ListStyle compatible =
-    { compatible | value : String, listStyleTypeOrPositionOrImage : Compatible }
+    Value { compatible | listStyleTypeOrPositionOrImage : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/white-space#Values>
 -}
 type alias WhiteSpace compatible =
-    { compatible | value : String, whiteSpace : Compatible }
+    Value { compatible | whiteSpace : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values>
 -}
 type alias ColorValue compatible =
-    { compatible | value : String, color : Compatible }
+    Value { compatible | color : Compatible }
 
 
-colorValueForOverloadedProperty : ColorValue NonMixable
+colorValueForOverloadedProperty : Color
 colorValueForOverloadedProperty =
     transparent
 
 
 {-| -}
 type alias Color =
-    ColorValue { red : Int, green : Int, blue : Int, alpha : Float }
+    ColorValue {}
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#repeat-style>
 -}
 type alias BackgroundRepeat compatible =
-    { compatible | value : String, backgroundRepeat : Compatible, backgroundRepeatShorthand : Compatible }
+    Value { compatible | backgroundRepeat : Compatible, backgroundRepeatShorthand : Compatible }
 
 
 {-| -}
 type alias BackgroundRepeatShorthand compatible =
-    { compatible | value : String, backgroundRepeatShorthand : Compatible }
+    Value { compatible | backgroundRepeatShorthand : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment>
 -}
 type alias BackgroundAttachment compatible =
-    { compatible | value : String, backgroundAttachment : Compatible }
+    Value { compatible | backgroundAttachment : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-position>
 -}
 type alias BackgroundPosition compatible =
-    { compatible | value : String, backgroundPosition : Compatible }
+    Value { compatible | backgroundPosition : Compatible }
 
 
 {-| Because `color` is both a common propertie and common value
@@ -1400,14 +1397,14 @@ be used as a value as well. When being used as a value, we call it, expect
 that it will return the desired String as its key, and use that as our value.
 (See `getOverloadedProperty`. Note that `VerticalAlign`.)
 -}
-type alias BackgroundBlendMode a =
-    ColorValue a -> Style
+type alias BackgroundBlendMode compatible =
+    ColorValue compatible -> Style
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip>
 -}
 type alias BackgroundClip compatible =
-    { compatible | value : String, backgroundClip : Compatible }
+    Value { compatible | backgroundClip : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin>
@@ -1419,51 +1416,42 @@ type alias BackgroundOrigin compatible =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-image>
 -}
 type alias BackgroundImage compatible =
-    { compatible | value : String, backgroundImage : Compatible }
+    Value { compatible | backgroundImage : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-size>
 -}
 type alias LengthOrAutoOrCoverOrContain compatible =
-    { compatible | value : String, lengthOrAutoOrCoverOrContain : Compatible }
+    Value { compatible | lengthOrAutoOrCoverOrContain : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias Length compatible units =
-    { compatible
-        | value : String
-        , length : Compatible
-        , numericValue : Float
-        , units : units
-        , unitLabel : String
-    }
+    Value { compatible | units : units, length : Compatible }
 
 
 {-| <https://developer.mozilla.org/en/docs/Web/CSS/calc>
 -}
 type alias Calc compatible =
-    { compatible
-        | value : String
-        , calc : Compatible
-    }
+    Value { compatible | calc : Compatible }
 
 
 type alias CalculatedLength =
-    { value : String
-    , length : Compatible
-    , lengthOrAuto : Compatible
-    , lengthOrNumber : Compatible
-    , lengthOrNone : Compatible
-    , lengthOrMinMaxDimension : Compatible
-    , lengthOrNoneOrMinMaxDimension : Compatible
-    , textIndent : Compatible
-    , flexBasis : Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-    , fontSize : Compatible
-    , lengthOrAutoOrCoverOrContain : Compatible
-    , calc : Compatible
-    }
+    Value
+        { length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , textIndent : Compatible
+        , flexBasis : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , fontSize : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , calc : Compatible
+        }
 
 
 {-| -}
@@ -1485,13 +1473,13 @@ calcExpressionToString expression =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action?v=control#Values>
 -}
 type alias TouchAction compatible =
-    { compatible | value : String, touchAction : Compatible }
+    Value { compatible | touchAction : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout?v=control#Values>
 -}
 type alias TableLayout compatible =
-    { compatible | value : String, tableLayout : Compatible }
+    Value { compatible | tableLayout : Compatible }
 
 
 {-| The css [calc](https://developer.mozilla.org/en/docs/Web/CSS/calc) function.
@@ -1515,13 +1503,13 @@ Using * and / with calc isn't supported. Use arithmetics from elm instead.
 
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
-calc first expression second =
+calc (Value first) expression (Value second) =
     let
         grab l =
-            if String.startsWith "calc(" l.value then
-                String.dropLeft 4 l.value
+            if String.startsWith "calc(" l then
+                String.dropLeft 4 l
             else
-                l.value
+                l
 
         calcs =
             String.join " "
@@ -1529,24 +1517,8 @@ calc first expression second =
                 , calcExpressionToString expression
                 , grab second
                 ]
-
-        value =
-            cssFunction "calc" [ calcs ]
     in
-    { value = value
-    , length = Compatible
-    , lengthOrAuto = Compatible
-    , lengthOrNumber = Compatible
-    , lengthOrNone = Compatible
-    , lengthOrMinMaxDimension = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    , textIndent = Compatible
-    , flexBasis = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , fontSize = Compatible
-    , lengthOrAutoOrCoverOrContain = Compatible
-    , calc = Compatible
-    }
+    Value (cssFunction "calc" [ calcs ])
 
 
 {-| Use with calc to add lengths together
@@ -1571,172 +1543,150 @@ minus =
     Subtraction
 
 
-combineLengths :
-    (number -> number -> number)
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
-combineLengths operation first second =
-    let
-        numericValue =
-            operation first.numericValue second.numericValue
-
-        value =
-            [ toString numericValue
-            , first.unitLabel
-            ]
-                |> List.filter (not << String.isEmpty)
-                |> String.join ""
-    in
-    { first | value = value, numericValue = numericValue }
-
-
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrAuto compatible =
-    { compatible | value : String, lengthOrAuto : Compatible }
+    Value { compatible | lengthOrAuto : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrNoneOrMinMaxDimension compatible =
-    { compatible | value : String, lengthOrNoneOrMinMaxDimension : Compatible }
+    Value { compatible | lengthOrNoneOrMinMaxDimension : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrMinMaxDimension compatible =
-    { compatible | value : String, lengthOrMinMaxDimension : Compatible }
+    Value { compatible | lengthOrMinMaxDimension : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrNone compatible =
-    { compatible | value : String, lengthOrNone : Compatible }
+    Value { compatible | lengthOrNone : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias LengthOrNumber compatible =
-    { compatible | value : String, lengthOrNumber : Compatible }
+    Value { compatible | lengthOrNumber : Compatible }
 
 
 {-| -}
 type alias ExplicitLength units =
-    { value : String
-    , numericValue : Float
-    , units : units
-    , unitLabel : String
-    , length : Compatible
-    , lengthOrAuto : Compatible
-    , lengthOrNumber : Compatible
-    , lengthOrNone : Compatible
-    , lengthOrMinMaxDimension : Compatible
-    , lengthOrNoneOrMinMaxDimension : Compatible
-    , textIndent : Compatible
-    , flexBasis : Compatible
-    , absoluteLength : Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-    , fontSize : Compatible
-    , lengthOrAutoOrCoverOrContain : Compatible
-    , calc : Compatible
-    }
+    Value
+        { units : units
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , textIndent : Compatible
+        , flexBasis : Compatible
+        , absoluteLength : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , fontSize : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , calc : Compatible
+        }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform#Values>
 -}
 type alias Transform compatible =
-    { compatible | value : String, transform : Compatible }
+    Value { compatible | transform : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/angle>
 -}
 type alias Angle compatible =
-    { compatible | value : String, angle : Compatible }
+    Value { compatible | angle : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values>
 -}
 type alias AngleOrDirection compatible =
-    { compatible | value : String, angleOrDirection : Compatible }
+    Value { compatible | angleOrDirection : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values>
 -}
 type alias TextDecorationStyle compatible =
-    { compatible | value : String, textDecorationStyle : Compatible }
+    Value { compatible | textDecorationStyle : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color#Values>
 -}
 type alias TextEmphasisColor compatible =
-    { compatible | value : String, textDecorationStyle : Compatible }
+    Value { compatible | textDecorationStyle : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values>
 -}
 type alias Position compatible =
-    { compatible | value : String, position : Compatible }
+    Value { compatible | position : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values>
 -}
 type alias BorderStyle compatible =
-    { compatible | value : String, borderStyle : Compatible }
+    Value { compatible | borderStyle : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse>
 -}
 type alias BorderCollapse compatible =
-    { compatible | value : String, borderCollapse : Compatible }
+    Value { compatible | borderCollapse : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box#Values>
 -}
 type alias TransformBox compatible =
-    { compatible | value : String, transformBox : Compatible }
+    Value { compatible | transformBox : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values>
 -}
 type alias TextOrientation compatible =
-    { compatible | value : String, textOrientation : Compatible }
+    Value { compatible | textOrientation : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style#Values>
 -}
 type alias TransformStyle compatible =
-    { compatible | value : String, transformStyle : Compatible }
+    Value { compatible | transformStyle : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values>
 -}
 type alias TextIndent compatible =
-    { compatible | value : String, textIndent : Compatible }
+    Value { compatible | textIndent : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values>
 -}
 type alias TextOverflow compatible =
-    { compatible | value : String, textOverflow : Compatible }
+    Value { compatible | textOverflow : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values>
 -}
 type alias TextTransform compatible =
-    { compatible | value : String, textTransform : Compatible }
+    Value { compatible | textTransform : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values>
 -}
 type alias TextRendering compatible =
-    { compatible | value : String, textRendering : Compatible }
+    Value { compatible | textRendering : Compatible }
 
 
 {-| <https://www.microsoft.com/typography/otspec/featurelist.htm>
 -}
 type alias FeatureTagValue compatible =
-    { compatible | value : String, featureTagValue : Compatible }
+    Value { compatible | featureTagValue : Compatible }
 
 
 {-| Because `left` and `right` are both common properties and common values
@@ -1764,13 +1714,13 @@ type alias VerticalAlign a b =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>
 -}
 type alias Cursor compatible =
-    { compatible | value : String, cursor : Compatible }
+    Value { compatible | cursor : Compatible }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/outline#Values>
 -}
 type alias Outline compatible =
-    { compatible | value : String, outline : Compatible }
+    Value { compatible | outline : Compatible }
 
 
 
@@ -1800,30 +1750,19 @@ makeImportant str =
         str ++ " !important"
 
 
-{-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
-values.
--}
-type alias NonMixable =
-    {}
-
-
 {-| A [`transparent`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#transparent_keyword) color.
 -}
-transparent : ColorValue NonMixable
+transparent : Color
 transparent =
-    { value = "transparent"
-    , color = Compatible
-    }
+    Value "transparent"
 
 
 {-| The [`currentColor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentColor_keyword)
 value.
 -}
-currentColor : ColorValue NonMixable
+currentColor : Color
 currentColor =
-    { value = "currentColor"
-    , color = Compatible
-    }
+    Value "currentColor"
 
 
 {-| This can represent:
@@ -1831,18 +1770,9 @@ a `visible` [`visibility`](https://developer.mozilla.org/en-US/docs/Web/CSS/visi
 a `visible` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values), or
 a `visible` [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events) value.
 -}
-visible :
-    { value : String
-    , overflow : Compatible
-    , visibility : Compatible
-    , pointerEvents : Compatible
-    }
+visible : Value { overflow : Compatible, visibility : Compatible, pointerEvents : Compatible }
 visible =
-    { value = "visible"
-    , overflow = Compatible
-    , visibility = Compatible
-    , pointerEvents = Compatible
-    }
+    Value "visible"
 
 
 {-| The `scroll` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
@@ -1850,57 +1780,43 @@ This can also represent a `scroll` [`background-attachment`](https://developer.m
 It can also be used in the overflow-block and oveflow-line media features.
 -}
 scroll :
-    { value : String
-    , scroll : Compatible
-    , overflow : Compatible
-    , backgroundAttachment : Compatible
-    , blockAxisOverflow : Compatible
-    , inlineAxisOverflow : Compatible
-    }
+    Value
+        { scroll : Compatible
+        , overflow : Compatible
+        , backgroundAttachment : Compatible
+        , blockAxisOverflow : Compatible
+        , inlineAxisOverflow : Compatible
+        }
 scroll =
-    { value = "scroll"
-    , scroll = Compatible
-    , overflow = Compatible
-    , backgroundAttachment = Compatible
-    , blockAxisOverflow = Compatible
-    , inlineAxisOverflow = Compatible
-    }
+    Value "scroll"
 
 
 {-| The `break-word` value for the [`overflow-wrap`](https://developer.mozilla.org/en/docs/Web/CSS/overflow-wrap#Values) property.
 -}
 breakWord : Wrap {}
 breakWord =
-    { value = "break-word"
-    , overflowWrap = Compatible
-    }
+    Value "break-word"
 
 
 {-| The `both` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
 -}
 both : Resize {}
 both =
-    { value = "both"
-    , resize = Compatible
-    }
+    Value "both"
 
 
 {-| The `horizontal` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
 -}
 horizontal : Resize {}
 horizontal =
-    { value = "horizontal"
-    , resize = Compatible
-    }
+    Value "horizontal"
 
 
 {-| The `vertical` value for the [`resize`](https://developer.mozilla.org/en/docs/Web/CSS/resize#Values) property.
 -}
 vertical : Resize {}
 vertical =
-    { value = "vertical"
-    , resize = Compatible
-    }
+    Value "vertical"
 
 
 {-| The `multiply` [`blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode#multiply).
@@ -2005,42 +1921,28 @@ luminosity =
 -}
 paddingBox : BackgroundClip {}
 paddingBox =
-    { value = "padding-box"
-    , backgroundClip = Compatible
-    }
+    Value "padding-box"
 
 
 {-| The `url` [`background-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image) value.
 -}
 url : String -> BackgroundImage {}
 url urlValue =
-    { value = "url(" ++ urlValue ++ ")"
-    , backgroundImage = Compatible
-    }
+    Value ("url(" ++ urlValue ++ ")")
 
 
 {-| The `cover` [`background-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size) value.
 -}
-cover :
-    { value : String
-    , lengthOrAutoOrCoverOrContain : Compatible
-    }
+cover : LengthOrAutoOrCoverOrContain {}
 cover =
-    { value = "cover"
-    , lengthOrAutoOrCoverOrContain = Compatible
-    }
+    Value "cover"
 
 
 {-| The `contain` [`background-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size) value.
 -}
-contain :
-    { value : String
-    , lengthOrAutoOrCoverOrContain : Compatible
-    }
+contain : LengthOrAutoOrCoverOrContain {}
 contain =
-    { value = "contain"
-    , lengthOrAutoOrCoverOrContain = Compatible
-    }
+    Value "contain"
 
 
 {-| `hidden` [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) value.
@@ -2049,71 +1951,65 @@ This can also represent a `hidden` [border style](https://developer.mozilla.org/
 as well as a `hidden` [`visibility`](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility#Values).
 
 -}
-hidden : Overflow (BorderStyle (Visibility {}))
+hidden : Value { overflow : Compatible, borderStyle : Compatible, visibility : Compatible }
 hidden =
-    { value = "hidden"
-    , overflow = Compatible
-    , borderStyle = Compatible
-    , visibility = Compatible
-    }
+    Value "hidden"
 
 
 {-| -}
 type alias BasicProperty =
-    { value : String
-    , all : Compatible
-    , alignItems : Compatible
-    , borderStyle : Compatible
-    , boxSizing : Compatible
-    , color : Compatible
-    , cursor : Compatible
-    , display : Compatible
-    , flexBasis : Compatible
-    , flexWrap : Compatible
-    , flexDirection : Compatible
-    , flexDirectionOrWrap : Compatible
-    , justifyContent : Compatible
-    , none : Compatible
-    , number : Compatible
-    , outline : Compatible
-    , overflow : Compatible
-    , pointerEvents : Compatible
-    , visibility : Compatible
-    , textDecorationLine : Compatible
-    , textRendering : Compatible
-    , textIndent : Compatible
-    , textDecorationStyle : Compatible
-    , textTransform : Compatible
-    , length : Compatible
-    , lengthOrAuto : Compatible
-    , lengthOrNone : Compatible
-    , lengthOrNumber : Compatible
-    , lengthOrMinMaxDimension : Compatible
-    , lengthOrNoneOrMinMaxDimension : Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-    , listStyleType : Compatible
-    , listStylePosition : Compatible
-    , listStyleTypeOrPositionOrImage : Compatible
-    , fontFamily : Compatible
-    , fontSize : Compatible
-    , fontStyle : Compatible
-    , fontWeight : Compatible
-    , fontVariant : Compatible
-    , units : IncompatibleUnits
-    , numericValue : Float
-    , unitLabel : String
-    , backgroundRepeat : Compatible
-    , backgroundRepeatShorthand : Compatible
-    , backgroundAttachment : Compatible
-    , backgroundBlendMode : Compatible
-    , backgroundOrigin : Compatible
-    , backgroundImage : Compatible
-    , lengthOrAutoOrCoverOrContain : Compatible
-    , intOrAuto : Compatible
-    , touchAction : Compatible
-    , whiteSpace : Compatible
-    , tableLayout : Compatible
-    }
+    Value
+        { all : Compatible
+        , alignItems : Compatible
+        , borderStyle : Compatible
+        , boxSizing : Compatible
+        , color : Compatible
+        , cursor : Compatible
+        , display : Compatible
+        , flexBasis : Compatible
+        , flexWrap : Compatible
+        , flexDirection : Compatible
+        , flexDirectionOrWrap : Compatible
+        , justifyContent : Compatible
+        , none : Compatible
+        , number : Compatible
+        , outline : Compatible
+        , overflow : Compatible
+        , pointerEvents : Compatible
+        , visibility : Compatible
+        , textDecorationLine : Compatible
+        , textRendering : Compatible
+        , textIndent : Compatible
+        , textDecorationStyle : Compatible
+        , textTransform : Compatible
+        , length : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , listStyleType : Compatible
+        , listStylePosition : Compatible
+        , listStyleTypeOrPositionOrImage : Compatible
+        , fontFamily : Compatible
+        , fontSize : Compatible
+        , fontStyle : Compatible
+        , fontWeight : Compatible
+        , fontVariant : Compatible
+        , units : IncompatibleUnits
+        , backgroundRepeat : Compatible
+        , backgroundRepeatShorthand : Compatible
+        , backgroundAttachment : Compatible
+        , backgroundBlendMode : Compatible
+        , backgroundOrigin : Compatible
+        , backgroundImage : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , intOrAuto : Compatible
+        , touchAction : Compatible
+        , whiteSpace : Compatible
+        , tableLayout : Compatible
+        }
 
 
 {-| The [`unset`](https://developer.mozilla.org/en-US/docs/Web/CSS/unset) value.
@@ -2121,7 +2017,7 @@ Any CSS property can be set to this value.
 -}
 unset : BasicProperty
 unset =
-    { initial | value = "unset" }
+    Value "unset"
 
 
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
@@ -2129,7 +2025,7 @@ Any CSS property can be set to this value.
 -}
 inherit : BasicProperty
 inherit =
-    { initial | value = "inherit" }
+    Value "inherit"
 
 
 {-| The [`initial`](https://developer.mozilla.org/en-US/docs/Web/CSS/initial) value.
@@ -2137,60 +2033,7 @@ Any CSS property can be set to this value.
 -}
 initial : BasicProperty
 initial =
-    { value = "initial"
-    , overflow = Compatible
-    , visibility = Compatible
-    , none = Compatible
-    , number = Compatible
-    , textDecorationLine = Compatible
-    , textRendering = Compatible
-    , textIndent = Compatible
-    , textDecorationStyle = Compatible
-    , textTransform = Compatible
-    , borderStyle = Compatible
-    , boxSizing = Compatible
-    , color = Compatible
-    , cursor = Compatible
-    , display = Compatible
-    , all = Compatible
-    , alignItems = Compatible
-    , justifyContent = Compatible
-    , length = Compatible
-    , lengthOrAuto = Compatible
-    , lengthOrNone = Compatible
-    , lengthOrNumber = Compatible
-    , lengthOrMinMaxDimension = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    , listStyleType = Compatible
-    , listStylePosition = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    , flexBasis = Compatible
-    , flexWrap = Compatible
-    , flexDirection = Compatible
-    , flexDirectionOrWrap = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , fontFamily = Compatible
-    , fontSize = Compatible
-    , fontStyle = Compatible
-    , fontWeight = Compatible
-    , fontVariant = Compatible
-    , outline = Compatible
-    , pointerEvents = Compatible
-    , units = IncompatibleUnits
-    , numericValue = 0
-    , unitLabel = ""
-    , backgroundRepeat = Compatible
-    , backgroundRepeatShorthand = Compatible
-    , backgroundAttachment = Compatible
-    , backgroundBlendMode = Compatible
-    , backgroundOrigin = Compatible
-    , backgroundImage = Compatible
-    , lengthOrAutoOrCoverOrContain = Compatible
-    , intOrAuto = Compatible
-    , touchAction = Compatible
-    , whiteSpace = Compatible
-    , tableLayout = Compatible
-    }
+    Value "initial"
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -2198,26 +2041,20 @@ in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
 rgb red green blue =
-    { value = cssFunction "rgb" (List.map numberToString [ red, green, blue ])
-    , color = Compatible
-    , red = red
-    , green = green
-    , blue = blue
-    , alpha = 1
-    }
+    [ red, green, blue ]
+        |> List.map numberToString
+        |> cssFunction "rgb"
+        |> Value
 
 
 {-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba red green blue alpha =
-    { value = cssFunction "rgba" (List.map numberToString [ red, green, blue ] ++ [ numberToString alpha ])
-    , color = Compatible
-    , red = red
-    , green = green
-    , blue = blue
-    , alpha = alpha
-    }
+    List.map numberToString [ red, green, blue ]
+        ++ [ numberToString alpha ]
+        |> cssFunction "rgba"
+        |> Value
 
 
 {-| [HSL color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl())
@@ -2226,17 +2063,12 @@ to the appropriate percentage at compile-time
 -}
 hsl : Float -> Float -> Float -> Color
 hsl hue saturation lightness =
-    let
-        valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
-            ]
-
-        value =
-            cssFunction "hsl" valuesList
-    in
-    hslaToRgba value hue saturation lightness 1
+    [ numberToString hue
+    , numericalPercentageToString saturation
+    , numericalPercentageToString lightness
+    ]
+        |> cssFunction "hsl"
+        |> Value
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -2245,18 +2077,13 @@ to the appropriate percentage at compile-time
 -}
 hsla : Float -> Float -> Float -> Float -> Color
 hsla hue saturation lightness alpha =
-    let
-        valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
-            , numberToString alpha
-            ]
-
-        value =
-            cssFunction "hsla" valuesList
-    in
-    hslaToRgba value hue saturation lightness alpha
+    [ numberToString hue
+    , numericalPercentageToString saturation
+    , numericalPercentageToString lightness
+    , numberToString alpha
+    ]
+        |> cssFunction "hsla"
+        |> Value
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -2266,92 +2093,10 @@ tools which express these as e.g. `#abcdef0`, etc.
 -}
 hex : String -> Color
 hex str =
-    let
-        withoutHash =
-            if String.startsWith "#" str then
-                String.dropLeft 1 str
-            else
-                str
-    in
-    case String.toList withoutHash of
-        [ r, g, b ] ->
-            validHex str ( r, r ) ( g, g ) ( b, b ) ( 'f', 'f' )
-
-        [ r, g, b, a ] ->
-            validHex str ( r, r ) ( g, g ) ( b, b ) ( a, a )
-
-        [ r1, r2, g1, g2, b1, b2 ] ->
-            validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( 'f', 'f' )
-
-        [ r1, r2, g1, g2, b1, b2, a1, a2 ] ->
-            validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 )
-
-        _ ->
-            erroneousHex str
-
-
-validHex : String -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> ( Char, Char ) -> Color
-validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
-    let
-        toResult =
-            String.fromList >> String.toLower >> Hex.fromString
-
-        results =
-            ( toResult [ r1, r2 ]
-            , toResult [ g1, g2 ]
-            , toResult [ b1, b2 ]
-            , toResult [ a1, a2 ]
-            )
-    in
-    case results of
-        ( Ok red, Ok green, Ok blue, Ok alpha ) ->
-            { value = withPrecedingHash str
-            , color = Compatible
-            , red = red
-            , green = green
-            , blue = blue
-            , alpha = toFloat alpha / 255
-            }
-
-        _ ->
-            erroneousHex str
-
-
-withPrecedingHash : String -> String
-withPrecedingHash str =
     if String.startsWith "#" str then
-        str
+        Value str
     else
-        String.cons '#' str
-
-
-{-| Not to be confused with Thelonious Monk or Hieronymus Bosch.
--}
-erroneousHex : String -> Color
-erroneousHex str =
-    { value = withPrecedingHash str
-    , color = Compatible
-    , red = 0
-    , green = 0
-    , blue = 0
-    , alpha = 1
-    }
-
-
-hslaToRgba : String -> Float -> Float -> Float -> Float -> Color
-hslaToRgba value hue saturation lightness hslAlpha =
-    let
-        { red, green, blue, alpha } =
-            Color.hsla hue saturation lightness hslAlpha
-                |> Color.toRgb
-    in
-    { value = value
-    , color = Compatible
-    , red = red
-    , green = green
-    , blue = blue
-    , alpha = alpha
-    }
+        Value ("#" ++ str)
 
 
 
@@ -2362,27 +2107,21 @@ hslaToRgba value hue saturation lightness hslAlpha =
 -}
 optimizeSpeed : TextRendering {}
 optimizeSpeed =
-    { value = "optimizeSpeed"
-    , textRendering = Compatible
-    }
+    Value "optimizeSpeed"
 
 
 {-| `optimizeLegibility` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
 optimizeLegibility : TextRendering {}
 optimizeLegibility =
-    { value = "optimizeLegibility"
-    , textRendering = Compatible
-    }
+    Value "optimizeLegibility"
 
 
 {-| `geometricPrecision` [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering#Values) value
 -}
 geometricPrecision : TextRendering {}
 geometricPrecision =
-    { value = "geometricPrecision"
-    , textRendering = Compatible
-    }
+    Value "geometricPrecision"
 
 
 
@@ -2393,18 +2132,14 @@ geometricPrecision =
 -}
 hanging : TextIndent {}
 hanging =
-    { value = "hanging"
-    , textIndent = Compatible
-    }
+    Value "hanging"
 
 
 {-| `each-line` [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent#Values) value
 -}
 eachLine : TextIndent {}
 eachLine =
-    { value = "each-line"
-    , textIndent = Compatible
-    }
+    Value "each-line"
 
 
 
@@ -2415,27 +2150,21 @@ eachLine =
 -}
 mixed : TextOrientation {}
 mixed =
-    { value = "mixed"
-    , textOrientation = Compatible
-    }
+    Value "mixed"
 
 
 {-| `upright` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation#Values) value
 -}
 upright : TextOrientation {}
 upright =
-    { value = "upright"
-    , textOrientation = Compatible
-    }
+    Value "upright"
 
 
 {-| `sideways` [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientationEValues) value
 -}
 sideways : TextOrientation {}
 sideways =
-    { value = "sideways"
-    , textOrientation = Compatible
-    }
+    Value "sideways"
 
 
 
@@ -2446,54 +2175,42 @@ sideways =
 -}
 capitalize : TextTransform {}
 capitalize =
-    { value = "capitalize"
-    , textTransform = Compatible
-    }
+    Value "capitalize"
 
 
 {-| `uppercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
 uppercase : TextTransform {}
 uppercase =
-    { value = "uppercase"
-    , textTransform = Compatible
-    }
+    Value "uppercase"
 
 
 {-| `lowercase` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
 lowercase : TextTransform {}
 lowercase =
-    { value = "lowercase"
-    , textTransform = Compatible
-    }
+    Value "lowercase"
 
 
 {-| `full-width` [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Values) value
 -}
 fullWidth : TextTransform {}
 fullWidth =
-    { value = "full-width"
-    , textTransform = Compatible
-    }
+    Value "full-width"
 
 
 {-| `ellipsis` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
 -}
 ellipsis : TextOverflow {}
 ellipsis =
-    { value = "ellipsis"
-    , textOverflow = Compatible
-    }
+    Value "ellipsis"
 
 
 {-| `clip` [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow#Values) value
 -}
 clip : TextOverflow {}
 clip =
-    { value = "clip"
-    , textOverflow = Compatible
-    }
+    Value "clip"
 
 
 
@@ -2504,85 +2221,63 @@ clip =
 -}
 wavy : TextDecorationStyle {}
 wavy =
-    { value = "wavy"
-    , textDecorationStyle = Compatible
-    }
+    Value "wavy"
 
 
 {-| A `dotted` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-dotted : BorderStyle (TextDecorationStyle {})
+dotted : Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 dotted =
-    { value = "dotted"
-    , borderStyle = Compatible
-    , textDecorationStyle = Compatible
-    }
+    Value "dotted"
 
 
 {-| A `dashed` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-dashed : BorderStyle (TextDecorationStyle {})
+dashed : Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 dashed =
-    { value = "dashed"
-    , borderStyle = Compatible
-    , textDecorationStyle = Compatible
-    }
+    Value "dashed"
 
 
 {-| A `solid` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-solid : BorderStyle (TextDecorationStyle {})
+solid : Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 solid =
-    { value = "solid"
-    , borderStyle = Compatible
-    , textDecorationStyle = Compatible
-    }
+    Value "solid"
 
 
 {-| A `double` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
-double : BorderStyle (TextDecorationStyle {})
+double : Value { borderStyle : Compatible, textDecorationStyle : Compatible }
 double =
-    { value = "double"
-    , borderStyle = Compatible
-    , textDecorationStyle = Compatible
-    }
+    Value "double"
 
 
 {-| A `groove` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
 groove : BorderStyle {}
 groove =
-    { value = "groove"
-    , borderStyle = Compatible
-    }
+    Value "groove"
 
 
 {-| A `ridge` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
 ridge : BorderStyle {}
 ridge =
-    { value = "ridge"
-    , borderStyle = Compatible
-    }
+    Value "ridge"
 
 
 {-| An `inset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
 inset : BorderStyle {}
 inset =
-    { value = "inset"
-    , borderStyle = Compatible
-    }
+    Value "inset"
 
 
 {-| An `outset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
 outset : BorderStyle {}
 outset =
-    { value = "outset"
-    , borderStyle = Compatible
-    }
+    Value "outset"
 
 
 
@@ -2593,20 +2288,15 @@ outset =
 -}
 separate : BorderCollapse {}
 separate =
-    { value = "separate"
-    , borderCollapse = Compatible
-    }
+    Value "separate"
 
 
 {-| A `collapse` [border-collapse](https://developer.mozilla.org/en-US/docs/Web/CSS/border-collapse#Values).
 This can also represent a `collapse` [`visibility`](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility#Values).
 -}
-collapse : BorderCollapse (Visibility {})
+collapse : Value { borderCollapse : Compatible, visibility : Compatible }
 collapse =
-    { value = "collapse"
-    , borderCollapse = Compatible
-    , visibility = Compatible
-    }
+    Value "collapse"
 
 
 
@@ -2667,28 +2357,6 @@ true =
 {- LENGTHS -}
 
 
-lengthConverter : units -> String -> Float -> ExplicitLength units
-lengthConverter units unitLabel numericValue =
-    { value = numberToString numericValue ++ unitLabel
-    , numericValue = numericValue
-    , units = units
-    , unitLabel = unitLabel
-    , length = Compatible
-    , lengthOrAuto = Compatible
-    , lengthOrNumber = Compatible
-    , lengthOrNone = Compatible
-    , lengthOrMinMaxDimension = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    , textIndent = Compatible
-    , flexBasis = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , fontSize = Compatible
-    , absoluteLength = Compatible
-    , lengthOrAutoOrCoverOrContain = Compatible
-    , calc = Compatible
-    }
-
-
 {-| Convenience length value that compiles to 0 with no units.
 
     css [ padding zero ]
@@ -2699,245 +2367,182 @@ lengthConverter units unitLabel numericValue =
 
 -}
 zero :
-    { value : String
-    , length : Compatible
-    , lengthOrNumber : Compatible
-    , lengthOrNone : Compatible
-    , lengthOrAuto : Compatible
-    , lengthOrMinMaxDimension : Compatible
-    , lengthOrNoneOrMinMaxDimension : Compatible
-    , number : Compatible
-    , outline : Compatible
-    , units : UnitlessInteger
-    , unitLabel : String
-    , numericValue : Float
-    , lengthOrAutoOrCoverOrContain : Compatible
-    }
+    Value
+        { length : Compatible
+        , lengthOrNumber : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrAuto : Compatible
+        , lengthOrMinMaxDimension : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , number : Compatible
+        , outline : Compatible
+        , units : UnitlessInteger
+        , lengthOrAutoOrCoverOrContain : Compatible
+        }
 zero =
-    { value = "0"
-    , length = Compatible
-    , lengthOrNumber = Compatible
-    , lengthOrNone = Compatible
-    , lengthOrAuto = Compatible
-    , lengthOrMinMaxDimension = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    , number = Compatible
-    , outline = Compatible
-    , units = UnitlessInteger
-    , unitLabel = ""
-    , numericValue = 0
-    , lengthOrAutoOrCoverOrContain = Compatible
-    }
+    Value "0"
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
 type alias Pct =
-    ExplicitLength PercentageUnits
+    ExplicitLength { percentage : Compatible }
 
 
 {-| [`pct`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pct) units.
 -}
 pct : Float -> Pct
-pct =
-    lengthConverter PercentageUnits "%"
-
-
-type PercentageUnits
-    = PercentageUnits
+pct value =
+    Value (numberToString value ++ "%")
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
 type alias Em =
-    ExplicitLength EmUnits
+    ExplicitLength { em : Compatible }
 
 
 {-| [`em`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#em) units.
 -}
 em : Float -> Em
-em =
-    lengthConverter EmUnits "em"
-
-
-type EmUnits
-    = EmUnits
+em value =
+    Value (numberToString value ++ "em")
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
 type alias Ex =
-    ExplicitLength ExUnits
+    ExplicitLength { ex : Compatible }
 
 
 {-| [`ex`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ex) units.
 -}
 ex : Float -> Ex
-ex =
-    lengthConverter ExUnits "ex"
-
-
-type ExUnits
-    = ExUnits
+ex value =
+    Value (numberToString value ++ "ex")
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
 type alias Ch =
-    ExplicitLength ChUnits
+    ExplicitLength { ch : Compatible }
 
 
 {-| [`ch`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#ch) units.
 -}
 ch : Float -> Ch
-ch =
-    lengthConverter ChUnits "ch"
-
-
-type ChUnits
-    = ChUnits
+ch value =
+    Value (numberToString value ++ "ch")
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
 type alias Rem =
-    ExplicitLength RemUnits
+    ExplicitLength { rem : Compatible }
 
 
 {-| [`rem`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#rem) units.
 -}
 rem : Float -> Rem
-rem =
-    lengthConverter RemUnits "rem"
-
-
-type RemUnits
-    = RemUnits
+rem value =
+    Value (numberToString value ++ "rem")
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
 type alias Vh =
-    ExplicitLength VhUnits
+    ExplicitLength { vh : Compatible }
 
 
 {-| [`vh`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vh) units.
 -}
 vh : Float -> Vh
-vh =
-    lengthConverter VhUnits "vh"
-
-
-type VhUnits
-    = VhUnits
+vh value =
+    Value (numberToString value ++ "vh")
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
 type alias Vw =
-    ExplicitLength VwUnits
+    ExplicitLength { vw : Compatible }
 
 
 {-| [`vw`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vw) units.
 -}
 vw : Float -> Vw
-vw =
-    lengthConverter VwUnits "vw"
-
-
-type VwUnits
-    = VwUnits
+vw value =
+    Value (numberToString value ++ "vw")
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
 type alias Vmin =
-    ExplicitLength VMinUnits
+    ExplicitLength { vmin : Compatible }
 
 
 {-| [`vmin`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmin) units.
 -}
 vmin : Float -> Vmin
-vmin =
-    lengthConverter VMinUnits "vmin"
-
-
-type VMinUnits
-    = VMinUnits
+vmin value =
+    Value (numberToString value ++ "vmin")
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
 type alias Vmax =
-    ExplicitLength VMaxUnits
+    ExplicitLength { vmax : Compatible }
 
 
 {-| [`vmax`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#vmax) units.
 -}
 vmax : Float -> Vmax
-vmax =
-    lengthConverter VMaxUnits "vmax"
-
-
-type VMaxUnits
-    = VMaxUnits
+vmax value =
+    Value (numberToString value ++ "vmax")
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
 type alias Px =
-    ExplicitLength PxUnits
+    ExplicitLength { px : Compatible }
 
 
 {-| [`px`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#px) units.
 -}
 px : Float -> Px
-px =
-    lengthConverter PxUnits "px"
-
-
-type PxUnits
-    = PxUnits
+px value =
+    Value (numberToString value ++ "px")
 
 
 {-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
 -}
 type alias Mm =
-    ExplicitLength MMUnits
+    ExplicitLength { mm : Compatible }
 
 
 {-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
 -}
 mm : Float -> Mm
-mm =
-    lengthConverter MMUnits "mm"
-
-
-type MMUnits
-    = MMUnits
+mm value =
+    Value (numberToString value ++ "mm")
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
 type alias Cm =
-    ExplicitLength CMUnits
+    ExplicitLength { cm : Compatible }
 
 
 {-| [`cm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cm) units.
 -}
 cm : Float -> Cm
-cm =
-    lengthConverter CMUnits "cm"
-
-
-type CMUnits
-    = CMUnits
+cm value =
+    Value (numberToString value ++ "cm")
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
 -}
 type alias In =
-    ExplicitLength InchUnits
+    ExplicitLength { inches : Compatible }
 
 
 {-| [`in`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#in) units.
@@ -2946,134 +2551,120 @@ type alias In =
 
 -}
 inches : Float -> In
-inches =
-    lengthConverter InchUnits "in"
-
-
-type InchUnits
-    = InchUnits
+inches value =
+    Value (numberToString value ++ "in")
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
 type alias Pt =
-    ExplicitLength PtUnits
+    ExplicitLength { pt : Compatible }
 
 
 {-| [`pt`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pt) units.
 -}
 pt : Float -> Pt
-pt =
-    lengthConverter PtUnits "pt"
-
-
-type PtUnits
-    = PtUnits
+pt value =
+    Value (numberToString value ++ "pt")
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
 type alias Pc =
-    ExplicitLength PcUnits
+    ExplicitLength { pc : Compatible }
 
 
 {-| [`pc`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#pc) units.
 -}
 pc : Float -> Pc
-pc =
-    lengthConverter PcUnits "pc"
-
-
-type PcUnits
-    = PcUnits
+pc value =
+    Value (numberToString value ++ "pc")
 
 
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
+int : Int -> UnitlessInteger
 int val =
-    { value = numberToString val
-    , lengthOrNumber = Compatible
-    , number = Compatible
-    , fontWeight = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , intOrAuto = Compatible
-    , numericValue = toFloat val
-    , unitLabel = ""
-    , units = UnitlessInteger
-    }
+    Value (numberToString val)
 
 
-type UnitlessInteger
-    = UnitlessInteger
+type alias UnitlessInteger =
+    Value
+        { intOrAuto : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , lengthOrNumber : Compatible
+        , fontWeight : Compatible
+        , number : Compatible
+        }
 
 
 {-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
 which accept unitless numbers.
 -}
-num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
+num : Float -> UnitlessFloat
 num val =
-    { value = numberToString val
-    , lengthOrNumber = Compatible
-    , number = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , numericValue = val
-    , unitLabel = ""
-    , units = UnitlessFloat
-    }
+    Value (numberToString val)
 
 
-type UnitlessFloat
-    = UnitlessFloat
+type alias UnitlessFloat =
+    Value
+        { lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , lengthOrNumber : Compatible
+        , number : Compatible
+        }
 
 
 lengthForOverloadedProperty : ExplicitLength IncompatibleUnits
 lengthForOverloadedProperty =
-    lengthConverter IncompatibleUnits "" 0
+    Value (numberToString 0)
 
 
 {-| -}
-type IncompatibleUnits
-    = IncompatibleUnits
+type alias IncompatibleUnits =
+    { incompatible : Compatible }
 
 
 
 {- ANGLES -}
 
 
-angleConverter : String -> number -> AngleOrDirection (Angle {})
+type alias AngleWithDirection =
+    Value
+        { angleOrDirection : Compatible
+        , angle : Compatible
+        }
+
+
+angleConverter : String -> number -> AngleWithDirection
 angleConverter suffix num =
-    { value = numberToString num ++ suffix
-    , angle = Compatible
-    , angleOrDirection = Compatible
-    }
+    Value (numberToString num ++ suffix)
 
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
 -}
-deg : number -> AngleOrDirection (Angle {})
+deg : number -> AngleWithDirection
 deg =
     angleConverter "deg"
 
 
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
-grad : number -> AngleOrDirection (Angle {})
+grad : number -> AngleWithDirection
 grad =
     angleConverter "grad"
 
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
-rad : number -> AngleOrDirection (Angle {})
+rad : number -> AngleWithDirection
 rad =
     angleConverter "rad"
 
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
-turn : number -> AngleOrDirection (Angle {})
+turn : number -> AngleWithDirection
 turn =
     angleConverter "turn"
 
@@ -3089,9 +2680,10 @@ turn =
 -}
 matrix : number -> number -> number -> number -> number -> number -> Transform {}
 matrix a b c d tx ty =
-    { value = cssFunction "matrix" (List.map numberToString [ a, b, c, d, tx, ty ])
-    , transform = Compatible
-    }
+    [ a, b, c, d, tx, ty ]
+        |> List.map numberToString
+        |> cssFunction "matrix"
+        |> Value
 
 
 {-| The [`matrix3d()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#matrix3d()) transform-function.
@@ -3101,9 +2693,10 @@ matrix a b c d tx ty =
 -}
 matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-    { value = cssFunction "matrix3d" (List.map numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
-    , transform = Compatible
-    }
+    [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ]
+        |> List.map numberToString
+        |> cssFunction "matrix3d"
+        |> Value
 
 
 {-| The [`perspective()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#perspective()) transform-function.
@@ -3113,9 +2706,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 -}
 perspective : number -> Transform {}
 perspective l =
-    { value = cssFunction "perspective" [ numberToString l ]
-    , transform = Compatible
-    }
+    Value (cssFunction "perspective" [ numberToString l ])
 
 
 {-| The [`rotate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate()) transform-function.
@@ -3124,10 +2715,8 @@ perspective l =
 
 -}
 rotate : Angle compatible -> Transform {}
-rotate { value } =
-    { value = cssFunction "rotate" [ value ]
-    , transform = Compatible
-    }
+rotate (Value value) =
+    Value (cssFunction "rotate" [ value ])
 
 
 {-| The [`rotateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateX()) transform-function.
@@ -3136,10 +2725,8 @@ rotate { value } =
 
 -}
 rotateX : Angle compatible -> Transform {}
-rotateX { value } =
-    { value = cssFunction "rotateX" [ value ]
-    , transform = Compatible
-    }
+rotateX (Value value) =
+    Value (cssFunction "rotateX" [ value ])
 
 
 {-| The [`rotateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateY()) transform-function.
@@ -3148,10 +2735,8 @@ rotateX { value } =
 
 -}
 rotateY : Angle compatible -> Transform {}
-rotateY { value } =
-    { value = cssFunction "rotateY" [ value ]
-    , transform = Compatible
-    }
+rotateY (Value value) =
+    Value (cssFunction "rotateY" [ value ])
 
 
 {-| The [`rotateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotateZ()) transform-function.
@@ -3160,10 +2745,8 @@ rotateY { value } =
 
 -}
 rotateZ : Angle compatible -> Transform {}
-rotateZ { value } =
-    { value = cssFunction "rotateZ" [ value ]
-    , transform = Compatible
-    }
+rotateZ (Value value) =
+    Value (cssFunction "rotateZ" [ value ])
 
 
 {-| The [`rotate3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate3d()) transform-function.
@@ -3172,14 +2755,12 @@ rotateZ { value } =
 
 -}
 rotate3d : number -> number -> number -> Angle compatible -> Transform {}
-rotate3d x y z { value } =
+rotate3d x y z (Value value) =
     let
         coordsAsStrings =
             List.map numberToString [ x, y, z ]
     in
-    { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
-    , transform = Compatible
-    }
+    Value (cssFunction "rotate3d" (coordsAsStrings ++ [ value ]))
 
 
 {-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
@@ -3190,9 +2771,7 @@ rotate3d x y z { value } =
 -}
 scale : number -> Transform {}
 scale x =
-    { value = cssFunction "scale" [ numberToString x ]
-    , transform = Compatible
-    }
+    Value (cssFunction "scale" [ numberToString x ])
 
 
 {-| The [`scale`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()) transform-function.
@@ -3203,9 +2782,7 @@ scale x =
 -}
 scale2 : number -> number -> Transform {}
 scale2 x y =
-    { value = cssFunction "scale" (List.map numberToString [ x, y ])
-    , transform = Compatible
-    }
+    Value (cssFunction "scale" (List.map numberToString [ x, y ]))
 
 
 {-| The [`scaleX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleX()) transform-function.
@@ -3215,9 +2792,7 @@ scale2 x y =
 -}
 scaleX : number -> Transform {}
 scaleX x =
-    { value = cssFunction "scaleX" [ numberToString x ]
-    , transform = Compatible
-    }
+    Value (cssFunction "scaleX" [ numberToString x ])
 
 
 {-| The [`scaleY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scaleY()) transform-function.
@@ -3227,9 +2802,7 @@ scaleX x =
 -}
 scaleY : number -> Transform {}
 scaleY y =
-    { value = cssFunction "scaleY" [ numberToString y ]
-    , transform = Compatible
-    }
+    Value (cssFunction "scaleY" [ numberToString y ])
 
 
 {-| The [`scale3d`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale3d()) transform-function.
@@ -3239,9 +2812,7 @@ scaleY y =
 -}
 scale3d : number -> number -> number -> Transform {}
 scale3d x y z =
-    { value = cssFunction "scale3d" (List.map numberToString [ x, y, z ])
-    , transform = Compatible
-    }
+    Value (cssFunction "scale3d" (List.map numberToString [ x, y, z ]))
 
 
 {-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
@@ -3251,10 +2822,8 @@ scale3d x y z =
 
 -}
 skew : Angle compatible -> Transform {}
-skew { value } =
-    { value = cssFunction "skew" [ value ]
-    , transform = Compatible
-    }
+skew (Value value) =
+    Value (cssFunction "skew" [ value ])
 
 
 {-| The [`skew`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skew()) transform-function.
@@ -3264,10 +2833,8 @@ skew { value } =
 
 -}
 skew2 : Angle compatibleA -> Angle compatibleB -> Transform {}
-skew2 ax ay =
-    { value = cssFunction "skew" [ ax.value, ay.value ]
-    , transform = Compatible
-    }
+skew2 (Value ax) (Value ay) =
+    Value (cssFunction "skew" [ ax, ay ])
 
 
 {-| The [`skewX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewX()) transform-function.
@@ -3276,10 +2843,8 @@ skew2 ax ay =
 
 -}
 skewX : Angle compatible -> Transform {}
-skewX { value } =
-    { value = cssFunction "skewX" [ value ]
-    , transform = Compatible
-    }
+skewX (Value value) =
+    Value (cssFunction "skewX" [ value ])
 
 
 {-| The [`skewY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#skewY()) transform-function.
@@ -3288,10 +2853,8 @@ skewX { value } =
 
 -}
 skewY : Angle compatible -> Transform {}
-skewY { value } =
-    { value = cssFunction "skewY" [ value ]
-    , transform = Compatible
-    }
+skewY (Value value) =
+    Value (cssFunction "skewY" [ value ])
 
 
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
@@ -3301,10 +2864,8 @@ skewY { value } =
 
 -}
 translate : Length compatible units -> Transform {}
-translate { value } =
-    { value = cssFunction "translate" [ value ]
-    , transform = Compatible
-    }
+translate (Value value) =
+    Value (cssFunction "translate" [ value ])
 
 
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
@@ -3314,10 +2875,8 @@ translate { value } =
 
 -}
 translate2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Transform {}
-translate2 tx ty =
-    { value = cssFunction "translate" [ tx.value, ty.value ]
-    , transform = Compatible
-    }
+translate2 (Value tx) (Value ty) =
+    Value (cssFunction "translate" [ tx, ty ])
 
 
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
@@ -3326,10 +2885,8 @@ translate2 tx ty =
 
 -}
 translateX : Length compatible units -> Transform {}
-translateX { value } =
-    { value = cssFunction "translateX" [ value ]
-    , transform = Compatible
-    }
+translateX (Value value) =
+    Value (cssFunction "translateX" [ value ])
 
 
 {-| The [`translateY`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateY()) transform-function.
@@ -3338,10 +2895,8 @@ translateX { value } =
 
 -}
 translateY : Length compatible units -> Transform {}
-translateY { value } =
-    { value = cssFunction "translateY" [ value ]
-    , transform = Compatible
-    }
+translateY (Value value) =
+    Value (cssFunction "translateY" [ value ])
 
 
 {-| The [`translateZ`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateZ()) transform-function.
@@ -3350,10 +2905,8 @@ translateY { value } =
 
 -}
 translateZ : Length compatible units -> Transform {}
-translateZ { value } =
-    { value = cssFunction "translateZ" [ value ]
-    , transform = Compatible
-    }
+translateZ (Value value) =
+    Value (cssFunction "translateZ" [ value ])
 
 
 {-| The [`translateX`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translateX()) transform-function.
@@ -3362,10 +2915,8 @@ translateZ { value } =
 
 -}
 translate3d : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Transform {}
-translate3d tx ty tz =
-    { value = cssFunction "translate3d" [ tx.value, ty.value, tz.value ]
-    , transform = Compatible
-    }
+translate3d (Value tx) (Value ty) (Value tz) =
+    Value (cssFunction "translate3d" [ tx, ty, tz ])
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
@@ -3409,40 +2960,30 @@ transform only =
 -}
 fillBox : TransformBox {}
 fillBox =
-    { value = "fill-box"
-    , transformBox = Compatible
-    }
+    Value "fill-box"
 
 
 {-| The `content-box` value for the [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property.
 Can also be used as `content-box` value for the [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip) property.
 -}
-contentBox : BoxSizing (BackgroundClip {})
+contentBox : Value { boxSizing : Compatible, backgroundClip : Compatible }
 contentBox =
-    { value = "content-box"
-    , boxSizing = Compatible
-    , backgroundClip = Compatible
-    }
+    Value "content-box"
 
 
 {-| The `border-box` value for the [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property.
 Can also be used as `border-box` value for the [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip) property.
 -}
-borderBox : BoxSizing (BackgroundClip {})
+borderBox : Value { boxSizing : Compatible, backgroundClip : Compatible }
 borderBox =
-    { value = "border-box"
-    , boxSizing = Compatible
-    , backgroundClip = Compatible
-    }
+    Value "border-box"
 
 
 {-| The `view-box` value for the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
 -}
 viewBox : TransformBox {}
 viewBox =
-    { value = "view-box"
-    , transformBox = Compatible
-    }
+    Value "view-box"
 
 
 {-| The [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
@@ -3466,18 +3007,14 @@ boxSizing =
 -}
 preserve3d : TransformStyle {}
 preserve3d =
-    { value = "preserve-3d"
-    , transformStyle = Compatible
-    }
+    Value "preserve-3d"
 
 
 {-| The `flat` value for the [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
 -}
 flat : TransformStyle {}
 flat =
-    { value = "flat"
-    , transformStyle = Compatible
-    }
+    Value "flat"
 
 
 {-| The [`transform-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style) property.
@@ -3498,22 +3035,23 @@ listStylePosition =
     prop1 "list-style-position"
 
 
+type alias ListStyleWithPosition =
+    Value
+        { listStylePosition : Compatible
+        , listStyleTypeOrPositionOrImage : Compatible
+        }
+
+
 {-| -}
-inside : ListStyle (ListStylePosition {})
+inside : ListStyleWithPosition
 inside =
-    { value = "inside"
-    , listStylePosition = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "inside"
 
 
 {-| -}
-outside : ListStyle (ListStylePosition {})
+outside : ListStyleWithPosition
 outside =
-    { value = "outside"
-    , listStylePosition = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "outside"
 
 
 
@@ -3527,274 +3065,191 @@ listStyleType =
     prop1 "list-style-type"
 
 
+type alias ListStyleWithType =
+    Value
+        { listStyleType : Compatible
+        , listStyleTypeOrPositionOrImage : Compatible
+        }
+
+
 {-| -}
-disc : ListStyle (ListStyleType {})
+disc : ListStyleWithType
 disc =
-    { value = "disc"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "disc"
 
 
 {-| -}
-circle : ListStyle (ListStyleType {})
+circle : ListStyleWithType
 circle =
-    { value = "circle"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "circle"
 
 
 {-| -}
-square : ListStyle (ListStyleType {})
+square : ListStyleWithType
 square =
-    { value = "square"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "square"
 
 
 {-| -}
-decimal : ListStyle (ListStyleType {})
+decimal : ListStyleWithType
 decimal =
-    { value = "decimal"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "decimal"
 
 
 {-| -}
-decimalLeadingZero : ListStyle (ListStyleType {})
+decimalLeadingZero : ListStyleWithType
 decimalLeadingZero =
-    { value = "decimal-leading-zero"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "decimal-leading-zero"
 
 
 {-| -}
-lowerRoman : ListStyle (ListStyleType {})
+lowerRoman : ListStyleWithType
 lowerRoman =
-    { value = "lower-roman"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "lower-roman"
 
 
 {-| -}
-upperRoman : ListStyle (ListStyleType {})
+upperRoman : ListStyleWithType
 upperRoman =
-    { value = "upper-roman"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "upper-roman"
 
 
 {-| -}
-lowerGreek : ListStyle (ListStyleType {})
+lowerGreek : ListStyleWithType
 lowerGreek =
-    { value = "lower-greek"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "lower-greek"
 
 
 {-| -}
-upperGreek : ListStyle (ListStyleType {})
+upperGreek : ListStyleWithType
 upperGreek =
-    { value = "upper-greek"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "upper-greek"
 
 
 {-| -}
-lowerAlpha : ListStyle (ListStyleType {})
+lowerAlpha : ListStyleWithType
 lowerAlpha =
-    { value = "lower-alpha"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "lower-alpha"
 
 
 {-| -}
-upperAlpha : ListStyle (ListStyleType {})
+upperAlpha : ListStyleWithType
 upperAlpha =
-    { value = "upper-alpha"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "upper-alpha"
 
 
 {-| -}
-lowerLatin : ListStyle (ListStyleType {})
+lowerLatin : ListStyleWithType
 lowerLatin =
-    { value = "lower-latin"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "lower-latin"
 
 
 {-| -}
-upperLatin : ListStyle (ListStyleType {})
+upperLatin : ListStyleWithType
 upperLatin =
-    { value = "upper-latin"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "upper-latin"
 
 
 {-| -}
-arabicIndic : ListStyle (ListStyleType {})
+arabicIndic : ListStyleWithType
 arabicIndic =
-    { value = "arabic-indic"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "arabic-indic"
 
 
 {-| -}
-armenian : ListStyle (ListStyleType {})
+armenian : ListStyleWithType
 armenian =
-    { value = "armenian"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "armenian"
 
 
 {-| -}
-bengali : ListStyle (ListStyleType {})
+bengali : ListStyleWithType
 bengali =
-    { value = "bengali"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "bengali"
 
 
 {-| -}
-cjkEarthlyBranch : ListStyle (ListStyleType {})
+cjkEarthlyBranch : ListStyleWithType
 cjkEarthlyBranch =
-    { value = "cjk-earthly-branch"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "cjk-earthly-branch"
 
 
 {-| -}
-cjkHeavenlyStem : ListStyle (ListStyleType {})
+cjkHeavenlyStem : ListStyleWithType
 cjkHeavenlyStem =
-    { value = "cjk-heavenly-stem"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "cjk-heavenly-stem"
 
 
 {-| -}
-devanagari : ListStyle (ListStyleType {})
+devanagari : ListStyleWithType
 devanagari =
-    { value = "devanagari"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "devanagari"
 
 
 {-| -}
-georgian : ListStyle (ListStyleType {})
+georgian : ListStyleWithType
 georgian =
-    { value = "georgian"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "georgian"
 
 
 {-| -}
-gujarati : ListStyle (ListStyleType {})
+gujarati : ListStyleWithType
 gujarati =
-    { value = "gujarati"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "gujarati"
 
 
 {-| -}
-gurmukhi : ListStyle (ListStyleType {})
+gurmukhi : ListStyleWithType
 gurmukhi =
-    { value = "gurmukhi"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "gurmukhi"
 
 
 {-| -}
-kannada : ListStyle (ListStyleType {})
+kannada : ListStyleWithType
 kannada =
-    { value = "kannada"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "kannada"
 
 
 {-| -}
-khmer : ListStyle (ListStyleType {})
+khmer : ListStyleWithType
 khmer =
-    { value = "khmer"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "khmer"
 
 
 {-| -}
-lao : ListStyle (ListStyleType {})
+lao : ListStyleWithType
 lao =
-    { value = "lao"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "lao"
 
 
 {-| -}
-malayalam : ListStyle (ListStyleType {})
+malayalam : ListStyleWithType
 malayalam =
-    { value = "malayalam"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "malayalam"
 
 
 {-| -}
-myanmar : ListStyle (ListStyleType {})
+myanmar : ListStyleWithType
 myanmar =
-    { value = "myanmar"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "myanmar"
 
 
 {-| -}
-oriya : ListStyle (ListStyleType {})
+oriya : ListStyleWithType
 oriya =
-    { value = "oriya"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "oriya"
 
 
 {-| -}
-telugu : ListStyle (ListStyleType {})
+telugu : ListStyleWithType
 telugu =
-    { value = "telugu"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "telugu"
 
 
 {-| -}
-thai : ListStyle (ListStyleType {})
+thai : ListStyleWithType
 thai =
-    { value = "thai"
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    Value "thai"
 
 
 
@@ -3977,31 +3432,25 @@ order =
 {-| The [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values) value for the
 flex-basis property.
 -}
-content : LengthOrNumberOrAutoOrNoneOrContent (FlexBasis {})
+content : Value { flexBasis : Compatible, lengthOrNumberOrAutoOrNoneOrContent : Compatible }
 content =
-    { value = "content"
-    , flexBasis = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    }
+    Value "content"
 
 
 {-| The[`wrap`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values) value for the
 flex-wrap property.
 -}
-wrap : FlexDirectionOrWrap (FlexWrap {})
+wrap : Value { flexWrap : Compatible, flexDirectionOrWrap : Compatible }
 wrap =
-    { value = "wrap"
-    , flexWrap = Compatible
-    , flexDirectionOrWrap = Compatible
-    }
+    Value "wrap"
 
 
 {-| The[`wrap-reverse`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values) value for the
 flex-wrap property.
 -}
-wrapReverse : FlexDirectionOrWrap (FlexWrap {})
+wrapReverse : Value { flexWrap : Compatible, flexDirectionOrWrap : Compatible }
 wrapReverse =
-    { wrap | value = "wrap-reverse" }
+    Value "wrap-reverse"
 
 
 {-| The[`flex-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
@@ -4049,36 +3498,33 @@ stretch =
 {-| The[`row`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
 flex-direction property.
 -}
-row : FlexDirectionOrWrap (FlexDirection {})
+row : Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 row =
-    { value = "row"
-    , flexDirection = Compatible
-    , flexDirectionOrWrap = Compatible
-    }
+    Value "row"
 
 
 {-| The[`row-reverse`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
 flex-direction property.
 -}
-rowReverse : FlexDirectionOrWrap (FlexDirection {})
+rowReverse : Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 rowReverse =
-    { row | value = "row-reverse" }
+    Value "row-reverse"
 
 
 {-| The[`column`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
 flex-direction property.
 -}
-column : FlexDirectionOrWrap (FlexDirection {})
+column : Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 column =
-    { row | value = "column" }
+    Value "column"
 
 
 {-| The[`column-reverse`](<https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction> #Values) value for the
 flex-direction property.
 -}
-columnReverse : FlexDirectionOrWrap (FlexDirection {})
+columnReverse : Value { flexDirection : Compatible, flexDirectionOrWrap : Compatible }
 columnReverse =
-    { row | value = "column-reverse" }
+    Value "column-reverse"
 
 
 
@@ -4090,9 +3536,7 @@ text decoration line.
 -}
 underline : TextDecorationLine {}
 underline =
-    { value = "underline"
-    , textDecorationLine = Compatible
-    }
+    Value "underline"
 
 
 {-| An [`overline`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
@@ -4100,9 +3544,7 @@ text decoration line.
 -}
 overline : TextDecorationLine {}
 overline =
-    { value = "overline"
-    , textDecorationLine = Compatible
-    }
+    Value "overline"
 
 
 {-| A [`line-through`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line#Value)
@@ -4110,9 +3552,7 @@ text decoration line.
 -}
 lineThrough : TextDecorationLine {}
 lineThrough =
-    { value = "line-through"
-    , textDecorationLine = Compatible
-    }
+    Value "line-through"
 
 
 
@@ -4123,67 +3563,49 @@ lineThrough =
 -}
 repeatX : BackgroundRepeatShorthand {}
 repeatX =
-    { value = "repeat-x"
-    , backgroundRepeatShorthand = Compatible
-    }
+    Value "repeat-x"
 
 
 {-| The `repeat-y` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
 repeatY : BackgroundRepeatShorthand {}
 repeatY =
-    { value = "repeat-y"
-    , backgroundRepeatShorthand = Compatible
-    }
+    Value "repeat-y"
 
 
 {-| The `repeat` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
 repeat : BackgroundRepeat {}
 repeat =
-    { value = "repeat"
-    , backgroundRepeat = Compatible
-    , backgroundRepeatShorthand = Compatible
-    }
+    Value "repeat"
 
 
 {-| The `space` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
 space : BackgroundRepeat {}
 space =
-    { value = "space"
-    , backgroundRepeat = Compatible
-    , backgroundRepeatShorthand = Compatible
-    }
+    Value "space"
 
 
 {-| The `round` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
 round : BackgroundRepeat {}
 round =
-    { value = "round"
-    , backgroundRepeat = Compatible
-    , backgroundRepeatShorthand = Compatible
-    }
+    Value "round"
 
 
 {-| The `no-repeat` [`background-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat) value.
 -}
 noRepeat : BackgroundRepeat {}
 noRepeat =
-    { value = "no-repeat"
-    , backgroundRepeat = Compatible
-    , backgroundRepeatShorthand = Compatible
-    }
+    Value "no-repeat"
 
 
 {-| The `local` [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment) value.
 -}
 local : BackgroundAttachment {}
 local =
-    { value = "local"
-    , backgroundAttachment = Compatible
-    }
+    Value "local"
 
 
 
@@ -4192,8 +3614,8 @@ local =
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values>
 -}
-type alias ColorStop compatibleA compatibleB unit =
-    ( ColorValue compatibleA, Maybe (Length compatibleB unit) )
+type alias ColorStop compatible unit =
+    ( Color, Maybe (Length compatible unit) )
 
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
@@ -4203,22 +3625,20 @@ type alias ColorStop compatibleA compatibleB unit =
 
 -}
 linearGradient :
-    ColorStop compatibleA compatibleB unit
-    -> ColorStop compatibleA compatibleB unit
-    -> List (ColorStop compatibleA compatibleB unit)
-    -> BackgroundImage (ListStyle {})
+    ColorStop compatible unit
+    -> ColorStop compatible unit
+    -> List (ColorStop compatible unit)
+    -> Value { backgroundImage : Compatible, listStyleTypeOrPositionOrImage : Compatible }
 linearGradient stop1 stop2 stops =
     -- TODO we should make this more permissive, e.g. compatibleA/compatibleB/compatibleC/compatibleD
     -- the only reason it isn't is that we happen to be using collectStops like this.
     -- We should just not use collectStops. Same with linearGradient2
-    { value =
-        [ stop1, stop2 ]
-            ++ stops
-            |> collectStops
-            |> cssFunction "linear-gradient"
-    , backgroundImage = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    stop1
+        :: stop2
+        :: stops
+        |> collectStops
+        |> cssFunction "linear-gradient"
+        |> Value
 
 
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
@@ -4228,43 +3648,44 @@ linearGradient stop1 stop2 stops =
 
 -}
 linearGradient2 :
-    AngleOrDirection compatible
-    -> ColorStop compatibleA compatibleB unit
-    -> ColorStop compatibleA compatibleB unit
-    -> List (ColorStop compatibleA compatibleB unit)
-    -> BackgroundImage (ListStyle {})
-linearGradient2 dir stop1 stop2 stops =
-    { value =
-        [ stop1, stop2 ]
-            ++ stops
-            |> collectStops
-            |> (::) dir.value
-            |> cssFunction "linear-gradient"
-    , backgroundImage = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    }
+    AngleOrDirection compatibleA
+    -> ColorStop compatibleB unit
+    -> ColorStop compatibleB unit
+    -> List (ColorStop compatibleB unit)
+    -> Value { backgroundImage : Compatible, listStyleTypeOrPositionOrImage : Compatible }
+linearGradient2 (Value dir) stop1 stop2 stops =
+    stop1
+        :: stop2
+        :: stops
+        |> collectStops
+        |> (::) dir
+        |> cssFunction "linear-gradient"
+        |> Value
 
 
-collectStops : List (ColorStop compatibleA compatibleB unit) -> List String
+collectStops : List (ColorStop compatible unit) -> List String
 collectStops =
-    List.map <|
-        \( c, len ) ->
-            len
-                |> Maybe.map (String.cons ' ' << .value)
-                |> Maybe.withDefault ""
-                |> String.append c.value
+    List.map
+        (\( Value color, len ) ->
+            case len of
+                Nothing ->
+                    color
+
+                Just (Value len) ->
+                    color ++ " " ++ len
+        )
 
 
 {-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-stop : ColorValue compatibleA -> ColorStop compatibleA compatibleB unit
+stop : Color -> ColorStop compatible unit
 stop c =
     ( c, Nothing )
 
 
 {-| [`ColorStop`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
-stop2 : ColorValue compatibleA -> Length compatibleB unit -> ColorStop compatibleA compatibleB unit
+stop2 : Color -> Length compatible unit -> ColorStop compatible unit
 stop2 c len =
     ( c, Just len )
 
@@ -4273,72 +3694,56 @@ stop2 c len =
 -}
 toTop : AngleOrDirection {}
 toTop =
-    { value = "to top"
-    , angleOrDirection = Compatible
-    }
+    Value "to top"
 
 
 {-| Sets the direction to [`top right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
 toTopRight : AngleOrDirection {}
 toTopRight =
-    { value = "to top right"
-    , angleOrDirection = Compatible
-    }
+    Value "to top right"
 
 
 {-| Sets the direction to [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
 toRight : AngleOrDirection {}
 toRight =
-    { value = "to right"
-    , angleOrDirection = Compatible
-    }
+    Value "to right"
 
 
 {-| Sets the direction to [`bottom right`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
 toBottomRight : AngleOrDirection {}
 toBottomRight =
-    { value = "to bottom right"
-    , angleOrDirection = Compatible
-    }
+    Value "to bottom right"
 
 
 {-| Sets the direction to [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
 toBottom : AngleOrDirection {}
 toBottom =
-    { value = "to bottom"
-    , angleOrDirection = Compatible
-    }
+    Value "to bottom"
 
 
 {-| Sets the direction to [`bottom left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
 toBottomLeft : AngleOrDirection {}
 toBottomLeft =
-    { value = "to bottom left"
-    , angleOrDirection = Compatible
-    }
+    Value "to bottom left"
 
 
 {-| Sets the direction to [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
 toLeft : AngleOrDirection {}
 toLeft =
-    { value = "to left"
-    , angleOrDirection = Compatible
-    }
+    Value "to left"
 
 
 {-| Sets the direction to [`top left`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient#Values)
 -}
 toTopLeft : AngleOrDirection {}
 toTopLeft =
-    { value = "to top left"
-    , angleOrDirection = Compatible
-    }
+    Value "to top left"
 
 
 
@@ -4348,240 +3753,171 @@ toTopLeft =
 {-| -}
 block : Display {}
 block =
-    { value = "block"
-    , display = Compatible
-    }
+    Value "block"
 
 
 {-| -}
 inlineBlock : Display {}
 inlineBlock =
-    { value = "inline-block"
-    , display = Compatible
-    }
+    Value "inline-block"
 
 
 {-| Sets the display style to [`inline-flex`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 inlineFlex : Display {}
 inlineFlex =
-    { value = "inline-flex"
-    , display = Compatible
-    }
+    Value "inline-flex"
 
 
 {-| -}
 inline : Display {}
 inline =
-    { value = "inline"
-    , display = Compatible
-    }
+    Value "inline"
 
 
 {-| Sets the display style to [`table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 table : Display {}
 table =
-    { value = "table"
-    , display = Compatible
-    }
+    Value "table"
 
 
 {-| Sets the display style to [`inline-table`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 inlineTable : Display {}
 inlineTable =
-    { value = "inline-table"
-    , display = Compatible
-    }
+    Value "inline-table"
 
 
 {-| Sets the display style to [`table-row`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableRow : Display {}
 tableRow =
-    { value = "table-row"
-    , display = Compatible
-    }
+    Value "table-row"
 
 
 {-| Sets the display style to [`table-cell`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableCell : Display {}
 tableCell =
-    { value = "table-cell"
-    , display = Compatible
-    }
+    Value "table-cell"
 
 
 {-| Sets the display style to [`table-column`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableColumn : Display {}
 tableColumn =
-    { value = "table-column"
-    , display = Compatible
-    }
+    Value "table-column"
 
 
 {-| Sets the display style to [`table-caption`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableCaption : Display {}
 tableCaption =
-    { value = "table-caption"
-    , display = Compatible
-    }
+    Value "table-caption"
 
 
 {-| Sets the display style to [`table-row-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableRowGroup : Display {}
 tableRowGroup =
-    { value = "table-row-group"
-    , display = Compatible
-    }
+    Value "table-row-group"
 
 
 {-| Sets the display style to [`table-column-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableColumnGroup : Display {}
 tableColumnGroup =
-    { value = "table-column-group"
-    , display = Compatible
-    }
+    Value "table-column-group"
 
 
 {-| Sets the display style to [`table-header-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableHeaderGroup : Display {}
 tableHeaderGroup =
-    { value = "table-header-group"
-    , display = Compatible
-    }
+    Value "table-header-group"
 
 
 {-| Sets the display style to [`table-footer-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/display#Values)
 -}
 tableFooterGroup : Display {}
 tableFooterGroup =
-    { value = "table-footer-group"
-    , display = Compatible
-    }
+    Value "table-footer-group"
 
 
 {-| -}
 listItem : Display {}
 listItem =
-    { value = "list-item"
-    , display = Compatible
-    }
+    Value "list-item"
 
 
 {-| -}
 inlineListItem : Display {}
 inlineListItem =
-    { value = "inline-list-item"
-    , display = Compatible
-    }
+    Value "inline-list-item"
 
 
 {-| -}
 none :
-    { borderStyle : Compatible
-    , cursor : Compatible
-    , display : Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-    , none : Compatible
-    , lengthOrNone : Compatible
-    , lengthOrNoneOrMinMaxDimension : Compatible
-    , listStyleType : Compatible
-    , listStyleTypeOrPositionOrImage : Compatible
-    , outline : Compatible
-    , pointerEvents : Compatible
-    , resize : Compatible
-    , textDecorationLine : Compatible
-    , transform : Compatible
-    , backgroundImage : Compatible
-    , value : String
-    , textTransform : Compatible
-    , touchAction : Compatible
-    , updateFrequency : Compatible
-    , blockAxisOverflow : Compatible
-    , inlineAxisOverflow : Compatible
-    , pointerDevice : Compatible
-    , hoverCapability : Compatible
-    , scriptingSupport : Compatible
-    }
+    Value
+        { borderStyle : Compatible
+        , cursor : Compatible
+        , display : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , none : Compatible
+        , lengthOrNone : Compatible
+        , lengthOrNoneOrMinMaxDimension : Compatible
+        , listStyleType : Compatible
+        , listStyleTypeOrPositionOrImage : Compatible
+        , outline : Compatible
+        , pointerEvents : Compatible
+        , resize : Compatible
+        , textDecorationLine : Compatible
+        , transform : Compatible
+        , backgroundImage : Compatible
+        , textTransform : Compatible
+        , touchAction : Compatible
+        , updateFrequency : Compatible
+        , blockAxisOverflow : Compatible
+        , inlineAxisOverflow : Compatible
+        , pointerDevice : Compatible
+        , hoverCapability : Compatible
+        , scriptingSupport : Compatible
+        }
 none =
-    { value = "none"
-    , cursor = Compatible
-    , none = Compatible
-    , lengthOrNone = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , textDecorationLine = Compatible
-    , listStyleType = Compatible
-    , listStyleTypeOrPositionOrImage = Compatible
-    , display = Compatible
-    , outline = Compatible
-    , pointerEvents = Compatible
-    , resize = Compatible
-    , transform = Compatible
-    , borderStyle = Compatible
-    , backgroundImage = Compatible
-    , textTransform = Compatible
-    , touchAction = Compatible
-    , updateFrequency = Compatible
-    , blockAxisOverflow = Compatible
-    , inlineAxisOverflow = Compatible
-    , pointerDevice = Compatible
-    , hoverCapability = Compatible
-    , scriptingSupport = Compatible
-    }
+    Value "none"
 
 
 {-| -}
 auto :
-    { lengthOrAuto : Compatible
-    , overflow : Compatible
-    , textRendering : Compatible
-    , flexBasis : Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-    , alignItemsOrAuto : Compatible
-    , justifyContentOrAuto : Compatible
-    , cursor : Compatible
-    , value : String
-    , lengthOrAutoOrCoverOrContain : Compatible
-    , intOrAuto : Compatible
-    , pointerEvents : Compatible
-    , touchAction : Compatible
-    , tableLayout : Compatible
-    }
+    Value
+        { lengthOrAuto : Compatible
+        , overflow : Compatible
+        , textRendering : Compatible
+        , flexBasis : Compatible
+        , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+        , alignItemsOrAuto : Compatible
+        , justifyContentOrAuto : Compatible
+        , cursor : Compatible
+        , lengthOrAutoOrCoverOrContain : Compatible
+        , intOrAuto : Compatible
+        , pointerEvents : Compatible
+        , touchAction : Compatible
+        , tableLayout : Compatible
+        }
 auto =
-    { value = "auto"
-    , cursor = Compatible
-    , flexBasis = Compatible
-    , overflow = Compatible
-    , textRendering = Compatible
-    , lengthOrAuto = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , alignItemsOrAuto = Compatible
-    , lengthOrAutoOrCoverOrContain = Compatible
-    , justifyContentOrAuto = Compatible
-    , intOrAuto = Compatible
-    , pointerEvents = Compatible
-    , touchAction = Compatible
-    , tableLayout = Compatible
-    }
+    Value "auto"
 
 
 {-| -}
-noWrap : WhiteSpace (FlexDirectionOrWrap (FlexWrap {}))
+noWrap :
+    Value
+        { whiteSpace : Compatible
+        , flexWrap : Compatible
+        , flexDirectionOrWrap : Compatible
+        }
 noWrap =
-    { value = "nowrap"
-    , whiteSpace = Compatible
-    , flexWrap = Compatible
-    , flexDirectionOrWrap = Compatible
-    }
+    Value "nowrap"
 
 
 
@@ -4660,33 +3996,33 @@ position =
 
 
 prop1 : String -> Value a -> Style
-prop1 key arg =
-    property key arg.value
+prop1 key (Value arg) =
+    property key arg
 
 
 prop2 : String -> Value a -> Value b -> Style
-prop2 key argA argB =
-    property key (String.join " " [ argA.value, argB.value ])
+prop2 key (Value argA) (Value argB) =
+    property key (String.join " " [ argA, argB ])
 
 
 prop3 : String -> Value a -> Value b -> Value c -> Style
-prop3 key argA argB argC =
-    property key (String.join " " [ argA.value, argB.value, argC.value ])
+prop3 key (Value argA) (Value argB) (Value argC) =
+    property key (String.join " " [ argA, argB, argC ])
 
 
 prop4 : String -> Value a -> Value b -> Value c -> Value d -> Style
-prop4 key argA argB argC argD =
-    property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
+prop4 key (Value argA) (Value argB) (Value argC) (Value argD) =
+    property key (String.join " " [ argA, argB, argC, argD ])
 
 
 prop5 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Style
-prop5 key argA argB argC argD argE =
-    property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value ])
+prop5 key (Value argA) (Value argB) (Value argC) (Value argD) (Value argE) =
+    property key (String.join " " [ argA, argB, argC, argD, argE ])
 
 
 prop6 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Value f -> Style
-prop6 key argA argB argC argD argE argF =
-    property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value, argF.value ])
+prop6 key (Value argA) (Value argB) (Value argC) (Value argD) (Value argE) (Value argF) =
+    property key (String.join " " [ argA, argB, argC, argD, argE, argF ])
 
 
 {-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
@@ -4705,9 +4041,9 @@ float fn =
     textDecorationColor (rgb 12 11 10)
 
 -}
-textDecorationColor : ColorValue compatible -> Style
-textDecorationColor c =
-    property "text-decoration-color" c.value
+textDecorationColor : Color -> Style
+textDecorationColor =
+    prop1 "text-decoration-color"
 
 
 {-| Sets ['text-emphasis-color'](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color)
@@ -4715,9 +4051,9 @@ textDecorationColor c =
      textEmphasisColor (rgb 100 100 100)
 
 -}
-textEmphasisColor : ColorValue compatible -> Style
-textEmphasisColor c =
-    property "text-emphasis-color" c.value
+textEmphasisColor : Color -> Style
+textEmphasisColor =
+    prop1 "text-emphasis-color"
 
 
 {-| Sets [`text-align-last`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align-last).
@@ -4803,7 +4139,7 @@ textShadow2 =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> ColorValue compatibleC -> Style
+textShadow3 : Length compatibleA unitsA -> Length compatibleB unitsB -> Color -> Style
 textShadow3 =
     prop3 "text-shadow"
 
@@ -4816,7 +4152,7 @@ textShadow3 =
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
-textShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> ColorValue compatibleD -> Style
+textShadow4 : Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Color -> Style
 textShadow4 =
     prop4 "text-shadow"
 
@@ -4921,7 +4257,7 @@ boxShadow4 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
+boxShadow5 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Color -> Style
 boxShadow5 =
     prop5 "box-shadow"
 
@@ -4942,7 +4278,7 @@ boxShadow5 =
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
-boxShadow6 : Value a -> Length compatibleA unitsA -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> ColorValue compatibleE -> Style
+boxShadow6 : Value a -> Length compatibleB unitsB -> Length compatibleC unitsC -> Length compatibleD unitsD -> Length compatibleE unitsE -> Color -> Style
 boxShadow6 =
     prop6 "box-shadow"
 
@@ -5430,7 +4766,7 @@ right =
 -}
 maxContent : MinMaxDimension {}
 maxContent =
-    { fillAvailable | value = "max-content" }
+    Value "max-content"
 
 
 {-| The `min-content` value for
@@ -5441,7 +4777,7 @@ maxContent =
 -}
 minContent : MinMaxDimension {}
 minContent =
-    { fillAvailable | value = "min-content" }
+    Value "min-content"
 
 
 {-| The `fit-content` value for
@@ -5452,7 +4788,7 @@ minContent =
 -}
 fitContent : MinMaxDimension {}
 fitContent =
-    { fillAvailable | value = "fit-content" }
+    Value "fit-content"
 
 
 {-| The `fill-available` value for
@@ -5463,11 +4799,7 @@ fitContent =
 -}
 fillAvailable : MinMaxDimension {}
 fillAvailable =
-    { value = "fill-available"
-    , minMaxDimension = Compatible
-    , lengthOrMinMaxDimension = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    }
+    Value "fill-available"
 
 
 
@@ -5481,9 +4813,7 @@ fillAvailable =
 -}
 static : Position {}
 static =
-    { value = "static"
-    , position = Compatible
-    }
+    Value "static"
 
 
 {-| A `fixed` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
@@ -5495,17 +4825,13 @@ This can also be the `fixed` value for [`table-layout`](https://developer.mozill
 
 -}
 fixed :
-    { value : String
-    , position : Compatible
-    , backgroundAttachment : Compatible
-    , tableLayout : Compatible
-    }
+    Value
+        { position : Compatible
+        , backgroundAttachment : Compatible
+        , tableLayout : Compatible
+        }
 fixed =
-    { value = "fixed"
-    , position = Compatible
-    , backgroundAttachment = Compatible
-    , tableLayout = Compatible
-    }
+    Value "fixed"
 
 
 {-| A `sticky` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
@@ -5515,9 +4841,7 @@ fixed =
 -}
 sticky : Position {}
 sticky =
-    { value = "sticky"
-    , position = Compatible
-    }
+    Value "sticky"
 
 
 {-| A `relative` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
@@ -5527,9 +4851,7 @@ sticky =
 -}
 relative : Position {}
 relative =
-    { value = "relative"
-    , position = Compatible
-    }
+    Value "relative"
 
 
 {-| An `absolute` [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) value.
@@ -5539,9 +4861,7 @@ relative =
 -}
 absolute : Position {}
 absolute =
-    { value = "absolute"
-    , position = Compatible
-    }
+    Value "absolute"
 
 
 
@@ -5552,31 +4872,31 @@ absolute =
 {-| -}
 serif : FontFamily {}
 serif =
-    { value = "serif", fontFamily = Compatible }
+    Value "serif"
 
 
 {-| -}
 sansSerif : FontFamily {}
 sansSerif =
-    { value = "sans-serif", fontFamily = Compatible }
+    Value "sans-serif"
 
 
 {-| -}
 monospace : FontFamily {}
 monospace =
-    { value = "monospace", fontFamily = Compatible }
+    Value "monospace"
 
 
 {-| -}
 cursive : FontFamily {}
 cursive =
-    { value = "cursive", fontFamily = Compatible }
+    Value "cursive"
 
 
 {-| -}
 fantasy : FontFamily {}
 fantasy =
-    { value = "fantasy", fontFamily = Compatible }
+    Value "fantasy"
 
 
 
@@ -5586,93 +4906,84 @@ fantasy =
 {-| -}
 xxSmall : FontSize {}
 xxSmall =
-    { value = "xx-small", fontSize = Compatible }
+    Value "xx-small"
 
 
 {-| -}
 xSmall : FontSize {}
 xSmall =
-    { value = "x-small", fontSize = Compatible }
+    Value "x-small"
 
 
 {-| -}
 small : FontSize {}
 small =
-    { value = "small", fontSize = Compatible }
+    Value "small"
 
 
 {-| -}
 medium : FontSize {}
 medium =
-    { value = "medium", fontSize = Compatible }
+    Value "medium"
 
 
 {-| -}
 large : FontSize {}
 large =
-    { value = "large", fontSize = Compatible }
+    Value "large"
 
 
 {-| -}
 xLarge : FontSize {}
 xLarge =
-    { value = "x-large", fontSize = Compatible }
+    Value "x-large"
 
 
 {-| -}
 xxLarge : FontSize {}
 xxLarge =
-    { value = "xx-large", fontSize = Compatible }
+    Value "xx-large"
 
 
 {-| -}
 smaller : FontSize {}
 smaller =
-    { value = "smaller", fontSize = Compatible }
+    Value "smaller"
 
 
 {-| -}
 larger : FontSize {}
 larger =
-    { value = "larger", fontSize = Compatible }
+    Value "larger"
 
 
 
 -- Styles --
 
 
-type alias Normal =
-    { value : String
-    , fontStyle : Compatible
-    , fontWeight : Compatible
-    , featureTagValue : Compatible
-    , overflowWrap : Compatible
-    , whiteSpace : Compatible
-    }
-
-
 {-| -}
-normal : Normal
+normal :
+    Value
+        { fontStyle : Compatible
+        , fontWeight : Compatible
+        , featureTagValue : Compatible
+        , overflowWrap : Compatible
+        , whiteSpace : Compatible
+        }
 normal =
-    { value = "normal"
-    , fontStyle = Compatible
-    , fontWeight = Compatible
-    , featureTagValue = Compatible
-    , overflowWrap = Compatible
-    , whiteSpace = Compatible
-    }
+    Value "normal"
 
 
 {-| -}
 italic : FontStyle {}
 italic =
-    { value = "italic", fontStyle = Compatible }
+    Value "italic"
 
 
 {-| -}
 oblique : FontStyle {}
 oblique =
-    { value = "oblique", fontStyle = Compatible }
+    Value "oblique"
 
 
 
@@ -5682,25 +4993,19 @@ oblique =
 {-| -}
 bold : FontWeight {}
 bold =
-    { value = "bold"
-    , fontWeight = Compatible
-    }
+    Value "bold"
 
 
 {-| -}
 lighter : FontWeight {}
 lighter =
-    { value = "lighter"
-    , fontWeight = Compatible
-    }
+    Value "lighter"
 
 
 {-| -}
 bolder : FontWeight {}
 bolder =
-    { value = "bolder"
-    , fontWeight = Compatible
-    }
+    Value "bolder"
 
 
 
@@ -5711,37 +5016,37 @@ bolder =
 {-| -}
 smallCaps : FontVariantCaps {}
 smallCaps =
-    { value = "small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+    Value "small-caps"
 
 
 {-| -}
 allSmallCaps : FontVariantCaps {}
 allSmallCaps =
-    { value = "all-small-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+    Value "all-small-caps"
 
 
 {-| -}
 petiteCaps : FontVariantCaps {}
 petiteCaps =
-    { value = "petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+    Value "petite-caps"
 
 
 {-| -}
 allPetiteCaps : FontVariantCaps {}
 allPetiteCaps =
-    { value = "all-petite-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+    Value "all-petite-caps"
 
 
 {-| -}
 unicase : FontVariantCaps {}
 unicase =
-    { value = "unicase", fontVariant = Compatible, fontVariantCaps = Compatible }
+    Value "unicase"
 
 
 {-| -}
 titlingCaps : FontVariantCaps {}
 titlingCaps =
-    { value = "titling-caps", fontVariant = Compatible, fontVariantCaps = Compatible }
+    Value "titling-caps"
 
 
 
@@ -5751,73 +5056,49 @@ titlingCaps =
 {-| -}
 commonLigatures : FontVariantLigatures {}
 commonLigatures =
-    { value = "common-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "common-ligatures"
 
 
 {-| -}
 noCommonLigatures : FontVariantLigatures {}
 noCommonLigatures =
-    { value = "no-common-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "no-common-ligatures"
 
 
 {-| -}
 discretionaryLigatures : FontVariantLigatures {}
 discretionaryLigatures =
-    { value = "discretionary-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "discretionary-ligatures"
 
 
 {-| -}
 noDiscretionaryLigatures : FontVariantLigatures {}
 noDiscretionaryLigatures =
-    { value = "no-discretionary-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "no-discretionary-ligatures"
 
 
 {-| -}
 historicalLigatures : FontVariantLigatures {}
 historicalLigatures =
-    { value = "historical-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "historical-ligatures"
 
 
 {-| -}
 noHistoricalLigatures : FontVariantLigatures {}
 noHistoricalLigatures =
-    { value = "no-historical-ligatures"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "no-historical-ligatures"
 
 
 {-| -}
 contextual : FontVariantLigatures {}
 contextual =
-    { value = "context"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "context"
 
 
 {-| -}
 noContextual : FontVariantLigatures {}
 noContextual =
-    { value = "no-contextual"
-    , fontVariant = Compatible
-    , fontVariantLigatures = Compatible
-    }
+    Value "no-contextual"
 
 
 
@@ -5827,73 +5108,49 @@ noContextual =
 {-| -}
 liningNums : FontVariantNumeric {}
 liningNums =
-    { value = "lining-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "lining-nums"
 
 
 {-| -}
 oldstyleNums : FontVariantNumeric {}
 oldstyleNums =
-    { value = "oldstyle-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "oldstyle-nums"
 
 
 {-| -}
 proportionalNums : FontVariantNumeric {}
 proportionalNums =
-    { value = "proportional-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "proportional-nums"
 
 
 {-| -}
 tabularNums : FontVariantNumeric {}
 tabularNums =
-    { value = "tabular-nums"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "tabular-nums"
 
 
 {-| -}
 diagonalFractions : FontVariantNumeric {}
 diagonalFractions =
-    { value = "diagonal-fractions"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "diagonal-fractions"
 
 
 {-| -}
 stackedFractions : FontVariantNumeric {}
 stackedFractions =
-    { value = "stacked-fractions"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "stacked-fractions"
 
 
 {-| -}
 ordinal : FontVariantNumeric {}
 ordinal =
-    { value = "ordinal"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "ordinal"
 
 
 {-| -}
 slashedZero : FontVariantNumeric {}
 slashedZero =
-    { value = "slashed-zero"
-    , fontVariant = Compatible
-    , fontVariantNumeric = Compatible
-    }
+    Value "slashed-zero"
 
 
 
@@ -5934,9 +5191,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = toString tag ++ " " ++ toString value
-    , featureTagValue = Compatible
-    }
+    Value (toString tag ++ " " ++ toString value)
 
 
 
@@ -5974,7 +5229,7 @@ border2 =
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
-border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+border3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 border3 =
     prop3 "border"
 
@@ -6010,7 +5265,7 @@ borderTop2 =
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderTop3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderTop3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 borderTop3 =
     prop3 "border-top"
 
@@ -6046,7 +5301,7 @@ borderBottom2 =
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBottom3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderBottom3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 borderBottom3 =
     prop3 "border-bottom"
 
@@ -6082,7 +5337,7 @@ borderLeft2 =
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderLeft3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderLeft3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 borderLeft3 =
     prop3 "border-left"
 
@@ -6118,7 +5373,7 @@ borderRight2 =
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderRight3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderRight3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 borderRight3 =
     prop3 "border-right"
 
@@ -6154,7 +5409,7 @@ borderBlockStart2 =
     borderBlockStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockStart3 : Length compatibleA units -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderBlockStart3 : Length compatibleA units -> BorderStyle compatibleB -> Color -> Style
 borderBlockStart3 =
     prop3 "border-block-start"
 
@@ -6190,7 +5445,7 @@ borderBlockEnd2 =
     borderBlockEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderBlockEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderBlockEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 borderBlockEnd3 =
     prop3 "border-block-end"
 
@@ -6226,7 +5481,7 @@ borderInlineStart2 =
     borderInlineStart3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineStart3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderInlineStart3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 borderInlineStart3 =
     prop3 "border-block-start"
 
@@ -6262,7 +5517,7 @@ borderInlineEnd2 =
     borderInlineEnd3 (px 5) dashed (rgb 11 14 17)
 
 -}
-borderInlineEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+borderInlineEnd3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 borderInlineEnd3 =
     prop3 "border-block-end"
 
@@ -6376,9 +5631,9 @@ borderImageWidth4 =
     borderBlockStartColor (rgb 101 202 0)
 
 -}
-borderBlockStartColor : ColorValue compatible -> Style
-borderBlockStartColor c =
-    property "border-block-start-color" c.value
+borderBlockStartColor : Color -> Style
+borderBlockStartColor =
+    prop1 "border-block-start-color"
 
 
 {-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
@@ -6386,9 +5641,9 @@ borderBlockStartColor c =
     borderBottomColor (rgb 101 202 0)
 
 -}
-borderBottomColor : ColorValue compatible -> Style
-borderBottomColor c =
-    property "border-bottom-color" c.value
+borderBottomColor : Color -> Style
+borderBottomColor =
+    prop1 "border-bottom-color"
 
 
 {-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color)
@@ -6396,9 +5651,9 @@ borderBottomColor c =
     borderInlineStartColor (rgb 101 202 0)
 
 -}
-borderInlineStartColor : ColorValue compatible -> Style
-borderInlineStartColor c =
-    property "border-inline-start-color" c.value
+borderInlineStartColor : Color -> Style
+borderInlineStartColor =
+    prop1 "border-inline-start-color"
 
 
 {-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color)
@@ -6406,9 +5661,9 @@ borderInlineStartColor c =
     borderInlineEndColor (rgb 101 202 0)
 
 -}
-borderInlineEndColor : ColorValue compatible -> Style
-borderInlineEndColor c =
-    property "border-inline-end-color" c.value
+borderInlineEndColor : Color -> Style
+borderInlineEndColor =
+    prop1 "border-inline-end-color"
 
 
 {-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
@@ -6416,9 +5671,9 @@ borderInlineEndColor c =
     borderLeftColor (rgb 101 202 0)
 
 -}
-borderLeftColor : ColorValue compatible -> Style
-borderLeftColor c =
-    property "border-left-color" c.value
+borderLeftColor : Color -> Style
+borderLeftColor =
+    prop1 "border-left-color"
 
 
 {-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
@@ -6426,9 +5681,9 @@ borderLeftColor c =
     borderRightColor (rgb 101 202 0)
 
 -}
-borderRightColor : ColorValue compatible -> Style
-borderRightColor c =
-    property "border-right-color" c.value
+borderRightColor : Color -> Style
+borderRightColor =
+    prop1 "border-right-color"
 
 
 {-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
@@ -6436,9 +5691,9 @@ borderRightColor c =
     borderTopColor (rgb 101 202 0)
 
 -}
-borderTopColor : ColorValue compatible -> Style
-borderTopColor c =
-    property "border-top-color" c.value
+borderTopColor : Color -> Style
+borderTopColor =
+    prop1 "border-top-color"
 
 
 {-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color)
@@ -6446,9 +5701,9 @@ borderTopColor c =
     borderBlockEndColor (rgb 101 202 0)
 
 -}
-borderBlockEndColor : ColorValue compatible -> Style
-borderBlockEndColor c =
-    property "border-block-end-color" c.value
+borderBlockEndColor : Color -> Style
+borderBlockEndColor =
+    prop1 "border-block-end-color"
 
 
 {-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style)
@@ -6835,9 +6090,9 @@ borderSpacing2 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor : ColorValue compatible -> Style
-borderColor c =
-    property "border-color" c.value
+borderColor : Color -> Style
+borderColor =
+    prop1 "border-color"
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6848,13 +6103,11 @@ borderColor c =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Style
-borderColor2 c1 c2 =
-    let
-        value =
-            String.join " " [ c1.value, c2.value ]
-    in
-    property "border-color" value
+borderColor2 : Color -> Color -> Style
+borderColor2 (Value c1) (Value c2) =
+    [ c1, c2 ]
+        |> String.join ""
+        |> property "border-color"
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6865,13 +6118,11 @@ borderColor2 c1 c2 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> Style
-borderColor3 c1 c2 c3 =
-    let
-        value =
-            String.join " " [ c1.value, c2.value, c3.value ]
-    in
-    property "border-color" value
+borderColor3 : Color -> Color -> Color -> Style
+borderColor3 (Value c1) (Value c2) (Value c3) =
+    [ c1, c2, c3 ]
+        |> String.join " "
+        |> property "border-color"
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
@@ -6882,13 +6133,11 @@ borderColor3 c1 c2 c3 =
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
-borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue compatibleC -> ColorValue compatibleD -> Style
-borderColor4 c1 c2 c3 c4 =
-    let
-        value =
-            String.join " " [ c1.value, c2.value, c3.value, c4.value ]
-    in
-    property "border-color" value
+borderColor4 : Color -> Color -> Color -> Color -> Style
+borderColor4 (Value c1) (Value c2) (Value c3) (Value c4) =
+    [ c1, c2, c3, c4 ]
+        |> String.join " "
+        |> property "border-color"
 
 
 {-| Sets [`outline`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
@@ -6910,7 +6159,7 @@ outline =
     outline3 (px 10) dashed (rgb 11 14 17)
 
 -}
-outline3 : Length compatibleA unitsA -> BorderStyle compatibleB -> ColorValue compatibleC -> Style
+outline3 : Length compatibleA unitsA -> BorderStyle compatibleB -> Color -> Style
 outline3 =
     prop3 "outline"
 
@@ -6923,8 +6172,8 @@ outline3 =
 
 -}
 outlineColor : ColorValue compatible -> Style
-outlineColor c =
-    property "outline-color" c.value
+outlineColor =
+    prop1 "outline-color"
 
 
 {-| Sets [`outline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width)
@@ -6970,7 +6219,7 @@ resize =
 
 
 {-| -}
-fill : ColorValue compatible -> Style
+fill : Color -> Style
 fill =
     prop1 "fill"
 
@@ -7012,9 +6261,9 @@ whiteSpace =
 
 
 {-| -}
-backgroundColor : ColorValue compatible -> Style
-backgroundColor c =
-    property "background-color" c.value
+backgroundColor : Color -> Style
+backgroundColor =
+    prop1 "background-color"
 
 
 {-| Sets ['background-repeat'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat)
@@ -7076,7 +6325,7 @@ backgroundPosition2 =
     backgroundBlendMode darken
 
 -}
-backgroundBlendMode : (ColorValue NonMixable -> Style) -> Style
+backgroundBlendMode : (Color -> Style) -> Style
 backgroundBlendMode fn =
     getOverloadedProperty "backgroundBlendMode" "background-blend-mode" (fn colorValueForOverloadedProperty)
 
@@ -7133,8 +6382,8 @@ backgroundSize2 =
 
 {-| -}
 color : ColorValue compatible -> Style
-color c =
-    property "color" c.value
+color =
+    prop1 "color"
 
 
 
@@ -7163,8 +6412,8 @@ letterSpacing =
 
 {-| -}
 src_ : ImportType compatible -> String
-src_ value =
-    toString value.value
+src_ (Value value) =
+    toString value
 
 
 {-| -}
@@ -7210,9 +6459,9 @@ fontFamilies =
     fontFeatureSettings (featureTag2 "swsh" 2)
 
 -}
-fontFeatureSettings : FeatureTagValue a -> Style
-fontFeatureSettings { value } =
-    property "font-feature-settings" value
+fontFeatureSettings : FeatureTagValue compatible -> Style
+fontFeatureSettings =
+    prop1 "font-feature-settings"
 
 
 {-| Sets [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings)
@@ -7220,10 +6469,10 @@ fontFeatureSettings { value } =
     fontFeatureSettingsList [featureTag "c2sc", featureTag "smcp"]
 
 -}
-fontFeatureSettingsList : List (FeatureTagValue a) -> Style
+fontFeatureSettingsList : List (FeatureTagValue compatible) -> Style
 fontFeatureSettingsList featureTagValues =
     featureTagValues
-        |> List.map .value
+        |> List.map (\(Value value) -> value)
         |> String.join ", "
         |> property "font-feature-settings"
 
@@ -7234,7 +6483,7 @@ fontFeatureSettingsList featureTagValues =
     fontSize  (px 12)
 
 -}
-fontSize : FontSize a -> Style
+fontSize : FontSize compatible -> Style
 fontSize =
     prop1 "font-size"
 
@@ -7244,7 +6493,7 @@ fontSize =
     fontStyle  italic
 
 -}
-fontStyle : FontStyle a -> Style
+fontStyle : FontStyle compatible -> Style
 fontStyle =
     prop1 "font-style"
 
@@ -7255,9 +6504,9 @@ fontStyle =
     fontWeight  (int 300)
 
 -}
-fontWeight : FontWeight a -> Style
-fontWeight { value } =
-    property "font-weight" value
+fontWeight : FontWeight compatible -> Style
+fontWeight =
+    prop1 "font-weight"
 
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -7268,7 +6517,7 @@ fontWeight { value } =
     fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
 
 -}
-fontVariant : FontVariant a -> Style
+fontVariant : FontVariant compatible -> Style
 fontVariant =
     prop1 "font-variant"
 
@@ -7286,19 +6535,19 @@ fontVariant3 =
 
 
 {-| -}
-fontVariantLigatures : FontVariantLigatures a -> Style
+fontVariantLigatures : FontVariantLigatures compatible -> Style
 fontVariantLigatures =
     prop1 "font-variant-ligatures"
 
 
 {-| -}
-fontVariantCaps : FontVariantCaps a -> Style
+fontVariantCaps : FontVariantCaps compatible -> Style
 fontVariantCaps =
     prop1 "font-variant-caps"
 
 
 {-| -}
-fontVariantNumeric : FontVariantNumeric a -> Style
+fontVariantNumeric : FontVariantNumeric compatible -> Style
 fontVariantNumeric =
     prop1 "font-variant-numeric"
 
@@ -7340,205 +6589,205 @@ cursor =
 {-| -}
 default : Cursor {}
 default =
-    { value = "default", cursor = Compatible }
+    Value "default"
 
 
 {-| -}
 crosshair : Cursor {}
 crosshair =
-    { value = "crosshair", cursor = Compatible }
+    Value "crosshair"
 
 
 {-| -}
 contextMenu : Cursor {}
 contextMenu =
-    { value = "context-menu", cursor = Compatible }
+    Value "context-menu"
 
 
 {-| -}
 help : Cursor {}
 help =
-    { value = "help", cursor = Compatible }
+    Value "help"
 
 
 {-| -}
 pointer : Cursor {}
 pointer =
-    { value = "pointer", cursor = Compatible }
+    Value "pointer"
 
 
 {-| -}
 progress : Cursor {}
 progress =
-    { value = "progress", cursor = Compatible }
+    Value "progress"
 
 
 {-| -}
 wait : Cursor {}
 wait =
-    { value = "wait", cursor = Compatible }
+    Value "wait"
 
 
 {-| -}
 cell : Cursor {}
 cell =
-    { value = "cell", cursor = Compatible }
+    Value "cell"
 
 
 {-| -}
 text_ : Cursor {}
 text_ =
-    { value = "text", cursor = Compatible }
+    Value "text"
 
 
 {-| -}
 verticalText : Cursor {}
 verticalText =
-    { value = "vertical-text", cursor = Compatible }
+    Value "vertical-text"
 
 
 {-| -}
 cursorAlias : Cursor {}
 cursorAlias =
-    { value = "alias", cursor = Compatible }
+    Value "alias"
 
 
 {-| -}
 copy : Cursor {}
 copy =
-    { value = "copy", cursor = Compatible }
+    Value "copy"
 
 
 {-| -}
 move : Cursor {}
 move =
-    { value = "move", cursor = Compatible }
+    Value "move"
 
 
 {-| -}
 noDrop : Cursor {}
 noDrop =
-    { value = "no-drop", cursor = Compatible }
+    Value "no-drop"
 
 
 {-| -}
 notAllowed : Cursor {}
 notAllowed =
-    { value = "not-allowed", cursor = Compatible }
+    Value "not-allowed"
 
 
 {-| -}
 eResize : Cursor {}
 eResize =
-    { value = "e-resize", cursor = Compatible }
+    Value "e-resize"
 
 
 {-| -}
 nResize : Cursor {}
 nResize =
-    { value = "n-resize", cursor = Compatible }
+    Value "n-resize"
 
 
 {-| -}
 neResize : Cursor {}
 neResize =
-    { value = "ne-resize", cursor = Compatible }
+    Value "ne-resize"
 
 
 {-| -}
 nwResize : Cursor {}
 nwResize =
-    { value = "nw-resize", cursor = Compatible }
+    Value "nw-resize"
 
 
 {-| -}
 sResize : Cursor {}
 sResize =
-    { value = "s-resize", cursor = Compatible }
+    Value "s-resize"
 
 
 {-| -}
 seResize : Cursor {}
 seResize =
-    { value = "se-resize", cursor = Compatible }
+    Value "se-resize"
 
 
 {-| -}
 swResize : Cursor {}
 swResize =
-    { value = "sw-resize", cursor = Compatible }
+    Value "sw-resize"
 
 
 {-| -}
 wResize : Cursor {}
 wResize =
-    { value = "w-resize", cursor = Compatible }
+    Value "w-resize"
 
 
 {-| -}
 ewResize : Cursor {}
 ewResize =
-    { value = "ew-resize", cursor = Compatible }
+    Value "ew-resize"
 
 
 {-| -}
 nsResize : Cursor {}
 nsResize =
-    { value = "ns-resize", cursor = Compatible }
+    Value "ns-resize"
 
 
 {-| -}
 neswResize : Cursor {}
 neswResize =
-    { value = "nesw-resize", cursor = Compatible }
+    Value "nesw-resize"
 
 
 {-| -}
 nwseResize : Cursor {}
 nwseResize =
-    { value = "nwse-resize", cursor = Compatible }
+    Value "nwse-resize"
 
 
 {-| -}
 colResize : Cursor {}
 colResize =
-    { value = "col-resize", cursor = Compatible }
+    Value "col-resize"
 
 
 {-| -}
 rowResize : Cursor {}
 rowResize =
-    { value = "row-resize", cursor = Compatible }
+    Value "row-resize"
 
 
 {-| -}
 allScroll : Cursor {}
 allScroll =
-    { value = "all-scroll", cursor = Compatible }
+    Value "all-scroll"
 
 
 {-| -}
 zoomIn : Cursor {}
 zoomIn =
-    { value = "zoom-in", cursor = Compatible }
+    Value "zoom-in"
 
 
 {-| -}
 zoomOut : Cursor {}
 zoomOut =
-    { value = "zoom-out", cursor = Compatible }
+    Value "zoom-out"
 
 
 {-| -}
 grab : Cursor {}
 grab =
-    { value = "grab", cursor = Compatible }
+    Value "grab"
 
 
 {-| -}
 grabbing : Cursor {}
 grabbing =
-    { value = "grabbing", cursor = Compatible }
+    Value "grabbing"
 
 
 
@@ -7558,7 +6807,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecoration : TextDecorationLine a -> Style
+textDecoration : TextDecorationLine compatible -> Style
 textDecoration =
     prop1 "text-decoration"
 
@@ -7594,7 +6843,7 @@ You can specify multiple line decorations with `textDecorations`.
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
+textDecoration3 : TextDecorationLine compatibleA -> TextDecorationStyle compatibleB -> Color -> Style
 textDecoration3 =
     prop3 "text-decoration"
 
@@ -7630,7 +6879,7 @@ textDecorations2 =
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
-textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> ColorValue compatibleC -> Style
+textDecorations3 : List (TextDecorationLine compatibleA) -> TextDecorationStyle compatibleB -> Color -> Style
 textDecorations3 =
     prop3 "text-decoration" << valuesOrNone
 
@@ -7680,9 +6929,7 @@ textDecorationStyle =
 -}
 pre : WhiteSpace {}
 pre =
-    { value = "pre"
-    , whiteSpace = Compatible
-    }
+    Value "pre"
 
 
 {-| The `pre-wrap` [`white-space`](https://developer.mozilla.org/en-US/docs/Web/CSS/white-space) value.
@@ -7692,9 +6939,7 @@ pre =
 -}
 preWrap : WhiteSpace {}
 preWrap =
-    { value = "pre-wrap"
-    , whiteSpace = Compatible
-    }
+    Value "pre-wrap"
 
 
 {-| The `pre-line` [`white-space`](https://developer.mozilla.org/en-US/docs/Web/CSS/white-space) value.
@@ -7704,9 +6949,7 @@ preWrap =
 -}
 preLine : WhiteSpace {}
 preLine =
-    { value = "pre-line"
-    , whiteSpace = Compatible
-    }
+    Value "pre-line"
 
 
 {-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
@@ -8241,17 +7484,20 @@ numericalPercentageToString value =
 valuesOrNone : List (Value compatible) -> Value {}
 valuesOrNone list =
     if List.isEmpty list then
-        { value = "none" }
+        Value "none"
     else
-        { value = String.join " " (List.map .value list) }
+        list
+            |> List.map (\(Value value) -> value)
+            |> String.join " "
+            |> Value
 
 
 stringsToValue : List String -> Value {}
 stringsToValue list =
     if List.isEmpty list then
-        { value = "none" }
+        Value "none"
     else
-        { value = String.join ", " (List.map (\s -> s) list) }
+        Value (String.join ", " list)
 
 
 {-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
@@ -8275,72 +7521,56 @@ zIndex =
 -}
 panX : TouchAction {}
 panX =
-    { value = "pan-x"
-    , touchAction = Compatible
-    }
+    Value "pan-x"
 
 
 {-| The `pan-left` value for the [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
 -}
 panLeft : TouchAction {}
 panLeft =
-    { value = "pan-left"
-    , touchAction = Compatible
-    }
+    Value "pan-left"
 
 
 {-| The `pan-right` value for the [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
 -}
 panRight : TouchAction {}
 panRight =
-    { value = "pan-right"
-    , touchAction = Compatible
-    }
+    Value "pan-right"
 
 
 {-| The `pan-y` value for the [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
 -}
 panY : TouchAction {}
 panY =
-    { value = "pan-y"
-    , touchAction = Compatible
-    }
+    Value "pan-y"
 
 
 {-| The `pan-up` value for the [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
 -}
 panUp : TouchAction {}
 panUp =
-    { value = "pan-up"
-    , touchAction = Compatible
-    }
+    Value "pan-up"
 
 
 {-| The `pan-down` value for the [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
 -}
 panDown : TouchAction {}
 panDown =
-    { value = "pan-down"
-    , touchAction = Compatible
-    }
+    Value "pan-down"
 
 
 {-| The `pinch-zoom` value for the [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
 -}
 pinchZoom : TouchAction {}
 pinchZoom =
-    { value = "pinch-zoom"
-    , touchAction = Compatible
-    }
+    Value "pinch-zoom"
 
 
 {-| The `manipulation` value for the [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
 -}
 manipulation : TouchAction {}
 manipulation =
-    { value = "manipulation"
-    , touchAction = Compatible
-    }
+    Value "manipulation"
 
 
 {-| Sets [`touch-action`](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
@@ -8391,7 +7621,7 @@ pointerEvents =
 -}
 visiblePainted : PointerEvents {}
 visiblePainted =
-    { value = "visiblePainted", pointerEvents = Compatible }
+    Value "visiblePainted"
 
 
 {-| A `visibleFill` [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events) value.
@@ -8401,7 +7631,7 @@ visiblePainted =
 -}
 visibleFill : PointerEvents {}
 visibleFill =
-    { value = "visibleFill", pointerEvents = Compatible }
+    Value "visibleFill"
 
 
 {-| A `visibleStroke` [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events) value.
@@ -8411,7 +7641,7 @@ visibleFill =
 -}
 visibleStroke : PointerEvents {}
 visibleStroke =
-    { value = "visibleStroke", pointerEvents = Compatible }
+    Value "visibleStroke"
 
 
 {-| A `painted` [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events) value.
@@ -8421,7 +7651,7 @@ visibleStroke =
 -}
 painted : PointerEvents {}
 painted =
-    { value = "painted", pointerEvents = Compatible }
+    Value "painted"
 
 
 {-| `property-events: fill`. This works around the fact that
@@ -8447,4 +7677,4 @@ pointerEventsAll =
 -}
 stroke : PointerEvents {}
 stroke =
-    { value = "stroke", pointerEvents = Compatible }
+    Value "stroke"
