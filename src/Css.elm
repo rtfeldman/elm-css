@@ -43,6 +43,7 @@ module Css
         , borderCollapse
         , borderSpacing
         , borderSpacing2
+        , bottom
         , bottom_
         , boxShadow
         , breakWord
@@ -137,6 +138,7 @@ module Css
         , large
         , larger
         , lastBaseline
+        , left
         , left_
         , lighten
         , lighter
@@ -191,6 +193,7 @@ module Css
         , pct
         , petiteCaps
         , pointer
+        , position
         , progress
         , proportionalNums
         , pseudoClass
@@ -198,11 +201,13 @@ module Css
         , pt
         , px
         , rad
+        , relative
         , rem
         , revert
         , rgb
         , rgba
         , ridge
+        , right
         , right_
         , rowResize
         , rtl
@@ -227,6 +232,8 @@ module Css
         , solid
         , stackedFractions
         , start
+        , static
+        , sticky
         , stop
         , stop2
         , stretch
@@ -264,6 +271,7 @@ module Css
         , toTop
         , toTopLeft
         , toTopRight
+        , top
         , top_
         , turn
         , unicase
@@ -286,6 +294,7 @@ module Css
         , xSmall
         , xxLarge
         , xxSmall
+        , zIndex
         , zero
         , zoomIn
         , zoomOut
@@ -374,7 +383,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Positions
 
-@docs absolute
+@docs position, top, right, bottom, left, zIndex
+
+@docs absolute, fixed, relative, static, sticky
 
 
 ## Flexbox
@@ -1010,14 +1021,243 @@ hex str =
 -- POSITIONS --
 
 
-{-| An `absolute` [`position`](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/) value.
+{-| Sets the [`position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position) of an element.
+
+    position absolute
+    position relative
+
+-}
+position :
+    Value
+        { absolute : Supported
+        , fixed : Supported
+        , relative : Supported
+        , static : Supported
+        , sticky : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+position (Value val) =
+    AppendProperty ("position:" ++ val)
+
+
+{-| Sets the [`top` property](https://developer.mozilla.org/en-US/docs/Web/CSS/top).
+
+    top (px 10)
+    top (pct 50)
+    top auto
+    top zero
+
+-}
+top :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+top (Value val) =
+    AppendProperty ("top:" ++ val)
+
+
+{-| Sets the [`bottom` property](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom).
+
+    bottom (px 10)
+    bottom (pct 50)
+    bottom auto
+    bottom zero
+
+-}
+bottom :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+bottom (Value val) =
+    AppendProperty ("bottom:" ++ val)
+
+
+{-| Sets the [`left` property](https://developer.mozilla.org/en-US/docs/Web/CSS/left).
+
+    left (px 10)
+    left (pct 50)
+    left auto
+    left zero
+
+-}
+left :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+left (Value val) =
+    AppendProperty ("left:" ++ val)
+
+
+{-| Sets the [`right` property](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
+
+    right (px 10)
+    right (pct 50)
+    right auto
+    right zero
+
+-}
+right :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+right (Value val) =
+    AppendProperty ("right:" ++ val)
+
+
+{-| An [`absolute` `position`](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/) value.
 
     position absolute
 
 -}
-absolute : Value { provides | position : Supported }
+absolute : Value { provides | absolute : Supported }
 absolute =
     Value "absolute"
+
+
+{-| A [`fixed` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#fixed)
+or [`fixed` `background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
+or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/)
+
+    position fixed
+    backgroundAttachment fixed
+    tableLayout fixed
+
+-}
+fixed : Value { provides | fixed : Supported }
+fixed =
+    Value "fixed"
+
+
+{-| A [`relative` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative)
+
+    position relative
+
+-}
+relative : Value { provides | relative : Supported }
+relative =
+    Value "relative"
+
+
+{-| A [`static` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#static)
+
+    position static
+
+-}
+static : Value { provides | static : Supported }
+static =
+    Value "static"
+
+
+{-| A [`sticky` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky)
+
+    position sticky
+
+-}
+sticky : Value { provides | sticky : Supported }
+sticky =
+    Value "sticky"
+
+
+{-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
+
+    zIndex (num 10)
+    zIndex auto
+
+-}
+zIndex :
+    Value
+        { num : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+zIndex (Value val) =
+    AppendProperty ("z-index:" ++ val)
 
 
 
@@ -3030,16 +3270,6 @@ backgroundAttachments firstValue values =
                 |> String.join ","
     in
     AppendProperty ("background-attachment:" ++ str)
-
-
-{-| The `fixed` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
-
-    backgroundAttachment fixed
-
--}
-fixed : Value { provides | fixed : Supported }
-fixed =
-    Value "fixed"
 
 
 {-| The `local` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
