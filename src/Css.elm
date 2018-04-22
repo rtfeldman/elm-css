@@ -32,6 +32,7 @@ module Css
         , backgroundPosition
         , backgroundPosition2
         , backgroundPosition4
+        , backgroundRepeat
         , baseline
         , batch
         , before
@@ -203,12 +204,16 @@ module Css
         , rad
         , relative
         , rem
+        , repeat
+        , repeatX
+        , repeatY
         , revert
         , rgb
         , rgba
         , ridge
         , right
         , right_
+        , round
         , rowResize
         , rtl
         , sResize
@@ -230,6 +235,7 @@ module Css
         , smaller
         , softLight
         , solid
+        , space
         , stackedFractions
         , start
         , static
@@ -359,9 +365,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat
 
 @docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+
+@docs repeat, repeatX, repeatY, space, round
 
 
 ## Box Shadow
@@ -3975,6 +3983,76 @@ backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAm
             ++ " "
             ++ vertAmount
         )
+
+
+
+-- BACKGROUND REPEAT --
+
+
+{-| Sets [`background-repeat`](https://css-tricks.com/almanac/properties/b/background-repeat/)
+
+    backgroundRepeat repeat
+
+    backgroundRepeat repeatX
+
+If you need to set horizontal and vertical direction separately, see
+[`backgroundRepeat2`](#backgroundRepeat2)
+
+-}
+backgroundRepeat :
+    Value
+        { repeat : Supported
+        , repeatX : Supported
+        , repeatY : Supported
+        , space : Supported
+        , round : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+backgroundRepeat (Value repeat) =
+    AppendProperty ("background-repeat:" ++ repeat)
+
+
+{-| [Repeat a background](#backgroundRepeat).
+-}
+repeat : Value { provides | repeat : Supported }
+repeat =
+    Value "repeat"
+
+
+{-| [Repeat a background](#backgroundRepeat) side to side.
+-}
+repeatX : Value { provides | repeatX : Supported }
+repeatX =
+    Value "repeat-x"
+
+
+{-| [Repeat a background](#backgroundRepeat) up and down.
+-}
+repeatY : Value { provides | repeatY : Supported }
+repeatY =
+    Value "repeat-y"
+
+
+{-| [Repeat a background](#backgroundRepeat) without cutting off the edges by
+putting **space** between the repetitions. See the [css-tricks article on
+this](https://css-tricks.com/almanac/properties/b/background-repeat/) for more
+details.
+-}
+space : Value { provides | space : Supported }
+space =
+    Value "space"
+
+
+{-| [Repeat a background](#backgroundRepeat) without cutting off the edges by
+stretching or shrinking the images slightly. See the [css-tricks article on
+this](https://css-tricks.com/almanac/properties/b/background-repeat/) for more
+details.
+-}
+round : Value { provides | round : Supported }
+round =
+    Value "round"
 
 
 
