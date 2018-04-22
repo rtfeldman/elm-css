@@ -3971,9 +3971,9 @@ backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAm
 
 {-| Sets [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
 
-    linearGradient (to top) (stop red) (stop blue) []
+    linearGradient toTop (stop red) (stop blue) []
 
-    linearGradient (to top) (stop red) (stop blue) [ stop green ]
+    linearGradient toTop (stop red) (stop blue) [ stop green ]
 
 -}
 linearGradient :
@@ -4002,7 +4002,7 @@ linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
 
 {-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
 
-    linearGradient (to top) (stop red) (stop blue) []
+    linearGradient toTop (stop red) (stop blue) []
 
 See also [`stop2`](#stop2) for controlling stop positioning.
 
@@ -4014,7 +4014,7 @@ stop (Value color) =
 
 {-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
 
-    linearGradient (to top) (stop2 red (px 20)) (stop blue) []
+    linearGradient toTop (stop2 red (px 20)) (stop blue) []
 
 See also [`stop`](#stop) if you don't need to control the stop position.
 
