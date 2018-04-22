@@ -1043,12 +1043,15 @@ position (Value val) =
     AppendProperty ("position:" ++ val)
 
 
-{-| Sets the [`top` property](https://developer.mozilla.org/en-US/docs/Web/CSS/top).
+{-| Sets the [`top` property](https://css-tricks.com/almanac/properties/t/top/).
 
     top (px 10)
     top (pct 50)
     top auto
     top zero
+
+If you need to use `top` as a CSS _value_ instead of as a _property_,
+for example in `vertical-align: top`, use [`top_`](#top_) instead of this.
 
 -}
 top :
@@ -1079,12 +1082,15 @@ top (Value val) =
     AppendProperty ("top:" ++ val)
 
 
-{-| Sets the [`bottom` property](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom).
+{-| Sets the [`bottom` property](https://css-tricks.com/almanac/properties/b/bottom/).
 
     bottom (px 10)
     bottom (pct 50)
     bottom auto
     bottom zero
+
+If you need to use `bottom` as a CSS _value_ instead of as a _property_,
+for example in `vertical-align: bottom`, use [`bottom_`](#bottom_) instead of this.
 
 -}
 bottom :
@@ -1115,12 +1121,15 @@ bottom (Value val) =
     AppendProperty ("bottom:" ++ val)
 
 
-{-| Sets the [`left` property](https://developer.mozilla.org/en-US/docs/Web/CSS/left).
+{-| Sets the [`left` property](https://css-tricks.com/almanac/properties/l/left/).
 
     left (px 10)
     left (pct 50)
     left auto
     left zero
+
+If you need to use `left` as a CSS _value_ instead of as a _property_,
+for example in `float: left`, use [`left_`](#left_) instead of this.
 
 -}
 left :
@@ -1151,12 +1160,15 @@ left (Value val) =
     AppendProperty ("left:" ++ val)
 
 
-{-| Sets the [`right` property](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
+{-| Sets the [`right` property](https://css-tricks.com/almanac/properties/r/right).
 
     right (px 10)
     right (pct 50)
     right auto
     right zero
+
+If you need to use `right` as a CSS _value_ instead of as a _property_,
+for example in `float: right`, use [`right_`](#right_) instead of this.
 
 -}
 right :
@@ -1930,6 +1942,8 @@ selfEnd =
 
 {-| The `left` value used for alignment.
 
+    float left_
+
 The value is called `left_` instead of `left` because [`left` is already a function](#left).
 
 -}
@@ -1940,6 +1954,8 @@ left_ =
 
 {-| The `right` value used for alignment.
 
+    float right_
+
 The value is called `right_` instead of `right` because [`right` is already a function](#right).
 
 -}
@@ -1948,7 +1964,9 @@ right_ =
     Value "right"
 
 
-{-| The `top` value used in [`color stops`](#stop).
+{-| The `top` value used by [`verticalAlign`](#verticalAlign).
+
+    verticalAlign top_
 
 The value is called `top_` instead of `top` because [`top` is already a function](#top).
 
@@ -1958,7 +1976,9 @@ top_ =
     Value "top"
 
 
-{-| The `bottom` value value used in [`color stops`](#stop).
+{-| The `bottom` value used by [`verticalAlign`](#verticalAlign).
+
+    verticalAlign bottom_
 
 The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
 
