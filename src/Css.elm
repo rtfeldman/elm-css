@@ -4009,6 +4009,7 @@ backgroundRepeat :
         , round : Supported
         , initial : Supported
         , unset : Supported
+        , inherit : Supported
         }
     -> Style
 backgroundRepeat (Value repeat) =
@@ -4032,6 +4033,7 @@ backgroundRepeat2 :
         , round : Supported
         , initial : Supported
         , unset : Supported
+        , inherit : Supported
         }
     -> Style
 backgroundRepeat2 (Value repeat) =
