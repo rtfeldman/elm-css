@@ -33,6 +33,7 @@ module Css
         , backgroundPosition2
         , backgroundPosition4
         , backgroundRepeat
+        , backgroundRepeat2
         , baseline
         , batch
         , before
@@ -365,7 +366,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2
 
 @docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
@@ -4011,6 +4012,29 @@ backgroundRepeat :
         }
     -> Style
 backgroundRepeat (Value repeat) =
+    AppendProperty ("background-repeat:" ++ repeat)
+
+
+{-| Sets [`background-repeat`](https://css-tricks.com/almanac/properties/b/background-repeat/) along the horizontal axis, then the vertical axis.
+
+    backgroundRepeat2 repeat space
+
+    backgroundRepeat2 space round
+
+If you only need to set one value for both, see
+[`backgroundRepeat`](#backgroundRepeat) instead.
+
+-}
+backgroundRepeat2 :
+    Value
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+backgroundRepeat2 (Value repeat) =
     AppendProperty ("background-repeat:" ++ repeat)
 
 
