@@ -4035,9 +4035,18 @@ backgroundRepeat2 :
         , unset : Supported
         , inherit : Supported
         }
+    ->
+        Value
+            { repeat : Supported
+            , space : Supported
+            , round : Supported
+            , initial : Supported
+            , unset : Supported
+            , inherit : Supported
+            }
     -> Style
-backgroundRepeat2 (Value repeat) =
-    AppendProperty ("background-repeat:" ++ repeat)
+backgroundRepeat2 (Value horiz) (Value vert) =
+    AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
 
 
 {-| [Repeat a background](#backgroundRepeat).
