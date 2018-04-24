@@ -4049,41 +4049,52 @@ backgroundRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
 
 
-{-| [Repeat a background](#backgroundRepeat).
+{-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+
+    backgroundRepeat repeat
+
 -}
 repeat : Value { provides | repeat : Supported }
 repeat =
     Value "repeat"
 
 
-{-| [Repeat a background](#backgroundRepeat) side to side.
+{-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) horizontally.
+
+    backgroundRepeat repeatX
+
 -}
 repeatX : Value { provides | repeatX : Supported }
 repeatX =
     Value "repeat-x"
 
 
-{-| [Repeat a background](#backgroundRepeat) up and down.
+{-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) vertically.
+
+    backgroundRepeat repeatY
+
 -}
 repeatY : Value { provides | repeatY : Supported }
 repeatY =
     Value "repeat-y"
 
 
-{-| [Repeat a background](#backgroundRepeat) without cutting off the edges by
-putting **space** between the repetitions. See the [css-tricks article on
-this](https://css-tricks.com/almanac/properties/b/background-repeat/) for more
-details.
+{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by adding space.
+
+    backgroundRepeat space
+
+)
+
 -}
 space : Value { provides | space : Supported }
 space =
     Value "space"
 
 
-{-| [Repeat a background](#backgroundRepeat) without cutting off the edges by
-stretching or shrinking the images slightly. See the [css-tricks article on
-this](https://css-tricks.com/almanac/properties/b/background-repeat/) for more
-details.
+{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by stretching or shrinking the image.
+
+    backgroundRepeat round
+
 -}
 round : Value { provides | round : Supported }
 round =
