@@ -171,6 +171,7 @@ module Css
         , noDiscretionaryLigatures
         , noDrop
         , noHistoricalLigatures
+        , noRepeat
         , none
         , normal
         , notAllowed
@@ -370,7 +371,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 @docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
-@docs repeat, repeatX, repeatY, space, round
+@docs repeat, noRepeat, repeatX, repeatY, space, round
 
 
 ## Box Shadow
@@ -4007,6 +4008,7 @@ backgroundRepeat :
         , repeatY : Supported
         , space : Supported
         , round : Supported
+        , noRepeat : Supported
         , initial : Supported
         , unset : Supported
         , inherit : Supported
@@ -4031,6 +4033,7 @@ backgroundRepeat2 :
         { repeat : Supported
         , space : Supported
         , round : Supported
+        , noRepeat : Supported
         , initial : Supported
         , unset : Supported
         , inherit : Supported
@@ -4040,6 +4043,7 @@ backgroundRepeat2 :
             { repeat : Supported
             , space : Supported
             , round : Supported
+            , noRepeat : Supported
             , initial : Supported
             , unset : Supported
             , inherit : Supported
@@ -4057,6 +4061,16 @@ backgroundRepeat2 (Value horiz) (Value vert) =
 repeat : Value { provides | repeat : Supported }
 repeat =
     Value "repeat"
+
+
+{-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+
+    backgroundRepeat noRepeat
+
+-}
+noRepeat : Value { provides | repeat : Supported }
+noRepeat =
+    Value "no-repeat"
 
 
 {-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) horizontally.
