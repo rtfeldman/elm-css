@@ -289,7 +289,6 @@ module Css
         , vw
         , wResize
         , wait
-        , wavy
         , xLarge
         , xSmall
         , xxLarge
@@ -371,7 +370,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border Style
 
-@docs wavy, dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs dotted, dashed, solid, double, groove, ridge, inset, outset
 
 
 ## Display
@@ -651,6 +650,7 @@ inherit =
 Any CSS property can be set to this value.
 
     display initial
+    borderStyle initial
 
 -}
 initial : Value { provides | initial : Supported }
@@ -722,6 +722,7 @@ auto =
 {-| The `none` value used for properties such as [`display`](#display).
 
     display none
+    borderStyle none
 
 -}
 none : Value { provides | none : Supported }
@@ -2183,9 +2184,10 @@ small =
     Value "small"
 
 
-{-| The `medium` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+{-| The `medium` [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values) or [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) (equivalent of 3px) value.
 
     fontSize medium
+    borderWidth medium
 
 -}
 medium : Value { provides | medium : Supported }
@@ -4317,66 +4319,258 @@ listStyle3 (Value val1) (Value val2) (Value val3) =
 
 
 
+{- BORDERS -}
+
+
+{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
+
+    border (px 1)
+    border2 (px 1) solid
+    border3 (px 1) solid (hex "#f00")
+
+-}
+border :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        }
+    -> Style
+border (Value width) =
+    AppendProperty ("border:" ++ width)
+
+
+{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
+
+    border (px 1)
+    border2 (px 1) solid
+    border3 (px 1) solid (hex "#f00")
+
+-}
+border2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    -> Style
+border2 (Value width) (Value style) =
+    AppendProperty ("border:" ++ width ++ " " ++ style)
+
+
+{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
+
+    border (px 1)
+    border2 (px 1) solid
+    border3 (px 1) solid (hex "#f00")
+
+-}
+border3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            }
+    -> Style
+border3 (Value width) (Value style) (Value color) =
+    AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ color)
+
+
+
+-- BORDER WIDTH --
+
+
+{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) (equivalent of 1px) value.
+
+    borderWidth thin
+
+-}
+thin : Value { provides | thin : Supported }
+thin =
+    Value "thin"
+
+
+{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) (equivalent of 5px) value.
+
+    borderWidth thick
+
+-}
+thick : Value { provides | thick : Supported }
+thick =
+    Value "thick"
+
+
+
 -- BORDER STYLE --
 
 
-{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
--}
-wavy : Value { provides | wavy : Supported }
-wavy =
-    Value "wavy"
+{-| The `dotted` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+A line that consists of dots.
 
+    borderStyle dotted
 
-{-| A `dotted` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
 -}
 dotted : Value { provides | dotted : Supported }
 dotted =
     Value "dotted"
 
 
-{-| A `dashed` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| The `dashed` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+A line that consists of dashes.
+
+    borderStyle dashed
+
 -}
 dashed : Value { provides | dashed : Supported }
 dashed =
     Value "dashed"
 
 
-{-| A `solid` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| The `solid` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+A solid, continuous line.
+
+    borderStyle solid
+
 -}
 solid : Value { provides | solid : Supported }
 solid =
     Value "solid"
 
 
-{-| A `double` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| The `double` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+Two lines are drawn around the element.
+
+    borderStyle double
+
 -}
 double : Value { provides | double : Supported }
 double =
     Value "double"
 
 
-{-| A `groove` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| The `groove` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
+
+    borderStyle groove
+
 -}
 groove : Value { provides | groove : Supported }
 groove =
     Value "groove"
 
 
-{-| A `ridge` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| The `ridge` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
+
+    borderStyle ridge
+
 -}
 ridge : Value { provides | ridge : Supported }
 ridge =
     Value "ridge"
 
 
-{-| An `inset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| The `inset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+Adds a split tone to the line that makes the element appear slightly depressed.
+
+    borderStyle inset
+
 -}
 inset : Value { provides | inset : Supported }
 inset =
     Value "inset"
 
 
-{-| An `outset` [border style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| The `outset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+Similar to `inset`, but reverses the colors in a way that makes the element appear slightly raised.
+
+    borderStyle outset
+
 -}
 outset : Value { provides | outset : Supported }
 outset =
