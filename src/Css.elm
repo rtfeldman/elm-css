@@ -45,6 +45,7 @@ module Css
         , borderBottom
         , borderBottom2
         , borderBottom3
+        , borderBottomWidth
         , borderBox
         , borderCollapse
         , borderColor
@@ -54,9 +55,11 @@ module Css
         , borderLeft
         , borderLeft2
         , borderLeft3
+        , borderLeftWidth
         , borderRight
         , borderRight2
         , borderRight3
+        , borderRightWidth
         , borderSpacing
         , borderSpacing2
         , borderStyle
@@ -66,6 +69,7 @@ module Css
         , borderTop
         , borderTop2
         , borderTop3
+        , borderTopWidth
         , borderWidth
         , borderWidth2
         , borderWidth3
@@ -409,13 +413,14 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border Width
 
-@docs borderWidth, borderWidth2, borderWidth3, borderWidth4
+@docs borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
 @docs thin ,thick
 
 
 ## Border Style
 
 @docs borderStyle, borderStyle2, borderStyle3, borderStyle4
+
 @docs dotted ,dashed ,solid ,double ,groove ,ridge ,inset ,outset
 
 
@@ -5425,6 +5430,142 @@ borderWidth4 :
     -> Style
 borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
     AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRight ++ " " ++ widthBottom ++ " " ++ widthLeft)
+
+
+{-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width) property.
+
+    borderTopWidth (px 1)
+
+-}
+borderTopWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderTopWidth (Value width) =
+    AppendProperty ("border-top-width:" ++ width)
+
+
+{-| Sets [`border-right-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width) property.
+
+    borderRightWidth (px 1)
+
+-}
+borderRightWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderRightWidth (Value width) =
+    AppendProperty ("border-right-width:" ++ width)
+
+
+{-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width) property.
+
+    borderBottomWidth (px 1)
+
+-}
+borderBottomWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderBottomWidth (Value width) =
+    AppendProperty ("border-bottom-width:" ++ width)
+
+
+{-| Sets [`border-left-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width) property.
+
+    borderLeftWidth (px 1)
+
+-}
+borderLeftWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderLeftWidth (Value width) =
+    AppendProperty ("border-left-width:" ++ width)
 
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
