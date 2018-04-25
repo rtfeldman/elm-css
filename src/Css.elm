@@ -45,6 +45,7 @@ module Css
         , borderBottom
         , borderBottom2
         , borderBottom3
+        , borderBottomColor
         , borderBottomStyle
         , borderBottomWidth
         , borderBox
@@ -56,11 +57,13 @@ module Css
         , borderLeft
         , borderLeft2
         , borderLeft3
+        , borderLeftColor
         , borderLeftStyle
         , borderLeftWidth
         , borderRight
         , borderRight2
         , borderRight3
+        , borderRightColor
         , borderRightStyle
         , borderRightWidth
         , borderSpacing
@@ -72,6 +75,7 @@ module Css
         , borderTop
         , borderTop2
         , borderTop3
+        , borderTopColor
         , borderTopStyle
         , borderTopWidth
         , borderWidth
@@ -410,11 +414,6 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs border, border2, border3, borderTop, borderTop2, borderTop3, borderRight, borderRight2, borderRight3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3
 
 
-## Border Color
-
-@docs borderColor, borderColor2, borderColor3, borderColor4
-
-
 ## Border Width
 
 @docs borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
@@ -427,6 +426,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
 
 @docs dotted, dashed, solid, double, groove, ridge, inset, outset
+
+
+## Border Color
+
+@docs borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
 
 
 ## Display
@@ -6069,6 +6073,98 @@ borderColor4 :
     -> Style
 borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
     AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRight ++ " " ++ colorBottom ++ " " ++ colorLeft)
+
+
+{-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color) property.
+
+    borderTopColor (rgb 0 0 0)
+
+-}
+borderTopColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderTopColor (Value color) =
+    AppendProperty ("border-top-color:" ++ color)
+
+
+{-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color) property.
+
+    borderRightColor (rgb 0 0 0)
+
+-}
+borderRightColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderRightColor (Value color) =
+    AppendProperty ("border-right-color:" ++ color)
+
+
+{-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color) property.
+
+    borderBottomColor (rgb 0 0 0)
+
+-}
+borderBottomColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderBottomColor (Value color) =
+    AppendProperty ("border-bottom-color:" ++ color)
+
+
+{-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color) property.
+
+    borderLeftColor (rgb 0 0 0)
+
+-}
+borderLeftColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderLeftColor (Value color) =
+    AppendProperty ("border-left-color:" ++ color)
 
 
 
