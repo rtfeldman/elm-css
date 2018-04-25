@@ -44,6 +44,10 @@ module Css
         , border3
         , borderBox
         , borderCollapse
+        , borderColor
+        , borderColor2
+        , borderColor3
+        , borderColor4
         , borderSpacing
         , borderSpacing2
         , bottom
@@ -375,7 +379,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border
 
-@docs border, border2, border3
+@docs border, border2, border3 ,borderColor ,borderColor2 ,borderColor3 ,borderColor4
 
 
 ## Border Width
@@ -4476,6 +4480,138 @@ border3 :
     -> Style
 border3 (Value width) (Value style) (Value color) =
     AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ color)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        }
+    -> Style
+borderColor (Value color) =
+    AppendProperty ("border-color:" ++ color)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor2 :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            }
+    -> Style
+borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
+    AppendProperty ("border-color:" ++ colorTopBottom ++ " " ++ colorRightLeft)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor3 :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            }
+    -> Style
+borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
+    AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRightLeft ++ " " ++ colorBottom)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor4 :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            }
+    -> Style
+borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
+    AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRight ++ " " ++ colorBottom ++ " " ++ colorLeft)
 
 
 
