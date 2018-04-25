@@ -3,7 +3,7 @@
     "name": "rtfeldman/elm-css",
     "summary": "Validate data",
     "license": "BSD-3-Clause",
-    "version": "14.0.1",
+    "version": "14.0.2",
     "exposed-modules": {
         "Styling": [
             "Css",
