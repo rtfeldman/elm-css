@@ -50,6 +50,10 @@ module Css
         , borderColor4
         , borderSpacing
         , borderSpacing2
+        , borderWidth
+        , borderWidth2
+        , borderWidth3
+        , borderWidth4
         , bottom
         , bottom_
         , boxShadow
@@ -379,7 +383,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border
 
-@docs border, border2, border3 ,borderColor ,borderColor2 ,borderColor3 ,borderColor4
+@docs border, border2, border3, borderColor, borderColor2, borderColor3, borderColor4, borderWidth, borderWidth2, borderWidth3, borderWidth4
 
 
 ## Border Width
@@ -4370,6 +4374,9 @@ border :
         , thin : Supported
         , medium : Supported
         , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 border (Value width) =
@@ -4403,6 +4410,9 @@ border2 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     ->
         Value
@@ -4452,6 +4462,9 @@ border3 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     ->
         Value
@@ -4485,6 +4498,298 @@ border3 :
     -> Style
 border3 (Value width) (Value style) (Value color) =
     AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ color)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+    borderWidth2 (px 1) thin
+    borderWidth3 (px 1) thin zero
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderWidth (Value width) =
+    AppendProperty ("border-width:" ++ width)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+    borderWidth2 (px 1) thin
+    borderWidth3 (px 1) thin zero
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , thin : Supported
+            , medium : Supported
+            , thick : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    -> Style
+borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
+    AppendProperty ("border-width:" ++ widthTopBottom ++ " " ++ widthRightLeft)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+    borderWidth2 (px 1) thin
+    borderWidth3 (px 1) thin zero
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , thin : Supported
+            , medium : Supported
+            , thick : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , thin : Supported
+            , medium : Supported
+            , thick : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    -> Style
+borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
+    AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRightLeft ++ " " ++ widthBottom)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+    borderWidth2 (px 1) thin
+    borderWidth3 (px 1) thin zero
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , thin : Supported
+            , medium : Supported
+            , thick : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , thin : Supported
+            , medium : Supported
+            , thick : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , thin : Supported
+            , medium : Supported
+            , thick : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    -> Style
+borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
+    AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRight ++ " " ++ widthBottom ++ " " ++ widthLeft)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
