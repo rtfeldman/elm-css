@@ -4476,6 +4476,11 @@ border3 :
             , hsl : Supported
             , hsla : Supported
             , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
             }
     -> Style
 border3 (Value width) (Value style) (Value color) =
@@ -4497,6 +4502,11 @@ borderColor :
         , hsl : Supported
         , hsla : Supported
         , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 borderColor (Value color) =
@@ -4518,6 +4528,11 @@ borderColor2 :
         , hsl : Supported
         , hsla : Supported
         , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     ->
         Value
@@ -4526,6 +4541,11 @@ borderColor2 :
             , hsl : Supported
             , hsla : Supported
             , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
             }
     -> Style
 borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
@@ -4547,6 +4567,11 @@ borderColor3 :
         , hsl : Supported
         , hsla : Supported
         , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     ->
         Value
@@ -4555,6 +4580,11 @@ borderColor3 :
             , hsl : Supported
             , hsla : Supported
             , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
             }
     ->
         Value
@@ -4563,6 +4593,11 @@ borderColor3 :
             , hsl : Supported
             , hsla : Supported
             , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
             }
     -> Style
 borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
@@ -4584,6 +4619,11 @@ borderColor4 :
         , hsl : Supported
         , hsla : Supported
         , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     ->
         Value
@@ -4592,6 +4632,11 @@ borderColor4 :
             , hsl : Supported
             , hsla : Supported
             , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
             }
     ->
         Value
@@ -4600,6 +4645,11 @@ borderColor4 :
             , hsl : Supported
             , hsla : Supported
             , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
             }
     ->
         Value
@@ -4608,6 +4658,11 @@ borderColor4 :
             , hsl : Supported
             , hsla : Supported
             , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
             }
     -> Style
 borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
