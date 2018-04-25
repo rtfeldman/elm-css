@@ -81,28 +81,28 @@ prettyPrintDeclaration declaration =
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
         SupportsRule _ _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         DocumentRule _ _ _ _ _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         PageRule _ _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         FontFace _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         Keyframes _ _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         Viewport _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         CounterStyle _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         FontFeatureValues _ ->
-            Debug.crash "TODO"
+            "TODO"
 
 
 mediaQueryToString : MediaQuery -> String
