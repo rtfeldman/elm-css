@@ -330,6 +330,7 @@ module Css
         , vw
         , wResize
         , wait
+        , wavy
         , xLarge
         , xSmall
         , xxLarge
@@ -571,6 +572,11 @@ Multiple CSS properties use these values.
 
 @docs textTransform
 @docs capitalize, uppercase, lowercase, fullWidth
+
+
+## Text Decoration
+
+@docs wavy
 
 
 # Tables
@@ -6528,6 +6534,17 @@ rad radians =
 turn : Float -> Value { provides | turn : Supported }
 turn turns =
     Value (toString turns ++ "turn")
+
+
+
+-- TEXT DECORATION --
+
+
+{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
+-}
+wavy : Value { provides | wavy : Supported }
+wavy =
+    Value "wavy"
 
 
 
