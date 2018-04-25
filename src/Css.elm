@@ -45,6 +45,7 @@ module Css
         , borderBottom
         , borderBottom2
         , borderBottom3
+        , borderBottomStyle
         , borderBottomWidth
         , borderBox
         , borderCollapse
@@ -55,10 +56,12 @@ module Css
         , borderLeft
         , borderLeft2
         , borderLeft3
+        , borderLeftStyle
         , borderLeftWidth
         , borderRight
         , borderRight2
         , borderRight3
+        , borderRightStyle
         , borderRightWidth
         , borderSpacing
         , borderSpacing2
@@ -69,6 +72,7 @@ module Css
         , borderTop
         , borderTop2
         , borderTop3
+        , borderTopStyle
         , borderTopWidth
         , borderWidth
         , borderWidth2
@@ -414,14 +418,15 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Border Width
 
 @docs borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
-@docs thin ,thick
+
+@docs thin, thick
 
 
 ## Border Style
 
-@docs borderStyle, borderStyle2, borderStyle3, borderStyle4
+@docs borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
 
-@docs dotted ,dashed ,solid ,double ,groove ,ridge ,inset ,outset
+@docs dotted, dashed, solid, double, groove, ridge, inset, outset
 
 
 ## Display
@@ -5778,6 +5783,110 @@ borderStyle4 :
     -> Style
 borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value styleLeft) =
     AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigt ++ " " ++ styleBottom ++ " " ++ styleLeft)
+
+
+{-| Sets [`border-top-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style) property.
+
+    borderTopStyle solid
+
+-}
+borderTopStyle :
+    Value
+        { solid : Supported
+        , none : Supported
+        , hidden : Supported
+        , dashed : Supported
+        , dotted : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderTopStyle (Value style) =
+    AppendProperty ("border-top-style:" ++ style)
+
+
+{-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style) property.
+
+    borderRightStyle solid
+
+-}
+borderRightStyle :
+    Value
+        { solid : Supported
+        , none : Supported
+        , hidden : Supported
+        , dashed : Supported
+        , dotted : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderRightStyle (Value style) =
+    AppendProperty ("border-right-style:" ++ style)
+
+
+{-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style) property.
+
+    borderBottomStyle solid
+
+-}
+borderBottomStyle :
+    Value
+        { solid : Supported
+        , none : Supported
+        , hidden : Supported
+        , dashed : Supported
+        , dotted : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderBottomStyle (Value style) =
+    AppendProperty ("border-bottom-style:" ++ style)
+
+
+{-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style) property.
+
+    borderLeftStyle solid
+
+-}
+borderLeftStyle :
+    Value
+        { solid : Supported
+        , none : Supported
+        , hidden : Supported
+        , dashed : Supported
+        , dotted : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderLeftStyle (Value style) =
+    AppendProperty ("border-left-style:" ++ style)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
