@@ -39,6 +39,9 @@ module Css
         , block
         , bold
         , bolder
+        , border
+        , border2
+        , border3
         , borderBox
         , borderCollapse
         , borderSpacing
@@ -262,6 +265,8 @@ module Css
         , textTransform
         , text_
         , thai
+        , thick
+        , thin
         , titlingCaps
         , toBottom
         , toBottomLeft
@@ -368,9 +373,19 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs BoxShadowConfig, boxShadow, defaultBoxShadow
 
 
+## Border
+
+@docs border, border2, border3
+
+
+## Border Width
+
+@docs thin ,thick
+
+
 ## Border Style
 
-@docs dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs dotted ,dashed ,solid ,double ,groove ,ridge ,inset ,outset
 
 
 ## Display
@@ -2184,10 +2199,12 @@ small =
     Value "small"
 
 
-{-| The `medium` [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values) or [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) (equivalent of 3px) value.
+{-| The `medium` [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values) or [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     fontSize medium
     borderWidth medium
+
+The value is equivalent of 3px when using for `border-width`.
 
 -}
 medium : Value { provides | medium : Supported }
@@ -4465,9 +4482,11 @@ border3 (Value width) (Value style) (Value color) =
 -- BORDER WIDTH --
 
 
-{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) (equivalent of 1px) value.
+{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     borderWidth thin
+
+The value is equivalent of 1px.
 
 -}
 thin : Value { provides | thin : Supported }
@@ -4475,9 +4494,11 @@ thin =
     Value "thin"
 
 
-{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) (equivalent of 5px) value.
+{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     borderWidth thick
+
+The value is equivalent of 5px.
 
 -}
 thick : Value { provides | thick : Supported }
@@ -4490,9 +4511,10 @@ thick =
 
 
 {-| The `dotted` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-A line that consists of dots.
 
     borderStyle dotted
+
+A line that consists of dots.
 
 -}
 dotted : Value { provides | dotted : Supported }
@@ -4501,9 +4523,9 @@ dotted =
 
 
 {-| The `dashed` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-A line that consists of dashes.
+borderStyle dashed
 
-    borderStyle dashed
+A line that consists of dashes.
 
 -}
 dashed : Value { provides | dashed : Supported }
@@ -4512,9 +4534,10 @@ dashed =
 
 
 {-| The `solid` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-A solid, continuous line.
 
     borderStyle solid
+
+A solid, continuous line.
 
 -}
 solid : Value { provides | solid : Supported }
@@ -4523,9 +4546,10 @@ solid =
 
 
 {-| The `double` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-Two lines are drawn around the element.
 
     borderStyle double
+
+Two lines are drawn around the element.
 
 -}
 double : Value { provides | double : Supported }
@@ -4534,9 +4558,10 @@ double =
 
 
 {-| The `groove` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
 
     borderStyle groove
+
+Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
 
 -}
 groove : Value { provides | groove : Supported }
@@ -4545,9 +4570,10 @@ groove =
 
 
 {-| The `ridge` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
 
     borderStyle ridge
+
+Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
 
 -}
 ridge : Value { provides | ridge : Supported }
@@ -4556,9 +4582,10 @@ ridge =
 
 
 {-| The `inset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-Adds a split tone to the line that makes the element appear slightly depressed.
 
     borderStyle inset
+
+Adds a split tone to the line that makes the element appear slightly depressed.
 
 -}
 inset : Value { provides | inset : Supported }
@@ -4567,9 +4594,10 @@ inset =
 
 
 {-| The `outset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-Similar to `inset`, but reverses the colors in a way that makes the element appear slightly raised.
 
     borderStyle outset
+
+Similar to `inset`, but reverses the colors in a way that makes the element appear slightly raised.
 
 -}
 outset : Value { provides | outset : Supported }
