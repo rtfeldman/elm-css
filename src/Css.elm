@@ -722,6 +722,7 @@ initial =
 Any CSS property can be set to this value.
 
     display unset
+    borderStyle unset
 
 -}
 unset : Value { provides | unset : Supported }
