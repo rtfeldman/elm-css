@@ -411,7 +411,15 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border
 
-@docs border, border2, border3, borderTop, borderTop2, borderTop3, borderRight, borderRight2, borderRight3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3
+@docs border, border2, border3
+
+@docs borderTop, borderTop2, borderTop3
+
+@docs borderRight, borderRight2, borderRight3
+
+@docs borderBottom, borderBottom2, borderBottom3
+
+@docs borderLeft, borderLeft2, borderLeft3
 
 
 ## Border Width
