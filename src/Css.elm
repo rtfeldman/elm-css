@@ -6530,6 +6530,10 @@ you should create a batch of `Style`:
     , borderBottomLeftRadius  (px 3) (px 4)
     ]
 
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius: (px 1) zero inherit inherit`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
 -}
 borderRadius2 :
     Value
@@ -6549,7 +6553,6 @@ borderRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
@@ -6571,7 +6574,6 @@ borderRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , inherit : Supported
             , initial : Supported
             , unset : Supported
             }
@@ -6597,6 +6599,10 @@ you should create a batch of `Style`:
     , borderBottomLeftRadius  (px 3) (px 4)
     ]
 
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius: (px 1) zero inherit inherit`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
 -}
 borderRadius3 :
     Value
@@ -6616,7 +6622,6 @@ borderRadius3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
@@ -6638,7 +6643,6 @@ borderRadius3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , inherit : Supported
             , initial : Supported
             , unset : Supported
             }
@@ -6660,7 +6664,6 @@ borderRadius3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , inherit : Supported
             , initial : Supported
             , unset : Supported
             }
@@ -6686,6 +6689,10 @@ you should create a batch of `Style`:
     , borderBottomLeftRadius  (px 3) (px 4)
     ]
 
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius: (px 1) zero inherit inherit`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
 -}
 borderRadius4 :
     Value
@@ -6705,7 +6712,6 @@ borderRadius4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
@@ -6727,7 +6733,6 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , inherit : Supported
             , initial : Supported
             , unset : Supported
             }
@@ -6749,7 +6754,6 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , inherit : Supported
             , initial : Supported
             , unset : Supported
             }
@@ -6771,7 +6775,6 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , inherit : Supported
             , initial : Supported
             , unset : Supported
             }
@@ -6780,7 +6783,7 @@ borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRi
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
 
 
-{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
+{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) longhand property.
 
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
@@ -6813,7 +6816,7 @@ borderTopLeftRadius (Value radius) =
     AppendProperty ("border-top-left-radius:" ++ radius)
 
 
-{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
+{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) longhand property.
 
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
@@ -6868,7 +6871,7 @@ borderTopLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-top-left-radius:" ++ horizontal ++ " " ++ vertical)
 
 
-{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
+{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) longhand property.
 
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
@@ -6901,7 +6904,7 @@ borderTopRightRadius (Value radius) =
     AppendProperty ("border-top-right-radius:" ++ radius)
 
 
-{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
+{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) longhand property.
 
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
@@ -6956,7 +6959,7 @@ borderTopRightRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-top-right-radius:" ++ horizontal ++ " " ++ vertical)
 
 
-{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
+{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) longhand property.
 
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
@@ -6989,7 +6992,7 @@ borderBottomRightRadius (Value radius) =
     AppendProperty ("border-bottom-right-radius:" ++ radius)
 
 
-{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
+{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) longhand property.
 
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
@@ -7044,7 +7047,7 @@ borderBottomRightRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-right-radius:" ++ horizontal ++ " " ++ vertical)
 
 
-{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
+{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) longhand property.
 
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
@@ -7077,7 +7080,7 @@ borderBottomLeftRadius (Value radius) =
     AppendProperty ("border-bottom-left-radius:" ++ radius)
 
 
-{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
+{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) longhand property.
 
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
