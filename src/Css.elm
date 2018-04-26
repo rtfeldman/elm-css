@@ -4534,7 +4534,7 @@ listStyle3 (Value val1) (Value val2) (Value val3) =
 
 
 
-{- BORDERS -}
+-- BORDERS --
 
 
 {-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
