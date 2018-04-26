@@ -48,6 +48,10 @@ module Css
         , borderBottom2
         , borderBottom3
         , borderBottomColor
+        , borderBottomLeftRadius
+        , borderBottomLeftRadius2
+        , borderBottomRightRadius
+        , borderBottomRightRadius2
         , borderBottomStyle
         , borderBottomWidth
         , borderBox
@@ -62,6 +66,10 @@ module Css
         , borderLeftColor
         , borderLeftStyle
         , borderLeftWidth
+        , borderRadius
+        , borderRadius2
+        , borderRadius3
+        , borderRadius4
         , borderRight
         , borderRight2
         , borderRight3
@@ -78,6 +86,10 @@ module Css
         , borderTop2
         , borderTop3
         , borderTopColor
+        , borderTopLeftRadius
+        , borderTopLeftRadius2
+        , borderTopRightRadius
+        , borderTopRightRadius2
         , borderTopStyle
         , borderTopWidth
         , borderWidth
@@ -450,6 +462,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Border Color
 
 @docs borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
+
+
+## Border Radius
+
+@docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
 
 
 ## Display
