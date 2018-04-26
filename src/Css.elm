@@ -32,6 +32,8 @@ module Css
         , backgroundPosition
         , backgroundPosition2
         , backgroundPosition4
+        , backgroundRepeat
+        , backgroundRepeat2
         , baseline
         , batch
         , before
@@ -169,6 +171,7 @@ module Css
         , noDiscretionaryLigatures
         , noDrop
         , noHistoricalLigatures
+        , noRepeat
         , none
         , normal
         , notAllowed
@@ -203,12 +206,16 @@ module Css
         , rad
         , relative
         , rem
+        , repeat
+        , repeatX
+        , repeatY
         , revert
         , rgb
         , rgba
         , ridge
         , right
         , right_
+        , round
         , rowResize
         , rtl
         , sResize
@@ -230,6 +237,7 @@ module Css
         , smaller
         , softLight
         , solid
+        , space
         , stackedFractions
         , start
         , static
@@ -359,9 +367,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2
 
 @docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+
+@docs repeat, noRepeat, repeatX, repeatY, space, round
 
 
 ## Box Shadow
@@ -3975,6 +3985,134 @@ backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAm
             ++ " "
             ++ vertAmount
         )
+
+
+
+-- BACKGROUND REPEAT --
+
+
+{-| Sets [`background-repeat`](https://css-tricks.com/almanac/properties/b/background-repeat/)
+
+    backgroundRepeat repeat
+
+    backgroundRepeat repeatX
+
+If you need to set horizontal and vertical direction separately, see
+[`backgroundRepeat2`](#backgroundRepeat2)
+
+-}
+backgroundRepeat :
+    Value
+        { repeat : Supported
+        , repeatX : Supported
+        , repeatY : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        , initial : Supported
+        , unset : Supported
+        , inherit : Supported
+        }
+    -> Style
+backgroundRepeat (Value repeat) =
+    AppendProperty ("background-repeat:" ++ repeat)
+
+
+{-| Sets [`background-repeat`](https://css-tricks.com/almanac/properties/b/background-repeat/) along the horizontal axis, then the vertical axis.
+
+    backgroundRepeat2 repeat space
+
+    backgroundRepeat2 space round
+
+If you only need to set one value for both, see
+[`backgroundRepeat`](#backgroundRepeat) instead.
+
+-}
+backgroundRepeat2 :
+    Value
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        , initial : Supported
+        , unset : Supported
+        , inherit : Supported
+        }
+    ->
+        Value
+            { repeat : Supported
+            , space : Supported
+            , round : Supported
+            , noRepeat : Supported
+            , initial : Supported
+            , unset : Supported
+            , inherit : Supported
+            }
+    -> Style
+backgroundRepeat2 (Value horiz) (Value vert) =
+    AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
+
+
+{-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+
+    backgroundRepeat repeat
+
+-}
+repeat : Value { provides | repeat : Supported }
+repeat =
+    Value "repeat"
+
+
+{-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+
+    backgroundRepeat noRepeat
+
+-}
+noRepeat : Value { provides | repeat : Supported }
+noRepeat =
+    Value "no-repeat"
+
+
+{-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) horizontally.
+
+    backgroundRepeat repeatX
+
+-}
+repeatX : Value { provides | repeatX : Supported }
+repeatX =
+    Value "repeat-x"
+
+
+{-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) vertically.
+
+    backgroundRepeat repeatY
+
+-}
+repeatY : Value { provides | repeatY : Supported }
+repeatY =
+    Value "repeat-y"
+
+
+{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by adding space.
+
+    backgroundRepeat space
+
+)
+
+-}
+space : Value { provides | space : Supported }
+space =
+    Value "space"
+
+
+{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by stretching or shrinking the image.
+
+    backgroundRepeat round
+
+-}
+round : Value { provides | round : Supported }
+round =
+    Value "round"
 
 
 
