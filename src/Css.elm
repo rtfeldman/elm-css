@@ -6468,12 +6468,22 @@ outset =
 {- BORDER RADIUS -}
 
 
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) shorthand property.
 
     borderRadius  (em 4)
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
+so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
+you should create a batch of `Style`:
+
+    [ borderTopLeftRadius     (px 4) (px 2)
+    , borderTopRightRadius    (px 3) (px 4)
+    , borderBottomRightRadius (px 6) (px 2)
+    , borderBottomLeftRadius  (px 3) (px 4)
+    ]
 
 -}
 borderRadius :
@@ -6503,12 +6513,22 @@ borderRadius (Value radius) =
     AppendProperty ("border-radius:" ++ radius)
 
 
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) shorthand property.
 
     borderRadius  (em 4)
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
+so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
+you should create a batch of `Style`:
+
+    [ borderTopLeftRadius     (px 4) (px 2)
+    , borderTopRightRadius    (px 3) (px 4)
+    , borderBottomRightRadius (px 6) (px 2)
+    , borderBottomLeftRadius  (px 3) (px 4)
+    ]
 
 -}
 borderRadius2 :
@@ -6560,12 +6580,22 @@ borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottom
     AppendProperty ("border-radius:" ++ radiusTopLeftAndBottomRight ++ " " ++ radiusTopRightAndBottomLeft)
 
 
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) shorthand property.
 
     borderRadius  (em 4)
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
+so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
+you should create a batch of `Style`:
+
+    [ borderTopLeftRadius     (px 4) (px 2)
+    , borderTopRightRadius    (px 3) (px 4)
+    , borderBottomRightRadius (px 6) (px 2)
+    , borderBottomLeftRadius  (px 3) (px 4)
+    ]
 
 -}
 borderRadius3 :
@@ -6639,12 +6669,22 @@ borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value r
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRightAndBottomLeft ++ " " ++ radiusBottomRight)
 
 
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) shorthand property.
 
     borderRadius  (em 4)
     borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
+so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
+you should create a batch of `Style`:
+
+    [ borderTopLeftRadius     (px 4) (px 2)
+    , borderTopRightRadius    (px 3) (px 4)
+    , borderBottomRightRadius (px 6) (px 2)
+    , borderBottomLeftRadius  (px 3) (px 4)
+    ]
 
 -}
 borderRadius4 :
