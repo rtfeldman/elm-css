@@ -137,6 +137,10 @@ module Css
         , dotted
         , double
         , eResize
+        , elliptical
+        , elliptical2
+        , elliptical3
+        , elliptical4
         , em
         , emptyCells
         , end
@@ -467,6 +471,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Border Radius
 
 @docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+
+@docs elliptical, elliptical2, elliptical3, elliptical4
 
 
 ## Display
@@ -6471,19 +6477,6 @@ outset =
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
     borderRadius  (em 4)
-    borderRadius2 (em 4) (px 2)
-    borderRadius3 (em 4) (px 2) (pct 5)
-    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
-
-**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
-so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
-you should create a batch of `Style`:
-
-    [ borderTopLeftRadius     (px 4) (px 2)
-    , borderTopRightRadius    (px 3) (px 4)
-    , borderBottomRightRadius (px 6) (px 2)
-    , borderBottomLeftRadius  (px 3) (px 4)
-    ]
 
 -}
 borderRadius :
@@ -6515,20 +6508,10 @@ borderRadius (Value radius) =
 
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
-    borderRadius  (em 4)
     borderRadius2 (em 4) (px 2)
-    borderRadius3 (em 4) (px 2) (pct 5)
-    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+    borderRadius2 (em 4) (elliptical (px 6))
 
-**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
-so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
-you should create a batch of `Style`:
-
-    [ borderTopLeftRadius     (px 4) (px 2)
-    , borderTopRightRadius    (px 3) (px 4)
-    , borderBottomRightRadius (px 6) (px 2)
-    , borderBottomLeftRadius  (px 3) (px 4)
-    ]
+If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
 
 **Note:** As with any shorthand property, individual sub-properties cannot inherit,
 such as in `borderRadius2 (px 1) inherit`, which would partially override existing definitions.
@@ -6576,6 +6559,7 @@ borderRadius2 :
             , zero : Supported
             , initial : Supported
             , unset : Supported
+            , elliptical : Supported
             }
     -> Style
 borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
@@ -6584,20 +6568,10 @@ borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottom
 
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
-    borderRadius  (em 4)
-    borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
-    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+    borderRadius3 (em 4) (px 2) (elliptical (px 6))
 
-**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
-so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
-you should create a batch of `Style`:
-
-    [ borderTopLeftRadius     (px 4) (px 2)
-    , borderTopRightRadius    (px 3) (px 4)
-    , borderBottomRightRadius (px 6) (px 2)
-    , borderBottomLeftRadius  (px 3) (px 4)
-    ]
+If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
 
 **Note:** As with any shorthand property, individual sub-properties cannot inherit,
 such as in `borderRadius3 (px 1) zero inherit`, which would partially override existing definitions.
@@ -6666,6 +6640,7 @@ borderRadius3 :
             , zero : Supported
             , initial : Supported
             , unset : Supported
+            , elliptical : Supported
             }
     -> Style
 borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
@@ -6674,20 +6649,10 @@ borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value r
 
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
-    borderRadius  (em 4)
-    borderRadius2 (em 4) (px 2)
-    borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+    borderRadius4 (em 4) (px 2) (pct 5) (elliptical (px 6))
 
-**Note:** An implementation of shorthand property with supporting of elipse shape looks ugly,
-so if you wanna make somehting like this `border-radius: 4px 3px 6px / 2px 4px` by `elm-css`
-you should create a batch of `Style`:
-
-    [ borderTopLeftRadius     (px 4) (px 2)
-    , borderTopRightRadius    (px 3) (px 4)
-    , borderBottomRightRadius (px 6) (px 2)
-    , borderBottomLeftRadius  (px 3) (px 4)
-    ]
+If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
 
 **Note:** As with any shorthand property, individual sub-properties cannot inherit,
 such as in `borderRadius4 (px 1) zero inherit inherit`, which would partially override existing definitions.
@@ -6777,9 +6742,109 @@ borderRadius4 :
             , zero : Supported
             , initial : Supported
             , unset : Supported
+            , elliptical : Supported
             }
     -> Style
 borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
+    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
+
+
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property with [`elliptical`](#elliptical) corners.
+
+    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical (px 6))
+
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius5 (px 1) zero inherit inherit (elliptical (px 6))`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
+-}
+borderRadius5 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            , elliptical : Supported
+            }
+    -> Style
+borderRadius5 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
 
 
@@ -7141,6 +7206,284 @@ borderBottomLeftRadius2 :
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius2 (em 4) (elliptical (px 6))
+    borderRadius3 (em 4) (px 2) (elliptical (px 6))
+    borderRadius4 (em 4) (px 2) (pct 5) (elliptical (px 6))
+    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical (px 6))
+
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius5 (px 1) zero inherit inherit (elliptical (px 6))`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
+-}
+elliptical :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Value { properties | elliptical : Supported }
+elliptical (Value radius) =
+    Value (" / " ++ radius)
+
+
+{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius2 (em 4) (elliptical2 (px 6) (px 7))
+    borderRadius3 (em 4) (px 2) (elliptical2 (px 6) (px 7))
+    borderRadius4 (em 4) (px 2) (pct 5) (elliptical2 (px 6) (px 7))
+    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical2 (px 6) (px 7))
+
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius5 (px 1) zero inherit inherit (elliptical2 (px 6) (px 7))`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
+-}
+elliptical2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    -> Value { properties | elliptical : Supported }
+elliptical2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
+    Value (" / " ++ radiusTopLeftAndBottomRight ++ " " ++ radiusTopRightAndBottomLeft)
+
+
+{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius2 (em 4) (elliptical3 (px 6) (px 7) (pct 10))
+    borderRadius3 (em 4) (px 2) (elliptical3 (px 6) (px 7) (pct 10))
+    borderRadius4 (em 4) (px 2) (pct 5) (elliptical3 (px 6) (px 7) (pct 10))
+    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical3 (px 6) (px 7) (pct 10))
+
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius5 (px 1) zero inherit inherit (elliptical3 (px 6) (px 7) (pct 10))`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
+-}
+elliptical3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    -> Value { properties | elliptical : Supported }
+elliptical3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
+    Value (" / " ++ radiusTopLeft ++ " " ++ radiusTopRightAndBottomLeft ++ " " ++ radiusBottomRight)
+
+
+{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius2 (em 4) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
+    borderRadius3 (em 4) (px 2) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
+    borderRadius4 (em 4) (px 2) (pct 5) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
+    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
+
+**Note:** As with any shorthand property, individual sub-properties cannot inherit,
+such as in `borderRadius5 (px 1) zero inherit inherit (elliptical4 (px 6) (px 7) (pct 10) (em 1))`, which would partially override existing definitions.
+Instead, the individual longhand properties have to be used.
+
+-}
+elliptical4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+    -> Value { properties | elliptical : Supported }
+elliptical4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
+    Value (" / " ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
 
 
 
