@@ -70,6 +70,7 @@ module Css
         , borderRadius2
         , borderRadius3
         , borderRadius4
+        , borderRadius5
         , borderRight
         , borderRight2
         , borderRight3
@@ -470,7 +471,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border Radius
 
-@docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+@docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRadius5, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
 
 @docs elliptical, elliptical2, elliptical3, elliptical4
 
