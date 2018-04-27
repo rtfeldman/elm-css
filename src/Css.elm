@@ -214,6 +214,7 @@ module Css
         , none
         , normal
         , notAllowed
+        , nowrap
         , nsResize
         , num
         , nwResize
@@ -236,6 +237,9 @@ module Css
         , petiteCaps
         , pointer
         , position
+        , pre
+        , preLine
+        , preWrap
         , progress
         , proportionalNums
         , pseudoClass
@@ -339,6 +343,7 @@ module Css
         , wResize
         , wait
         , wavy
+        , whiteSpace
         , xLarge
         , xSmall
         , xxLarge
@@ -623,6 +628,12 @@ Multiple CSS properties use these values.
 
 @docs verticalAlign
 @docs sub, super, textTop, textBottom, middle
+
+
+## White space
+
+@docs whiteSpace
+@docs pre, preWrap, preLine, nowrap
 
 -}
 
@@ -2591,7 +2602,8 @@ fontVariantCaps (Value str) =
 
 
 {-| The `normal` value, which can be used with such properties as
-[`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values)
+[`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values),
+[`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/),
 and [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
 
     fontVariantCaps normal
@@ -7082,3 +7094,71 @@ ltr =
 rtl : Value { provides | rtl : Supported }
 rtl =
     Value "rtl"
+
+
+
+-- WHITE-SPACE --
+
+
+{-| Sets [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+
+    whiteSpace pre
+    whiteSpace nowrap
+    whiteSpace preWrap
+    whiteSpace preLine
+
+-}
+whiteSpace :
+    Value
+        { normal : Supported
+        , nowrap : Supported
+        , pre : Supported
+        , preWrap : Supported
+        , preLine : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+whiteSpace (Value str) =
+    AppendProperty ("white-space:" ++ str)
+
+
+{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace nowrap
+
+-}
+nowrap : Value { provides | nowrap : Supported }
+nowrap =
+    Value "nowrap"
+
+
+{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace pre
+
+-}
+pre : Value { provides | pre : Supported }
+pre =
+    Value "pre"
+
+
+{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preWrap
+
+-}
+preWrap : Value { provides | preWrap : Supported }
+preWrap =
+    Value "pre-wrap"
+
+
+{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preLine
+
+-}
+preLine : Value { provides | preLine : Supported }
+preLine =
+    Value "pre-line"
