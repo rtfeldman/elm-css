@@ -136,6 +136,7 @@ module Css
         , fixed
         , flexEnd
         , flexStart
+        , float
         , fontFamilies
         , fontFamily
         , fontSize
@@ -634,6 +635,11 @@ Multiple CSS properties use these values.
 
 @docs whiteSpace
 @docs pre, preWrap, preLine, nowrap
+
+
+## Float
+
+@docs float
 
 -}
 
@@ -7162,3 +7168,28 @@ preWrap =
 preLine : Value { provides | preLine : Supported }
 preLine =
     Value "pre-line"
+
+
+
+-- FLOAT --
+
+
+{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
+
+    float none
+    float left_
+    float right_
+
+-}
+float :
+    Value
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+float (Value str) =
+    AppendProperty ("float:" ++ str)
