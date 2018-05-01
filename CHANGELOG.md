@@ -1,9 +1,9 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
-| [**14.0.0**](https://github.com/rtfeldman/elm-css/tree/14.0.0) | Remove `Css.asPairsDEPRECATED` in favor of `DEPRECATED.Css.asPairs`. (#352) Fix bug in `borderBottomWidth` functions. (#380) Make `styled` more flexible. (#420) Add `withAttribute`. (#389) Add `Css.Transitions`
+| [**14.0.0**](https://github.com/rtfeldman/elm-css/tree/14.0.0) | Remove `Css.asPairsDEPRECATED` in favor of `DEPRECATED.Css.asPairs`. (#352) Fix bug in `borderBottomWidth` functions. (#380) Make `styled` more flexible. (#420) Add `Css.Transitions`.
 | [**13.1.1**](https://github.com/rtfeldman/elm-css/tree/13.1.1) | Fix `AngleOrDirection` bug (#356)
-| [**13.1.0**](https://github.com/rtfeldman/elm-css/tree/13.1.0) | Add program, programWithFlags, and beginnerProgram to Html.Styled. (#381)
+| [**13.1.0**](https://github.com/rtfeldman/elm-css/tree/13.1.0) | Add program, programWithFlags, and beginnerProgram to Html.Styled. (#381) Add `withAttribute`. (#389)
 | [**13.0.1**](https://github.com/rtfeldman/elm-css/tree/13.0.1) | Remove extraneous Debug.log
 | [**13.0.0**](https://github.com/rtfeldman/elm-css/tree/13.0.0) | Disallow using multiple `css` attributes in same element, to fix #337. Fix Html.Styled.Lazy (#348). Add Svg.Styled (#339). Improve docs for Css.Foreign (#353).
 | [**12.0.1**](https://github.com/rtfeldman/elm-css/tree/12.0.1) | Add deprecation warning to upgrade to 13.0.0 for critical bugfixes
