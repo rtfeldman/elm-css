@@ -7210,6 +7210,7 @@ wordBreak :
         , initial : Supported
         , unset : Supported
         }
+    -> Style
 wordBreak (Value str) =
     AppendProperty ("word-break:" ++ str)
 
