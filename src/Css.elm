@@ -137,6 +137,7 @@ module Css
         , fixed
         , flexEnd
         , flexStart
+        , float
         , fontFamilies
         , fontFamily
         , fontSize
@@ -639,10 +640,16 @@ Multiple CSS properties use these values.
 @docs pre, preWrap, preLine, nowrap
 
 
+
 ## Word break
 
 @docs wordBreak
 @docs breakAll, keepAll
+
+
+## Float
+
+@docs float
 
 -}
 
@@ -7204,7 +7211,6 @@ wordBreak :
         , initial : Supported
         , unset : Supported
         }
-    -> Style
 wordBreak (Value str) =
     AppendProperty ("word-break:" ++ str)
 
@@ -7227,3 +7233,28 @@ breakAll =
 keepAll : Value { provides | keepAll : Supported }
 keepAll =
     Value "keep-all"
+
+
+
+-- FLOAT --
+
+
+{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
+
+    float none
+    float left_
+    float right_
+
+-}
+float :
+    Value
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+float (Value str) =
+    AppendProperty ("float:" ++ str)
