@@ -87,6 +87,7 @@ module Css
         , bottom
         , bottom_
         , boxShadow
+        , breakAll
         , breakWord
         , capitalize
         , captionSide
@@ -175,6 +176,7 @@ module Css
         , italic
         , justify
         , kannada
+        , keepAll
         , khmer
         , lao
         , large
@@ -345,6 +347,7 @@ module Css
         , wait
         , wavy
         , whiteSpace
+        , wordBreak
         , xLarge
         , xSmall
         , xxLarge
@@ -635,6 +638,13 @@ Multiple CSS properties use these values.
 
 @docs whiteSpace
 @docs pre, preWrap, preLine, nowrap
+
+
+
+## Word break
+
+@docs wordBreak
+@docs breakAll, keepAll
 
 
 ## Float
@@ -959,7 +969,13 @@ overflowWrap (Value val) =
     AppendProperty ("overflow-wrap:" ++ val)
 
 
-{-| The `break-word` value for the [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/) property.
+{-| The `break-word` value, which can be used with such properties as
+[`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
+and [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/).
+
+    overflowWrap breakWord
+    wordBreak breakWord
+
 -}
 breakWord : Value { provides | breakWord : Supported }
 breakWord =
@@ -2610,9 +2626,12 @@ fontVariantCaps (Value str) =
 {-| The `normal` value, which can be used with such properties as
 [`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values),
 [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/),
+[`word-break`](https://css-tricks.com/almanac/properties/w/word-break/),
 and [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
 
     fontVariantCaps normal
+    whiteSpace normal
+    wordBreak normal
     alignItems normal
 
 -}
@@ -7168,6 +7187,52 @@ preWrap =
 preLine : Value { provides | preLine : Supported }
 preLine =
     Value "pre-line"
+
+
+
+--- WORD-BREAK ---
+
+
+{-| Sets [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/)
+
+      wordBreak normal
+      wordBreak breakAll
+      wordBreak keepAll
+      wordBreak breakWord
+
+-}
+wordBreak :
+    Value
+        { normal : Supported
+        , breakAll : Supported
+        , keepAll : Supported
+        , breakWord : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+wordBreak (Value str) =
+    AppendProperty ("word-break:" ++ str)
+
+
+{-| A `breakAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
+
+      wordBreak breakAll
+
+-}
+breakAll : Value { provides | breakAll : Supported }
+breakAll =
+    Value "break-all"
+
+
+{-| A `keepAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
+
+      wordBreak keepAll
+
+-}
+keepAll : Value { provides | keepAll : Supported }
+keepAll =
+    Value "keep-all"
 
 
 
