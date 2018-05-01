@@ -293,10 +293,10 @@ attributes). They will be applied after the pre-applied styles.
 
 -}
 styled :
-    (List (Attribute msg) -> List (Html msg) -> Html msg)
+    (List (Attribute a) -> List (Html b) -> Html msg)
     -> List Style
-    -> List (Attribute msg)
-    -> List (Html msg)
+    -> List (Attribute a)
+    -> List (Html b)
     -> Html msg
 styled fn styles attrs children =
     fn (Internal.css styles :: attrs) children
