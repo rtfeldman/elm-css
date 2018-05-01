@@ -6800,11 +6800,11 @@ borderRadius5 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , elliptical : Supported
             }
+    -> Value { elliptical : Supported }
     -> Style
-borderRadius5 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
-    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
+borderRadius5 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) (Value radiusElliptical) =
+    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft ++ " " ++ radiusElliptical)
 
 
 {-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
@@ -7164,7 +7164,7 @@ elliptical :
         }
     -> Value { properties | elliptical : Supported }
 elliptical (Value radius) =
-    Value (" / " ++ radius)
+    Value ("/ " ++ radius)
 
 
 {-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
