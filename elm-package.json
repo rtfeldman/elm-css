@@ -11,6 +11,7 @@
         "Css.Colors",
         "Css.Foreign",
         "Css.Media",
+        "Css.Transitions",
         "Html.Styled",
         "Html.Styled.Attributes",
         "Html.Styled.Events",
