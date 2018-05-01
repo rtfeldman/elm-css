@@ -8,8 +8,9 @@
     ],
     "exposed-modules": [
         "Css",
+        "Css.Transitions",
+        "Css.Global",
         "Css.Colors",
-        "Css.Foreign",
         "Css.Media",
         "Html.Styled",
         "Html.Styled.Attributes",

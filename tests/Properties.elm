@@ -1,7 +1,7 @@
 module Properties exposing (all)
 
 import Css exposing (..)
-import Css.Foreign exposing (p)
+import Css.Global exposing (p)
 import Css.Preprocess exposing (stylesheet)
 import DEPRECATED.Css exposing (asPairs)
 import DEPRECATED.Css.Namespace exposing (namespace)
