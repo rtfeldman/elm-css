@@ -4290,28 +4290,25 @@ need to set both width and height explicitly, use
 -}
 backgroundSize :
     Value
-        { provides
-            | contain : Supported
-            , cover : Supported
-            , px : Supported
-            , cm : Supported
-            , mm : Supported
-            , inches : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , ch : Supported
-            , em : Supported
-            , ex : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 backgroundSize (Value size) =
@@ -4329,10 +4326,26 @@ If you only want to set the width, use [`backgroundImage`](#backgroundImage) ins
 -}
 backgroundSize2 :
     Value
-        { provides
-            | contain : Supported
-            , cover : Supported
-            , px : Supported
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { px : Supported
             , cm : Supported
             , mm : Supported
             , inches : Supported
@@ -4348,28 +4361,6 @@ backgroundSize2 :
             , vmin : Supported
             , vmax : Supported
             , auto : Supported
-        }
-    ->
-        Value
-            { provides
-                | contain : Supported
-                , cover : Supported
-                , px : Supported
-                , cm : Supported
-                , mm : Supported
-                , inches : Supported
-                , pc : Supported
-                , pct : Supported
-                , pt : Supported
-                , ch : Supported
-                , em : Supported
-                , ex : Supported
-                , rem : Supported
-                , vh : Supported
-                , vw : Supported
-                , vmin : Supported
-                , vmax : Supported
-                , auto : Supported
             }
     -> Style
 backgroundSize2 (Value width) (Value height) =
