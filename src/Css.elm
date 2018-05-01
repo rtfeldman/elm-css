@@ -339,6 +339,7 @@ module Css
         , verticalAlign
         , verticalText
         , vh
+        , visibility
         , visible
         , vmax
         , vmin
@@ -6745,9 +6746,11 @@ borderCollapse (Value str) =
     AppendProperty ("border-collapse:" ++ str)
 
 
-{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
+{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) and
+[`visibility`](https://css-tricks.com/almanac/properties/v/visibility/) property.
 
     borderCollapse collapse
+    visibility collapse
 
 -}
 collapse : Value { provides | collapse : Supported }
@@ -7258,3 +7261,28 @@ float :
     -> Style
 float (Value str) =
     AppendProperty ("float:" ++ str)
+
+
+
+-- VISIBILITY --
+
+
+{-| Sets [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/)
+
+      visibility visible
+      visibility hidden
+      visibility collapse
+
+-}
+visibility :
+    Value
+        { visible : Supported
+        , hidden : Supported
+        , collapse : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+visibility (Value str) =
+    AppendProperty ("visibility:" ++ str)
