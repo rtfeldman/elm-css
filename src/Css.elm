@@ -35,6 +35,7 @@ module Css
         , backgroundRepeat
         , backgroundRepeat2
         , backgroundSize
+        , backgroundSize2
         , baseline
         , batch
         , before
@@ -421,7 +422,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
 
 @docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
@@ -4282,7 +4283,9 @@ round =
     backgroundSize (px 400)
 
 If you give a length value, it will be used for the width. The height will be set
-proportional to the size of the [`background-image`](#backgroundImage).
+proportional to the size of the [`background-image`](#backgroundImage). If you
+need to set both width and height explicitly, use
+[`backgroundImage2`](#backgroundImage2) instead.
 
 -}
 backgroundSize :
@@ -4313,6 +4316,70 @@ backgroundSize :
     -> Style
 backgroundSize (Value size) =
     AppendProperty ("background-size:" ++ size)
+
+
+{-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/) for both width and height (in that order.)
+
+    backgroundSize2 (px 300) (px 100)
+
+    backgroundSize2 auto (px 400)
+
+If you only want to set the width, use [`backgroundImage`](#backgroundImage) instead.
+
+-}
+backgroundSize2 :
+    Value
+        { provides
+            | contain : Supported
+            , cover : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+        }
+    ->
+        Value
+            { provides
+                | contain : Supported
+                , cover : Supported
+                , px : Supported
+                , cm : Supported
+                , mm : Supported
+                , inches : Supported
+                , pc : Supported
+                , pct : Supported
+                , pt : Supported
+                , ch : Supported
+                , em : Supported
+                , ex : Supported
+                , rem : Supported
+                , vh : Supported
+                , vw : Supported
+                , vmin : Supported
+                , vmax : Supported
+                , auto : Supported
+                , inherit : Supported
+                , initial : Supported
+                , unset : Supported
+            }
+    -> Style
+backgroundSize2 (Value width) (Value height) =
+    AppendProperty ("background-size:" ++ width ++ " " ++ height)
 
 
 {-| Used in [`backgroundSize`](#backgroundSize) to always show the whole
