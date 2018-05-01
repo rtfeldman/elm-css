@@ -651,6 +651,11 @@ Multiple CSS properties use these values.
 
 @docs float
 
+
+# Visibility
+
+@docs visibility
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
