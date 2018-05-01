@@ -7202,14 +7202,16 @@ preLine =
 -}
 wordBreak :
     Value
-        { normal : Supported
-        , breakAll : Supported
-        , keepAll : Supported
-        , breakWord : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
+        { provides
+            | normal : Supported
+            , breakAll : Supported
+            , keepAll : Supported
+            , breakWord : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
         }
+    -> Style
 wordBreak (Value str) =
     AppendProperty ("word-break:" ++ str)
 
