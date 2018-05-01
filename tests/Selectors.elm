@@ -1,7 +1,7 @@
 module Selectors exposing (..)
 
 import Css exposing (..)
-import Css.Global exposing (..)
+import Css.Foreign exposing (..)
 import Css.Preprocess exposing (stylesheet)
 import Expect
 import Test exposing (..)
@@ -45,17 +45,17 @@ elements =
         , testSelector "li" li
         , testSelector "main" main_
         , testSelector "p" p
-        , testSelector "pre" Css.Global.pre
+        , testSelector "pre" Css.Foreign.pre
         , testSelector "dd" dd
         , testSelector "dl" dl
         , testSelector "dt" dt
         , testSelector "a" a
         , testSelector "code" code
-        , testSelector "small" Css.Global.small
+        , testSelector "small" Css.Foreign.small
         , testSelector "span" span
         , testSelector "strong" strong
         , testSelector "i" i
-        , testSelector "em" Css.Global.em
+        , testSelector "em" Css.Foreign.em
         , testSelector "q" q
         , testSelector "img" img
         , testSelector "audio" audio
@@ -64,7 +64,7 @@ elements =
         , testSelector "caption" caption
         , testSelector "col" col
         , testSelector "colgroup" colgroup
-        , testSelector "table" Css.Global.table
+        , testSelector "table" Css.Foreign.table
         , testSelector "tbody" tbody
         , testSelector "td" td
         , testSelector "tfoot" tfoot
@@ -79,7 +79,7 @@ elements =
         , testSelector "legend" legend
         , testSelector "optgroup" optgroup
         , testSelector "option" option
-        , testSelector "progress" Css.Global.progress
+        , testSelector "progress" Css.Foreign.progress
         , testSelector "select" select
         ]
 

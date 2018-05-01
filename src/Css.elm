@@ -940,7 +940,7 @@ we haven't gotten around to adding them!
 
 If you need something that `elm-css` does not support right now, the
 [`Css.property`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#property)
-and [`Css.Global.selector`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Global#selector)
+and [`Css.Foreign.selector`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Foreign#selector)
 functions let you define custom properties and selectors, respectively.
 
 

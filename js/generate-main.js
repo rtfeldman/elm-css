@@ -32,7 +32,7 @@ function writeMain(
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
   const otherModules = [
     "Css",
-    "Css.Global",
+    "Css.Foreign",
     "DEPRECATED.Css.File",
     "Platform",
     "Json.Decode"
@@ -63,7 +63,7 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     "        , update = \\_ _ -> ( (), Cmd.none )\n" +
     "        , subscriptions = \\_ -> Sub.none\n" +
     "        }\n\n\n" +
-    "classToSnippet : String -> a -> Css.Global.Snippet\n" +
+    "classToSnippet : String -> a -> Css.Foreign.Snippet\n" +
     "classToSnippet str class =\n" +
     "    classToSnippet str class\n\n\n" + // This is just to make type-checking pass. We'll splice in a useful implementation after emitting.
     "main : Program () () Never\n" +
@@ -77,7 +77,7 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
 function generateStylesheet(modul /*: ModuleDeclaration */) {
   const entries = modul.values.map(function(value) {
     switch (value.signature) {
-      case "Css.Global.Snippet":
+      case "Css.Foreign.Snippet":
         return modul.name + "." + value.name;
       case "DEPRECATED.Css.File.UniqueClass":
       case "DEPRECATED.Css.File.UniqueSvgClass":

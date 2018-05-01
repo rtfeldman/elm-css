@@ -1,4 +1,4 @@
-module Css.Global
+module Css.Foreign
     exposing
         ( Snippet
         , a
@@ -86,13 +86,13 @@ module Css.Global
         , withClass
         )
 
-{-| Apply global CSS to things like foreign DOM structures (e.g. generated
-from markdown) where you cannot add attributes.
+{-| Style foreign DOM structures (e.g. generated from markdown) where you cannot
+add attributes.
 
-This module relies on CSS selectors which are [globally scoped and
+This works by using CSS selectors which are [globally scoped and
 bad for maintainability](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284),
-so definitely avoid using this module except when there is no reasonable way
-do to it using `Style` instead!
+so definitely avoid using this module except when you specifically need to style
+third-party DOM nodes!
 
 
 # Global Styles

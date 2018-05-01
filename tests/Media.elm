@@ -1,7 +1,7 @@
 module Media exposing (..)
 
 import Css exposing (..)
-import Css.Global exposing (Snippet, a, body, button, class, media, mediaQuery, p)
+import Css.Foreign exposing (Snippet, a, body, button, class, media, mediaQuery, p)
 import Css.Media as Media exposing (..)
 import Css.Preprocess exposing (stylesheet)
 import DEPRECATED.Css.Namespace exposing (namespace)
