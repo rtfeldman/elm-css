@@ -4348,9 +4348,6 @@ backgroundSize2 :
             , vmin : Supported
             , vmax : Supported
             , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
         }
     ->
         Value
@@ -4373,9 +4370,6 @@ backgroundSize2 :
                 , vmin : Supported
                 , vmax : Supported
                 , auto : Supported
-                , inherit : Supported
-                , initial : Supported
-                , unset : Supported
             }
     -> Style
 backgroundSize2 (Value width) (Value height) =
