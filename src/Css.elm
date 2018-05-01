@@ -34,6 +34,7 @@ module Css
         , backgroundPosition4
         , backgroundRepeat
         , backgroundRepeat2
+        , backgroundSize
         , baseline
         , batch
         , before
@@ -104,10 +105,12 @@ module Css
         , colorDodge
         , color_
         , commonLigatures
+        , contain
         , contentBox
         , contextMenu
         , contextual
         , copy
+        , cover
         , crosshair
         , cursive
         , cursor
@@ -418,11 +421,13 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize
 
 @docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 @docs repeat, noRepeat, repeatX, repeatY, space, round
+
+@docs cover, contain
 
 
 ## Box Shadow
@@ -4264,6 +4269,72 @@ space =
 round : Value { provides | round : Supported }
 round =
     Value "round"
+
+
+
+-- BACKGROUND SIZE --
+
+
+{-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/).
+
+    backgroundSize cover
+
+    backgroundSize (px 400)
+
+If you give a length value, it will be used for the width. The height will be set
+proportional to the size of the [`background-image`](#backgroundImage).
+
+-}
+backgroundSize :
+    Value
+        { provides
+            | contain : Supported
+            , cover : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+        }
+    -> Style
+backgroundSize (Value size) =
+    AppendProperty ("background-size:" ++ size)
+
+
+{-| Used in [`backgroundSize`](#backgroundSize) to always show the whole
+background image, even if it leaves empty spaces on the sides.
+
+    backgroundSize contain
+
+-}
+contain : Value { provides | contain : Supported }
+contain =
+    Value "contain"
+
+
+{-| Used in [`backgroundSize`](#backgroundSize) to always fill the whole
+background, even if it cuts off some of the image.
+
+    backgroundSize cover
+
+-}
+cover : Value { provides | cover : Supported }
+cover =
+    Value "cover"
 
 
 
