@@ -6537,8 +6537,6 @@ borderRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6558,8 +6556,6 @@ borderRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             , elliptical : Supported
             }
     -> Style
@@ -6597,8 +6593,6 @@ borderRadius3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6618,8 +6612,6 @@ borderRadius3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6639,8 +6631,6 @@ borderRadius3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             , elliptical : Supported
             }
     -> Style
@@ -6678,8 +6668,6 @@ borderRadius4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6699,8 +6687,6 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6720,8 +6706,6 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6741,8 +6725,6 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             , elliptical : Supported
             }
     -> Style
@@ -6777,8 +6759,6 @@ borderRadius5 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6798,8 +6778,6 @@ borderRadius5 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6819,8 +6797,6 @@ borderRadius5 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6840,8 +6816,6 @@ borderRadius5 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             , elliptical : Supported
             }
     -> Style
@@ -6910,8 +6884,6 @@ borderTopLeftRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6931,8 +6903,6 @@ borderTopLeftRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderTopLeftRadius2 (Value horizontal) (Value vertical) =
@@ -7000,8 +6970,6 @@ borderTopRightRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -7021,8 +6989,6 @@ borderTopRightRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderTopRightRadius2 (Value horizontal) (Value vertical) =
@@ -7090,8 +7056,6 @@ borderBottomRightRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -7111,8 +7075,6 @@ borderBottomRightRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderBottomRightRadius2 (Value horizontal) (Value vertical) =
@@ -7180,8 +7142,6 @@ borderBottomLeftRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -7201,8 +7161,6 @@ borderBottomLeftRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
@@ -7239,8 +7197,6 @@ elliptical :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Value { properties | elliptical : Supported }
 elliptical (Value radius) =
@@ -7277,8 +7233,6 @@ elliptical2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -7298,8 +7252,6 @@ elliptical2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Value { properties | elliptical : Supported }
 elliptical2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
@@ -7336,8 +7288,6 @@ elliptical3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -7357,8 +7307,6 @@ elliptical3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -7378,8 +7326,6 @@ elliptical3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Value { properties | elliptical : Supported }
 elliptical3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
@@ -7416,8 +7362,6 @@ elliptical4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -7437,8 +7381,6 @@ elliptical4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -7458,8 +7400,6 @@ elliptical4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -7479,8 +7419,6 @@ elliptical4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Value { properties | elliptical : Supported }
 elliptical4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
