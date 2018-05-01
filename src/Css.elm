@@ -4186,9 +4186,6 @@ backgroundRepeat2 :
         , space : Supported
         , round : Supported
         , noRepeat : Supported
-        , initial : Supported
-        , unset : Supported
-        , inherit : Supported
         }
     ->
         Value
@@ -4196,9 +4193,6 @@ backgroundRepeat2 :
             , space : Supported
             , round : Supported
             , noRepeat : Supported
-            , initial : Supported
-            , unset : Supported
-            , inherit : Supported
             }
     -> Style
 backgroundRepeat2 (Value horiz) (Value vert) =
@@ -4676,9 +4670,6 @@ border2 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -4692,9 +4683,6 @@ border2 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 border2 (Value width) (Value style) =
@@ -4728,9 +4716,6 @@ border3 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -4744,9 +4729,6 @@ border3 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -4757,9 +4739,6 @@ border3 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 border3 (Value width) (Value style) (Value color) =
@@ -4829,9 +4808,6 @@ borderTop2 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -4845,9 +4821,6 @@ borderTop2 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderTop2 (Value width) (Value style) =
@@ -4881,9 +4854,6 @@ borderTop3 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -4897,9 +4867,6 @@ borderTop3 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -4910,9 +4877,6 @@ borderTop3 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderTop3 (Value width) (Value style) (Value color) =
@@ -4982,9 +4946,6 @@ borderRight2 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -4998,9 +4959,6 @@ borderRight2 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderRight2 (Value width) (Value style) =
@@ -5034,9 +4992,6 @@ borderRight3 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5050,9 +5005,6 @@ borderRight3 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5063,9 +5015,6 @@ borderRight3 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderRight3 (Value width) (Value style) (Value color) =
@@ -5135,9 +5084,6 @@ borderBottom2 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5151,9 +5097,6 @@ borderBottom2 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderBottom2 (Value width) (Value style) =
@@ -5187,9 +5130,6 @@ borderBottom3 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5203,9 +5143,6 @@ borderBottom3 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5216,9 +5153,6 @@ borderBottom3 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderBottom3 (Value width) (Value style) (Value color) =
@@ -5288,9 +5222,6 @@ borderLeft2 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5304,9 +5235,6 @@ borderLeft2 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderLeft2 (Value width) (Value style) =
@@ -5340,9 +5268,6 @@ borderLeft3 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5356,9 +5281,6 @@ borderLeft3 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5369,9 +5291,6 @@ borderLeft3 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderLeft3 (Value width) (Value style) (Value color) =
@@ -5443,9 +5362,6 @@ borderWidth2 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5467,9 +5383,6 @@ borderWidth2 :
             , thin : Supported
             , medium : Supported
             , thick : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
@@ -5504,9 +5417,6 @@ borderWidth3 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5528,9 +5438,6 @@ borderWidth3 :
             , thin : Supported
             , medium : Supported
             , thick : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5553,8 +5460,6 @@ borderWidth3 :
             , medium : Supported
             , thick : Supported
             , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
@@ -5589,9 +5494,6 @@ borderWidth4 :
         , thin : Supported
         , medium : Supported
         , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5613,9 +5515,6 @@ borderWidth4 :
             , thin : Supported
             , medium : Supported
             , thick : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5637,9 +5536,6 @@ borderWidth4 :
             , thin : Supported
             , medium : Supported
             , thick : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5661,9 +5557,6 @@ borderWidth4 :
             , thin : Supported
             , medium : Supported
             , thick : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
@@ -5855,9 +5748,6 @@ borderStyle2 :
         , ridge : Supported
         , inset : Supported
         , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5871,9 +5761,6 @@ borderStyle2 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
@@ -5900,9 +5787,6 @@ borderStyle3 :
         , ridge : Supported
         , inset : Supported
         , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5916,9 +5800,6 @@ borderStyle3 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5932,9 +5813,6 @@ borderStyle3 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
@@ -5961,9 +5839,6 @@ borderStyle4 :
         , ridge : Supported
         , inset : Supported
         , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -5977,9 +5852,6 @@ borderStyle4 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -5993,9 +5865,6 @@ borderStyle4 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6009,9 +5878,6 @@ borderStyle4 :
             , ridge : Supported
             , inset : Supported
             , outset : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value styleLeft) =
@@ -6165,9 +6031,6 @@ borderColor2 :
         , hex : Supported
         , transparent : Supported
         , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6178,9 +6041,6 @@ borderColor2 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
@@ -6204,9 +6064,6 @@ borderColor3 :
         , hex : Supported
         , transparent : Supported
         , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6217,9 +6074,6 @@ borderColor3 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6230,9 +6084,6 @@ borderColor3 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
@@ -6256,9 +6107,6 @@ borderColor4 :
         , hex : Supported
         , transparent : Supported
         , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6269,9 +6117,6 @@ borderColor4 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6282,9 +6127,6 @@ borderColor4 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     ->
         Value
@@ -6295,9 +6137,6 @@ borderColor4 :
             , hex : Supported
             , transparent : Supported
             , currentColor : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
     -> Style
 borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
@@ -6865,9 +6704,6 @@ borderSpacing2 :
         , inches : Supported
         , pc : Supported
         , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
     ->
         Value
@@ -6886,9 +6722,6 @@ borderSpacing2 :
             , inches : Supported
             , pc : Supported
             , pt : Supported
-            , initial : Supported
-            , inherit : Supported
-            , unset : Supported
             }
     -> Style
 borderSpacing2 (Value horizontal) (Value vertical) =
