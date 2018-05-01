@@ -1006,6 +1006,8 @@ type alias Color =
         , hsl : Supported
         , hsla : Supported
         , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
         }
 
 
@@ -1023,6 +1025,11 @@ color :
         , hsl : Supported
         , hsla : Supported
         , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 color (Value val) =
@@ -1036,7 +1043,20 @@ color (Value val) =
     backgroundColor (rgba 96 181 204 0.5)
 
 -}
-backgroundColor : Value { rgb : Supported } -> Style
+backgroundColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
 backgroundColor (Value val) =
     AppendProperty ("background-color:" ++ val)
 
@@ -2540,7 +2560,17 @@ enquoteIfNotGeneric fontName =
     fontStyle  italic
 
 -}
-fontStyle : Value { normal : Supported, bold : Supported, bolder : Supported, lighter : Supported } -> Style
+fontStyle :
+    Value
+        { normal : Supported
+        , bold : Supported
+        , bolder : Supported
+        , lighter : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
 fontStyle (Value val) =
     AppendProperty ("font-style:" ++ val)
 
@@ -3874,6 +3904,9 @@ backgroundImage :
         { url : Supported
         , linearGradient : Supported
         , none : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 backgroundImage (Value value) =
@@ -3955,6 +3988,9 @@ backgroundPosition :
         , left_ : Supported
         , right_ : Supported
         , center : Supported
+        , inherit : Supported
+        , unset : Supported
+        , initial : Supported
         }
     -> Style
 backgroundPosition (Value horiz) =
@@ -4455,6 +4491,9 @@ listStyle :
         , oriya : Supported
         , telugu : Supported
         , thai : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 listStyle (Value val) =
