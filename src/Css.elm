@@ -7202,14 +7202,13 @@ preLine =
 -}
 wordBreak :
     Value
-        { provides
-            | normal : Supported
-            , breakAll : Supported
-            , keepAll : Supported
-            , breakWord : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
+        { normal : Supported
+        , breakAll : Supported
+        , keepAll : Supported
+        , breakWord : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 wordBreak (Value str) =
