@@ -10,7 +10,7 @@
         "Css",
         "Css.Transitions",
         "Css.Media",
-        "Css.Foreign",
+        "Css.Global",
         "Css.Colors",
         "Html.Styled",
         "Html.Styled.Attributes",
