@@ -6514,10 +6514,6 @@ borderRadius (Value radius) =
 
 If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
 
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius2 (px 1) inherit`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
-
 -}
 borderRadius2 :
     Value
@@ -6569,10 +6565,6 @@ borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottom
     borderRadius3 (em 4) (px 2) (elliptical (px 6))
 
 If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
-
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius3 (px 1) zero inherit`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
 
 -}
 borderRadius3 :
@@ -6644,10 +6636,6 @@ borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value r
     borderRadius4 (em 4) (px 2) (pct 5) (elliptical (px 6))
 
 If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
-
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius4 (px 1) zero inherit inherit`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
 
 -}
 borderRadius4 :
@@ -6735,10 +6723,6 @@ borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRi
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property with [`elliptical`](#elliptical) corners.
 
     borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical (px 6))
-
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius5 (px 1) zero inherit inherit (elliptical (px 6))`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
 
 -}
 borderRadius5 :
@@ -6861,10 +6845,6 @@ borderTopLeftRadius (Value radius) =
     borderTopLeftRadius  (em 4)
     borderTopLeftRadius2 (em 4) (px 2)
 
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderTopLeftRadius2 (px 1) inherit`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
-
 -}
 borderTopLeftRadius2 :
     Value
@@ -6946,10 +6926,6 @@ borderTopRightRadius (Value radius) =
 
     borderTopRightRadius  (em 4)
     borderTopRightRadius2 (em 4) (px 2)
-
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderTopRightRadius2 (px 1) inherit`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
 
 -}
 borderTopRightRadius2 :
@@ -7033,10 +7009,6 @@ borderBottomRightRadius (Value radius) =
     borderBottomRightRadius  (em 4)
     borderBottomRightRadius2 (em 4) (px 2)
 
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderBottomRightRadius2 (px 1) inherit`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
-
 -}
 borderBottomRightRadius2 :
     Value
@@ -7119,10 +7091,6 @@ borderBottomLeftRadius (Value radius) =
     borderBottomLeftRadius  (em 4)
     borderBottomLeftRadius2 (em 4) (px 2)
 
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderBottomLeftRadius2 (px 1) inherit`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
-
 -}
 borderBottomLeftRadius2 :
     Value
@@ -7174,10 +7142,6 @@ borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     borderRadius4 (em 4) (px 2) (pct 5) (elliptical (px 6))
     borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical (px 6))
 
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius5 (px 1) zero inherit inherit (elliptical (px 6))`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
-
 -}
 elliptical :
     Value
@@ -7209,10 +7173,6 @@ elliptical (Value radius) =
     borderRadius3 (em 4) (px 2) (elliptical2 (px 6) (px 7))
     borderRadius4 (em 4) (px 2) (pct 5) (elliptical2 (px 6) (px 7))
     borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical2 (px 6) (px 7))
-
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius5 (px 1) zero inherit inherit (elliptical2 (px 6) (px 7))`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
 
 -}
 elliptical2 :
@@ -7264,10 +7224,6 @@ elliptical2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLe
     borderRadius3 (em 4) (px 2) (elliptical3 (px 6) (px 7) (pct 10))
     borderRadius4 (em 4) (px 2) (pct 5) (elliptical3 (px 6) (px 7) (pct 10))
     borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical3 (px 6) (px 7) (pct 10))
-
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius5 (px 1) zero inherit inherit (elliptical3 (px 6) (px 7) (pct 10))`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
 
 -}
 elliptical3 :
@@ -7338,10 +7294,6 @@ elliptical3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value rad
     borderRadius3 (em 4) (px 2) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
     borderRadius4 (em 4) (px 2) (pct 5) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
     borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
-
-**Note:** As with any shorthand property, individual sub-properties cannot inherit,
-such as in `borderRadius5 (px 1) zero inherit inherit (elliptical4 (px 6) (px 7) (pct 10) (em 1))`, which would partially override existing definitions.
-Instead, the individual longhand properties have to be used.
 
 -}
 elliptical4 :
