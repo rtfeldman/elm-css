@@ -70,7 +70,6 @@ module Css
         , borderRadius2
         , borderRadius3
         , borderRadius4
-        , borderRadius5
         , borderRight
         , borderRight2
         , borderRight3
@@ -138,10 +137,6 @@ module Css
         , dotted
         , double
         , eResize
-        , elliptical
-        , elliptical2
-        , elliptical3
-        , elliptical4
         , em
         , emptyCells
         , end
@@ -471,9 +466,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border Radius
 
-@docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRadius5, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
-
-@docs elliptical, elliptical2, elliptical3, elliptical4
+@docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
 
 
 ## Display
@@ -6477,7 +6470,10 @@ outset =
 
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
-    borderRadius  (em 4)
+    borderRadius (em 4)
+    borderRadius2 (em 4) (px 2)
+    borderRadius3 (em 4) (px 2) (pct 5)
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
 borderRadius :
@@ -6509,10 +6505,10 @@ borderRadius (Value radius) =
 
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
+    borderRadius (em 4)
     borderRadius2 (em 4) (px 2)
-    borderRadius2 (em 4) (elliptical (px 6))
-
-If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
+    borderRadius3 (em 4) (px 2) (pct 5)
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
 borderRadius2 :
@@ -6552,7 +6548,6 @@ borderRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , elliptical : Supported
             }
     -> Style
 borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
@@ -6561,10 +6556,10 @@ borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottom
 
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
+    borderRadius (em 4)
+    borderRadius2 (em 4) (px 2)
     borderRadius3 (em 4) (px 2) (pct 5)
-    borderRadius3 (em 4) (px 2) (elliptical (px 6))
-
-If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
 borderRadius3 :
@@ -6623,7 +6618,6 @@ borderRadius3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , elliptical : Supported
             }
     -> Style
 borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
@@ -6632,10 +6626,10 @@ borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value r
 
 {-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
 
+    borderRadius (em 4)
+    borderRadius2 (em 4) (px 2)
+    borderRadius3 (em 4) (px 2) (pct 5)
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
-    borderRadius4 (em 4) (px 2) (pct 5) (elliptical (px 6))
-
-If you wanna describe elliptical border radius see [`elliptical`](#elliptical) value.
 
 -}
 borderRadius4 :
@@ -6713,98 +6707,10 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
-            , elliptical : Supported
             }
     -> Style
 borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
-
-
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property with [`elliptical`](#elliptical) corners.
-
-    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical (px 6))
-
--}
-borderRadius5 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    -> Value { elliptical : Supported }
-    -> Style
-borderRadius5 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) (Value radiusElliptical) =
-    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft ++ " " ++ radiusElliptical)
 
 
 {-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
@@ -7133,248 +7039,6 @@ borderBottomLeftRadius2 :
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
-
-
-{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius2 (em 4) (elliptical (px 6))
-    borderRadius3 (em 4) (px 2) (elliptical (px 6))
-    borderRadius4 (em 4) (px 2) (pct 5) (elliptical (px 6))
-    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical (px 6))
-
--}
-elliptical :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        }
-    -> Value { properties | elliptical : Supported }
-elliptical (Value radius) =
-    Value ("/ " ++ radius)
-
-
-{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius2 (em 4) (elliptical2 (px 6) (px 7))
-    borderRadius3 (em 4) (px 2) (elliptical2 (px 6) (px 7))
-    borderRadius4 (em 4) (px 2) (pct 5) (elliptical2 (px 6) (px 7))
-    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical2 (px 6) (px 7))
-
--}
-elliptical2 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    -> Value { properties | elliptical : Supported }
-elliptical2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
-    Value (" / " ++ radiusTopLeftAndBottomRight ++ " " ++ radiusTopRightAndBottomLeft)
-
-
-{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius2 (em 4) (elliptical3 (px 6) (px 7) (pct 10))
-    borderRadius3 (em 4) (px 2) (elliptical3 (px 6) (px 7) (pct 10))
-    borderRadius4 (em 4) (px 2) (pct 5) (elliptical3 (px 6) (px 7) (pct 10))
-    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical3 (px 6) (px 7) (pct 10))
-
--}
-elliptical3 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    -> Value { properties | elliptical : Supported }
-elliptical3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
-    Value (" / " ++ radiusTopLeft ++ " " ++ radiusTopRightAndBottomLeft ++ " " ++ radiusBottomRight)
-
-
-{-| The elliptical corners for [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius2 (em 4) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
-    borderRadius3 (em 4) (px 2) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
-    borderRadius4 (em 4) (px 2) (pct 5) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
-    borderRadius5 (em 4) (px 2) (pct 5) (px 3) (elliptical4 (px 6) (px 7) (pct 10) (em 1))
-
--}
-elliptical4 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            }
-    -> Value { properties | elliptical : Supported }
-elliptical4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
-    Value (" / " ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
 
 
 
