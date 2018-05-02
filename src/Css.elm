@@ -34,6 +34,8 @@ module Css
         , backgroundPosition4
         , backgroundRepeat
         , backgroundRepeat2
+        , backgroundSize
+        , backgroundSize2
         , baseline
         , batch
         , before
@@ -104,10 +106,12 @@ module Css
         , colorDodge
         , color_
         , commonLigatures
+        , contain
         , contentBox
         , contextMenu
         , contextual
         , copy
+        , cover
         , crosshair
         , cursive
         , cursor
@@ -418,11 +422,13 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
 
 @docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 @docs repeat, noRepeat, repeatX, repeatY, space, round
+
+@docs cover, contain
 
 
 ## Box Shadow
@@ -4264,6 +4270,125 @@ space =
 round : Value { provides | round : Supported }
 round =
     Value "round"
+
+
+
+-- BACKGROUND SIZE --
+
+
+{-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/).
+
+    backgroundSize cover
+
+    backgroundSize (px 400)
+
+If you give a length value, it will be used for the width. The height will be set
+proportional to the size of the [`background-image`](#backgroundImage). If you
+need to set both width and height explicitly, use
+[`backgroundImage2`](#backgroundImage2) instead.
+
+-}
+backgroundSize :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+backgroundSize (Value size) =
+    AppendProperty ("background-size:" ++ size)
+
+
+{-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/) for both width and height (in that order.)
+
+    backgroundSize2 (px 300) (px 100)
+
+    backgroundSize2 auto (px 400)
+
+If you only want to set the width, use [`backgroundImage`](#backgroundImage) instead.
+
+-}
+backgroundSize2 :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , auto : Supported
+            }
+    -> Style
+backgroundSize2 (Value width) (Value height) =
+    AppendProperty ("background-size:" ++ width ++ " " ++ height)
+
+
+{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
+for [`backgroundSize`](#backgroundSize). It always show the whole background
+image, even if it leaves empty spaces on the sides.
+
+    backgroundSize contain
+
+-}
+contain : Value { provides | contain : Supported }
+contain =
+    Value "contain"
+
+
+{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
+for [`backgroundSize`](#backgroundSize). It fills the whole space available with
+the background image by scaling, even if it cuts off some of the image.
+
+    backgroundSize cover
+
+-}
+cover : Value { provides | cover : Supported }
+cover =
+    Value "cover"
 
 
 
