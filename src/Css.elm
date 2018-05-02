@@ -1724,8 +1724,8 @@ pct value =
 
 {-| A unitless number. Useful with properties like
 [`flexGrow`](#flexGrow),
-[`z-index`](https://css-tricks.com/almanac/properties/z/z-index/),
-and [`order`](https://css-tricks.com/almanac/properties/o/order/)
+[`zIndex`](#zIndex),
+and [`order`](#order)
 which accept unitless numbers.
 
     flexGrow (num 2)
