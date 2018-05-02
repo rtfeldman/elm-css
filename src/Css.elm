@@ -4367,8 +4367,9 @@ backgroundSize2 (Value width) (Value height) =
     AppendProperty ("background-size:" ++ width ++ " " ++ height)
 
 
-{-| Used in [`backgroundSize`](#backgroundSize) to always show the whole
-background image, even if it leaves empty spaces on the sides.
+{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
+for [`backgroundSize`](#backgroundSize). It always show the whole background
+image, even if it leaves empty spaces on the sides.
 
     backgroundSize contain
 
@@ -4378,8 +4379,9 @@ contain =
     Value "contain"
 
 
-{-| Used in [`backgroundSize`](#backgroundSize) to always fill the whole
-background, even if it cuts off some of the image.
+{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
+for [`backgroundSize`](#backgroundSize). It fills the whole space available with
+the background image by scaling, even if it cuts off some of the image.
 
     backgroundSize cover
 
