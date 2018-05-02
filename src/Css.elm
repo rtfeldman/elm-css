@@ -226,6 +226,7 @@ module Css
         , oldstyleNums
         , optimizeLegibility
         , optimizeSpeed
+        , order
         , ordinal
         , oriya
         , outset
@@ -655,6 +656,11 @@ Multiple CSS properties use these values.
 # Visibility
 
 @docs visibility
+
+
+# Flexbox
+
+@docs order
 
 -}
 
@@ -1693,9 +1699,14 @@ pct value =
     Value (toString value ++ "%")
 
 
-{-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow) which accept unitless numbers.
+{-| A unitless number. Useful with properties like
+[`flexGrow`](#flexGrow),
+[`z-index`](https://css-tricks.com/almanac/properties/z/z-index/),
+and [`order`](https://css-tricks.com/almanac/properties/o/order/)
+which accept unitless numbers.
 
     flexGrow (num 2)
+    order (num -2)
 
 -}
 num : Float -> Value { provides | num : Supported }
@@ -7163,3 +7174,25 @@ visibility :
     -> Style
 visibility (Value str) =
     AppendProperty ("visibility:" ++ str)
+
+
+
+-- ORDER --
+
+
+{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
+
+    order (num 2)
+    order (num -2)
+
+-}
+order :
+    Value
+        { num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+order (Value val) =
+    AppendProperty ("order:" ++ val)
