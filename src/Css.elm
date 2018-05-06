@@ -149,6 +149,7 @@ module Css
         , ex
         , exclusion
         , fantasy
+        , fill
         , firstBaseline
         , fixed
         , flexEnd
@@ -685,6 +686,11 @@ Multiple CSS properties use these values.
 
 @docs order
 
+
+# SVG
+
+@docs fill
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
@@ -847,8 +853,7 @@ revert =
 -- SHARED VALUES --
 
 
-{-| The `url` value for the [`cursor`](#cursor) and [`backgroundImage`](#backgroundImage)
-properties.
+{-| The `url` value for the [`cursor`](#cursor), [`fill`](#fill), and [`backgroundImage`](#backgroundImage) properties.
 -}
 url : String -> Value { provides | url : Supported }
 url str =
@@ -7915,3 +7920,31 @@ order :
     -> Style
 order (Value val) =
     AppendProperty ("order:" ++ val)
+
+
+{-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
+**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a `defs` element.
+
+    fill (hex "#60b5cc")
+    fill (rgb 96 181 204)
+    fill (rgba 96 181 204 0.5)
+    fill (url "#pattern")
+
+-}
+fill :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , currentColor : Supported
+        , transparent : Supported
+        , url : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fill (Value val) =
+    AppendProperty ("fill:" ++ val)
