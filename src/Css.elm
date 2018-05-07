@@ -4295,9 +4295,11 @@ space =
     Value "space"
 
 
-{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by stretching or shrinking the image.
+{-| The `round` value used for properties such as [repeating background](#backgroundRepeat) without cutting off edges by stretching or shrinking the image,
+and [`stroke-linecap`](#strokeLinecap).
 
     backgroundRepeat round
+    strokeLineCap round
 
 -}
 round : Value { provides | round : Supported }
@@ -7948,3 +7950,170 @@ fill :
     -> Style
 fill (Value val) =
     AppendProperty ("fill:" ++ val)
+
+
+
+-- STROKE --
+
+
+{-| Sets [`stroke`](https://css-tricks.com/almanac/properties/s/stroke/)
+**Note:** `stroke` also accepts the patterns of SVG shapes that are defined inside of a `defs` element.
+
+    stroke (rgb 0 100 44)
+    stroke (hex "#FF9E2C")
+    stroke (url "#pattern")
+
+-}
+stroke :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , currentColor : Supported
+        , transparent : Supported
+        , url : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+stroke (Value val) =
+    AppendProperty ("stroke:" ++ val)
+
+
+{-| Sets [`stroke-dasharray`](https://css-tricks.com/almanac/properties/s/stroke-dasharray/)
+
+    strokeDasharray (num 2)
+    strokeDasharray (num 2.5)
+    strokeDasharray (em 2)
+    strokeDasharray (pct 15)
+
+-}
+strokeDasharray :
+    Value
+        { zero : Supported
+        , num : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDasharray (Value val) =
+    AppendProperty ("stroke-dasharray:" ++ val)
+
+
+{-| Sets [`stroke-dashoffset`](https://css-tricks.com/almanac/properties/s/stroke-dashoffset/)
+
+    strokeDashoffset zero
+    strokeDashoffset (num 100)
+    strokeDashoffset (pct 25)
+
+-}
+strokeDashoffset :
+    Value
+        { zero : Supported
+        , num : Supported
+        , pct : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDashoffset (Value val) =
+    AppendProperty ("stroke-dashoffset:" ++ val)
+
+
+{-| Sets [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/)
+
+    strokeLinecap butt
+    strokeLinecap square
+    strokeLinecap round
+
+-}
+strokeLinecap :
+    Value
+        { butt : Supported
+        , square : Supported
+        , round : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeLinecap (Value val) =
+    AppendProperty ("stroke-linecap:" ++ val)
+
+
+{-| A `butt` value for the [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/) property.
+
+      strokeLinecap butt
+
+-}
+butt : Value { provides | butt : Supported }
+butt =
+    Value "butt"
+
+
+{-| A `square` value for the [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/) property.
+
+      strokeLinecap square
+
+-}
+square : Value { provides | square : Supported }
+square =
+    Value "square"
+
+
+{-| Sets [`stroke-width`](https://css-tricks.com/almanac/properties/s/stroke-width/)
+
+    strokeWidth zero
+    strokeWidth (px 2)
+    strokeWidth (em 2)
+    strokeWidth (num 2)
+    strokeWidth (num 2.5)
+    strokeWidth (pct 15)
+
+-}
+strokeWidth :
+    Value
+        { zero : Supported
+        , num : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeWidth (Value val) =
+    AppendProperty ("stroke-width:" ++ val)
