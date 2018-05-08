@@ -7925,7 +7925,7 @@ order (Value val) =
 
 
 {-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
-**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a `defs` element.
+**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
 
     fill (hex "#60b5cc")
     fill (rgb 96 181 204)
@@ -7957,7 +7957,7 @@ fill (Value val) =
 
 
 {-| Sets [`stroke`](https://css-tricks.com/almanac/properties/s/stroke/)
-**Note:** `stroke` also accepts the patterns of SVG shapes that are defined inside of a `defs` element.
+**Note:** `stroke` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
 
     stroke (rgb 0 100 44)
     stroke (hex "#FF9E2C")
