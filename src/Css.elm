@@ -252,7 +252,15 @@ module Css
         , overflowX
         , overflowY
         , overlay
+        , padding
+        , padding2
+        , padding3
+        , padding4
+        , paddingBottom
         , paddingBox
+        , paddingLeft
+        , paddingRight
+        , paddingTop
         , pc
         , pct
         , petiteCaps
@@ -499,6 +507,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs position, top, right, bottom, left, zIndex
 
 @docs absolute, fixed, relative, static, sticky
+
+
+## Paddings
+
+@docs padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
 
 
 ## Flexbox
@@ -1460,6 +1473,383 @@ zIndex :
     -> Style
 zIndex (Value val) =
     AppendProperty ("z-index:" ++ val)
+
+
+
+-- PADDINGS --
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+padding (Value value) =
+    AppendProperty ("padding:" ++ value)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+padding2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`padding-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top) property.
+
+    paddingTop (px 4)
+
+-}
+paddingTop :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingTop (Value value) =
+    AppendProperty ("padding-top:" ++ value)
+
+
+{-| Sets [`padding-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right) property.
+
+    paddingRight (px 4)
+
+-}
+paddingRight :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingRight (Value value) =
+    AppendProperty ("padding-right:" ++ value)
+
+
+{-| Sets [`padding-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom) property.
+
+    paddingBottom (px 4)
+
+-}
+paddingBottom :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingBottom (Value value) =
+    AppendProperty ("padding-bottom:" ++ value)
+
+
+{-| Sets [`padding-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left) property.
+
+    paddingLeft (px 4)
+
+-}
+paddingLeft :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingLeft (Value value) =
+    AppendProperty ("padding-left:" ++ value)
 
 
 
