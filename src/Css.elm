@@ -8249,3 +8249,20 @@ strokeMiterlimit :
     -> Style
 strokeMiterlimit (Value val) =
     AppendProperty ("stroke-miterlimit:" ++ val)
+
+
+{-| Sets [`stroke-opacity`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-opacity)
+
+    strokeOpacity (num 0.5)
+
+-}
+strokeOpacity :
+    Value
+        { num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeOpacity (Value val) =
+    AppendProperty ("stroke-opacity:" ++ val)
