@@ -293,9 +293,10 @@ applyNestedStylesToLast nestedStyles rest f declarations =
         newDeclarations =
             case ( List.head nextResult, last declarations ) of
                 ( Just nextResultParent, Just originalParent ) ->
-                    List.take (List.length declarations - 1) declarations
+                    dropLast declarations
                         ++ [ if originalParent /= nextResultParent then
                                 nextResultParent
+
                              else
                                 originalParent
                            ]
@@ -304,6 +305,24 @@ applyNestedStylesToLast nestedStyles rest f declarations =
                     declarations
     in
     newDeclarations ++ withoutParent initialResult ++ withoutParent nextResult
+
+
+dropLast : List a -> List a
+dropLast list =
+    dropLastHelp [] list
+
+
+dropLastHelp : List a -> List a -> List a
+dropLastHelp acc list =
+    case list of
+        [] ->
+            List.reverse acc
+
+        [ singleton ] ->
+            List.reverse acc
+
+        first :: rest ->
+            dropLastHelp (first :: acc) rest
 
 
 lastDeclaration : List Structure.Declaration -> Maybe (List Structure.Declaration)
