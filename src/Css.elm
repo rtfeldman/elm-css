@@ -8189,3 +8189,27 @@ slice =
 clone : Value { provides | clone : Supported }
 clone =
     Value "clone"
+
+
+{-| Sets [`stroke-color`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-color)
+
+    strokeColor (rgb 0 100 44)
+    strokeColor (hex "#FF9E2C")
+
+-}
+strokeColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , currentColor : Supported
+        , transparent : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeColor (Value val) =
+    AppendProperty ("stroke-color:" ++ val)
