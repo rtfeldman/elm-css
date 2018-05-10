@@ -6491,7 +6491,7 @@ groove =
     Value "groove"
 
 
-{-| The `ridge` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `ridge` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     borderStyle ridge
 
@@ -6503,11 +6503,11 @@ ridge =
     Value "ridge"
 
 
-{-| The `inset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `inset` value used for properties such as [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0),
+and [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align).
 
     borderStyle inset
-
-Adds a split tone to the line that makes the element appear slightly depressed.
+    strokeAlign inset
 
 -}
 inset : Value { provides | inset : Supported }
@@ -6515,11 +6515,11 @@ inset =
     Value "inset"
 
 
-{-| The `outset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `outset` value used for properties such as [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0),
+and [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align).
 
     borderStyle outset
-
-Similar to `inset`, but reverses the colors in a way that makes the element appear slightly raised.
+    strokeAlign outset
 
 -}
 outset : Value { provides | outset : Supported }
@@ -8117,3 +8117,24 @@ strokeWidth :
     -> Style
 strokeWidth (Value val) =
     AppendProperty ("stroke-width:" ++ val)
+
+
+{-| Sets [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align)
+
+      strokeAlign center
+      strokeAlign inset
+      strokeAlign outset
+
+-}
+strokeAlign :
+    Value
+        { center : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeAlign (Value val) =
+    AppendProperty ("stroke-align:" ++ val)
