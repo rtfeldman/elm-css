@@ -8138,3 +8138,54 @@ strokeAlign :
     -> Style
 strokeAlign (Value val) =
     AppendProperty ("stroke-align:" ++ val)
+
+
+{-| Sets [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break)
+
+      strokeBreak boundingBox
+      strokeBreak slice
+      strokeBreak clone
+
+-}
+strokeBreak :
+    Value
+        { boundingBox : Supported
+        , slice : Supported
+        , clone : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeBreak (Value val) =
+    AppendProperty ("stroke-break:" ++ val)
+
+
+{-| A `boundingBox` value for the [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break) property.
+
+      strokeBreak boundingBox
+
+-}
+boundingBox : Value { provides | boundingBox : Supported }
+boundingBox =
+    Value "bounding-box"
+
+
+{-| A `slice` value for the [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break) property.
+
+      strokeBreak slice
+
+-}
+slice : Value { provides | slice : Supported }
+slice =
+    Value "slice"
+
+
+{-| A `clone` value for the [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break) property.
+
+      strokeBreak clone
+
+-}
+clone : Value { provides | clone : Supported }
+clone =
+    Value "clone"
