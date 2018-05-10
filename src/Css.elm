@@ -8213,3 +8213,22 @@ strokeColor :
     -> Style
 strokeColor (Value val) =
     AppendProperty ("stroke-color:" ++ val)
+
+
+{-| Sets [`stroke-image`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-image)
+
+    strokeImage (url "#svg-pattern")
+    strokeImage (url "http://www.example.com/chicken.jpg")
+
+-}
+strokeImage :
+    Value
+        { url : Supported
+        , none : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeImage (Value value) =
+    AppendProperty ("stroke-image:" ++ value)
