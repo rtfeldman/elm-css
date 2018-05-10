@@ -8232,3 +8232,20 @@ strokeImage :
     -> Style
 strokeImage (Value value) =
     AppendProperty ("stroke-image:" ++ value)
+
+
+{-| Sets [`stroke-miterlimit`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-miterlimit)
+
+    strokeMiterlimit (num 4)
+
+-}
+strokeMiterlimit :
+    Value
+        { num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeMiterlimit (Value val) =
+    AppendProperty ("stroke-miterlimit:" ++ val)
