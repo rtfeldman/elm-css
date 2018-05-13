@@ -4313,11 +4313,13 @@ space =
 
 {-| The `round` value used for properties such as [repeating background](#backgroundRepeat) without cutting off edges by stretching or shrinking the image,
 and [`stroke-linecap`](#strokeLinecap),
-and [`stroke-repeat`](#strokeRepeat).
+and [`stroke-repeat`](#strokeRepeat),
+and [`stroke-linejoin`](#strokeLinejoin2).
 
     backgroundRepeat round
     strokeLineCap round
     strokeRepeat round
+    strokeLinejoin2 miter round
 
 -}
 round : Value { provides | round : Supported }
@@ -8708,3 +8710,101 @@ strokeDashCorner :
     -> Style
 strokeDashCorner (Value size) =
     AppendProperty ("stroke-dash-corner:" ++ size)
+
+
+{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
+
+    strokeLinejoin crop
+    strokeLinejoin arcs
+    strokeLinejoin miter
+
+**Note:** if you only want to specifiy the rendering of the cap of a corner you need to use [`strokeLinejoin2`](#strokeLinejoin2)
+and set it's first value to `miter` like so: `strokeLinejoin2 miter bevel`.
+
+-}
+strokeLinejoin :
+    Value
+        { crop : Supported
+        , arcs : Supported
+        , miter : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeLinejoin (Value val) =
+    AppendProperty ("stroke-linejoin:" ++ val)
+
+
+{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
+
+    strokeLinejoin crop bevel
+    strokeLinejoin arcs round
+    strokeLinejoin miter stupid
+
+-}
+strokeLinejoin2 :
+    Value
+        { crop : Supported
+        , arcs : Supported
+        , miter : Supported
+        }
+    ->
+        Value
+            { bevel : Supported
+            , round : Supported
+            , stupid : Supported
+            }
+    -> Style
+strokeLinejoin2 (Value extendCorner) (Value capRender) =
+    AppendProperty ("stroke-linejoin:" ++ extendCorner ++ " " ++ capRender)
+
+
+{-| Sets `crop` value for usage with [`stroke-linejoin`](#strokeLinejoin).
+
+    strokeLinejoin crop
+
+-}
+crop : Value { provides | crop : Supported }
+crop =
+    Value "crop"
+
+
+{-| Sets `arcs` value for usage with [`stroke-linejoin`](#strokeLinejoin).
+
+    strokeLinejoin arcs
+
+-}
+arcs : Value { provides | arcs : Supported }
+arcs =
+    Value "arcs"
+
+
+{-| Sets `miter` value for usage with [`stroke-linejoin`](#strokeLinejoin).
+
+    strokeLinejoin miter
+
+-}
+miter : Value { provides | miter : Supported }
+miter =
+    Value "miter"
+
+
+{-| Sets `bevel` value for usage with [`stroke-linejoin`](#strokeLinejoins2).
+
+    strokeLinejoin miter bevel
+
+-}
+bevel : Value { provides | bevel : Supported }
+bevel =
+    Value "bevel"
+
+
+{-| Sets `stupid` value for usage with [`stroke-linejoin`](#strokeLinejoins2).
+
+    strokeLinejoin miter stupid
+
+-}
+stupid : Value { provides | stupid : Supported }
+stupid =
+    Value "stupid"
