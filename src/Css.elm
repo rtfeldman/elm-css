@@ -8672,3 +8672,39 @@ strokeSize2 :
     -> Style
 strokeSize2 (Value width) (Value height) =
     AppendProperty ("stroke-size:" ++ width ++ " " ++ height)
+
+
+{-| Sets [`stroke-dash-corner`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-corner).
+
+    strokeDashCorner none
+    strokeDashCorner (px 10)
+    strokeDashCorner (em 5)
+
+-}
+strokeDashCorner :
+    Value
+        { none : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , cover : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDashCorner (Value size) =
+    AppendProperty ("stroke-dash-corner:" ++ size)
