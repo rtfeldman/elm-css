@@ -1878,6 +1878,8 @@ paddingLeft (Value value) =
     margin3 (em 4) (px 2) (pct 5)
     margin4 (em 4) (px 2) (pct 5) (px 3)
 
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
 -}
 margin :
     Value
@@ -1912,6 +1914,8 @@ margin (Value value) =
     margin2 (em 4) (px 2)
     margin3 (em 4) (px 2) (pct 5)
     margin4 (em 4) (px 2) (pct 5) (px 3)
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
 
 -}
 margin2 :
@@ -1963,6 +1967,8 @@ margin2 (Value valueTopBottom) (Value valueRightLeft) =
     margin2 (em 4) (px 2)
     margin3 (em 4) (px 2) (pct 5)
     margin4 (em 4) (px 2) (pct 5) (px 3)
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
 
 -}
 margin3 :
@@ -2033,6 +2039,8 @@ margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     margin2 (em 4) (px 2)
     margin3 (em 4) (px 2) (pct 5)
     margin4 (em 4) (px 2) (pct 5) (px 3)
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
 
 -}
 margin4 :
@@ -2120,6 +2128,8 @@ margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft
 
     marginTop (px 4)
 
+This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
+
 -}
 marginTop :
     Value
@@ -2183,6 +2193,8 @@ marginRight (Value value) =
 {-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom) property.
 
     marginBottom (px 4)
+
+This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
 
 -}
 marginBottom :
