@@ -1899,6 +1899,7 @@ margin :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , auto : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1936,6 +1937,7 @@ margin2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , auto : Supported
         }
     ->
         Value
@@ -1955,6 +1957,7 @@ margin2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , auto : Supported
             }
     -> Style
 margin2 (Value valueTopBottom) (Value valueRightLeft) =
@@ -1989,6 +1992,7 @@ margin3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , auto : Supported
         }
     ->
         Value
@@ -2008,6 +2012,7 @@ margin3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , auto : Supported
             }
     ->
         Value
@@ -2027,6 +2032,7 @@ margin3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , auto : Supported
             }
     -> Style
 margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
@@ -2061,6 +2067,7 @@ margin4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , auto : Supported
         }
     ->
         Value
@@ -2080,6 +2087,7 @@ margin4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , auto : Supported
             }
     ->
         Value
@@ -2099,6 +2107,7 @@ margin4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , auto : Supported
             }
     ->
         Value
@@ -2118,6 +2127,7 @@ margin4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , auto : Supported
             }
     -> Style
 margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
@@ -2152,6 +2162,7 @@ marginTop :
         , inherit : Supported
         , initial : Supported
         , unset : Supported
+        , auto : Supported
         }
     -> Style
 marginTop (Value value) =
@@ -2184,6 +2195,7 @@ marginRight :
         , inherit : Supported
         , initial : Supported
         , unset : Supported
+        , auto : Supported
         }
     -> Style
 marginRight (Value value) =
@@ -2218,6 +2230,7 @@ marginBottom :
         , inherit : Supported
         , initial : Supported
         , unset : Supported
+        , auto : Supported
         }
     -> Style
 marginBottom (Value value) =
@@ -2250,6 +2263,7 @@ marginLeft :
         , inherit : Supported
         , initial : Supported
         , unset : Supported
+        , auto : Supported
         }
     -> Style
 marginLeft (Value value) =
