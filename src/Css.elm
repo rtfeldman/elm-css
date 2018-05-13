@@ -4249,9 +4249,11 @@ backgroundRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
 
 
-{-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+{-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
+and [`stroke-repeat`](#strokeRepeat).
 
     backgroundRepeat repeat
+    strokeRepeat repeat
 
 -}
 repeat : Value { provides | repeat : Supported }
@@ -4259,9 +4261,11 @@ repeat =
     Value "repeat"
 
 
-{-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+{-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
+and [`stroke-repeat`](#strokeRepeat).
 
     backgroundRepeat noRepeat
+    strokeRpeat noRepeat
 
 -}
 noRepeat : Value { provides | repeat : Supported }
@@ -4269,9 +4273,11 @@ noRepeat =
     Value "no-repeat"
 
 
-{-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) horizontally.
+{-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
+and [`stroke-repeat`](#strokeRepeat) horizontally.
 
     backgroundRepeat repeatX
+    strokeRepeat repeatX
 
 -}
 repeatX : Value { provides | repeatX : Supported }
@@ -4279,9 +4285,11 @@ repeatX =
     Value "repeat-x"
 
 
-{-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) vertically.
+{-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
+and [`stroke-repeat`](#strokeRepeat) vertically.
 
     backgroundRepeat repeatY
+    strokeRepeat repeatY
 
 -}
 repeatY : Value { provides | repeatY : Supported }
@@ -4289,9 +4297,11 @@ repeatY =
     Value "repeat-y"
 
 
-{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by adding space.
+{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
+and [`stroke-repeat`](#strokeRepeat) without cutting off edges by adding space.
 
     backgroundRepeat space
+    strokeRepeat space
 
 )
 
@@ -4302,10 +4312,12 @@ space =
 
 
 {-| The `round` value used for properties such as [repeating background](#backgroundRepeat) without cutting off edges by stretching or shrinking the image,
-and [`stroke-linecap`](#strokeLinecap).
+and [`stroke-linecap`](#strokeLinecap),
+and [`stroke-repeat`](#strokeRepeat).
 
     backgroundRepeat round
     strokeLineCap round
+    strokeRepeat round
 
 -}
 round : Value { provides | round : Supported }
@@ -8510,3 +8522,59 @@ strokePosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount
             ++ " "
             ++ vertAmount
         )
+
+
+{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat)
+
+    strokeRepeat repeat
+
+    strokeRepeat repeatX
+
+If you need to set horizontal and vertical direction separately, see
+[`strokeRepeat2`](#strokeRepeat2)
+
+-}
+strokeRepeat :
+    Value
+        { repeat : Supported
+        , repeatX : Supported
+        , repeatY : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        , initial : Supported
+        , unset : Supported
+        , inherit : Supported
+        }
+    -> Style
+strokeRepeat (Value repeat) =
+    AppendProperty ("stroke-repeat:" ++ repeat)
+
+
+{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat) along the horizontal axis, then the vertical axis.
+
+    strokeRepeat2 repeat space
+
+    strokeRepeat2 space round
+
+If you only need to set one value for both, see
+[`strokeRepeat`](#strokeRepeat) instead.
+
+-}
+strokeRepeat2 :
+    Value
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
+    ->
+        Value
+            { repeat : Supported
+            , space : Supported
+            , round : Supported
+            , noRepeat : Supported
+            }
+    -> Style
+strokeRepeat2 (Value horiz) (Value vert) =
+    AppendProperty ("stroke-repeat:" ++ horiz ++ " " ++ vert)
