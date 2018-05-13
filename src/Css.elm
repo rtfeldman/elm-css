@@ -4359,6 +4359,7 @@ backgroundSize :
         , vmin : Supported
         , vmax : Supported
         , auto : Supported
+        , cover : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -4432,7 +4433,7 @@ contain =
     Value "contain"
 
 
-{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
+{-| Sets [`cover`](https://css-tricks.com/almanac/properties/b/background-size/)
 for [`backgroundSize`](#backgroundSize). It fills the whole space available with
 the background image by scaling, even if it cuts off some of the image.
 
