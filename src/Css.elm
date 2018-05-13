@@ -3830,11 +3830,13 @@ backgroundClips firstValue values =
     AppendProperty ("background-clip:" ++ str)
 
 
-{-| The `border-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
-and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+{-| The `border-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values),
+[`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values),
+and [`stroke-origin`](#strokeOrigin).
 
     backgroundClip borderBox
     backgroundOrigin borderBox
+    strokeOrigin borderBox
 
 -}
 borderBox : Value { provides | borderBox : Supported }
@@ -3842,11 +3844,13 @@ borderBox =
     Value "border-box"
 
 
-{-| The `padding-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
-and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+{-| The `padding-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values),
+[`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values),
+and [`stroke-origin`](#strokeOrigin).
 
     backgroundClip paddingBox
     backgroundOrigin paddingBox
+    strokeOrigin paddingBox
 
 -}
 paddingBox : Value { provides | paddingBox : Supported }
@@ -3854,11 +3858,13 @@ paddingBox =
     Value "padding-box"
 
 
-{-| The `content-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
-and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+{-| The `content-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values),
+[`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values),
+and [`stroke-origin`](#strokeOrigin).
 
     backgroundClip contentBox
     backgroundOrigin contentBox
+    strokeOrigin contentBox
 
 -}
 contentBox : Value { provides | contentBox : Supported }
@@ -7707,9 +7713,11 @@ justify =
     Value "justify"
 
 
-{-| A `match-parent` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
+{-| A `match-parent` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/),
+and [`strokeOrigin`](#strokeOrigin) properties.
 
     textAlign matchParent
+    strokeOrigin matchParent
 
 -}
 matchParent : Value { provides | matchParent : Supported }
@@ -8266,3 +8274,50 @@ strokeOpacity :
     -> Style
 strokeOpacity (Value val) =
     AppendProperty ("stroke-opacity:" ++ val)
+
+
+{-| Sets [`stroke-origin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-origin)
+
+    strokeOrign matchParent
+    strokeOrign fillBox
+    strokeOrign strokeBox
+    strokeOrign contentBox
+    strokeOrign paddingBox
+    strokeOrign borderBox
+
+-}
+strokeOrigin :
+    Value
+        { matchParent : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , contentBox : Supported
+        , paddingBox : Supported
+        , borderBox : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeOrigin (Value val) =
+    AppendProperty ("stroke-origin:" ++ val)
+
+
+{-| A `fillBox` value for the [`stroke-origin`](#strokeOrigin) property.
+
+      strokeOrigin fillBox
+
+-}
+fillBox : Value { provides | fillBox : Supported }
+fillBox =
+    Value "fill-box"
+
+
+{-| A `strokeBox` value for the [`stroke-origin`](#strokeOrigin) property.
+
+      strokeOrigin strokeBox
+
+-}
+strokeBox : Value { provides | strokeBox : Supported }
+strokeBox =
+    Value "stroke-box"
