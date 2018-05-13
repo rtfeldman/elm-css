@@ -8069,7 +8069,7 @@ strokeLinecap (Value val) =
     AppendProperty ("stroke-linecap:" ++ val)
 
 
-{-| A `butt` value for the [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/) property.
+{-| A `butt` value for the [`stroke-linecap`](#strokeLinecap) property.
 
       strokeLinecap butt
 
@@ -8079,7 +8079,7 @@ butt =
     Value "butt"
 
 
-{-| A `square` value for the [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/) property.
+{-| A `square` value for the [`stroke-linecap`](#strokeLinecap) property.
 
       strokeLinecap square
 
@@ -8169,7 +8169,7 @@ strokeBreak (Value val) =
     AppendProperty ("stroke-break:" ++ val)
 
 
-{-| A `boundingBox` value for the [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break) property.
+{-| A `boundingBox` value for the [`stroke-break`](#strokeBreak) property.
 
       strokeBreak boundingBox
 
@@ -8179,7 +8179,7 @@ boundingBox =
     Value "bounding-box"
 
 
-{-| A `slice` value for the [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break) property.
+{-| A `slice` value for the [`stroke-break`](#strokeBreak) property.
 
       strokeBreak slice
 
@@ -8189,7 +8189,7 @@ slice =
     Value "slice"
 
 
-{-| A `clone` value for the [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break) property.
+{-| A `clone` value for the [`stroke-break`](#strokeBreak) property.
 
       strokeBreak clone
 
