@@ -213,6 +213,14 @@ module Css
         , ltr
         , luminosity
         , malayalam
+        , margin
+        , margin2
+        , margin3
+        , margin4
+        , marginBottom
+        , marginLeft
+        , marginRight
+        , marginTop
         , matchParent
         , medium
         , middle
@@ -512,6 +520,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Paddings
 
 @docs padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
+
+
+## Margins
+
+@docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
 
 
 ## Flexbox
@@ -1850,6 +1863,383 @@ paddingLeft :
     -> Style
 paddingLeft (Value value) =
     AppendProperty ("padding-left:" ++ value)
+
+
+
+-- MARGINS --
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+margin :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+margin (Value value) =
+    AppendProperty ("margin:" ++ value)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+margin2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+margin2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+margin3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+margin4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top) property.
+
+    marginTop (px 4)
+
+-}
+marginTop :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+marginTop (Value value) =
+    AppendProperty ("margin-top:" ++ value)
+
+
+{-| Sets [`margin-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right) property.
+
+    marginRight (px 4)
+
+-}
+marginRight :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+marginRight (Value value) =
+    AppendProperty ("margin-right:" ++ value)
+
+
+{-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom) property.
+
+    marginBottom (px 4)
+
+-}
+marginBottom :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+marginBottom (Value value) =
+    AppendProperty ("margin-bottom:" ++ value)
+
+
+{-| Sets [`margin-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left) property.
+
+    marginLeft (px 4)
+
+-}
+marginLeft :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+marginLeft (Value value) =
+    AppendProperty ("margin-left:" ++ value)
 
 
 
