@@ -4434,10 +4434,11 @@ contain =
 
 
 {-| Sets [`cover`](https://css-tricks.com/almanac/properties/b/background-size/)
-for [`backgroundSize`](#backgroundSize). It fills the whole space available with
+for [`backgroundSize`](#backgroundSize), and [`stroke-size`](#strokeSize). It fills the whole space available with
 the background image by scaling, even if it cuts off some of the image.
 
     backgroundSize cover
+    strokeSize cover
 
 -}
 cover : Value { provides | cover : Supported }
@@ -8579,3 +8580,95 @@ strokeRepeat2 :
     -> Style
 strokeRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("stroke-repeat:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+
+    strokeSize cover
+
+    strokeSize (px 400)
+
+If you give a length value, it will be used for the width. The height will be set
+proportional to the size of the [`stroke-image`](#strokeImage). If you
+need to set both width and height explicitly, use
+[`strokeImage2`](#strokeImage2) instead.
+
+-}
+strokeSize :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , cover : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeSize (Value size) =
+    AppendProperty ("stroke-size:" ++ size)
+
+
+{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+
+    strokeSize2 (px 300) (px 100)
+
+    strokeSize2 auto (px 400)
+
+If you only want to set the width, use [`strokeImage`](#strokeImage) instead.
+
+-}
+strokeSize2 :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , auto : Supported
+            }
+    -> Style
+strokeSize2 (Value width) (Value height) =
+    AppendProperty ("stroke-size:" ++ width ++ " " ++ height)
