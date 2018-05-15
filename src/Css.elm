@@ -117,6 +117,7 @@ module Css
         , colorBurn
         , colorDodge
         , color_
+        , columnWidth
         , columns
         , columns2
         , commonLigatures
@@ -722,7 +723,7 @@ Multiple CSS properties use these values.
 
 # Columns
 
-@docs columns, columns2
+@docs columns, columns2, columnWidth
 
 -}
 
@@ -8833,3 +8834,36 @@ columns2 :
     -> Style
 columns2 (Value width) (Value count) =
     AppendProperty ("columns:" ++ width ++ " " ++ count)
+
+
+{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
+
+    columnWidth auto
+    columnWidth (px 200)
+
+-}
+columnWidth :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnWidth (Value width) =
+    AppendProperty ("column-width:" ++ width)
