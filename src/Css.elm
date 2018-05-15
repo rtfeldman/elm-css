@@ -123,6 +123,7 @@ module Css
         , columnCount
         , columnFill
         , columnGap
+        , columnRuleStyle
         , columnRuleWidth
         , columnSpan
         , columnWidth
@@ -731,7 +732,7 @@ Multiple CSS properties use these values.
 
 # Columns
 
-@docs columns, columns2, columnWidth, columnCount, columnGap
+@docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
 
@@ -7263,9 +7264,11 @@ thick =
 -- BORDER STYLE --
 
 
-{-| The `dotted` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `dotted` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
 
     borderStyle dotted
+    columnRuleStyle dotted
 
 A line that consists of dots.
 
@@ -7275,8 +7278,11 @@ dotted =
     Value "dotted"
 
 
-{-| The `dashed` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-borderStyle dashed
+{-| The `dashed` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
+
+    borderStyle dashed
+    columnRuleStyle dashed
 
 A line that consists of dashes.
 
@@ -7286,9 +7292,11 @@ dashed =
     Value "dashed"
 
 
-{-| The `solid` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `solid` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
 
     borderStyle solid
+    columnRuleStyle solid
 
 A solid, continuous line.
 
@@ -7298,9 +7306,11 @@ solid =
     Value "solid"
 
 
-{-| The `double` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `double` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
 
     borderStyle double
+    columnRuleStyle double
 
 Two lines are drawn around the element.
 
@@ -7310,9 +7320,11 @@ double =
     Value "double"
 
 
-{-| The `groove` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `groove` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
 
     borderStyle groove
+    columnRuleStyle groove
 
 Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
 
@@ -7322,9 +7334,11 @@ groove =
     Value "groove"
 
 
-{-| The `ridge` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `ridge` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
 
     borderStyle ridge
+    columnRuleStyle ridge
 
 Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
 
@@ -7334,9 +7348,11 @@ ridge =
     Value "ridge"
 
 
-{-| The `inset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `inset` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
 
     borderStyle inset
+    columnRuleStyle inset
 
 Adds a split tone to the line that makes the element appear slightly depressed.
 
@@ -7346,9 +7362,11 @@ inset =
     Value "inset"
 
 
-{-| The `outset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `outset` value used by properties such as [`border-style`](#borderStyle),
+and [`column-rule-style`](#columnRuleStyle) value.
 
     borderStyle outset
+    columnRuleStyle outset
 
 Similar to `inset`, but reverses the colors in a way that makes the element appear slightly raised.
 
@@ -9043,3 +9061,31 @@ columnRuleWidth :
     -> Style
 columnRuleWidth (Value width) =
     AppendProperty ("column-rule-width:" ++ width)
+
+
+{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
+
+    columnRuleStyle solid
+    columnRuleStyle dotted
+    columnRuleStyle dashed
+
+-}
+columnRuleStyle :
+    Value
+        { solid : Supported
+        , none : Supported
+        , hidden : Supported
+        , dashed : Supported
+        , dotted : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleStyle (Value style) =
+    AppendProperty ("column-rule-style:" ++ style)
