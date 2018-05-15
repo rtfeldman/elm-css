@@ -117,6 +117,8 @@ module Css
         , colorBurn
         , colorDodge
         , color_
+        , columns
+        , columns2
         , commonLigatures
         , contain
         , contentBox
@@ -717,11 +719,15 @@ Multiple CSS properties use these values.
 
 @docs fill
 
+
+# Columns
+
+@docs columns, columns2
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
-
 
 
 -- TYPES --
@@ -1218,7 +1224,6 @@ hex str =
     Value <|
         if String.startsWith "#" str then
             String.dropLeft 1 str
-
         else
             str
 
@@ -2753,7 +2758,6 @@ boxShadowConfigToString config =
         insetStr =
             if config.inset then
                 "inset "
-
             else
                 ""
     in
@@ -8757,3 +8761,75 @@ fill :
     -> Style
 fill (Value val) =
     AppendProperty ("fill:" ++ val)
+
+
+
+-- COLUMNS --
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+    columns2 (px 300) (num 2)
+
+-}
+columns :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columns (Value width) =
+    AppendProperty ("columns:" ++ width)
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+    columns2 (px 300) (num 2)
+
+-}
+columns2 :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , num : Supported
+            }
+    -> Style
+columns2 (Value width) (Value count) =
+    AppendProperty ("columns:" ++ width ++ " " ++ count)
