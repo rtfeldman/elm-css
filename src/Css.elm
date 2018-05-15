@@ -123,6 +123,9 @@ module Css
         , columnCount
         , columnFill
         , columnGap
+        , columnRule
+        , columnRule2
+        , columnRule3
         , columnRuleColor
         , columnRuleStyle
         , columnRuleWidth
@@ -733,7 +736,7 @@ Multiple CSS properties use these values.
 
 # Columns
 
-@docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle
+@docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
 
@@ -9114,3 +9117,150 @@ columnRuleColor :
     -> Style
 columnRuleColor (Value color) =
     AppendProperty ("column-rule-color:" ++ color)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`column-rule-width`](#columnRuleWidth),
+[`column-rule-style`](#columnRuleStyle), and [`column-rule-color`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRule (Value width) =
+    AppendProperty ("column-rule:" ++ width)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`column-rule-width`](#columnRuleWidth),
+[`column-rule-style`](#columnRuleStyle), and [`column-rule-color`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule2 :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            }
+    -> Style
+columnRule2 (Value width) (Value style) =
+    AppendProperty ("column-rule:" ++ width ++ " " ++ style)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`column-rule-width`](#columnRuleWidth),
+[`column-rule-style`](#columnRuleStyle), and [`column-rule-color`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule3 :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+columnRule3 (Value width) (Value style) (Value color) =
+    AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
