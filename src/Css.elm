@@ -904,7 +904,10 @@ revert =
 -- SHARED VALUES --
 
 
-{-| The `url` value for the [`cursor`](#cursor), [`fill`](#fill), and [`backgroundImage`](#backgroundImage) properties.
+{-| The `url` value for the [`cursor`](#cursor),
+[`fill`](#fill),
+[`stroke-image`](#strokeImage),
+and [`backgroundImage`](#backgroundImage) properties.
 -}
 url : String -> Value { provides | url : Supported }
 url str =
