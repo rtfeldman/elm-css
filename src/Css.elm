@@ -322,7 +322,6 @@ module Css
         , stop
         , stop2
         , stretch
-        , stroke
         , strokeAlign
         , strokeBox
         , strokeBreak
@@ -735,7 +734,7 @@ Multiple CSS properties use these values.
 
 ## Stroke
 
-@docs stroke, strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
+@docs strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
 @docs strokeLinecap, butt, square
 @docs strokeBreak, boundingBox, slice, clone
 @docs strokeOrigin, fillBox, strokeBox
@@ -8037,33 +8036,6 @@ fill (Value val) =
 -- STROKE --
 
 
-{-| Sets [`stroke`](https://css-tricks.com/almanac/properties/s/stroke/)
-**Note:** `stroke` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
-
-    stroke (rgb 0 100 44)
-    stroke (hex "#FF9E2C")
-    stroke (url "#pattern")
-
--}
-stroke :
-    Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , currentColor : Supported
-        , transparent : Supported
-        , url : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
-    -> Style
-stroke (Value val) =
-    AppendProperty ("stroke:" ++ val)
-
-
 {-| Sets [`stroke-dasharray`](https://css-tricks.com/almanac/properties/s/stroke-dasharray/)
 
     strokeDasharray (num 2)
@@ -8514,8 +8486,8 @@ strokePosition2 (Value horiz) (Value vert) =
 
     strokePosition4 right_ (px 20) bottom_ (pct 30)
 
-The four-argument form of stroke position alternates sides and offets. So the
-example above would position the stroke image 20px from the right, and 30%
+The four-argument form of stroke-position alternates sides and offets. So the
+example above would position the stroke-image 20px from the right, and 30%
 from the bottom.
 
 See also [`strokePosition`](#strokePosition) for horizontal alignment and
