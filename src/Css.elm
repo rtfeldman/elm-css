@@ -15,6 +15,7 @@ module Css
         , allPetiteCaps
         , allScroll
         , allSmallCaps
+        , all_
         , arabicIndic
         , armenian
         , auto
@@ -121,6 +122,7 @@ module Css
         , color_
         , columnCount
         , columnFill
+        , columnSpan
         , columnWidth
         , columns
         , columns2
@@ -729,6 +731,7 @@ Multiple CSS properties use these values.
 
 @docs columns, columns2, columnWidth, columnCount
 @docs columnFill, balance, balanceAll
+@docs columnSpan, all_
 
 -}
 
@@ -8932,3 +8935,32 @@ balance =
 balanceAll : Value { provides | balanceAll : Supported }
 balanceAll =
     Value "balance-all"
+
+
+{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
+
+    columnSpan all_
+    columnSpan none
+
+-}
+columnSpan :
+    Value
+        { none : Supported
+        , all_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnSpan (Value span) =
+    AppendProperty ("column-span:" ++ span)
+
+
+{-| A `all` value used in properties such as [`column-span`](#columnSpan).
+
+    columnSpan all_
+
+-}
+all_ : Value { provides | all_ : Supported }
+all_ =
+    Value "all"
