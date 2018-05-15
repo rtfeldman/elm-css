@@ -123,6 +123,7 @@ module Css
         , columnCount
         , columnFill
         , columnGap
+        , columnRuleWidth
         , columnSpan
         , columnWidth
         , columns
@@ -3189,10 +3190,13 @@ small =
     Value "small"
 
 
-{-| The `medium` [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values) or [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `medium` value used by properties such as [`font-size`](#fontSize),
+[`border-width`](#borderWidth),
+[`columnRuleWidth`](#columnRuleWidth).
 
     fontSize medium
     borderWidth medium
+    columnRuleWidth medium
 
 The value is equivalent of 3px when using for `border-width`.
 
@@ -7227,9 +7231,11 @@ borderLeftColor (Value color) =
 -- BORDER WIDTH --
 
 
-{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `thin` value used by properties such as [`border-width`](#borderWidth),
+and [`column-rule-width`](#columnRuleWidth).
 
     borderWidth thin
+    columnRuleWidth thin
 
 The value is equivalent of 1px.
 
@@ -7239,9 +7245,11 @@ thin =
     Value "thin"
 
 
-{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `thick` value used by properties such as [`border-width`](#borderWidth),
+and [`column-rule-width`](#columnRuleWidth).
 
     borderWidth thick
+    columnRuleWidth thick
 
 The value is equivalent of 5px.
 
@@ -9000,3 +9008,38 @@ columnGap :
     -> Style
 columnGap (Value width) =
     AppendProperty ("column-gap:" ++ width)
+
+
+{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
+
+    columnRuleWidth thin
+    columnRuleWidth (px 2)
+
+-}
+columnRuleWidth :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleWidth (Value width) =
+    AppendProperty ("column-rule-width:" ++ width)
