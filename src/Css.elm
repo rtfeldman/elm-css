@@ -123,6 +123,7 @@ module Css
         , columnCount
         , columnFill
         , columnGap
+        , columnRuleColor
         , columnRuleStyle
         , columnRuleWidth
         , columnSpan
@@ -9089,3 +9090,27 @@ columnRuleStyle :
     -> Style
 columnRuleStyle (Value style) =
     AppendProperty ("column-rule-style:" ++ style)
+
+
+{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
+
+    columnRuleColor (rgb 0 0 0)
+    columnRuleColor (hex "#fff")
+
+-}
+columnRuleColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleColor (Value color) =
+    AppendProperty ("column-rule-color:" ++ color)
