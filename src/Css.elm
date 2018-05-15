@@ -870,10 +870,13 @@ auto =
     Value "auto"
 
 
-{-| The `none` value used for properties such as [`display`](#display).
+{-| The `none` value used for properties such as [`display`](#display),
+[`border-style`](#borderStyle),
+and [`stroke-dash-justify`](#strokeDashJustify).
 
     display none
     borderStyle none
+    strokeDashJustify none
 
 -}
 none : Value { provides | none : Supported }
@@ -8808,3 +8811,58 @@ bevel =
 stupid : Value { provides | stupid : Supported }
 stupid =
     Value "stupid"
+
+
+{-| Sets [`stroke-dash-justify`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-justify).
+
+      strokeDashJustify none
+      strokeDashJustify stretch
+      strokeDashJustify compress
+      strokeDashJustify dashes
+      strokeDashJustify gaps
+
+-}
+strokeDashJustify :
+    Value
+        { none : Supported
+        , stretch : Supported
+        , compress : Supported
+        , dashes : Supported
+        , gaps : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDashJustify (Value val) =
+    AppendProperty ("stroke-dash-justify:" ++ val)
+
+
+{-| Sets `compress` value for usage with [`stroke-dash-justify`](#strokeDashJustify).
+
+      strokeDashJustify compress
+
+-}
+compress : Value { provides | compress : Supported }
+compress =
+    Value "compress"
+
+
+{-| Sets `dashes` value for usage with [`stroke-dash-justify`](#strokeDashJustify).
+
+      strokeDashJustify dashes
+
+-}
+dashes : Value { provides | dashes : Supported }
+dashes =
+    Value "dashes"
+
+
+{-| Sets `gaps` value for usage with [`stroke-dash-justify`](#strokeDashJustify).
+
+      strokeDashJustify gaps
+
+-}
+gaps : Value { provides | gaps : Supported }
+gaps =
+    Value "gaps"
