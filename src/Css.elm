@@ -117,6 +117,7 @@ module Css
         , colorBurn
         , colorDodge
         , color_
+        , columnCount
         , columnWidth
         , columns
         , columns2
@@ -723,7 +724,7 @@ Multiple CSS properties use these values.
 
 # Columns
 
-@docs columns, columns2, columnWidth
+@docs columns, columns2, columnWidth, columnCount
 
 -}
 
@@ -8867,3 +8868,22 @@ columnWidth :
     -> Style
 columnWidth (Value width) =
     AppendProperty ("column-width:" ++ width)
+
+
+{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
+
+    columnCount auto
+    columnCount (num 3)
+
+-}
+columnCount :
+    Value
+        { auto : Supported
+        , num : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnCount (Value count) =
+    AppendProperty ("column-count:" ++ count)
