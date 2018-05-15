@@ -36,6 +36,8 @@ module Css
         , backgroundRepeat2
         , backgroundSize
         , backgroundSize2
+        , balance
+        , balanceAll
         , baseline
         , batch
         , before
@@ -118,6 +120,7 @@ module Css
         , colorDodge
         , color_
         , columnCount
+        , columnFill
         , columnWidth
         , columns
         , columns2
@@ -725,6 +728,7 @@ Multiple CSS properties use these values.
 # Columns
 
 @docs columns, columns2, columnWidth, columnCount
+@docs columnFill, balance, balanceAll
 
 -}
 
@@ -8887,3 +8891,44 @@ columnCount :
     -> Style
 columnCount (Value count) =
     AppendProperty ("column-count:" ++ count)
+
+
+{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
+
+    columnFill auto
+    columnFill balance
+    columnFill balanceAll
+
+-}
+columnFill :
+    Value
+        { auto : Supported
+        , balance : Supported
+        , balanceAll : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnFill (Value val) =
+    AppendProperty ("column-fill:" ++ val)
+
+
+{-| A `balance` value used in properties such as [`column-fill`](#columnFill)
+
+    columnFill balance
+
+-}
+balance : Value { provides | balance : Supported }
+balance =
+    Value "balance"
+
+
+{-| A `balance-all` value used in properties such as [`column-fill`](#columnFill)
+
+    columnFill balanceAll
+
+-}
+balanceAll : Value { provides | balanceAll : Supported }
+balanceAll =
+    Value "balance-all"
