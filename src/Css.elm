@@ -16,6 +16,7 @@ module Css
         , allScroll
         , allSmallCaps
         , arabicIndic
+        , arcs
         , armenian
         , auto
         , backgroundAttachment
@@ -40,6 +41,7 @@ module Css
         , batch
         , before
         , bengali
+        , bevel
         , block
         , bold
         , bolder
@@ -100,9 +102,11 @@ module Css
         , borderWidth4
         , bottom
         , bottom_
+        , boundingBox
         , boxShadow
         , breakAll
         , breakWord
+        , butt
         , capitalize
         , captionSide
         , cell
@@ -110,6 +114,7 @@ module Css
         , ch
         , cjkEarthlyBranch
         , cjkHeavenlyStem
+        , clone
         , cm
         , colResize
         , collapse
@@ -118,17 +123,20 @@ module Css
         , colorDodge
         , color_
         , commonLigatures
+        , compress
         , contain
         , contentBox
         , contextMenu
         , contextual
         , copy
         , cover
+        , crop
         , crosshair
         , cursive
         , cursor
         , darken
         , dashed
+        , dashes
         , default
         , defaultBoxShadow
         , deg
@@ -150,6 +158,7 @@ module Css
         , exclusion
         , fantasy
         , fill
+        , fillBox
         , firstBaseline
         , fixed
         , flexEnd
@@ -164,6 +173,7 @@ module Css
         , fontVariantNumeric
         , fontWeight
         , fullWidth
+        , gaps
         , geometricPrecision
         , georgian
         , grab
@@ -216,6 +226,7 @@ module Css
         , matchParent
         , medium
         , middle
+        , miter
         , mixed
         , mm
         , monospace
@@ -296,12 +307,14 @@ module Css
         , show
         , sideways
         , slashedZero
+        , slice
         , small
         , smallCaps
         , smaller
         , softLight
         , solid
         , space
+        , square
         , stackedFractions
         , start
         , static
@@ -309,6 +322,31 @@ module Css
         , stop
         , stop2
         , stretch
+        , stroke
+        , strokeAlign
+        , strokeBox
+        , strokeBreak
+        , strokeColor
+        , strokeDashCorner
+        , strokeDashJustify
+        , strokeDasharray
+        , strokeDashoffset
+        , strokeImage
+        , strokeLinecap
+        , strokeLinejoin
+        , strokeLinejoin2
+        , strokeMiterlimit
+        , strokeOpacity
+        , strokeOrigin
+        , strokePosition
+        , strokePosition2
+        , strokePosition4
+        , strokeRepeat
+        , strokeRepeat2
+        , strokeSize
+        , strokeSize2
+        , strokeWidth
+        , stupid
         , sub
         , super
         , swResize
@@ -689,7 +727,20 @@ Multiple CSS properties use these values.
 
 # SVG
 
+
+## Fill
+
 @docs fill
+
+
+## Stroke
+
+@docs stroke, strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
+@docs strokeLinecap, butt, square
+@docs strokeBreak, boundingBox, slice, clone
+@docs strokeOrigin, fillBox, strokeBox
+@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, stupid
+@docs strokeDashJustify, compress, dashes, gaps
 
 -}
 
