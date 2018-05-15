@@ -122,6 +122,7 @@ module Css
         , color_
         , columnCount
         , columnFill
+        , columnGap
         , columnSpan
         , columnWidth
         , columns
@@ -729,7 +730,7 @@ Multiple CSS properties use these values.
 
 # Columns
 
-@docs columns, columns2, columnWidth, columnCount
+@docs columns, columns2, columnWidth, columnCount, columnGap
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
 
@@ -3523,12 +3524,14 @@ fontVariantCaps (Value str) =
 [`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values),
 [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/),
 [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/),
+[`column-gap`](#columnGap),
 and [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
 
     fontVariantCaps normal
     whiteSpace normal
     wordBreak normal
     alignItems normal
+    columnGap normal
 
 -}
 normal : Value { provides | normal : Supported }
@@ -8964,3 +8967,36 @@ columnSpan (Value span) =
 all_ : Value { provides | all_ : Supported }
 all_ =
     Value "all"
+
+
+{-| Sets [`column-gap`](https://css-tricks.com/almanac/properties/c/column-gap/)
+
+    columnGap normal
+    columnGap (px 20)
+
+-}
+columnGap :
+    Value
+        { normal : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnGap (Value width) =
+    AppendProperty ("column-gap:" ++ width)
