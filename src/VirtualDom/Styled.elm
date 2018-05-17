@@ -223,8 +223,14 @@ unstyle elemType properties children =
         styleNode =
             toStyleNode styles
 
-        unstyledProperties =
-            List.map extractUnstyledProperty properties
+        ( unstyledPropList, styledPropList ) =
+            List.partition isNotClassName properties
+
+        unstyledPropertiesWithoutStyleClass =
+            List.map extractUnstyledProperty unstyledPropList
+
+        unstyledProperties = 
+            List.append (lastStyleClassFromProperties styledPropList) unstyledPropertiesWithoutStyleClass
     in
     VirtualDom.node
         elemType
@@ -300,7 +306,13 @@ toStyleNode styles =
 
 
 -- INTERNAL --
-
+lastStyleClassFromProperties : List (Property msg) -> List (VirtualDom.Property msg)
+lastStyleClassFromProperties propList =
+    case ( List.head (List.reverse propList) ) of
+        Nothing -> 
+            []
+        Just val ->
+            [val]
 
 stylesFromProperties : List (Property msg) -> Dict Classname (List Style)
 stylesFromProperties properties =
@@ -467,3 +479,11 @@ containsKey key pairs =
                 True
             else
                 containsKey key rest
+
+isNotClassName  : Property msg -> Bool
+isNotClassName (Property _ _ class) =
+    if class == "" then
+        True
+    else
+        False
+        
