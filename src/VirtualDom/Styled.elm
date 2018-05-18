@@ -26,7 +26,6 @@ module VirtualDom.Styled
 import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
-import Debug exposing (..)
 import Dict exposing (Dict)
 import Hex
 import Json.Decode
