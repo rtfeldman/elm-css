@@ -62,6 +62,10 @@ module Css
         , borderColor2
         , borderColor3
         , borderColor4
+        , borderImageOutset
+        , borderImageOutset2
+        , borderImageOutset3
+        , borderImageOutset4
         , borderLeft
         , borderLeft2
         , borderLeft3
@@ -512,6 +516,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Border Radius
 
 @docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+
+
+## Border Image Outset
+
+@docs borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
 
 
 ## Display
@@ -7934,6 +7943,259 @@ borderBottomLeftRadius2 :
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderImageOutset (Value width) =
+    AppendProperty ("border-image-outset:" ++ width)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
 
 
