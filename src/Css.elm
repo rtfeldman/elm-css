@@ -1491,7 +1491,7 @@ sticky =
 
 {-| Sets [`z-index`](https://css-tricks.com/almanac/properties/z/z-index/)
 
-    zIndex (num 10)
+    zIndex (int 10)
     zIndex auto
 
 **NOTE:** Z-index is not as simple as it looks! Make sure to read about [stacking contexts](https://css-tricks.com/css-stacking-contexts/) if you're not already familiar with them.
@@ -1499,7 +1499,7 @@ sticky =
 -}
 zIndex :
     Value
-        { num : Supported
+        { int : Supported
         , auto : Supported
         , inherit : Supported
         , initial : Supported
@@ -2557,7 +2557,6 @@ pct value =
 
 {-| A unitless number. Useful with properties like
 [`flexGrow`](#flexGrow),
-[`zIndex`](#zIndex),
 and [`order`](#order)
 which accept unitless numbers.
 
@@ -2570,9 +2569,9 @@ num value =
     Value (toString value)
 
 
-{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset) which accept either length units or unitless numbers for some properties.
+{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
 
-    borderImageOutset (int 3)
+    zIndex (int 3)
 
 -}
 int : Int -> Value { provides | int : Supported }
