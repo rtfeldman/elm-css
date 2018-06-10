@@ -203,6 +203,7 @@ module Css
         , left_
         , lighten
         , lighter
+        , lineThrough
         , linearGradient
         , liningNums
         , listStyle
@@ -260,6 +261,7 @@ module Css
         , overflowX
         , overflowY
         , overlay
+        , overline
         , padding
         , padding2
         , padding3
@@ -344,6 +346,14 @@ module Css
         , text
         , textAlign
         , textBottom
+        , textDecoration
+        , textDecoration2
+        , textDecoration3
+        , textDecorationColor
+        , textDecorationLine
+        , textDecorationLine2
+        , textDecorationLine3
+        , textDecorationStyle
         , textOrientation
         , textRendering
         , textTop
@@ -364,6 +374,7 @@ module Css
         , top
         , top_
         , turn
+        , underline
         , unicase
         , unsafeCenter
         , unset
@@ -647,7 +658,9 @@ Multiple CSS properties use these values.
 
 ## Text Decoration
 
-@docs wavy
+@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+
+@docs wavy, underline, overline, lineThrough
 
 
 # Tables
@@ -721,7 +734,6 @@ Multiple CSS properties use these values.
 
 import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
-
 
 
 -- TYPES --
@@ -1218,7 +1230,6 @@ hex str =
     Value <|
         if String.startsWith "#" str then
             String.dropLeft 1 str
-
         else
             str
 
@@ -2753,7 +2764,6 @@ boxShadowConfigToString config =
         insetStr =
             if config.inset then
                 "inset "
-
             else
                 ""
     in
@@ -7239,11 +7249,15 @@ thick =
 -- BORDER STYLE --
 
 
-{-| The `dotted` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `dotted` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
 
     borderStyle dotted
+    textDecorationStyle dotted
 
 A line that consists of dots.
+
+[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
 
 -}
 dotted : Value { provides | dotted : Supported }
@@ -7251,10 +7265,13 @@ dotted =
     Value "dotted"
 
 
-{-| The `dashed` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `dashed` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
 borderStyle dashed
 
 A line that consists of dashes.
+
+[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
 
 -}
 dashed : Value { provides | dashed : Supported }
@@ -7262,11 +7279,15 @@ dashed =
     Value "dashed"
 
 
-{-| The `solid` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `solid` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
 
     borderStyle solid
+    textDecorationStyle solid
 
 A solid, continuous line.
+
+[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
 
 -}
 solid : Value { provides | solid : Supported }
@@ -7274,11 +7295,15 @@ solid =
     Value "solid"
 
 
-{-| The `double` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `double` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
 
     borderStyle double
+    textDecorationStyle double
 
 Two lines are drawn around the element.
+
+[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
 
 -}
 double : Value { provides | double : Supported }
@@ -7286,7 +7311,7 @@ double =
     Value "double"
 
 
-{-| The `groove` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `groove` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     borderStyle groove
 
@@ -7298,7 +7323,7 @@ groove =
     Value "groove"
 
 
-{-| The `ridge` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `ridge` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     borderStyle ridge
 
@@ -7310,7 +7335,7 @@ ridge =
     Value "ridge"
 
 
-{-| The `inset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `inset` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     borderStyle inset
 
@@ -7322,7 +7347,7 @@ inset =
     Value "inset"
 
 
-{-| The `outset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `outset` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
 
     borderStyle outset
 
@@ -8087,6 +8112,232 @@ fullWidth =
 
 
 
+-- TEXT DECORATION --
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecoration (Value line) =
+    AppendProperty ("text-decoration:" ++ line)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration2 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    -> Style
+textDecoration2 (Value line) (Value style) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ style)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration3 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+textDecoration3 (Value line) (Value style) (Value color) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ color)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationLine (Value line) =
+    AppendProperty ("text-decoration-line:" ++ line)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine2 :
+    Value
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    -> Style
+textDecorationLine2 (Value line1) (Value line2) =
+    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine3 :
+    Value
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    -> Style
+textDecorationLine3 (Value line1) (Value line2) (Value line3) =
+    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2 ++ " " ++ line3)
+
+
+{-| Sets [`text-decoration-style`][text-decoration-style] property.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/
+
+-}
+textDecorationStyle :
+    Value
+        { solid : Supported
+        , double : Supported
+        , dotted : Supported
+        , dashed : Supported
+        , wavy : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationStyle (Value style) =
+    AppendProperty ("text-decoration-style:" ++ style)
+
+
+{-| Sets [`text-decoration-color`][text-decoration-color] property.
+
+    textDecorationColor (hex "#0cf")
+
+[text-decoration-color]: https://css-tricks.com/almanac/properties/t/text-decoration-color/
+
+-}
+textDecorationColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationColor (Value color) =
+    AppendProperty ("text-decoration-color:" ++ color)
+
+
+
 -- ANGLES --
 
 
@@ -8142,11 +8393,52 @@ turn turns =
 -- TEXT DECORATION --
 
 
-{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
+{-| The `wavy` [`text-decoration-style`][text-decoration-style] value.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
+
 -}
 wavy : Value { provides | wavy : Supported }
 wavy =
     Value "wavy"
+
+
+{-| The `underline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine underline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+underline : Value { provides | underline : Supported }
+underline =
+    Value "underline"
+
+
+{-| The `overline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine overline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+overline : Value { provides | overline : Supported }
+overline =
+    Value "overline"
+
+
+{-| The `line-through` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+lineThrough : Value { provides | lineThrough : Supported }
+lineThrough =
+    Value "line-through"
 
 
 
