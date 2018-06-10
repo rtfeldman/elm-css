@@ -1,7 +1,7 @@
 module Fixtures exposing (..)
 
 import Css exposing (..)
-import Css.Foreign exposing (..)
+import Css.Global exposing (..)
 import Css.Media exposing (only, print, withMedia)
 import Css.Preprocess exposing (Stylesheet, stylesheet)
 
@@ -234,7 +234,7 @@ borders =
             , borderImageOutset2 (int 3) (Css.em 4)
             ]
         , a [ border2 (px 10) solid ]
-        , Css.Foreign.table [ borderSpacing (px 10) ]
+        , Css.Global.table [ borderSpacing (px 10) ]
         ]
 
 

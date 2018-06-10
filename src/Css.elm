@@ -404,7 +404,10 @@ module Css
         , zoomOut
         )
 
-{-|
+{-| If you need something that `elm-css` does not support right now, the
+[`Css.property`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#property)
+and [`Css.Global.selector`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Global#selector)
+functions let you define custom properties and selectors, respectively.
 
 
 ## CSS Values
@@ -734,6 +737,7 @@ Multiple CSS properties use these values.
 
 import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
+
 
 
 -- TYPES --
@@ -1230,6 +1234,7 @@ hex str =
     Value <|
         if String.startsWith "#" str then
             String.dropLeft 1 str
+
         else
             str
 
@@ -2764,6 +2769,7 @@ boxShadowConfigToString config =
         insetStr =
             if config.inset then
                 "inset "
+
             else
                 ""
     in

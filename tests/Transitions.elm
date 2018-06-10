@@ -1,6 +1,6 @@
 module Transitions exposing (..)
 
-import Css.Foreign exposing (p)
+import Css.Global exposing (p)
 import Css.Preprocess exposing (stylesheet)
 import Css.Transitions exposing (..)
 import Expect

@@ -1,7 +1,7 @@
 module Media exposing (..)
 
 import Css exposing (..)
-import Css.Foreign exposing (Snippet, a, body, button, class, li, media, mediaQuery, p, ul)
+import Css.Global exposing (Snippet, a, body, button, class, li, media, mediaQuery, p, ul)
 import Css.Media as Media exposing (..)
 import Css.Preprocess exposing (stylesheet)
 import Expect
