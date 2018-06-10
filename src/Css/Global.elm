@@ -1,4 +1,4 @@
-module Css.Foreign
+module Css.Global
     exposing
         ( Snippet
         , a
