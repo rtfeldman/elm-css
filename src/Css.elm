@@ -62,6 +62,14 @@ module Css
         , borderColor2
         , borderColor3
         , borderColor4
+        , borderImageOutset
+        , borderImageOutset2
+        , borderImageOutset3
+        , borderImageOutset4
+        , borderImageWidth
+        , borderImageWidth2
+        , borderImageWidth3
+        , borderImageWidth4
         , borderLeft
         , borderLeft2
         , borderLeft3
@@ -515,6 +523,13 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Border Radius
 
 @docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+
+
+## Border Image
+
+@docs borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
+
+@docs borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
 
 
 ## Display
@@ -1487,7 +1502,7 @@ sticky =
 
 {-| Sets [`z-index`](https://css-tricks.com/almanac/properties/z/z-index/)
 
-    zIndex (num 10)
+    zIndex (int 10)
     zIndex auto
 
 **NOTE:** Z-index is not as simple as it looks! Make sure to read about [stacking contexts](https://css-tricks.com/css-stacking-contexts/) if you're not already familiar with them.
@@ -1495,7 +1510,7 @@ sticky =
 -}
 zIndex :
     Value
-        { num : Supported
+        { int : Supported
         , auto : Supported
         , inherit : Supported
         , initial : Supported
@@ -2553,7 +2568,6 @@ pct value =
 
 {-| A unitless number. Useful with properties like
 [`flexGrow`](#flexGrow),
-[`zIndex`](#zIndex),
 and [`order`](#order)
 which accept unitless numbers.
 
@@ -2566,9 +2580,9 @@ num value =
     Value (toString value)
 
 
-{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset) which accept either length units or unitless numbers for some properties.
+{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
 
-    borderImageOutset (int 3)
+    zIndex (int 3)
 
 -}
 int : Int -> Value { provides | int : Supported }
@@ -7940,6 +7954,532 @@ borderBottomLeftRadius2 :
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderImageOutset (Value width) =
+    AppendProperty ("border-image-outset:" ++ width)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderImageWidth (Value width) =
+    AppendProperty ("border-image-width:" ++ width)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-width:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
 
 
