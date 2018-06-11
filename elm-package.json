@@ -21,9 +21,7 @@
         "Svg.Styled.Events",
         "Svg.Styled.Keyed",
         "Svg.Styled.Lazy",
-        "DEPRECATED.Css",
-        "DEPRECATED.Css.File",
-        "DEPRECATED.Css.Namespace"
+        "DEPRECATED.Css.File"
     ],
     "dependencies": {
         "Skinney/murmur3": "2.0.4 <= v < 3.0.0",
