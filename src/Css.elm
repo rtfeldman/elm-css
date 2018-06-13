@@ -3195,8 +3195,8 @@ small =
     Value "small"
 
 
-{-| The `medium` value used by properties such as [`font-size`](#fontSize),
-[`border-width`](#borderWidth),
+{-| The `medium` value used by properties such as [`fontSize`](#fontSize),
+[`borderWidth`](#borderWidth),
 [`columnRuleWidth`](#columnRuleWidth).
 
     fontSize medium
@@ -3530,11 +3530,11 @@ fontVariantCaps (Value str) =
 
 
 {-| The `normal` value, which can be used with such properties as
-[`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values),
-[`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/),
-[`word-break`](https://css-tricks.com/almanac/properties/w/word-break/),
-[`column-gap`](#columnGap),
-and [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
+[`fontVariantCaps`](#fontVariantCaps),
+[`whiteSpace`](#whiteSpace),
+[`wordBreak`](#wordBreak),
+[`columnGap`](#columnGap),
+and [`alignItems`](#alignItems).
 
     fontVariantCaps normal
     whiteSpace normal
@@ -7236,8 +7236,8 @@ borderLeftColor (Value color) =
 -- BORDER WIDTH --
 
 
-{-| The `thin` value used by properties such as [`border-width`](#borderWidth),
-and [`column-rule-width`](#columnRuleWidth).
+{-| The `thin` value used by properties such as [`borderWidth`](#borderWidth),
+and [`columnRuleWidth`](#columnRuleWidth).
 
     borderWidth thin
     columnRuleWidth thin
@@ -7250,8 +7250,8 @@ thin =
     Value "thin"
 
 
-{-| The `thick` value used by properties such as [`border-width`](#borderWidth),
-and [`column-rule-width`](#columnRuleWidth).
+{-| The `thick` value used by properties such as [`borderWidth`](#borderWidth),
+and [`columnRuleWidth`](#columnRuleWidth).
 
     borderWidth thick
     columnRuleWidth thick
@@ -7268,8 +7268,8 @@ thick =
 -- BORDER STYLE --
 
 
-{-| The `dotted` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `dotted` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle dotted
     columnRuleStyle dotted
@@ -7282,8 +7282,8 @@ dotted =
     Value "dotted"
 
 
-{-| The `dashed` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `dashed` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle dashed
     columnRuleStyle dashed
@@ -7296,8 +7296,8 @@ dashed =
     Value "dashed"
 
 
-{-| The `solid` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `solid` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle solid
     columnRuleStyle solid
@@ -7310,8 +7310,8 @@ solid =
     Value "solid"
 
 
-{-| The `double` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `double` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle double
     columnRuleStyle double
@@ -7324,8 +7324,8 @@ double =
     Value "double"
 
 
-{-| The `groove` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `groove` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle groove
     columnRuleStyle groove
@@ -7338,8 +7338,8 @@ groove =
     Value "groove"
 
 
-{-| The `ridge` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `ridge` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle ridge
     columnRuleStyle ridge
@@ -7352,8 +7352,8 @@ ridge =
     Value "ridge"
 
 
-{-| The `inset` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle inset
     columnRuleStyle inset
@@ -7366,8 +7366,8 @@ inset =
     Value "inset"
 
 
-{-| The `outset` value used by properties such as [`border-style`](#borderStyle),
-and [`column-rule-style`](#columnRuleStyle) value.
+{-| The `outset` value used by properties such as [`borderStyle`](#borderStyle),
+and [`columnRuleStyle`](#columnRuleStyle) value.
 
     borderStyle outset
     columnRuleStyle outset
@@ -8950,7 +8950,7 @@ columnFill (Value val) =
     AppendProperty ("column-fill:" ++ val)
 
 
-{-| A `balance` value used in properties such as [`column-fill`](#columnFill)
+{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
 
     columnFill balance
 
@@ -8960,7 +8960,7 @@ balance =
     Value "balance"
 
 
-{-| A `balance-all` value used in properties such as [`column-fill`](#columnFill)
+{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
 
     columnFill balanceAll
 
@@ -8989,7 +8989,7 @@ columnSpan (Value span) =
     AppendProperty ("column-span:" ++ span)
 
 
-{-| A `all` value used in properties such as [`column-span`](#columnSpan).
+{-| A `all` value used in properties such as [`columnSpan`](#columnSpan).
 
     columnSpan all_
 
@@ -9120,8 +9120,8 @@ columnRuleColor (Value color) =
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`column-rule-width`](#columnRuleWidth),
-[`column-rule-style`](#columnRuleStyle), and [`column-rule-color`](#columnRuleColor)
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
 properties.
 
     columnRule thin
@@ -9159,8 +9159,8 @@ columnRule (Value width) =
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`column-rule-width`](#columnRuleWidth),
-[`column-rule-style`](#columnRuleStyle), and [`column-rule-color`](#columnRuleColor)
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
 properties.
 
     columnRule thin
@@ -9208,8 +9208,8 @@ columnRule2 (Value width) (Value style) =
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`column-rule-width`](#columnRuleWidth),
-[`column-rule-style`](#columnRuleStyle), and [`column-rule-color`](#columnRuleColor)
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
 properties.
 
     columnRule thin
