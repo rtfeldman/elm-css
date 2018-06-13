@@ -65,6 +65,14 @@ module Css
         , borderColor2
         , borderColor3
         , borderColor4
+        , borderImageOutset
+        , borderImageOutset2
+        , borderImageOutset3
+        , borderImageOutset4
+        , borderImageWidth
+        , borderImageWidth2
+        , borderImageWidth3
+        , borderImageWidth4
         , borderLeft
         , borderLeft2
         , borderLeft3
@@ -219,6 +227,7 @@ module Css
         , left_
         , lighten
         , lighter
+        , lineThrough
         , linearGradient
         , liningNums
         , listStyle
@@ -276,6 +285,7 @@ module Css
         , overflowX
         , overflowY
         , overlay
+        , overline
         , padding
         , padding2
         , padding3
@@ -360,6 +370,14 @@ module Css
         , text
         , textAlign
         , textBottom
+        , textDecoration
+        , textDecoration2
+        , textDecoration3
+        , textDecorationColor
+        , textDecorationLine
+        , textDecorationLine2
+        , textDecorationLine3
+        , textDecorationStyle
         , textOrientation
         , textRendering
         , textTop
@@ -380,6 +398,7 @@ module Css
         , top
         , top_
         , turn
+        , underline
         , unicase
         , unsafeCenter
         , unset
@@ -409,7 +428,10 @@ module Css
         , zoomOut
         )
 
-{-|
+{-| If you need something that `elm-css` does not support right now, the
+[`Css.property`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#property)
+and [`Css.Global.selector`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Global#selector)
+functions let you define custom properties and selectors, respectively.
 
 
 ## CSS Values
@@ -517,6 +539,13 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Border Radius
 
 @docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+
+
+## Border Image
+
+@docs borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
+
+@docs borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
 
 
 ## Display
@@ -663,7 +692,9 @@ Multiple CSS properties use these values.
 
 ## Text Decoration
 
-@docs wavy
+@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+
+@docs wavy, underline, overline, lineThrough
 
 
 # Tables
@@ -1492,7 +1523,7 @@ sticky =
 
 {-| Sets [`z-index`](https://css-tricks.com/almanac/properties/z/z-index/)
 
-    zIndex (num 10)
+    zIndex (int 10)
     zIndex auto
 
 **NOTE:** Z-index is not as simple as it looks! Make sure to read about [stacking contexts](https://css-tricks.com/css-stacking-contexts/) if you're not already familiar with them.
@@ -1500,7 +1531,7 @@ sticky =
 -}
 zIndex :
     Value
-        { num : Supported
+        { int : Supported
         , auto : Supported
         , inherit : Supported
         , initial : Supported
@@ -2558,7 +2589,6 @@ pct value =
 
 {-| A unitless number. Useful with properties like
 [`flexGrow`](#flexGrow),
-[`zIndex`](#zIndex),
 and [`order`](#order)
 which accept unitless numbers.
 
@@ -2571,9 +2601,9 @@ num value =
     Value (toString value)
 
 
-{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset) which accept either length units or unitless numbers for some properties.
+{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
 
-    borderImageOutset (int 3)
+    zIndex (int 3)
 
 -}
 int : Int -> Value { provides | int : Supported }
@@ -7269,12 +7299,13 @@ thick =
 
 
 {-| The `dotted` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+It represents a line that consists of dots.
 
     borderStyle dotted
     columnRuleStyle dotted
-
-A line that consists of dots.
+    textDecorationStyle dotted
 
 -}
 dotted : Value { provides | dotted : Supported }
@@ -7283,12 +7314,13 @@ dotted =
 
 
 {-| The `dashed` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle dashed
     columnRuleStyle dashed
+    textDecorationStyle dashed
 
-A line that consists of dashes.
+It represents a line that consists of dashes.
 
 -}
 dashed : Value { provides | dashed : Supported }
@@ -7296,13 +7328,15 @@ dashed =
     Value "dashed"
 
 
+
 {-| The `solid` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle solid
     columnRuleStyle solid
+    textDecorationStyle solid
 
-A solid, continuous line.
+It represents a solid, continuous line.
 
 -}
 solid : Value { provides | solid : Supported }
@@ -7311,12 +7345,13 @@ solid =
 
 
 {-| The `double` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle double
     columnRuleStyle double
+    textDecorationStyle double
 
-Two lines are drawn around the element.
+It represents a double line: two lines side by side.
 
 -}
 double : Value { provides | double : Supported }
@@ -7325,12 +7360,13 @@ double =
 
 
 {-| The `groove` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle groove
     columnRuleStyle groove
+    textDecorationStyle groove
 
-Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
+Adds a bevel based on the color value, which makes things appear pressed into the document.
 
 -}
 groove : Value { provides | groove : Supported }
@@ -7339,12 +7375,13 @@ groove =
 
 
 {-| The `ridge` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle ridge
     columnRuleStyle ridge
-
-Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
+    textDecorationStyle ridge
+    
+Similar to [`groove`](#groove), but reverses the color values in a way that makes things appear raised.
 
 -}
 ridge : Value { provides | ridge : Supported }
@@ -7353,12 +7390,15 @@ ridge =
 
 
 {-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle inset
     columnRuleStyle inset
+    textDecorationStyle inset
 
-Adds a split tone to the line that makes the element appear slightly depressed.
+Adds a split tone to the line that makes it appear slightly depressed.
+
+Contrast with [`outset`](#outset)
 
 -}
 inset : Value { provides | inset : Supported }
@@ -7367,12 +7407,13 @@ inset =
 
 
 {-| The `outset` value used by properties such as [`borderStyle`](#borderStyle),
-and [`columnRuleStyle`](#columnRuleStyle) value.
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle outset
     columnRuleStyle outset
+    textDecorationStyle outset
 
-Similar to `inset`, but reverses the colors in a way that makes the element appear slightly raised.
+Similar to [`inset`](#outset), but reverses the colors in a way that makes it appear slightly raised.
 
 -}
 outset : Value { provides | outset : Supported }
@@ -7957,6 +7998,532 @@ borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
 
 
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderImageOutset (Value width) =
+    AppendProperty ("border-image-outset:" ++ width)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderImageWidth (Value width) =
+    AppendProperty ("border-image-width:" ++ width)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-width:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
 
 -- TEXT ORIENTATION --
 
@@ -8133,6 +8700,232 @@ fullWidth =
 
 
 
+-- TEXT DECORATION --
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecoration (Value line) =
+    AppendProperty ("text-decoration:" ++ line)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration2 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    -> Style
+textDecoration2 (Value line) (Value style) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ style)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration3 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+textDecoration3 (Value line) (Value style) (Value color) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ color)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationLine (Value line) =
+    AppendProperty ("text-decoration-line:" ++ line)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine2 :
+    Value
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    -> Style
+textDecorationLine2 (Value line1) (Value line2) =
+    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine3 :
+    Value
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    -> Style
+textDecorationLine3 (Value line1) (Value line2) (Value line3) =
+    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2 ++ " " ++ line3)
+
+
+{-| Sets [`text-decoration-style`][text-decoration-style] property.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/
+
+-}
+textDecorationStyle :
+    Value
+        { solid : Supported
+        , double : Supported
+        , dotted : Supported
+        , dashed : Supported
+        , wavy : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationStyle (Value style) =
+    AppendProperty ("text-decoration-style:" ++ style)
+
+
+{-| Sets [`text-decoration-color`][text-decoration-color] property.
+
+    textDecorationColor (hex "#0cf")
+
+[text-decoration-color]: https://css-tricks.com/almanac/properties/t/text-decoration-color/
+
+-}
+textDecorationColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationColor (Value color) =
+    AppendProperty ("text-decoration-color:" ++ color)
+
+
+
 -- ANGLES --
 
 
@@ -8188,11 +8981,52 @@ turn turns =
 -- TEXT DECORATION --
 
 
-{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
+{-| The `wavy` [`text-decoration-style`][text-decoration-style] value.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
+
 -}
 wavy : Value { provides | wavy : Supported }
 wavy =
     Value "wavy"
+
+
+{-| The `underline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine underline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+underline : Value { provides | underline : Supported }
+underline =
+    Value "underline"
+
+
+{-| The `overline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine overline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+overline : Value { provides | overline : Supported }
+overline =
+    Value "overline"
+
+
+{-| The `line-through` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+lineThrough : Value { provides | lineThrough : Supported }
+lineThrough =
+    Value "line-through"
 
 
 

@@ -1,7 +1,7 @@
 module CompileFixtures exposing (..)
 
 import Css exposing (..)
-import Css.Foreign exposing (..)
+import Css.Global exposing (..)
 import Css.Preprocess exposing (Stylesheet, stylesheet)
 
 
