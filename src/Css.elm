@@ -17,6 +17,7 @@ module Css
         , allSmallCaps
         , all_
         , arabicIndic
+        , arcs
         , armenian
         , auto
         , backgroundAttachment
@@ -43,6 +44,7 @@ module Css
         , batch
         , before
         , bengali
+        , bevel
         , block
         , bold
         , bolder
@@ -111,9 +113,11 @@ module Css
         , borderWidth4
         , bottom
         , bottom_
+        , boundingBox
         , boxShadow
         , breakAll
         , breakWord
+        , butt
         , capitalize
         , captionSide
         , cell
@@ -121,6 +125,7 @@ module Css
         , ch
         , cjkEarthlyBranch
         , cjkHeavenlyStem
+        , clone
         , cm
         , colResize
         , collapse
@@ -142,17 +147,20 @@ module Css
         , columns
         , columns2
         , commonLigatures
+        , compress
         , contain
         , contentBox
         , contextMenu
         , contextual
         , copy
         , cover
+        , crop
         , crosshair
         , cursive
         , cursor
         , darken
         , dashed
+        , dashes
         , default
         , defaultBoxShadow
         , deg
@@ -174,6 +182,7 @@ module Css
         , exclusion
         , fantasy
         , fill
+        , fillBox
         , firstBaseline
         , fixed
         , flexEnd
@@ -188,6 +197,7 @@ module Css
         , fontVariantNumeric
         , fontWeight
         , fullWidth
+        , gaps
         , geometricPrecision
         , georgian
         , grab
@@ -249,6 +259,7 @@ module Css
         , matchParent
         , medium
         , middle
+        , miter
         , mixed
         , mm
         , monospace
@@ -338,12 +349,14 @@ module Css
         , show
         , sideways
         , slashedZero
+        , slice
         , small
         , smallCaps
         , smaller
         , softLight
         , solid
         , space
+        , square
         , stackedFractions
         , start
         , static
@@ -351,6 +364,30 @@ module Css
         , stop
         , stop2
         , stretch
+        , strokeAlign
+        , strokeBox
+        , strokeBreak
+        , strokeColor
+        , strokeDashCorner
+        , strokeDashJustify
+        , strokeDasharray
+        , strokeDashoffset
+        , strokeImage
+        , strokeLinecap
+        , strokeLinejoin
+        , strokeLinejoin2
+        , strokeMiterlimit
+        , strokeOpacity
+        , strokeOrigin
+        , strokePosition
+        , strokePosition2
+        , strokePosition4
+        , strokeRepeat
+        , strokeRepeat2
+        , strokeSize
+        , strokeSize2
+        , strokeWidth
+        , stupid
         , sub
         , super
         , swResize
@@ -762,7 +799,20 @@ Multiple CSS properties use these values.
 
 # SVG
 
+
+## Fill
+
 @docs fill
+
+
+## Stroke
+
+@docs strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
+@docs strokeLinecap, butt, square
+@docs strokeBreak, boundingBox, slice, clone
+@docs strokeOrigin, fillBox, strokeBox
+@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, stupid
+@docs strokeDashJustify, compress, dashes, gaps
 
 
 # Columns
@@ -934,7 +984,10 @@ revert =
 -- SHARED VALUES --
 
 
-{-| The `url` value for the [`cursor`](#cursor), [`fill`](#fill), and [`backgroundImage`](#backgroundImage) properties.
+{-| The `url` value for the [`cursor`](#cursor),
+[`fill`](#fill),
+[`strokeImage`](#strokeImage),
+and [`backgroundImage`](#backgroundImage) properties.
 -}
 url : String -> Value { provides | url : Supported }
 url str =
@@ -951,10 +1004,13 @@ auto =
     Value "auto"
 
 
-{-| The `none` value used for properties such as [`display`](#display).
+{-| The `none` value used for properties such as [`display`](#display),
+[`borderStyle`](#borderStyle),
+and [`strokeDashJustify`](#strokeDashJustify).
 
     display none
     borderStyle none
+    strokeDashJustify none
 
 -}
 none : Value { provides | none : Supported }
@@ -4381,8 +4437,17 @@ local =
     Value "local"
 
 
-{-| Sets [`background-blend-mode`](https://css-tricks.com/almanac/properties/b/background-blend-mode/).
+{-| The `text` [`background-clip` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values).
 
+    backgroundClip text_
+
+-}
+text_ : Value { provides | text_ : Supported }
+text_ =
+    Value "text"
+
+
+{-| Sets [`background-blend-mode`](https://css-tricks.com/almanac/properties/b/background-blend-mode/).
 Note that this takes an argument of [`color_`](#color_), not [`color`](#color)!
 
     backgroundBlendMode color_
@@ -4636,7 +4701,6 @@ luminosity =
 
 
 {-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
-
 Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
 
     backgroundClip text_
@@ -4662,7 +4726,6 @@ backgroundClip (Value str) =
 
 
 {-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
-
 Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
 
     backgroundClips text_ [ borderBox, text_ ]
@@ -4697,23 +4760,13 @@ backgroundClips firstValue values =
     AppendProperty ("background-clip:" ++ str)
 
 
-{-| The `border-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
-and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
-
-    backgroundClip borderBox
-    backgroundOrigin borderBox
-
--}
-borderBox : Value { provides | borderBox : Supported }
-borderBox =
-    Value "border-box"
-
-
-{-| The `padding-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
-and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+{-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](#backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
 
     backgroundClip paddingBox
     backgroundOrigin paddingBox
+    strokeOrigin paddingBox
 
 -}
 paddingBox : Value { provides | paddingBox : Supported }
@@ -4721,11 +4774,13 @@ paddingBox =
     Value "padding-box"
 
 
-{-| The `content-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values)
-and [`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values).
+{-| The `content-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](#backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
 
     backgroundClip contentBox
     backgroundOrigin contentBox
+    strokeOrigin contentBox
 
 -}
 contentBox : Value { provides | contentBox : Supported }
@@ -4733,14 +4788,18 @@ contentBox =
     Value "content-box"
 
 
-{-| The `text` [`background-clip` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values).
+{-| The `border-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
 
-    backgroundClip text_
+    backgroundClip borderBox
+    backgroundOrigin borderBox
+    strokeOrigin borderBox
 
 -}
-text_ : Value { provides | text_ : Supported }
-text_ =
-    Value "text"
+borderBox : Value { provides | borderBox : Supported }
+borderBox =
+    Value "border-box"
 
 
 
@@ -5110,9 +5169,11 @@ backgroundRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
 
 
-{-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+{-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
+and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat repeat
+    strokeRepeat repeat
 
 -}
 repeat : Value { provides | repeat : Supported }
@@ -5120,9 +5181,11 @@ repeat =
     Value "repeat"
 
 
-{-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat).
+{-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
+and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat noRepeat
+    strokeRpeat noRepeat
 
 -}
 noRepeat : Value { provides | repeat : Supported }
@@ -5130,9 +5193,11 @@ noRepeat =
     Value "no-repeat"
 
 
-{-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) horizontally.
+{-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
+and [`strokeRepeat`](#strokeRepeat) horizontally.
 
     backgroundRepeat repeatX
+    strokeRepeat repeatX
 
 -}
 repeatX : Value { provides | repeatX : Supported }
@@ -5140,9 +5205,11 @@ repeatX =
     Value "repeat-x"
 
 
-{-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) vertically.
+{-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
+and [`strokeRepeat`](#strokeRepeat) vertically.
 
     backgroundRepeat repeatY
+    strokeRepeat repeatY
 
 -}
 repeatY : Value { provides | repeatY : Supported }
@@ -5150,11 +5217,11 @@ repeatY =
     Value "repeat-y"
 
 
-{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by adding space.
+{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
+and [`strokeRepeat`](#strokeRepeat) without cutting off edges by adding space.
 
     backgroundRepeat space
-
-)
+    strokeRepeat space
 
 -}
 space : Value { provides | space : Supported }
@@ -5162,9 +5229,15 @@ space =
     Value "space"
 
 
-{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat) without cutting off edges by stretching or shrinking the image.
+{-| The `round` value used for properties such as [repeating background](#backgroundRepeat) without cutting off edges by stretching or shrinking the image,
+and [`strokeLinecap`](#strokeLinecap),
+and [`strokeRepeat`](#strokeRepeat),
+and [`strokeLinejoin`](#strokeLinejoin2).
 
     backgroundRepeat round
+    strokeLineCap round
+    strokeLinejoin2 miter round
+    strokeRepeat round
 
 -}
 round : Value { provides | round : Supported }
@@ -5179,7 +5252,6 @@ round =
 {-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/).
 
     backgroundSize cover
-
     backgroundSize (px 400)
 
 If you give a length value, it will be used for the width. The height will be set
@@ -5206,6 +5278,7 @@ backgroundSize :
         , vmin : Supported
         , vmax : Supported
         , auto : Supported
+        , cover : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -5279,11 +5352,12 @@ contain =
     Value "contain"
 
 
-{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
-for [`backgroundSize`](#backgroundSize). It fills the whole space available with
+{-| Sets [`cover`](https://css-tricks.com/almanac/properties/b/background-size/)
+for [`backgroundSize`](#backgroundSize), and [`strokeSize`](#strokeSize). It fills the whole space available with
 the background image by scaling, even if it cuts off some of the image.
 
     backgroundSize cover
+    strokeSize cover
 
 -}
 cover : Value { provides | cover : Supported }
@@ -7409,13 +7483,16 @@ inset =
 
 
 {-| The `outset` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+[`columnRuleStyle`](#columnRuleStyle),
+and [`textDecorationStyle`](#textDecorationStyle),
+and [`strokeAlign`](#strokeAlign).
 
     borderStyle outset
     columnRuleStyle outset
+    strokeAlign outset
     textDecorationStyle outset
 
-Similar to [`inset`](#outset), but reverses the colors in a way that makes it appear slightly raised.
+Similar to [`inset`](#inset), but reverses the colors in a way that makes it appear slightly raised.
 
 -}
 outset : Value { provides | outset : Supported }
@@ -9396,9 +9473,11 @@ justify =
     Value "justify"
 
 
-{-| A `match-parent` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
+{-| A `match-parent` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/),
+and [`strokeOrigin`](#strokeOrigin) properties.
 
     textAlign matchParent
+    strokeOrigin matchParent
 
 -}
 matchParent : Value { provides | matchParent : Supported }
@@ -9614,7 +9693,7 @@ order (Value val) =
 
 
 {-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
-**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a `defs` element.
+**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
 
     fill (hex "#60b5cc")
     fill (rgb 96 181 204)
@@ -9953,6 +10032,868 @@ columnRuleColor :
     -> Style
 columnRuleColor (Value color) =
     AppendProperty ("column-rule-color:" ++ color)
+
+
+
+-- STROKE --
+
+
+{-| Sets [`stroke-dasharray`](https://css-tricks.com/almanac/properties/s/stroke-dasharray/)
+
+    strokeDasharray (num 2)
+    strokeDasharray (num 2.5)
+    strokeDasharray (em 2)
+    strokeDasharray (pct 15)
+
+-}
+strokeDasharray :
+    Value
+        { zero : Supported
+        , num : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDasharray (Value val) =
+    AppendProperty ("stroke-dasharray:" ++ val)
+
+
+{-| Sets [`stroke-dashoffset`](https://css-tricks.com/almanac/properties/s/stroke-dashoffset/)
+
+    strokeDashoffset zero
+    strokeDashoffset (num 100)
+    strokeDashoffset (pct 25)
+
+-}
+strokeDashoffset :
+    Value
+        { zero : Supported
+        , num : Supported
+        , pct : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDashoffset (Value val) =
+    AppendProperty ("stroke-dashoffset:" ++ val)
+
+
+{-| Sets [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/)
+
+    strokeLinecap butt
+    strokeLinecap square
+    strokeLinecap round
+
+-}
+strokeLinecap :
+    Value
+        { butt : Supported
+        , square : Supported
+        , round : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeLinecap (Value val) =
+    AppendProperty ("stroke-linecap:" ++ val)
+
+
+{-| A `butt` value for the [`strokeLinecap`](#strokeLinecap) property.
+
+      strokeLinecap butt
+
+-}
+butt : Value { provides | butt : Supported }
+butt =
+    Value "butt"
+
+
+{-| A `square` value for the [`strokeLinecap`](#strokeLinecap) property.
+
+      strokeLinecap square
+
+-}
+square : Value { provides | square : Supported }
+square =
+    Value "square"
+
+
+{-| Sets [`stroke-width`](https://css-tricks.com/almanac/properties/s/stroke-width/)
+
+    strokeWidth zero
+    strokeWidth (px 2)
+    strokeWidth (em 2)
+    strokeWidth (num 2)
+    strokeWidth (num 2.5)
+    strokeWidth (pct 15)
+
+-}
+strokeWidth :
+    Value
+        { zero : Supported
+        , num : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeWidth (Value val) =
+    AppendProperty ("stroke-width:" ++ val)
+
+
+{-| Sets [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align)
+
+      strokeAlign center
+      strokeAlign inset
+      strokeAlign outset
+
+-}
+strokeAlign :
+    Value
+        { center : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeAlign (Value val) =
+    AppendProperty ("stroke-align:" ++ val)
+
+
+{-| Sets [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break)
+
+      strokeBreak boundingBox
+      strokeBreak slice
+      strokeBreak clone
+
+-}
+strokeBreak :
+    Value
+        { boundingBox : Supported
+        , slice : Supported
+        , clone : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeBreak (Value val) =
+    AppendProperty ("stroke-break:" ++ val)
+
+
+{-| A `boundingBox` value for the [`strokeBreak`](#strokeBreak) property.
+
+      strokeBreak boundingBox
+
+-}
+boundingBox : Value { provides | boundingBox : Supported }
+boundingBox =
+    Value "bounding-box"
+
+
+{-| A `slice` value for the [`strokeBreak`](#strokeBreak) property.
+
+      strokeBreak slice
+
+-}
+slice : Value { provides | slice : Supported }
+slice =
+    Value "slice"
+
+
+{-| A `clone` value for the [`strokeBreak`](#strokeBreak) property.
+
+      strokeBreak clone
+
+-}
+clone : Value { provides | clone : Supported }
+clone =
+    Value "clone"
+
+
+{-| Sets [`stroke-color`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-color)
+
+    strokeColor (rgb 0 100 44)
+    strokeColor (hex "#FF9E2C")
+
+-}
+strokeColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , currentColor : Supported
+        , transparent : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeColor (Value val) =
+    AppendProperty ("stroke-color:" ++ val)
+
+
+{-| Sets [`stroke-image`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-image)
+
+    strokeImage (url "#svg-pattern")
+    strokeImage (url "http://www.example.com/chicken.jpg")
+
+-}
+strokeImage :
+    Value
+        { url : Supported
+        , none : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeImage (Value value) =
+    AppendProperty ("stroke-image:" ++ value)
+
+
+{-| Sets [`stroke-miterlimit`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-miterlimit)
+
+    strokeMiterlimit (num 4)
+
+-}
+strokeMiterlimit :
+    Value
+        { num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeMiterlimit (Value val) =
+    AppendProperty ("stroke-miterlimit:" ++ val)
+
+
+{-| Sets [`stroke-opacity`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-opacity)
+
+    strokeOpacity (num 0.5)
+
+-}
+strokeOpacity :
+    Value
+        { num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeOpacity (Value val) =
+    AppendProperty ("stroke-opacity:" ++ val)
+
+
+{-| Sets [`stroke-origin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-origin)
+
+    strokeOrign matchParent
+    strokeOrign fillBox
+    strokeOrign strokeBox
+    strokeOrign contentBox
+    strokeOrign paddingBox
+    strokeOrign borderBox
+
+-}
+strokeOrigin :
+    Value
+        { matchParent : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , contentBox : Supported
+        , paddingBox : Supported
+        , borderBox : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeOrigin (Value val) =
+    AppendProperty ("stroke-origin:" ++ val)
+
+
+{-| A `fillBox` value for the [`strokeOrigin`](#strokeOrigin) property.
+
+      strokeOrigin fillBox
+
+-}
+fillBox : Value { provides | fillBox : Supported }
+fillBox =
+    Value "fill-box"
+
+
+{-| A `strokeBox` value for the [`strokeOrigin`](#strokeOrigin) property.
+
+      strokeOrigin strokeBox
+
+-}
+strokeBox : Value { provides | strokeBox : Supported }
+strokeBox =
+    Value "stroke-box"
+
+
+{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
+
+    strokePosition left_
+
+    strokePosition (px 45)
+
+`strokePosition` sets the horizontal direction. If you need the vertical
+direction instead, use [`strokePosition2`](#strokePosition2) like this:
+
+    strokePosition zero (px 45)
+
+If you need to set the offsets from the right or bottom, use
+[`strokePosition4`](#strokePosition4) like this:
+
+    strokePosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+strokePosition :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        , inherit : Supported
+        , unset : Supported
+        , initial : Supported
+        }
+    -> Style
+strokePosition (Value horiz) =
+    AppendProperty ("stroke-position:" ++ horiz)
+
+
+{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
+
+    strokePosition2 left_ top_
+
+    strokePosition2 (px 45) (pct 50)
+
+`strokePosition2` sets both the horizontal and vertical directions (in that
+order, same as CSS.) If you need only the horizontal, you can use
+[`strokePosition`](#strokePosition) instead:
+
+    strokePosition left_
+
+If you need to set the offsets from the right or bottom, use
+[`strokePosition4`](#strokePosition4) like this:
+
+    strokePosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+strokePosition2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , center : Supported
+            }
+    -> Style
+strokePosition2 (Value horiz) (Value vert) =
+    AppendProperty ("stroke-position:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
+
+    strokePosition4 right_ (px 20) bottom_ (pct 30)
+
+The four-argument form of stroke-position alternates sides and offets. So the
+example above would position the stroke-image 20px from the right, and 30%
+from the bottom.
+
+See also [`strokePosition`](#strokePosition) for horizontal alignment and
+[`strokePosition2`](#strokePosition2) for horizontal (from left) and
+vertical (from top) alignment.
+
+-}
+strokePosition4 :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { top_ : Supported
+            , bottom_ : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+strokePosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
+    AppendProperty
+        ("stroke-position:"
+            ++ horiz
+            ++ " "
+            ++ horizAmount
+            ++ " "
+            ++ vert
+            ++ " "
+            ++ vertAmount
+        )
+
+
+{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat)
+
+    strokeRepeat repeat
+
+    strokeRepeat repeatX
+
+If you need to set horizontal and vertical direction separately, see
+[`strokeRepeat2`](#strokeRepeat2)
+
+-}
+strokeRepeat :
+    Value
+        { repeat : Supported
+        , repeatX : Supported
+        , repeatY : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        , initial : Supported
+        , unset : Supported
+        , inherit : Supported
+        }
+    -> Style
+strokeRepeat (Value repeat) =
+    AppendProperty ("stroke-repeat:" ++ repeat)
+
+
+{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat) along the horizontal axis, then the vertical axis.
+
+    strokeRepeat2 repeat space
+
+    strokeRepeat2 space round
+
+If you only need to set one value for both, see
+[`strokeRepeat`](#strokeRepeat) instead.
+
+-}
+strokeRepeat2 :
+    Value
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
+    ->
+        Value
+            { repeat : Supported
+            , space : Supported
+            , round : Supported
+            , noRepeat : Supported
+            }
+    -> Style
+strokeRepeat2 (Value horiz) (Value vert) =
+    AppendProperty ("stroke-repeat:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+
+    strokeSize cover
+
+    strokeSize (px 400)
+
+If you give a length value, it will be used for the width. The height will be set
+proportional to the size of the [`stroke-image`](#strokeImage). If you
+need to set both width and height explicitly, use
+[`strokeImage2`](#strokeImage2) instead.
+
+-}
+strokeSize :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , cover : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeSize (Value size) =
+    AppendProperty ("stroke-size:" ++ size)
+
+
+{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+
+    strokeSize2 (px 300) (px 100)
+
+    strokeSize2 auto (px 400)
+
+If you only want to set the width, use [`strokeImage`](#strokeImage) instead.
+
+-}
+strokeSize2 :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , auto : Supported
+            }
+    -> Style
+strokeSize2 (Value width) (Value height) =
+    AppendProperty ("stroke-size:" ++ width ++ " " ++ height)
+
+
+{-| Sets [`stroke-dash-corner`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-corner).
+
+    strokeDashCorner none
+    strokeDashCorner (px 10)
+    strokeDashCorner (em 5)
+
+-}
+strokeDashCorner :
+    Value
+        { none : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , cover : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDashCorner (Value size) =
+    AppendProperty ("stroke-dash-corner:" ++ size)
+
+
+{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
+
+    strokeLinejoin crop
+    strokeLinejoin arcs
+    strokeLinejoin miter
+
+**Note:** if you only want to specifiy the rendering of the cap of a corner you need to use [`strokeLinejoin2`](#strokeLinejoin2)
+and set it's first value to `miter` like so: `strokeLinejoin2 miter bevel`.
+
+-}
+strokeLinejoin :
+    Value
+        { crop : Supported
+        , arcs : Supported
+        , miter : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeLinejoin (Value val) =
+    AppendProperty ("stroke-linejoin:" ++ val)
+
+
+{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
+
+    strokeLinejoin crop bevel
+    strokeLinejoin arcs round
+    strokeLinejoin miter stupid
+
+-}
+strokeLinejoin2 :
+    Value
+        { crop : Supported
+        , arcs : Supported
+        , miter : Supported
+        }
+    ->
+        Value
+            { bevel : Supported
+            , round : Supported
+            , stupid : Supported
+            }
+    -> Style
+strokeLinejoin2 (Value extendCorner) (Value capRender) =
+    AppendProperty ("stroke-linejoin:" ++ extendCorner ++ " " ++ capRender)
+
+
+{-| Sets `crop` value for usage with [`strokeLinejoin`](#strokeLinejoin).
+
+    strokeLinejoin crop
+
+-}
+crop : Value { provides | crop : Supported }
+crop =
+    Value "crop"
+
+
+{-| Sets `arcs` value for usage with [`strokeLinejoin`](#strokeLinejoin).
+
+    strokeLinejoin arcs
+
+-}
+arcs : Value { provides | arcs : Supported }
+arcs =
+    Value "arcs"
+
+
+{-| Sets `miter` value for usage with [`strokeLinejoin`](#strokeLinejoin).
+
+    strokeLinejoin miter
+
+-}
+miter : Value { provides | miter : Supported }
+miter =
+    Value "miter"
+
+
+{-| Sets `bevel` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
+
+    strokeLinejoin miter bevel
+
+-}
+bevel : Value { provides | bevel : Supported }
+bevel =
+    Value "bevel"
+
+
+{-| Sets `stupid` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
+
+    strokeLinejoin miter stupid
+
+-}
+stupid : Value { provides | stupid : Supported }
+stupid =
+    Value "stupid"
+
+
+{-| Sets [`stroke-dash-justify`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-justify).
+
+      strokeDashJustify none
+      strokeDashJustify stretch
+      strokeDashJustify compress
+      strokeDashJustify dashes
+      strokeDashJustify gaps
+
+-}
+strokeDashJustify :
+    Value
+        { none : Supported
+        , stretch : Supported
+        , compress : Supported
+        , dashes : Supported
+        , gaps : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+strokeDashJustify (Value val) =
+    AppendProperty ("stroke-dash-justify:" ++ val)
+
+
+{-| Sets `compress` value for usage with [`strokeDashJustify`](#strokeDashJustify).
+
+      strokeDashJustify compress
+
+-}
+compress : Value { provides | compress : Supported }
+compress =
+    Value "compress"
+
+
+{-| Sets `dashes` value for usage with [`strokeDashJustify`](#strokeDashJustify).
+
+      strokeDashJustify dashes
+
+-}
+dashes : Value { provides | dashes : Supported }
+dashes =
+    Value "dashes"
+
+
+{-| Sets `gaps` value for usage with [`strokeDashJustify`](#strokeDashJustify).
+
+      strokeDashJustify gaps
+
+-}
+gaps : Value { provides | gaps : Supported }
+gaps =
+    Value "gaps"
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
