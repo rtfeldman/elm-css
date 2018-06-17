@@ -3273,6 +3273,7 @@ fontSize :
         , pt : Supported
         , pc : Supported
         , pct : Supported
+        , zero : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
