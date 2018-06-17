@@ -10,6 +10,10 @@ module VirtualDom.Styled
         , lazy
         , lazy2
         , lazy3
+        , lazy4
+        , lazy5
+        , lazy6
+        , lazy7
         , makeSnippet
         , map
         , mapAttribute
@@ -158,22 +162,88 @@ mapAttribute transform (Attribute prop styles classname) =
     Attribute (VirtualDom.mapAttribute transform prop) styles classname
 
 
-lazy : (a -> VirtualDom.Node msg) -> a -> Node msg
+lazy : (a -> Node msg) -> a -> Node msg
 lazy fn arg =
-    VirtualDom.lazy fn arg
+    VirtualDom.lazy2 lazyHelp fn arg
         |> Unstyled
 
 
-lazy2 : (a -> b -> VirtualDom.Node msg) -> a -> b -> Node msg
+lazyHelp : (a -> Node msg) -> a -> VirtualDom.Node msg
+lazyHelp fn arg =
+    fn arg
+        |> toUnstyled
+
+
+lazy2 : (a -> b -> Node msg) -> a -> b -> Node msg
 lazy2 fn arg1 arg2 =
-    VirtualDom.lazy2 fn arg1 arg2
+    VirtualDom.lazy3 lazyHelp2 fn arg1 arg2
         |> Unstyled
 
 
-lazy3 : (a -> b -> c -> VirtualDom.Node msg) -> a -> b -> c -> Node msg
+lazyHelp2 : (a -> b -> Node msg) -> a -> b -> VirtualDom.Node msg
+lazyHelp2 fn arg1 arg2 =
+    fn arg1 arg2
+        |> toUnstyled
+
+
+lazy3 : (a -> b -> c -> Node msg) -> a -> b -> c -> Node msg
 lazy3 fn arg1 arg2 arg3 =
-    VirtualDom.lazy3 fn arg1 arg2 arg3
+    VirtualDom.lazy4 lazyHelp3 fn arg1 arg2 arg3
         |> Unstyled
+
+
+lazyHelp3 : (a -> b -> c -> Node msg) -> a -> b -> c -> VirtualDom.Node msg
+lazyHelp3 fn arg1 arg2 arg3 =
+    fn arg1 arg2 arg3
+        |> toUnstyled
+
+
+lazy4 : (a -> b -> c -> d -> Node msg) -> a -> b -> c -> d -> Node msg
+lazy4 fn arg1 arg2 arg3 arg4 =
+    VirtualDom.lazy5 lazyHelp4 fn arg1 arg2 arg3 arg4
+        |> Unstyled
+
+
+lazyHelp4 : (a -> b -> c -> d -> Node msg) -> a -> b -> c -> d -> VirtualDom.Node msg
+lazyHelp4 fn arg1 arg2 arg3 arg4 =
+    fn arg1 arg2 arg3 arg4
+        |> toUnstyled
+
+
+lazy5 : (a -> b -> c -> d -> e -> Node msg) -> a -> b -> c -> d -> e -> Node msg
+lazy5 fn arg1 arg2 arg3 arg4 arg5 =
+    VirtualDom.lazy6 lazyHelp5 fn arg1 arg2 arg3 arg4 arg5
+        |> Unstyled
+
+
+lazyHelp5 : (a -> b -> c -> d -> e -> Node msg) -> a -> b -> c -> d -> e -> VirtualDom.Node msg
+lazyHelp5 fn arg1 arg2 arg3 arg4 arg5 =
+    fn arg1 arg2 arg3 arg4 arg5
+        |> toUnstyled
+
+
+lazy6 : (a -> b -> c -> d -> e -> f -> Node msg) -> a -> b -> c -> d -> e -> f -> Node msg
+lazy6 fn arg1 arg2 arg3 arg4 arg5 arg6 =
+    VirtualDom.lazy7 lazyHelp6 fn arg1 arg2 arg3 arg4 arg5 arg6
+        |> Unstyled
+
+
+lazyHelp6 : (a -> b -> c -> d -> e -> f -> Node msg) -> a -> b -> c -> d -> e -> f -> VirtualDom.Node msg
+lazyHelp6 fn arg1 arg2 arg3 arg4 arg5 arg6 =
+    fn arg1 arg2 arg3 arg4 arg5 arg6
+        |> toUnstyled
+
+
+lazy7 : (a -> b -> c -> d -> e -> f -> g -> Node msg) -> a -> b -> c -> d -> e -> f -> g -> Node msg
+lazy7 fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 =
+    VirtualDom.lazy8 lazyHelp7 fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
+        |> Unstyled
+
+
+lazyHelp7 : (a -> b -> c -> d -> e -> f -> g -> Node msg) -> a -> b -> c -> d -> e -> f -> g -> VirtualDom.Node msg
+lazyHelp7 fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 =
+    fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
+        |> toUnstyled
 
 
 toUnstyled : Node msg -> VirtualDom.Node msg
