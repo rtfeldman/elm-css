@@ -315,6 +315,7 @@ module Css
         , preLine
         , preWrap
         , progress
+        , property
         , proportionalNums
         , pseudoClass
         , pseudoElement
@@ -479,6 +480,11 @@ functions let you define custom properties and selectors, respectively.
 ## Reusable Styles
 
 @docs Style, batch
+
+
+## Custom Properties
+
+@docs property
 
 
 ## General Values
@@ -881,6 +887,28 @@ type Value supports
 -}
 type Supported
     = Supported
+
+
+
+-- CUSTOM PROPERTIES --
+
+
+{-| Define a custom property.
+
+    css [ property "-webkit-font-smoothing" "none" ]
+
+...outputs
+
+    -webkit-font-smoothing: none;
+
+-}
+property : String -> String -> Style
+property key value =
+    Preprocess.AppendProperty (key ++ ":" ++ value)
+
+
+
+-- STYLES --
 
 
 {-| Create a style from multiple other styles.
