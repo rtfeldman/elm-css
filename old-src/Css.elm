@@ -1520,6 +1520,7 @@ calc firstExpr expression secondExpr =
         withoutCalcStr l =
             if String.startsWith "calc(" l.value then
                 String.dropLeft 4 l.value
+
             else
                 l.value
 
@@ -1796,6 +1797,7 @@ makeImportant : Property -> Property
 makeImportant str =
     if String.endsWith " !important" (String.toLower str) then
         str
+
     else
         str ++ " !important"
 
@@ -2270,6 +2272,7 @@ hex str =
         withoutHash =
             if String.startsWith "#" str then
                 String.dropLeft 1 str
+
             else
                 str
     in
@@ -2323,6 +2326,7 @@ withPrecedingHash : String -> String
 withPrecedingHash str =
     if String.startsWith "#" str then
         str
+
     else
         String.cons '#' str
 
@@ -8226,6 +8230,7 @@ valuesOrNone : List (Value compatible) -> Value {}
 valuesOrNone list =
     if List.isEmpty list then
         { value = "none" }
+
     else
         { value = String.join " " (List.map .value list) }
 
@@ -8234,6 +8239,7 @@ stringsToValue : List String -> Value {}
 stringsToValue list =
     if List.isEmpty list then
         { value = "none" }
+
     else
         { value = String.join ", " (List.map (\s -> s) list) }
 

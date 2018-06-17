@@ -441,18 +441,21 @@ dropEmptyDeclarations declarations =
         ((StyleBlockDeclaration (StyleBlock _ _ properties)) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((MediaRule _ styleBlocks) as declaration) :: rest ->
             if List.all (\(StyleBlock _ _ properties) -> List.isEmpty properties) styleBlocks then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((SupportsRule _ otherDeclarations) as declaration) :: rest ->
             if List.isEmpty otherDeclarations then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
@@ -462,36 +465,42 @@ dropEmptyDeclarations declarations =
         ((PageRule _ properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((FontFace properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((Keyframes _ properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((Viewport properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((CounterStyle properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((FontFeatureValues tuples) as declaration) :: rest ->
             if List.all (\( _, properties ) -> List.isEmpty properties) tuples then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 

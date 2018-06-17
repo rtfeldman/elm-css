@@ -777,6 +777,7 @@ import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
 
 
+
 -- TYPES --
 
 
@@ -1271,6 +1272,7 @@ hex str =
     Value <|
         if String.startsWith "#" str then
             String.dropLeft 1 str
+
         else
             str
 
@@ -2804,6 +2806,7 @@ boxShadowConfigToString config =
         insetStr =
             if config.inset then
                 "inset "
+
             else
                 ""
     in
@@ -7328,7 +7331,6 @@ dashed =
     Value "dashed"
 
 
-
 {-| The `solid` value used by properties such as [`borderStyle`](#borderStyle),
 [`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
@@ -7380,7 +7382,7 @@ groove =
     borderStyle ridge
     columnRuleStyle ridge
     textDecorationStyle ridge
-    
+
 Similar to [`groove`](#groove), but reverses the color values in a way that makes things appear raised.
 
 -}
