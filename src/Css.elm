@@ -905,7 +905,7 @@ revert =
 
 {-| The `url` value for the [`cursor`](#cursor),
 [`fill`](#fill),
-[`stroke-image`](#strokeImage),
+[`strokeImage`](#strokeImage),
 and [`backgroundImage`](#backgroundImage) properties.
 -}
 url : String -> Value { provides | url : Supported }
@@ -924,8 +924,8 @@ auto =
 
 
 {-| The `none` value used for properties such as [`display`](#display),
-[`border-style`](#borderStyle),
-and [`stroke-dash-justify`](#strokeDashJustify).
+[`borderStyle`](#borderStyle),
+and [`strokeDashJustify`](#strokeDashJustify).
 
     display none
     borderStyle none
@@ -3886,9 +3886,9 @@ backgroundClips firstValue values =
     AppendProperty ("background-clip:" ++ str)
 
 
-{-| The `border-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values),
-[`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values),
-and [`stroke-origin`](#strokeOrigin).
+{-| The `border-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
 
     backgroundClip borderBox
     backgroundOrigin borderBox
@@ -3900,9 +3900,9 @@ borderBox =
     Value "border-box"
 
 
-{-| The `padding-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values),
-[`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values),
-and [`stroke-origin`](#strokeOrigin).
+{-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](#backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
 
     backgroundClip paddingBox
     backgroundOrigin paddingBox
@@ -3914,9 +3914,9 @@ paddingBox =
     Value "padding-box"
 
 
-{-| The `content-box` value, used with [`background-clip`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values),
-[`background-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin#Values),
-and [`stroke-origin`](#strokeOrigin).
+{-| The `content-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](#backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
 
     backgroundClip contentBox
     backgroundOrigin contentBox
@@ -4306,7 +4306,7 @@ backgroundRepeat2 (Value horiz) (Value vert) =
 
 
 {-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
-and [`stroke-repeat`](#strokeRepeat).
+and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat repeat
     strokeRepeat repeat
@@ -4318,7 +4318,7 @@ repeat =
 
 
 {-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
-and [`stroke-repeat`](#strokeRepeat).
+and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat noRepeat
     strokeRpeat noRepeat
@@ -4330,7 +4330,7 @@ noRepeat =
 
 
 {-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
-and [`stroke-repeat`](#strokeRepeat) horizontally.
+and [`strokeRepeat`](#strokeRepeat) horizontally.
 
     backgroundRepeat repeatX
     strokeRepeat repeatX
@@ -4342,7 +4342,7 @@ repeatX =
 
 
 {-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
-and [`stroke-repeat`](#strokeRepeat) vertically.
+and [`strokeRepeat`](#strokeRepeat) vertically.
 
     backgroundRepeat repeatY
     strokeRepeat repeatY
@@ -4354,7 +4354,7 @@ repeatY =
 
 
 {-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
-and [`stroke-repeat`](#strokeRepeat) without cutting off edges by adding space.
+and [`strokeRepeat`](#strokeRepeat) without cutting off edges by adding space.
 
     backgroundRepeat space
     strokeRepeat space
@@ -4368,9 +4368,9 @@ space =
 
 
 {-| The `round` value used for properties such as [repeating background](#backgroundRepeat) without cutting off edges by stretching or shrinking the image,
-and [`stroke-linecap`](#strokeLinecap),
-and [`stroke-repeat`](#strokeRepeat),
-and [`stroke-linejoin`](#strokeLinejoin2).
+and [`strokeLinecap`](#strokeLinecap),
+and [`strokeRepeat`](#strokeRepeat),
+and [`strokeLinejoin`](#strokeLinejoin2).
 
     backgroundRepeat round
     strokeLineCap round
@@ -4492,7 +4492,7 @@ contain =
 
 
 {-| Sets [`cover`](https://css-tricks.com/almanac/properties/b/background-size/)
-for [`backgroundSize`](#backgroundSize), and [`stroke-size`](#strokeSize). It fills the whole space available with
+for [`backgroundSize`](#backgroundSize), and [`strokeSize`](#strokeSize). It fills the whole space available with
 the background image by scaling, even if it cuts off some of the image.
 
     backgroundSize cover
@@ -6581,8 +6581,8 @@ ridge =
     Value "ridge"
 
 
-{-| The `inset` value used for properties such as [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0),
-and [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align).
+{-| The `inset` value used for properties such as [`borderStyle`](#borderStyle),
+and [`strokeAlign`](#stokeAlign).
 
     borderStyle inset
     strokeAlign inset
@@ -6593,8 +6593,8 @@ inset =
     Value "inset"
 
 
-{-| The `outset` value used for properties such as [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0),
-and [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align).
+{-| The `outset` value used for properties such as [`borderStyle`](#borderStyle),
+and [`strokeAlign`](#strokeAlign).
 
     borderStyle outset
     strokeAlign outset
@@ -8114,7 +8114,7 @@ strokeLinecap (Value val) =
     AppendProperty ("stroke-linecap:" ++ val)
 
 
-{-| A `butt` value for the [`stroke-linecap`](#strokeLinecap) property.
+{-| A `butt` value for the [`strokeLinecap`](#strokeLinecap) property.
 
       strokeLinecap butt
 
@@ -8124,7 +8124,7 @@ butt =
     Value "butt"
 
 
-{-| A `square` value for the [`stroke-linecap`](#strokeLinecap) property.
+{-| A `square` value for the [`strokeLinecap`](#strokeLinecap) property.
 
       strokeLinecap square
 
@@ -8214,7 +8214,7 @@ strokeBreak (Value val) =
     AppendProperty ("stroke-break:" ++ val)
 
 
-{-| A `boundingBox` value for the [`stroke-break`](#strokeBreak) property.
+{-| A `boundingBox` value for the [`strokeBreak`](#strokeBreak) property.
 
       strokeBreak boundingBox
 
@@ -8224,7 +8224,7 @@ boundingBox =
     Value "bounding-box"
 
 
-{-| A `slice` value for the [`stroke-break`](#strokeBreak) property.
+{-| A `slice` value for the [`strokeBreak`](#strokeBreak) property.
 
       strokeBreak slice
 
@@ -8234,7 +8234,7 @@ slice =
     Value "slice"
 
 
-{-| A `clone` value for the [`stroke-break`](#strokeBreak) property.
+{-| A `clone` value for the [`strokeBreak`](#strokeBreak) property.
 
       strokeBreak clone
 
@@ -8348,7 +8348,7 @@ strokeOrigin (Value val) =
     AppendProperty ("stroke-origin:" ++ val)
 
 
-{-| A `fillBox` value for the [`stroke-origin`](#strokeOrigin) property.
+{-| A `fillBox` value for the [`strokeOrigin`](#strokeOrigin) property.
 
       strokeOrigin fillBox
 
@@ -8358,7 +8358,7 @@ fillBox =
     Value "fill-box"
 
 
-{-| A `strokeBox` value for the [`stroke-origin`](#strokeOrigin) property.
+{-| A `strokeBox` value for the [`strokeOrigin`](#strokeOrigin) property.
 
       strokeOrigin strokeBox
 
@@ -8789,7 +8789,7 @@ strokeLinejoin2 (Value extendCorner) (Value capRender) =
     AppendProperty ("stroke-linejoin:" ++ extendCorner ++ " " ++ capRender)
 
 
-{-| Sets `crop` value for usage with [`stroke-linejoin`](#strokeLinejoin).
+{-| Sets `crop` value for usage with [`strokeLinejoin`](#strokeLinejoin).
 
     strokeLinejoin crop
 
@@ -8799,7 +8799,7 @@ crop =
     Value "crop"
 
 
-{-| Sets `arcs` value for usage with [`stroke-linejoin`](#strokeLinejoin).
+{-| Sets `arcs` value for usage with [`strokeLinejoin`](#strokeLinejoin).
 
     strokeLinejoin arcs
 
@@ -8809,7 +8809,7 @@ arcs =
     Value "arcs"
 
 
-{-| Sets `miter` value for usage with [`stroke-linejoin`](#strokeLinejoin).
+{-| Sets `miter` value for usage with [`strokeLinejoin`](#strokeLinejoin).
 
     strokeLinejoin miter
 
@@ -8819,7 +8819,7 @@ miter =
     Value "miter"
 
 
-{-| Sets `bevel` value for usage with [`stroke-linejoin`](#strokeLinejoins2).
+{-| Sets `bevel` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
 
     strokeLinejoin miter bevel
 
@@ -8829,7 +8829,7 @@ bevel =
     Value "bevel"
 
 
-{-| Sets `stupid` value for usage with [`stroke-linejoin`](#strokeLinejoins2).
+{-| Sets `stupid` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
 
     strokeLinejoin miter stupid
 
@@ -8864,7 +8864,7 @@ strokeDashJustify (Value val) =
     AppendProperty ("stroke-dash-justify:" ++ val)
 
 
-{-| Sets `compress` value for usage with [`stroke-dash-justify`](#strokeDashJustify).
+{-| Sets `compress` value for usage with [`strokeDashJustify`](#strokeDashJustify).
 
       strokeDashJustify compress
 
@@ -8874,7 +8874,7 @@ compress =
     Value "compress"
 
 
-{-| Sets `dashes` value for usage with [`stroke-dash-justify`](#strokeDashJustify).
+{-| Sets `dashes` value for usage with [`strokeDashJustify`](#strokeDashJustify).
 
       strokeDashJustify dashes
 
@@ -8884,7 +8884,7 @@ dashes =
     Value "dashes"
 
 
-{-| Sets `gaps` value for usage with [`stroke-dash-justify`](#strokeDashJustify).
+{-| Sets `gaps` value for usage with [`strokeDashJustify`](#strokeDashJustify).
 
       strokeDashJustify gaps
 
