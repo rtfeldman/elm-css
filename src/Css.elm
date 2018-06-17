@@ -15,6 +15,7 @@ module Css
         , allPetiteCaps
         , allScroll
         , allSmallCaps
+        , all_
         , arabicIndic
         , arcs
         , armenian
@@ -37,6 +38,8 @@ module Css
         , backgroundRepeat2
         , backgroundSize
         , backgroundSize2
+        , balance
+        , balanceAll
         , baseline
         , batch
         , before
@@ -64,6 +67,14 @@ module Css
         , borderColor2
         , borderColor3
         , borderColor4
+        , borderImageOutset
+        , borderImageOutset2
+        , borderImageOutset3
+        , borderImageOutset4
+        , borderImageWidth
+        , borderImageWidth2
+        , borderImageWidth3
+        , borderImageWidth4
         , borderLeft
         , borderLeft2
         , borderLeft3
@@ -122,6 +133,19 @@ module Css
         , colorBurn
         , colorDodge
         , color_
+        , columnCount
+        , columnFill
+        , columnGap
+        , columnRule
+        , columnRule2
+        , columnRule3
+        , columnRuleColor
+        , columnRuleStyle
+        , columnRuleWidth
+        , columnSpan
+        , columnWidth
+        , columns
+        , columns2
         , commonLigatures
         , compress
         , contain
@@ -213,6 +237,7 @@ module Css
         , left_
         , lighten
         , lighter
+        , lineThrough
         , linearGradient
         , liningNums
         , listStyle
@@ -223,6 +248,14 @@ module Css
         , ltr
         , luminosity
         , malayalam
+        , margin
+        , margin2
+        , margin3
+        , margin4
+        , marginBottom
+        , marginLeft
+        , marginRight
+        , marginTop
         , matchParent
         , medium
         , middle
@@ -263,7 +296,16 @@ module Css
         , overflowX
         , overflowY
         , overlay
+        , overline
+        , padding
+        , padding2
+        , padding3
+        , padding4
+        , paddingBottom
         , paddingBox
+        , paddingLeft
+        , paddingRight
+        , paddingTop
         , pc
         , pct
         , petiteCaps
@@ -365,6 +407,14 @@ module Css
         , text
         , textAlign
         , textBottom
+        , textDecoration
+        , textDecoration2
+        , textDecoration3
+        , textDecorationColor
+        , textDecorationLine
+        , textDecorationLine2
+        , textDecorationLine3
+        , textDecorationStyle
         , textOrientation
         , textRendering
         , textTop
@@ -385,6 +435,7 @@ module Css
         , top
         , top_
         , turn
+        , underline
         , unicase
         , unsafeCenter
         , unset
@@ -414,7 +465,10 @@ module Css
         , zoomOut
         )
 
-{-|
+{-| If you need something that `elm-css` does not support right now, the
+[`Css.property`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#property)
+and [`Css.Global.selector`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Global#selector)
+functions let you define custom properties and selectors, respectively.
 
 
 ## CSS Values
@@ -524,6 +578,13 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
 
 
+## Border Image
+
+@docs borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
+
+@docs borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
+
+
 ## Display
 
 @docs display, displayFlex
@@ -536,6 +597,16 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs position, top, right, bottom, left, zIndex
 
 @docs absolute, fixed, relative, static, sticky
+
+
+## Paddings
+
+@docs padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
+
+
+## Margins
+
+@docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
 
 
 ## Flexbox
@@ -574,7 +645,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Font Variant Ligatures
 
-@docs fontVariantLigatures , commonLigatures , noCommonLigatures , discretionaryLigatures , noDiscretionaryLigatures , historicalLigatures , noHistoricalLigatures , contextual , noContextual
+@docs fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
 
 
 ## Font Variant Numeric
@@ -658,7 +729,9 @@ Multiple CSS properties use these values.
 
 ## Text Decoration
 
-@docs wavy
+@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+
+@docs wavy, underline, overline, lineThrough
 
 
 # Tables
@@ -741,10 +814,18 @@ Multiple CSS properties use these values.
 @docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, stupid
 @docs strokeDashJustify, compress, dashes, gaps
 
+
+# Columns
+
+@docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
+@docs columnFill, balance, balanceAll
+@docs columnSpan, all_
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
+
 
 
 -- TYPES --
@@ -1247,6 +1328,7 @@ hex str =
     Value <|
         if String.startsWith "#" str then
             String.dropLeft 1 str
+
         else
             str
 
@@ -1499,7 +1581,7 @@ sticky =
 
 {-| Sets [`z-index`](https://css-tricks.com/almanac/properties/z/z-index/)
 
-    zIndex (num 10)
+    zIndex (int 10)
     zIndex auto
 
 **NOTE:** Z-index is not as simple as it looks! Make sure to read about [stacking contexts](https://css-tricks.com/css-stacking-contexts/) if you're not already familiar with them.
@@ -1507,7 +1589,7 @@ sticky =
 -}
 zIndex :
     Value
-        { num : Supported
+        { int : Supported
         , auto : Supported
         , inherit : Supported
         , initial : Supported
@@ -1516,6 +1598,786 @@ zIndex :
     -> Style
 zIndex (Value val) =
     AppendProperty ("z-index:" ++ val)
+
+
+
+-- PADDINGS --
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+padding (Value value) =
+    AppendProperty ("padding:" ++ value)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+padding2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+
+    padding (em 4)
+    padding2 (em 4) (px 2)
+    padding3 (em 4) (px 2) (pct 5)
+    padding4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+padding4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            }
+    -> Style
+padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`padding-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top) property.
+
+    paddingTop (px 4)
+
+-}
+paddingTop :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingTop (Value value) =
+    AppendProperty ("padding-top:" ++ value)
+
+
+{-| Sets [`padding-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right) property.
+
+    paddingRight (px 4)
+
+-}
+paddingRight :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingRight (Value value) =
+    AppendProperty ("padding-right:" ++ value)
+
+
+{-| Sets [`padding-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom) property.
+
+    paddingBottom (px 4)
+
+-}
+paddingBottom :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingBottom (Value value) =
+    AppendProperty ("padding-bottom:" ++ value)
+
+
+{-| Sets [`padding-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left) property.
+
+    paddingLeft (px 4)
+
+-}
+paddingLeft :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+paddingLeft (Value value) =
+    AppendProperty ("padding-left:" ++ value)
+
+
+
+-- MARGINS --
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+margin (Value value) =
+    AppendProperty ("margin:" ++ value)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , auto : Supported
+            }
+    -> Style
+margin2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , auto : Supported
+            }
+    -> Style
+margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+
+    margin (em 4)
+    margin2 (em 4) (px 2)
+    margin3 (em 4) (px 2) (pct 5)
+    margin4 (em 4) (px 2) (pct 5) (px 3)
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , auto : Supported
+            }
+    -> Style
+margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top) property.
+
+    marginTop (px 4)
+
+This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
+
+-}
+marginTop :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+marginTop (Value value) =
+    AppendProperty ("margin-top:" ++ value)
+
+
+{-| Sets [`margin-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right) property.
+
+    marginRight (px 4)
+
+-}
+marginRight :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+marginRight (Value value) =
+    AppendProperty ("margin-right:" ++ value)
+
+
+{-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom) property.
+
+    marginBottom (px 4)
+
+This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
+
+-}
+marginBottom :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+marginBottom (Value value) =
+    AppendProperty ("margin-bottom:" ++ value)
+
+
+{-| Sets [`margin-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left) property.
+
+    marginLeft (px 4)
+
+-}
+marginLeft :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+marginLeft (Value value) =
+    AppendProperty ("margin-left:" ++ value)
 
 
 
@@ -1785,7 +2647,6 @@ pct value =
 
 {-| A unitless number. Useful with properties like
 [`flexGrow`](#flexGrow),
-[`zIndex`](#zIndex),
 and [`order`](#order)
 which accept unitless numbers.
 
@@ -1798,9 +2659,9 @@ num value =
     Value (toString value)
 
 
-{-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset) which accept either length units or unitless numbers for some properties.
+{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
 
-    borderImageOutset (int 3)
+    zIndex (int 3)
 
 -}
 int : Int -> Value { provides | int : Supported }
@@ -2001,6 +2862,7 @@ boxShadowConfigToString config =
         insetStr =
             if config.inset then
                 "inset "
+
             else
                 ""
     in
@@ -2422,10 +3284,13 @@ small =
     Value "small"
 
 
-{-| The `medium` [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values) or [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `medium` value used by properties such as [`fontSize`](#fontSize),
+[`borderWidth`](#borderWidth),
+[`columnRuleWidth`](#columnRuleWidth).
 
     fontSize medium
     borderWidth medium
+    columnRuleWidth medium
 
 The value is equivalent of 3px when using for `border-width`.
 
@@ -2754,15 +3619,17 @@ fontVariantCaps (Value str) =
 
 
 {-| The `normal` value, which can be used with such properties as
-[`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values),
-[`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/),
-[`word-break`](https://css-tricks.com/almanac/properties/w/word-break/),
-and [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
+[`fontVariantCaps`](#fontVariantCaps),
+[`whiteSpace`](#whiteSpace),
+[`wordBreak`](#wordBreak),
+[`columnGap`](#columnGap),
+and [`alignItems`](#alignItems).
 
     fontVariantCaps normal
     whiteSpace normal
     wordBreak normal
     alignItems normal
+    columnGap normal
 
 -}
 normal : Value { provides | normal : Supported }
@@ -3570,8 +4437,17 @@ local =
     Value "local"
 
 
-{-| Sets [`background-blend-mode`](https://css-tricks.com/almanac/properties/b/background-blend-mode/).
+{-| The `text` [`background-clip` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values).
 
+    backgroundClip text_
+
+-}
+text_ : Value { provides | text_ : Supported }
+text_ =
+    Value "text"
+
+
+{-| Sets [`background-blend-mode`](https://css-tricks.com/almanac/properties/b/background-blend-mode/).
 Note that this takes an argument of [`color_`](#color_), not [`color`](#color)!
 
     backgroundBlendMode color_
@@ -3825,7 +4701,6 @@ luminosity =
 
 
 {-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
-
 Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
 
     backgroundClip text_
@@ -3851,7 +4726,6 @@ backgroundClip (Value str) =
 
 
 {-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
-
 Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
 
     backgroundClips text_ [ borderBox, text_ ]
@@ -3886,20 +4760,6 @@ backgroundClips firstValue values =
     AppendProperty ("background-clip:" ++ str)
 
 
-{-| The `border-box` value, used with [`backgroundClip`](#backgroundClip),
-[`backgroundOrigin`](backgroundOrigin),
-and [`strokeOrigin`](#strokeOrigin).
-
-    backgroundClip borderBox
-    backgroundOrigin borderBox
-    strokeOrigin borderBox
-
--}
-borderBox : Value { provides | borderBox : Supported }
-borderBox =
-    Value "border-box"
-
-
 {-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
 [`backgroundOrigin`](#backgroundOrigin),
 and [`strokeOrigin`](#strokeOrigin).
@@ -3928,14 +4788,18 @@ contentBox =
     Value "content-box"
 
 
-{-| The `text` [`background-clip` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values).
+{-| The `border-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
 
-    backgroundClip text_
+    backgroundClip borderBox
+    backgroundOrigin borderBox
+    strokeOrigin borderBox
 
 -}
-text_ : Value { provides | text_ : Supported }
-text_ =
-    Value "text"
+borderBox : Value { provides | borderBox : Supported }
+borderBox =
+    Value "border-box"
 
 
 
@@ -4359,8 +5223,6 @@ and [`strokeRepeat`](#strokeRepeat) without cutting off edges by adding space.
     backgroundRepeat space
     strokeRepeat space
 
-)
-
 -}
 space : Value { provides | space : Supported }
 space =
@@ -4374,8 +5236,8 @@ and [`strokeLinejoin`](#strokeLinejoin2).
 
     backgroundRepeat round
     strokeLineCap round
-    strokeRepeat round
     strokeLinejoin2 miter round
+    strokeRepeat round
 
 -}
 round : Value { provides | round : Supported }
@@ -4390,7 +5252,6 @@ round =
 {-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/).
 
     backgroundSize cover
-
     backgroundSize (px 400)
 
 If you give a length value, it will be used for the width. The height will be set
@@ -6482,9 +7343,11 @@ borderLeftColor (Value color) =
 -- BORDER WIDTH --
 
 
-{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `thin` value used by properties such as [`borderWidth`](#borderWidth),
+and [`columnRuleWidth`](#columnRuleWidth).
 
     borderWidth thin
+    columnRuleWidth thin
 
 The value is equivalent of 1px.
 
@@ -6494,9 +7357,11 @@ thin =
     Value "thin"
 
 
-{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `thick` value used by properties such as [`borderWidth`](#borderWidth),
+and [`columnRuleWidth`](#columnRuleWidth).
 
     borderWidth thick
+    columnRuleWidth thick
 
 The value is equivalent of 5px.
 
@@ -6510,11 +7375,14 @@ thick =
 -- BORDER STYLE --
 
 
-{-| The `dotted` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `dotted` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+It represents a line that consists of dots.
 
     borderStyle dotted
-
-A line that consists of dots.
+    columnRuleStyle dotted
+    textDecorationStyle dotted
 
 -}
 dotted : Value { provides | dotted : Supported }
@@ -6522,10 +7390,14 @@ dotted =
     Value "dotted"
 
 
-{-| The `dashed` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
-borderStyle dashed
+{-| The `dashed` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
-A line that consists of dashes.
+    borderStyle dashed
+    columnRuleStyle dashed
+    textDecorationStyle dashed
+
+It represents a line that consists of dashes.
 
 -}
 dashed : Value { provides | dashed : Supported }
@@ -6533,11 +7405,14 @@ dashed =
     Value "dashed"
 
 
-{-| The `solid` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `solid` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle solid
+    columnRuleStyle solid
+    textDecorationStyle solid
 
-A solid, continuous line.
+It represents a solid, continuous line.
 
 -}
 solid : Value { provides | solid : Supported }
@@ -6545,11 +7420,14 @@ solid =
     Value "solid"
 
 
-{-| The `double` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `double` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle double
+    columnRuleStyle double
+    textDecorationStyle double
 
-Two lines are drawn around the element.
+It represents a double line: two lines side by side.
 
 -}
 double : Value { provides | double : Supported }
@@ -6557,11 +7435,14 @@ double =
     Value "double"
 
 
-{-| The `groove` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+{-| The `groove` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle groove
+    columnRuleStyle groove
+    textDecorationStyle groove
 
-Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
+Adds a bevel based on the color value, which makes things appear pressed into the document.
 
 -}
 groove : Value { provides | groove : Supported }
@@ -6569,11 +7450,14 @@ groove =
     Value "groove"
 
 
-{-| The `ridge` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `ridge` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle ridge
+    columnRuleStyle ridge
+    textDecorationStyle ridge
 
-Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
+Similar to [`groove`](#groove), but reverses the color values in a way that makes things appear raised.
 
 -}
 ridge : Value { provides | ridge : Supported }
@@ -6581,11 +7465,16 @@ ridge =
     Value "ridge"
 
 
-{-| The `inset` value used for properties such as [`borderStyle`](#borderStyle),
-and [`strokeAlign`](#stokeAlign).
+{-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle inset
-    strokeAlign inset
+    columnRuleStyle inset
+    textDecorationStyle inset
+
+Adds a split tone to the line that makes it appear slightly depressed.
+
+Contrast with [`outset`](#outset)
 
 -}
 inset : Value { provides | inset : Supported }
@@ -6593,11 +7482,17 @@ inset =
     Value "inset"
 
 
-{-| The `outset` value used for properties such as [`borderStyle`](#borderStyle),
+{-| The `outset` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle),
+and [`textDecorationStyle`](#textDecorationStyle),
 and [`strokeAlign`](#strokeAlign).
 
     borderStyle outset
+    columnRuleStyle outset
     strokeAlign outset
+    textDecorationStyle outset
+
+Similar to [`inset`](#inset), but reverses the colors in a way that makes it appear slightly raised.
 
 -}
 outset : Value { provides | outset : Supported }
@@ -7100,6 +7995,241 @@ borderBottomRightRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-right-radius:" ++ horizontal ++ " " ++ vertical)
 
 
+
+-- BORDER WIDTH --
+
+
+{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+
+    borderWidth thin
+
+The value is equivalent of 1px.
+
+-}
+thin : Value { provides | thin : Supported }
+thin =
+    Value "thin"
+
+
+{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+
+    borderWidth thick
+
+The value is equivalent of 5px.
+
+-}
+thick : Value { provides | thick : Supported }
+thick =
+    Value "thick"
+
+
+
+-- BORDER STYLE --
+
+
+{-| The `dotted` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle dotted
+
+A line that consists of dots.
+
+-}
+dotted : Value { provides | dotted : Supported }
+dotted =
+    Value "dotted"
+
+
+{-| The `dashed` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+borderStyle dashed
+
+A line that consists of dashes.
+
+-}
+dashed : Value { provides | dashed : Supported }
+dashed =
+    Value "dashed"
+
+
+{-| The `solid` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle solid
+
+A solid, continuous line.
+
+-}
+solid : Value { provides | solid : Supported }
+solid =
+    Value "solid"
+
+
+{-| The `double` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle double
+
+Two lines are drawn around the element.
+
+-}
+double : Value { provides | double : Supported }
+double =
+    Value "double"
+
+
+{-| The `groove` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle groove
+
+Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
+
+-}
+groove : Value { provides | groove : Supported }
+groove =
+    Value "groove"
+
+
+{-| The `ridge` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+
+    borderStyle ridge
+
+Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
+
+-}
+ridge : Value { provides | ridge : Supported }
+ridge =
+    Value "ridge"
+
+
+{-| The `inset` value used for properties such as [`borderStyle`](#borderStyle),
+and [`strokeAlign`](#stokeAlign).
+
+    borderStyle inset
+    strokeAlign inset
+
+-}
+inset : Value { provides | inset : Supported }
+inset =
+    Value "inset"
+        ||||||| merged common ancestors
+
+
+borderLeftColor (Value color) =
+    AppendProperty ("border-left-color:" ++ color)
+
+
+
+-- BORDER WIDTH --
+
+
+{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+
+    borderWidth thin
+
+The value is equivalent of 1px.
+
+-}
+thin : Value { provides | thin : Supported }
+thin =
+    Value "thin"
+
+
+{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+
+    borderWidth thick
+
+The value is equivalent of 5px.
+
+-}
+thick : Value { provides | thick : Supported }
+thick =
+    Value "thick"
+
+
+
+-- BORDER STYLE --
+
+
+{-| The `dotted` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle dotted
+
+A line that consists of dots.
+
+-}
+dotted : Value { provides | dotted : Supported }
+dotted =
+    Value "dotted"
+
+
+{-| The `dashed` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+borderStyle dashed
+
+A line that consists of dashes.
+
+-}
+dashed : Value { provides | dashed : Supported }
+dashed =
+    Value "dashed"
+
+
+{-| The `solid` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle solid
+
+A solid, continuous line.
+
+-}
+solid : Value { provides | solid : Supported }
+solid =
+    Value "solid"
+
+
+{-| The `double` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle double
+
+Two lines are drawn around the element.
+
+-}
+double : Value { provides | double : Supported }
+double =
+    Value "double"
+
+
+{-| The `groove` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle groove
+
+Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
+
+-}
+groove : Value { provides | groove : Supported }
+groove =
+    Value "groove"
+
+
+{-| The `ridge` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle ridge
+
+Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
+
+-}
+ridge : Value { provides | ridge : Supported }
+ridge =
+    Value "ridge"
+
+
+{-| The `inset` [`border-style`](<https://css-tricks.com/almanac/properties/b/border/#article-header-id-0> value.
+
+    borderStyle inset
+
+Adds a split tone to the line that makes the element appear slightly depressed.
+
+-}
+inset : Value { provides | inset : Supported }
+inset =
+    Value "inset"
+
+
 {-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
 
     borderBottomLeftRadius  (em 4)
@@ -7180,6 +8310,532 @@ borderBottomLeftRadius2 :
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderImageOutset (Value width) =
+    AppendProperty ("border-image-outset:" ++ width)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+    borderImageOutset2 (num 1) (num 1.2)
+    borderImageOutset3 (px 30) (num 2) (px 45)
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            }
+    -> Style
+borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+borderImageWidth (Value width) =
+    AppendProperty ("border-image-width:" ++ width)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-width:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+    borderImageWidth2 (num 1) (num 1.2)
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , num : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , num : Supported
+            , auto : Supported
+            }
+    -> Style
+borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
 
 
@@ -7358,6 +9014,232 @@ fullWidth =
 
 
 
+-- TEXT DECORATION --
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecoration (Value line) =
+    AppendProperty ("text-decoration:" ++ line)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration2 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    -> Style
+textDecoration2 (Value line) (Value style) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ style)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration underline
+    textDecoration2 underline dotted
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration3 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+textDecoration3 (Value line) (Value style) (Value color) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ color)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationLine (Value line) =
+    AppendProperty ("text-decoration-line:" ++ line)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine2 :
+    Value
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    -> Style
+textDecorationLine2 (Value line1) (Value line2) =
+    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+    textDecorationLine2 underline overline
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine3 :
+    Value
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    -> Style
+textDecorationLine3 (Value line1) (Value line2) (Value line3) =
+    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2 ++ " " ++ line3)
+
+
+{-| Sets [`text-decoration-style`][text-decoration-style] property.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/
+
+-}
+textDecorationStyle :
+    Value
+        { solid : Supported
+        , double : Supported
+        , dotted : Supported
+        , dashed : Supported
+        , wavy : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationStyle (Value style) =
+    AppendProperty ("text-decoration-style:" ++ style)
+
+
+{-| Sets [`text-decoration-color`][text-decoration-color] property.
+
+    textDecorationColor (hex "#0cf")
+
+[text-decoration-color]: https://css-tricks.com/almanac/properties/t/text-decoration-color/
+
+-}
+textDecorationColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationColor (Value color) =
+    AppendProperty ("text-decoration-color:" ++ color)
+
+
+
 -- ANGLES --
 
 
@@ -7413,11 +9295,52 @@ turn turns =
 -- TEXT DECORATION --
 
 
-{-| A `wavy` [text decoration style](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-style#Values).
+{-| The `wavy` [`text-decoration-style`][text-decoration-style] value.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
+
 -}
 wavy : Value { provides | wavy : Supported }
 wavy =
     Value "wavy"
+
+
+{-| The `underline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine underline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+underline : Value { provides | underline : Supported }
+underline =
+    Value "underline"
+
+
+{-| The `overline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine overline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+overline : Value { provides | overline : Supported }
+overline =
+    Value "overline"
+
+
+{-| The `line-through` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+lineThrough : Value { provides | lineThrough : Supported }
+lineThrough =
+    Value "line-through"
 
 
 
@@ -8030,6 +9953,320 @@ fill :
     -> Style
 fill (Value val) =
     AppendProperty ("fill:" ++ val)
+
+
+
+-- COLUMNS --
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+    columns2 (px 300) (num 2)
+
+-}
+columns :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columns (Value width) =
+    AppendProperty ("columns:" ++ width)
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+    columns2 (px 300) (num 2)
+
+-}
+columns2 :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , num : Supported
+            }
+    -> Style
+columns2 (Value width) (Value count) =
+    AppendProperty ("columns:" ++ width ++ " " ++ count)
+
+
+{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
+
+    columnWidth auto
+    columnWidth (px 200)
+
+-}
+columnWidth :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnWidth (Value width) =
+    AppendProperty ("column-width:" ++ width)
+
+
+{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
+
+    columnCount auto
+    columnCount (num 3)
+
+-}
+columnCount :
+    Value
+        { auto : Supported
+        , num : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnCount (Value count) =
+    AppendProperty ("column-count:" ++ count)
+
+
+{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
+
+    columnFill auto
+    columnFill balance
+    columnFill balanceAll
+
+-}
+columnFill :
+    Value
+        { auto : Supported
+        , balance : Supported
+        , balanceAll : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnFill (Value val) =
+    AppendProperty ("column-fill:" ++ val)
+
+
+{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balance
+
+-}
+balance : Value { provides | balance : Supported }
+balance =
+    Value "balance"
+
+
+{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balanceAll
+
+-}
+balanceAll : Value { provides | balanceAll : Supported }
+balanceAll =
+    Value "balance-all"
+
+
+{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
+
+    columnSpan all_
+    columnSpan none
+
+-}
+columnSpan :
+    Value
+        { none : Supported
+        , all_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnSpan (Value span) =
+    AppendProperty ("column-span:" ++ span)
+
+
+{-| A `all` value used in properties such as [`columnSpan`](#columnSpan).
+
+    columnSpan all_
+
+-}
+all_ : Value { provides | all_ : Supported }
+all_ =
+    Value "all"
+
+
+{-| Sets [`column-gap`](https://css-tricks.com/almanac/properties/c/column-gap/)
+
+    columnGap normal
+    columnGap (px 20)
+
+-}
+columnGap :
+    Value
+        { normal : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnGap (Value width) =
+    AppendProperty ("column-gap:" ++ width)
+
+
+{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
+
+    columnRuleWidth thin
+    columnRuleWidth (px 2)
+
+-}
+columnRuleWidth :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleWidth (Value width) =
+    AppendProperty ("column-rule-width:" ++ width)
+
+
+{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
+
+    columnRuleStyle solid
+    columnRuleStyle dotted
+    columnRuleStyle dashed
+
+-}
+columnRuleStyle :
+    Value
+        { solid : Supported
+        , none : Supported
+        , hidden : Supported
+        , dashed : Supported
+        , dotted : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleStyle (Value style) =
+    AppendProperty ("column-rule-style:" ++ style)
+
+
+{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
+
+    columnRuleColor (rgb 0 0 0)
+    columnRuleColor (hex "#fff")
+
+-}
+columnRuleColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleColor (Value color) =
+    AppendProperty ("column-rule-color:" ++ color)
 
 
 
@@ -8892,3 +11129,150 @@ dashes =
 gaps : Value { provides | gaps : Supported }
 gaps =
     Value "gaps"
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRule (Value width) =
+    AppendProperty ("column-rule:" ++ width)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule2 :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            }
+    -> Style
+columnRule2 (Value width) (Value style) =
+    AppendProperty ("column-rule:" ++ width ++ " " ++ style)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule3 :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+columnRule3 (Value width) (Value style) (Value color) =
+    AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)

@@ -296,6 +296,7 @@ applyNestedStylesToLast nestedStyles rest f declarations =
                     List.take (List.length declarations - 1) declarations
                         ++ [ if originalParent /= nextResultParent then
                                 nextResultParent
+
                              else
                                 originalParent
                            ]

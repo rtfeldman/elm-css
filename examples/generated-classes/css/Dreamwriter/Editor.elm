@@ -1,7 +1,7 @@
 module Dreamwriter.Editor exposing (editor, headerBar, purpleCircle)
 
 import Css exposing (..)
-import Css.Foreign exposing (..)
+import Css.Global exposing (..)
 import DEPRECATED.Css.File exposing (UniqueClass, UniqueSvgClass, uniqueClass, uniqueSvgClass)
 
 
