@@ -15,6 +15,7 @@ module Css
         , allPetiteCaps
         , allScroll
         , allSmallCaps
+        , all_
         , arabicIndic
         , armenian
         , auto
@@ -36,6 +37,8 @@ module Css
         , backgroundRepeat2
         , backgroundSize
         , backgroundSize2
+        , balance
+        , balanceAll
         , baseline
         , batch
         , before
@@ -125,6 +128,19 @@ module Css
         , colorBurn
         , colorDodge
         , color_
+        , columnCount
+        , columnFill
+        , columnGap
+        , columnRule
+        , columnRule2
+        , columnRule3
+        , columnRuleColor
+        , columnRuleStyle
+        , columnRuleWidth
+        , columnSpan
+        , columnWidth
+        , columns
+        , columns2
         , commonLigatures
         , contain
         , contentBox
@@ -748,11 +764,17 @@ Multiple CSS properties use these values.
 
 @docs fill
 
+
+# Columns
+
+@docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
+@docs columnFill, balance, balanceAll
+@docs columnSpan, all_
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
-
 
 
 -- TYPES --
@@ -1249,7 +1271,6 @@ hex str =
     Value <|
         if String.startsWith "#" str then
             String.dropLeft 1 str
-
         else
             str
 
@@ -2783,7 +2804,6 @@ boxShadowConfigToString config =
         insetStr =
             if config.inset then
                 "inset "
-
             else
                 ""
     in
@@ -3205,10 +3225,13 @@ small =
     Value "small"
 
 
-{-| The `medium` [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values) or [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `medium` value used by properties such as [`fontSize`](#fontSize),
+[`borderWidth`](#borderWidth),
+[`columnRuleWidth`](#columnRuleWidth).
 
     fontSize medium
     borderWidth medium
+    columnRuleWidth medium
 
 The value is equivalent of 3px when using for `border-width`.
 
@@ -3537,15 +3560,17 @@ fontVariantCaps (Value str) =
 
 
 {-| The `normal` value, which can be used with such properties as
-[`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values),
-[`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/),
-[`word-break`](https://css-tricks.com/almanac/properties/w/word-break/),
-and [`align-items`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values).
+[`fontVariantCaps`](#fontVariantCaps),
+[`whiteSpace`](#whiteSpace),
+[`wordBreak`](#wordBreak),
+[`columnGap`](#columnGap),
+and [`alignItems`](#alignItems).
 
     fontVariantCaps normal
     whiteSpace normal
     wordBreak normal
     alignItems normal
+    columnGap normal
 
 -}
 normal : Value { provides | normal : Supported }
@@ -7241,9 +7266,11 @@ borderLeftColor (Value color) =
 -- BORDER WIDTH --
 
 
-{-| The `thin` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `thin` value used by properties such as [`borderWidth`](#borderWidth),
+and [`columnRuleWidth`](#columnRuleWidth).
 
     borderWidth thin
+    columnRuleWidth thin
 
 The value is equivalent of 1px.
 
@@ -7253,9 +7280,11 @@ thin =
     Value "thin"
 
 
-{-| The `thick` [`border-width`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `thick` value used by properties such as [`borderWidth`](#borderWidth),
+and [`columnRuleWidth`](#columnRuleWidth).
 
     borderWidth thick
+    columnRuleWidth thick
 
 The value is equivalent of 5px.
 
@@ -7269,15 +7298,14 @@ thick =
 -- BORDER STYLE --
 
 
-{-| The `dotted` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
+{-| The `dotted` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+It represents a line that consists of dots.
 
     borderStyle dotted
+    columnRuleStyle dotted
     textDecorationStyle dotted
-
-A line that consists of dots.
-
-[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
-[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
 
 -}
 dotted : Value { provides | dotted : Supported }
@@ -7285,13 +7313,14 @@ dotted =
     Value "dotted"
 
 
-{-| The `dashed` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
-borderStyle dashed
+{-| The `dashed` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
-A line that consists of dashes.
+    borderStyle dashed
+    columnRuleStyle dashed
+    textDecorationStyle dashed
 
-[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
-[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
+It represents a line that consists of dashes.
 
 -}
 dashed : Value { provides | dashed : Supported }
@@ -7299,15 +7328,15 @@ dashed =
     Value "dashed"
 
 
-{-| The `solid` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
+
+{-| The `solid` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle solid
+    columnRuleStyle solid
     textDecorationStyle solid
 
-A solid, continuous line.
-
-[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
-[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
+It represents a solid, continuous line.
 
 -}
 solid : Value { provides | solid : Supported }
@@ -7315,15 +7344,14 @@ solid =
     Value "solid"
 
 
-{-| The `double` [`border-style`][border-style] and [`text-decoration-style`][text-decoration-style] value.
+{-| The `double` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle double
+    columnRuleStyle double
     textDecorationStyle double
 
-Two lines are drawn around the element.
-
-[border-style]: https://css-tricks.com/almanac/properties/b/border/#article-header-id-0
-[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
+It represents a double line: two lines side by side.
 
 -}
 double : Value { provides | double : Supported }
@@ -7331,11 +7359,14 @@ double =
     Value "double"
 
 
-{-| The `groove` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `groove` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle groove
+    columnRuleStyle groove
+    textDecorationStyle groove
 
-Adds a bevel based on the color value in a way that makes the element appear pressed into the document.
+Adds a bevel based on the color value, which makes things appear pressed into the document.
 
 -}
 groove : Value { provides | groove : Supported }
@@ -7343,11 +7374,14 @@ groove =
     Value "groove"
 
 
-{-| The `ridge` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `ridge` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle ridge
-
-Similar to `groove`, but reverses the color values in a way that makes the element appear raised.
+    columnRuleStyle ridge
+    textDecorationStyle ridge
+    
+Similar to [`groove`](#groove), but reverses the color values in a way that makes things appear raised.
 
 -}
 ridge : Value { provides | ridge : Supported }
@@ -7355,11 +7389,16 @@ ridge =
     Value "ridge"
 
 
-{-| The `inset` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle inset
+    columnRuleStyle inset
+    textDecorationStyle inset
 
-Adds a split tone to the line that makes the element appear slightly depressed.
+Adds a split tone to the line that makes it appear slightly depressed.
+
+Contrast with [`outset`](#outset)
 
 -}
 inset : Value { provides | inset : Supported }
@@ -7367,11 +7406,14 @@ inset =
     Value "inset"
 
 
-{-| The `outset` [`border-style`](https://css-tricks.com/almanac/properties/b/border/#article-header-id-0) value.
+{-| The `outset` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
     borderStyle outset
+    columnRuleStyle outset
+    textDecorationStyle outset
 
-Similar to `inset`, but reverses the colors in a way that makes the element appear slightly raised.
+Similar to [`inset`](#outset), but reverses the colors in a way that makes it appear slightly raised.
 
 -}
 outset : Value { provides | outset : Supported }
@@ -9595,3 +9637,464 @@ fill :
     -> Style
 fill (Value val) =
     AppendProperty ("fill:" ++ val)
+
+
+
+-- COLUMNS --
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+    columns2 (px 300) (num 2)
+
+-}
+columns :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columns (Value width) =
+    AppendProperty ("columns:" ++ width)
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+    columns2 (px 300) (num 2)
+
+-}
+columns2 :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , num : Supported
+            }
+    -> Style
+columns2 (Value width) (Value count) =
+    AppendProperty ("columns:" ++ width ++ " " ++ count)
+
+
+{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
+
+    columnWidth auto
+    columnWidth (px 200)
+
+-}
+columnWidth :
+    Value
+        { auto : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnWidth (Value width) =
+    AppendProperty ("column-width:" ++ width)
+
+
+{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
+
+    columnCount auto
+    columnCount (num 3)
+
+-}
+columnCount :
+    Value
+        { auto : Supported
+        , num : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnCount (Value count) =
+    AppendProperty ("column-count:" ++ count)
+
+
+{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
+
+    columnFill auto
+    columnFill balance
+    columnFill balanceAll
+
+-}
+columnFill :
+    Value
+        { auto : Supported
+        , balance : Supported
+        , balanceAll : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnFill (Value val) =
+    AppendProperty ("column-fill:" ++ val)
+
+
+{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balance
+
+-}
+balance : Value { provides | balance : Supported }
+balance =
+    Value "balance"
+
+
+{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balanceAll
+
+-}
+balanceAll : Value { provides | balanceAll : Supported }
+balanceAll =
+    Value "balance-all"
+
+
+{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
+
+    columnSpan all_
+    columnSpan none
+
+-}
+columnSpan :
+    Value
+        { none : Supported
+        , all_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnSpan (Value span) =
+    AppendProperty ("column-span:" ++ span)
+
+
+{-| A `all` value used in properties such as [`columnSpan`](#columnSpan).
+
+    columnSpan all_
+
+-}
+all_ : Value { provides | all_ : Supported }
+all_ =
+    Value "all"
+
+
+{-| Sets [`column-gap`](https://css-tricks.com/almanac/properties/c/column-gap/)
+
+    columnGap normal
+    columnGap (px 20)
+
+-}
+columnGap :
+    Value
+        { normal : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnGap (Value width) =
+    AppendProperty ("column-gap:" ++ width)
+
+
+{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
+
+    columnRuleWidth thin
+    columnRuleWidth (px 2)
+
+-}
+columnRuleWidth :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleWidth (Value width) =
+    AppendProperty ("column-rule-width:" ++ width)
+
+
+{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
+
+    columnRuleStyle solid
+    columnRuleStyle dotted
+    columnRuleStyle dashed
+
+-}
+columnRuleStyle :
+    Value
+        { solid : Supported
+        , none : Supported
+        , hidden : Supported
+        , dashed : Supported
+        , dotted : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleStyle (Value style) =
+    AppendProperty ("column-rule-style:" ++ style)
+
+
+{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
+
+    columnRuleColor (rgb 0 0 0)
+    columnRuleColor (hex "#fff")
+
+-}
+columnRuleColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRuleColor (Value color) =
+    AppendProperty ("column-rule-color:" ++ color)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+columnRule (Value width) =
+    AppendProperty ("column-rule:" ++ width)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule2 :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            }
+    -> Style
+columnRule2 (Value width) (Value style) =
+    AppendProperty ("column-rule:" ++ width ++ " " ++ style)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+    columnRule2 thin solid
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule3 :
+    Value
+        { thin : Supported
+        , medium : Supported
+        , thick : Supported
+        , zero : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , none : Supported
+            , hidden : Supported
+            , dashed : Supported
+            , dotted : Supported
+            , double : Supported
+            , groove : Supported
+            , ridge : Supported
+            , inset : Supported
+            , outset : Supported
+            }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+columnRule3 (Value width) (Value style) (Value color) =
+    AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
