@@ -24,7 +24,6 @@ module Css
         , ColorValue
         , Compatible
         , Cursor
-        , Directionality
         , Display
         , Em
         , Ex
@@ -238,7 +237,6 @@ module Css
         , devanagari
         , diagonalFractions
         , difference
-        , dir
         , disabled
         , disc
         , discretionaryLigatures
@@ -971,7 +969,7 @@ functions let you define custom properties and selectors, respectively.
 
 # Pseudo-Classes
 
-@docs pseudoClass, active, any, checked, dir, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
+@docs pseudoClass, active, any, checked, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
 
 
 # Pseudo-Elements
@@ -997,7 +995,7 @@ functions let you define custom properties and selectors, respectively.
 @docs listStyle, listStyle2, listStyle3
 @docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
-@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Directionality, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
+@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
 
 
 # Types
@@ -7519,22 +7517,6 @@ property key value =
 -- Pseudo-Classes --
 
 
-{-| -}
-type Directionality
-    = Ltr
-    | Rtl
-
-
-directionalityToString : Directionality -> String
-directionalityToString directionality =
-    case directionality of
-        Ltr ->
-            "ltr"
-
-        Rtl ->
-            "rtl"
-
-
 {-| Define a custom pseudo-class.
 
 This can be useful for deprecated pseudo-classes such as `-moz-any-link`, which
@@ -7583,14 +7565,6 @@ any str =
 checked : List Style -> Style
 checked =
     pseudoClass "checked"
-
-
-{-| A [`:dir`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adir)
-[pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
--}
-dir : Directionality -> List Style -> Style
-dir directionality =
-    pseudoClass ("dir(" ++ directionalityToString directionality ++ ")")
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3Adisabled)
