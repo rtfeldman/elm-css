@@ -2787,22 +2787,13 @@ type alias BoxShadowConfig =
     , color :
         Maybe
             (Value
-                { px : Supported
-                , em : Supported
-                , ex : Supported
-                , ch : Supported
-                , rem : Supported
-                , vh : Supported
-                , vw : Supported
-                , vmin : Supported
-                , vmax : Supported
-                , mm : Supported
-                , cm : Supported
-                , inches : Supported
-                , pt : Supported
-                , pc : Supported
-                , pct : Supported
-                , zero : Supported
+                { rgb : Supported
+                , rgba : Supported
+                , hsl : Supported
+                , hsla : Supported
+                , hex : Supported
+                , transparent : Supported
+                , currentColor : Supported
                 }
             )
     , inset : Bool
