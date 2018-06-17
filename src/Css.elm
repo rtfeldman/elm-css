@@ -1,6 +1,7 @@
 module Css
     exposing
         ( BoxShadowConfig
+        , CalcOperation
         , Color
         , Style
         , Supported
@@ -118,6 +119,7 @@ module Css
         , breakAll
         , breakWord
         , butt
+        , calc
         , capitalize
         , captionSide
         , cell
@@ -171,6 +173,7 @@ module Css
         , discretionaryLigatures
         , display
         , displayFlex
+        , dividedBy
         , dotted
         , double
         , eResize
@@ -259,6 +262,7 @@ module Css
         , matchParent
         , medium
         , middle
+        , minus
         , miter
         , mixed
         , mm
@@ -309,6 +313,7 @@ module Css
         , pc
         , pct
         , petiteCaps
+        , plus
         , pointer
         , position
         , pre
@@ -424,6 +429,7 @@ module Css
         , thai
         , thick
         , thin
+        , times
         , titlingCaps
         , toBottom
         , toBottomLeft
@@ -499,6 +505,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Numeric Units
 
 @docs zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pt, pc, pct, num, int
+
+
+## Calc
+
+@docs calc, CalcOperation, minus, plus, times, dividedBy
 
 
 ## Color
@@ -1417,6 +1428,7 @@ top :
         , vmax : Supported
         , auto : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1456,6 +1468,7 @@ bottom :
         , vmax : Supported
         , auto : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1495,6 +1508,7 @@ left :
         , vmax : Supported
         , auto : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1534,6 +1548,7 @@ right :
         , vmax : Supported
         , auto : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1658,6 +1673,7 @@ padding :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1693,6 +1709,7 @@ padding2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -1712,6 +1729,7 @@ padding2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 padding2 (Value valueTopBottom) (Value valueRightLeft) =
@@ -1744,6 +1762,7 @@ padding3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -1763,6 +1782,7 @@ padding3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -1782,6 +1802,7 @@ padding3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
@@ -1814,6 +1835,7 @@ padding4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -1833,6 +1855,7 @@ padding4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -1852,6 +1875,7 @@ padding4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -1871,6 +1895,7 @@ padding4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
@@ -1900,6 +1925,7 @@ paddingTop :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1932,6 +1958,7 @@ paddingRight :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1964,6 +1991,7 @@ paddingBottom :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -1996,6 +2024,7 @@ paddingLeft :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -2037,6 +2066,7 @@ margin :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , auto : Supported
         , inherit : Supported
         , initial : Supported
@@ -2075,6 +2105,7 @@ margin2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , auto : Supported
         }
     ->
@@ -2095,6 +2126,7 @@ margin2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , auto : Supported
             }
     -> Style
@@ -2130,6 +2162,7 @@ margin3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , auto : Supported
         }
     ->
@@ -2150,6 +2183,7 @@ margin3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , auto : Supported
             }
     ->
@@ -2170,6 +2204,7 @@ margin3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , auto : Supported
             }
     -> Style
@@ -2205,6 +2240,7 @@ margin4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , auto : Supported
         }
     ->
@@ -2225,6 +2261,7 @@ margin4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , auto : Supported
             }
     ->
@@ -2245,6 +2282,7 @@ margin4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , auto : Supported
             }
     ->
@@ -2265,6 +2303,7 @@ margin4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , auto : Supported
             }
     -> Style
@@ -2297,6 +2336,7 @@ marginTop :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -2330,6 +2370,7 @@ marginRight :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -2365,6 +2406,7 @@ marginBottom :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -2398,6 +2440,7 @@ marginLeft :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -2722,6 +2765,7 @@ type alias BoxShadowConfig =
             , pc : Supported
             , pct : Supported
             , zero : Supported
+            , calc : Supported
             }
     , offsetY :
         Value
@@ -2741,6 +2785,7 @@ type alias BoxShadowConfig =
             , pc : Supported
             , pct : Supported
             , zero : Supported
+            , calc : Supported
             }
     , blurRadius :
         Maybe
@@ -2761,6 +2806,7 @@ type alias BoxShadowConfig =
                 , pc : Supported
                 , pct : Supported
                 , zero : Supported
+                , calc : Supported
                 }
             )
     , spreadRadius :
@@ -2782,6 +2828,7 @@ type alias BoxShadowConfig =
                 , pc : Supported
                 , pct : Supported
                 , zero : Supported
+                , calc : Supported
                 }
             )
     , color :
@@ -2886,6 +2933,189 @@ boxShadowConfigToString config =
                 ""
     in
     insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius
+
+
+
+-- CALC --
+
+
+{-| The css [`calc`](https://css-tricks.com/a-couple-of-use-cases-for-calc) function.
+
+    almostPct100 =
+        calc (pct 100) (minus (px 2))
+
+
+    -- The following compiles to: calc(100vh - (2px + 2rem))
+
+    screenMinusBorderAndFooter =
+        calc (vh 100) (minus (calc (px 2) (plus (rem 2))))
+
+    myWidth =
+        width almostPct100
+
+    myHeight =
+        height screenMinusBorderAndFooter
+
+**CAUTION:** `calc` can easily be used to create invalid CSS values! For example,
+`zIndex (calc (pct 100) (minus (px 5)))` compiles to `z-index: calc(100% - 5px);`
+which is invalid. According to the spec, `calc` may return values that have no
+relation to its arguments, so unfortunately there's not much `elm-css` can do
+to make `calc` more reliable. Use with caution!
+
+-}
+calc :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , num : Supported
+        , int : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    -> CalcOperation
+    -> Value { provides | calc : Supported }
+calc (Value first) (CalcOperation operation) =
+    Value
+        ("calc("
+            ++ getCalcExpression first
+            ++ operation
+            ++ ")"
+        )
+
+
+{-| Either [`plus`](#plus) or [`minus`](#minus).
+
+See [`calc`](#calc) for how to use this.
+
+-}
+type CalcOperation
+    = CalcOperation String
+
+
+getCalcExpression : String -> String
+getCalcExpression str =
+    if String.startsWith "calc(" str then
+        String.dropLeft 4 str
+
+    else
+        str
+
+
+{-| Use with [`calc`](#calc) to subtract one value from another.
+
+    calc (pct 100) (minus (px 2))
+    -- calc: (100% - 2px)
+
+-}
+minus :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , num : Supported
+        , int : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    -> CalcOperation
+minus (Value second) =
+    -- The calc `-` operator MUST be surrounded by whitespace.
+    CalcOperation (" - " ++ getCalcExpression second)
+
+
+{-| Use with [`calc`](#calc) to add one numeric value to another.
+
+    calc (pct 100) (plus (px 2))
+    -- calc: (100% + 2px)
+
+-}
+plus :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , num : Supported
+        , int : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    -> CalcOperation
+plus (Value second) =
+    -- The calc `+` operator MUST be surrounded by whitespace.
+    CalcOperation (" + " ++ getCalcExpression second)
+
+
+{-| Use with [`calc`](#calc) to multiply a value by a unitless number.
+
+    calc (pct 100) (times (int 2))
+    -- calc: (100% * 2px)
+
+-}
+times :
+    Value
+        { num : Supported
+        , int : Supported
+        , zero : Supported
+        }
+    -> CalcOperation
+times (Value second) =
+    -- The calc `*` operator does not need to be surrounded by whitespace.
+    CalcOperation ("*" ++ getCalcExpression second)
+
+
+{-| Use with [`calc`](#calc) to divide a value by a unitless number.
+
+    calc (pct 100) (dividedBy (int 2))
+    -- calc: (100% / 2px)
+
+-}
+dividedBy :
+    Value
+        { num : Supported
+        , int : Supported
+        , zero : Supported
+        }
+    -> CalcOperation
+dividedBy (Value second) =
+    -- The calc `/` operator does not need to be surrounded by whitespace.
+    CalcOperation ("/" ++ getCalcExpression second)
 
 
 
@@ -3265,6 +3495,7 @@ fontSize :
         , pc : Supported
         , pct : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -4975,6 +5206,7 @@ backgroundPosition :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , left_ : Supported
         , right_ : Supported
         , center : Supported
@@ -5023,6 +5255,7 @@ backgroundPosition2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , left_ : Supported
         , right_ : Supported
         , center : Supported
@@ -5045,6 +5278,7 @@ backgroundPosition2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , top_ : Supported
             , bottom_ : Supported
             , center : Supported
@@ -5090,6 +5324,7 @@ backgroundPosition4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -5114,6 +5349,7 @@ backgroundPosition4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
@@ -5404,6 +5640,7 @@ linearGradient :
         , rad : Supported
         , turn : Supported
         , zero : Supported
+        , calc : Supported
         }
     -> Value { colorStop : Supported }
     -> Value { colorStop : Supported }
@@ -5459,6 +5696,7 @@ stop2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Value { supported | colorStop : Supported }
 stop2 (Value color) (Value position) =
@@ -5755,6 +5993,7 @@ border :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -5791,6 +6030,7 @@ border2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -5837,6 +6077,7 @@ border3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -5893,6 +6134,7 @@ borderTop :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -5929,6 +6171,7 @@ borderTop2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -5975,6 +6218,7 @@ borderTop3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6031,6 +6275,7 @@ borderRight :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6067,6 +6312,7 @@ borderRight2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6113,6 +6359,7 @@ borderRight3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6169,6 +6416,7 @@ borderBottom :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6205,6 +6453,7 @@ borderBottom2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6251,6 +6500,7 @@ borderBottom3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6307,6 +6557,7 @@ borderLeft :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6343,6 +6594,7 @@ borderLeft2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6389,6 +6641,7 @@ borderLeft3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6446,6 +6699,7 @@ borderWidth :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6483,6 +6737,7 @@ borderWidth2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6504,6 +6759,7 @@ borderWidth2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , thin : Supported
             , medium : Supported
             , thick : Supported
@@ -6538,6 +6794,7 @@ borderWidth3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6559,6 +6816,7 @@ borderWidth3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , thin : Supported
             , medium : Supported
             , thick : Supported
@@ -6580,6 +6838,7 @@ borderWidth3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , thin : Supported
             , medium : Supported
             , thick : Supported
@@ -6615,6 +6874,7 @@ borderWidth4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6636,6 +6896,7 @@ borderWidth4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , thin : Supported
             , medium : Supported
             , thick : Supported
@@ -6657,6 +6918,7 @@ borderWidth4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , thin : Supported
             , medium : Supported
             , thick : Supported
@@ -6678,6 +6940,7 @@ borderWidth4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , thin : Supported
             , medium : Supported
             , thick : Supported
@@ -6709,6 +6972,7 @@ borderTopWidth :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6743,6 +7007,7 @@ borderRightWidth :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6777,6 +7042,7 @@ borderBottomWidth :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -6811,6 +7077,7 @@ borderLeftWidth :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , thin : Supported
         , medium : Supported
         , thick : Supported
@@ -7550,6 +7817,7 @@ borderRadius :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -7585,6 +7853,7 @@ borderRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -7604,6 +7873,7 @@ borderRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
@@ -7636,6 +7906,7 @@ borderRadius3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -7655,6 +7926,7 @@ borderRadius3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -7674,6 +7946,7 @@ borderRadius3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
@@ -7706,6 +7979,7 @@ borderRadius4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -7725,6 +7999,7 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -7744,6 +8019,7 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -7763,6 +8039,7 @@ borderRadius4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
@@ -7793,6 +8070,7 @@ borderTopLeftRadius :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -7826,6 +8104,7 @@ borderTopLeftRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -7845,6 +8124,7 @@ borderTopLeftRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 borderTopLeftRadius2 (Value horizontal) (Value vertical) =
@@ -7875,6 +8155,7 @@ borderTopRightRadius :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -7908,6 +8189,7 @@ borderTopRightRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -7927,6 +8209,7 @@ borderTopRightRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 borderTopRightRadius2 (Value horizontal) (Value vertical) =
@@ -7957,6 +8240,7 @@ borderBottomRightRadius :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -7990,6 +8274,7 @@ borderBottomRightRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -8009,6 +8294,7 @@ borderBottomRightRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 borderBottomRightRadius2 (Value horizontal) (Value vertical) =
@@ -8039,6 +8325,7 @@ borderBottomLeftRadius :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -8072,6 +8359,7 @@ borderBottomLeftRadius2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -8091,6 +8379,7 @@ borderBottomLeftRadius2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
@@ -8124,6 +8413,7 @@ borderImageOutset :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         , inherit : Supported
         , initial : Supported
@@ -8161,6 +8451,7 @@ borderImageOutset2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         }
     ->
@@ -8180,6 +8471,7 @@ borderImageOutset2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             }
     -> Style
@@ -8214,6 +8506,7 @@ borderImageOutset3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         }
     ->
@@ -8233,6 +8526,7 @@ borderImageOutset3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             }
     ->
@@ -8252,6 +8546,7 @@ borderImageOutset3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             }
     -> Style
@@ -8286,6 +8581,7 @@ borderImageOutset4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         }
     ->
@@ -8305,6 +8601,7 @@ borderImageOutset4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             }
     ->
@@ -8324,6 +8621,7 @@ borderImageOutset4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             }
     ->
@@ -8343,6 +8641,7 @@ borderImageOutset4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             }
     -> Style
@@ -8378,6 +8677,7 @@ borderImageWidth :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         , auto : Supported
         , inherit : Supported
@@ -8417,6 +8717,7 @@ borderImageWidth2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         , auto : Supported
         }
@@ -8438,6 +8739,7 @@ borderImageWidth2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             , auto : Supported
             }
@@ -8474,6 +8776,7 @@ borderImageWidth3 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         , auto : Supported
         }
@@ -8495,6 +8798,7 @@ borderImageWidth3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             , auto : Supported
             }
@@ -8516,6 +8820,7 @@ borderImageWidth3 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             , auto : Supported
             }
@@ -8552,6 +8857,7 @@ borderImageWidth4 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , num : Supported
         , auto : Supported
         }
@@ -8573,6 +8879,7 @@ borderImageWidth4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             , auto : Supported
             }
@@ -8594,6 +8901,7 @@ borderImageWidth4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             , auto : Supported
             }
@@ -8615,6 +8923,7 @@ borderImageWidth4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , num : Supported
             , auto : Supported
             }
@@ -9187,6 +9496,7 @@ separate =
 borderSpacing :
     Value
         { zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -9218,6 +9528,7 @@ borderSpacing (Value str) =
 borderSpacing2 :
     Value
         { zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -9236,6 +9547,7 @@ borderSpacing2 :
     ->
         Value
             { zero : Supported
+            , calc : Supported
             , ch : Supported
             , em : Supported
             , ex : Supported
@@ -9367,6 +9679,7 @@ verticalAlign :
         , bottom_ : Supported
         , pct : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -9754,6 +10067,7 @@ columns :
     Value
         { auto : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -9787,6 +10101,7 @@ columns2 :
     Value
         { auto : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -9822,6 +10137,7 @@ columnWidth :
     Value
         { auto : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -9944,6 +10260,7 @@ columnGap :
     Value
         { normal : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -9979,6 +10296,7 @@ columnRuleWidth :
         , medium : Supported
         , thick : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -10069,6 +10387,7 @@ columnRuleColor (Value color) =
 strokeDasharray :
     Value
         { zero : Supported
+        , calc : Supported
         , num : Supported
         , ch : Supported
         , em : Supported
@@ -10104,6 +10423,7 @@ strokeDasharray (Value val) =
 strokeDashoffset :
     Value
         { zero : Supported
+        , calc : Supported
         , num : Supported
         , pct : Supported
         , inherit : Supported
@@ -10169,6 +10489,7 @@ square =
 strokeWidth :
     Value
         { zero : Supported
+        , calc : Supported
         , num : Supported
         , ch : Supported
         , em : Supported
@@ -10425,6 +10746,7 @@ strokePosition :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , left_ : Supported
         , right_ : Supported
         , center : Supported
@@ -10473,6 +10795,7 @@ strokePosition2 :
         , vmin : Supported
         , vw : Supported
         , zero : Supported
+        , calc : Supported
         , left_ : Supported
         , right_ : Supported
         , center : Supported
@@ -10495,6 +10818,7 @@ strokePosition2 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             , top_ : Supported
             , bottom_ : Supported
             , center : Supported
@@ -10540,6 +10864,7 @@ strokePosition4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     ->
         Value
@@ -10564,6 +10889,7 @@ strokePosition4 :
             , vmin : Supported
             , vw : Supported
             , zero : Supported
+            , calc : Supported
             }
     -> Style
 strokePosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
@@ -10932,6 +11258,7 @@ columnRule :
         , medium : Supported
         , thick : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
@@ -10971,6 +11298,7 @@ columnRule2 :
         , medium : Supported
         , thick : Supported
         , zero : Supported
+        , calc : Supported
         , ch : Supported
         , em : Supported
         , ex : Supported
