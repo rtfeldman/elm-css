@@ -4673,7 +4673,7 @@ backgroundAttachments firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value str) -> str)
+                |> List.map (\(Value val) -> val)
                 |> String.join ","
     in
     AppendProperty ("background-attachment:" ++ str)
