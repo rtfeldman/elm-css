@@ -9283,7 +9283,7 @@ textDecorationLine3 :
             }
     -> Style
 textDecorationLine3 (Value line1) (Value line2) (Value line3) =
-    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2 ++ " " ++ line3)
+    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2 ++ " " ++ line3)
 
 
 {-| Sets [`text-decoration-style`][text-decoration-style] property.
