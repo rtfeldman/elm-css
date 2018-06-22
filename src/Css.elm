@@ -9251,7 +9251,7 @@ textDecorationLine2 :
             }
     -> Style
 textDecorationLine2 (Value line1) (Value line2) =
-    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2)
+    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2)
 
 
 {-| Sets [`text-decoration-line`][text-decoration-line] property.
