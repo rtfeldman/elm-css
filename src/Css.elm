@@ -3738,7 +3738,7 @@ fontFamilies list (Value genericFont) =
         fonts ->
             AppendProperty
                 ("font-family:"
-                    ++ String.join "," (List.map enquoteIfNotGeneric list)
+                    ++ String.join "," (List.map enquoteIfNotGeneric fonts)
                     ++ ("," ++ genericFont)
                 )
 
