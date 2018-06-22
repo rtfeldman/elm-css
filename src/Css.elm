@@ -4138,13 +4138,8 @@ fontVariantNumeric4 val1 val2 val3 val4 =
 
 
 maybeValToString : Maybe (Value a) -> Maybe String
-maybeValToString maybeVal =
-    case maybeVal of
-        Just (Value str) ->
-            Just str
-
-        Nothing ->
-            Nothing
+maybeValToString =
+    Maybe.map (\(Value val) -> val)
 
 
 {-| The `ordinal` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
