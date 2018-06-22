@@ -198,6 +198,7 @@ module Css
         , fontVariantCaps
         , fontVariantLigatures
         , fontVariantNumeric
+        , fontVariantNumeric4
         , fontWeight
         , fullWidth
         , gaps
@@ -667,7 +668,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Font Variant Numeric
 
-@docs fontVariantNumeric, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
+@docs fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
 
 
 # Align Items
