@@ -1031,7 +1031,7 @@ and [`backgroundImage`](#backgroundImage) properties.
 -}
 url : String -> Value { provides | url : Supported }
 url str =
-    Value ("url(" ++ ")")
+    Value ("url(" ++ str ++ ")")
 
 
 {-| The `auto` value used for properties such as [`width`](#width).
