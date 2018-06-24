@@ -116,6 +116,7 @@ module Css
         , bottom_
         , boundingBox
         , boxShadow
+        , boxSizing
         , breakAll
         , breakWord
         , butt
@@ -540,7 +541,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Clip and Origin
 
-@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, borderBox, paddingBox, contentBox, text_
+@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
 
 
 ## Background Image
@@ -627,6 +628,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
 
 
+## Box Sizing
+
+@docs boxSizing
+
+
 ## Flexbox
 
 @docs alignItems, alignSelf
@@ -702,6 +708,7 @@ Multiple CSS properties use these values.
 
 @docs auto, none
 @docs hidden, visible
+@docs contentBox, borderBox
 
 
 ## Overflow
@@ -1091,6 +1098,36 @@ visible =
 scroll : Value { provides | scroll : Supported }
 scroll =
     Value "scroll"
+
+
+{-| The `content-box` value, used with [`boxSizing`](#boxSizing),
+[`backgroundClip`](#backgroundClip), [`backgroundOrigin`](#backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
+
+    boxSizing contentBox
+    backgroundClip contentBox
+    backgroundOrigin contentBox
+    strokeOrigin contentBox
+
+-}
+contentBox : Value { provides | contentBox : Supported }
+contentBox =
+    Value "content-box"
+
+
+{-| The `border-box` value, used with [`boxSizing`](#boxSizing),
+[`backgroundClip`](#backgroundClip), [`backgroundOrigin`](backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
+
+    boxSizing borderBox
+    backgroundClip borderBox
+    backgroundOrigin borderBox
+    strokeOrigin borderBox
+
+-}
+borderBox : Value { provides | borderBox : Supported }
+borderBox =
+    Value "border-box"
 
 
 
@@ -2450,6 +2487,29 @@ marginLeft :
     -> Style
 marginLeft (Value value) =
     AppendProperty ("margin-left:" ++ value)
+
+
+
+-- BOX SIZING --
+
+
+{-| Sets [`box-sizing`](https://css-tricks.com/almanac/properties/b/box-sizing/) property.
+
+    boxSizing contentBox
+    boxSizing borderBox
+
+-}
+boxSizing :
+    Value
+        { contentBox : Supported
+        , borderBox : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+boxSizing (Value value) =
+    AppendProperty ("box-sizing:" ++ value)
 
 
 
@@ -5019,34 +5079,6 @@ and [`strokeOrigin`](#strokeOrigin).
 paddingBox : Value { provides | paddingBox : Supported }
 paddingBox =
     Value "padding-box"
-
-
-{-| The `content-box` value, used with [`backgroundClip`](#backgroundClip),
-[`backgroundOrigin`](#backgroundOrigin),
-and [`strokeOrigin`](#strokeOrigin).
-
-    backgroundClip contentBox
-    backgroundOrigin contentBox
-    strokeOrigin contentBox
-
--}
-contentBox : Value { provides | contentBox : Supported }
-contentBox =
-    Value "content-box"
-
-
-{-| The `border-box` value, used with [`backgroundClip`](#backgroundClip),
-[`backgroundOrigin`](backgroundOrigin),
-and [`strokeOrigin`](#strokeOrigin).
-
-    backgroundClip borderBox
-    backgroundOrigin borderBox
-    strokeOrigin borderBox
-
--}
-borderBox : Value { provides | borderBox : Supported }
-borderBox =
-    Value "border-box"
 
 
 
