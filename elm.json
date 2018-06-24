@@ -9,8 +9,7 @@
             "Css",
             "Css.Transitions",
             "Css.Media",
-            "Css.Global",
-            "DEPRECATED.Css.File"
+            "Css.Global"
         ],
         "Elements": [
             "Html.Styled",
