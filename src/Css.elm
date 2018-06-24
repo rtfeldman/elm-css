@@ -198,6 +198,7 @@ module Css
         , fontVariantCaps
         , fontVariantLigatures
         , fontVariantNumeric
+        , fontVariantNumeric4
         , fontWeight
         , fullWidth
         , gaps
@@ -667,7 +668,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Font Variant Numeric
 
-@docs fontVariantNumeric, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
+@docs fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
 
 
 # Align Items
@@ -1030,7 +1031,7 @@ and [`backgroundImage`](#backgroundImage) properties.
 -}
 url : String -> Value { provides | url : Supported }
 url str =
-    Value ("url(" ++ ")")
+    Value ("url(" ++ str ++ ")")
 
 
 {-| The `auto` value used for properties such as [`width`](#width).
@@ -3737,7 +3738,7 @@ fontFamilies list (Value genericFont) =
         fonts ->
             AppendProperty
                 ("font-family:"
-                    ++ String.join "," (List.map enquoteIfNotGeneric list)
+                    ++ String.join "," (List.map enquoteIfNotGeneric fonts)
                     ++ ("," ++ genericFont)
                 )
 
@@ -4137,13 +4138,8 @@ fontVariantNumeric4 val1 val2 val3 val4 =
 
 
 maybeValToString : Maybe (Value a) -> Maybe String
-maybeValToString maybeVal =
-    case maybeVal of
-        Just (Value str) ->
-            Just str
-
-        Nothing ->
-            Nothing
+maybeValToString =
+    Maybe.map (\(Value val) -> val)
 
 
 {-| The `ordinal` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
@@ -4672,7 +4668,7 @@ backgroundAttachments firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value str) -> str)
+                |> List.map (\(Value val) -> val)
                 |> String.join ","
     in
     AppendProperty ("background-attachment:" ++ str)
@@ -4789,7 +4785,7 @@ backgroundBlendModes firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value str) -> str)
+                |> List.map (\(Value val) -> val)
                 |> String.join ","
     in
     AppendProperty ("background-blend-mode:" ++ str)
@@ -5005,7 +5001,7 @@ backgroundClips firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value str) -> str)
+                |> List.map (\(Value val) -> val)
                 |> String.join ","
     in
     AppendProperty ("background-clip:" ++ str)
@@ -5105,7 +5101,7 @@ backgroundOrigins firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value str) -> str)
+                |> List.map (\(Value val) -> val)
                 |> String.join ","
     in
     AppendProperty ("background-origin:" ++ str)
@@ -9250,7 +9246,7 @@ textDecorationLine2 :
             }
     -> Style
 textDecorationLine2 (Value line1) (Value line2) =
-    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2)
+    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2)
 
 
 {-| Sets [`text-decoration-line`][text-decoration-line] property.
@@ -9282,7 +9278,7 @@ textDecorationLine3 :
             }
     -> Style
 textDecorationLine3 (Value line1) (Value line2) (Value line3) =
-    AppendProperty ("text-decoration-line:" ++ line2 ++ " " ++ line2 ++ " " ++ line3)
+    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2 ++ " " ++ line3)
 
 
 {-| Sets [`text-decoration-style`][text-decoration-style] property.
