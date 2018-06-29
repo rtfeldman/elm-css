@@ -475,6 +475,7 @@ module Css
         , xxSmall
         , zIndex
         , zero
+        , zoom
         , zoomIn
         , zoomOut
         )
@@ -857,6 +858,11 @@ Multiple CSS properties use these values.
 
 @docs opacity
 
+
+# Viewport
+
+@docs zoom
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
@@ -1052,9 +1058,11 @@ url str =
     Value ("url(" ++ str ++ ")")
 
 
-{-| The `auto` value used for properties such as [`width`](#width).
+{-| The `auto` value used for properties such as [`width`](#width),
+and [`zoom`](#zoom).
 
     width auto
+    zoom auto
 
 -}
 auto : Value { provides | auto : Supported }
@@ -3947,13 +3955,15 @@ fontVariantCaps (Value str) =
 [`whiteSpace`](#whiteSpace),
 [`wordBreak`](#wordBreak),
 [`columnGap`](#columnGap),
+[`zoom`](#zoom),
 and [`alignItems`](#alignItems).
 
+    alignItems normal
+    columnGap normal
     fontVariantCaps normal
     whiteSpace normal
     wordBreak normal
-    alignItems normal
-    columnGap normal
+    zoom normal
 
 -}
 normal : Value { provides | normal : Supported }
@@ -11507,3 +11517,26 @@ opacity :
     -> Style
 opacity (Value val) =
     AppendProperty ("stroke-opacity:" ++ val)
+
+
+{-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
+
+    zoom (pct 150)
+    zoom (num 1.5)
+    zoom normal
+
+-}
+zoom :
+    Value
+        { pct : Supported
+        , zero : Supported
+        , num : Supported
+        , normal : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+zoom (Value val) =
+    AppendProperty ("zoom:" ++ val)
