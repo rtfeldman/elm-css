@@ -11510,6 +11510,7 @@ opacity :
     Value
         { num : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -11532,6 +11533,7 @@ zoom :
         , zero : Supported
         , num : Supported
         , normal : Supported
+        , calc : Supported
         , auto : Supported
         , inherit : Supported
         , initial : Supported
