@@ -112,6 +112,7 @@ module Css
         , borderWidth2
         , borderWidth3
         , borderWidth4
+        , both
         , bottom
         , bottom_
         , boundingBox
@@ -128,6 +129,7 @@ module Css
         , ch
         , cjkEarthlyBranch
         , cjkHeavenlyStem
+        , clear
         , clone
         , cm
         , colResize
@@ -226,7 +228,9 @@ module Css
         , initial
         , inline
         , inlineBlock
+        , inlineEnd
         , inlineFlex
+        , inlineStart
         , inset
         , int
         , italic
@@ -810,6 +814,7 @@ Multiple CSS properties use these values.
 ## Float
 
 @docs float
+@docs clear, both, inlineStart, inlineEnd
 
 
 # Visibility
@@ -1053,6 +1058,7 @@ auto =
 
 {-| The `none` value used for properties such as [`display`](#display),
 [`borderStyle`](#borderStyle),
+[`clear`](#clear),
 and [`strokeDashJustify`](#strokeDashJustify).
 
     display none
@@ -11417,3 +11423,60 @@ columnRule3 :
     -> Style
 columnRule3 (Value width) (Value style) (Value color) =
     AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
+
+
+{-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
+
+    clear none
+    clear both
+    clear left_
+    clear right_
+    clear inlineStart
+    clear inlineEnd
+
+-}
+clear :
+    Value
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , both : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+clear (Value val) =
+    AppendProperty ("clear:" ++ val)
+
+
+{-| Sets `both` value for usage with [`clear`](#clear).
+
+      clear both
+
+-}
+both : Value { provides | both : Supported }
+both =
+    Value "both"
+
+
+{-| Sets `inline-start` value for usage with [`clear`](#clear).
+
+      clear inlineStart
+
+-}
+inlineStart : Value { provides | inlineStart : Supported }
+inlineStart =
+    Value "inline-start"
+
+
+{-| Sets `inline-end` value for usage with [`clear`](#clear).
+
+      clear inlineEnd
+
+-}
+inlineEnd : Value { provides | inlineEnd : Supported }
+inlineEnd =
+    Value "inline-end"
