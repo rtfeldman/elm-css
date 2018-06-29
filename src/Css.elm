@@ -10050,6 +10050,7 @@ visibility (Value str) =
 order :
     Value
         { num : Supported
+        , zero : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
