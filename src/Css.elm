@@ -295,6 +295,7 @@ module Css
         , nwseResize
         , oblique
         , oldstyleNums
+        , opacity
         , optimizeLegibility
         , optimizeSpeed
         , order
@@ -850,6 +851,11 @@ Multiple CSS properties use these values.
 @docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
+
+
+# Opacity
+
+@docs opacity
 
 -}
 
@@ -11481,3 +11487,23 @@ inlineStart =
 inlineEnd : Value { provides | inlineEnd : Supported }
 inlineEnd =
     Value "inline-end"
+
+
+{-| Sets [`opacity`](https://css-tricks.com/almanac/properties/o/opacity/)
+
+    opacity (num 0.5)
+    opacity (num 1.0)
+    opacity zero
+
+-}
+opacity :
+    Value
+        { num : Supported
+        , zero : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+opacity (Value val) =
+    AppendProperty ("stroke-opacity:" ++ val)
