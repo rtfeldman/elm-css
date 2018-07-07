@@ -11417,3 +11417,58 @@ columnRule3 :
     -> Style
 columnRule3 (Value width) (Value style) (Value color) =
     AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
+
+
+
+-- TRANSFORM
+
+
+{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/).
+-}
+transform :
+    Value
+        { matrix : Supported
+        , translate : Supported
+        , translate2 : Supported
+        , translateX : Supported
+        , translateY : Supported
+        , scale : Supported
+        , scaleX : Supported
+        , scaleY : Supported
+        , rotate : Supported
+        , skew : Supported
+        , skewX : Supported
+        , skewY : Supported
+        , matrix3d : Supported
+        , translate3d : Supported
+        , translateZ : Supported
+        , scale3d : Supported
+        , scaleZ : Supported
+        , rotate3d : Supported
+        , rotateX : Supported
+        , rotateY : Supported
+        , rotateZ : Supported
+        , perspective : Supported
+        }
+    -> Style
+transform (Value val) =
+    AppendProperty ("transform:" ++ val)
+
+
+{-| Sets `matrix` value for usage with [`transform`](#transform).
+The first four numeric values describe the linear transformation.
+The last two numeric values describe the translation to apply.
+
+        transform (matrix 1 2 -1 1 80 80)
+
+-}
+matrix :
+    Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Value { provides | matrix : Supported }
+matrix a b c d tx ty =
+    Value ("matrix(" ++ toString a ++ " " ++ toString b ++ " " ++ toString c ++ " " ++ toString d ++ " " ++ toString tx ++ " " ++ toString ty ++ ")")
