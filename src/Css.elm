@@ -11664,3 +11664,13 @@ scale2 x y =
 scaleX : Float -> Value { provides | scaleX : Supported }
 scaleX x =
     Value ("scaleX(" ++ toString x ++ ")")
+
+
+{-| Sets `scaleY` value for usage with [`transform`](#transform).
+
+    transform (scaleY 0.7)
+
+-}
+scaleY : Float -> Value { provides | scaleY : Supported }
+scaleY y =
+    Value ("scaleY(" ++ toString y ++ ")")
