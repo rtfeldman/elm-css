@@ -11684,3 +11684,17 @@ scaleY y =
 scaleZ : Float -> Value { provides | scaleZ : Supported }
 scaleZ z =
     Value ("scaleZ(" ++ toString z ++ ")")
+
+
+{-| Sets `scale3d` value for usage with [`transform`](#transform).
+
+    transform (scale3d 2 0.7 0.2)
+
+-}
+scale3d :
+    Float
+    -> Float
+    -> Float
+    -> Value { provides | scale3d : Supported }
+scale3d x y z =
+    Value ("scale3d(" ++ toString x ++ "," ++ toString y ++ "," ++ toString z ++ ")")
