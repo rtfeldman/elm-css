@@ -11472,3 +11472,80 @@ matrix :
     -> Value { provides | matrix : Supported }
 matrix a b c d tx ty =
     Value ("matrix(" ++ toString a ++ " " ++ toString b ++ " " ++ toString c ++ " " ++ toString d ++ " " ++ toString tx ++ " " ++ toString ty ++ ")")
+
+
+{-| Sets `translate` value for usage with [`transform`](#transform).
+
+    transform (translate (px 10))
+
+-}
+translate :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | translate : Supported }
+translate (Value x) =
+    Value ("translate(" ++ x ++ ")")
+
+
+{-| Sets `translate` value for usage with [`transform`](#transform).
+
+    transform (translate (px 10) (px 20))
+
+-}
+translate2 :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { zero : Supported
+            , calc : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            }
+    -> Value { provides | translate2 : Supported }
+translate2 (Value x) (Value y) =
+    Value ("translate(" ++ x ++ "," ++ y ++ ")")
