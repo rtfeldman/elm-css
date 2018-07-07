@@ -11424,15 +11424,42 @@ columnRule3 (Value width) (Value style) (Value color) =
 
 
 {-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/).
+
+    transform none
+    transform (matrix 1.0 2.0 3.0 4.0 5.0 6.0)
+    transform (translate (px 12) (pct 50))
+    transform (translateX (em 2))
+    transform (translateY (in 3))
+    transform (scale 2)
+    transform (scale2 2, 0.5)
+    transform (scaleX 2)
+    transform (scaleY 0.5)
+    transform (rotate (turn 0.5))
+    transform (skew (deg 30) (deg 20))
+    transform (skewX (deg 30))
+    transform (skewY (rad 1.07))
+    transform (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1)
+    transform (translate3d (px 12) (pct 50) (em 3))
+    transform (translateZ (px 2))
+    transform (scale3d 2.5 1.2 0.3)
+    transform (scaleZ 0.3)
+    transform (rotate3d 1 2.0 3.0 (deg 10))
+    transform (rotateX (deg 10))
+    transform (rotateY (deg 10))
+    transform (rotateZ (deg 10))
+    transform (perspective (px 17))
+
 -}
 transform :
     Value
-        { matrix : Supported
+        { none : Supported
+        , matrix : Supported
         , translate : Supported
         , translate2 : Supported
         , translateX : Supported
         , translateY : Supported
         , scale : Supported
+        , scale2 : Supported
         , scaleX : Supported
         , scaleY : Supported
         , rotate : Supported
@@ -11607,3 +11634,23 @@ translateY :
     -> Value { provides | translateY : Supported }
 translateY (Value y) =
     Value ("translateY(" ++ y ++ ")")
+
+
+{-| Sets `scale` value for usage with [`transform`](#transform).
+
+    transform (scale 0.7)
+
+-}
+scale : Float -> Value { provides | scale : Supported }
+scale val =
+    Value ("scale(" ++ toString val ++ ")")
+
+
+{-| Sets `scale` value for usage with [`transform`](#transform).
+
+    transform (scale 0.7 0.7)
+
+-}
+scale2 : Float -> Float -> Value { provides | scale2 : Supported }
+scale2 x y =
+    Value ("scale(" ++ toString x ++ ", " ++ toString y ++ ")")
