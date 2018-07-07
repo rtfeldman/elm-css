@@ -11578,3 +11578,32 @@ translateX :
     -> Value { provides | translateX : Supported }
 translateX (Value x) =
     Value ("translateX(" ++ x ++ ")")
+
+
+{-| Sets `translateY` value for usage with [`transform`](#transform).
+
+    transform (translateY (px 10))
+
+-}
+translateY :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | translateY : Supported }
+translateY (Value y) =
+    Value ("translateY(" ++ y ++ ")")
