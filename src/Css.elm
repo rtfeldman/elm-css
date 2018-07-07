@@ -11462,6 +11462,8 @@ transform :
         , scale2 : Supported
         , scaleX : Supported
         , scaleY : Supported
+        , scaleZ : Supported
+        , scale3d : Supported
         , rotate : Supported
         , skew : Supported
         , skewX : Supported
@@ -11469,8 +11471,6 @@ transform :
         , matrix3d : Supported
         , translate3d : Supported
         , translateZ : Supported
-        , scale3d : Supported
-        , scaleZ : Supported
         , rotate3d : Supported
         , rotateX : Supported
         , rotateY : Supported
@@ -11674,3 +11674,13 @@ scaleX x =
 scaleY : Float -> Value { provides | scaleY : Supported }
 scaleY y =
     Value ("scaleY(" ++ toString y ++ ")")
+
+
+{-| Sets `scaleZ` value for usage with [`transform`](#transform).
+
+    transform (scaleZ 0.7)
+
+-}
+scaleZ : Float -> Value { provides | scaleZ : Supported }
+scaleZ z =
+    Value ("scaleZ(" ++ toString z ++ ")")
