@@ -11454,27 +11454,27 @@ transform :
     Value
         { none : Supported
         , matrix : Supported
+        , matrix3d : Supported
         , translate : Supported
         , translate2 : Supported
         , translateX : Supported
         , translateY : Supported
+        , translateZ : Supported
+        , translate3d : Supported
         , scale : Supported
         , scale2 : Supported
         , scaleX : Supported
         , scaleY : Supported
         , scaleZ : Supported
         , scale3d : Supported
-        , rotate : Supported
         , skew : Supported
         , skewX : Supported
         , skewY : Supported
-        , matrix3d : Supported
-        , translate3d : Supported
-        , translateZ : Supported
-        , rotate3d : Supported
+        , rotate : Supported
         , rotateX : Supported
         , rotateY : Supported
         , rotateZ : Supported
+        , rotate3d : Supported
         , perspective : Supported
         }
     -> Style
@@ -11711,6 +11711,35 @@ translateY :
     -> Value { provides | translateY : Supported }
 translateY (Value y) =
     Value ("translateY(" ++ y ++ ")")
+
+
+{-| Sets `translateZ` value for usage with [`transform`](#transform).
+
+    transform (translateZ (px 10))
+
+-}
+translateZ :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | translateZ : Supported }
+translateZ (Value z) =
+    Value ("translateZ(" ++ z ++ ")")
 
 
 {-| Sets `scale` value for usage with [`transform`](#transform).
