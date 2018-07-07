@@ -11498,7 +11498,84 @@ matrix :
     -> Float
     -> Value { provides | matrix : Supported }
 matrix a b c d tx ty =
-    Value ("matrix(" ++ toString a ++ " " ++ toString b ++ " " ++ toString c ++ " " ++ toString d ++ " " ++ toString tx ++ " " ++ toString ty ++ ")")
+    Value
+        ("matrix("
+            ++ toString a
+            ++ " "
+            ++ toString b
+            ++ " "
+            ++ toString c
+            ++ " "
+            ++ toString d
+            ++ " "
+            ++ toString tx
+            ++ " "
+            ++ toString ty
+            ++ ")"
+        )
+
+
+{-| Sets `matrix3d` value for usage with [`transform`](#transform).
+Every fourth number describes the translation to apply. All other describe the
+linear tranformation.
+
+        transform (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1)
+
+-}
+matrix3d :
+    Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Value { provides | matrix : Supported }
+matrix3d a1 b1 c1 d1 a2 b2 c2 d2 a3 b3 c3 d3 a4 b4 c4 d4 =
+    Value
+        ("matrix3d:"
+            ++ toString a1
+            ++ ","
+            ++ toString b1
+            ++ ","
+            ++ toString c1
+            ++ ","
+            ++ toString d1
+            ++ ","
+            ++ toString a2
+            ++ ","
+            ++ toString b2
+            ++ ","
+            ++ toString c2
+            ++ ","
+            ++ toString d2
+            ++ ","
+            ++ toString a3
+            ++ ","
+            ++ toString b3
+            ++ ","
+            ++ toString c3
+            ++ ","
+            ++ toString d3
+            ++ ","
+            ++ toString a4
+            ++ ","
+            ++ toString b4
+            ++ ","
+            ++ toString c4
+            ++ ","
+            ++ toString d4
+            ++ ")"
+        )
 
 
 {-| Sets `translate` value for usage with [`transform`](#transform).
