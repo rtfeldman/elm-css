@@ -11742,6 +11742,73 @@ translateZ (Value z) =
     Value ("translateZ(" ++ z ++ ")")
 
 
+{-| Sets `translate3d` value for usage with [`transform`](#transform).
+
+    transform (translate3d (px 12) (pct 50) (em 3))
+
+-}
+translate3d :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { zero : Supported
+            , calc : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            }
+    ->
+        Value
+            { zero : Supported
+            , calc : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            }
+    -> Value { provides | translate3d : Supported }
+translate3d (Value x) (Value y) (Value z) =
+    Value ("translate3d(" ++ x ++ "," ++ y ++ "," ++ z ++ ")")
+
+
 {-| Sets `scale` value for usage with [`transform`](#transform).
 
     transform (scale 0.7)
