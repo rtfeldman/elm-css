@@ -4259,7 +4259,7 @@ fontVariantNumeric4 val1 val2 val3 val4 =
 
 maybeValToString : Maybe (Value a) -> Maybe String
 maybeValToString =
-    Maybe.map (\(Value val) -> val)
+    Maybe.map unpackValue
 
 
 {-| The `ordinal` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
@@ -4788,7 +4788,7 @@ backgroundAttachments firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-attachment:" ++ str)
@@ -4905,7 +4905,7 @@ backgroundBlendModes firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-blend-mode:" ++ str)
@@ -5121,7 +5121,7 @@ backgroundClips firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-clip:" ++ str)
@@ -5193,7 +5193,7 @@ backgroundOrigins firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-origin:" ++ str)
@@ -5247,7 +5247,7 @@ backgroundImages :
 backgroundImages (Value first) rest =
     let
         peeled =
-            List.map (\(Value value) -> value) rest
+            List.map unpackValue rest
 
         values =
             String.join "," (first :: peeled)
@@ -5737,7 +5737,7 @@ linearGradient :
 linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
     let
         peeledStops =
-            List.map (\(Value stop) -> stop) moreStops
+            List.map unpackValue moreStops
 
         stops =
             String.join "," (firstStop :: secondStop :: peeledStops)
