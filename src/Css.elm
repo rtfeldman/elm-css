@@ -11482,6 +11482,10 @@ transform (Value val) =
     AppendProperty ("transform:" ++ val)
 
 
+
+-- MATRIX TRANSFORMATION
+
+
 {-| Sets `matrix` value for usage with [`transform`](#transform).
 The first four numeric values describe the linear transformation.
 The last two numeric values describe the translation to apply.
@@ -11576,6 +11580,10 @@ matrix3d a1 b1 c1 d1 a2 b2 c2 d2 a3 b3 c3 d3 a4 b4 c4 d4 =
             ++ toString d4
             ++ ")"
         )
+
+
+
+-- TRANSLATION (moving)
 
 
 {-| Sets `translate` value for usage with [`transform`](#transform).
@@ -11809,6 +11817,10 @@ translate3d (Value x) (Value y) (Value z) =
     Value ("translate3d(" ++ x ++ "," ++ y ++ "," ++ z ++ ")")
 
 
+
+-- SCALING (resizing)
+
+
 {-| Sets `scale` value for usage with [`transform`](#transform).
 
     transform (scale 0.7)
@@ -11871,3 +11883,17 @@ scale3d :
     -> Value { provides | scale3d : Supported }
 scale3d x y z =
     Value ("scale3d(" ++ toString x ++ "," ++ toString y ++ "," ++ toString z ++ ")")
+
+
+
+-- SKEWING (distortion)
+
+
+{-| Sets `skew` value for usage with [`transform`](#transform).
+
+    transform (skwe (deg 30))
+
+-}
+skew : Value { deg : Supported } -> Value { provides | skew : Supported }
+skew (Value degrees) =
+    Value ("skew(" ++ degrees ++ ")")
