@@ -11962,3 +11962,24 @@ skewY :
     -> Value { provides | skewY : Supported }
 skewY (Value angle) =
     Value ("skewY(" ++ angle ++ ")")
+
+
+
+-- ROTATION
+
+
+{-| Sets `rotate` value for usage with [`transform`](#transform).
+
+    transform (rotate (deg 30))
+
+-}
+rotate :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | rotate : Supported }
+rotate (Value angle) =
+    Value ("rotate(" ++ angle ++ ")")
