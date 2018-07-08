@@ -262,6 +262,8 @@ module Css
         , marginRight
         , marginTop
         , matchParent
+        , matrix
+        , matrix3d
         , medium
         , middle
         , minus
@@ -314,6 +316,7 @@ module Css
         , paddingTop
         , pc
         , pct
+        , perspective
         , petiteCaps
         , plus
         , pointer
@@ -340,6 +343,11 @@ module Css
         , ridge
         , right
         , right_
+        , rotate
+        , rotate3d
+        , rotateX
+        , rotateY
+        , rotateZ
         , round
         , rowResize
         , rtl
@@ -347,6 +355,12 @@ module Css
         , safeCenter
         , sansSerif
         , saturation
+        , scale
+        , scale2
+        , scale3d
+        , scaleX
+        , scaleY
+        , scaleZ
         , screen
         , scroll
         , seResize
@@ -356,6 +370,10 @@ module Css
         , serif
         , show
         , sideways
+        , skew
+        , skew2
+        , skewX
+        , skewY
         , slashedZero
         , slice
         , small
@@ -443,6 +461,13 @@ module Css
         , toTopRight
         , top
         , top_
+        , transform
+        , translate
+        , translate2
+        , translate3d
+        , translateX
+        , translateY
+        , translateZ
         , turn
         , underline
         , unicase
@@ -845,6 +870,41 @@ Multiple CSS properties use these values.
 @docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
+
+
+# Transformation
+
+@docs transform
+
+
+## Matrix transformation
+
+@docs matrix, matrix3d
+
+
+## Perspective
+
+@docs perspective
+
+
+## Rotation
+
+@docs rotate, rotateX, rotateY, rotateZ, rotate3d
+
+
+## Scaling (resizing)
+
+@docs scale, scale2, scaleX, scaleY, scaleZ, scale3d
+
+
+## Skewing (distortion)
+
+@docs skew, skew2, skewX, skewY
+
+
+## Translation (moving)
+
+@docs translate, translate2, translateX, translateY, translateZ, translate3d
 
 -}
 
