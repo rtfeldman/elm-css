@@ -462,6 +462,7 @@ module Css
         , top
         , top_
         , transform
+        , transformN
         , translate
         , translate2
         , translate3d
@@ -874,7 +875,7 @@ Multiple CSS properties use these values.
 
 # Transformation
 
-@docs transform
+@docs transform, transformN
 
 
 ## Matrix transformation
