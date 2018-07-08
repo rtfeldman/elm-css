@@ -11894,7 +11894,14 @@ scale3d x y z =
     transform (skew (deg 30))
 
 -}
-skew : Value { deg : Supported } -> Value { provides | skew : Supported }
+skew :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | skew : Supported }
 skew (Value degrees) =
     Value ("skew(" ++ degrees ++ ")")
 
@@ -11905,8 +11912,19 @@ skew (Value degrees) =
 
 -}
 skew2 :
-    Value { deg : Supported }
-    -> Value { deg : Supported }
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    ->
+        Value
+            { deg : Supported
+            , grad : Supported
+            , rad : Supported
+            , turn : Supported
+            }
     -> Value { provides | skew2 : Supported }
 skew2 (Value deg1) (Value deg2) =
     Value ("skew(" ++ deg1 ++ "," ++ deg2 ++ ")")
