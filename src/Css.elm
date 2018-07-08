@@ -12034,3 +12034,34 @@ rotateZ :
     -> Value { provides | rotateZ : Supported }
 rotateZ (Value angle) =
     Value ("rotateZ(" ++ angle ++ ")")
+
+
+{-| Sets `rotate3d` value for usage with [`transform`](#transform).
+
+    transform (rotate3d 0 1 0 (deg 30))
+
+-}
+rotate3d :
+    Float
+    -> Float
+    -> Float
+    ->
+        Value
+            { deg : Supported
+            , grad : Supported
+            , rad : Supported
+            , turn : Supported
+            }
+    -> Value { provides | rotate3d : Supported }
+rotate3d x y z (Value angle) =
+    Value
+        ("rotate3d("
+            ++ toString x
+            ++ ","
+            ++ toString y
+            ++ ","
+            ++ toString z
+            ++ ","
+            ++ angle
+            ++ ")"
+        )
