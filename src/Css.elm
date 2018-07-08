@@ -11928,3 +11928,20 @@ skew2 :
     -> Value { provides | skew2 : Supported }
 skew2 (Value deg1) (Value deg2) =
     Value ("skew(" ++ deg1 ++ "," ++ deg2 ++ ")")
+
+
+{-| Sets `skewX` value for usage with [`transform`](#transform).
+
+    transform (skewX (deg 30))
+
+-}
+skewX :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | skewX : Supported }
+skewX (Value degrees) =
+    Value ("skewX(" ++ degrees ++ ")")
