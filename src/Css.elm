@@ -11891,9 +11891,22 @@ scale3d x y z =
 
 {-| Sets `skew` value for usage with [`transform`](#transform).
 
-    transform (skwe (deg 30))
+    transform (skew (deg 30))
 
 -}
 skew : Value { deg : Supported } -> Value { provides | skew : Supported }
 skew (Value degrees) =
     Value ("skew(" ++ degrees ++ ")")
+
+
+{-| Sets `skew` value for usage with [`transform`](#transform).
+
+    transform (skew2 (deg 30) (deg 10))
+
+-}
+skew2 :
+    Value { deg : Supported }
+    -> Value { deg : Supported }
+    -> Value { provides | skew2 : Supported }
+skew2 (Value deg1) (Value deg2) =
+    Value ("skew(" ++ deg1 ++ "," ++ deg2 ++ ")")
