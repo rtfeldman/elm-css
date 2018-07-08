@@ -11902,8 +11902,8 @@ skew :
         , turn : Supported
         }
     -> Value { provides | skew : Supported }
-skew (Value degrees) =
-    Value ("skew(" ++ degrees ++ ")")
+skew (Value angle) =
+    Value ("skew(" ++ angle ++ ")")
 
 
 {-| Sets `skew` value for usage with [`transform`](#transform).
@@ -11926,8 +11926,8 @@ skew2 :
             , turn : Supported
             }
     -> Value { provides | skew2 : Supported }
-skew2 (Value deg1) (Value deg2) =
-    Value ("skew(" ++ deg1 ++ "," ++ deg2 ++ ")")
+skew2 (Value angle1) (Value angle2) =
+    Value ("skew(" ++ angle1 ++ "," ++ angle2 ++ ")")
 
 
 {-| Sets `skewX` value for usage with [`transform`](#transform).
@@ -11943,5 +11943,22 @@ skewX :
         , turn : Supported
         }
     -> Value { provides | skewX : Supported }
-skewX (Value degrees) =
-    Value ("skewX(" ++ degrees ++ ")")
+skewX (Value angle) =
+    Value ("skewX(" ++ angle ++ ")")
+
+
+{-| Sets `skewY` value for usage with [`transform`](#transform).
+
+    transform (skewY (deg 30))
+
+-}
+skewY :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | skewY : Supported }
+skewY (Value angle) =
+    Value ("skewY(" ++ angle ++ ")")
