@@ -11983,3 +11983,20 @@ rotate :
     -> Value { provides | rotate : Supported }
 rotate (Value angle) =
     Value ("rotate(" ++ angle ++ ")")
+
+
+{-| Sets `rotateX` value for usage with [`transform`](#transform).
+
+    transform (rotateX (deg 30))
+
+-}
+rotateX :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | rotateX : Supported }
+rotateX (Value angle) =
+    Value ("rotateX(" ++ angle ++ ")")
