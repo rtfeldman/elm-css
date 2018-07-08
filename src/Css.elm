@@ -12065,3 +12065,36 @@ rotate3d x y z (Value angle) =
             ++ angle
             ++ ")"
         )
+
+
+
+-- PERSPECTIVE
+
+
+{-| Sets `perspective` value for usage with [`transform`](#transform).
+
+    transform (perspective (px 17))
+
+-}
+perspective :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | perspective : Supported }
+perspective (Value length) =
+    Value ("perspective(" ++ length ++ ")")
