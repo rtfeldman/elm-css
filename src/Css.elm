@@ -11468,6 +11468,7 @@ transform :
         , scaleZ : Supported
         , scale3d : Supported
         , skew : Supported
+        , skew2 : Supported
         , skewX : Supported
         , skewY : Supported
         , rotate : Supported
@@ -11476,6 +11477,9 @@ transform :
         , rotateZ : Supported
         , rotate3d : Supported
         , perspective : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
         }
     -> Style
 transform (Value val) =
