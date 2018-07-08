@@ -11548,6 +11548,53 @@ transform (Value val) =
     AppendProperty ("transform:" ++ val)
 
 
+{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/).
+
+    transformN [ (translate (px 12)), (scale 2), (skew (deg 20)) ]
+
+-}
+transformN :
+    List
+        (Value
+            { matrix : Supported
+            , matrix3d : Supported
+            , translate : Supported
+            , translate2 : Supported
+            , translateX : Supported
+            , translateY : Supported
+            , translateZ : Supported
+            , translate3d : Supported
+            , scale : Supported
+            , scale2 : Supported
+            , scaleX : Supported
+            , scaleY : Supported
+            , scaleZ : Supported
+            , scale3d : Supported
+            , skew : Supported
+            , skew2 : Supported
+            , skewX : Supported
+            , skewY : Supported
+            , rotate : Supported
+            , rotateX : Supported
+            , rotateY : Supported
+            , rotateZ : Supported
+            , rotate3d : Supported
+            , perspective : Supported
+            }
+        )
+    -> Style
+transformN =
+    List.map unpackValue
+        >> String.join ","
+        >> (++) "transform:"
+        >> AppendProperty
+
+
+unpackValue : Value a -> String
+unpackValue (Value value) =
+    value
+
+
 
 -- MATRIX TRANSFORMATION
 
