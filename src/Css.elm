@@ -11839,6 +11839,7 @@ translate3d :
         , inches : Supported
         , pc : Supported
         , pt : Supported
+        , pct : Supported
         }
     ->
         Value
@@ -11858,6 +11859,7 @@ translate3d :
             , inches : Supported
             , pc : Supported
             , pt : Supported
+            , pct : Supported
             }
     ->
         Value
@@ -11877,6 +11879,7 @@ translate3d :
             , inches : Supported
             , pc : Supported
             , pt : Supported
+            , pct : Supported
             }
     -> Value { provides | translate3d : Supported }
 translate3d (Value x) (Value y) (Value z) =
