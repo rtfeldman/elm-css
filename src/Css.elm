@@ -11484,77 +11484,40 @@ columnRule3 (Value width) (Value style) (Value color) =
 -- TRANSFORM
 
 
-{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/).
+{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/)
+with a series of transform-functions. If an empty list is provided, the CSS
+output will be none, as if to state directly that the set of transforms applied
+to the current selector is empty.
 
-    transform none
-    transform (matrix 1.0 2.0 3.0 4.0 5.0 6.0)
-    transform (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1)
-    transform (translate (px 12))
-    transform (translate2 (px 12) (pct 50))
-    transform (translateX (em 2))
-    transform (translateY (in 3))
-    transform (translateZ (px 2))
-    transform (translate3d (px 12) (pct 50) (em 3))
-    transform (scale 2)
-    transform (scale2 2, 0.5)
-    transform (scaleX 2)
-    transform (scaleY 0.5)
-    transform (scaleZ 0.3)
-    transform (scale3d 2.5 1.2 0.3)
-    transform (skew (deg 20))
-    transform (skew2 (deg 30) (deg 20))
-    transform (skewX (deg 30))
-    transform (skewY (rad 1.07))
-    transform (rotate (turn 0.5))
-    transform (rotateX (deg 10))
-    transform (rotateY (deg 10))
-    transform (rotateZ (deg 10))
-    transform (rotate3d 1 2.0 3.0 (deg 10))
-    transform (perspective (px 17))
+    transform [] -- transform: none;
+    transform [ (matrix 1.0 2.0 3.0 4.0 5.0 6.0) ]
+    transform [ (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1) ]
+    transform [ (translate (px 12)) ]
+    transform [ (translate2 (px 12) (pct 50)) ]
+    transform [ (translateX (em 2)) ]
+    transform [ (translateY (in 3)) ]
+    transform [ (translateZ (px 2)) ]
+    transform [ (translate3d (px 12) (pct 50) (em 3)) ]
+    transform [ (scale 2) ]
+    transform [ (scale2 2, 0.5) ]
+    transform [ (scaleX 2) ]
+    transform [ (scaleY 0.5) ]
+    transform [ (scaleZ 0.3) ]
+    transform [ (scale3d 2.5 1.2 0.3) ]
+    transform [ (skew (deg 20)) ]
+    transform [ (skew2 (deg 30) (deg 20)) ]
+    transform [ (skewX (deg 30)) ]
+    transform [ (skewY (rad 1.07)) ]
+    transform [ (rotate (turn 0.5)) ]
+    transform [ (rotateX (deg 10)) ]
+    transform [ (rotateY (deg 10)) ]
+    transform [ (rotateZ (deg 10)) ]
+    transform [ (rotate3d 1 2.0 3.0 (deg 10)) ]
+    transform [ (perspective (px 17)) ]
+    transform [ (translate (px 12)), (scale 2), (skew (deg 20)) ]
 
 -}
 transform :
-    Value
-        { none : Supported
-        , matrix : Supported
-        , matrix3d : Supported
-        , translate : Supported
-        , translate2 : Supported
-        , translateX : Supported
-        , translateY : Supported
-        , translateZ : Supported
-        , translate3d : Supported
-        , scale : Supported
-        , scale2 : Supported
-        , scaleX : Supported
-        , scaleY : Supported
-        , scaleZ : Supported
-        , scale3d : Supported
-        , skew : Supported
-        , skew2 : Supported
-        , skewX : Supported
-        , skewY : Supported
-        , rotate : Supported
-        , rotateX : Supported
-        , rotateY : Supported
-        , rotateZ : Supported
-        , rotate3d : Supported
-        , perspective : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
-    -> Style
-transform (Value val) =
-    AppendProperty ("transform:" ++ val)
-
-
-{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/).
-
-    transformN [ (translate (px 12)), (scale 2), (skew (deg 20)) ]
-
--}
-transformN :
     List
         (Value
             { matrix : Supported
@@ -11584,11 +11547,22 @@ transformN :
             }
         )
     -> Style
-transformN =
-    List.map unpackValue
+transform =
+    appendNoneToEmptyList
+        >> List.map unpackValue
         >> String.join ","
         >> (++) "transform:"
         >> AppendProperty
+
+
+appendNoneToEmptyList : List a -> List a
+appendNoneToEmptyList values =
+    case values of
+        [] ->
+            [ none ]
+
+        list ->
+            list
 
 
 unpackValue : Value a -> String
