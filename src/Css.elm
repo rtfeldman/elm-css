@@ -112,6 +112,7 @@ module Css
         , borderWidth2
         , borderWidth3
         , borderWidth4
+        , both
         , bottom
         , bottom_
         , boundingBox
@@ -128,6 +129,7 @@ module Css
         , ch
         , cjkEarthlyBranch
         , cjkHeavenlyStem
+        , clear
         , clone
         , cm
         , colResize
@@ -226,7 +228,9 @@ module Css
         , initial
         , inline
         , inlineBlock
+        , inlineEnd
         , inlineFlex
+        , inlineStart
         , inset
         , int
         , italic
@@ -293,6 +297,7 @@ module Css
         , nwseResize
         , oblique
         , oldstyleNums
+        , opacity
         , optimizeLegibility
         , optimizeSpeed
         , order
@@ -496,6 +501,7 @@ module Css
         , xxSmall
         , zIndex
         , zero
+        , zoom
         , zoomIn
         , zoomOut
         )
@@ -836,6 +842,7 @@ Multiple CSS properties use these values.
 ## Float
 
 @docs float
+@docs clear, both, inlineStart, inlineEnd
 
 
 # Visibility
@@ -906,6 +913,16 @@ Multiple CSS properties use these values.
 ## Translation (moving)
 
 @docs translate, translate2, translateX, translateY, translateZ, translate3d
+
+
+# Opacity
+
+@docs opacity
+
+
+# Viewport
+
+@docs zoom
 
 -}
 
@@ -1102,9 +1119,11 @@ url str =
     Value ("url(" ++ str ++ ")")
 
 
-{-| The `auto` value used for properties such as [`width`](#width).
+{-| The `auto` value used for properties such as [`width`](#width),
+and [`zoom`](#zoom).
 
     width auto
+    zoom auto
 
 -}
 auto : Value { provides | auto : Supported }
@@ -1114,6 +1133,7 @@ auto =
 
 {-| The `none` value used for properties such as [`display`](#display),
 [`borderStyle`](#borderStyle),
+[`clear`](#clear),
 and [`strokeDashJustify`](#strokeDashJustify).
 
     display none
@@ -3996,13 +4016,15 @@ fontVariantCaps (Value str) =
 [`whiteSpace`](#whiteSpace),
 [`wordBreak`](#wordBreak),
 [`columnGap`](#columnGap),
+[`zoom`](#zoom),
 and [`alignItems`](#alignItems).
 
+    alignItems normal
+    columnGap normal
     fontVariantCaps normal
     whiteSpace normal
     wordBreak normal
-    alignItems normal
-    columnGap normal
+    zoom normal
 
 -}
 normal : Value { provides | normal : Supported }
@@ -10105,6 +10127,7 @@ visibility (Value str) =
 order :
     Value
         { num : Supported
+        , zero : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -12189,3 +12212,105 @@ perspective :
     -> Value { provides | perspective : Supported }
 perspective (Value length) =
     Value ("perspective(" ++ length ++ ")")
+
+
+{-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
+
+    clear none
+    clear both
+    clear left_
+    clear right_
+    clear inlineStart
+    clear inlineEnd
+
+-}
+clear :
+    Value
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , both : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+clear (Value val) =
+    AppendProperty ("clear:" ++ val)
+
+
+{-| Sets `both` value for usage with [`clear`](#clear).
+
+      clear both
+
+-}
+both : Value { provides | both : Supported }
+both =
+    Value "both"
+
+
+{-| Sets `inline-start` value for usage with [`clear`](#clear).
+
+      clear inlineStart
+
+-}
+inlineStart : Value { provides | inlineStart : Supported }
+inlineStart =
+    Value "inline-start"
+
+
+{-| Sets `inline-end` value for usage with [`clear`](#clear).
+
+      clear inlineEnd
+
+-}
+inlineEnd : Value { provides | inlineEnd : Supported }
+inlineEnd =
+    Value "inline-end"
+
+
+{-| Sets [`opacity`](https://css-tricks.com/almanac/properties/o/opacity/)
+
+    opacity (num 0.5)
+    opacity (num 1.0)
+    opacity zero
+
+-}
+opacity :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+opacity (Value val) =
+    AppendProperty ("stroke-opacity:" ++ val)
+
+
+{-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
+
+    zoom (pct 150)
+    zoom (num 1.5)
+    zoom normal
+
+-}
+zoom :
+    Value
+        { pct : Supported
+        , zero : Supported
+        , num : Supported
+        , normal : Supported
+        , calc : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+zoom (Value val) =
+    AppendProperty ("zoom:" ++ val)
