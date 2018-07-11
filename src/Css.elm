@@ -11569,22 +11569,20 @@ transform :
             }
         )
     -> Style
-transform =
-    appendNoneToEmptyList
-        >> List.map unpackValue
-        >> String.join ","
-        >> (++) "transform:"
-        >> AppendProperty
-
-
-appendNoneToEmptyList : List a -> List a
-appendNoneToEmptyList values =
+transform values =
+    let
+        intoTransform =
+            List.map unpackValue
+                >> String.join ","
+                >> (++) "transform:"
+                >> AppendProperty
+    in
     case values of
         [] ->
-            [ none ]
+            intoTransform [ none ]
 
         list ->
-            list
+            intoTransform list
 
 
 unpackValue : Value a -> String
