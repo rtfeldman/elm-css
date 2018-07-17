@@ -19,6 +19,7 @@ module Css.Global
         , colgroup
         , dd
         , descendants
+        , details
         , div
         , dl
         , dt
@@ -70,6 +71,7 @@ module Css.Global
         , small
         , span
         , strong
+        , summary
         , svg
         , table
         , tbody
@@ -118,7 +120,7 @@ do to it using `Style` instead!
 
 # Content sectioning
 
-@docs article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time
+@docs article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time, details, summary
 
 
 # Text content
@@ -1091,6 +1093,20 @@ polyline =
 polygon : List Style -> Snippet
 polygon =
     typeSelector "polygon"
+
+
+{-| Selector for a details element.
+-}
+details : List Style -> Snippet
+details =
+    typeSelector "details"
+
+
+{-| Selector for a summary element.
+-}
+summary : List Style -> Snippet
+summary =
+    typeSelector "summary"
 
 
 collectSelectors : List Preprocess.SnippetDeclaration -> List Structure.Selector
