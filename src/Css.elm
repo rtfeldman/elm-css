@@ -266,6 +266,8 @@ module Css
         , marginRight
         , marginTop
         , matchParent
+        , matrix
+        , matrix3d
         , medium
         , middle
         , minus
@@ -319,6 +321,7 @@ module Css
         , paddingTop
         , pc
         , pct
+        , perspective
         , petiteCaps
         , plus
         , pointer
@@ -345,6 +348,11 @@ module Css
         , ridge
         , right
         , right_
+        , rotate
+        , rotate3d
+        , rotateX
+        , rotateY
+        , rotateZ
         , round
         , rowResize
         , rtl
@@ -352,6 +360,12 @@ module Css
         , safeCenter
         , sansSerif
         , saturation
+        , scale
+        , scale2
+        , scale3d
+        , scaleX
+        , scaleY
+        , scaleZ
         , screen
         , scroll
         , seResize
@@ -361,6 +375,10 @@ module Css
         , serif
         , show
         , sideways
+        , skew
+        , skew2
+        , skewX
+        , skewY
         , slashedZero
         , slice
         , small
@@ -448,6 +466,13 @@ module Css
         , toTopRight
         , top
         , top_
+        , transform
+        , translate
+        , translate2
+        , translate3d
+        , translateX
+        , translateY
+        , translateZ
         , turn
         , underline
         , unicase
@@ -852,6 +877,41 @@ Multiple CSS properties use these values.
 @docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
+
+
+# Transformation
+
+@docs transform
+
+
+## Matrix transformation
+
+@docs matrix, matrix3d
+
+
+## Perspective
+
+@docs perspective
+
+
+## Rotation
+
+@docs rotate, rotateX, rotateY, rotateZ, rotate3d
+
+
+## Scaling (resizing)
+
+@docs scale, scale2, scaleX, scaleY, scaleZ, scale3d
+
+
+## Skewing (distortion)
+
+@docs skew, skew2, skewX, skewY
+
+
+## Translation (moving)
+
+@docs translate, translate2, translateX, translateY, translateZ, translate3d
 
 
 # Opacity
@@ -4221,7 +4281,7 @@ fontVariantNumeric4 val1 val2 val3 val4 =
 
 maybeValToString : Maybe (Value a) -> Maybe String
 maybeValToString =
-    Maybe.map (\(Value val) -> val)
+    Maybe.map unpackValue
 
 
 {-| The `ordinal` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
@@ -4750,7 +4810,7 @@ backgroundAttachments firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-attachment:" ++ str)
@@ -4867,7 +4927,7 @@ backgroundBlendModes firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-blend-mode:" ++ str)
@@ -5083,7 +5143,7 @@ backgroundClips firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-clip:" ++ str)
@@ -5155,7 +5215,7 @@ backgroundOrigins firstValue values =
     let
         str =
             (firstValue :: values)
-                |> List.map (\(Value val) -> val)
+                |> List.map unpackValue
                 |> String.join ","
     in
     AppendProperty ("background-origin:" ++ str)
@@ -5209,7 +5269,7 @@ backgroundImages :
 backgroundImages (Value first) rest =
     let
         peeled =
-            List.map (\(Value value) -> value) rest
+            List.map unpackValue rest
 
         values =
             String.join "," (first :: peeled)
@@ -5699,7 +5759,7 @@ linearGradient :
 linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
     let
         peeledStops =
-            List.map (\(Value stop) -> stop) moreStops
+            List.map unpackValue moreStops
 
         stops =
             String.join "," (firstStop :: secondStop :: peeledStops)
@@ -11440,6 +11500,715 @@ columnRule3 :
     -> Style
 columnRule3 (Value width) (Value style) (Value color) =
     AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
+
+
+
+-- TRANSFORM
+
+
+{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/)
+with a series of transform-functions. If an empty list is provided, the CSS
+output will be none, as if to state directly that the set of transforms applied
+to the current selector is empty.
+
+    transform [] -- transform: none;
+    transform [ (matrix 1.0 2.0 3.0 4.0 5.0 6.0) ]
+    transform [ (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1) ]
+    transform [ (translate (px 12)) ]
+    transform [ (translate2 (px 12) (pct 50)) ]
+    transform [ (translateX (em 2)) ]
+    transform [ (translateY (in 3)) ]
+    transform [ (translateZ (px 2)) ]
+    transform [ (translate3d (px 12) (pct 50) (em 3)) ]
+    transform [ (scale 2) ]
+    transform [ (scale2 2, 0.5) ]
+    transform [ (scaleX 2) ]
+    transform [ (scaleY 0.5) ]
+    transform [ (scaleZ 0.3) ]
+    transform [ (scale3d 2.5 1.2 0.3) ]
+    transform [ (skew (deg 20)) ]
+    transform [ (skew2 (deg 30) (deg 20)) ]
+    transform [ (skewX (deg 30)) ]
+    transform [ (skewY (rad 1.07)) ]
+    transform [ (rotate (turn 0.5)) ]
+    transform [ (rotateX (deg 10)) ]
+    transform [ (rotateY (deg 10)) ]
+    transform [ (rotateZ (deg 10)) ]
+    transform [ (rotate3d 1 2.0 3.0 (deg 10)) ]
+    transform [ (perspective (px 17)) ]
+    transform [ (translate (px 12)), (scale 2), (skew (deg 20)) ]
+
+-}
+transform :
+    List
+        (Value
+            { matrix : Supported
+            , matrix3d : Supported
+            , translate : Supported
+            , translate2 : Supported
+            , translateX : Supported
+            , translateY : Supported
+            , translateZ : Supported
+            , translate3d : Supported
+            , scale : Supported
+            , scale2 : Supported
+            , scaleX : Supported
+            , scaleY : Supported
+            , scaleZ : Supported
+            , scale3d : Supported
+            , skew : Supported
+            , skew2 : Supported
+            , skewX : Supported
+            , skewY : Supported
+            , rotate : Supported
+            , rotateX : Supported
+            , rotateY : Supported
+            , rotateZ : Supported
+            , rotate3d : Supported
+            , perspective : Supported
+            }
+        )
+    -> Style
+transform values =
+    let
+        intoTransform =
+            List.map unpackValue
+                >> String.join ","
+                >> (++) "transform:"
+                >> AppendProperty
+    in
+    case values of
+        [] ->
+            intoTransform [ none ]
+
+        list ->
+            intoTransform list
+
+
+unpackValue : Value a -> String
+unpackValue (Value value) =
+    value
+
+
+
+-- MATRIX TRANSFORMATION
+
+
+{-| Sets `matrix` value for usage with [`transform`](#transform).
+The first four numeric values describe the linear transformation.
+The last two numeric values describe the translation to apply.
+
+        transform (matrix 1 2 -1 1 80 80)
+
+-}
+matrix :
+    Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Value { provides | matrix : Supported }
+matrix a b c d tx ty =
+    Value
+        ("matrix("
+            ++ toString a
+            ++ " "
+            ++ toString b
+            ++ " "
+            ++ toString c
+            ++ " "
+            ++ toString d
+            ++ " "
+            ++ toString tx
+            ++ " "
+            ++ toString ty
+            ++ ")"
+        )
+
+
+{-| Sets `matrix3d` value for usage with [`transform`](#transform).
+Every fourth number describes the translation to apply. All other describe the
+linear tranformation.
+
+        transform (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1)
+
+-}
+matrix3d :
+    Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Float
+    -> Value { provides | matrix : Supported }
+matrix3d a1 b1 c1 d1 a2 b2 c2 d2 a3 b3 c3 d3 a4 b4 c4 d4 =
+    Value
+        ("matrix3d:"
+            ++ toString a1
+            ++ ","
+            ++ toString b1
+            ++ ","
+            ++ toString c1
+            ++ ","
+            ++ toString d1
+            ++ ","
+            ++ toString a2
+            ++ ","
+            ++ toString b2
+            ++ ","
+            ++ toString c2
+            ++ ","
+            ++ toString d2
+            ++ ","
+            ++ toString a3
+            ++ ","
+            ++ toString b3
+            ++ ","
+            ++ toString c3
+            ++ ","
+            ++ toString d3
+            ++ ","
+            ++ toString a4
+            ++ ","
+            ++ toString b4
+            ++ ","
+            ++ toString c4
+            ++ ","
+            ++ toString d4
+            ++ ")"
+        )
+
+
+
+-- TRANSLATION (moving)
+
+
+{-| Sets `translate` value for usage with [`transform`](#transform).
+
+    transform (translate (px 10))
+
+-}
+translate :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | translate : Supported }
+translate (Value x) =
+    Value ("translate(" ++ x ++ ")")
+
+
+{-| Sets `translate` value for usage with [`transform`](#transform).
+
+    transform (translate (px 10) (px 20))
+
+-}
+translate2 :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    ->
+        Value
+            { zero : Supported
+            , calc : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            }
+    -> Value { provides | translate2 : Supported }
+translate2 (Value x) (Value y) =
+    Value ("translate(" ++ x ++ "," ++ y ++ ")")
+
+
+{-| Sets `translateX` value for usage with [`transform`](#transform).
+
+    transform (translateX (px 10))
+
+-}
+translateX :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | translateX : Supported }
+translateX (Value x) =
+    Value ("translateX(" ++ x ++ ")")
+
+
+{-| Sets `translateY` value for usage with [`transform`](#transform).
+
+    transform (translateY (px 10))
+
+-}
+translateY :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | translateY : Supported }
+translateY (Value y) =
+    Value ("translateY(" ++ y ++ ")")
+
+
+{-| Sets `translateZ` value for usage with [`transform`](#transform).
+
+    transform (translateZ (px 10))
+
+-}
+translateZ :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | translateZ : Supported }
+translateZ (Value z) =
+    Value ("translateZ(" ++ z ++ ")")
+
+
+{-| Sets `translate3d` value for usage with [`transform`](#transform).
+
+    transform (translate3d (px 12) (pct 50) (em 3))
+
+-}
+translate3d :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        }
+    ->
+        Value
+            { zero : Supported
+            , calc : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            }
+    ->
+        Value
+            { zero : Supported
+            , calc : Supported
+            , ch : Supported
+            , em : Supported
+            , ex : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , px : Supported
+            , cm : Supported
+            , mm : Supported
+            , inches : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            }
+    -> Value { provides | translate3d : Supported }
+translate3d (Value x) (Value y) (Value z) =
+    Value ("translate3d(" ++ x ++ "," ++ y ++ "," ++ z ++ ")")
+
+
+
+-- SCALING (resizing)
+
+
+{-| Sets `scale` value for usage with [`transform`](#transform).
+
+    transform (scale 0.7)
+
+-}
+scale : Float -> Value { provides | scale : Supported }
+scale val =
+    Value ("scale(" ++ toString val ++ ")")
+
+
+{-| Sets `scale` value for usage with [`transform`](#transform).
+
+    transform (scale 0.7 0.7)
+
+-}
+scale2 : Float -> Float -> Value { provides | scale2 : Supported }
+scale2 x y =
+    Value ("scale(" ++ toString x ++ ", " ++ toString y ++ ")")
+
+
+{-| Sets `scaleX` value for usage with [`transform`](#transform).
+
+    transform (scaleX 0.7)
+
+-}
+scaleX : Float -> Value { provides | scaleX : Supported }
+scaleX x =
+    Value ("scaleX(" ++ toString x ++ ")")
+
+
+{-| Sets `scaleY` value for usage with [`transform`](#transform).
+
+    transform (scaleY 0.7)
+
+-}
+scaleY : Float -> Value { provides | scaleY : Supported }
+scaleY y =
+    Value ("scaleY(" ++ toString y ++ ")")
+
+
+{-| Sets `scaleZ` value for usage with [`transform`](#transform).
+
+    transform (scaleZ 0.7)
+
+-}
+scaleZ : Float -> Value { provides | scaleZ : Supported }
+scaleZ z =
+    Value ("scaleZ(" ++ toString z ++ ")")
+
+
+{-| Sets `scale3d` value for usage with [`transform`](#transform).
+
+    transform (scale3d 2 0.7 0.2)
+
+-}
+scale3d :
+    Float
+    -> Float
+    -> Float
+    -> Value { provides | scale3d : Supported }
+scale3d x y z =
+    Value ("scale3d(" ++ toString x ++ "," ++ toString y ++ "," ++ toString z ++ ")")
+
+
+
+-- SKEWING (distortion)
+
+
+{-| Sets `skew` value for usage with [`transform`](#transform).
+
+    transform (skew (deg 30))
+
+-}
+skew :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | skew : Supported }
+skew (Value angle) =
+    Value ("skew(" ++ angle ++ ")")
+
+
+{-| Sets `skew` value for usage with [`transform`](#transform).
+
+    transform (skew2 (deg 30) (deg 10))
+
+-}
+skew2 :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    ->
+        Value
+            { deg : Supported
+            , grad : Supported
+            , rad : Supported
+            , turn : Supported
+            }
+    -> Value { provides | skew2 : Supported }
+skew2 (Value angle1) (Value angle2) =
+    Value ("skew(" ++ angle1 ++ "," ++ angle2 ++ ")")
+
+
+{-| Sets `skewX` value for usage with [`transform`](#transform).
+
+    transform (skewX (deg 30))
+
+-}
+skewX :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | skewX : Supported }
+skewX (Value angle) =
+    Value ("skewX(" ++ angle ++ ")")
+
+
+{-| Sets `skewY` value for usage with [`transform`](#transform).
+
+    transform (skewY (deg 30))
+
+-}
+skewY :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | skewY : Supported }
+skewY (Value angle) =
+    Value ("skewY(" ++ angle ++ ")")
+
+
+
+-- ROTATION
+
+
+{-| Sets `rotate` value for usage with [`transform`](#transform).
+
+    transform (rotate (deg 30))
+
+-}
+rotate :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | rotate : Supported }
+rotate (Value angle) =
+    Value ("rotate(" ++ angle ++ ")")
+
+
+{-| Sets `rotateX` value for usage with [`transform`](#transform).
+
+    transform (rotateX (deg 30))
+
+-}
+rotateX :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | rotateX : Supported }
+rotateX (Value angle) =
+    Value ("rotateX(" ++ angle ++ ")")
+
+
+{-| Sets `rotateY` value for usage with [`transform`](#transform).
+
+    transform (rotateY (deg 30))
+
+-}
+rotateY :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | rotateY : Supported }
+rotateY (Value angle) =
+    Value ("rotateY(" ++ angle ++ ")")
+
+
+{-| Sets `rotateZ` value for usage with [`transform`](#transform).
+
+    transform (rotateZ (deg 30))
+
+-}
+rotateZ :
+    Value
+        { deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        }
+    -> Value { provides | rotateZ : Supported }
+rotateZ (Value angle) =
+    Value ("rotateZ(" ++ angle ++ ")")
+
+
+{-| Sets `rotate3d` value for usage with [`transform`](#transform).
+
+    transform (rotate3d 0 1 0 (deg 30))
+
+-}
+rotate3d :
+    Float
+    -> Float
+    -> Float
+    ->
+        Value
+            { deg : Supported
+            , grad : Supported
+            , rad : Supported
+            , turn : Supported
+            }
+    -> Value { provides | rotate3d : Supported }
+rotate3d x y z (Value angle) =
+    Value
+        ("rotate3d("
+            ++ toString x
+            ++ ","
+            ++ toString y
+            ++ ","
+            ++ toString z
+            ++ ","
+            ++ angle
+            ++ ")"
+        )
+
+
+
+-- PERSPECTIVE
+
+
+{-| Sets `perspective` value for usage with [`transform`](#transform).
+
+    transform (perspective (px 17))
+
+-}
+perspective :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        }
+    -> Value { provides | perspective : Supported }
+perspective (Value length) =
+    Value ("perspective(" ++ length ++ ")")
 
 
 {-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
