@@ -30,6 +30,7 @@ type Style
     | NestSnippet Structure.SelectorCombinator (List Snippet)
     | WithPseudoElement Structure.PseudoElement (List Style)
     | WithMedia (List MediaQuery) (List Style)
+    | WithKeyframes String
     | ApplyStyles (List Style)
 
 

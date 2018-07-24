@@ -66,7 +66,7 @@ type Declaration
     | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
-    | Keyframes String (List KeyframeProperty)
+    | Keyframes { name : String, declaration : String }
     | Viewport (List Property)
     | CounterStyle (List Property)
     | FontFeatureValues (List ( String, List Property ))
