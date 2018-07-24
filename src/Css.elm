@@ -51,6 +51,7 @@ module Css
         , IncompatibleUnits
         , IntOrAuto
         , JustifyContent
+        , Keyframes
         , Length
         , LengthOrAuto
         , LengthOrAutoOrCoverOrContain
@@ -107,6 +108,7 @@ module Css
         , allPetiteCaps
         , allScroll
         , allSmallCaps
+        , animationName
         , any
         , arabicIndic
         , armenian
@@ -346,6 +348,7 @@ module Css
         , justifyAll
         , justifyContent
         , kannada
+        , keyframes
         , khmer
         , lang
         , lao
@@ -1003,6 +1006,11 @@ functions let you define custom properties and selectors, respectively.
 @docs FontSize, ColorValue, ColorStop, IntOrAuto
 
 
+# Animation
+
+@docs keyframes, animationName, Keyframes
+
+
 # Intentionally Unsupported
 
 These are features you might expect to be in elm-css (because they are in the
@@ -1016,6 +1024,7 @@ deprecated or discouraged.
 import Color
 import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
+import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure exposing (..)
 import Hex
 import String
@@ -1080,6 +1089,9 @@ getOverloadedProperty functionName desiredKey style =
         Preprocess.WithMedia mediaQuery _ ->
             propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for media query " ++ toString mediaQuery ] desiredKey ""
 
+        Preprocess.WithKeyframes _ ->
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-keyframes")
+
         Preprocess.ApplyStyles [] ->
             propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty Style. " ] desiredKey ""
 
@@ -1113,6 +1125,11 @@ type alias Number compatible =
 {-| -}
 type alias None compatible =
     { compatible | value : String, none : Compatible }
+
+
+{-| -}
+type alias Keyframes compatible =
+    None { compatible | keyframes : Compatible }
 
 
 {-| -}
@@ -3460,6 +3477,27 @@ translate3d tx ty tz =
     { value = cssFunction "translate3d" [ tx.value, ty.value, tz.value ]
     , transform = Compatible
     }
+
+
+{-| **NOTE:** Some `Style` values will be ignored here.
+
+  - `important` is ignored, [per the CSS spec for keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes#!important_in_a_keyframe).
+  - Pseudo-classes like `hover` are ignored.
+  - Pseudo-elements like `before` are ignored.
+
+-}
+keyframes : List ( Float, List Style ) -> Keyframes {}
+keyframes tuples =
+    { value = Resolve.compileKeyframes tuples
+    , none = Compatible
+    , keyframes = Compatible
+    }
+
+{-| See [`keyframes`](#keyframes)
+-}
+animationName : Keyframes compatible -> Style
+animationName { value } =
+    Preprocess.WithKeyframes value
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
