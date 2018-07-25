@@ -1,4 +1,4 @@
-module Css.Preprocess.Resolve exposing (compile)
+module Css.Preprocess.Resolve exposing (compile, compileKeyframes)
 
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures.
@@ -14,6 +14,76 @@ import String
 compile : List Preprocess.Stylesheet -> String
 compile styles =
     String.join "\n\n" (List.map compile1 styles)
+
+
+{-| Used only for compiling keyframes. This does not compile to valid standalone
+CSS, but rather to the body of an @keyframes at-rule.
+
+It will be up to other parts of the stystem to generate the @keyframes rule
+itself, including the keyframe name. Since keyframe name is generated from a
+hash of the string body, we need to be able to compile the body independently.
+
+**NOTE:** This ignores !important, selectors (including pseudo-class and
+pseudo-element selectors), and media queries, because those are not supported
+in keyframe declarations.
+
+-}
+compileKeyframes : List ( Int, List Style ) -> String
+compileKeyframes tuples =
+    tuples
+        |> List.map (Tuple.mapSecond toKeyframeProperties)
+        |> List.map printKeyframeSelector
+        |> String.join "\n\n"
+
+
+printKeyframeSelector : ( Int, List Property ) -> String
+printKeyframeSelector ( percentage, properties ) =
+    let
+        percentageStr =
+            toString percentage ++ "%"
+
+        propertiesStr =
+            properties
+                |> List.map (\prop -> prop ++ ";")
+                |> String.join ""
+    in
+    percentageStr ++ " {" ++ propertiesStr ++ "}"
+
+
+{-| Convert styles to properties that work with keyframes.
+
+This involves dropping things like !important, media queries, pseudo-classes,
+etc.
+
+-}
+toKeyframeProperties : List Style -> List Property
+toKeyframeProperties styles =
+    case styles of
+        [] ->
+            []
+
+        (AppendProperty prop) :: rest ->
+            prop :: toKeyframeProperties rest
+
+        (ExtendSelector _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (NestSnippet _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithPseudoElement _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithMedia _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithKeyframes _) :: rest ->
+            toKeyframeProperties rest
+
+        (ApplyStyles nestedStyles) :: rest ->
+            List.append
+                (toKeyframeProperties nestedStyles)
+                (toKeyframeProperties rest)
 
 
 compile1 : Preprocess.Stylesheet -> String
