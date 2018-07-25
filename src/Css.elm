@@ -1090,7 +1090,7 @@ getOverloadedProperty functionName desiredKey style =
         Preprocess.WithPseudoElement pseudoElement _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
 
-        Preprocess.WithMedia mediaQuery _ ->
+        Preprocess.WithMedia _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-media-query")
 
         Preprocess.WithKeyframes _ ->

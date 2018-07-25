@@ -86,8 +86,8 @@ prettyPrintDeclaration declaration =
         FontFace _ ->
             Debug.crash "TODO"
 
-        Keyframes _ _ ->
-            Debug.crash "TODO"
+        Keyframes { name, declaration } ->
+            "@keyframes " ++ name ++ " {" ++ declaration ++ "}"
 
         Viewport _ ->
             Debug.crash "TODO"

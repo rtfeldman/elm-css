@@ -45,7 +45,6 @@ type SnippetDeclaration
     | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
-    | Keyframes String (List Structure.KeyframeProperty)
     | Viewport (List Property)
     | CounterStyle (List Property)
     | FontFeatureValues (List ( String, List Property ))
@@ -77,7 +76,7 @@ toMediaRule mediaQueries declaration =
         Structure.FontFace _ ->
             declaration
 
-        Structure.Keyframes _ _ ->
+        Structure.Keyframes _ ->
             declaration
 
         Structure.Viewport _ ->
@@ -106,6 +105,9 @@ mapLastProperty update style =
             style
 
         WithMedia _ _ ->
+            style
+
+        WithKeyframes _ ->
             style
 
         ApplyStyles otherStyles ->

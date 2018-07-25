@@ -1,10 +1,10 @@
-module Css.Preprocess.Resolve exposing (compile)
+module Css.Preprocess.Resolve exposing (compile, compileKeyframes)
 
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures.
 -}
 
-import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
 import Css.Structure as Structure exposing (Property, mapLast, styleBlockToMediaRule)
 import Css.Structure.Output as Output
 import String
@@ -13,6 +13,75 @@ import String
 compile : List Preprocess.Stylesheet -> String
 compile styles =
     String.join "\n\n" (List.map compile1 styles)
+
+
+{-| Used only for compiling keyframes. This does not compile to valid standalone
+CSS, but rather to the body of an @keyframes at-rule.
+
+It will be up to other parts of the stystem to generate the @keyframes rule
+itself, including the keyframe name. Since keyframe name is generated from a
+hash of the string body, we need to be able to compile the body independently.
+
+**NOTE:** This ignores !important, pseudo-classes, pseudo-elements, and
+media queries, because those are not supported in keyframe declarations.
+
+-}
+compileKeyframes : List ( Float, List Style ) -> String
+compileKeyframes tuples =
+    tuples
+        |> List.map (Tuple.mapSecond toKeyframeProperties)
+        |> List.map printKeyframeSelector
+        |> String.join "\n\n"
+
+
+printKeyframeSelector : ( Float, List Property ) -> String
+printKeyframeSelector ( percentage, properties ) =
+    let
+        percentageStr =
+            toString (percentage * 100) ++ "%"
+
+        propertiesStr =
+            properties
+                |> List.map (\prop -> prop ++ ";")
+                |> String.join ""
+    in
+    percentageStr ++ " {" ++ propertiesStr ++ "}"
+
+
+{-| Convert styles to properties that work with keyframes.
+
+This involves dropping things like !important, media queries, pseudo-classes,
+etc.
+
+-}
+toKeyframeProperties : List Style -> List Property
+toKeyframeProperties styles =
+    case styles of
+        [] ->
+            []
+
+        (AppendProperty prop) :: rest ->
+            prop :: toKeyframeProperties rest
+
+        (ExtendSelector _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (NestSnippet _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithPseudoElement _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithMedia _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithKeyframes _) :: rest ->
+            toKeyframeProperties rest
+
+        (ApplyStyles nestedStyles) :: rest ->
+            List.append
+                (toKeyframeProperties nestedStyles)
+                (toKeyframeProperties rest)
 
 
 compile1 : Preprocess.Stylesheet -> String
@@ -61,7 +130,7 @@ toMediaRule mediaQueries declaration =
         Structure.FontFace _ ->
             declaration
 
-        Structure.Keyframes _ _ ->
+        Structure.Keyframes  _ ->
             declaration
 
         Structure.Viewport _ ->
@@ -112,9 +181,6 @@ toDeclarations snippetDeclaration =
 
         Preprocess.FontFace properties ->
             [ Structure.FontFace properties ]
-
-        Preprocess.Keyframes str properties ->
-            [ Structure.Keyframes str properties ]
 
         Preprocess.Viewport properties ->
             [ Structure.Viewport properties ]
@@ -198,8 +264,6 @@ applyStyles styles declarations =
                         Preprocess.FontFace properties ->
                             [ Structure.FontFace properties ]
 
-                        Preprocess.Keyframes str properties ->
-                            [ Structure.Keyframes str properties ]
 
                         Preprocess.Viewport properties ->
                             [ Structure.Viewport properties ]

@@ -178,7 +178,7 @@ appendProperty property declarations =
         --| DocumentRule String String String String StyleBlock
         --| PageRule String (List Property)
         --| FontFace (List Property)
-        --| Keyframes String (List KeyframeProperty)
+        --| Keyframes { name : String, declaration : String }
         --| Viewport (List Property)
         --| CounterStyle (List Property)
         --| FontFeatureValues (List ( String, List Property ))
@@ -258,7 +258,7 @@ extendLastSelector selector declarations =
         (FontFace _) :: [] ->
             declarations
 
-        (Keyframes _ _) :: [] ->
+        (Keyframes _) :: [] ->
             declarations
 
         (Viewport _) :: [] ->
@@ -345,7 +345,7 @@ concatMapLastStyleBlock update declarations =
         (FontFace _) :: [] ->
             declarations
 
-        (Keyframes _ _) :: [] ->
+        (Keyframes _) :: [] ->
             declarations
 
         (Viewport _) :: [] ->
@@ -476,8 +476,8 @@ dropEmptyDeclarations declarations =
             else
                 declaration :: dropEmptyDeclarations rest
 
-        ((Keyframes _ properties) as declaration) :: rest ->
-            if List.isEmpty properties then
+        ((Keyframes record) as declaration) :: rest ->
+            if String.isEmpty record.declaration then
                 dropEmptyDeclarations rest
 
             else
