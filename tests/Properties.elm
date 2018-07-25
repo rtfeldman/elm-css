@@ -636,6 +636,14 @@ all =
             , ( tableLayout auto, "auto")
             , ( tableLayout fixed, "fixed")
             ]
+        , testProperty { function = "animationName", property = "animation-name" }
+            [ ( animationName inherit, "inherit" )
+            , ( animationName initial, "initial" )
+            , ( animationName unset, "unset" )
+            , ( animationName none, "none" )
+
+            -- for animationName tests with keyframes, see Tests.Keyframes
+            ]
         ]
 
 
