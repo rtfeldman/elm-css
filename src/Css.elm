@@ -3490,16 +3490,26 @@ translate3d tx ty tz =
 -}
 keyframes : List ( Float, List Style ) -> Keyframes {}
 keyframes tuples =
-    { value = Resolve.compileKeyframes tuples
-    , none = Compatible
-    , keyframes = Compatible
-    }
+    if List.isEmpty tuples then
+        -- animationName is special-cased to pick up on this.
+        { value = "none"
+        , none = Compatible
+        , keyframes = Compatible
+        }
+    else
+        { value = Resolve.compileKeyframes tuples
+        , none = Compatible
+        , keyframes = Compatible
+        }
 
 {-| See [`keyframes`](#keyframes)
 -}
 animationName : Keyframes compatible -> Style
-animationName { value } =
-    Preprocess.WithKeyframes value
+animationName arg =
+    if arg.value == "none" || arg.value == "inherit" || arg.value == "unset" || arg.value == "initial" then
+        prop1 "animation-name" arg
+    else
+        Preprocess.WithKeyframes arg.value
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
