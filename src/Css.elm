@@ -2097,6 +2097,7 @@ type alias BasicProperty =
     , justifyContent : Compatible
     , none : Compatible
     , number : Compatible
+    , keyframes : Compatible
     , outline : Compatible
     , overflow : Compatible
     , pointerEvents : Compatible
@@ -2175,6 +2176,7 @@ initial =
     , color = Compatible
     , cursor = Compatible
     , display = Compatible
+    , keyframes = Compatible
     , all = Compatible
     , alignItems = Compatible
     , justifyContent = Compatible
@@ -4637,6 +4639,7 @@ none :
     , display : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , none : Compatible
+    , keyframes : Compatible
     , lengthOrNone : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
     , listStyleType : Compatible
@@ -4668,6 +4671,7 @@ none =
     , listStyleType = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
     , display = Compatible
+    , keyframes = Compatible
     , outline = Compatible
     , pointerEvents = Compatible
     , resize = Compatible
