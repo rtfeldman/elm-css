@@ -8,30 +8,31 @@ import Test exposing (Test, describe, test, todo)
 import TestUtil exposing (outdented, prettyPrint)
 
 
-testKeyframes : Test
-testKeyframes =
-    let
-        sampleKeyframes =
-            keyframes
-                [ ( 0, [ Css.color (hex "00FF00"), display block ] )
-                , ( 50, [ Css.maxHeight none ] )
-                , ( 100, [ Css.color (hex "00FF00"), display inlineBlock ] )
-                ]
-
-        input =
-            stylesheet
-                [ body [ padding zero ]
-                , button [ margin auto ]
-                , p
-                    [ Css.color (hex "FF0000")
-                    , display inline
-                    , animationName sampleKeyframes
-                    , Css.backgroundColor (Css.rgb 11 11 11)
+suite : Test
+suite =
+    describe "@keyframes"
+        [ let
+            sampleKeyframes =
+                keyframes
+                    [ ( 0, [ Css.color (hex "00FF00"), display block ] )
+                    , ( 50, [ Css.maxHeight none ] )
+                    , ( 100, [ Css.color (hex "00FF00"), display inlineBlock ] )
                     ]
-                ]
 
-        output =
-            """
+            input =
+                stylesheet
+                    [ body [ padding zero ]
+                    , button [ margin auto ]
+                    , p
+                        [ Css.color (hex "FF0000")
+                        , display inline
+                        , animationName sampleKeyframes
+                        , Css.backgroundColor (Css.rgb 11 11 11)
+                        ]
+                    ]
+
+            output =
+                """
             body {
                 padding:0;
             }
@@ -55,9 +56,72 @@ testKeyframes =
                 100% {color:#00FF00;display:inline-block;}
             }
             """
-    in
-    describe "@keyframes test"
-        [ test "pretty prints the expected output" <|
+          in
+          test "one keyframe" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        , let
+            sampleKeyframes =
+                keyframes
+                    [ ( 0, [ Css.color (hex "00FF00"), display block ] )
+                    , ( 50, [ Css.maxHeight none ] )
+                    , ( 100, [ Css.color (hex "00FF00"), display inlineBlock ] )
+                    ]
+
+            moreKeyframes =
+                keyframes
+                    [ ( 10, [ Css.minHeight (px 100) ] ) ]
+
+            input =
+                stylesheet
+                    [ body [ padding zero ]
+                    , button
+                        [ margin auto
+                        , animationName moreKeyframes
+                        , Css.backgroundColor (hex "0F0F0F")
+                        ]
+                    , p
+                        [ Css.color (hex "FF0000")
+                        , display inline
+                        , animationName sampleKeyframes
+                        , Css.backgroundColor (Css.rgb 11 11 11)
+                        ]
+                    ]
+
+            output =
+                """
+            body {
+                padding:0;
+            }
+
+            button {
+                margin:auto;
+                animation-name:_85cdb76;
+                background-color:#0F0F0F;
+            }
+
+            @keyframes _85cdb76 {
+                10% {min-height:100px;}
+            }
+
+            p {
+                color:#FF0000;
+                display:inline;
+                animation-name:_e5ef3caa;
+                background-color:rgb(11, 11, 11);
+            }
+
+            @keyframes _e5ef3caa {
+                0% {color:#00FF00;display:block;}
+
+                50% {max-height:none;}
+
+                100% {color:#00FF00;display:inline-block;}
+            }
+            """
+          in
+          test "multiple keyframes" <|
             \_ ->
                 outdented (prettyPrint input)
                     |> Expect.equal (outdented output)
