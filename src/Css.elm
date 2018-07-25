@@ -47,7 +47,6 @@ module Css
         , IncompatibleUnits
         , IntOrAuto
         , JustifyContent
-        , Keyframes
         , Length
         , LengthOrAuto
         , LengthOrAutoOrCoverOrContain
@@ -1008,7 +1007,7 @@ functions let you define custom properties and selectors, respectively.
 
 # Animation
 
-@docs keyframes, animationName, Keyframes
+@docs animationName
 
 
 # Intentionally Unsupported
@@ -1022,8 +1021,9 @@ deprecated or discouraged.
 -}
 
 import Color
+import Css.Animations exposing (Keyframes)
+import Css.Internal exposing (getOverloadedProperty, lengthConverter, lengthForOverloadedProperty, numberToString)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
-import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure exposing (..)
 import Hex
 import String
@@ -1044,66 +1044,6 @@ cssFunction funcName args =
         ++ "("
         ++ String.join ", " args
         ++ ")"
-
-
-{-| Caution: trickery ahead!
-
-This is for use with overloaded CSS properties like `left` that need to be keys
-in some places and values in othes. You give it a Style that evaluates to the
-relevant key, and then use that key as your value.
-
-For example, `left` is a Style that takes a Length and adds a property like
-"left: 3px". What this does is take `left`, pass it `zero` (to create a
-"left: 0" definition), then inspects that definition that it just created to
-extract the key (in this case the string "left"), then uses that key as the
-value for this property.
-
-In this way you can use this function to define textAlign, and allow textAlign
-to accept `left` as a value, in which case it will construct "text-align: left"
-as the end user expects.
-
-Other notes:
-
-`desiredKey` is the key of the property.
-`functionName` is just for better error messages.
-
--}
-getOverloadedProperty : String -> String -> Style -> Style
-getOverloadedProperty functionName desiredKey style =
-    case style of
-        Preprocess.AppendProperty str ->
-            let
-                key =
-                    String.split ":" str
-                        |> List.head
-                        |> Maybe.withDefault ""
-            in
-            -- Use the given style's Key as the resulting property's value.
-            property desiredKey key
-
-        Preprocess.ExtendSelector selector _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-selector")
-
-        Preprocess.NestSnippet combinator _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-combinator")
-
-        Preprocess.WithPseudoElement pseudoElement _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
-
-        Preprocess.WithMedia _ _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-media-query")
-
-        Preprocess.WithKeyframes _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-keyframes")
-
-        Preprocess.ApplyStyles [] ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-empty-Style")
-
-        Preprocess.ApplyStyles (only :: []) ->
-            getOverloadedProperty functionName desiredKey only
-
-        Preprocess.ApplyStyles (first :: rest) ->
-            getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
 
 
 {-| -}
@@ -1129,11 +1069,6 @@ type alias Number compatible =
 {-| -}
 type alias None compatible =
     { compatible | value : String, none : Compatible }
-
-
-{-| -}
-type alias Keyframes compatible =
-    None { compatible | keyframes : Compatible }
 
 
 {-| -}
@@ -1346,7 +1281,7 @@ type alias WhiteSpace compatible =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values>
 -}
 type alias ColorValue compatible =
-    { compatible | value : String, color : Compatible }
+    Css.Internal.ColorValue compatible
 
 
 colorValueForOverloadedProperty : ColorValue NonMixable
@@ -1414,19 +1349,13 @@ type alias BackgroundImage compatible =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-size>
 -}
 type alias LengthOrAutoOrCoverOrContain compatible =
-    { compatible | value : String, lengthOrAutoOrCoverOrContain : Compatible }
+    Css.Internal.LengthOrAutoOrCoverOrContain compatible
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias Length compatible units =
-    { compatible
-        | value : String
-        , length : Compatible
-        , numericValue : Float
-        , units : units
-        , unitLabel : String
-    }
+    Css.Internal.Length compatible units
 
 
 {-| <https://developer.mozilla.org/en/docs/Web/CSS/calc>
@@ -1613,24 +1542,7 @@ type alias LengthOrNumber compatible =
 
 {-| -}
 type alias ExplicitLength units =
-    { value : String
-    , numericValue : Float
-    , units : units
-    , unitLabel : String
-    , length : Compatible
-    , lengthOrAuto : Compatible
-    , lengthOrNumber : Compatible
-    , lengthOrNone : Compatible
-    , lengthOrMinMaxDimension : Compatible
-    , lengthOrNoneOrMinMaxDimension : Compatible
-    , textIndent : Compatible
-    , flexBasis : Compatible
-    , absoluteLength : Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-    , fontSize : Compatible
-    , lengthOrAutoOrCoverOrContain : Compatible
-    , calc : Compatible
-    }
+    Css.Internal.ExplicitLength units
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform#Values>
@@ -2662,28 +2574,6 @@ true =
 {- LENGTHS -}
 
 
-lengthConverter : units -> String -> Float -> ExplicitLength units
-lengthConverter units unitLabel numericValue =
-    { value = numberToString numericValue ++ unitLabel
-    , numericValue = numericValue
-    , units = units
-    , unitLabel = unitLabel
-    , length = Compatible
-    , lengthOrAuto = Compatible
-    , lengthOrNumber = Compatible
-    , lengthOrNone = Compatible
-    , lengthOrMinMaxDimension = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    , textIndent = Compatible
-    , flexBasis = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , fontSize = Compatible
-    , absoluteLength = Compatible
-    , lengthOrAutoOrCoverOrContain = Compatible
-    , calc = Compatible
-    }
-
-
 {-| Convenience length value that compiles to 0 with no units.
 
     css [ padding zero ]
@@ -3023,14 +2913,9 @@ type UnitlessFloat
     = UnitlessFloat
 
 
-lengthForOverloadedProperty : ExplicitLength IncompatibleUnits
-lengthForOverloadedProperty =
-    lengthConverter IncompatibleUnits "" 0
-
-
 {-| -}
-type IncompatibleUnits
-    = IncompatibleUnits
+type alias IncompatibleUnits =
+    Css.Internal.IncompatibleUnits
 
 
 
@@ -3363,32 +3248,7 @@ translate3d tx ty tz =
     }
 
 
-{-| `keyframes []` returns a `none` value.
-
-    **NOTE:** Some `Style` values will be ignored here.
-
-  - `important` is ignored, [per the CSS spec for keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes#!important_in_a_keyframe).
-  - Selectors are ignored (including class selectors, id selectors, `:hover`, `::before`, etc)
-  - Media queries and other keyframes are ignored
-
--}
-keyframes : List ( Int, List Style ) -> Keyframes {}
-keyframes tuples =
-    if List.isEmpty tuples then
-        -- animationName is special-cased to pick up on this.
-        { value = "none"
-        , none = Compatible
-        , keyframes = Compatible
-        }
-
-    else
-        { value = Resolve.compileKeyframes tuples
-        , none = Compatible
-        , keyframes = Compatible
-        }
-
-
-{-| See [`keyframes`](#keyframes)
+{-| See [`keyframes`](Css-Animations#keyframes) in the [`Css.Animations`](Css-Animations) module.
 -}
 animationName : Keyframes compatible -> Style
 animationName arg =
@@ -7940,11 +7800,6 @@ from elm-css.
 blink : IntentionallyUnsupportedPleaseSeeDocs
 blink =
     IntentionallyUnsupportedPleaseSeeDocs
-
-
-numberToString : number -> String
-numberToString num =
-    toString (num + 0)
 
 
 stringToInt : String -> Int
