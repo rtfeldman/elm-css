@@ -292,8 +292,16 @@ applyStyles styles declarations =
             let
                 name =
                     Hash.fromString str
+
+                newProperty =
+                    "animation-name:" ++ name
+
+                newDeclarations =
+                    declarations
+                        |> Structure.appendProperty newProperty
+                        |> applyStyles rest
             in
-            List.append (applyStyles rest declarations)
+            List.append newDeclarations
                 [ Structure.Keyframes { name = name, declaration = str } ]
 
         (Preprocess.WithMedia mediaQueries nestedStyles) :: rest ->
