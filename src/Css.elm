@@ -1088,8 +1088,8 @@ getOverloadedProperty functionName desiredKey style =
         Preprocess.WithMedia mediaQuery _ ->
             propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for media query " ++ toString mediaQuery ] desiredKey ""
 
-        Preprocess.WithKeyframes _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-keyframes")
+        Preprocess.WithKeyframes keyframes ->
+            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for keyframes " ++ toString keyframes ] desiredKey ""
 
         Preprocess.ApplyStyles [] ->
             propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty Style. " ] desiredKey ""
