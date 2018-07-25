@@ -642,7 +642,7 @@ all =
             , ( animationName unset, "unset" )
             , ( animationName none, "none" )
 
-            -- for animationName tests with keyframes, see Tests.Keyframes
+            -- for animationName tests with keyframes, see the Keyframes module
             ]
         ]
 
