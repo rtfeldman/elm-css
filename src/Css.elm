@@ -3363,7 +3363,6 @@ translate3d tx ty tz =
 
 {-| `keyframes []` returns a `none` value.
 
-
     **NOTE:** Some `Style` values will be ignored here.
 
   - `important` is ignored, [per the CSS spec for keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes#!important_in_a_keyframe).
@@ -3379,11 +3378,13 @@ keyframes tuples =
         , none = Compatible
         , keyframes = Compatible
         }
+
     else
         { value = Resolve.compileKeyframes tuples
         , none = Compatible
         , keyframes = Compatible
         }
+
 
 {-| See [`keyframes`](#keyframes)
 -}
@@ -3391,6 +3392,7 @@ animationName : Keyframes compatible -> Style
 animationName arg =
     if arg.value == "none" || arg.value == "inherit" || arg.value == "unset" || arg.value == "initial" then
         prop1 "animation-name" arg
+
     else
         Preprocess.WithKeyframes arg.value
 
