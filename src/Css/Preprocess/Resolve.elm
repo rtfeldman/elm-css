@@ -22,8 +22,9 @@ It will be up to other parts of the stystem to generate the @keyframes rule
 itself, including the keyframe name. Since keyframe name is generated from a
 hash of the string body, we need to be able to compile the body independently.
 
-**NOTE:** This ignores !important, pseudo-classes, pseudo-elements, and
-media queries, because those are not supported in keyframe declarations.
+**NOTE:** This ignores !important, selectors (including pseudo-class and
+pseudo-element selectors), and media queries, because those are not supported
+in keyframe declarations.
 
 -}
 compileKeyframes : List ( Float, List Style ) -> String
