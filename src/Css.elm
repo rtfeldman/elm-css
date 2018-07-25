@@ -3478,11 +3478,14 @@ translate3d tx ty tz =
     }
 
 
-{-| **NOTE:** Some `Style` values will be ignored here.
+{-| `keyframes []` returns a `none` value.
+
+
+    **NOTE:** Some `Style` values will be ignored here.
 
   - `important` is ignored, [per the CSS spec for keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes#!important_in_a_keyframe).
-  - Pseudo-classes like `hover` are ignored.
-  - Pseudo-elements like `before` are ignored.
+  - Selectors are ignored (including class selectors, id selectors, `:hover`, `::before`, etc)
+  - Media queries and other keyframes are ignored
 
 -}
 keyframes : List ( Float, List Style ) -> Keyframes {}

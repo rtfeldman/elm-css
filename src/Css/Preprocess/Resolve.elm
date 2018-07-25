@@ -13,6 +13,31 @@ import Tuple
 
 compile : List Preprocess.Stylesheet -> { warnings : List String, css : String }
 compile styles =
+    String.join "\n\n" (List.map compile1 styles)
+
+
+{-| Used only for compiling keyframes. This does not compile to valid standalone
+CSS, but rather to the body of an @keyframes at-rule.
+
+It will be up to other parts of the stystem to generate the @keyframes rule
+itself, including the keyframe name. Since keyframe name is generated from a
+hash of the string body, we need to be able to compile the body independently.
+
+**NOTE:** This ignores !important, selectors (including pseudo-class and
+pseudo-element selectors), and media queries, because those are not supported
+in keyframe declarations.
+
+-}
+compileKeyframes : List ( Float, List Style ) -> String
+compileKeyframes tuples =
+    tuples
+        |> List.map (Tuple.mapSecond toKeyframeProperties)
+        |> List.map printKeyframeSelector
+        |> String.join "\n\n"
+
+
+printKeyframeSelector : ( Float, List Property ) -> String
+printKeyframeSelector ( percentage, properties ) =
     let
         results =
             List.map compile1 styles
