@@ -87,7 +87,7 @@ prettyPrintDeclaration declaration =
             Debug.crash "TODO"
 
         Keyframes { name, declaration } ->
-            "@keyframes " ++ name ++ " {" ++ declaration ++ "}"
+            "@keyframes " ++ name ++ " {\n" ++ declaration ++ "\n}"
 
         Viewport _ ->
             Debug.crash "TODO"
