@@ -58,7 +58,7 @@ compile1 sheet =
             toStructure sheet
     in
     { warnings = warnings
-    , css = Output.prettyPrint (Structure.dropEmpty structureStylesheet)
+    , css = Output.prettyPrint (Structure.compactStylesheet structureStylesheet)
     }
 
 
