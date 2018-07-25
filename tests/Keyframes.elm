@@ -36,36 +36,27 @@ testKeyframes =
                 padding:0;
             }
 
-            @media only print {
-                body {
-                    margin:2em;
-                }
-            }
-
-            @media only screen and (max-width: 600px) {
-                body {
-                    margin:3em;
-                }
-            }
-
             button {
                 margin:auto;
             }
 
-            @media only screen and (color) and (pointer: fine) and (scan: interlace) and (grid) {
-                p {
-                    color:#FF0000;
-                }
+            p {
+                color:#FF0000;
+                display:inline;
+                animation-name:_e5ef3caa;
+                background-color:rgb(11, 11, 11);
             }
 
-            @media not screen and (color) {
-                p {
-                    color:#000000;
-                }
+            @keyframes _e5ef3caa {
+                0% {color:#00FF00;display:block;}
+
+                50% {max-height:none;}
+
+                100% {color:#00FF00;display:inline-block;}
             }
             """
     in
-    describe "@media test"
+    describe "@keyframes test"
         [ test "pretty prints the expected output" <|
             \_ ->
                 outdented (prettyPrint input)
