@@ -34,6 +34,14 @@ suite =
 
             output =
                 """
+            @keyframes _e5ef3caa {
+                0% {color:#00FF00;display:block;}
+
+                50% {max-height:none;}
+
+                100% {color:#00FF00;display:inline-block;}
+            }
+
             body {
                 padding:0;
             }
@@ -51,14 +59,6 @@ suite =
 
             i {
                 animation-name:_e5ef3caa;
-            }
-
-            @keyframes _e5ef3caa {
-                0% {color:#00FF00;display:block;}
-
-                50% {max-height:none;}
-
-                100% {color:#00FF00;display:inline-block;}
             }
             """
           in
@@ -96,6 +96,18 @@ suite =
 
             output =
                 """
+            @keyframes _85cdb76 {
+                10% {min-height:100px;}
+            }
+
+            @keyframes _e5ef3caa {
+                0% {color:#00FF00;display:block;}
+
+                50% {max-height:none;}
+
+                100% {color:#00FF00;display:inline-block;}
+            }
+
             body {
                 padding:0;
             }
@@ -106,23 +118,11 @@ suite =
                 background-color:#0F0F0F;
             }
 
-            @keyframes _85cdb76 {
-                10% {min-height:100px;}
-            }
-
             p {
                 color:#FF0000;
                 display:inline;
                 animation-name:_e5ef3caa;
                 background-color:rgb(11, 11, 11);
-            }
-
-            @keyframes _e5ef3caa {
-                0% {color:#00FF00;display:block;}
-
-                50% {max-height:none;}
-
-                100% {color:#00FF00;display:inline-block;}
             }
             """
           in

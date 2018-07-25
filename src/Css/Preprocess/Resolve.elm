@@ -88,7 +88,7 @@ toKeyframeProperties styles =
 
 compile1 : Preprocess.Stylesheet -> String
 compile1 sheet =
-    Output.prettyPrint (Structure.dropEmpty (toStructure sheet))
+    Output.prettyPrint (Structure.compactStylesheet (toStructure sheet))
 
 
 resolveMediaRule : List Structure.MediaQuery -> List Preprocess.StyleBlock -> List Structure.Declaration
