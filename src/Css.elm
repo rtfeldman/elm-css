@@ -3489,7 +3489,7 @@ translate3d tx ty tz =
   - Media queries and other keyframes are ignored
 
 -}
-keyframes : List ( Float, List Style ) -> Keyframes {}
+keyframes : List ( Int, List Style ) -> Keyframes {}
 keyframes tuples =
     if List.isEmpty tuples then
         -- animationName is special-cased to pick up on this.

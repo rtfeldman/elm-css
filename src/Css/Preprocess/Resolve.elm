@@ -29,7 +29,7 @@ pseudo-element selectors), and media queries, because those are not supported
 in keyframe declarations.
 
 -}
-compileKeyframes : List ( Float, List Style ) -> String
+compileKeyframes : List ( Int, List Style ) -> String
 compileKeyframes tuples =
     tuples
         |> List.map (Tuple.mapSecond toKeyframeProperties)
@@ -37,15 +37,18 @@ compileKeyframes tuples =
         |> String.join "\n\n"
 
 
-printKeyframeSelector : ( Float, List Property ) -> String
+printKeyframeSelector : ( Int, List Property ) -> String
 printKeyframeSelector ( percentage, properties ) =
     let
-        results =
-            List.map compile1 styles
+        percentageStr =
+            toString percentage ++ "%"
+
+        propertiesStr =
+            properties
+                |> List.map (\prop -> prop ++ ";")
+                |> String.join ""
     in
-    { warnings = List.concatMap .warnings results
-    , css = String.join "\n\n" (List.map .css results)
-    }
+    percentageStr ++ " {" ++ propertiesStr ++ "\n}"
 
 
 compile1 : Preprocess.Stylesheet -> { warnings : List String, css : String }
