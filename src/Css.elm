@@ -7470,42 +7470,6 @@ preLine =
     }
 
 
-{-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
-
-    animationName  Foo
-
-You can also use [`animationNames`](#animationNames) to set multiple animation
-names, or to set `animation-name: none;`
-
-    animationNames [ Foo, Bar ]
-    animationNames [] -- outputs "animation-name: none;"
-
--}
-animationName : animation -> Style
-animationName identifier =
-    animationNames [ identifier ]
-
-
-{-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
-
-    animationNames [ Foo, Bar ]
-
-Pass `[]` to set `animation-name: none;`
-
-    animationNames [] -- outputs "animation-name: none;"
-
--}
-animationNames : List animation -> Style
-animationNames identifiers =
-    let
-        value =
-            identifiers
-                |> List.map (identifierToString "")
-                |> String.join ", "
-    in
-    property "animation-name" value
-
-
 {-| Create a style from multiple other styles.
 
     underlineOnHover =
