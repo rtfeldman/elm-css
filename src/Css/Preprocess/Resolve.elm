@@ -28,7 +28,7 @@ pseudo-element selectors), and media queries, because those are not supported
 in keyframe declarations.
 
 -}
-compileKeyframes : List ( Float, List Style ) -> String
+compileKeyframes : List ( Int, List Style ) -> String
 compileKeyframes tuples =
     tuples
         |> List.map (Tuple.mapSecond toKeyframeProperties)
@@ -36,11 +36,11 @@ compileKeyframes tuples =
         |> String.join "\n\n"
 
 
-printKeyframeSelector : ( Float, List Property ) -> String
+printKeyframeSelector : ( Int, List Property ) -> String
 printKeyframeSelector ( percentage, properties ) =
     let
         percentageStr =
-            toString (percentage * 100) ++ "%"
+            toString percentage ++ "%"
 
         propertiesStr =
             properties
