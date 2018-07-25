@@ -1,4 +1,4 @@
-module Css.Preprocess.Resolve exposing (compile)
+module Css.Preprocess.Resolve exposing (compile, compileKeyframes)
 
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures and gathering warnings along the way.
@@ -17,7 +17,6 @@ compile styles =
     String.join "\n\n" (List.map compile1 styles)
 
 
-<<<<<<< HEAD
 {-| Used only for compiling keyframes. This does not compile to valid standalone
 CSS, but rather to the body of an @keyframes at-rule.
 
@@ -67,6 +66,44 @@ type alias DeclarationsAndWarnings =
     { declarations : List Structure.Declaration
     , warnings : List String
     }
+
+
+
+{-| Convert styles to properties that work with keyframes.
+
+This involves dropping things like !important, media queries, pseudo-classes,
+etc.
+
+-}
+toKeyframeProperties : List Style -> List Property
+toKeyframeProperties styles =
+    case styles of
+        [] ->
+            []
+
+        (AppendProperty prop) :: rest ->
+            prop :: toKeyframeProperties rest
+
+        (ExtendSelector _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (NestSnippet _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithPseudoElement _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithMedia _ _) :: rest ->
+            toKeyframeProperties rest
+
+        (WithKeyframes _) :: rest ->
+            toKeyframeProperties rest
+
+        (ApplyStyles nestedStyles) :: rest ->
+            List.append
+                (toKeyframeProperties nestedStyles)
+                (toKeyframeProperties rest)
+
 
 
 resolveMediaRule : List Structure.MediaQuery -> List Preprocess.StyleBlock -> DeclarationsAndWarnings
