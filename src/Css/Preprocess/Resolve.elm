@@ -7,6 +7,7 @@ Structure data structures.
 import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
 import Css.Structure as Structure exposing (Property, mapLast, styleBlockToMediaRule)
 import Css.Structure.Output as Output
+import Hash
 import String
 
 
@@ -131,7 +132,7 @@ toMediaRule mediaQueries declaration =
         Structure.FontFace _ ->
             declaration
 
-        Structure.Keyframes  _ ->
+        Structure.Keyframes _ ->
             declaration
 
         Structure.Viewport _ ->
@@ -265,7 +266,6 @@ applyStyles styles declarations =
                         Preprocess.FontFace properties ->
                             [ Structure.FontFace properties ]
 
-
                         Preprocess.Viewport properties ->
                             [ Structure.Viewport properties ]
 
@@ -287,6 +287,14 @@ applyStyles styles declarations =
                 rest
                 (Structure.appendPseudoElementToLastSelector pseudoElement)
                 declarations
+
+        (Preprocess.WithKeyframes str) :: rest ->
+            let
+                name =
+                    Hash.fromString str
+            in
+            List.append (applyStyles rest declarations)
+                [ Structure.Keyframes { name = name, declaration = str } ]
 
         (Preprocess.WithMedia mediaQueries nestedStyles) :: rest ->
             let
