@@ -1,7 +1,7 @@
 module Keyframes exposing (..)
 
 import Css exposing (..)
-import Css.Global exposing (Snippet, a, body, button, class, li, media, mediaQuery, p, ul)
+import Css.Global exposing (Snippet, a, body, button, class, i, li, media, mediaQuery, p, ul)
 import Css.Preprocess exposing (stylesheet)
 import Expect
 import Test exposing (Test, describe, test, todo)
@@ -29,6 +29,7 @@ suite =
                         , animationName sampleKeyframes
                         , Css.backgroundColor (Css.rgb 11 11 11)
                         ]
+                    , i [ animationName sampleKeyframes ]
                     ]
 
             output =
@@ -46,6 +47,10 @@ suite =
                 display:inline;
                 animation-name:_e5ef3caa;
                 background-color:rgb(11, 11, 11);
+            }
+
+            i {
+                animation-name:_e5ef3caa;
             }
 
             @keyframes _e5ef3caa {
