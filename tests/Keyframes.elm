@@ -62,3 +62,42 @@ testKeyframes =
                 outdented (prettyPrint input)
                     |> Expect.equal (outdented output)
         ]
+
+
+testEmptyKeyframes : Test
+testEmptyKeyframes =
+    describe "@keyframes with special cases for value"
+        [ test "initial" (\_ -> assertEmtyKeyframesForProperty initial "initial")
+        , test "unset" (\_ -> assertEmtyKeyframesForProperty unset "unset")
+        , test "inherit" (\_ -> assertEmtyKeyframesForProperty inherit "inherit")
+        , test "literal none" (\_ -> assertEmtyKeyframesForProperty none "none")
+        , test "empty keyframes" (\_ -> assertEmtyKeyframesForProperty (keyframes []) "none")
+        ]
+
+
+assertEmtyKeyframesForProperty : Keyframes compatible -> String -> Expect.Expectation
+assertEmtyKeyframesForProperty property expectedValue =
+    let
+        input =
+            stylesheet
+                [ body [ padding zero ]
+                , p
+                    [ Css.color (hex "FF0000")
+                    , animationName property
+                    ]
+                ]
+
+        output =
+            """
+            body {
+                padding:0;
+            }
+
+            p {
+                color:#FF0000;
+                animation-name:""" ++ expectedValue ++ """;
+            }
+            """
+    in
+    outdented (prettyPrint input)
+        |> Expect.equal (outdented output)
