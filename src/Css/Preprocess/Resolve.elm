@@ -7,6 +7,7 @@ Structure data structures and gathering warnings along the way.
 import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
 import Css.Structure as Structure exposing (Property, mapLast, styleBlockToMediaRule)
 import Css.Structure.Output as Output
+import Hash
 import String
 import Tuple
 
@@ -131,7 +132,7 @@ toMediaRule mediaQueries declaration =
         Structure.FontFace _ ->
             declaration
 
-        Structure.Keyframes  _ ->
+        Structure.Keyframes _ ->
             declaration
 
         Structure.Viewport _ ->
@@ -389,6 +390,14 @@ applyStyles styles declarations =
                 rest
                 (Structure.appendPseudoElementToLastSelector pseudoElement)
                 declarations
+
+        (Preprocess.WithKeyframes str) :: rest ->
+            let
+                name =
+                    Hash.fromString str
+            in
+            List.append (applyStyles rest declarations)
+                [ Structure.Keyframes { name = name, declaration = str } ]
 
         (Preprocess.WithMedia mediaQueries nestedStyles) :: rest ->
             let
