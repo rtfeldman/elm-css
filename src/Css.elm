@@ -196,6 +196,7 @@ module Css
         , flexDirection
         , flexEnd
         , flexStart
+        , flexWrap
         , flex_
         , float
         , fontFamilies
@@ -503,6 +504,8 @@ module Css
         , wavy
         , whiteSpace
         , wordBreak
+        , wrap
+        , wrapReverse
         , xLarge
         , xSmall
         , xxLarge
@@ -692,6 +695,11 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 ### Flexbox Order
 
 @docs order
+
+
+### Flexbox Wrapping
+
+@docs flexWrap, nowrap, wrap, wrapReverse
 
 
 ## Font Size
@@ -3747,6 +3755,47 @@ column =
 columnReverse : Value { provides | columnReverse : Supported }
 columnReverse =
     Value "column-reverse"
+
+
+{-| Sets [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/).
+
+    flexWrap wrap
+    flexWrap wrapReverse
+    flexWrap nowrap
+
+-}
+flexWrap :
+    Value
+        { nowrap : Supported
+        , wrap : Supported
+        , wrapReverse : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexWrap (Value val) =
+    AppendProperty ("flex-wrap:" ++ val)
+
+
+{-| The `wrap` [`flex-wrap` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values).
+
+    flexWrap wrap
+
+-}
+wrap : Value { provides | wrap : Supported }
+wrap =
+    Value "wrap"
+
+
+{-| The `wrap-reverse` [`flex-wrap` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values).
+
+    flexWrap wrapReverse
+
+-}
+wrapReverse : Value { provides | wrapReverse : Supported }
+wrapReverse =
+    Value "wrap-reverse"
 
 
 
@@ -10128,9 +10177,11 @@ whiteSpace (Value str) =
     AppendProperty ("white-space:" ++ str)
 
 
-{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
 
     whiteSpace nowrap
+    flexWrap nowrap
 
 -}
 nowrap : Value { provides | nowrap : Supported }
