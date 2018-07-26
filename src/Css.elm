@@ -194,6 +194,9 @@ module Css
         , fillBox
         , firstBaseline
         , fixed
+        , flex
+        , flex2
+        , flex3
         , flexBasis
         , flexDirection
         , flexEnd
@@ -715,7 +718,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ### Flexbox Shorthands
 
-@docs flexFlow, flexFlow2
+@docs flex, flex2, flex3, flexFlow, flexFlow2
 
 
 ## Font Size
@@ -1178,11 +1181,13 @@ auto =
 {-| The `none` value used for properties such as [`display`](#display),
 [`borderStyle`](#borderStyle),
 [`clear`](#clear),
-and [`strokeDashJustify`](#strokeDashJustify).
+[`strokeDashJustify`](#strokeDashJustify),
+and [`flex`](#flex).
 
     display none
     borderStyle none
     strokeDashJustify none
+    flex none
 
 -}
 none : Value { provides | none : Supported }
@@ -3809,6 +3814,138 @@ flexShrink :
     -> Style
 flexShrink (Value val) =
     AppendProperty ("flex-shrink:" ++ val)
+
+
+{-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
+
+    flex none
+    flex auto
+    flex (num 1)
+    flex2 zero auto
+    flex3 (num 1) zero (pct 50)
+
+-}
+flex :
+    Value
+        { none : Supported
+        , auto : Supported
+        , content : Supported
+        , ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , num : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flex (Value growOrBasis) =
+    AppendProperty ("flex:" ++ growOrBasis)
+
+
+{-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
+
+    flex none
+    flex auto
+    flex (num 1)
+    flex2 zero auto
+    flex3 (num 1) zero (pct 50)
+
+-}
+flex2 :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , content : Supported
+            , ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , num : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    -> Style
+flex2 (Value grow) (Value shrinkOrBasis) =
+    AppendProperty ("flex:" ++ grow ++ " " ++ shrinkOrBasis)
+
+
+{-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
+
+    flex none
+    flex auto
+    flex (num 1)
+    flex2 zero auto
+    flex3 (num 1) zero (pct 50)
+
+-}
+flex3 :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    ->
+        Value
+            { auto : Supported
+            , content : Supported
+            , ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    -> Style
+flex3 (Value grow) (Value shrink) (Value basis) =
+    AppendProperty ("flex:" ++ grow ++ " " ++ shrink ++ " " ++ basis)
 
 
 {-| Sets [`flex-direction`](https://css-tricks.com/almanac/properties/f/flex-direction/).
