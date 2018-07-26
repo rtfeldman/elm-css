@@ -197,6 +197,8 @@ module Css
         , flexBasis
         , flexDirection
         , flexEnd
+        , flexFlow
+        , flexFlow2
         , flexGrow
         , flexShrink
         , flexStart
@@ -709,6 +711,11 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 ### Flexbox Wrapping
 
 @docs flexWrap, nowrap, wrap, wrapReverse
+
+
+### Flexbox Shorthands
+
+@docs flexFlow, flexFlow2
 
 
 ## Font Size
@@ -3893,6 +3900,58 @@ wrap =
 wrapReverse : Value { provides | wrapReverse : Supported }
 wrapReverse =
     Value "wrap-reverse"
+
+
+{-| The [`flex-flow`](https://css-tricks.com/almanac/properties/f/flex-flow/) shorthand property.
+
+    flexFlow rowReverse
+    flexFlow wrap
+    flexFlow inherit
+    flexFlow2 column wrapReverse
+
+-}
+flexFlow :
+    Value
+        { row : Supported
+        , rowReverse : Supported
+        , column : Supported
+        , columnReverse : Supported
+        , nowrap : Supported
+        , wrap : Supported
+        , wrapReverse : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexFlow (Value directionOrWrapping) =
+    AppendProperty ("flex-flow:" ++ directionOrWrapping)
+
+
+{-| The [`flex-flow`](https://css-tricks.com/almanac/properties/f/flex-flow/) shorthand property.
+
+    flexFlow rowReverse
+    flexFlow wrap
+    flexFlow inherit
+    flexFlow2 column wrapReverse
+
+-}
+flexFlow2 :
+    Value
+        { row : Supported
+        , rowReverse : Supported
+        , column : Supported
+        , columnReverse : Supported
+        }
+    ->
+        Value
+            { nowrap : Supported
+            , wrap : Supported
+            , wrapReverse : Supported
+            }
+    -> Style
+flexFlow2 (Value direction) (Value wrapping) =
+    AppendProperty ("flex-flow:" ++ direction ++ " " ++ wrapping)
 
 
 
