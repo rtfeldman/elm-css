@@ -10,6 +10,7 @@ module Css
         , active
         , after
         , alias
+        , alignContent
         , alignItems
         , alignSelf
         , all
@@ -680,7 +681,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ### Flexbox Alignment
 
-@docs alignItems, alignSelf, justifyContent
+@docs alignItems, alignSelf, justifyContent, alignContent
 
 
 ### Flexbox Direction
@@ -3434,10 +3435,11 @@ end =
     Value "end"
 
 
-{-| The `flex-start` value used by [`alignItems`](#alignItems) and [`justifyContent`](#justifyContent).
+{-| The `flex-start` value used by [`alignItems`](#alignItems), [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
 
     alignItems flexStart
     justifyContent flexStart
+    alignContent flexStart
 
 -}
 flexStart : Value { provides | flexStart : Supported }
@@ -3445,10 +3447,11 @@ flexStart =
     Value "flex-start"
 
 
-{-| The `flex-end` value used by [`alignItems`](#alignItems) and [`justifyContent`](#justifyContent).
+{-| The `flex-end` value used by [`alignItems`](#alignItems), [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
 
     alignItems flexEnd
     justifyContent flexEnd
+    alignContent flexEnd
 
 -}
 flexEnd : Value { provides | flexEnd : Supported }
@@ -3468,7 +3471,7 @@ selfEnd =
     Value "self-end"
 
 
-{-| The `space-between` value used by [`justifyContent`](#justifyContent).
+{-| The `space-between` value used by [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
 
     justifyContent spaceBetween
 
@@ -3478,7 +3481,7 @@ spaceBetween =
     Value "space-between"
 
 
-{-| The `space-around` value used by [`justifyContent`](#justifyContent).
+{-| The `space-around` value used by [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
 
     justifyContent spaceAround
 
@@ -3568,6 +3571,30 @@ unsafeCenter =
 
 
 -- FLEXBOX --
+
+
+{-| Sets [`align-content`](https://css-tricks.com/almanac/properties/a/align-content/).
+
+    alignContent flexStart
+
+**Note:** This property has no effect when the flexbox has only a single line.
+
+-}
+alignContent :
+    Value
+        { flexStart : Supported
+        , flexEnd : Supported
+        , center : Supported
+        , spaceBetween : Supported
+        , spaceAround : Supported
+        , stretch : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+alignContent (Value val) =
+    AppendProperty ("align-content:" ++ val)
 
 
 {-| Sets [`align-items`](https://css-tricks.com/almanac/properties/a/align-items/).
