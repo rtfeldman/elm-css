@@ -175,7 +175,6 @@ module Css
         , direction
         , discretionaryLigatures
         , display
-        , displayFlex
         , dividedBy
         , dotted
         , double
@@ -193,6 +192,7 @@ module Css
         , fixed
         , flexEnd
         , flexStart
+        , flex_
         , float
         , fontFamilies
         , fontFamily
@@ -637,9 +637,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Display
 
-@docs display, displayFlex
+@docs display
 
-@docs block, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+@docs block, flex_, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
 
 
 ## Positions
@@ -3266,12 +3266,13 @@ dividedBy (Value second) =
 
     display block
 
-For `display: flex`, use [`displayFlex`](#displayFlex).
+**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a function](#flex).
 
 -}
 display :
     Value
         { block : Supported
+        , flex_ : Supported
         , grid : Supported
         , inline : Supported
         , inlineBlock : Supported
@@ -3296,20 +3297,16 @@ display (Value val) =
     AppendProperty ("display:" ++ val)
 
 
-{-| [`display: flex`](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). This works around the fact that [`flex` is already taken](#flex).
-
-    div [ displayFlex ]
-
--}
-displayFlex : Style
-displayFlex =
-    AppendProperty "display:flex"
-
-
 {-| -}
 block : Value { provides | block : Supported }
 block =
     Value "block"
+
+
+{-| -}
+flex_ : Value { provides | flex_ : Supported }
+flex_ =
+    Value "flex"
 
 
 {-| -}
