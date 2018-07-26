@@ -238,6 +238,7 @@ module Css
         , int
         , italic
         , justify
+        , justifyContent
         , kannada
         , keepAll
         , khmer
@@ -392,6 +393,8 @@ module Css
         , softLight
         , solid
         , space
+        , spaceAround
+        , spaceBetween
         , square
         , stackedFractions
         , start
@@ -677,7 +680,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ### Flexbox Alignment
 
-@docs alignItems, alignSelf
+@docs alignItems, alignSelf, justifyContent
 
 
 ### Flexbox Direction
@@ -731,7 +734,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -3431,13 +3434,23 @@ end =
     Value "end"
 
 
-{-| -}
+{-| The `flex-start` value used by [`alignItems`](#alignItems) and [`justifyContent`](#justifyContent).
+
+    alignItems flexStart
+    justifyContent flexStart
+
+-}
 flexStart : Value { provides | flexStart : Supported }
 flexStart =
     Value "flex-start"
 
 
-{-| -}
+{-| The `flex-end` value used by [`alignItems`](#alignItems) and [`justifyContent`](#justifyContent).
+
+    alignItems flexEnd
+    justifyContent flexEnd
+
+-}
 flexEnd : Value { provides | flexEnd : Supported }
 flexEnd =
     Value "flex-end"
@@ -3453,6 +3466,26 @@ selfStart =
 selfEnd : Value { provides | selfEnd : Supported }
 selfEnd =
     Value "self-end"
+
+
+{-| The `space-between` value used by [`justifyContent`](#justifyContent).
+
+    justifyContent spaceBetween
+
+-}
+spaceBetween : Value { provides | spaceBetween : Supported }
+spaceBetween =
+    Value "space-between"
+
+
+{-| The `space-around` value used by [`justifyContent`](#justifyContent).
+
+    justifyContent spaceAround
+
+-}
+spaceAround : Value { provides | spaceAround : Supported }
+spaceAround =
+    Value "space-around"
 
 
 {-| The `left` value used for alignment.
@@ -3606,6 +3639,27 @@ alignSelf :
     -> Style
 alignSelf (Value val) =
     AppendProperty ("align-self:" ++ val)
+
+
+{-| Sets [`justify-content`](https://css-tricks.com/almanac/properties/j/justify-content/).
+
+    justifyContent flexStart
+
+-}
+justifyContent :
+    Value
+        { flexStart : Supported
+        , flexEnd : Supported
+        , center : Supported
+        , spaceBetween : Supported
+        , spaceAround : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+justifyContent (Value val) =
+    AppendProperty ("justify-content:" ++ val)
 
 
 {-| Sets [`flex-direction`](https://css-tricks.com/almanac/properties/f/flex-direction/).
