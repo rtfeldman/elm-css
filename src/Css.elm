@@ -138,9 +138,11 @@ module Css
         , colorBurn
         , colorDodge
         , color_
+        , column
         , columnCount
         , columnFill
         , columnGap
+        , columnReverse
         , columnRule
         , columnRule2
         , columnRule3
@@ -190,6 +192,7 @@ module Css
         , fillBox
         , firstBaseline
         , fixed
+        , flexDirection
         , flexEnd
         , flexStart
         , flex_
@@ -354,7 +357,9 @@ module Css
         , rotateY
         , rotateZ
         , round
+        , row
         , rowResize
+        , rowReverse
         , rtl
         , sResize
         , safeCenter
@@ -666,7 +671,23 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Flexbox
 
+The CSS Flexible Box Layout Module.
+See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
+
+
+### Flexbox Alignment
+
 @docs alignItems, alignSelf
+
+
+### Flexbox Direction
+
+@docs flexDirection, row, rowReverse, column, columnReverse
+
+
+### Flexbox Order
+
+@docs order
 
 
 ## Font Size
@@ -847,11 +868,6 @@ Multiple CSS properties use these values.
 # Visibility
 
 @docs visibility
-
-
-# Flexbox
-
-@docs order
 
 
 # SVG
@@ -3590,6 +3606,66 @@ alignSelf :
     -> Style
 alignSelf (Value val) =
     AppendProperty ("align-self:" ++ val)
+
+
+{-| Sets [`flex-direction`](https://css-tricks.com/almanac/properties/f/flex-direction/).
+
+    flexDirection column
+
+-}
+flexDirection :
+    Value
+        { row : Supported
+        , rowReverse : Supported
+        , column : Supported
+        , columnReverse : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexDirection (Value val) =
+    AppendProperty ("flex-direction:" ++ val)
+
+
+{-| The `row` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection row
+
+-}
+row : Value { provides | row : Supported }
+row =
+    Value "row"
+
+
+{-| The `row-reverse` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection rowReverse
+
+-}
+rowReverse : Value { provides | rowReverse : Supported }
+rowReverse =
+    Value "row-reverse"
+
+
+{-| The `column` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection column
+
+-}
+column : Value { provides | column : Supported }
+column =
+    Value "column"
+
+
+{-| The `column-reverse` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection columnReverse
+
+-}
+columnReverse : Value { provides | columnReverse : Supported }
+columnReverse =
+    Value "column-reverse"
 
 
 
