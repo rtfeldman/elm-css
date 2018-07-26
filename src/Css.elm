@@ -1083,11 +1083,10 @@ unset =
 -}
 all :
     Value
-        { accepts
-            | revert : Supported
-            , initial : Supported
-            , inherit : Supported
-            , unset : Supported
+        { revert : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
         }
     -> Style
 all (Value val) =
@@ -3535,26 +3534,25 @@ because `Css.left` and `Css.right` are functions!
 -}
 alignItems :
     Value
-        { accepts
-            | normal : Supported
-            , stretch : Supported
-            , center : Supported
-            , start : Supported
-            , end : Supported
-            , flexStart : Supported
-            , flexEnd : Supported
-            , selfStart : Supported
-            , selfEnd : Supported
-            , left_ : Supported
-            , right_ : Supported
-            , baseline : Supported
-            , firstBaseline : Supported
-            , lastBaseline : Supported
-            , safeCenter : Supported
-            , unsafeCenter : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
+        { normal : Supported
+        , stretch : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , selfStart : Supported
+        , selfEnd : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        , safeCenter : Supported
+        , unsafeCenter : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 alignItems (Value val) =
