@@ -1162,10 +1162,12 @@ url str =
 
 
 {-| The `auto` value used for properties such as [`width`](#width),
-and [`zoom`](#zoom).
+[`zoom`](#zoom),
+and [`flexBasis`](#flexBasis).
 
     width auto
     zoom auto
+    flexBasis auto
 
 -}
 auto : Value { provides | auto : Supported }
@@ -3459,7 +3461,9 @@ end =
     Value "end"
 
 
-{-| The `flex-start` value used by [`alignItems`](#alignItems), [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
+{-| The `flex-start` value used by [`alignItems`](#alignItems),
+[`justifyContent`](#justifyContent),
+and [`alignContent`](#alignContent).
 
     alignItems flexStart
     justifyContent flexStart
@@ -3471,7 +3475,9 @@ flexStart =
     Value "flex-start"
 
 
-{-| The `flex-end` value used by [`alignItems`](#alignItems), [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
+{-| The `flex-end` value used by [`alignItems`](#alignItems),
+[`justifyContent`](#justifyContent),
+and [`alignContent`](#alignContent).
 
     alignItems flexEnd
     justifyContent flexEnd
@@ -3495,9 +3501,11 @@ selfEnd =
     Value "self-end"
 
 
-{-| The `space-between` value used by [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
+{-| The `space-between` value used by [`justifyContent`](#justifyContent)
+and [`alignContent`](#alignContent).
 
     justifyContent spaceBetween
+    alignContent spaceBetween
 
 -}
 spaceBetween : Value { provides | spaceBetween : Supported }
@@ -3505,9 +3513,11 @@ spaceBetween =
     Value "space-between"
 
 
-{-| The `space-around` value used by [`justifyContent`](#justifyContent) and [`alignContent`](#alignContent).
+{-| The `space-around` value used by [`justifyContent`](#justifyContent)
+and [`alignContent`](#alignContent).
 
     justifyContent spaceAround
+    alignContent spaceAround
 
 -}
 spaceAround : Value { provides | spaceAround : Supported }
