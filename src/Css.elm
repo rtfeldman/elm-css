@@ -10122,6 +10122,7 @@ order :
     Value
         { num : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
