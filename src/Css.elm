@@ -157,6 +157,7 @@ module Css
         , commonLigatures
         , compress
         , contain
+        , content
         , contentBox
         , contextMenu
         , contextual
@@ -193,8 +194,11 @@ module Css
         , fillBox
         , firstBaseline
         , fixed
+        , flexBasis
         , flexDirection
         , flexEnd
+        , flexGrow
+        , flexShrink
         , flexStart
         , flexWrap
         , flex_
@@ -695,6 +699,11 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 ### Flexbox Order
 
 @docs order
+
+
+### Flexbox Sizing
+
+@docs flexGrow, flexShrink, flexBasis, content
 
 
 ### Flexbox Wrapping
@@ -3695,6 +3704,94 @@ justifyContent :
     -> Style
 justifyContent (Value val) =
     AppendProperty ("justify-content:" ++ val)
+
+
+{-| Sets [`flex-basis`](https://css-tricks.com/almanac/properties/f/flex-basis/).
+
+    flexBasis (em 10)
+    flexBasis (px 3)
+    flexBasis (pct 100)
+    flexBasis auto
+
+-}
+flexBasis :
+    Value
+        { auto : Supported
+        , content : Supported
+        , ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexBasis (Value val) =
+    AppendProperty ("flex-basis:" ++ val)
+
+
+{-| The `content` [`flex-basis` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values).
+
+    flexBasis content
+
+-}
+content : Value { provides | content : Supported }
+content =
+    Value "content"
+
+
+{-| Sets [`flex-grow`](https://css-tricks.com/almanac/properties/f/flex-grow/).
+
+    flexGrow (num 3)
+    flexGrow (num 0.6)
+
+-}
+flexGrow :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexGrow (Value val) =
+    AppendProperty ("flex-grow:" ++ val)
+
+
+{-| Sets [`flex-shrink`](https://css-tricks.com/almanac/properties/f/flex-shrink/).
+
+    flexShrink (num 2)
+    flexShrink (num 0.6)
+
+-}
+flexShrink :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexShrink (Value val) =
+    AppendProperty ("flex-shrink:" ++ val)
 
 
 {-| Sets [`flex-direction`](https://css-tricks.com/almanac/properties/f/flex-direction/).
