@@ -1,8 +1,19 @@
 module Css
     exposing
-        ( BoxShadowConfig
+        ( Angle
+        , AngleSupported
+        , BorderStyle
+        , BorderStyleSupported
+        , BorderWidth
+        , BorderWidthSupported
+        , BoxShadowConfig
         , CalcOperation
         , Color
+        , ColorSupported
+        , Length
+        , LengthSupported
+        , ListStyle
+        , ListStyleSupported
         , Style
         , Supported
         , Value
@@ -534,6 +545,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 @docs all, revert
 
+@docs Length, LengthSupported, Angle, AngleSupported
+
 
 ## Numeric Units
 
@@ -547,7 +560,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Color
 
-@docs Color, color, backgroundColor, hex, rgb, rgba, hsl, hsla
+@docs Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
 
 
 ## Pseudo-Classes
@@ -592,6 +605,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 
 ## Border
+
+@docs BorderWidth, BorderWidthSupported, BorderStyle, BorderStyleSupported
 
 @docs border, border2, border3
 
@@ -729,6 +744,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## List Style Type
 
+@docs ListStyle, ListStyleSupported
 @docs listStyle, listStyle2, listStyle3
 @docs arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 
@@ -983,6 +999,119 @@ type Value supports
 -}
 type Supported
     = Supported
+
+
+{-| A type alias used to accept a [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
+among other values.
+-}
+type alias LengthSupported v =
+    { v
+        | ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , zero : Supported
+        , calc : Supported
+    }
+
+
+{-| A type alias used to accept a [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length).
+-}
+type alias Length =
+    LengthSupported {}
+
+
+{-| A type alias used to accept a [color](https://developer.mozilla.org/en-US/docs/Web/CSS/color)
+among other values.
+-}
+type alias ColorSupported v =
+    { v
+        | rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+    }
+
+
+{-| A type alias used to accept a [color](https://developer.mozilla.org/en-US/docs/Web/CSS/color).
+-}
+type alias Color =
+    ColorSupported {}
+
+
+{-| A type alias used to accept a [border-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values)
+among other values.
+-}
+type alias BorderStyleSupported v =
+    { v
+        | none : Supported
+        , hidden : Supported
+        , dotted : Supported
+        , dashed : Supported
+        , solid : Supported
+        , double : Supported
+        , groove : Supported
+        , ridge : Supported
+        , inset : Supported
+        , outset : Supported
+    }
+
+
+{-| A type alias used to accept a [border-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+-}
+type alias BorderStyle =
+    BorderStyleSupported {}
+
+
+{-| A type alias used to accept a [border-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values)
+among other values.
+-}
+type alias BorderWidthSupported v =
+    LengthSupported
+        { v
+            | thin : Supported
+            , medium : Supported
+            , thick : Supported
+        }
+
+
+{-| A type alias used to accept a [border-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
+-}
+type alias BorderWidth =
+    BorderWidthSupported {}
+
+
+{-| A type alias used to accept an [angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+among other values.
+-}
+type alias AngleSupported v =
+    { v
+        | deg : Supported
+        , grad : Supported
+        , rad : Supported
+        , turn : Supported
+        , zero : Supported
+        , calc : Supported
+    }
+
+
+{-| A type alias used to accept an [angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle).
+-}
+type alias Angle =
+    AngleSupported {}
 
 
 
@@ -1319,31 +1448,6 @@ breakWord =
 -- COLORS --
 
 
-{-| A color created with [`hex`](#hex), [`rgb`](#rgb), [`rgba`](#rgba),
-[`hsl`](#hsl), or [`hsla`](#hsla). `Color` can be used to annotate values
-returned by any of those functions.
-
-    limeGreen : Css.Color
-    limeGreen =
-        rgb 0 100 44
-
-    rebeccaPurple : Css.Color
-    rebeccaPurple =
-        hex "#663399"
-
--}
-type alias Color =
-    Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        }
-
-
 {-| Sets [`color`](https://css-tricks.com/almanac/properties/c/color/).
 
     color (hex "#60b5cc")
@@ -1353,17 +1457,12 @@ type alias Color =
 -}
 color :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 color (Value val) =
     AppendProperty ("color:" ++ val)
@@ -1378,17 +1477,12 @@ color (Value val) =
 -}
 backgroundColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 backgroundColor (Value val) =
     AppendProperty ("background-color:" ++ val)
@@ -1529,28 +1623,14 @@ for example in `vertical-align: top`, use [`top_`](#top_) instead of this.
 -}
 top :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 top (Value val) =
     AppendProperty ("top:" ++ val)
@@ -1569,28 +1649,14 @@ for example in `vertical-align: bottom`, use [`bottom_`](#bottom_) instead of th
 -}
 bottom :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 bottom (Value val) =
     AppendProperty ("bottom:" ++ val)
@@ -1609,28 +1675,14 @@ for example in `float: left`, use [`left_`](#left_) instead of this.
 -}
 left :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 left (Value val) =
     AppendProperty ("left:" ++ val)
@@ -1649,28 +1701,14 @@ for example in `float: right`, use [`right_`](#right_) instead of this.
 -}
 right :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 right (Value val) =
     AppendProperty ("right:" ++ val)
@@ -1775,27 +1813,13 @@ zIndex (Value val) =
 -}
 padding :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 padding (Value value) =
     AppendProperty ("padding:" ++ value)
@@ -1811,44 +1835,16 @@ padding (Value value) =
 -}
 padding2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 padding2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -1864,64 +1860,22 @@ padding2 (Value valueTopBottom) (Value valueRightLeft) =
 -}
 padding3 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
@@ -1937,84 +1891,28 @@ padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 -}
 padding4 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
@@ -2027,27 +1925,13 @@ padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLef
 -}
 paddingTop :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 paddingTop (Value value) =
     AppendProperty ("padding-top:" ++ value)
@@ -2060,27 +1944,13 @@ paddingTop (Value value) =
 -}
 paddingRight :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 paddingRight (Value value) =
     AppendProperty ("padding-right:" ++ value)
@@ -2093,27 +1963,13 @@ paddingRight (Value value) =
 -}
 paddingBottom :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 paddingBottom (Value value) =
     AppendProperty ("padding-bottom:" ++ value)
@@ -2126,27 +1982,13 @@ paddingBottom (Value value) =
 -}
 paddingLeft :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 paddingLeft (Value value) =
     AppendProperty ("padding-left:" ++ value)
@@ -2168,28 +2010,14 @@ You may want to check out [this article on collapsing margins](https://css-trick
 -}
 margin :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 margin (Value value) =
     AppendProperty ("margin:" ++ value)
@@ -2207,46 +2035,18 @@ You may want to check out [this article on collapsing margins](https://css-trick
 -}
 margin2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
+        (LengthSupported
+            { pct : Supported
             , auto : Supported
             }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 margin2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -2264,67 +2064,25 @@ You may want to check out [this article on collapsing margins](https://css-trick
 -}
 margin3 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
+        (LengthSupported
+            { pct : Supported
             , auto : Supported
             }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
@@ -2342,88 +2100,32 @@ You may want to check out [this article on collapsing margins](https://css-trick
 -}
 margin4 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
+        (LengthSupported
+            { pct : Supported
             , auto : Supported
             }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
@@ -2438,28 +2140,14 @@ This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/mar
 -}
 marginTop :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            , auto : Supported
+            }
+        )
     -> Style
 marginTop (Value value) =
     AppendProperty ("margin-top:" ++ value)
@@ -2472,28 +2160,14 @@ marginTop (Value value) =
 -}
 marginRight :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            , auto : Supported
+            }
+        )
     -> Style
 marginRight (Value value) =
     AppendProperty ("margin-right:" ++ value)
@@ -2508,28 +2182,14 @@ This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/mar
 -}
 marginBottom :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            , auto : Supported
+            }
+        )
     -> Style
 marginBottom (Value value) =
     AppendProperty ("margin-bottom:" ++ value)
@@ -2542,28 +2202,14 @@ marginBottom (Value value) =
 -}
 marginLeft :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            , auto : Supported
+            }
+        )
     -> Style
 marginLeft (Value value) =
     AppendProperty ("margin-left:" ++ value)
@@ -2890,100 +2536,34 @@ int value =
 type alias BoxShadowConfig =
     { offsetX :
         Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     , offsetY :
         Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     , blurRadius :
         Maybe
             (Value
-                { px : Supported
-                , em : Supported
-                , ex : Supported
-                , ch : Supported
-                , rem : Supported
-                , vh : Supported
-                , vw : Supported
-                , vmin : Supported
-                , vmax : Supported
-                , mm : Supported
-                , cm : Supported
-                , inches : Supported
-                , pt : Supported
-                , pc : Supported
-                , pct : Supported
-                , zero : Supported
-                , calc : Supported
-                }
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
             )
     , spreadRadius :
         Maybe
             (Value
-                { px : Supported
-                , em : Supported
-                , ex : Supported
-                , ch : Supported
-                , rem : Supported
-                , vh : Supported
-                , vw : Supported
-                , vmin : Supported
-                , vmax : Supported
-                , mm : Supported
-                , cm : Supported
-                , inches : Supported
-                , pt : Supported
-                , pc : Supported
-                , pct : Supported
-                , zero : Supported
-                , calc : Supported
-                }
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
             )
     , color :
-        Maybe
-            (Value
-                { rgb : Supported
-                , rgba : Supported
-                , hsl : Supported
-                , hsla : Supported
-                , hex : Supported
-                , transparent : Supported
-                , currentColor : Supported
-                }
-            )
+        Maybe (Value Color)
     , inset : Bool
     }
 
@@ -3106,26 +2686,12 @@ to make `calc` more reliable. Use with caution!
 -}
 calc :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , num : Supported
-        , int : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , int : Supported
+            }
+        )
     -> CalcOperation
     -> Value { provides | calc : Supported }
 calc (Value first) (CalcOperation operation) =
@@ -3163,26 +2729,12 @@ getCalcExpression str =
 -}
 minus :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , num : Supported
-        , int : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , int : Supported
+            }
+        )
     -> CalcOperation
 minus (Value second) =
     -- The calc `-` operator MUST be surrounded by whitespace.
@@ -3197,26 +2749,12 @@ minus (Value second) =
 -}
 plus :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , num : Supported
-        , int : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , int : Supported
+            }
+        )
     -> CalcOperation
 plus (Value second) =
     -- The calc `+` operator MUST be surrounded by whitespace.
@@ -3611,36 +3149,22 @@ Check out [fluid typography](https://css-tricks.com/snippets/css/fluid-typograph
 -}
 fontSize :
     Value
-        { xxSmall : Supported
-        , xSmall : Supported
-        , small : Supported
-        , medium : Supported
-        , large : Supported
-        , xLarge : Supported
-        , xxLarge : Supported
-        , smaller : Supported
-        , larger : Supported
-        , px : Supported
-        , em : Supported
-        , ex : Supported
-        , ch : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , mm : Supported
-        , cm : Supported
-        , inches : Supported
-        , pt : Supported
-        , pc : Supported
-        , pct : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { xxSmall : Supported
+            , xSmall : Supported
+            , small : Supported
+            , medium : Supported
+            , large : Supported
+            , xLarge : Supported
+            , xxLarge : Supported
+            , smaller : Supported
+            , larger : Supported
+            , pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 fontSize (Value val) =
     AppendProperty ("font-size:" ++ val)
@@ -5300,30 +4824,16 @@ If you need to set the offsets from the right or bottom, use
 -}
 backgroundPosition :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , center : Supported
-        , inherit : Supported
-        , unset : Supported
-        , initial : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            , inherit : Supported
+            , unset : Supported
+            , initial : Supported
+            }
+        )
     -> Style
 backgroundPosition (Value horiz) =
     AppendProperty ("background-position:" ++ horiz)
@@ -5349,50 +4859,22 @@ If you need to set the offsets from the right or bottom, use
 -}
 backgroundPosition2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , center : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , top_ : Supported
-            , bottom_ : Supported
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , right_ : Supported
             , center : Supported
             }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , top_ : Supported
+                , bottom_ : Supported
+                , center : Supported
+                }
+            )
     -> Style
 backgroundPosition2 (Value horiz) (Value vert) =
     AppendProperty ("background-position:" ++ horiz ++ " " ++ vert)
@@ -5418,24 +4900,10 @@ backgroundPosition4 :
         }
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
             { top_ : Supported
@@ -5443,24 +4911,10 @@ backgroundPosition4 :
             }
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
     AppendProperty
@@ -5628,27 +5082,15 @@ need to set both width and height explicitly, use
 -}
 backgroundSize :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , cover : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , cover : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 backgroundSize (Value size) =
     AppendProperty ("background-size:" ++ size)
@@ -5665,42 +5107,18 @@ If you only want to set the width, use [`backgroundImage`](#backgroundImage) ins
 -}
 backgroundSize2 :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { px : Supported
-            , cm : Supported
-            , mm : Supported
-            , inches : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , ch : Supported
-            , em : Supported
-            , ex : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
+        (LengthSupported
+            { pct : Supported
             , auto : Supported
             }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 backgroundSize2 (Value width) (Value height) =
     AppendProperty ("background-size:" ++ width ++ " " ++ height)
@@ -5744,14 +5162,10 @@ cover =
 -}
 linearGradient :
     Value
-        { to : Supported
-        , deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (AngleSupported
+            { to : Supported
+            }
+        )
     -> Value { colorStop : Supported }
     -> Value { colorStop : Supported }
     -> List (Value { colorStop : Supported })
@@ -5774,7 +5188,7 @@ linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
 See also [`stop2`](#stop2) for controlling stop positioning.
 
 -}
-stop : Color -> Value { provides | colorStop : Supported }
+stop : Value Color -> Value { provides | colorStop : Supported }
 stop (Value color) =
     Value color
 
@@ -5787,27 +5201,13 @@ See also [`stop`](#stop) if you don't need to control the stop position.
 
 -}
 stop2 :
-    Color
+    Value Color
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Value { supported | colorStop : Supported }
 stop2 (Value color) (Value position) =
     Value (color ++ " " ++ position)
@@ -5941,36 +5341,23 @@ toTopRight =
 -}
 listStyle :
     Value
-        { armenian : Supported
-        , bengali : Supported
-        , cjkEarthlyBranch : Supported
-        , cjkHeavenlyStem : Supported
-        , devanagari : Supported
-        , georgian : Supported
-        , gujarati : Supported
-        , gurmukhi : Supported
-        , kannada : Supported
-        , khmer : Supported
-        , lao : Supported
-        , malayalam : Supported
-        , myanmar : Supported
-        , oriya : Supported
-        , telugu : Supported
-        , thai : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ListStyleSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 listStyle (Value val) =
     AppendProperty ("list-style:" ++ val)
 
 
-{-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
+{-| A type alias used to accept a [list-style-type](https://developer.mozilla.org/fr/docs/Web/CSS/list-style-type)
+among other values.
 -}
-listStyle2 :
-    Value
-        { armenian : Supported
+type alias ListStyleSupported v =
+    { v
+        | armenian : Supported
         , bengali : Supported
         , cjkEarthlyBranch : Supported
         , cjkHeavenlyStem : Supported
@@ -5986,26 +5373,20 @@ listStyle2 :
         , oriya : Supported
         , telugu : Supported
         , thai : Supported
-        }
-    ->
-        Value
-            { armenian : Supported
-            , bengali : Supported
-            , cjkEarthlyBranch : Supported
-            , cjkHeavenlyStem : Supported
-            , devanagari : Supported
-            , georgian : Supported
-            , gujarati : Supported
-            , gurmukhi : Supported
-            , kannada : Supported
-            , khmer : Supported
-            , lao : Supported
-            , malayalam : Supported
-            , myanmar : Supported
-            , oriya : Supported
-            , telugu : Supported
-            , thai : Supported
-            }
+    }
+
+
+{-| A type alias used to accept a [list-style-type](https://developer.mozilla.org/fr/docs/Web/CSS/list-style-type)
+-}
+type alias ListStyle =
+    ListStyleSupported {}
+
+
+{-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
+-}
+listStyle2 :
+    Value ListStyle
+    -> Value ListStyle
     -> Style
 listStyle2 (Value val1) (Value val2) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2)
@@ -6014,62 +5395,9 @@ listStyle2 (Value val1) (Value val2) =
 {-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
 listStyle3 :
-    Value
-        { armenian : Supported
-        , bengali : Supported
-        , cjkEarthlyBranch : Supported
-        , cjkHeavenlyStem : Supported
-        , devanagari : Supported
-        , georgian : Supported
-        , gujarati : Supported
-        , gurmukhi : Supported
-        , kannada : Supported
-        , khmer : Supported
-        , lao : Supported
-        , malayalam : Supported
-        , myanmar : Supported
-        , oriya : Supported
-        , telugu : Supported
-        , thai : Supported
-        }
-    ->
-        Value
-            { armenian : Supported
-            , bengali : Supported
-            , cjkEarthlyBranch : Supported
-            , cjkHeavenlyStem : Supported
-            , devanagari : Supported
-            , georgian : Supported
-            , gujarati : Supported
-            , gurmukhi : Supported
-            , kannada : Supported
-            , khmer : Supported
-            , lao : Supported
-            , malayalam : Supported
-            , myanmar : Supported
-            , oriya : Supported
-            , telugu : Supported
-            , thai : Supported
-            }
-    ->
-        Value
-            { armenian : Supported
-            , bengali : Supported
-            , cjkEarthlyBranch : Supported
-            , cjkHeavenlyStem : Supported
-            , devanagari : Supported
-            , georgian : Supported
-            , gujarati : Supported
-            , gurmukhi : Supported
-            , kannada : Supported
-            , khmer : Supported
-            , lao : Supported
-            , malayalam : Supported
-            , myanmar : Supported
-            , oriya : Supported
-            , telugu : Supported
-            , thai : Supported
-            }
+    Value ListStyle
+    -> Value ListStyle
+    -> Value ListStyle
     -> Style
 listStyle3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
@@ -6088,29 +5416,12 @@ listStyle3 (Value val1) (Value val2) (Value val3) =
 -}
 border :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 border (Value width) =
     AppendProperty ("border:" ++ width)
@@ -6124,40 +5435,8 @@ border (Value width) =
 
 -}
 border2 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
     -> Style
 border2 (Value width) (Value style) =
     AppendProperty ("border:" ++ width ++ " " ++ style)
@@ -6171,50 +5450,9 @@ border2 (Value width) (Value style) =
 
 -}
 border3 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
+    -> Value Color
     -> Style
 border3 (Value width) (Value style) (Value color) =
     AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ color)
@@ -6229,29 +5467,12 @@ border3 (Value width) (Value style) (Value color) =
 -}
 borderTop :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderTop (Value width) =
     AppendProperty ("border-top:" ++ width)
@@ -6265,40 +5486,8 @@ borderTop (Value width) =
 
 -}
 borderTop2 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
     -> Style
 borderTop2 (Value width) (Value style) =
     AppendProperty ("border-top:" ++ width ++ " " ++ style)
@@ -6312,50 +5501,9 @@ borderTop2 (Value width) (Value style) =
 
 -}
 borderTop3 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
+    -> Value Color
     -> Style
 borderTop3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-top:" ++ width ++ " " ++ style ++ " " ++ color)
@@ -6370,29 +5518,12 @@ borderTop3 (Value width) (Value style) (Value color) =
 -}
 borderRight :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderRight (Value width) =
     AppendProperty ("border-right:" ++ width)
@@ -6406,40 +5537,8 @@ borderRight (Value width) =
 
 -}
 borderRight2 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
     -> Style
 borderRight2 (Value width) (Value style) =
     AppendProperty ("border-right:" ++ width ++ " " ++ style)
@@ -6453,50 +5552,9 @@ borderRight2 (Value width) (Value style) =
 
 -}
 borderRight3 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
+    -> Value Color
     -> Style
 borderRight3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-right:" ++ width ++ " " ++ style ++ " " ++ color)
@@ -6511,29 +5569,12 @@ borderRight3 (Value width) (Value style) (Value color) =
 -}
 borderBottom :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderBottom (Value width) =
     AppendProperty ("border-bottom:" ++ width)
@@ -6547,40 +5588,8 @@ borderBottom (Value width) =
 
 -}
 borderBottom2 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
     -> Style
 borderBottom2 (Value width) (Value style) =
     AppendProperty ("border-bottom:" ++ width ++ " " ++ style)
@@ -6594,50 +5603,9 @@ borderBottom2 (Value width) (Value style) =
 
 -}
 borderBottom3 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
+    -> Value Color
     -> Style
 borderBottom3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-bottom:" ++ width ++ " " ++ style ++ " " ++ color)
@@ -6652,29 +5620,12 @@ borderBottom3 (Value width) (Value style) (Value color) =
 -}
 borderLeft :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderLeft (Value width) =
     AppendProperty ("border-left:" ++ width)
@@ -6688,40 +5639,8 @@ borderLeft (Value width) =
 
 -}
 borderLeft2 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
     -> Style
 borderLeft2 (Value width) (Value style) =
     AppendProperty ("border-left:" ++ width ++ " " ++ style)
@@ -6735,50 +5654,9 @@ borderLeft2 (Value width) (Value style) =
 
 -}
 borderLeft3 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
+    -> Value Color
     -> Style
 borderLeft3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-left:" ++ width ++ " " ++ style ++ " " ++ color)
@@ -6794,29 +5672,12 @@ borderLeft3 (Value width) (Value style) (Value color) =
 -}
 borderWidth :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderWidth (Value width) =
     AppendProperty ("border-width:" ++ width)
@@ -6831,49 +5692,8 @@ borderWidth (Value width) =
 
 -}
 borderWidth2 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , thin : Supported
-            , medium : Supported
-            , thick : Supported
-            }
+    Value BorderWidth
+    -> Value BorderWidth
     -> Style
 borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
     AppendProperty ("border-width:" ++ widthTopBottom ++ " " ++ widthRightLeft)
@@ -6888,72 +5708,9 @@ borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
 
 -}
 borderWidth3 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , thin : Supported
-            , medium : Supported
-            , thick : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , thin : Supported
-            , medium : Supported
-            , thick : Supported
-            , inherit : Supported
-            }
+    Value BorderWidth
+    -> Value BorderWidth
+    -> Value BorderWidth
     -> Style
 borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
     AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRightLeft ++ " " ++ widthBottom)
@@ -6968,93 +5725,10 @@ borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
 
 -}
 borderWidth4 :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , thin : Supported
-            , medium : Supported
-            , thick : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , thin : Supported
-            , medium : Supported
-            , thick : Supported
-            }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , thin : Supported
-            , medium : Supported
-            , thick : Supported
-            }
+    Value BorderWidth
+    -> Value BorderWidth
+    -> Value BorderWidth
+    -> Value BorderWidth
     -> Style
 borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
     AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRight ++ " " ++ widthBottom ++ " " ++ widthLeft)
@@ -7067,29 +5741,12 @@ borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widt
 -}
 borderTopWidth :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderTopWidth (Value width) =
     AppendProperty ("border-top-width:" ++ width)
@@ -7102,29 +5759,12 @@ borderTopWidth (Value width) =
 -}
 borderRightWidth :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderRightWidth (Value width) =
     AppendProperty ("border-right-width:" ++ width)
@@ -7137,29 +5777,12 @@ borderRightWidth (Value width) =
 -}
 borderBottomWidth :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderBottomWidth (Value width) =
     AppendProperty ("border-bottom-width:" ++ width)
@@ -7172,29 +5795,12 @@ borderBottomWidth (Value width) =
 -}
 borderLeftWidth :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderLeftWidth (Value width) =
     AppendProperty ("border-left-width:" ++ width)
@@ -7210,20 +5816,12 @@ borderLeftWidth (Value width) =
 -}
 borderStyle :
     Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderStyleSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderStyle (Value style) =
     AppendProperty ("border-style:" ++ style)
@@ -7238,31 +5836,8 @@ borderStyle (Value style) =
 
 -}
 borderStyle2 :
-    Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderStyle
+    -> Value BorderStyle
     -> Style
 borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
     AppendProperty ("border-style:" ++ styleTopBottom ++ " " ++ styleRigthLeft)
@@ -7277,44 +5852,9 @@ borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
 
 -}
 borderStyle3 :
-    Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderStyle
+    -> Value BorderStyle
+    -> Value BorderStyle
     -> Style
 borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
     AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigthLeft ++ " " ++ styleBottom)
@@ -7329,57 +5869,10 @@ borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
 
 -}
 borderStyle4 :
-    Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderStyle
+    -> Value BorderStyle
+    -> Value BorderStyle
+    -> Value BorderStyle
     -> Style
 borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value styleLeft) =
     AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigt ++ " " ++ styleBottom ++ " " ++ styleLeft)
@@ -7392,20 +5885,12 @@ borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value style
 -}
 borderTopStyle :
     Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderStyleSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderTopStyle (Value style) =
     AppendProperty ("border-top-style:" ++ style)
@@ -7418,20 +5903,12 @@ borderTopStyle (Value style) =
 -}
 borderRightStyle :
     Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderStyleSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderRightStyle (Value style) =
     AppendProperty ("border-right-style:" ++ style)
@@ -7444,20 +5921,12 @@ borderRightStyle (Value style) =
 -}
 borderBottomStyle :
     Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderStyleSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderBottomStyle (Value style) =
     AppendProperty ("border-bottom-style:" ++ style)
@@ -7470,20 +5939,12 @@ borderBottomStyle (Value style) =
 -}
 borderLeftStyle :
     Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderStyleSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderLeftStyle (Value style) =
     AppendProperty ("border-left-style:" ++ style)
@@ -7499,17 +5960,12 @@ borderLeftStyle (Value style) =
 -}
 borderColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderColor (Value color) =
     AppendProperty ("border-color:" ++ color)
@@ -7524,25 +5980,8 @@ borderColor (Value color) =
 
 -}
 borderColor2 :
-    Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value Color
+    -> Value Color
     -> Style
 borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
     AppendProperty ("border-color:" ++ colorTopBottom ++ " " ++ colorRightLeft)
@@ -7557,35 +5996,9 @@ borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
 
 -}
 borderColor3 :
-    Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value Color
+    -> Value Color
+    -> Value Color
     -> Style
 borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
     AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRightLeft ++ " " ++ colorBottom)
@@ -7600,45 +6013,10 @@ borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
 
 -}
 borderColor4 :
-    Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value Color
+    -> Value Color
+    -> Value Color
+    -> Value Color
     -> Style
 borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
     AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRight ++ " " ++ colorBottom ++ " " ++ colorLeft)
@@ -7651,17 +6029,12 @@ borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colo
 -}
 borderTopColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderTopColor (Value color) =
     AppendProperty ("border-top-color:" ++ color)
@@ -7674,17 +6047,12 @@ borderTopColor (Value color) =
 -}
 borderRightColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderRightColor (Value color) =
     AppendProperty ("border-right-color:" ++ color)
@@ -7697,17 +6065,12 @@ borderRightColor (Value color) =
 -}
 borderBottomColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderBottomColor (Value color) =
     AppendProperty ("border-bottom-color:" ++ color)
@@ -7720,17 +6083,12 @@ borderBottomColor (Value color) =
 -}
 borderLeftColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderLeftColor (Value color) =
     AppendProperty ("border-left-color:" ++ color)
@@ -7911,27 +6269,13 @@ outset =
 -}
 borderRadius :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderRadius (Value radius) =
     AppendProperty ("border-radius:" ++ radius)
@@ -7947,44 +6291,16 @@ borderRadius (Value radius) =
 -}
 borderRadius2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
     AppendProperty ("border-radius:" ++ radiusTopLeftAndBottomRight ++ " " ++ radiusTopRightAndBottomLeft)
@@ -8000,64 +6316,22 @@ borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottom
 -}
 borderRadius3 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRightAndBottomLeft ++ " " ++ radiusBottomRight)
@@ -8073,84 +6347,28 @@ borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value r
 -}
 borderRadius4 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
@@ -8164,27 +6382,13 @@ borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRi
 -}
 borderTopLeftRadius :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderTopLeftRadius (Value radius) =
     AppendProperty ("border-top-left-radius:" ++ radius)
@@ -8198,44 +6402,16 @@ borderTopLeftRadius (Value radius) =
 -}
 borderTopLeftRadius2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 borderTopLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-top-left-radius:" ++ horizontal ++ " " ++ vertical)
@@ -8249,27 +6425,13 @@ borderTopLeftRadius2 (Value horizontal) (Value vertical) =
 -}
 borderTopRightRadius :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderTopRightRadius (Value radius) =
     AppendProperty ("border-top-right-radius:" ++ radius)
@@ -8283,44 +6445,16 @@ borderTopRightRadius (Value radius) =
 -}
 borderTopRightRadius2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 borderTopRightRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-top-right-radius:" ++ horizontal ++ " " ++ vertical)
@@ -8334,27 +6468,13 @@ borderTopRightRadius2 (Value horizontal) (Value vertical) =
 -}
 borderBottomRightRadius :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderBottomRightRadius (Value radius) =
     AppendProperty ("border-bottom-right-radius:" ++ radius)
@@ -8368,44 +6488,16 @@ borderBottomRightRadius (Value radius) =
 -}
 borderBottomRightRadius2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 borderBottomRightRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-right-radius:" ++ horizontal ++ " " ++ vertical)
@@ -8419,27 +6511,13 @@ borderBottomRightRadius2 (Value horizontal) (Value vertical) =
 -}
 borderBottomLeftRadius :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderBottomLeftRadius (Value radius) =
     AppendProperty ("border-bottom-left-radius:" ++ radius)
@@ -8453,44 +6531,16 @@ borderBottomLeftRadius (Value radius) =
 -}
 borderBottomLeftRadius2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
@@ -8508,27 +6558,13 @@ Specifies the distance by which an element's border image is set out from its bo
 -}
 borderImageOutset :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { num : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderImageOutset (Value width) =
     AppendProperty ("border-image-outset:" ++ width)
@@ -8546,44 +6582,16 @@ Specifies the distance by which an element's border image is set out from its bo
 -}
 borderImageOutset2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        }
+        (LengthSupported
+            { num : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            }
+            (LengthSupported
+                { num : Supported
+                }
+            )
     -> Style
 borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -8601,64 +6609,22 @@ Specifies the distance by which an element's border image is set out from its bo
 -}
 borderImageOutset3 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        }
+        (LengthSupported
+            { num : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            }
+            (LengthSupported
+                { num : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            }
+            (LengthSupported
+                { num : Supported
+                }
+            )
     -> Style
 borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
@@ -8676,84 +6642,28 @@ Specifies the distance by which an element's border image is set out from its bo
 -}
 borderImageOutset4 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        }
+        (LengthSupported
+            { num : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            }
+            (LengthSupported
+                { num : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            }
+            (LengthSupported
+                { num : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            }
+            (LengthSupported
+                { num : Supported
+                }
+            )
     -> Style
 borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
@@ -8771,29 +6681,15 @@ Specifies the width of an element's border image. Supports values specified as l
 -}
 borderImageWidth :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderImageWidth (Value width) =
     AppendProperty ("border-image-width:" ++ width)
@@ -8811,48 +6707,20 @@ Specifies the width of an element's border image. Supports values specified as l
 -}
 borderImageWidth2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
+        (LengthSupported
+            { pct : Supported
             , num : Supported
             , auto : Supported
             }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 borderImageWidth2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("border-image-width:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -8870,70 +6738,28 @@ Specifies the width of an element's border image. Supports values specified as l
 -}
 borderImageWidth3 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
+        (LengthSupported
+            { pct : Supported
             , num : Supported
             , auto : Supported
             }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 borderImageWidth3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
@@ -8951,92 +6777,36 @@ Specifies the width of an element's border image. Supports values specified as l
 -}
 borderImageWidth4 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , num : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
+        (LengthSupported
+            { pct : Supported
             , num : Supported
             , auto : Supported
             }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , num : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
@@ -9298,16 +7068,7 @@ textDecoration3 :
             , dashed : Supported
             , wavy : Supported
             }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    -> Value Color
     -> Style
 textDecoration3 (Value line) (Value style) (Value color) =
     AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ color)
@@ -9427,17 +7188,12 @@ textDecorationStyle (Value style) =
 -}
 textDecorationColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 textDecorationColor (Value color) =
     AppendProperty ("text-decoration-color:" ++ color)
@@ -9605,26 +7361,12 @@ separate =
 -}
 borderSpacing :
     Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 borderSpacing (Value str) =
     AppendProperty ("border-spacing:" ++ str)
@@ -9636,43 +7378,8 @@ borderSpacing (Value str) =
 
 -}
 borderSpacing2 :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
-    ->
-        Value
-            { zero : Supported
-            , calc : Supported
-            , ch : Supported
-            , em : Supported
-            , ex : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , px : Supported
-            , cm : Supported
-            , mm : Supported
-            , inches : Supported
-            , pc : Supported
-            , pt : Supported
-            }
+    Value Length
+    -> Value Length
     -> Style
 borderSpacing2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-spacing:" ++ horizontal ++ " " ++ vertical)
@@ -9779,35 +7486,21 @@ tableLayout (Value str) =
 -}
 verticalAlign :
     Value
-        { baseline : Supported
-        , sub : Supported
-        , super : Supported
-        , textTop : Supported
-        , textBottom : Supported
-        , middle : Supported
-        , top_ : Supported
-        , bottom_ : Supported
-        , pct : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { baseline : Supported
+            , sub : Supported
+            , super : Supported
+            , textTop : Supported
+            , textBottom : Supported
+            , middle : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , pct : Supported
+            , initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 verticalAlign (Value str) =
     AppendProperty ("vertical-align:" ++ str)
@@ -10147,18 +7840,13 @@ order (Value val) =
 -}
 fill :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , currentColor : Supported
-        , transparent : Supported
-        , url : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { url : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 fill (Value val) =
     AppendProperty ("fill:" ++ val)
@@ -10176,27 +7864,13 @@ fill (Value val) =
 -}
 columns :
     Value
-        { auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            , initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 columns (Value width) =
     AppendProperty ("columns:" ++ width)
@@ -10210,24 +7884,10 @@ columns (Value width) =
 -}
 columns2 :
     Value
-        { auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     ->
         Value
             { auto : Supported
@@ -10246,27 +7906,13 @@ columns2 (Value width) (Value count) =
 -}
 columnWidth :
     Value
-        { auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            , initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 columnWidth (Value width) =
     AppendProperty ("column-width:" ++ width)
@@ -10369,27 +8015,13 @@ all_ =
 -}
 columnGap :
     Value
-        { normal : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { normal : Supported
+            , initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 columnGap (Value width) =
     AppendProperty ("column-gap:" ++ width)
@@ -10403,29 +8035,12 @@ columnGap (Value width) =
 -}
 columnRuleWidth :
     Value
-        { thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 columnRuleWidth (Value width) =
     AppendProperty ("column-rule-width:" ++ width)
@@ -10440,20 +8055,12 @@ columnRuleWidth (Value width) =
 -}
 columnRuleStyle :
     Value
-        { solid : Supported
-        , none : Supported
-        , hidden : Supported
-        , dashed : Supported
-        , dotted : Supported
-        , double : Supported
-        , groove : Supported
-        , ridge : Supported
-        , inset : Supported
-        , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (BorderStyleSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 columnRuleStyle (Value style) =
     AppendProperty ("column-rule-style:" ++ style)
@@ -10467,17 +8074,12 @@ columnRuleStyle (Value style) =
 -}
 columnRuleColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 columnRuleColor (Value color) =
     AppendProperty ("column-rule-color:" ++ color)
@@ -10497,28 +8099,14 @@ columnRuleColor (Value color) =
 -}
 strokeDasharray :
     Value
-        { zero : Supported
-        , calc : Supported
-        , num : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { num : Supported
+            , pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 strokeDasharray (Value val) =
     AppendProperty ("stroke-dasharray:" ++ val)
@@ -10599,28 +8187,14 @@ square =
 -}
 strokeWidth :
     Value
-        { zero : Supported
-        , calc : Supported
-        , num : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { num : Supported
+            , pct : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 strokeWidth (Value val) =
     AppendProperty ("stroke-width:" ++ val)
@@ -10706,17 +8280,12 @@ clone =
 -}
 strokeColor :
     Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , currentColor : Supported
-        , transparent : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (ColorSupported
+            { inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 strokeColor (Value val) =
     AppendProperty ("stroke-color:" ++ val)
@@ -10841,30 +8410,16 @@ If you need to set the offsets from the right or bottom, use
 -}
 strokePosition :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , center : Supported
-        , inherit : Supported
-        , unset : Supported
-        , initial : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            , inherit : Supported
+            , unset : Supported
+            , initial : Supported
+            }
+        )
     -> Style
 strokePosition (Value horiz) =
     AppendProperty ("stroke-position:" ++ horiz)
@@ -10890,50 +8445,22 @@ If you need to set the offsets from the right or bottom, use
 -}
 strokePosition2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , center : Supported
-        }
-    ->
-        Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , top_ : Supported
-            , bottom_ : Supported
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , right_ : Supported
             , center : Supported
             }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , top_ : Supported
+                , bottom_ : Supported
+                , center : Supported
+                }
+            )
     -> Style
 strokePosition2 (Value horiz) (Value vert) =
     AppendProperty ("stroke-position:" ++ horiz ++ " " ++ vert)
@@ -10959,24 +8486,10 @@ strokePosition4 :
         }
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
             { top_ : Supported
@@ -10984,24 +8497,10 @@ strokePosition4 :
             }
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 strokePosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
     AppendProperty
@@ -11086,27 +8585,15 @@ need to set both width and height explicitly, use
 -}
 strokeSize :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , cover : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , cover : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 strokeSize (Value size) =
     AppendProperty ("stroke-size:" ++ size)
@@ -11123,42 +8610,18 @@ If you only want to set the width, use [`strokeImage`](#strokeImage) instead.
 -}
 strokeSize2 :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        }
-    ->
-        Value
-            { px : Supported
-            , cm : Supported
-            , mm : Supported
-            , inches : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , ch : Supported
-            , em : Supported
-            , ex : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
+        (LengthSupported
+            { pct : Supported
             , auto : Supported
             }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
     -> Style
 strokeSize2 (Value width) (Value height) =
     AppendProperty ("stroke-size:" ++ width ++ " " ++ height)
@@ -11173,28 +8636,16 @@ strokeSize2 (Value width) (Value height) =
 -}
 strokeDashCorner :
     Value
-        { none : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , cover : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+        (LengthSupported
+            { none : Supported
+            , pct : Supported
+            , auto : Supported
+            , cover : Supported
+            , inherit : Supported
+            , initial : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 strokeDashCorner (Value size) =
     AppendProperty ("stroke-dash-corner:" ++ size)
@@ -11365,29 +8816,12 @@ properties.
 -}
 columnRule :
     Value
-        { thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+        (BorderWidthSupported
+            { initial : Supported
+            , inherit : Supported
+            , unset : Supported
+            }
+        )
     -> Style
 columnRule (Value width) =
     AppendProperty ("column-rule:" ++ width)
@@ -11404,40 +8838,8 @@ properties.
 
 -}
 columnRule2 :
-    Value
-        { thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
     -> Style
 columnRule2 (Value width) (Value style) =
     AppendProperty ("column-rule:" ++ width ++ " " ++ style)
@@ -11454,49 +8856,9 @@ properties.
 
 -}
 columnRule3 :
-    Value
-        { thin : Supported
-        , medium : Supported
-        , thick : Supported
-        , zero : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , none : Supported
-            , hidden : Supported
-            , dashed : Supported
-            , dotted : Supported
-            , double : Supported
-            , groove : Supported
-            , ridge : Supported
-            , inset : Supported
-            , outset : Supported
-            }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
-            }
+    Value BorderWidth
+    -> Value BorderStyle
+    -> Value Color
     -> Style
 columnRule3 (Value width) (Value style) (Value color) =
     AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
@@ -11700,24 +9062,7 @@ matrix3d a1 b1 c1 d1 a2 b2 c2 d2 a3 b3 c3 d3 a4 b4 c4 d4 =
 
 -}
 translate :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
+    Value Length
     -> Value { provides | translate : Supported }
 translate (Value x) =
     Value ("translate(" ++ x ++ ")")
@@ -11729,43 +9074,8 @@ translate (Value x) =
 
 -}
 translate2 :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
-    ->
-        Value
-            { zero : Supported
-            , calc : Supported
-            , ch : Supported
-            , em : Supported
-            , ex : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , px : Supported
-            , cm : Supported
-            , mm : Supported
-            , inches : Supported
-            , pc : Supported
-            , pt : Supported
-            }
+    Value Length
+    -> Value Length
     -> Value { provides | translate2 : Supported }
 translate2 (Value x) (Value y) =
     Value ("translate(" ++ x ++ "," ++ y ++ ")")
@@ -11777,24 +9087,7 @@ translate2 (Value x) (Value y) =
 
 -}
 translateX :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
+    Value Length
     -> Value { provides | translateX : Supported }
 translateX (Value x) =
     Value ("translateX(" ++ x ++ ")")
@@ -11806,24 +9099,7 @@ translateX (Value x) =
 
 -}
 translateY :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
+    Value Length
     -> Value { provides | translateY : Supported }
 translateY (Value y) =
     Value ("translateY(" ++ y ++ ")")
@@ -11835,24 +9111,7 @@ translateY (Value y) =
 
 -}
 translateZ :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
+    Value Length
     -> Value { provides | translateZ : Supported }
 translateZ (Value z) =
     Value ("translateZ(" ++ z ++ ")")
@@ -11865,64 +9124,22 @@ translateZ (Value z) =
 -}
 translate3d :
     Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
     ->
         Value
-            { zero : Supported
-            , calc : Supported
-            , ch : Supported
-            , em : Supported
-            , ex : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , px : Supported
-            , cm : Supported
-            , mm : Supported
-            , inches : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
-            { zero : Supported
-            , calc : Supported
-            , ch : Supported
-            , em : Supported
-            , ex : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , px : Supported
-            , cm : Supported
-            , mm : Supported
-            , inches : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Value { provides | translate3d : Supported }
 translate3d (Value x) (Value y) (Value z) =
     Value ("translate3d(" ++ x ++ "," ++ y ++ "," ++ z ++ ")")
@@ -12006,12 +9223,7 @@ scale3d x y z =
 
 -}
 skew :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
+    Value Angle
     -> Value { provides | skew : Supported }
 skew (Value angle) =
     Value ("skew(" ++ angle ++ ")")
@@ -12023,19 +9235,8 @@ skew (Value angle) =
 
 -}
 skew2 :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
-    ->
-        Value
-            { deg : Supported
-            , grad : Supported
-            , rad : Supported
-            , turn : Supported
-            }
+    Value Angle
+    -> Value Angle
     -> Value { provides | skew2 : Supported }
 skew2 (Value angle1) (Value angle2) =
     Value ("skew(" ++ angle1 ++ "," ++ angle2 ++ ")")
@@ -12047,12 +9248,7 @@ skew2 (Value angle1) (Value angle2) =
 
 -}
 skewX :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
+    Value Angle
     -> Value { provides | skewX : Supported }
 skewX (Value angle) =
     Value ("skewX(" ++ angle ++ ")")
@@ -12064,12 +9260,7 @@ skewX (Value angle) =
 
 -}
 skewY :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
+    Value Angle
     -> Value { provides | skewY : Supported }
 skewY (Value angle) =
     Value ("skewY(" ++ angle ++ ")")
@@ -12085,12 +9276,7 @@ skewY (Value angle) =
 
 -}
 rotate :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
+    Value Angle
     -> Value { provides | rotate : Supported }
 rotate (Value angle) =
     Value ("rotate(" ++ angle ++ ")")
@@ -12102,12 +9288,7 @@ rotate (Value angle) =
 
 -}
 rotateX :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
+    Value Angle
     -> Value { provides | rotateX : Supported }
 rotateX (Value angle) =
     Value ("rotateX(" ++ angle ++ ")")
@@ -12119,12 +9300,7 @@ rotateX (Value angle) =
 
 -}
 rotateY :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
+    Value Angle
     -> Value { provides | rotateY : Supported }
 rotateY (Value angle) =
     Value ("rotateY(" ++ angle ++ ")")
@@ -12136,12 +9312,7 @@ rotateY (Value angle) =
 
 -}
 rotateZ :
-    Value
-        { deg : Supported
-        , grad : Supported
-        , rad : Supported
-        , turn : Supported
-        }
+    Value Angle
     -> Value { provides | rotateZ : Supported }
 rotateZ (Value angle) =
     Value ("rotateZ(" ++ angle ++ ")")
@@ -12156,13 +9327,7 @@ rotate3d :
     Float
     -> Float
     -> Float
-    ->
-        Value
-            { deg : Supported
-            , grad : Supported
-            , rad : Supported
-            , turn : Supported
-            }
+    -> Value Angle
     -> Value { provides | rotate3d : Supported }
 rotate3d x y z (Value angle) =
     Value
@@ -12188,24 +9353,7 @@ rotate3d x y z (Value angle) =
 
 -}
 perspective :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        }
+    Value Length
     -> Value { provides | perspective : Supported }
 perspective (Value length) =
     Value ("perspective(" ++ length ++ ")")
