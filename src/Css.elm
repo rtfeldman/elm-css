@@ -15,6 +15,10 @@ module Css
         , ListStyle
         , ListStyleSupported
         , Style
+        , Stylist
+        , Stylist2
+        , Stylist3
+        , Stylist4
         , Supported
         , Value
         , absolute
@@ -532,6 +536,11 @@ functions let you define custom properties and selectors, respectively.
 @docs Style, batch
 
 
+## Style functions types
+
+@docs Stylist, Stylist2, Stylist3, Stylist4
+
+
 ## Custom Properties
 
 @docs property
@@ -1001,6 +1010,37 @@ type Supported
     = Supported
 
 
+{-| A type alias for functions returning a `Style` from one `Value`. This alias
+will make the `Value` support the `initial`, `inherit` and `unset` global values.
+-}
+type alias Stylist v =
+    Value
+        { v
+            | initial : Supported
+            , inherit : Supported
+            , unset : Supported
+        }
+    -> Style
+
+
+{-| A type alias for functions returning a `Style` from two `Value`.
+-}
+type alias Stylist2 v1 v2 =
+    Value v1 -> Value v2 -> Style
+
+
+{-| A type alias for functions returning a `Style` from three `Value`.
+-}
+type alias Stylist3 v1 v2 v3 =
+    Value v1 -> Value v2 -> Value v3 -> Style
+
+
+{-| A type alias for functions returning a `Style` from four `Value`.
+-}
+type alias Stylist4 v1 v2 v3 v4 =
+    Value v1 -> Value v2 -> Value v3 -> Value v4 -> Style
+
+
 {-| A type alias used to accept a [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
 among other values.
 -}
@@ -1352,16 +1392,12 @@ borderBox =
 
 -}
 overflow :
-    Value
+    Stylist
         { visible : Supported
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 overflow (Value val) =
     AppendProperty ("overflow:" ++ val)
 
@@ -1375,16 +1411,12 @@ overflow (Value val) =
 
 -}
 overflowX :
-    Value
+    Stylist
         { visible : Supported
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 overflowX (Value val) =
     AppendProperty ("overflow-x:" ++ val)
 
@@ -1398,16 +1430,12 @@ overflowX (Value val) =
 
 -}
 overflowY :
-    Value
+    Stylist
         { visible : Supported
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
 
@@ -1419,14 +1447,10 @@ overflowY (Value val) =
 
 -}
 overflowWrap :
-    Value
+    Stylist
         { breakWord : Supported
         , normal : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 overflowWrap (Value val) =
     AppendProperty ("overflow-wrap:" ++ val)
 
@@ -1455,15 +1479,7 @@ breakWord =
     color (rgba 96 181 204 0.5)
 
 -}
-color :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+color : Stylist Color
 color (Value val) =
     AppendProperty ("color:" ++ val)
 
@@ -1475,15 +1491,7 @@ color (Value val) =
     backgroundColor (rgba 96 181 204 0.5)
 
 -}
-backgroundColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+backgroundColor : Stylist Color
 backgroundColor (Value val) =
     AppendProperty ("background-color:" ++ val)
 
@@ -1595,17 +1603,13 @@ hex str =
 
 -}
 position :
-    Value
+    Stylist
         { absolute : Supported
         , fixed : Supported
         , relative : Supported
         , static : Supported
         , sticky : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 position (Value val) =
     AppendProperty ("position:" ++ val)
 
@@ -1622,16 +1626,12 @@ for example in `vertical-align: top`, use [`top_`](#top_) instead of this.
 
 -}
 top :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 top (Value val) =
     AppendProperty ("top:" ++ val)
 
@@ -1648,16 +1648,12 @@ for example in `vertical-align: bottom`, use [`bottom_`](#bottom_) instead of th
 
 -}
 bottom :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 bottom (Value val) =
     AppendProperty ("bottom:" ++ val)
 
@@ -1674,16 +1670,12 @@ for example in `float: left`, use [`left_`](#left_) instead of this.
 
 -}
 left :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 left (Value val) =
     AppendProperty ("left:" ++ val)
 
@@ -1700,16 +1692,12 @@ for example in `float: right`, use [`right_`](#right_) instead of this.
 
 -}
 right :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 right (Value val) =
     AppendProperty ("right:" ++ val)
 
@@ -1787,14 +1775,10 @@ sticky =
 
 -}
 zIndex :
-    Value
+    Stylist
         { int : Supported
         , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 zIndex (Value val) =
     AppendProperty ("z-index:" ++ val)
 
@@ -1812,15 +1796,11 @@ zIndex (Value val) =
 
 -}
 padding :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 padding (Value value) =
     AppendProperty ("padding:" ++ value)
 
@@ -1834,18 +1814,15 @@ padding (Value value) =
 
 -}
 padding2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 padding2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
 
@@ -1859,24 +1836,19 @@ padding2 (Value valueTopBottom) (Value valueRightLeft) =
 
 -}
 padding3 :
-    Value
+    Stylist3
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
 
@@ -1890,30 +1862,23 @@ padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 
 -}
 padding4 :
-    Value
+    Stylist4
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
@@ -1924,15 +1889,11 @@ padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLef
 
 -}
 paddingTop :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 paddingTop (Value value) =
     AppendProperty ("padding-top:" ++ value)
 
@@ -1943,15 +1904,11 @@ paddingTop (Value value) =
 
 -}
 paddingRight :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 paddingRight (Value value) =
     AppendProperty ("padding-right:" ++ value)
 
@@ -1962,15 +1919,11 @@ paddingRight (Value value) =
 
 -}
 paddingBottom :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 paddingBottom (Value value) =
     AppendProperty ("padding-bottom:" ++ value)
 
@@ -1981,15 +1934,11 @@ paddingBottom (Value value) =
 
 -}
 paddingLeft :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 paddingLeft (Value value) =
     AppendProperty ("padding-left:" ++ value)
 
@@ -2009,16 +1958,12 @@ You may want to check out [this article on collapsing margins](https://css-trick
 
 -}
 margin :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 margin (Value value) =
     AppendProperty ("margin:" ++ value)
 
@@ -2034,20 +1979,17 @@ You may want to check out [this article on collapsing margins](https://css-trick
 
 -}
 margin2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
 margin2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
 
@@ -2063,27 +2005,22 @@ You may want to check out [this article on collapsing margins](https://css-trick
 
 -}
 margin3 :
-    Value
+    Stylist3
         (LengthSupported
             { pct : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
 margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
 
@@ -2099,34 +2036,27 @@ You may want to check out [this article on collapsing margins](https://css-trick
 
 -}
 margin4 :
-    Value
+    Stylist4
         (LengthSupported
             { pct : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
 margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
@@ -2139,16 +2069,12 @@ This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/mar
 
 -}
 marginTop :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             , auto : Supported
             }
         )
-    -> Style
 marginTop (Value value) =
     AppendProperty ("margin-top:" ++ value)
 
@@ -2159,16 +2085,12 @@ marginTop (Value value) =
 
 -}
 marginRight :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             , auto : Supported
             }
         )
-    -> Style
 marginRight (Value value) =
     AppendProperty ("margin-right:" ++ value)
 
@@ -2181,16 +2103,12 @@ This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/mar
 
 -}
 marginBottom :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             , auto : Supported
             }
         )
-    -> Style
 marginBottom (Value value) =
     AppendProperty ("margin-bottom:" ++ value)
 
@@ -2201,16 +2119,12 @@ marginBottom (Value value) =
 
 -}
 marginLeft :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             , auto : Supported
             }
         )
-    -> Style
 marginLeft (Value value) =
     AppendProperty ("margin-left:" ++ value)
 
@@ -2226,14 +2140,10 @@ marginLeft (Value value) =
 
 -}
 boxSizing :
-    Value
+    Stylist
         { contentBox : Supported
         , borderBox : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 boxSizing (Value value) =
     AppendProperty ("box-sizing:" ++ value)
 
@@ -2809,7 +2719,7 @@ For `display: flex`, use [`displayFlex`](#displayFlex).
 
 -}
 display :
-    Value
+    Stylist
         { block : Supported
         , grid : Supported
         , inline : Supported
@@ -2826,11 +2736,7 @@ display :
         , tableRow : Supported
         , tableRowGroup : Supported
         , for_display_flex_see_docs_for_displayFlex : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 display (Value val) =
     AppendProperty ("display:" ++ val)
 
@@ -3108,7 +3014,7 @@ because `Css.left` and `Css.right` are functions!
 
 -}
 alignSelf :
-    Value
+    Stylist
         { auto : Supported
         , normal : Supported
         , stretch : Supported
@@ -3126,11 +3032,7 @@ alignSelf :
         , lastBaseline : Supported
         , safeCenter : Supported
         , unsafeCenter : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 alignSelf (Value val) =
     AppendProperty ("align-self:" ++ val)
 
@@ -3148,7 +3050,7 @@ Check out [fluid typography](https://css-tricks.com/snippets/css/fluid-typograph
 
 -}
 fontSize :
-    Value
+    Stylist
         (LengthSupported
             { xxSmall : Supported
             , xSmall : Supported
@@ -3160,12 +3062,8 @@ fontSize :
             , smaller : Supported
             , larger : Supported
             , pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 fontSize (Value val) =
     AppendProperty ("font-size:" ++ val)
 
@@ -3276,18 +3174,14 @@ If you want to refer to a font by its name (like Helvetica or Arial), use [`font
 
 -}
 fontFamily :
-    Value
+    Stylist
         { serif : Supported
         , sansSerif : Supported
         , monospace : Supported
         , cursive : Supported
         , fantasy : Supported
         , systemUi : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 fontFamily (Value genericFont) =
     AppendProperty ("font-family:" ++ genericFont)
 
@@ -3442,16 +3336,12 @@ enquoteIfNotGeneric fontName =
 
 -}
 fontStyle :
-    Value
+    Stylist
         { normal : Supported
         , bold : Supported
         , bolder : Supported
         , lighter : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 fontStyle (Value val) =
     AppendProperty ("font-style:" ++ val)
 
@@ -3517,7 +3407,7 @@ bolder =
 
 -}
 fontVariantCaps :
-    Value
+    Stylist
         { normal : Supported
         , smallCaps : Supported
         , smallCaps : Supported
@@ -3525,11 +3415,7 @@ fontVariantCaps :
         , allPetiteCaps : Supported
         , unicase : Supported
         , titlingCaps : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 fontVariantCaps (Value str) =
     AppendProperty ("font-variant-caps:" ++ str)
 
@@ -3626,7 +3512,7 @@ titlingCaps =
 
 -}
 fontVariantLigatures :
-    Value
+    Stylist
         { normal : Supported
         , none : Supported
         , commonLigatures : Supported
@@ -3637,11 +3523,7 @@ fontVariantLigatures :
         , noHistoricalLigatures : Supported
         , contextual : Supported
         , noContextual : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 fontVariantLigatures (Value str) =
     AppendProperty ("font-variant-ligatures:" ++ str)
 
@@ -3738,7 +3620,7 @@ See [`fontVariantNumeric4`](#fontVariantNumeric4) for a more advanced version.
 
 -}
 fontVariantNumeric :
-    Value
+    Stylist
         { normal : Supported
         , ordinal : Supported
         , slashedZero : Supported
@@ -3748,11 +3630,7 @@ fontVariantNumeric :
         , tabularNums : Supported
         , diagonalFractions : Supported
         , stackedFractions : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 fontVariantNumeric (Value str) =
     AppendProperty ("font-variant-numeric:" ++ str)
 
@@ -3896,7 +3774,7 @@ stackedFractions =
 property.
 -}
 cursor :
-    Value
+    Stylist
         { pointer : Supported
         , auto : Supported
         , default : Supported
@@ -3934,11 +3812,7 @@ cursor :
         , grab : Supported
         , grabbing : Supported
         , url : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 cursor (Value val) =
     AppendProperty ("cursor:" ++ val)
 
@@ -4295,15 +4169,11 @@ See [`backgroundAttachments`](#backgroundAttachments) to set more than one `back
 
 -}
 backgroundAttachment :
-    Value
+    Stylist
         { fixed : Supported
         , scroll : Supported
         , local : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 backgroundAttachment (Value str) =
     AppendProperty ("background-attachment:" ++ str)
 
@@ -4371,7 +4241,7 @@ See [`backgroundBlendModes`](#backgroundBlendModes) to set more than one `backgr
 
 -}
 backgroundBlendMode :
-    Value
+    Stylist
         { normal : Supported
         , multiply : Supported
         , screen : Supported
@@ -4388,11 +4258,7 @@ backgroundBlendMode :
         , saturation : Supported
         , color : Supported
         , luminosity : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 backgroundBlendMode (Value str) =
     AppendProperty ("background-blend-mode:" ++ str)
 
@@ -4624,16 +4490,12 @@ See [`backgroundClips`](#backgroundClips) to set more than one `background-clip`
 
 -}
 backgroundClip :
-    Value
+    Stylist
         { borderBox : Supported
         , paddingBox : Supported
         , contentBox : Supported
         , text_ : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 backgroundClip (Value str) =
     AppendProperty ("background-clip:" ++ str)
 
@@ -4700,15 +4562,11 @@ See [`backgroundOrigins`](#backgroundOrigins) to set more than one `background-o
 
 -}
 backgroundOrigin :
-    Value
+    Stylist
         { borderBox : Supported
         , paddingBox : Supported
         , contentBox : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 backgroundOrigin (Value str) =
     AppendProperty ("background-origin:" ++ str)
 
@@ -4755,15 +4613,11 @@ See also [`backgroundImages`](#backgroundImages) if you need multiple images.
 
 -}
 backgroundImage :
-    Value
+    Stylist
         { url : Supported
         , linearGradient : Supported
         , none : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 backgroundImage (Value value) =
     AppendProperty ("background-image:" ++ value)
 
@@ -4823,18 +4677,14 @@ If you need to set the offsets from the right or bottom, use
 
 -}
 backgroundPosition :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , left_ : Supported
             , right_ : Supported
             , center : Supported
-            , inherit : Supported
-            , unset : Supported
-            , initial : Supported
             }
         )
-    -> Style
 backgroundPosition (Value horiz) =
     AppendProperty ("background-position:" ++ horiz)
 
@@ -4858,7 +4708,7 @@ If you need to set the offsets from the right or bottom, use
 
 -}
 backgroundPosition2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             , left_ : Supported
@@ -4866,16 +4716,13 @@ backgroundPosition2 :
             , center : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , top_ : Supported
-                , bottom_ : Supported
-                , center : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , center : Supported
+            }
+        )
 backgroundPosition2 (Value horiz) (Value vert) =
     AppendProperty ("background-position:" ++ horiz ++ " " ++ vert)
 
@@ -4894,28 +4741,21 @@ vertical (from top) alignment.
 
 -}
 backgroundPosition4 :
-    Value
+    Stylist4
         { left_ : Supported
         , right_ : Supported
         }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            { top_ : Supported
-            , bottom_ : Supported
+        (LengthSupported
+            { pct : Supported
             }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        )
+        { top_ : Supported
+        , bottom_ : Supported
+        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
     AppendProperty
         ("background-position:"
@@ -4944,18 +4784,14 @@ If you need to set horizontal and vertical direction separately, see
 
 -}
 backgroundRepeat :
-    Value
+    Stylist
         { repeat : Supported
         , repeatX : Supported
         , repeatY : Supported
         , space : Supported
         , round : Supported
         , noRepeat : Supported
-        , initial : Supported
-        , unset : Supported
-        , inherit : Supported
         }
-    -> Style
 backgroundRepeat (Value repeat) =
     AppendProperty ("background-repeat:" ++ repeat)
 
@@ -4971,20 +4807,17 @@ If you only need to set one value for both, see
 
 -}
 backgroundRepeat2 :
-    Value
+    Stylist2
         { repeat : Supported
         , space : Supported
         , round : Supported
         , noRepeat : Supported
         }
-    ->
-        Value
-            { repeat : Supported
-            , space : Supported
-            , round : Supported
-            , noRepeat : Supported
-            }
-    -> Style
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
 backgroundRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
 
@@ -5081,17 +4914,13 @@ need to set both width and height explicitly, use
 
 -}
 backgroundSize :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , auto : Supported
             , cover : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 backgroundSize (Value size) =
     AppendProperty ("background-size:" ++ size)
 
@@ -5106,20 +4935,17 @@ If you only want to set the width, use [`backgroundImage`](#backgroundImage) ins
 
 -}
 backgroundSize2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
 backgroundSize2 (Value width) (Value height) =
     AppendProperty ("background-size:" ++ width ++ " " ++ height)
 
@@ -5339,15 +5165,7 @@ toTopRight =
 
 {-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
-listStyle :
-    Value
-        (ListStyleSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+listStyle : Stylist ListStyle
 listStyle (Value val) =
     AppendProperty ("list-style:" ++ val)
 
@@ -5384,21 +5202,14 @@ type alias ListStyle =
 
 {-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
-listStyle2 :
-    Value ListStyle
-    -> Value ListStyle
-    -> Style
+listStyle2 : Stylist2 ListStyle ListStyle
 listStyle2 (Value val1) (Value val2) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2)
 
 
 {-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
-listStyle3 :
-    Value ListStyle
-    -> Value ListStyle
-    -> Value ListStyle
-    -> Style
+listStyle3 : Stylist3 ListStyle ListStyle ListStyle
 listStyle3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
 
@@ -5414,15 +5225,7 @@ listStyle3 (Value val1) (Value val2) (Value val3) =
     border3 (px 1) solid (hex "#f00")
 
 -}
-border :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+border : Stylist BorderWidth
 border (Value width) =
     AppendProperty ("border:" ++ width)
 
@@ -5434,10 +5237,7 @@ border (Value width) =
     border3 (px 1) solid (hex "#f00")
 
 -}
-border2 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Style
+border2 : Stylist2 BorderWidth BorderStyle
 border2 (Value width) (Value style) =
     AppendProperty ("border:" ++ width ++ " " ++ style)
 
@@ -5449,11 +5249,7 @@ border2 (Value width) (Value style) =
     border3 (px 1) solid (hex "#f00")
 
 -}
-border3 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Value Color
-    -> Style
+border3 : Stylist3 BorderWidth BorderStyle Color
 border3 (Value width) (Value style) (Value color) =
     AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ color)
 
@@ -5465,15 +5261,7 @@ border3 (Value width) (Value style) (Value color) =
     borderTop3 (px 1) solid (hex "#f00")
 
 -}
-borderTop :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderTop : Stylist BorderWidth
 borderTop (Value width) =
     AppendProperty ("border-top:" ++ width)
 
@@ -5485,10 +5273,7 @@ borderTop (Value width) =
     borderTop3 (px 1) solid (hex "#f00")
 
 -}
-borderTop2 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Style
+borderTop2 : Stylist2 BorderWidth BorderStyle
 borderTop2 (Value width) (Value style) =
     AppendProperty ("border-top:" ++ width ++ " " ++ style)
 
@@ -5500,11 +5285,7 @@ borderTop2 (Value width) (Value style) =
     borderTop3 (px 1) solid (hex "#f00")
 
 -}
-borderTop3 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Value Color
-    -> Style
+borderTop3 : Stylist3 BorderWidth BorderStyle Color
 borderTop3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-top:" ++ width ++ " " ++ style ++ " " ++ color)
 
@@ -5516,15 +5297,7 @@ borderTop3 (Value width) (Value style) (Value color) =
     borderRight3 (px 1) solid (hex "#f00")
 
 -}
-borderRight :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderRight : Stylist BorderWidth
 borderRight (Value width) =
     AppendProperty ("border-right:" ++ width)
 
@@ -5536,10 +5309,7 @@ borderRight (Value width) =
     borderRight3 (px 1) solid (hex "#f00")
 
 -}
-borderRight2 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Style
+borderRight2 : Stylist2 BorderWidth BorderStyle
 borderRight2 (Value width) (Value style) =
     AppendProperty ("border-right:" ++ width ++ " " ++ style)
 
@@ -5551,11 +5321,7 @@ borderRight2 (Value width) (Value style) =
     borderRight3 (px 1) solid (hex "#f00")
 
 -}
-borderRight3 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Value Color
-    -> Style
+borderRight3 : Stylist3 BorderWidth BorderStyle Color
 borderRight3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-right:" ++ width ++ " " ++ style ++ " " ++ color)
 
@@ -5567,15 +5333,7 @@ borderRight3 (Value width) (Value style) (Value color) =
     borderBottom3 (px 1) solid (hex "#f00")
 
 -}
-borderBottom :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderBottom : Stylist BorderWidth
 borderBottom (Value width) =
     AppendProperty ("border-bottom:" ++ width)
 
@@ -5587,10 +5345,7 @@ borderBottom (Value width) =
     borderBottom3 (px 1) solid (hex "#f00")
 
 -}
-borderBottom2 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Style
+borderBottom2 : Stylist2 BorderWidth BorderStyle
 borderBottom2 (Value width) (Value style) =
     AppendProperty ("border-bottom:" ++ width ++ " " ++ style)
 
@@ -5602,11 +5357,7 @@ borderBottom2 (Value width) (Value style) =
     borderBottom3 (px 1) solid (hex "#f00")
 
 -}
-borderBottom3 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Value Color
-    -> Style
+borderBottom3 : Stylist3 BorderWidth BorderStyle Color
 borderBottom3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-bottom:" ++ width ++ " " ++ style ++ " " ++ color)
 
@@ -5618,15 +5369,7 @@ borderBottom3 (Value width) (Value style) (Value color) =
     borderLeft3 (px 1) solid (hex "#f00")
 
 -}
-borderLeft :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderLeft : Stylist BorderWidth
 borderLeft (Value width) =
     AppendProperty ("border-left:" ++ width)
 
@@ -5638,10 +5381,7 @@ borderLeft (Value width) =
     borderLeft3 (px 1) solid (hex "#f00")
 
 -}
-borderLeft2 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Style
+borderLeft2 : Stylist2 BorderWidth BorderStyle
 borderLeft2 (Value width) (Value style) =
     AppendProperty ("border-left:" ++ width ++ " " ++ style)
 
@@ -5653,11 +5393,7 @@ borderLeft2 (Value width) (Value style) =
     borderLeft3 (px 1) solid (hex "#f00")
 
 -}
-borderLeft3 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Value Color
-    -> Style
+borderLeft3 : Stylist3 BorderWidth BorderStyle Color
 borderLeft3 (Value width) (Value style) (Value color) =
     AppendProperty ("border-left:" ++ width ++ " " ++ style ++ " " ++ color)
 
@@ -5670,15 +5406,7 @@ borderLeft3 (Value width) (Value style) (Value color) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderWidth : Stylist BorderWidth
 borderWidth (Value width) =
     AppendProperty ("border-width:" ++ width)
 
@@ -5691,10 +5419,7 @@ borderWidth (Value width) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth2 :
-    Value BorderWidth
-    -> Value BorderWidth
-    -> Style
+borderWidth2 : Stylist2 BorderWidth BorderWidth
 borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
     AppendProperty ("border-width:" ++ widthTopBottom ++ " " ++ widthRightLeft)
 
@@ -5707,11 +5432,7 @@ borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth3 :
-    Value BorderWidth
-    -> Value BorderWidth
-    -> Value BorderWidth
-    -> Style
+borderWidth3 : Stylist3 BorderWidth BorderWidth BorderWidth
 borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
     AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRightLeft ++ " " ++ widthBottom)
 
@@ -5724,12 +5445,7 @@ borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth4 :
-    Value BorderWidth
-    -> Value BorderWidth
-    -> Value BorderWidth
-    -> Value BorderWidth
-    -> Style
+borderWidth4 : Stylist4 BorderWidth BorderWidth BorderWidth BorderWidth
 borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
     AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRight ++ " " ++ widthBottom ++ " " ++ widthLeft)
 
@@ -5739,15 +5455,7 @@ borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widt
     borderTopWidth (px 1)
 
 -}
-borderTopWidth :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderTopWidth : Stylist BorderWidth
 borderTopWidth (Value width) =
     AppendProperty ("border-top-width:" ++ width)
 
@@ -5757,15 +5465,7 @@ borderTopWidth (Value width) =
     borderRightWidth (px 1)
 
 -}
-borderRightWidth :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderRightWidth : Stylist BorderWidth
 borderRightWidth (Value width) =
     AppendProperty ("border-right-width:" ++ width)
 
@@ -5775,15 +5475,7 @@ borderRightWidth (Value width) =
     borderBottomWidth (px 1)
 
 -}
-borderBottomWidth :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderBottomWidth : Stylist BorderWidth
 borderBottomWidth (Value width) =
     AppendProperty ("border-bottom-width:" ++ width)
 
@@ -5793,15 +5485,7 @@ borderBottomWidth (Value width) =
     borderLeftWidth (px 1)
 
 -}
-borderLeftWidth :
-    Value
-        (BorderWidthSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderLeftWidth : Stylist BorderWidth
 borderLeftWidth (Value width) =
     AppendProperty ("border-left-width:" ++ width)
 
@@ -5814,15 +5498,7 @@ borderLeftWidth (Value width) =
     borderStyle4 solid none dotted inherit
 
 -}
-borderStyle :
-    Value
-        (BorderStyleSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderStyle : Stylist BorderStyle
 borderStyle (Value style) =
     AppendProperty ("border-style:" ++ style)
 
@@ -5835,10 +5511,7 @@ borderStyle (Value style) =
     borderStyle4 solid none dotted inherit
 
 -}
-borderStyle2 :
-    Value BorderStyle
-    -> Value BorderStyle
-    -> Style
+borderStyle2 : Stylist2 BorderStyle BorderStyle
 borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
     AppendProperty ("border-style:" ++ styleTopBottom ++ " " ++ styleRigthLeft)
 
@@ -5851,11 +5524,7 @@ borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
     borderStyle4 solid none dotted inherit
 
 -}
-borderStyle3 :
-    Value BorderStyle
-    -> Value BorderStyle
-    -> Value BorderStyle
-    -> Style
+borderStyle3 : Stylist3 BorderStyle BorderStyle BorderStyle
 borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
     AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigthLeft ++ " " ++ styleBottom)
 
@@ -5868,12 +5537,7 @@ borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
     borderStyle4 solid none dotted inherit
 
 -}
-borderStyle4 :
-    Value BorderStyle
-    -> Value BorderStyle
-    -> Value BorderStyle
-    -> Value BorderStyle
-    -> Style
+borderStyle4 : Stylist4 BorderStyle BorderStyle BorderStyle BorderStyle
 borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value styleLeft) =
     AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigt ++ " " ++ styleBottom ++ " " ++ styleLeft)
 
@@ -5883,15 +5547,7 @@ borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value style
     borderTopStyle solid
 
 -}
-borderTopStyle :
-    Value
-        (BorderStyleSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderTopStyle : Stylist BorderStyle
 borderTopStyle (Value style) =
     AppendProperty ("border-top-style:" ++ style)
 
@@ -5901,15 +5557,7 @@ borderTopStyle (Value style) =
     borderRightStyle solid
 
 -}
-borderRightStyle :
-    Value
-        (BorderStyleSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderRightStyle : Stylist BorderStyle
 borderRightStyle (Value style) =
     AppendProperty ("border-right-style:" ++ style)
 
@@ -5919,15 +5567,7 @@ borderRightStyle (Value style) =
     borderBottomStyle solid
 
 -}
-borderBottomStyle :
-    Value
-        (BorderStyleSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderBottomStyle : Stylist BorderStyle
 borderBottomStyle (Value style) =
     AppendProperty ("border-bottom-style:" ++ style)
 
@@ -5937,15 +5577,7 @@ borderBottomStyle (Value style) =
     borderLeftStyle solid
 
 -}
-borderLeftStyle :
-    Value
-        (BorderStyleSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderLeftStyle : Stylist BorderStyle
 borderLeftStyle (Value style) =
     AppendProperty ("border-left-style:" ++ style)
 
@@ -5958,15 +5590,7 @@ borderLeftStyle (Value style) =
     borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
 
 -}
-borderColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderColor : Stylist Color
 borderColor (Value color) =
     AppendProperty ("border-color:" ++ color)
 
@@ -5979,10 +5603,7 @@ borderColor (Value color) =
     borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
 
 -}
-borderColor2 :
-    Value Color
-    -> Value Color
-    -> Style
+borderColor2 : Stylist2 Color Color
 borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
     AppendProperty ("border-color:" ++ colorTopBottom ++ " " ++ colorRightLeft)
 
@@ -5995,11 +5616,7 @@ borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
     borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
 
 -}
-borderColor3 :
-    Value Color
-    -> Value Color
-    -> Value Color
-    -> Style
+borderColor3 : Stylist3 Color Color Color
 borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
     AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRightLeft ++ " " ++ colorBottom)
 
@@ -6012,12 +5629,7 @@ borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
     borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
 
 -}
-borderColor4 :
-    Value Color
-    -> Value Color
-    -> Value Color
-    -> Value Color
-    -> Style
+borderColor4 : Stylist4 Color Color Color Color
 borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
     AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRight ++ " " ++ colorBottom ++ " " ++ colorLeft)
 
@@ -6027,15 +5639,7 @@ borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colo
     borderTopColor (rgb 0 0 0)
 
 -}
-borderTopColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderTopColor : Stylist Color
 borderTopColor (Value color) =
     AppendProperty ("border-top-color:" ++ color)
 
@@ -6045,15 +5649,7 @@ borderTopColor (Value color) =
     borderRightColor (rgb 0 0 0)
 
 -}
-borderRightColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderRightColor : Stylist Color
 borderRightColor (Value color) =
     AppendProperty ("border-right-color:" ++ color)
 
@@ -6063,15 +5659,7 @@ borderRightColor (Value color) =
     borderBottomColor (rgb 0 0 0)
 
 -}
-borderBottomColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderBottomColor : Stylist Color
 borderBottomColor (Value color) =
     AppendProperty ("border-bottom-color:" ++ color)
 
@@ -6081,15 +5669,7 @@ borderBottomColor (Value color) =
     borderLeftColor (rgb 0 0 0)
 
 -}
-borderLeftColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderLeftColor : Stylist Color
 borderLeftColor (Value color) =
     AppendProperty ("border-left-color:" ++ color)
 
@@ -6268,15 +5848,11 @@ outset =
 
 -}
 borderRadius :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 borderRadius (Value radius) =
     AppendProperty ("border-radius:" ++ radius)
 
@@ -6290,18 +5866,15 @@ borderRadius (Value radius) =
 
 -}
 borderRadius2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
     AppendProperty ("border-radius:" ++ radiusTopLeftAndBottomRight ++ " " ++ radiusTopRightAndBottomLeft)
 
@@ -6315,24 +5888,19 @@ borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottom
 
 -}
 borderRadius3 :
-    Value
+    Stylist3
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRightAndBottomLeft ++ " " ++ radiusBottomRight)
 
@@ -6346,30 +5914,23 @@ borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value r
 
 -}
 borderRadius4 :
-    Value
+    Stylist4
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
     AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
 
@@ -6381,15 +5942,11 @@ borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRi
 
 -}
 borderTopLeftRadius :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 borderTopLeftRadius (Value radius) =
     AppendProperty ("border-top-left-radius:" ++ radius)
 
@@ -6401,18 +5958,15 @@ borderTopLeftRadius (Value radius) =
 
 -}
 borderTopLeftRadius2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 borderTopLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-top-left-radius:" ++ horizontal ++ " " ++ vertical)
 
@@ -6424,15 +5978,11 @@ borderTopLeftRadius2 (Value horizontal) (Value vertical) =
 
 -}
 borderTopRightRadius :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 borderTopRightRadius (Value radius) =
     AppendProperty ("border-top-right-radius:" ++ radius)
 
@@ -6444,18 +5994,15 @@ borderTopRightRadius (Value radius) =
 
 -}
 borderTopRightRadius2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 borderTopRightRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-top-right-radius:" ++ horizontal ++ " " ++ vertical)
 
@@ -6467,15 +6014,11 @@ borderTopRightRadius2 (Value horizontal) (Value vertical) =
 
 -}
 borderBottomRightRadius :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 borderBottomRightRadius (Value radius) =
     AppendProperty ("border-bottom-right-radius:" ++ radius)
 
@@ -6487,18 +6030,15 @@ borderBottomRightRadius (Value radius) =
 
 -}
 borderBottomRightRadius2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 borderBottomRightRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-right-radius:" ++ horizontal ++ " " ++ vertical)
 
@@ -6510,15 +6050,11 @@ borderBottomRightRadius2 (Value horizontal) (Value vertical) =
 
 -}
 borderBottomLeftRadius :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 borderBottomLeftRadius (Value radius) =
     AppendProperty ("border-bottom-left-radius:" ++ radius)
 
@@ -6530,18 +6066,15 @@ borderBottomLeftRadius (Value radius) =
 
 -}
 borderBottomLeftRadius2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
 
@@ -6557,15 +6090,11 @@ Specifies the distance by which an element's border image is set out from its bo
 
 -}
 borderImageOutset :
-    Value
+    Stylist
         (LengthSupported
             { num : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 borderImageOutset (Value width) =
     AppendProperty ("border-image-outset:" ++ width)
 
@@ -6581,18 +6110,15 @@ Specifies the distance by which an element's border image is set out from its bo
 
 -}
 borderImageOutset2 :
-    Value
+    Stylist2
         (LengthSupported
             { num : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { num : Supported
+            }
+        )
 borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
 
@@ -6608,24 +6134,19 @@ Specifies the distance by which an element's border image is set out from its bo
 
 -}
 borderImageOutset3 :
-    Value
+    Stylist3
         (LengthSupported
             { num : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { num : Supported
+            }
+        )
+        (LengthSupported
+            { num : Supported
+            }
+        )
 borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
 
@@ -6641,30 +6162,23 @@ Specifies the distance by which an element's border image is set out from its bo
 
 -}
 borderImageOutset4 :
-    Value
+    Stylist4
         (LengthSupported
             { num : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { num : Supported
+            }
+        )
+        (LengthSupported
+            { num : Supported
+            }
+        )
+        (LengthSupported
+            { num : Supported
+            }
+        )
 borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
@@ -6680,17 +6194,13 @@ Specifies the width of an element's border image. Supports values specified as l
 
 -}
 borderImageWidth :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , num : Supported
             , auto : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 borderImageWidth (Value width) =
     AppendProperty ("border-image-width:" ++ width)
 
@@ -6706,22 +6216,19 @@ Specifies the width of an element's border image. Supports values specified as l
 
 -}
 borderImageWidth2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             , num : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
 borderImageWidth2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("border-image-width:" ++ valueTopBottom ++ " " ++ valueRightLeft)
 
@@ -6737,30 +6244,25 @@ Specifies the width of an element's border image. Supports values specified as l
 
 -}
 borderImageWidth3 :
-    Value
+    Stylist3
         (LengthSupported
             { pct : Supported
             , num : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
 borderImageWidth3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
 
@@ -6776,38 +6278,31 @@ Specifies the width of an element's border image. Supports values specified as l
 
 -}
 borderImageWidth4 :
-    Value
+    Stylist4
         (LengthSupported
             { pct : Supported
             , num : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
 borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
@@ -6823,15 +6318,11 @@ borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value
 
 -}
 textOrientation :
-    Value
+    Stylist
         { mixed : Supported
         , sideways : Supported
         , upright : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 textOrientation (Value str) =
     AppendProperty ("text-orientation:" ++ str)
 
@@ -6877,16 +6368,12 @@ upright =
 
 -}
 textRendering :
-    Value
+    Stylist
         { auto : Supported
         , geometricPrecision : Supported
         , optimizeLegibility : Supported
         , optimizeSpeed : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 textRendering (Value str) =
     AppendProperty ("text-rendering:" ++ str)
 
@@ -6932,17 +6419,13 @@ optimizeSpeed =
 
 -}
 textTransform :
-    Value
+    Stylist
         { capitalize : Supported
         , uppercase : Supported
         , lowercase : Supported
         , fullWidth : Supported
         , none : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 textTransform (Value str) =
     AppendProperty ("text-transform:" ++ str)
 
@@ -7001,16 +6484,12 @@ fullWidth =
 
 -}
 textDecoration :
-    Value
+    Stylist
         { none : Supported
         , underline : Supported
         , overline : Supported
         , lineThrough : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 textDecoration (Value line) =
     AppendProperty ("text-decoration:" ++ line)
 
@@ -7025,21 +6504,18 @@ textDecoration (Value line) =
 
 -}
 textDecoration2 :
-    Value
+    Stylist2
         { none : Supported
         , underline : Supported
         , overline : Supported
         , lineThrough : Supported
         }
-    ->
-        Value
-            { solid : Supported
-            , double : Supported
-            , dotted : Supported
-            , dashed : Supported
-            , wavy : Supported
-            }
-    -> Style
+        { solid : Supported
+        , double : Supported
+        , dotted : Supported
+        , dashed : Supported
+        , wavy : Supported
+        }
 textDecoration2 (Value line) (Value style) =
     AppendProperty ("text-decoration:" ++ line ++ " " ++ style)
 
@@ -7054,22 +6530,19 @@ textDecoration2 (Value line) (Value style) =
 
 -}
 textDecoration3 :
-    Value
+    Stylist3
         { none : Supported
         , underline : Supported
         , overline : Supported
         , lineThrough : Supported
         }
-    ->
-        Value
-            { solid : Supported
-            , double : Supported
-            , dotted : Supported
-            , dashed : Supported
-            , wavy : Supported
-            }
-    -> Value Color
-    -> Style
+        { solid : Supported
+        , double : Supported
+        , dotted : Supported
+        , dashed : Supported
+        , wavy : Supported
+        }
+        Color
 textDecoration3 (Value line) (Value style) (Value color) =
     AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ color)
 
@@ -7084,16 +6557,12 @@ textDecoration3 (Value line) (Value style) (Value color) =
 
 -}
 textDecorationLine :
-    Value
+    Stylist
         { none : Supported
         , underline : Supported
         , overline : Supported
         , lineThrough : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 textDecorationLine (Value line) =
     AppendProperty ("text-decoration-line:" ++ line)
 
@@ -7108,18 +6577,15 @@ textDecorationLine (Value line) =
 
 -}
 textDecorationLine2 :
-    Value
+    Stylist2
         { underline : Supported
         , overline : Supported
         , lineThrough : Supported
         }
-    ->
-        Value
-            { underline : Supported
-            , overline : Supported
-            , lineThrough : Supported
-            }
-    -> Style
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
 textDecorationLine2 (Value line1) (Value line2) =
     AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2)
 
@@ -7134,24 +6600,19 @@ textDecorationLine2 (Value line1) (Value line2) =
 
 -}
 textDecorationLine3 :
-    Value
+    Stylist3
         { underline : Supported
         , overline : Supported
         , lineThrough : Supported
         }
-    ->
-        Value
-            { underline : Supported
-            , overline : Supported
-            , lineThrough : Supported
-            }
-    ->
-        Value
-            { underline : Supported
-            , overline : Supported
-            , lineThrough : Supported
-            }
-    -> Style
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
 textDecorationLine3 (Value line1) (Value line2) (Value line3) =
     AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2 ++ " " ++ line3)
 
@@ -7164,17 +6625,13 @@ textDecorationLine3 (Value line1) (Value line2) (Value line3) =
 
 -}
 textDecorationStyle :
-    Value
+    Stylist
         { solid : Supported
         , double : Supported
         , dotted : Supported
         , dashed : Supported
         , wavy : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 textDecorationStyle (Value style) =
     AppendProperty ("text-decoration-style:" ++ style)
 
@@ -7186,15 +6643,7 @@ textDecorationStyle (Value style) =
 [text-decoration-color]: https://css-tricks.com/almanac/properties/t/text-decoration-color/
 
 -}
-textDecorationColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+textDecorationColor : Stylist Color
 textDecorationColor (Value color) =
     AppendProperty ("text-decoration-color:" ++ color)
 
@@ -7315,14 +6764,10 @@ lineThrough =
 
 -}
 borderCollapse :
-    Value
+    Stylist
         { collapse : Supported
         , separate : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 borderCollapse (Value str) =
     AppendProperty ("border-collapse:" ++ str)
 
@@ -7359,15 +6804,7 @@ separate =
     borderSpacing (px 5)
 
 -}
-borderSpacing :
-    Value
-        (LengthSupported
-            { initial : Supported
-            , inherit : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+borderSpacing : Stylist Length
 borderSpacing (Value str) =
     AppendProperty ("border-spacing:" ++ str)
 
@@ -7377,10 +6814,7 @@ borderSpacing (Value str) =
     borderSpacing2 (cm 1) (em 2)
 
 -}
-borderSpacing2 :
-    Value Length
-    -> Value Length
-    -> Style
+borderSpacing2 : Stylist2 Length Length
 borderSpacing2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-spacing:" ++ horizontal ++ " " ++ vertical)
 
@@ -7396,14 +6830,10 @@ borderSpacing2 (Value horizontal) (Value vertical) =
 
 -}
 captionSide :
-    Value
+    Stylist
         { top_ : Supported
         , bottom_ : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 captionSide (Value str) =
     AppendProperty ("caption-side:" ++ str)
 
@@ -7419,14 +6849,10 @@ captionSide (Value str) =
 
 -}
 emptyCells :
-    Value
+    Stylist
         { show : Supported
         , hide : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 emptyCells (Value str) =
     AppendProperty ("empty-cells:" ++ str)
 
@@ -7462,14 +6888,10 @@ hide =
 
 -}
 tableLayout :
-    Value
+    Stylist
         { auto : Supported
         , fixed : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 tableLayout (Value str) =
     AppendProperty ("table-layout:" ++ str)
 
@@ -7485,7 +6907,7 @@ tableLayout (Value str) =
 
 -}
 verticalAlign :
-    Value
+    Stylist
         (LengthSupported
             { baseline : Supported
             , sub : Supported
@@ -7496,12 +6918,8 @@ verticalAlign :
             , top_ : Supported
             , bottom_ : Supported
             , pct : Supported
-            , initial : Supported
-            , inherit : Supported
-            , unset : Supported
             }
         )
-    -> Style
 verticalAlign (Value str) =
     AppendProperty ("vertical-align:" ++ str)
 
@@ -7563,14 +6981,10 @@ middle =
 
 -}
 direction :
-    Value
+    Stylist
         { rtl : Supported
         , ltr : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 direction (Value str) =
     AppendProperty ("direction:" ++ str)
 
@@ -7582,7 +6996,7 @@ direction (Value str) =
 
 -}
 textAlign :
-    Value
+    Stylist
         { left_ : Supported
         , right_ : Supported
         , center : Supported
@@ -7590,11 +7004,7 @@ textAlign :
         , start : Supported
         , end : Supported
         , matchParent : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 textAlign (Value str) =
     AppendProperty ("text-align:" ++ str)
 
@@ -7654,17 +7064,13 @@ rtl =
 
 -}
 whiteSpace :
-    Value
+    Stylist
         { normal : Supported
         , nowrap : Supported
         , pre : Supported
         , preWrap : Supported
         , preLine : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 whiteSpace (Value str) =
     AppendProperty ("white-space:" ++ str)
 
@@ -7722,16 +7128,12 @@ preLine =
 
 -}
 wordBreak :
-    Value
+    Stylist
         { normal : Supported
         , breakAll : Supported
         , keepAll : Supported
         , breakWord : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 wordBreak (Value str) =
     AppendProperty ("word-break:" ++ str)
 
@@ -7768,15 +7170,11 @@ keepAll =
 
 -}
 float :
-    Value
+    Stylist
         { none : Supported
         , left_ : Supported
         , right_ : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 float (Value str) =
     AppendProperty ("float:" ++ str)
 
@@ -7793,15 +7191,11 @@ float (Value str) =
 
 -}
 visibility :
-    Value
+    Stylist
         { visible : Supported
         , hidden : Supported
         , collapse : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 visibility (Value str) =
     AppendProperty ("visibility:" ++ str)
 
@@ -7817,14 +7211,10 @@ visibility (Value str) =
 
 -}
 order :
-    Value
+    Stylist
         { num : Supported
         , zero : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 order (Value val) =
     AppendProperty ("order:" ++ val)
 
@@ -7839,15 +7229,11 @@ order (Value val) =
 
 -}
 fill :
-    Value
+    Stylist
         (ColorSupported
             { url : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 fill (Value val) =
     AppendProperty ("fill:" ++ val)
 
@@ -7863,15 +7249,11 @@ fill (Value val) =
 
 -}
 columns :
-    Value
+    Stylist
         (LengthSupported
             { auto : Supported
-            , initial : Supported
-            , inherit : Supported
-            , unset : Supported
             }
         )
-    -> Style
 columns (Value width) =
     AppendProperty ("columns:" ++ width)
 
@@ -7883,17 +7265,14 @@ columns (Value width) =
 
 -}
 columns2 :
-    Value
+    Stylist2
         (LengthSupported
             { auto : Supported
             }
         )
-    ->
-        Value
-            { auto : Supported
-            , num : Supported
-            }
-    -> Style
+        { auto : Supported
+        , num : Supported
+        }
 columns2 (Value width) (Value count) =
     AppendProperty ("columns:" ++ width ++ " " ++ count)
 
@@ -7905,15 +7284,11 @@ columns2 (Value width) (Value count) =
 
 -}
 columnWidth :
-    Value
+    Stylist
         (LengthSupported
             { auto : Supported
-            , initial : Supported
-            , inherit : Supported
-            , unset : Supported
             }
         )
-    -> Style
 columnWidth (Value width) =
     AppendProperty ("column-width:" ++ width)
 
@@ -7925,14 +7300,10 @@ columnWidth (Value width) =
 
 -}
 columnCount :
-    Value
+    Stylist
         { auto : Supported
         , num : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 columnCount (Value count) =
     AppendProperty ("column-count:" ++ count)
 
@@ -7945,15 +7316,11 @@ columnCount (Value count) =
 
 -}
 columnFill :
-    Value
+    Stylist
         { auto : Supported
         , balance : Supported
         , balanceAll : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 columnFill (Value val) =
     AppendProperty ("column-fill:" ++ val)
 
@@ -7985,14 +7352,10 @@ balanceAll =
 
 -}
 columnSpan :
-    Value
+    Stylist
         { none : Supported
         , all_ : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
-    -> Style
 columnSpan (Value span) =
     AppendProperty ("column-span:" ++ span)
 
@@ -8014,15 +7377,11 @@ all_ =
 
 -}
 columnGap :
-    Value
+    Stylist
         (LengthSupported
             { normal : Supported
-            , initial : Supported
-            , inherit : Supported
-            , unset : Supported
             }
         )
-    -> Style
 columnGap (Value width) =
     AppendProperty ("column-gap:" ++ width)
 
@@ -8033,15 +7392,7 @@ columnGap (Value width) =
     columnRuleWidth (px 2)
 
 -}
-columnRuleWidth :
-    Value
-        (BorderWidthSupported
-            { initial : Supported
-            , inherit : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+columnRuleWidth : Stylist BorderWidth
 columnRuleWidth (Value width) =
     AppendProperty ("column-rule-width:" ++ width)
 
@@ -8053,15 +7404,7 @@ columnRuleWidth (Value width) =
     columnRuleStyle dashed
 
 -}
-columnRuleStyle :
-    Value
-        (BorderStyleSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+columnRuleStyle : Stylist BorderStyle
 columnRuleStyle (Value style) =
     AppendProperty ("column-rule-style:" ++ style)
 
@@ -8072,15 +7415,7 @@ columnRuleStyle (Value style) =
     columnRuleColor (hex "#fff")
 
 -}
-columnRuleColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+columnRuleColor : Stylist Color
 columnRuleColor (Value color) =
     AppendProperty ("column-rule-color:" ++ color)
 
@@ -8098,16 +7433,12 @@ columnRuleColor (Value color) =
 
 -}
 strokeDasharray :
-    Value
+    Stylist
         (LengthSupported
             { num : Supported
             , pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 strokeDasharray (Value val) =
     AppendProperty ("stroke-dasharray:" ++ val)
 
@@ -8120,16 +7451,12 @@ strokeDasharray (Value val) =
 
 -}
 strokeDashoffset :
-    Value
+    Stylist
         { zero : Supported
         , calc : Supported
         , num : Supported
         , pct : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeDashoffset (Value val) =
     AppendProperty ("stroke-dashoffset:" ++ val)
 
@@ -8142,15 +7469,11 @@ strokeDashoffset (Value val) =
 
 -}
 strokeLinecap :
-    Value
+    Stylist
         { butt : Supported
         , square : Supported
         , round : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeLinecap (Value val) =
     AppendProperty ("stroke-linecap:" ++ val)
 
@@ -8186,16 +7509,12 @@ square =
 
 -}
 strokeWidth :
-    Value
+    Stylist
         (LengthSupported
             { num : Supported
             , pct : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 strokeWidth (Value val) =
     AppendProperty ("stroke-width:" ++ val)
 
@@ -8208,15 +7527,11 @@ strokeWidth (Value val) =
 
 -}
 strokeAlign :
-    Value
+    Stylist
         { center : Supported
         , inset : Supported
         , outset : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeAlign (Value val) =
     AppendProperty ("stroke-align:" ++ val)
 
@@ -8229,15 +7544,11 @@ strokeAlign (Value val) =
 
 -}
 strokeBreak :
-    Value
+    Stylist
         { boundingBox : Supported
         , slice : Supported
         , clone : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeBreak (Value val) =
     AppendProperty ("stroke-break:" ++ val)
 
@@ -8278,15 +7589,7 @@ clone =
     strokeColor (hex "#FF9E2C")
 
 -}
-strokeColor :
-    Value
-        (ColorSupported
-            { inherit : Supported
-            , initial : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+strokeColor : Stylist Color
 strokeColor (Value val) =
     AppendProperty ("stroke-color:" ++ val)
 
@@ -8298,14 +7601,10 @@ strokeColor (Value val) =
 
 -}
 strokeImage :
-    Value
+    Stylist
         { url : Supported
         , none : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeImage (Value value) =
     AppendProperty ("stroke-image:" ++ value)
 
@@ -8316,13 +7615,9 @@ strokeImage (Value value) =
 
 -}
 strokeMiterlimit :
-    Value
+    Stylist
         { num : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeMiterlimit (Value val) =
     AppendProperty ("stroke-miterlimit:" ++ val)
 
@@ -8333,13 +7628,9 @@ strokeMiterlimit (Value val) =
 
 -}
 strokeOpacity :
-    Value
+    Stylist
         { num : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeOpacity (Value val) =
     AppendProperty ("stroke-opacity:" ++ val)
 
@@ -8355,18 +7646,14 @@ strokeOpacity (Value val) =
 
 -}
 strokeOrigin :
-    Value
+    Stylist
         { matchParent : Supported
         , fillBox : Supported
         , strokeBox : Supported
         , contentBox : Supported
         , paddingBox : Supported
         , borderBox : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeOrigin (Value val) =
     AppendProperty ("stroke-origin:" ++ val)
 
@@ -8409,18 +7696,14 @@ If you need to set the offsets from the right or bottom, use
 
 -}
 strokePosition :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , left_ : Supported
             , right_ : Supported
             , center : Supported
-            , inherit : Supported
-            , unset : Supported
-            , initial : Supported
             }
         )
-    -> Style
 strokePosition (Value horiz) =
     AppendProperty ("stroke-position:" ++ horiz)
 
@@ -8444,7 +7727,7 @@ If you need to set the offsets from the right or bottom, use
 
 -}
 strokePosition2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             , left_ : Supported
@@ -8452,16 +7735,13 @@ strokePosition2 :
             , center : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , top_ : Supported
-                , bottom_ : Supported
-                , center : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , center : Supported
+            }
+        )
 strokePosition2 (Value horiz) (Value vert) =
     AppendProperty ("stroke-position:" ++ horiz ++ " " ++ vert)
 
@@ -8480,28 +7760,21 @@ vertical (from top) alignment.
 
 -}
 strokePosition4 :
-    Value
+    Stylist4
         { left_ : Supported
         , right_ : Supported
         }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            { top_ : Supported
-            , bottom_ : Supported
+        (LengthSupported
+            { pct : Supported
             }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
+        )
+        { top_ : Supported
+        , bottom_ : Supported
+        }
+        (LengthSupported
+            { pct : Supported
+            }
+        )
 strokePosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
     AppendProperty
         ("stroke-position:"
@@ -8526,18 +7799,14 @@ If you need to set horizontal and vertical direction separately, see
 
 -}
 strokeRepeat :
-    Value
+    Stylist
         { repeat : Supported
         , repeatX : Supported
         , repeatY : Supported
         , space : Supported
         , round : Supported
         , noRepeat : Supported
-        , initial : Supported
-        , unset : Supported
-        , inherit : Supported
         }
-    -> Style
 strokeRepeat (Value repeat) =
     AppendProperty ("stroke-repeat:" ++ repeat)
 
@@ -8553,20 +7822,17 @@ If you only need to set one value for both, see
 
 -}
 strokeRepeat2 :
-    Value
+    Stylist2
         { repeat : Supported
         , space : Supported
         , round : Supported
         , noRepeat : Supported
         }
-    ->
-        Value
-            { repeat : Supported
-            , space : Supported
-            , round : Supported
-            , noRepeat : Supported
-            }
-    -> Style
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
 strokeRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("stroke-repeat:" ++ horiz ++ " " ++ vert)
 
@@ -8584,17 +7850,13 @@ need to set both width and height explicitly, use
 
 -}
 strokeSize :
-    Value
+    Stylist
         (LengthSupported
             { pct : Supported
             , auto : Supported
             , cover : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 strokeSize (Value size) =
     AppendProperty ("stroke-size:" ++ size)
 
@@ -8609,20 +7871,17 @@ If you only want to set the width, use [`strokeImage`](#strokeImage) instead.
 
 -}
 strokeSize2 :
-    Value
+    Stylist2
         (LengthSupported
             { pct : Supported
             , auto : Supported
             }
         )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
 strokeSize2 (Value width) (Value height) =
     AppendProperty ("stroke-size:" ++ width ++ " " ++ height)
 
@@ -8635,18 +7894,14 @@ strokeSize2 (Value width) (Value height) =
 
 -}
 strokeDashCorner :
-    Value
+    Stylist
         (LengthSupported
             { none : Supported
             , pct : Supported
             , auto : Supported
             , cover : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
             }
         )
-    -> Style
 strokeDashCorner (Value size) =
     AppendProperty ("stroke-dash-corner:" ++ size)
 
@@ -8662,15 +7917,11 @@ and set it's first value to `miter` like so: `strokeLinejoin2 miter bevel`.
 
 -}
 strokeLinejoin :
-    Value
+    Stylist
         { crop : Supported
         , arcs : Supported
         , miter : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeLinejoin (Value val) =
     AppendProperty ("stroke-linejoin:" ++ val)
 
@@ -8683,18 +7934,15 @@ strokeLinejoin (Value val) =
 
 -}
 strokeLinejoin2 :
-    Value
+    Stylist2
         { crop : Supported
         , arcs : Supported
         , miter : Supported
         }
-    ->
-        Value
-            { bevel : Supported
-            , round : Supported
-            , stupid : Supported
-            }
-    -> Style
+        { bevel : Supported
+        , round : Supported
+        , stupid : Supported
+        }
 strokeLinejoin2 (Value extendCorner) (Value capRender) =
     AppendProperty ("stroke-linejoin:" ++ extendCorner ++ " " ++ capRender)
 
@@ -8759,17 +8007,13 @@ stupid =
 
 -}
 strokeDashJustify :
-    Value
+    Stylist
         { none : Supported
         , stretch : Supported
         , compress : Supported
         , dashes : Supported
         , gaps : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 strokeDashJustify (Value val) =
     AppendProperty ("stroke-dash-justify:" ++ val)
 
@@ -8814,15 +8058,7 @@ properties.
     columnRule3 thin solid (hex "#000000")
 
 -}
-columnRule :
-    Value
-        (BorderWidthSupported
-            { initial : Supported
-            , inherit : Supported
-            , unset : Supported
-            }
-        )
-    -> Style
+columnRule : Stylist BorderWidth
 columnRule (Value width) =
     AppendProperty ("column-rule:" ++ width)
 
@@ -8837,10 +8073,7 @@ properties.
     columnRule3 thin solid (hex "#000000")
 
 -}
-columnRule2 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Style
+columnRule2 : Stylist2 BorderWidth BorderStyle
 columnRule2 (Value width) (Value style) =
     AppendProperty ("column-rule:" ++ width ++ " " ++ style)
 
@@ -8855,11 +8088,7 @@ properties.
     columnRule3 thin solid (hex "#000000")
 
 -}
-columnRule3 :
-    Value BorderWidth
-    -> Value BorderStyle
-    -> Value Color
-    -> Style
+columnRule3 : Stylist3 BorderWidth BorderStyle Color
 columnRule3 (Value width) (Value style) (Value color) =
     AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
 
@@ -9370,18 +8599,14 @@ perspective (Value length) =
 
 -}
 clear :
-    Value
+    Stylist
         { none : Supported
         , left_ : Supported
         , right_ : Supported
         , both : Supported
         , inlineStart : Supported
         , inlineEnd : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 clear (Value val) =
     AppendProperty ("clear:" ++ val)
 
@@ -9424,15 +8649,11 @@ inlineEnd =
 
 -}
 opacity :
-    Value
+    Stylist
         { num : Supported
         , zero : Supported
         , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 opacity (Value val) =
     AppendProperty ("stroke-opacity:" ++ val)
 
@@ -9445,17 +8666,13 @@ opacity (Value val) =
 
 -}
 zoom :
-    Value
+    Stylist
         { pct : Supported
         , zero : Supported
         , num : Supported
         , normal : Supported
         , calc : Supported
         , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
-    -> Style
 zoom (Value val) =
     AppendProperty ("zoom:" ++ val)
