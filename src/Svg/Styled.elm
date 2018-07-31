@@ -222,8 +222,8 @@ styled fn styles =
         stylesAttribute =
             Internal.css styles
     in
-    \attrs ->
-        fn (stylesAttribute :: attrs)
+    \attrs children ->
+        fn (stylesAttribute :: attrs) children
 
 
 {-| -}
