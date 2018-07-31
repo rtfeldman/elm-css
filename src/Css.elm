@@ -3072,8 +3072,13 @@ boxShadowConfigToString config =
 
             else
                 ""
+
+        color =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
     in
-    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius
+    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ color
 
 
 
