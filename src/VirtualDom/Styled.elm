@@ -27,10 +27,10 @@ import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Dict exposing (Dict)
+import Hash
 import Json.Decode
 import Json.Encode
 import VirtualDom
-import Hash
 
 
 type Node msg
@@ -196,6 +196,7 @@ makeSnippet styles sequence =
     in
     [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
         |> Preprocess.Snippet
+
 
 unstyle :
     String
