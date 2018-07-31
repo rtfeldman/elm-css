@@ -1,4 +1,4 @@
-module Css.Internal exposing (AnimationProperty(..), ExplicitLength, IncompatibleUnits, LengthOrAutoOrCoverOrContain, compileKeyframes, getOverloadedProperty, lengthConverter, lengthForOverloadedProperty, numberToString, Length, ColorValue)
+module Css.Internal exposing (AnimationProperty(..), ColorValue, ExplicitLength, IncompatibleUnits(..), Length, LengthOrAutoOrCoverOrContain, compileKeyframes, getOverloadedProperty, lengthConverter, lengthForOverloadedProperty, numberToString)
 
 import Css.Preprocess as Preprocess exposing (Style)
 import Css.Structure exposing (Compatible(..))
@@ -13,7 +13,7 @@ type alias ColorValue compatible =
 type alias LengthOrAutoOrCoverOrContain compatible =
     { compatible | value : String, lengthOrAutoOrCoverOrContain : Compatible }
 
-type alias Length compatible units
+type alias Length compatible units =
     { compatible
         | value : String
         , length : Compatible
@@ -106,26 +106,32 @@ getOverloadedProperty : String -> String -> Style -> Style
 getOverloadedProperty functionName desiredKey style =
     case style of
         Preprocess.AppendProperty { key } ->
+            let
+                key =
+                    String.split ":" str
+                        |> List.head
+                        |> Maybe.withDefault ""
+            in
             -- Use the given style's Key as the resulting property's value.
             property desiredKey key
 
         Preprocess.ExtendSelector selector _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for selector " ++ toString selector ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-selector")
 
         Preprocess.NestSnippet combinator _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for combinator " ++ toString combinator ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-combinator")
 
         Preprocess.WithPseudoElement pseudoElement _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for pseudo-element setter " ++ toString pseudoElement ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
 
-        Preprocess.WithMedia mediaQuery _ ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for media query " ++ toString mediaQuery ] desiredKey ""
+        Preprocess.WithMedia _ _ ->
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-media-query")
 
-        Preprocess.WithKeyframes keyframes ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with inapplicable Style for keyframes " ++ toString keyframes ] desiredKey ""
+        Preprocess.WithKeyframes _ ->
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-keyframes")
 
         Preprocess.ApplyStyles [] ->
-            propertyWithWarnings [ "Cannot apply " ++ functionName ++ " with empty Style. " ] desiredKey ""
+            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-empty-Style")
 
         Preprocess.ApplyStyles (only :: []) ->
             getOverloadedProperty functionName desiredKey only

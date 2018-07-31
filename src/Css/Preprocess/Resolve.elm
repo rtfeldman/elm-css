@@ -1,4 +1,4 @@
-module Css.Preprocess.Resolve exposing (compile, compileKeyframes)
+module Css.Preprocess.Resolve exposing (compile)
 
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures and gathering warnings along the way.
@@ -17,6 +17,7 @@ compile styles =
     String.join "\n\n" (List.map compile1 styles)
 
 
+<<<<<<< HEAD
 {-| Used only for compiling keyframes. This does not compile to valid standalone
 CSS, but rather to the body of an @keyframes at-rule.
 
@@ -105,6 +106,11 @@ toKeyframeProperties styles =
                 (toKeyframeProperties rest)
 
 
+=======
+compile1 : Preprocess.Stylesheet -> String
+compile1 sheet =
+    Output.prettyPrint (Structure.compactStylesheet (toStructure sheet))
+>>>>>>> 184b086... Flesh out Animations module
 
 resolveMediaRule : List Structure.MediaQuery -> List Preprocess.StyleBlock -> DeclarationsAndWarnings
 resolveMediaRule mediaQueries styleBlocks =
