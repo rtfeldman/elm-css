@@ -298,8 +298,13 @@ styled :
     -> List (Attribute a)
     -> List (Html b)
     -> Html msg
-styled fn styles attrs children =
-    fn (Internal.css styles :: attrs) children
+styled fn styles =
+    let
+        stylesAttribute =
+            Internal.css styles
+    in
+    \attrs ->
+        fn (stylesAttribute :: attrs)
 
 
 {-| -}
