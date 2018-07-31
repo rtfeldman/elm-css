@@ -1,6 +1,7 @@
 module Keyframes exposing (..)
 
 import Css exposing (..)
+import Css.Animations as Anim exposing (Keyframes, keyframes)
 import Css.Global exposing (Snippet, a, body, button, class, i, li, media, mediaQuery, p, ul)
 import Css.Preprocess exposing (stylesheet)
 import Expect
@@ -14,9 +15,9 @@ suite =
         [ let
             sampleKeyframes =
                 keyframes
-                    [ ( 0, [ Css.color (hex "00FF00"), display block ] )
-                    , ( 50, [ Css.maxHeight none ] )
-                    , ( 100, [ Css.color (hex "00FF00"), display inlineBlock ] )
+                    [ ( 0, [ Anim.backgroundColor (hex "00FF00"), Anim.backgroundSize (px 2) ] )
+                    , ( 50, [ Anim.opacity zero ] )
+                    , ( 100, [ Anim.border (px 5), Anim.backgroundColor (rgb 11 22 33) ] )
                     ]
 
             input =
@@ -34,12 +35,12 @@ suite =
 
             output =
                 """
-            @keyframes _e5ef3caa {
-                0% {color:#00FF00;display:block;}
+            @keyframes _a56b5063 {
+                0% {background-color:#00FF00;background-size:2px;}
 
-                50% {max-height:none;}
+                50% {opacity:0;}
 
-                100% {color:#00FF00;display:inline-block;}
+                100% {border:5px;background-color:rgb(11, 22, 33);}
             }
 
             body {
@@ -53,12 +54,12 @@ suite =
             p {
                 color:#FF0000;
                 display:inline;
-                animation-name:_e5ef3caa;
+                animation-name:_a56b5063;
                 background-color:rgb(11, 11, 11);
             }
 
             i {
-                animation-name:_e5ef3caa;
+                animation-name:_a56b5063;
             }
             """
           in
@@ -69,14 +70,14 @@ suite =
         , let
             sampleKeyframes =
                 keyframes
-                    [ ( 0, [ Css.color (hex "00FF00"), display block ] )
-                    , ( 50, [ Css.maxHeight none ] )
-                    , ( 100, [ Css.color (hex "00FF00"), display inlineBlock ] )
+                    [ ( 0, [ Anim.backgroundColor (hex "00FF00"), Anim.backgroundSize (px 2) ] )
+                    , ( 50, [ Anim.opacity zero ] )
+                    , ( 100, [ Anim.border (px 5), Anim.backgroundColor (rgb 11 22 33) ] )
                     ]
 
             moreKeyframes =
                 keyframes
-                    [ ( 10, [ Css.minHeight (px 100) ] ) ]
+                    [ ( 10, [ Anim.transform [ Css.translate (px 100) ] ] ) ]
 
             input =
                 stylesheet
@@ -96,16 +97,16 @@ suite =
 
             output =
                 """
-            @keyframes _85cdb76 {
-                10% {min-height:100px;}
+            @keyframes _23526425 {
+                10% {transform:translate(100px);}
             }
 
-            @keyframes _e5ef3caa {
-                0% {color:#00FF00;display:block;}
+            @keyframes _a56b5063 {
+                0% {background-color:#00FF00;background-size:2px;}
 
-                50% {max-height:none;}
+                50% {opacity:0;}
 
-                100% {color:#00FF00;display:inline-block;}
+                100% {border:5px;background-color:rgb(11, 22, 33);}
             }
 
             body {
@@ -114,14 +115,14 @@ suite =
 
             button {
                 margin:auto;
-                animation-name:_85cdb76;
+                animation-name:_23526425;
                 background-color:#0F0F0F;
             }
 
             p {
                 color:#FF0000;
                 display:inline;
-                animation-name:_e5ef3caa;
+                animation-name:_a56b5063;
                 background-color:rgb(11, 11, 11);
             }
             """
@@ -136,16 +137,16 @@ suite =
 testEmptyKeyframes : Test
 testEmptyKeyframes =
     describe "@keyframes with special cases for value"
-        [ test "initial" (\_ -> assertEmtyKeyframesForProperty initial "initial")
-        , test "unset" (\_ -> assertEmtyKeyframesForProperty unset "unset")
-        , test "inherit" (\_ -> assertEmtyKeyframesForProperty inherit "inherit")
-        , test "literal none" (\_ -> assertEmtyKeyframesForProperty none "none")
-        , test "empty keyframes" (\_ -> assertEmtyKeyframesForProperty (keyframes []) "none")
+        [ test "initial" (\_ -> assertEmptyKeyframesForProperty initial "initial")
+        , test "unset" (\_ -> assertEmptyKeyframesForProperty unset "unset")
+        , test "inherit" (\_ -> assertEmptyKeyframesForProperty inherit "inherit")
+        , test "literal none" (\_ -> assertEmptyKeyframesForProperty none "none")
+        , test "empty keyframes" (\_ -> assertEmptyKeyframesForProperty (keyframes []) "none")
         ]
 
 
-assertEmtyKeyframesForProperty : Keyframes compatible -> String -> Expect.Expectation
-assertEmtyKeyframesForProperty property expectedValue =
+assertEmptyKeyframesForProperty : Keyframes compatible -> String -> Expect.Expectation
+assertEmptyKeyframesForProperty property expectedValue =
     let
         input =
             stylesheet
