@@ -154,7 +154,6 @@ do to it using `Style` instead!
 
 -}
 
-import Css.Helpers exposing (identifierToString)
 import Css.Media exposing (MediaQuery)
 import Css.Preprocess as Preprocess
     exposing
@@ -193,16 +192,16 @@ type alias Snippet =
 {-| An [id selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors).
 
     global
-        [ id NavBar
+        [ id "nav-bar"
             [ width 960 px
             , backgroundColor (rgb 123 42 208)
             ]
         ]
 
 -}
-id : id -> List Style -> Snippet
-id identifier styles =
-    [ Structure.IdSelector (identifierToString "" identifier) ]
+id : String -> List Style -> Snippet
+id str styles =
+    [ Structure.IdSelector str ]
         |> Structure.UniversalSelectorSequence
         |> makeSnippet styles
 
@@ -210,16 +209,16 @@ id identifier styles =
 {-| A [class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
     global
-        [ class LoginFormButton
+        [ class "login-form-button"
             [ fontWeight normal
             , color (rgb 128 64 32)
             ]
         ]
 
 -}
-class : class -> List Style -> Snippet
-class class styles =
-    [ Structure.ClassSelector (identifierToString "" class) ]
+class : String -> List Style -> Snippet
+class str styles =
+    [ Structure.ClassSelector str ]
         |> Structure.UniversalSelectorSequence
         |> makeSnippet styles
 
@@ -401,9 +400,9 @@ div.is-bold {
 ```
 
 -}
-withClass : class -> List Style -> Style
-withClass class =
-    Preprocess.ExtendSelector (Structure.ClassSelector (identifierToString "" class))
+withClass : String -> List Style -> Style
+withClass str =
+    Preprocess.ExtendSelector (Structure.ClassSelector str)
 
 
 {-| Apply styles to the current selector plus an attribute selector

@@ -1014,7 +1014,6 @@ deprecated or discouraged.
 -}
 
 import Color
-import Css.Helpers exposing (identifierToString, toCssIdentifier)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 import Hex
@@ -7443,7 +7442,7 @@ names, or to set `animation-name: none;`
     animationNames [] -- outputs "animation-name: none;"
 
 -}
-animationName : animation -> Style
+animationName : String -> Style
 animationName identifier =
     animationNames [ identifier ]
 
@@ -7457,13 +7456,11 @@ Pass `[]` to set `animation-name: none;`
     animationNames [] -- outputs "animation-name: none;"
 
 -}
-animationNames : List animation -> Style
-animationNames identifiers =
+animationNames : List String -> Style
+animationNames ids =
     let
         value =
-            identifiers
-                |> List.map (identifierToString "")
-                |> String.join ", "
+            String.join ", " ids
     in
     property "animation-name" value
 
