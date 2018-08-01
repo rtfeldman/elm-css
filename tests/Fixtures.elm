@@ -6,14 +6,6 @@ import Css.Media exposing (only, print, withMedia)
 import Css.Preprocess exposing (Stylesheet, stylesheet)
 
 
-type CssClasses
-    = Hidden
-
-
-type CssIds
-    = Page
-
-
 type CssAnimations
     = Wobble
 
@@ -166,8 +158,8 @@ multiSelector : Stylesheet
 multiSelector =
     stylesheet
         [ div
-            [ withClass Page
-                [ withClass Hidden
+            [ withClass "Page"
+                [ withClass "Hidden"
                     [ display none
                     , width (pct 100)
                     , height (pct 100)
@@ -374,7 +366,7 @@ colorHexAbbrWarning =
 pseudoElementStylesheet : Stylesheet
 pseudoElementStylesheet =
     stylesheet
-        [ id Page
+        [ id "Page"
             [ margin (px 10)
             , before
                 [ color (hex "#fff") ]
@@ -390,7 +382,7 @@ pseudoElementStylesheet =
 pseudoClassStylesheet : Stylesheet
 pseudoClassStylesheet =
     stylesheet
-        [ id Page
+        [ id "Page"
             [ color (hex "#fff")
             , hover
                 [ marginTop (px 10)
