@@ -245,10 +245,6 @@ testMedia =
         ]
 
 
-type CssClasses
-    = Container
-
-
 testWithMedia : Test
 testWithMedia =
     let
@@ -279,7 +275,7 @@ testWithMedia =
                     , withMedia [ only screen [] ] [ textDecoration underline ]
                     , Css.backgroundColor (hex "EE0000")
                     ]
-                , class Container
+                , class "Container"
                     [ Css.maxWidth (px 800)
                     , withMedia [ only screen [ Media.maxWidth (px 375) ], only screen [ Media.maxHeight (px 667) ] ]
                         [ Css.maxWidth (px 300) ]
@@ -542,7 +538,7 @@ bug352 =
                             [ marginRight (px 16) ]
                         ]
                     ]
-                , class Container
+                , class "Container"
                     [ Css.maxWidth (px 800)
                     , withMedia [ only screen [ Media.maxWidth (px 375) ], only screen [ Media.maxHeight (px 667) ] ]
                         [ Css.maxWidth (px 300) ]
