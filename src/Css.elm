@@ -2318,7 +2318,7 @@ hslaToRgba : String -> Float -> Float -> Float -> Float -> Color
 hslaToRgba value hue saturation lightness hslAlpha =
     let
         { red, green, blue, alpha } =
-            Color.hsla hue saturation lightness hslAlpha
+            Color.hsla (degreesToRadians hue) saturation lightness hslAlpha
                 |> Color.toRgb
     in
     { value = value
@@ -2328,6 +2328,11 @@ hslaToRgba value hue saturation lightness hslAlpha =
     , blue = blue
     , alpha = alpha
     }
+
+
+degreesToRadians : Float -> Float
+degreesToRadians deg =
+    deg * 180 / pi
 
 
 
