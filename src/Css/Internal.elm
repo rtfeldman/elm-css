@@ -159,7 +159,7 @@ property key value =
         |> Preprocess.AppendProperty
 
 
-numberToString : number -> String
+numberToString : Float -> String
 numberToString num =
     toString (num + 0)
 
