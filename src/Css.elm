@@ -861,7 +861,7 @@ combineLengths operation first second =
             operation first.numericValue second.numericValue
 
         value =
-            [ toString numericValue
+            [ String.fromInt numericValue
             , first.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
@@ -5269,7 +5269,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = toString tag ++ " " ++ toString value
+    { value = String.fromInt tag ++ " " ++ String.fromInt value
     , featureTagValue = Compatible
     }
 
@@ -6399,7 +6399,7 @@ letterSpacing =
 {-| -}
 src_ : ImportType compatible -> String
 src_ value =
-    toString value.value
+    String.fromInt value.value
 
 
 {-| -}
@@ -6417,7 +6417,7 @@ fontFace value =
 -}
 qt : String -> String
 qt str =
-    toString str
+    String.fromInt str
 
 
 {-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).

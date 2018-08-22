@@ -25,7 +25,7 @@ charsetToString charset =
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
     -- TODO
-    "@import \"" ++ name ++ toString mediaQueries ++ "\""
+    "@import \"" ++ name ++ String.fromInt mediaQueries ++ "\""
 
 
 namespaceToString : ( String, String ) -> String

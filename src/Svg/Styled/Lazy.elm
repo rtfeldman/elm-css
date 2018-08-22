@@ -27,7 +27,7 @@ For example:
             circle
                 [ cx "60"
                 , cy "60"
-                , r (toString radius)
+                , r (String.fromInt radius)
                 , css [ backgroundColor (rgb 200 0 0) ]
                 ]
                 |> toUnstyled -- toUnstyled must happen inside viewCircle!

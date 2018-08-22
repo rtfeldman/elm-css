@@ -178,7 +178,7 @@ expectFeatureWorks featureName n ( component, expectedStr ) =
         expected =
             "@media (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
     in
-    test ("pretty prints the expected feature output for:" ++ featureName ++ toString n) <| \() -> Expect.equal expected actual
+    test ("pretty prints the expected feature output for:" ++ featureName ++ String.fromInt n) <| \() -> Expect.equal expected actual
 
 
 basicMediaQuery : MediaQuery -> Snippet

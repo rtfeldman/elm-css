@@ -74,7 +74,7 @@ printKeyframeSelector : ( Int, List AnimationProperty ) -> String
 printKeyframeSelector ( percentage, properties ) =
     let
         percentageStr =
-            toString percentage ++ "%"
+            String.fromInt percentage ++ "%"
 
         propertiesStr =
             properties
@@ -161,7 +161,7 @@ property key value =
 
 numberToString : Float -> String
 numberToString num =
-    toString (num + 0)
+    String.fromFloat (num + 0)
 
 
 lengthForOverloadedProperty : ExplicitLength IncompatibleUnits

@@ -348,7 +348,7 @@ instead.
 -}
 tabindex : Int -> Attribute msg
 tabindex n =
-    attribute "tabIndex" (toString n)
+    attribute "tabIndex" (String.fromInt n)
 
 
 
@@ -432,7 +432,7 @@ src value =
 -}
 height : Int -> Attribute msg
 height value =
-    attribute "height" (toString value)
+    attribute "height" (String.fromInt value)
 
 
 {-| Declare the width of a `canvas`, `embed`, `iframe`, `img`, `input`,
@@ -440,7 +440,7 @@ height value =
 -}
 width : Int -> Attribute msg
 width value =
-    attribute "width" (toString value)
+    attribute "width" (String.fromInt value)
 
 
 {-| Alternative text in case an image can't be displayed. Works with `img`,
@@ -690,7 +690,7 @@ list value =
 -}
 minlength : Int -> Attribute msg
 minlength n =
-    attribute "minLength" (toString n)
+    attribute "minLength" (String.fromInt n)
 
 
 {-| Defines the maximum number of characters allowed in an `input` or
@@ -698,7 +698,7 @@ minlength n =
 -}
 maxlength : Int -> Attribute msg
 maxlength n =
-    attribute "maxlength" (toString n)
+    attribute "maxlength" (String.fromInt n)
 
 
 {-| Defines which HTTP method to use when submitting a `form`. Can be GET
@@ -764,7 +764,7 @@ For `select` specifies the number of visible options in a drop-down list.
 -}
 size : Int -> Attribute msg
 size n =
-    attribute "size" (toString n)
+    attribute "size" (String.fromInt n)
 
 
 {-| The element ID described by this `label` or the element IDs that are used
@@ -820,14 +820,14 @@ step n =
 -}
 cols : Int -> Attribute msg
 cols n =
-    attribute "cols" (toString n)
+    attribute "cols" (String.fromInt n)
 
 
 {-| Defines the number of rows in a `textarea`.
 -}
 rows : Int -> Attribute msg
 rows n =
-    attribute "rows" (toString n)
+    attribute "rows" (String.fromInt n)
 
 
 {-| Indicates whether the text should be wrapped in a `textarea`. Possible
@@ -1028,7 +1028,7 @@ besides 1.
 -}
 start : Int -> Attribute msg
 start n =
-    stringProperty "start" (toString n)
+    stringProperty "start" (String.fromInt n)
 
 
 
@@ -1040,7 +1040,7 @@ For `td` and `th`.
 -}
 colspan : Int -> Attribute msg
 colspan n =
-    attribute "colspan" (toString n)
+    attribute "colspan" (String.fromInt n)
 
 
 {-| A space separated list of element IDs indicating which `th` elements are
@@ -1056,7 +1056,7 @@ For `td` and `th`.
 -}
 rowspan : Int -> Attribute msg
 rowspan n =
-    attribute "rowspan" (toString n)
+    attribute "rowspan" (String.fromInt n)
 
 
 {-| Specifies the scope of a header cell `th`. Possible values are: col, row,

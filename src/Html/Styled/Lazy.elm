@@ -20,7 +20,7 @@ For example:
 
         viewCount : Int -> VirtualDom.Node msg
         viewCount count =
-            span [ css [ textDecoration underline ] ] [ text (toString count) ]
+            span [ css [ textDecoration underline ] ] [ text (String.fromInt count) ]
                 |> toUnstyled -- toUnstyled must happen inside viewCount!
 
 @docs lazy, lazy2, lazy3
