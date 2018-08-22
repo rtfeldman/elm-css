@@ -382,7 +382,6 @@ deprecated or discouraged.
 
 -}
 
-import Color
 import Css.Animations exposing (Keyframes)
 import Css.Internal exposing (getOverloadedProperty, lengthConverter, lengthForOverloadedProperty, numberToString)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
