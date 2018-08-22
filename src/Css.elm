@@ -2245,7 +2245,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
-    { value = numberToString val
+    { value = String.fromInt val
     , lengthOrNumber = Compatible
     , number = Compatible
     , fontWeight = Compatible
@@ -2418,7 +2418,7 @@ rotateZ { value } =
      transform (rotate3d 1 1 1 (deg 90))
 
 -}
-rotate3d : number -> number -> number -> Angle compatible -> Transform {}
+rotate3d : Float -> Float -> Float -> Angle compatible -> Transform {}
 rotate3d x y z { value } =
     let
         coordsAsStrings =
@@ -7427,12 +7427,12 @@ blink =
 
 stringToInt : String -> Int
 stringToInt str =
-    Result.withDefault 0 <| String.toInt str
+    Maybe.withDefault 0 <| String.toInt str
 
 
-numericalPercentageToString : number -> String
+numericalPercentageToString : Float -> String
 numericalPercentageToString value =
-    value |> (*) 100 |> numberToString |> flip (++) "%"
+    String.fromFloat (value * 100) ++ "%"
 
 
 valuesOrNone : List (Value compatible) -> Value {}
