@@ -65,7 +65,6 @@ An example of this would be the [`background3`](#background3), [`background2`](#
 -}
 
 import Css
-import Time
 
 
 type TimingFunction
@@ -147,8 +146,8 @@ compiled down to a string and added as a style property on elements
 type Transition
     = Transition
         { animation : Animatable
-        , duration : Time.Time
-        , delay : Maybe Time.Time
+        , duration : Float
+        , delay : Maybe Float
         , timing : Maybe TimingFunction
         }
 
@@ -2856,7 +2855,7 @@ propToString prop =
             "z-index"
 
 
-timeToString : Time.Time -> String
+timeToString : Float -> String
 timeToString time =
     toString time ++ "ms"
 
