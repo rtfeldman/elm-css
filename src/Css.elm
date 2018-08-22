@@ -1608,24 +1608,79 @@ erroneousHex str =
 
 
 hslaToRgba : String -> Float -> Float -> Float -> Float -> Color
-hslaToRgba value hue saturation lightness hslAlpha =
+hslaToRgba value hueVal saturationVal lightness hslAlpha =
     let
-        { red, green, blue, alpha } =
-            Color.hsla (degreesToRadians hue) saturation lightness hslAlpha
-                |> Color.toRgb
+        { red, green, blue } =
+            hslToRgb (degreesToRadians hue) saturation lightness hslAlpha
     in
     { value = value
     , color = Compatible
     , red = red
     , green = green
     , blue = blue
-    , alpha = alpha
+    , alpha = hslAlpha
     }
 
 
+{-| Backported from <https://github.com/elm-lang/core/blob/5.1.1/src/Color.elm>
+-}
+hslToRgb : Float -> Float -> Float -> ( Float, Float, Float )
+hslToRgb hueVal saturationVal lightness =
+    let
+        chroma =
+            (1 - abs (2 * lightness - 1)) * saturationVal
+
+        normHue =
+            hueVal / degrees 60
+
+        x =
+            chroma * (1 - abs (fmod normHue 2 - 1))
+
+        ( r, g, b ) =
+            if normHue < 0 then
+                ( 0, 0, 0 )
+
+            else if normHue < 1 then
+                ( chroma, x, 0 )
+
+            else if normHue < 2 then
+                ( x, chroma, 0 )
+
+            else if normHue < 3 then
+                ( 0, chroma, x )
+
+            else if normHue < 4 then
+                ( 0, x, chroma )
+
+            else if normHue < 5 then
+                ( x, 0, chroma )
+
+            else if normHue < 6 then
+                ( chroma, 0, x )
+
+            else
+                ( 0, 0, 0 )
+
+        m =
+            lightness - chroma / 2
+    in
+    ( r + m, g + m, b + m )
+
+
+{-| Backported from <https://github.com/elm-lang/core/blob/5.1.1/src/Color.elm>
+-}
+fmod : Float -> Int -> Float
+fmod f n =
+    let
+        integer =
+            floor f
+    in
+    toFloat (modBy n integer) + f - toFloat integer
+
+
 degreesToRadians : Float -> Float
-degreesToRadians deg =
-    deg * 180 / pi
+degreesToRadians degrees =
+    degrees * 180 / pi
 
 
 
