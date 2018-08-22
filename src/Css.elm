@@ -793,9 +793,9 @@ Using \* and / with calc isn't supported. Use arithmetics from elm instead.
 
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
-calc first expression second =
+calc firstExpr expression secondExpr =
     let
-        grab l =
+        withoutCalcStr l =
             if String.startsWith "calc(" l.value then
                 String.dropLeft 4 l.value
 
@@ -804,9 +804,9 @@ calc first expression second =
 
         calcs =
             String.join " "
-                [ grab first
+                [ withoutCalcStr firstExpr
                 , calcExpressionToString expression
-                , grab second
+                , withoutCalcStr secondExpr
                 ]
 
         value =
@@ -1490,18 +1490,18 @@ rgba red green blue alpha =
 to the appropriate percentage at compile-time
 -}
 hsl : Float -> Float -> Float -> Color
-hsl hue saturation lightness =
+hsl hueVal saturationVal lightnessVal =
     let
         valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
+            [ numberToString hueVal
+            , numericalPercentageToString saturationVal
+            , numericalPercentageToString lightnessVal
             ]
 
         value =
             cssFunction "hsl" valuesList
     in
-    hslaToRgba value hue saturation lightness 1
+    hslaToRgba value hueVal saturationVal lightnessVal 1
 
 
 {-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
@@ -1509,19 +1509,19 @@ hsl hue saturation lightness =
 to the appropriate percentage at compile-time
 -}
 hsla : Float -> Float -> Float -> Float -> Color
-hsla hue saturation lightness alpha =
+hsla hueVal saturationVal lightnessVal alpha =
     let
         valuesList =
-            [ numberToString hue
-            , numericalPercentageToString saturation
-            , numericalPercentageToString lightness
-            , numberToString alpha
+            [ numberToString hueVal
+            , numericalPercentageToString saturationVal
+            , numericalPercentageToString lightnessVal
+            , String.fromFloat alpha
             ]
 
         value =
             cssFunction "hsla" valuesList
     in
-    hslaToRgba value hue saturation lightness alpha
+    hslaToRgba value hueVal saturationVal lightnessVal alpha
 
 
 {-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
@@ -1563,14 +1563,16 @@ validHex str ( r1, r2 ) ( g1, g2 ) ( b1, b2 ) ( a1, a2 ) =
             String.fromList >> String.toLower >> Hex.fromString
 
         results =
-            ( toResult [ r1, r2 ]
-            , toResult [ g1, g2 ]
-            , toResult [ b1, b2 ]
-            , toResult [ a1, a2 ]
+            ( ( toResult [ r1, r2 ]
+              , toResult [ g1, g2 ]
+              )
+            , ( toResult [ b1, b2 ]
+              , toResult [ a1, a2 ]
+              )
             )
     in
     case results of
-        ( Ok red, Ok green, Ok blue, Ok alpha ) ->
+        ( ( Ok red, Ok green ), ( Ok blue, Ok alpha ) ) ->
             { value = withPrecedingHash str
             , color = Compatible
             , red = red
@@ -2287,9 +2289,9 @@ type alias IncompatibleUnits =
 {- ANGLES -}
 
 
-angleConverter : String -> number -> AngleOrDirection (Angle {})
-angleConverter suffix num =
-    { value = numberToString num ++ suffix
+angleConverter : String -> Float -> AngleOrDirection (Angle {})
+angleConverter suffix angleVal =
+    { value = numberToString angleVal ++ suffix
     , angle = Compatible
     , angleOrDirection = Compatible
     }
@@ -2297,28 +2299,28 @@ angleConverter suffix num =
 
 {-| [`deg`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg) units.
 -}
-deg : number -> AngleOrDirection (Angle {})
+deg : Float -> AngleOrDirection (Angle {})
 deg =
     angleConverter "deg"
 
 
 {-| [`grad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad) units.
 -}
-grad : number -> AngleOrDirection (Angle {})
+grad : Float -> AngleOrDirection (Angle {})
 grad =
     angleConverter "grad"
 
 
 {-| [`rad`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad) units.
 -}
-rad : number -> AngleOrDirection (Angle {})
+rad : Float -> AngleOrDirection (Angle {})
 rad =
     angleConverter "rad"
 
 
 {-| [`turn`](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#tr) units.
 -}
-turn : number -> AngleOrDirection (Angle {})
+turn : Float -> AngleOrDirection (Angle {})
 turn =
     angleConverter "turn"
 
@@ -2332,7 +2334,7 @@ turn =
     transform (matrix 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix : number -> number -> number -> number -> number -> number -> Transform {}
+matrix : Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix a b c d tx ty =
     { value = cssFunction "matrix" (List.map numberToString [ a, b, c, d, tx, ty ])
     , transform = Compatible
@@ -2344,7 +2346,7 @@ matrix a b c d tx ty =
     transform (matrix3d 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3 0.5 1 1.5 2 2.5 3)
 
 -}
-matrix3d : number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> number -> Transform {}
+matrix3d : Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
     { value = cssFunction "matrix3d" (List.map numberToString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
     , transform = Compatible
@@ -2356,7 +2358,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
      transform (perspective 0.5)
 
 -}
-perspective : number -> Transform {}
+perspective : Float -> Transform {}
 perspective l =
     { value = cssFunction "perspective" [ numberToString l ]
     , transform = Compatible
@@ -2433,7 +2435,7 @@ rotate3d x y z { value } =
      transform (scale2 0.5 0.7)
 
 -}
-scale : number -> Transform {}
+scale : Float -> Transform {}
 scale x =
     { value = cssFunction "scale" [ numberToString x ]
     , transform = Compatible
@@ -2446,7 +2448,7 @@ scale x =
      transform (scale2 0.5 0.7)
 
 -}
-scale2 : number -> number -> Transform {}
+scale2 : Float -> Float -> Transform {}
 scale2 x y =
     { value = cssFunction "scale" (List.map numberToString [ x, y ])
     , transform = Compatible
@@ -2458,7 +2460,7 @@ scale2 x y =
      transform (scaleX 0.5)
 
 -}
-scaleX : number -> Transform {}
+scaleX : Float -> Transform {}
 scaleX x =
     { value = cssFunction "scaleX" [ numberToString x ]
     , transform = Compatible
@@ -2470,7 +2472,7 @@ scaleX x =
      transform (scaleY 0.5)
 
 -}
-scaleY : number -> Transform {}
+scaleY : Float -> Transform {}
 scaleY y =
     { value = cssFunction "scaleY" [ numberToString y ]
     , transform = Compatible
@@ -2482,7 +2484,7 @@ scaleY y =
      transform (scale3d 0.5 0.5 1)
 
 -}
-scale3d : number -> number -> number -> Transform {}
+scale3d : Float -> Float -> Float -> Transform {}
 scale3d x y z =
     { value = cssFunction "scale3d" (List.map numberToString [ x, y, z ])
     , transform = Compatible
@@ -3466,13 +3468,12 @@ linearGradient :
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
-linearGradient stop1 stop2 stops =
+linearGradient firstStop secondStop otherStops =
     -- TODO we should make this more permissive, e.g. compatibleA/compatibleB/compatibleC/compatibleD
     -- the only reason it isn't is that we happen to be using collectStops like this.
     -- We should just not use collectStops. Same with linearGradient2
     { value =
-        [ stop1, stop2 ]
-            ++ stops
+        ([ firstStop, secondStop ] ++ otherStops)
             |> collectStops
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
@@ -3493,12 +3494,11 @@ linearGradient2 :
     -> ColorStop compatibleA compatibleB unit
     -> List (ColorStop compatibleA compatibleB unit)
     -> BackgroundImage (ListStyle {})
-linearGradient2 dir stop1 stop2 stops =
+linearGradient2 direction firstStop secondStop otherStops =
     { value =
-        [ stop1, stop2 ]
-            ++ stops
+        ([ firstStop, secondStop ] ++ otherStops)
             |> collectStops
-            |> (::) dir.value
+            |> (::) direction.value
             |> cssFunction "linear-gradient"
     , backgroundImage = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
@@ -5269,7 +5269,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = String.fromInt tag ++ " " ++ String.fromInt value
+    { value = "\"" ++ tag ++ "\" " ++ String.fromInt value
     , featureTagValue = Compatible
     }
 
@@ -6399,7 +6399,7 @@ letterSpacing =
 {-| -}
 src_ : ImportType compatible -> String
 src_ value =
-    String.fromInt value.value
+    "\"" ++ value.value ++ "\""
 
 
 {-| -}
@@ -6417,7 +6417,7 @@ fontFace value =
 -}
 qt : String -> String
 qt str =
-    String.fromInt str
+    "\"" ++ str ++ "\""
 
 
 {-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).
