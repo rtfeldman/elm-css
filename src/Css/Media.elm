@@ -7,7 +7,7 @@ module Css.Media exposing
     , minAspectRatio, aspectRatio, maxAspectRatio, Landscape, Portrait
     , landscape, portrait, orientation
     , Resolution, dpi, dpcm, dppx, minResolution, resolution, maxResolution
-    , scan, Progressive, Interlace, progressive, interlace, scan, grid, Slow
+    , Progressive, Interlace, progressive, interlace, scan, grid, Slow
     , Fast, slow, fast, update, Paged, OptionalPaged, paged, optionalPaged
     , overflowBlock, overflowInline
     , Bits, bits, minColor, color, maxColor, minMonochrome, monochrome
@@ -51,7 +51,7 @@ module Css.Media exposing
 # Display Quality Media Features
 
 @docs Resolution, dpi, dpcm, dppx, minResolution, resolution, maxResolution
-@docs scan, Progressive, Interlace, progressive, interlace, scan, grid, Slow
+@docs Progressive, Interlace, progressive, interlace, scan, grid, Slow
 @docs Fast, slow, fast, update, Paged, OptionalPaged, paged, optionalPaged
 @docs overflowBlock, overflowInline
 
@@ -104,7 +104,7 @@ type alias MediaQuery =
 
 {-| A media type.
 
-[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_types](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
+[[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_types](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
 
 -}
 type alias MediaType =
@@ -122,7 +122,7 @@ In the media query `screen and (min-width: 768px)`,
   - `min-width` is a media feature, and
   - `(min-width: 768px)` is an expression.
 
-[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
+[[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
 
 -}
 type alias Expression =
@@ -456,7 +456,7 @@ type alias Resolution =
 -}
 dpi : Float -> Resolution
 dpi value =
-    { value = String.fromInt value ++ "dpi", resolution = Compatible }
+    { value = String.fromFloat value ++ "dpi", resolution = Compatible }
 
 
 {-| `dpcm`: Dots per centimeter. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -466,7 +466,7 @@ dpi value =
 -}
 dpcm : Float -> Resolution
 dpcm value =
-    { value = String.fromInt value ++ "dpcm", resolution = Compatible }
+    { value = String.fromFloat value ++ "dpcm", resolution = Compatible }
 
 
 {-| `dppx`: Dots per pixel. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -476,7 +476,7 @@ dpcm value =
 -}
 dppx : Float -> Resolution
 dppx value =
-    { value = String.fromInt value ++ "dppx", resolution = Compatible }
+    { value = String.fromFloat value ++ "dppx", resolution = Compatible }
 
 
 {-| Media feature [`min-resolution`](https://drafts.csswg.org/mediaqueries/#resolution).
