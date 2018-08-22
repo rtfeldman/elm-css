@@ -851,23 +851,23 @@ minus =
 
 
 combineLengths :
-    (number -> number -> number)
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
-    -> { r | numericValue : number, unitLabel : String, value : String }
-combineLengths operation first second =
+    (Float -> Float -> Float)
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+    -> { r | numericValue : Float, unitLabel : String, value : String }
+combineLengths operation firstLength secondLength =
     let
         numericValue =
-            operation first.numericValue second.numericValue
+            operation firstLength.numericValue secondLength.numericValue
 
         value =
-            [ String.fromInt numericValue
-            , first.unitLabel
+            [ String.fromFloat numericValue
+            , firstLength.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
                 |> String.join ""
     in
-    { first | value = value, numericValue = numericValue }
+    { firstLength | value = value, numericValue = numericValue }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
