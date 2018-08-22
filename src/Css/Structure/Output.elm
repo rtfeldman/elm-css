@@ -25,7 +25,13 @@ charsetToString charset =
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
     -- TODO
-    "@import \"" ++ name ++ String.fromInt mediaQueries ++ "\""
+    List.map (importMediaQueryToString name) mediaQueries
+        |> String.join "\n"
+
+
+importMediaQueryToString : String -> MediaQuery -> String
+importMediaQueryToString name mediaQuery =
+    "@import \"" ++ name ++ mediaQueryToString mediaQuery ++ "\""
 
 
 namespaceToString : ( String, String ) -> String
@@ -57,8 +63,8 @@ prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors prope
 
 
 prettyPrintDeclaration : Declaration -> String
-prettyPrintDeclaration declaration =
-    case declaration of
+prettyPrintDeclaration decl =
+    case decl of
         StyleBlockDeclaration styleBlock ->
             prettyPrintStyleBlock noIndent styleBlock
 
@@ -210,10 +216,12 @@ selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
         pseudoElementsString =
             String.join "" [ Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement) ]
     in
-    segments
-        |> List.filter (not << String.isEmpty)
-        |> String.join " "
-        |> flip (++) pseudoElementsString
+    String.append
+        (segments
+            |> List.filter (not << String.isEmpty)
+            |> String.join " "
+        )
+        pseudoElementsString
 
 
 combinatorToString : SelectorCombinator -> String
