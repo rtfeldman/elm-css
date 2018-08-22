@@ -1,4 +1,4 @@
-module Css.Internal exposing (AnimationProperty(..), ColorValue, ExplicitLength, IncompatibleUnits(..), Length, LengthOrAutoOrCoverOrContain, compileKeyframes, getOverloadedProperty, lengthConverter, lengthForOverloadedProperty, numberToString)
+module Css.Internal exposing (AnimationProperty(..), ColorValue, ExplicitLength, IncompatibleUnits(..), Length, LengthOrAutoOrCoverOrContain, compileKeyframes, getOverloadedProperty, lengthConverter, lengthForOverloadedProperty)
 
 import Css.Preprocess as Preprocess exposing (Style)
 import Css.Structure exposing (Compatible(..))
@@ -159,11 +159,6 @@ property key value =
         |> Preprocess.AppendProperty
 
 
-numberToString : Float -> String
-numberToString num =
-    String.fromFloat (num + 0)
-
-
 lengthForOverloadedProperty : ExplicitLength IncompatibleUnits
 lengthForOverloadedProperty =
     lengthConverter IncompatibleUnits "" 0
@@ -171,7 +166,7 @@ lengthForOverloadedProperty =
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
 lengthConverter units unitLabel numericValue =
-    { value = numberToString numericValue ++ unitLabel
+    { value = String.fromFloat numericValue ++ unitLabel
     , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel
