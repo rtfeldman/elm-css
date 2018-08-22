@@ -1,4 +1,4 @@
-module Transitions exposing (..)
+module Transitions exposing (expectTransitionWorks, testDuration, testDurationDelay, testDurationDelayTiming, testTransition)
 
 import Css.Global exposing (p)
 import Css.Preprocess exposing (stylesheet)

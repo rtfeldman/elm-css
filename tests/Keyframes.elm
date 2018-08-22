@@ -1,4 +1,4 @@
-module Keyframes exposing (..)
+module Keyframes exposing (assertEmptyKeyframesForProperty, suite, testEmptyKeyframes)
 
 import Css exposing (..)
 import Css.Animations as Anim exposing (Keyframes, keyframes)

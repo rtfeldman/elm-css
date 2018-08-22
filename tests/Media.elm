@@ -1,4 +1,4 @@
-module Media exposing (..)
+module Media exposing (basicMediaQuery, bug352, expectFeatureWorks, mediaFeatures, mediaTypes, testFeature, testMedia, testMediaQuery, testMediaType, testUnparameterizedFeature, testWithMedia, testWithMediaQuery, withMediaInside, withMediaInsideAndOtheDeclarations, withMediaOutside, withMediaOutsideAndOtherDeclarations)
 
 import Css exposing (..)
 import Css.Global exposing (Snippet, a, body, button, class, li, media, mediaQuery, p, ul)
