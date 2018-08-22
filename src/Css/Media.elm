@@ -1,90 +1,22 @@
-module Css.Media
-    exposing
-        ( Bits
-        , CanHover
-        , Coarse
-        , Enabled
-        , Expression
-        , Fast
-        , Fine
-        , InitialOnly
-        , Interlace
-        , Landscape
-        , MediaQuery
-        , MediaType
-        , OptionalPaged
-        , P3
-        , Paged
-        , Portrait
-        , Progressive
-        , Ratio
-        , Rec2020
-        , Resolution
-        , SRGB
-        , Slow
-        , all
-        , anyHover
-        , anyPointer
-        , aspectRatio
-        , bits
-        , canHover
-        , coarse
-        , color
-        , colorGamut
-        , colorIndex
-        , dpcm
-        , dpi
-        , dppx
-        , enabled
-        , fast
-        , fine
-        , grid
-        , height
-        , hover
-        , initialOnly
-        , interlace
-        , landscape
-        , maxAspectRatio
-        , maxColor
-        , maxColorIndex
-        , maxHeight
-        , maxMonochrome
-        , maxResolution
-        , maxWidth
-        , minAspectRatio
-        , minColor
-        , minColorIndex
-        , minHeight
-        , minMonochrome
-        , minResolution
-        , minWidth
-        , monochrome
-        , not
-        , only
-        , optionalPaged
-        , orientation
-        , overflowBlock
-        , overflowInline
-        , p3
-        , paged
-        , pointer
-        , portrait
-        , print
-        , progressive
-        , ratio
-        , rec2020
-        , resolution
-        , scan
-        , screen
-        , scripting
-        , slow
-        , speech
-        , srgb
-        , update
-        , width
-        , withMedia
-        , withMediaQuery
-        )
+module Css.Media exposing
+    ( MediaQuery, MediaType, Expression
+    , withMedia, withMediaQuery
+    , all, only, not
+    , screen, print, speech
+    , minWidth, width, maxWidth, minHeight, height, maxHeight, Ratio, ratio
+    , minAspectRatio, aspectRatio, maxAspectRatio, Landscape, Portrait
+    , landscape, portrait, orientation
+    , Resolution, dpi, dpcm, dppx, minResolution, resolution, maxResolution
+    , scan, Progressive, Interlace, progressive, interlace, scan, grid, Slow
+    , Fast, slow, fast, update, Paged, OptionalPaged, paged, optionalPaged
+    , overflowBlock, overflowInline
+    , Bits, bits, minColor, color, maxColor, minMonochrome, monochrome
+    , maxMonochrome, minColorIndex, colorIndex, maxColorIndex, SRGB, P3
+    , Rec2020, srgb, p3, rec2020, colorGamut
+    , Fine, Coarse, fine, coarse, pointer, anyPointer, CanHover, canHover
+    , hover, anyHover
+    , InitialOnly, Enabled, initialOnly, enabled, scripting
+    )
 
 {-| Functions for building [`@media` queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries).
 
@@ -172,7 +104,7 @@ type alias MediaQuery =
 
 {-| A media type.
 
-<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types>
+[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_types](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
 
 -}
 type alias MediaType =
@@ -190,7 +122,7 @@ In the media query `screen and (min-width: 768px)`,
   - `min-width` is a media feature, and
   - `(min-width: 768px)` is an expression.
 
-<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features>
+[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
 
 -}
 type alias Expression =
@@ -231,9 +163,9 @@ withMedia =
 using a List of strings.
 
     body
-      [ withMediaQuery [ "screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
-          [ fontSize (px 14px) ]
-      ]
+        [ withMediaQuery [ "screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
+            [ fontSize (px 14 px) ]
+        ]
 
 The above code translates into the following CSS.
 
@@ -328,7 +260,7 @@ not =
 
 {-| Media type for printers
 
-    media print [ a [ color (hex 000000), textDecoration none ] ]
+    media print [ a [ color (hex 0), textDecoration none ] ]
 
 -}
 print : MediaType
@@ -390,7 +322,7 @@ width value =
 
 {-| Media feature [`max-width`](https://drafts.csswg.org/mediaqueries/#width)
 
-    media (Media.maxWidth (px 800)) [ Css.class MobileNav [ display none] ]
+    media (Media.maxWidth (px 800)) [ Css.class MobileNav [ display none ] ]
 
 -}
 maxWidth : AbsoluteLength compatible -> Expression
@@ -400,7 +332,7 @@ maxWidth value =
 
 {-| Media feature [`min-height`](https://drafts.csswg.org/mediaqueries/#height)
 
-    media (Media.minHeight(px 400)) [ Css.class TopBanner [ display block] ]
+    media (Media.minHeight (px 400)) [ Css.class TopBanner [ display block ] ]
 
 -}
 minHeight : AbsoluteLength compatible -> Expression
@@ -417,7 +349,7 @@ height value =
 
 {-| Media feature [`max-height`](https://drafts.csswg.org/mediaqueries/#height)
 
-    media (Media.maxHeight(px 399)) [ Css.class TopBanner [ display none] ]
+    media (Media.maxHeight (px 399)) [ Css.class TopBanner [ display none ] ]
 
 -}
 maxHeight : AbsoluteLength compatible -> Expression
@@ -740,7 +672,7 @@ minColor value =
 
 {-| Media feature [`color`](https://drafts.csswg.org/mediaqueries/#color)
 
-    media (not color) [ body [Css.color (hex "000000")] ]
+    media (not color) [ body [ Css.color (hex "000000") ] ]
 
 -}
 color : Expression
@@ -761,7 +693,7 @@ maxColor value =
 
 {-| Media feature [`monochrome`](https://drafts.csswg.org/mediaqueries/#monochrome)
 
-    media [ monochrome ] [ body [Css.color (hex "000000")] ]
+    media [ monochrome ] [ body [ Css.color (hex "000000") ] ]
 
 -}
 monochrome : Expression
@@ -797,7 +729,7 @@ colorIndex value =
 {-| Media Feature [`min-color-index`](https://drafts.csswg.org/mediaqueries/nn#color-index)
 Queries the number of colors in the user agent's color lookup table.
 
-    media (and screen (minColorIndex (int 16777216))) [ a [ Css.color (hex "D9534F")] ]
+    media (and screen (minColorIndex (int 16777216))) [ a [ Css.color (hex "D9534F") ] ]
 
 -}
 minColorIndex : Number a -> Expression
@@ -808,7 +740,7 @@ minColorIndex value =
 {-| Media feature [`max-color-index`](https://drafts.csswg.org/mediaqueries/#color-index).
 Queries the number of colors in the user agent's color lookup table.
 
-    media (and screen (maxColorIndex (int 256))) [ a [ Css.color (hex "FF0000")] ]
+    media (and screen (maxColorIndex (int 256))) [ a [ Css.color (hex "FF0000") ] ]
 
 -}
 maxColorIndex : Number a -> Expression
@@ -950,7 +882,7 @@ canHover =
 Queries the if the user agent's primary input mechanism has the ability to hover over elements.
 Accepts `none` or `canHover`.
 
-    media (Media.hover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
+    media (Media.hover canHover) [ a [ Css.hover [ textDecoration underline ] ] ]
 
 -}
 hover : HoverCapability a -> Expression
@@ -962,7 +894,7 @@ hover value =
 Queries the if any of user agent's input mechanisms have the ability to hover over elements
 Accepts `none` or `canHover`.
 
-    media (anyHover canHover) [ a [ Css.hover [ textDecoration underline] ] ]
+    media (anyHover canHover) [ a [ Css.hover [ textDecoration underline ] ] ]
 
 -}
 anyHover : HoverCapability a -> Expression

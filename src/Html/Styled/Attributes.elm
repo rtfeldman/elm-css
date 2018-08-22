@@ -1,107 +1,23 @@
-module Html.Styled.Attributes
-    exposing
-        ( accept
-        , acceptCharset
-        , accesskey
-        , action
-        , align
-        , alt
-        , async
-        , attribute
-        , autocomplete
-        , autofocus
-        , autoplay
-        , challenge
-        , charset
-        , checked
-        , cite
-        , class
-        , classList
-        , cols
-        , colspan
-        , content
-        , contenteditable
-        , contextmenu
-        , controls
-        , coords
-        , css
-        , datetime
-        , default
-        , defaultValue
-        , defer
-        , dir
-        , disabled
-        , download
-        , downloadAs
-        , draggable
-        , dropzone
-        , enctype
-        , for
-        , form
-        , formaction
-        , fromUnstyled
-        , headers
-        , height
-        , hidden
-        , href
-        , hreflang
-        , httpEquiv
-        , id
-        , ismap
-        , itemprop
-        , keytype
-        , kind
-        , lang
-        , language
-        , list
-        , loop
-        , manifest
-        , map
-        , max
-        , maxlength
-        , media
-        , method
-        , min
-        , minlength
-        , multiple
-        , name
-        , novalidate
-        , pattern
-        , ping
-        , placeholder
-        , poster
-        , preload
-        , property
-        , pubdate
-        , readonly
-        , rel
-        , required
-        , reversed
-        , rows
-        , rowspan
-        , sandbox
-        , scope
-        , scoped
-        , seamless
-        , selected
-        , shape
-        , size
-        , spellcheck
-        , src
-        , srcdoc
-        , srclang
-        , start
-        , step
-        , style
-        , tabindex
-        , target
-        , title
-        , type_
-        , usemap
-        , value
-        , width
-        , wrap
-        )
+module Html.Styled.Attributes exposing
+    ( css, fromUnstyled
+    , style, property, attribute, map
+    , class, classList, id, title, hidden
+    , type_, value, defaultValue, checked, placeholder, selected
+    , accept, acceptCharset, action, autocomplete, autofocus, disabled, enctype, formaction, list, maxlength, minlength, method, multiple, name, novalidate, pattern, readonly, required, size, for, form
+    , max, min, step
+    , cols, rows, wrap
+    , href, target, download, downloadAs, hreflang, media, ping, rel
+    , ismap, usemap, shape, coords
+    , src, height, width, alt
+    , autoplay, controls, loop, preload, poster, default, kind, srclang
+    , sandbox, seamless, srcdoc
+    , reversed, start
+    , align, colspan, rowspan, headers, scope
+    , async, charset, content, defer, httpEquiv, language, scoped
+    , accesskey, contenteditable, contextmenu, dir, draggable, dropzone, itemprop, lang, spellcheck, tabindex
+    , challenge, keytype
+    , cite, datetime, manifest, pubdate
+    )
 
 {-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
 The only functions added are `css` and `fromUnstyled`:
@@ -1015,10 +931,10 @@ href value =
 {-| Specify where the results of clicking an `a`, `area`, `base`, or `form`
 should appear. Possible special values include:
 
-  - _blank &mdash; a new window or tab
-  - _self &mdash; the same frame (this is default)
-  - _parent &mdash; the parent frame
-  - _top &mdash; the full body of the window
+  - \_blank &mdash; a new window or tab
+  - \_self &mdash; the same frame (this is default)
+  - \_parent &mdash; the parent frame
+  - \_top &mdash; the full body of the window
 
 You can also give the name of any `frame` you have created.
 

@@ -1,4 +1,7 @@
-module Html.Styled.Keyed exposing (node, ol, ul)
+module Html.Styled.Keyed exposing
+    ( node
+    , ol, ul
+    )
 
 {-| Drop-in replacement for the `Html.Keyed` module from the `elm-lang/html` package.
 

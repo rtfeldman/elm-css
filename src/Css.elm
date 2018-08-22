@@ -1,664 +1,27 @@
-module Css
-    exposing
-        ( AlignItems
-        , All
-        , Angle
-        , AngleOrDirection
-        , BackgroundAttachment
-        , BackgroundBlendMode
-        , BackgroundClip
-        , BackgroundImage
-        , BackgroundOrigin
-        , BackgroundRepeat
-        , BackgroundRepeatShorthand
-        , BasicProperty
-        , BorderCollapse
-        , BorderStyle
-        , BoxSizing
-        , Calc
-        , CalcExpression
-        , Ch
-        , Cm
-        , Color
-        , ColorStop
-        , ColorValue
-        , Compatible
-        , Cursor
-        , Display
-        , Em
-        , Ex
-        , ExplicitLength
-        , FeatureTagValue
-        , FlexBasis
-        , FlexDirection
-        , FlexDirectionOrWrap
-        , FlexWrap
-        , FontFamily
-        , FontSize
-        , FontStyle
-        , FontStyleOrFeatureTagValue
-        , FontVariant
-        , FontVariantCaps
-        , FontVariantLigatures
-        , FontVariantNumeric
-        , FontWeight
-        , ImportType
-        , In
-        , IncompatibleUnits
-        , IntOrAuto
-        , JustifyContent
-        , Length
-        , LengthOrAuto
-        , LengthOrAutoOrCoverOrContain
-        , LengthOrMinMaxDimension
-        , LengthOrNone
-        , LengthOrNoneOrMinMaxDimension
-        , LengthOrNumber
-        , LengthOrNumberOrAutoOrNoneOrContent
-        , ListStyle
-        , ListStylePosition
-        , ListStyleType
-        , MinMaxDimension
-        , Mm
-        , NonMixable
-        , None
-        , Number
-        , Outline
-        , Overflow
-        , Pc
-        , Pct
-        , Position
-        , Pt
-        , Px
-        , Rem
-        , Resize
-        , Style
-        , TableLayout
-        , TextDecorationLine
-        , TextDecorationStyle
-        , TextIndent
-        , TextOrientation
-        , TextOverflow
-        , TextRendering
-        , TextTransform
-        , TouchAction
-        , Transform
-        , TransformBox
-        , TransformStyle
-        , Value
-        , VerticalAlign
-        , Vh
-        , Visibility
-        , Vmax
-        , Vmin
-        , Vw
-        , WhiteSpace
-        , Wrap
-        , absolute
-        , active
-        , after
-        , alignItems
-        , alignSelf
-        , all
-        , allPetiteCaps
-        , allScroll
-        , allSmallCaps
-        , animationName
-        , any
-        , arabicIndic
-        , armenian
-        , auto
-        , backgroundAttachment
-        , backgroundBlendMode
-        , backgroundClip
-        , backgroundColor
-        , backgroundImage
-        , backgroundOrigin
-        , backgroundPosition
-        , backgroundPosition2
-        , backgroundRepeat
-        , backgroundRepeat2
-        , backgroundSize
-        , backgroundSize2
-        , baseline
-        , batch
-        , before
-        , bengali
-        , blink
-        , block
-        , bold
-        , bolder
-        , border
-        , border2
-        , border3
-        , borderBottom
-        , borderBottom2
-        , borderBottom3
-        , borderBottomColor
-        , borderBottomLeftRadius
-        , borderBottomLeftRadius2
-        , borderBottomRightRadius
-        , borderBottomRightRadius2
-        , borderBottomStyle
-        , borderBottomWidth
-        , borderBox
-        , borderCollapse
-        , borderColor
-        , borderColor2
-        , borderColor3
-        , borderColor4
-        , borderImageOutset
-        , borderImageOutset2
-        , borderImageOutset3
-        , borderImageOutset4
-        , borderImageWidth
-        , borderImageWidth2
-        , borderImageWidth3
-        , borderImageWidth4
-        , borderLeft
-        , borderLeft2
-        , borderLeft3
-        , borderLeftColor
-        , borderLeftStyle
-        , borderLeftWidth
-        , borderRadius
-        , borderRadius2
-        , borderRadius3
-        , borderRadius4
-        , borderRight
-        , borderRight2
-        , borderRight3
-        , borderRightColor
-        , borderRightStyle
-        , borderRightWidth
-        , borderSpacing
-        , borderSpacing2
-        , borderStyle
-        , borderTop
-        , borderTop2
-        , borderTop3
-        , borderTopColor
-        , borderTopLeftRadius
-        , borderTopLeftRadius2
-        , borderTopRightRadius
-        , borderTopRightRadius2
-        , borderTopStyle
-        , borderTopWidth
-        , borderWidth
-        , borderWidth2
-        , borderWidth3
-        , borderWidth4
-        , both
-        , bottom
-        , boxShadow
-        , boxShadow2
-        , boxShadow3
-        , boxShadow4
-        , boxShadow5
-        , boxShadow6
-        , boxSizing
-        , breakWord
-        , calc
-        , capitalize
-        , cell
-        , center
-        , ch
-        , checked
-        , circle
-        , cjkEarthlyBranch
-        , cjkHeavenlyStem
-        , clip
-        , cm
-        , colResize
-        , collapse
-        , color
-        , colorBurn
-        , colorDodge
-        , column
-        , columnReverse
-        , commonLigatures
-        , contain
-        , content
-        , contentBox
-        , contextMenu
-        , contextual
-        , copy
-        , cover
-        , crosshair
-        , currentColor
-        , cursive
-        , cursor
-        , cursorAlias
-        , darken
-        , dashed
-        , decimal
-        , decimalLeadingZero
-        , default
-        , deg
-        , devanagari
-        , diagonalFractions
-        , difference
-        , disabled
-        , disc
-        , discretionaryLigatures
-        , display
-        , displayFlex
-        , dotted
-        , double
-        , eResize
-        , eachLine
-        , ellipsis
-        , em
-        , empty
-        , enabled
-        , end
-        , ewResize
-        , ex
-        , exclusion
-        , fantasy
-        , featureOff
-        , featureOn
-        , featureTag
-        , featureTag2
-        , fill
-        , fillAvailable
-        , fillBox
-        , first
-        , firstChild
-        , firstLetter
-        , firstLine
-        , firstOfType
-        , fitContent
-        , fixed
-        , flat
-        , flex
-        , flex2
-        , flex3
-        , flexBasis
-        , flexDirection
-        , flexEnd
-        , flexFlow1
-        , flexFlow2
-        , flexGrow
-        , flexShrink
-        , flexStart
-        , flexWrap
-        , float
-        , focus
-        , fontFace
-        , fontFamilies
-        , fontFamily
-        , fontFeatureSettings
-        , fontFeatureSettingsList
-        , fontSize
-        , fontStyle
-        , fontVariant
-        , fontVariant2
-        , fontVariant3
-        , fontVariantCaps
-        , fontVariantLigatures
-        , fontVariantNumeric
-        , fontVariantNumeric2
-        , fontVariantNumeric3
-        , fontVariantNumerics
-        , fontWeight
-        , fullWidth
-        , fullscreen
-        , geometricPrecision
-        , georgian
-        , grab
-        , grabbing
-        , grad
-        , groove
-        , gujarati
-        , gurmukhi
-        , hanging
-        , hardLight
-        , height
-        , help
-        , hex
-        , hidden
-        , historicalLigatures
-        , horizontal
-        , hover
-        , hsl
-        , hsla
-        , hue
-        , important
-        , inches
-        , indeterminate
-        , inherit
-        , initial
-        , inline
-        , inlineBlock
-        , inlineFlex
-        , inlineListItem
-        , inlineTable
-        , inset
-        , inside
-        , int
-        , invalid
-        , italic
-        , justify
-        , justifyAll
-        , justifyContent
-        , kannada
-        , khmer
-        , lang
-        , lao
-        , large
-        , larger
-        , lastChild
-        , lastOfType
-        , left
-        , letterSpacing
-        , lighten
-        , lighter
-        , lineHeight
-        , lineThrough
-        , linearGradient
-        , linearGradient2
-        , liningNums
-        , link
-        , listItem
-        , listStyle
-        , listStyle2
-        , listStyle3
-        , listStylePosition
-        , listStyleType
-        , local
-        , lowerAlpha
-        , lowerGreek
-        , lowerLatin
-        , lowerRoman
-        , lowercase
-        , luminosity
-        , malayalam
-        , manipulation
-        , margin
-        , margin2
-        , margin3
-        , margin4
-        , marginBlockEnd
-        , marginBlockStart
-        , marginBottom
-        , marginInlineEnd
-        , marginInlineStart
-        , marginLeft
-        , marginRight
-        , marginTop
-        , matchParent
-        , matrix
-        , matrix3d
-        , maxContent
-        , maxHeight
-        , maxWidth
-        , medium
-        , middle
-        , minContent
-        , minHeight
-        , minWidth
-        , minus
-        , mm
-        , monospace
-        , move
-        , multiply
-        , myanmar
-        , nResize
-        , neResize
-        , neswResize
-        , noCommonLigatures
-        , noContextual
-        , noDiscretionaryLigatures
-        , noDrop
-        , noHistoricalLigatures
-        , noRepeat
-        , noWrap
-        , none
-        , normal
-        , notAllowed
-        , nsResize
-        , nthChild
-        , nthLastChild
-        , nthLastOfType
-        , nthOfType
-        , num
-        , nwResize
-        , nwseResize
-        , oblique
-        , oldstyleNums
-        , onlyChild
-        , onlyOfType
-        , opacity
-        , optimizeLegibility
-        , optimizeSpeed
-        , optional
-        , order
-        , ordinal
-        , oriya
-        , outOfRange
-        , outline
-        , outline3
-        , outlineColor
-        , outlineOffset
-        , outlineStyle
-        , outlineWidth
-        , outset
-        , outside
-        , overflow
-        , overflowWrap
-        , overflowX
-        , overflowY
-        , overlay
-        , overline
-        , padding
-        , padding2
-        , padding3
-        , padding4
-        , paddingBottom
-        , paddingBox
-        , paddingLeft
-        , paddingRight
-        , paddingTop
-        , painted
-        , panDown
-        , panLeft
-        , panRight
-        , panUp
-        , panX
-        , panY
-        , pc
-        , pct
-        , perspective
-        , petiteCaps
-        , pinchZoom
-        , plus
-        , pointer
-        , pointerEvents
-        , pointerEventsAll
-        , pointerEventsFill
-        , position
-        , pre
-        , preLine
-        , preWrap
-        , preserve3d
-        , progress
-        , property
-        , proportionalNums
-        , pseudoClass
-        , pseudoElement
-        , pt
-        , px
-        , qt
-        , rad
-        , readWrite
-        , relative
-        , rem
-        , repeat
-        , repeatX
-        , repeatY
-        , required
-        , resize
-        , rgb
-        , rgba
-        , ridge
-        , right
-        , root
-        , rotate
-        , rotate3d
-        , rotateX
-        , rotateY
-        , rotateZ
-        , round
-        , row
-        , rowResize
-        , rowReverse
-        , sResize
-        , sansSerif
-        , saturation
-        , scale
-        , scale2
-        , scale3d
-        , scaleX
-        , scaleY
-        , scope
-        , screenBlendMode
-        , scroll
-        , seResize
-        , selection
-        , separate
-        , serif
-        , skew
-        , skew2
-        , skewX
-        , skewY
-        , slashedZero
-        , small
-        , smallCaps
-        , smaller
-        , softLight
-        , solid
-        , space
-        , spaceAround
-        , spaceBetween
-        , square
-        , src_
-        , stackedFractions
-        , start
-        , static
-        , sticky
-        , stop
-        , stop2
-        , stretch
-        , stroke
-        , sub
-        , super
-        , swResize
-        , table
-        , tableCaption
-        , tableCell
-        , tableColumn
-        , tableColumnGroup
-        , tableFooterGroup
-        , tableHeaderGroup
-        , tableLayout
-        , tableRow
-        , tableRowGroup
-        , tabularNums
-        , target
-        , telugu
-        , textAlign
-        , textAlignLast
-        , textBottom
-        , textDecoration
-        , textDecoration2
-        , textDecoration3
-        , textDecorationLine
-        , textDecorationLines
-        , textDecorationStyle
-        , textDecorations
-        , textDecorations2
-        , textDecorations3
-        , textEmphasisColor
-        , textIndent
-        , textIndent2
-        , textIndent3
-        , textOrientation
-        , textOverflow
-        , textRendering
-        , textShadow
-        , textShadow2
-        , textShadow3
-        , textShadow4
-        , textTop
-        , textTransform
-        , text_
-        , thai
-        , thick
-        , thin
-        , titlingCaps
-        , toBottom
-        , toBottomLeft
-        , toBottomRight
-        , toLeft
-        , toRight
-        , toTop
-        , toTopLeft
-        , toTopRight
-        , top
-        , touchAction
-        , transform
-        , transformBox
-        , transformStyle
-        , transforms
-        , translate
-        , translate2
-        , translate3d
-        , translateX
-        , translateY
-        , translateZ
-        , transparent
-        , true
-        , turn
-        , underline
-        , unicase
-        , unset
-        , upperAlpha
-        , upperLatin
-        , upperRoman
-        , uppercase
-        , url
-        , valid
-        , vertical
-        , verticalAlign
-        , verticalText
-        , vh
-        , viewBox
-        , visibility
-        , visible
-        , visibleFill
-        , visiblePainted
-        , visibleStroke
-        , visited
-        , vmax
-        , vmin
-        , vw
-        , wResize
-        , wait
-        , wavy
-        , whiteSpace
-        , width
-        , wrap
-        , wrapReverse
-        , xLarge
-        , xSmall
-        , xxLarge
-        , xxSmall
-        , zIndex
-        , zero
-        , zoomIn
-        , zoomOut
-        )
+module Css exposing
+    ( Style, batch
+    , property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, pointerEvents, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
+    , important, solid, transparent, rgb, rgba, hsl, hsla, hex
+    , featureTag, featureTag2, featureOn, featureOff
+    , borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBottomColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, solid, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text_, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing, visiblePainted, visibleFill, visibleStroke, painted, stroke
+    , Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, calc, plus, minus
+    , Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax, Mm, Cm, In, Pt, Pc
+    , deg, rad, grad, turn
+    , pseudoClass, active, any, checked, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
+    , pseudoElement, after, before, firstLetter, firstLine, selection
+    , src_
+    , qt
+    , Compatible, absolute, all, allPetiteCaps, allSmallCaps, auto, baseline, block, bold, bolder, border, border2, border3, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomStyle, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderBox, borderColor, borderColor2, borderColor3, borderColor4, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftStyle, borderLeftWidth, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderRight, borderRight2, borderRight3, borderRightColor, borderRightStyle, borderRightWidth, borderStyle, borderCollapse, borderTop, borderTop2, borderTop3, borderTopColor, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderTopStyle, borderTopWidth, bottom, column, columnReverse, commonLigatures, content, contentBox, contextual, cursive, dashed, diagonalFractions, discretionaryLigatures, dotted, double, fantasy, fillBox, fixed, flat, displayFlex, flexEnd, flexStart, groove, hex, hidden, historicalLigatures, hsl, hsla, important, inherit, initial, inline, inlineBlock, inlineFlex, table, inlineTable, tableCell, tableRow, tableColumn, tableCaption, tableRowGroup, tableColumnGroup, tableHeaderGroup, tableFooterGroup, inlineListItem, inset, italic, large, larger, lighter, liningNums, listItem, manipulation, matrix, matrix3d, middle, monospace, noCommonLigatures, noContextual, noDiscretionaryLigatures, noHistoricalLigatures, noWrap, none, normal, oblique, oldstyleNums, ordinal, outset, panX, panLeft, panRight, panY, panUp, panDown, perspective, petiteCaps, pinchZoom, position, float, preserve3d, proportionalNums, relative, rgb, rgba, ridge, rotate, rotate3d, rotateX, rotateY, rotateZ, row, rowReverse, sansSerif, scale, scale2, scale3d, scaleX, scaleY, scroll, serif, skew, skew2, skewX, skewY, slashedZero, small, smallCaps, smaller, solid, stackedFractions, static, sticky, stretch, sub, super, tableLayout, tabularNums, textBottom, textTop, titlingCaps, top, translate, translate2, translate3d, translateX, translateY, translateZ, transparent, unicase, unset, viewBox, visible, wavy, wrap, wrapReverse, xLarge, xSmall, xxLarge, xxSmall, backgroundRepeat, backgroundRepeat2, repeatX, repeatY, repeat, space, round, noRepeat, backgroundAttachment, local, backgroundBlendMode, multiply, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, luminosity, screenBlendMode, backgroundClip, paddingBox, backgroundImage, url, backgroundPosition, backgroundPosition2, backgroundOrigin, backgroundSize, backgroundSize2, cover, contain, both, horizontal, vertical, breakWord, spaceAround, spaceBetween, separate, collapse, pointerEventsAll, pointerEventsFill
+    , listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
+    , listStylePosition, inside, outside
+    , listStyle, listStyle2, listStyle3
+    , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+    , AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
+    , FontSize, ColorValue, ColorStop, IntOrAuto
+    , animationName
+    , thin, medium, thick, blink
+    , Color
+    )
 
 {-| Define CSS styles in Elm.
 
@@ -1418,7 +781,6 @@ type alias TableLayout compatible =
 
 
     -- calc(100vh - (2px + 2rem))
-
     screenMinusBorderAndFooter =
         calc (vh 100) minus (calc (px 2) plus (rem 2))
 
@@ -1428,7 +790,7 @@ type alias TableLayout compatible =
     myHeight =
         height screenMinusBorderAndFooter
 
-Using * and / with calc isn't supported. Use arithmetics from elm instead.
+Using \* and / with calc isn't supported. Use arithmetics from elm instead.
 
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
@@ -2789,13 +2151,13 @@ type PxUnits
     = PxUnits
 
 
-{-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
+{-| [\`\`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 type alias Mm =
     ExplicitLength MMUnits
 
 
-{-| [``](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
+{-| [\`\`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 mm : Float -> Mm
 mm =
@@ -3181,6 +2543,7 @@ skewY { value } =
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
 
     transform (translate (px 100))
+
     transform (translate2 (px 100) (pct -45))
 
 -}
@@ -3194,6 +2557,7 @@ translate { value } =
 {-| The [`translate`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#translate()) transform-function.
 
     transform (translate (px 100))
+
     transform (translate2 (px 100) (pct -45))
 
 -}
@@ -4094,6 +3458,7 @@ type alias ColorStop compatibleA compatibleB unit =
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
     linearGradient (stop2 red <| pct 75) (stop <| hex "222") []
+
     linearGradient (stop red) (stop <| hex "222") [ stop green, stop blue ]
 
 -}
@@ -4119,6 +3484,7 @@ linearGradient stop1 stop2 stops =
 {-| Sets [`linear-gradient`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient)
 
     linearGradient2 toBottomLeft (stop2 red <| pct 75) (stop <| hex "222") []
+
     linearGradient2 toTop (stop red) (stop <| hex "222") [ stop green, stop blue ]
 
 -}
@@ -4648,7 +4014,7 @@ textRendering =
 
 {-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
 
-    text-orientation mixed
+    text - orientation mixed
 
 -}
 textOrientation : TextOrientation compatible -> Style
@@ -4668,9 +4034,12 @@ textOverflow =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    textShadow  none
+    textShadow none
+
     textShadow2 (px 1) (px 2)
+
     textShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
@@ -4681,9 +4050,12 @@ textShadow =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    textShadow  none
+    textShadow none
+
     textShadow2 (px 1) (px 2)
+
     textShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
@@ -4694,9 +4066,12 @@ textShadow2 =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    textShadow  none
+    textShadow none
+
     textShadow2 (px 1) (px 2)
+
     textShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
@@ -4707,9 +4082,12 @@ textShadow3 =
 
 {-| Sets [`text-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow).
 
-    textShadow  none
+    textShadow none
+
     textShadow2 (px 1) (px 2)
+
     textShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     textShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
 
 -}
@@ -4720,17 +4098,28 @@ textShadow4 =
 
 {-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
 
-    boxShadow  none
+    boxShadow none
+
     boxShadow2 (px 1) (px 2)
+
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     boxShadow3 (px 1) (px 2) (px 3)
+
     boxShadow3 inset (px 2) (px 3)
+
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+
     boxShadow4 inset (px 2) (px 3) (px 4)
+
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
@@ -4741,17 +4130,28 @@ boxShadow =
 
 {-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
 
-    boxShadow  none
+    boxShadow none
+
     boxShadow2 (px 1) (px 2)
+
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     boxShadow3 (px 1) (px 2) (px 3)
+
     boxShadow3 inset (px 2) (px 3)
+
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+
     boxShadow4 inset (px 2) (px 3) (px 4)
+
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
@@ -4762,17 +4162,28 @@ boxShadow2 =
 
 {-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
 
-    boxShadow  none
+    boxShadow none
+
     boxShadow2 (px 1) (px 2)
+
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     boxShadow3 (px 1) (px 2) (px 3)
+
     boxShadow3 inset (px 2) (px 3)
+
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+
     boxShadow4 inset (px 2) (px 3) (px 4)
+
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
@@ -4783,17 +4194,28 @@ boxShadow3 =
 
 {-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
 
-    boxShadow  none
+    boxShadow none
+
     boxShadow2 (px 1) (px 2)
+
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     boxShadow3 (px 1) (px 2) (px 3)
+
     boxShadow3 inset (px 2) (px 3)
+
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+
     boxShadow4 inset (px 2) (px 3) (px 4)
+
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
@@ -4804,17 +4226,28 @@ boxShadow4 =
 
 {-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
 
-    boxShadow  none
+    boxShadow none
+
     boxShadow2 (px 1) (px 2)
+
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     boxShadow3 (px 1) (px 2) (px 3)
+
     boxShadow3 inset (px 2) (px 3)
+
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+
     boxShadow4 inset (px 2) (px 3) (px 4)
+
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
@@ -4825,17 +4258,28 @@ boxShadow5 =
 
 {-| Sets [`box-shadow`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow).
 
-    boxShadow  none
+    boxShadow none
+
     boxShadow2 (px 1) (px 2)
+
     boxShadow3 (px 1) (px 2) (rgb 211 121 112)
+
     boxShadow3 (px 1) (px 2) (px 3)
+
     boxShadow3 inset (px 2) (px 3)
+
     boxShadow4 (px 1) (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 inset (px 2) (px 3) (rgb 211 121 112)
+
     boxShadow4 (px 1) (px 2) (px 3) (px 4)
+
     boxShadow4 inset (px 2) (px 3) (px 4)
+
     boxShadow5 (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow5 inset (px 2) (px 3) (px 4) (rgb 211 121 112)
+
     boxShadow6 inset (px 1) (px 2) (px 3) (px 4) (rgb 211 121 112)
 
 -}
@@ -4846,8 +4290,10 @@ boxShadow6 =
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
 
-    textIndent  (px 40)
+    textIndent (px 40)
+
     textIndent2 (px 40) hanging
+
     textIndent3 (px 40) hanging eachLine
 
 -}
@@ -4858,8 +4304,10 @@ textIndent =
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
 
-    textIndent  (px 40)
+    textIndent (px 40)
+
     textIndent2 (px 40) hanging
+
     textIndent3 (px 40) hanging eachLine
 
 -}
@@ -4870,8 +4318,10 @@ textIndent2 =
 
 {-| Sets [`text-indent`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent).
 
-    textIndent  (px 40)
+    textIndent (px 40)
+
     textIndent2 (px 40) hanging
+
     textIndent3 (px 40) hanging eachLine
 
 -}
@@ -4981,9 +4431,12 @@ maxHeight =
 
 {-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
 
-    padding  (px 10)
+    padding (px 10)
+
     padding2 (px 10) (px 10)
+
     padding3 (px 10) (px 10) (px 10)
+
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -4994,9 +4447,12 @@ padding =
 
 {-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
 
-    padding  (px 10)
+    padding (px 10)
+
     padding2 (px 10) (px 10)
+
     padding3 (px 10) (px 10) (px 10)
+
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -5007,9 +4463,12 @@ padding2 =
 
 {-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
 
-    padding  (px 10)
+    padding (px 10)
+
     padding2 (px 10) (px 10)
+
     padding3 (px 10) (px 10) (px 10)
+
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -5020,9 +4479,12 @@ padding3 =
 
 {-| Sets [`padding`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
 
-    padding  (px 10)
+    padding (px 10)
+
     padding2 (px 10) (px 10)
+
     padding3 (px 10) (px 10) (px 10)
+
     padding4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -5077,9 +4539,12 @@ paddingLeft =
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
 
-    margin  (px 10)
+    margin (px 10)
+
     margin2 (px 10) (px 10)
+
     margin3 (px 10) (px 10) (px 10)
+
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -5090,9 +4555,12 @@ margin =
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
 
-    margin  (px 10)
+    margin (px 10)
+
     margin2 (px 10) (px 10)
+
     margin3 (px 10) (px 10) (px 10)
+
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -5103,9 +4571,12 @@ margin2 =
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
 
-    margin  (px 10)
+    margin (px 10)
+
     margin2 (px 10) (px 10)
+
     margin3 (px 10) (px 10) (px 10)
+
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -5116,9 +4587,12 @@ margin3 =
 
 {-| Sets [`margin`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
 
-    margin  (px 10)
+    margin (px 10)
+
     margin2 (px 10) (px 10)
+
     margin3 (px 10) (px 10) (px 10)
+
     margin4 (px 10) (px 10) (px 10) (px 10)
 
 -}
@@ -5210,6 +4684,7 @@ marginInlineEnd =
 {-| The [`top`](https://developer.mozilla.org/en-US/docs/Web/CSS/top) property.
 
     position absolute
+
     top (px 5)
 
 This can also be used as a `top` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
@@ -5225,6 +4700,7 @@ top =
 {-| The [`bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom) property.
 
     position absolute
+
     bottom (px 5)
 
 This can also be used as a `bottom` [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) value:
@@ -5240,6 +4716,7 @@ bottom =
 {-| The [`left`](https://developer.mozilla.org/en-US/docs/Web/CSS/left) property.
 
     position absolute
+
     left (px 5)
 
 This can also be used as a `left` [text alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
@@ -5259,6 +4736,7 @@ left =
 {-| Sets [`right`](https://developer.mozilla.org/en-US/docs/Web/CSS/right).
 
     position absolute
+
     right (px 5)
 
 This can also be used as a `right` [alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) value:
@@ -5786,6 +5264,7 @@ featureTag tag =
 with a particular integer value
 
     fontFeatureSettings (featureTag2 "smcp" on)
+
     fontFeatureSettings (featureTag2 "swsh" 2)
 
 -}
@@ -5802,8 +5281,10 @@ featureTag2 tag value =
 
 {-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
 
-    border  (px 10)
+    border (px 10)
+
     border2 (px 10) dashed
+
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
@@ -5814,8 +5295,10 @@ border =
 
 {-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
 
-    border  (px 10)
+    border (px 10)
+
     border2 (px 10) dashed
+
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
@@ -5826,8 +5309,10 @@ border2 =
 
 {-| Sets [`border`](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
 
-    border  (px 10)
+    border (px 10)
+
     border2 (px 10) dashed
+
     border3 (px 10) dashed (rgb 11 14 17)
 
 -}
@@ -5838,8 +5323,10 @@ border3 =
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
 
-    borderTop  (px 5)
+    borderTop (px 5)
+
     borderTop2 (px 5) dashed
+
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5850,8 +5337,10 @@ borderTop =
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
 
-    borderTop  (px 5)
+    borderTop (px 5)
+
     borderTop2 (px 5) dashed
+
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5862,8 +5351,10 @@ borderTop2 =
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
 
-    borderTop  (px 5)
+    borderTop (px 5)
+
     borderTop2 (px 5) dashed
+
     borderTop3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5874,8 +5365,10 @@ borderTop3 =
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
 
-    borderBottom  (px 5)
+    borderBottom (px 5)
+
     borderBottom2 (px 5) dashed
+
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5886,8 +5379,10 @@ borderBottom =
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
 
-    borderBottom  (px 5)
+    borderBottom (px 5)
+
     borderBottom2 (px 5) dashed
+
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5898,8 +5393,10 @@ borderBottom2 =
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
 
-    borderBottom  (px 5)
+    borderBottom (px 5)
+
     borderBottom2 (px 5) dashed
+
     borderBottom3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5910,8 +5407,10 @@ borderBottom3 =
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
 
-    borderLeft  (px 5)
+    borderLeft (px 5)
+
     borderLeft2 (px 5) dashed
+
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5922,8 +5421,10 @@ borderLeft =
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
 
-    borderLeft  (px 5)
+    borderLeft (px 5)
+
     borderLeft2 (px 5) dashed
+
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5934,8 +5435,10 @@ borderLeft2 =
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
 
-    borderLeft  (px 5)
+    borderLeft (px 5)
+
     borderLeft2 (px 5) dashed
+
     borderLeft3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5946,8 +5449,10 @@ borderLeft3 =
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
 
-    borderRight  (px 5)
+    borderRight (px 5)
+
     borderRight2 (px 5) dashed
+
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5958,8 +5463,10 @@ borderRight =
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
 
-    borderRight  (px 5)
+    borderRight (px 5)
+
     borderRight2 (px 5) dashed
+
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5970,8 +5477,10 @@ borderRight2 =
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
 
-    borderRight  (px 5)
+    borderRight (px 5)
+
     borderRight2 (px 5) dashed
+
     borderRight3 (px 5) dashed (rgb 11 14 17)
 
 -}
@@ -5982,9 +5491,12 @@ borderRight3 =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (int 2)
+    borderImageOutset (int 2)
+
     borderImageOutset2 (int 2) (px 15)
+
     borderImageOutset3 (int 2) (px 15) (int 1.5)
+
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
@@ -5995,9 +5507,12 @@ borderImageOutset =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (int 2)
+    borderImageOutset (int 2)
+
     borderImageOutset2 (int 2) (px 15)
+
     borderImageOutset3 (int 2) (px 15) (int 1.5)
+
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
@@ -6008,9 +5523,12 @@ borderImageOutset2 =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (int 2)
+    borderImageOutset (int 2)
+
     borderImageOutset2 (int 2) (px 15)
+
     borderImageOutset3 (int 2) (px 15) (int 1.5)
+
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
@@ -6021,9 +5539,12 @@ borderImageOutset3 =
 
 {-| Sets [`border-image-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset)
 
-    borderImageOutset  (int 2)
+    borderImageOutset (int 2)
+
     borderImageOutset2 (int 2) (px 15)
+
     borderImageOutset3 (int 2) (px 15) (int 1.5)
+
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
 -}
@@ -6034,9 +5555,12 @@ borderImageOutset4 =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (int 3)
+    borderImageWidth (int 3)
+
     borderImageWidth2 (int 3) (px 15)
+
     borderImageWidth3 (int 3) (px 15) auto
+
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
@@ -6047,9 +5571,12 @@ borderImageWidth =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (int 3)
+    borderImageWidth (int 3)
+
     borderImageWidth2 (int 3) (px 15)
+
     borderImageWidth3 (int 3) (px 15) auto
+
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
@@ -6060,9 +5587,12 @@ borderImageWidth2 =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (int 3)
+    borderImageWidth (int 3)
+
     borderImageWidth2 (int 3) (px 15)
+
     borderImageWidth3 (int 3) (px 15) auto
+
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
@@ -6073,9 +5603,12 @@ borderImageWidth3 =
 
 {-| Sets [`border-image-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width)
 
-    borderImageWidth  (int 3)
+    borderImageWidth (int 3)
+
     borderImageWidth2 (int 3) (px 15)
+
     borderImageWidth3 (int 3) (px 15) auto
+
     borderImageWidth4 (int 3) (px 15) auto (int 2)
 
 -}
@@ -6206,9 +5739,12 @@ borderCollapse =
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 
-    borderWidth  (em 4)
+    borderWidth (em 4)
+
     borderWidth2 (em 4) (px 2)
+
     borderWidth3 (em 4) (px 2) (pct 5)
+
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6219,9 +5755,12 @@ borderWidth =
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 
-    borderWidth  (em 4)
+    borderWidth (em 4)
+
     borderWidth2 (em 4) (px 2)
+
     borderWidth3 (em 4) (px 2) (pct 5)
+
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6232,9 +5771,12 @@ borderWidth2 =
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 
-    borderWidth  (em 4)
+    borderWidth (em 4)
+
     borderWidth2 (em 4) (px 2)
+
     borderWidth3 (em 4) (px 2) (pct 5)
+
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6245,9 +5787,12 @@ borderWidth3 =
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 
-    borderWidth  (em 4)
+    borderWidth (em 4)
+
     borderWidth2 (em 4) (px 2)
+
     borderWidth3 (em 4) (px 2) (pct 5)
+
     borderWidth4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6288,7 +5833,8 @@ borderRightWidth =
 
 {-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
 
-    borderTopWidth  (em 4)
+    borderTopWidth (em 4)
+
     borderTopWidth2 (em 4) (px 2)
 
 -}
@@ -6299,7 +5845,8 @@ borderTopWidth =
 
 {-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
 
-    borderTopWidth  (em 4)
+    borderTopWidth (em 4)
+
     borderTopWidth2 (em 4) (px 2)
 
 -}
@@ -6310,7 +5857,8 @@ borderTopWidth2 =
 
 {-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
 
-    borderBottomLeftRadius  (em 4)
+    borderBottomLeftRadius (em 4)
+
     borderBottomLeftRadius2 (em 4) (px 2)
 
 -}
@@ -6321,7 +5869,8 @@ borderBottomLeftRadius =
 
 {-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
 
-    borderBottomLeftRadius  (em 4)
+    borderBottomLeftRadius (em 4)
+
     borderBottomLeftRadius2 (em 4) (px 2)
 
 -}
@@ -6332,7 +5881,8 @@ borderBottomLeftRadius2 =
 
 {-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
 
-    borderBottomRightRadius  (em 4)
+    borderBottomRightRadius (em 4)
+
     borderBottomRightRadius2 (em 4) (px 2)
 
 -}
@@ -6343,7 +5893,8 @@ borderBottomRightRadius =
 
 {-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
 
-    borderBottomRightRadius  (em 4)
+    borderBottomRightRadius (em 4)
+
     borderBottomRightRadius2 (em 4) (px 2)
 
 -}
@@ -6354,7 +5905,8 @@ borderBottomRightRadius2 =
 
 {-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
 
-    borderTopLeftRadius  (em 4)
+    borderTopLeftRadius (em 4)
+
     borderTopLeftRadius2 (em 4) (px 2)
 
 -}
@@ -6365,7 +5917,8 @@ borderTopLeftRadius =
 
 {-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
 
-    borderTopLeftRadius  (em 4)
+    borderTopLeftRadius (em 4)
+
     borderTopLeftRadius2 (em 4) (px 2)
 
 -}
@@ -6376,7 +5929,8 @@ borderTopLeftRadius2 =
 
 {-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
 
-    borderTopRightRadius  (em 4)
+    borderTopRightRadius (em 4)
+
     borderTopRightRadius2 (em 4) (px 2)
 
 -}
@@ -6387,7 +5941,8 @@ borderTopRightRadius =
 
 {-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
 
-    borderTopRightRadius  (em 4)
+    borderTopRightRadius (em 4)
+
     borderTopRightRadius2 (em 4) (px 2)
 
 -}
@@ -6398,9 +5953,12 @@ borderTopRightRadius2 =
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
 
-    borderRadius  (em 4)
+    borderRadius (em 4)
+
     borderRadius2 (em 4) (px 2)
+
     borderRadius3 (em 4) (px 2) (pct 5)
+
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6411,9 +5969,12 @@ borderRadius =
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
 
-    borderRadius  (em 4)
+    borderRadius (em 4)
+
     borderRadius2 (em 4) (px 2)
+
     borderRadius3 (em 4) (px 2) (pct 5)
+
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6424,9 +5985,12 @@ borderRadius2 =
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
 
-    borderRadius  (em 4)
+    borderRadius (em 4)
+
     borderRadius2 (em 4) (px 2)
+
     borderRadius3 (em 4) (px 2) (pct 5)
+
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6437,9 +6001,12 @@ borderRadius3 =
 
 {-| Sets [`border-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
 
-    borderRadius  (em 4)
+    borderRadius (em 4)
+
     borderRadius2 (em 4) (px 2)
+
     borderRadius3 (em 4) (px 2) (pct 5)
+
     borderRadius4 (em 4) (px 2) (pct 5) (px 3)
 
 -}
@@ -6450,7 +6017,8 @@ borderRadius4 =
 
 {-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing)
 
-    borderSpacing  (em 4)
+    borderSpacing (em 4)
+
     borderSpacing2 (em 4) (px 2)
 
 -}
@@ -6461,7 +6029,8 @@ borderSpacing =
 
 {-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing)
 
-    borderSpacing  (em 4)
+    borderSpacing (em 4)
+
     borderSpacing2 (em 4) (px 2)
 
 -}
@@ -6472,9 +6041,12 @@ borderSpacing2 =
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
 
-    borderColor  (rgb 12 11 10)
+    borderColor (rgb 12 11 10)
+
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
@@ -6485,9 +6057,12 @@ borderColor c =
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
 
-    borderColor  (rgb 12 11 10)
+    borderColor (rgb 12 11 10)
+
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
@@ -6502,9 +6077,12 @@ borderColor2 c1 c2 =
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
 
-    borderColor  (rgb 12 11 10)
+    borderColor (rgb 12 11 10)
+
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
@@ -6519,9 +6097,12 @@ borderColor3 c1 c2 c3 =
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
 
-    borderColor  (rgb 12 11 10)
+    borderColor (rgb 12 11 10)
+
     borderColor2 (rgb 12 11 10) (hex "FFBBCC")
+
     borderColor3 (rgb 12 11 10) (hex "FFBBCC") inherit
+
     borderColor4 (rgb 12 11 10) (hex "FFBBCC") inherit (rgb 1 2 3)
 
 -}
@@ -6536,8 +6117,10 @@ borderColor4 c1 c2 c3 c4 =
 
 {-| Sets [`outline`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
 
-    outline  zero
-    outline  initial
+    outline zero
+
+    outline initial
+
     outline3 (px 10) dashed (rgb 11 14 17)
 
 -}
@@ -6548,8 +6131,10 @@ outline =
 
 {-| Sets [`outline`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
 
-    outline  zero
-    outline  initial
+    outline zero
+
+    outline initial
+
     outline3 (px 10) dashed (rgb 11 14 17)
 
 -}
@@ -6561,7 +6146,9 @@ outline3 =
 {-| Sets [`outline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color)
 
     outlineColor (rgb 11 14 17)
+
     outlineColor (hex "#ffffff")
+
     outlineColor (hsla 120 0.5 0.5 0.5)
 
 -}
@@ -6573,7 +6160,9 @@ outlineColor c =
 {-| Sets [`outline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width)
 
     outlineWidth (px 10)
+
     outlineWidth (em 1.4)
+
     outlineWidth none
 
 -}
@@ -6585,7 +6174,9 @@ outlineWidth =
 {-| Sets [`outline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-style)
 
     outlineStyle dashed
+
     outlineStyle solid
+
     outlineStyle outset
 
 -}
@@ -6597,7 +6188,9 @@ outlineStyle =
 {-| Sets [`outline-offset`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset)
 
     outlineOffset (px 10)
+
     outlineOffset (em 1.4)
+
     outlineOffset (pct 50)
 
 -}
@@ -6766,7 +6359,7 @@ backgroundSize =
 
 {-| Sets ['background-size'](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
 
-    backgroundSize2 50% auto
+    backgroundSize2 50 % auto
 
 -}
 backgroundSize2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
@@ -6818,8 +6411,9 @@ fontFace value =
 
 {-| For use with [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
 
-    fontFamily    serif
-    fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
+    fontFamily serif
+
+    fontFamilies [ qt "Gill Sans Extrabold", "Helvetica", .value sansSerif ]
 
 -}
 qt : String -> String
@@ -6837,8 +6431,9 @@ fontFamily =
 
 {-| For multiple font families:
 
-    fontFamilies  ["Verdana", "Arial"]
-    fontFamilies  [(qt "Gill Sans Extrabold"), "Helvetica", .value sansSerif]
+    fontFamilies [ "Verdana", "Arial" ]
+
+    fontFamilies [ qt "Gill Sans Extrabold", "Helvetica", .value sansSerif ]
 
 -}
 fontFamilies : List String -> Style
@@ -6849,7 +6444,9 @@ fontFamilies =
 {-| Sets [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings)
 
     fontFeatureSettings (featureTag "hist")
+
     fontFeatureSettings (featureTag2 "smcp" on)
+
     fontFeatureSettings (featureTag2 "swsh" 2)
 
 -}
@@ -6860,7 +6457,7 @@ fontFeatureSettings { value } =
 
 {-| Sets [`font-feature-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings)
 
-    fontFeatureSettingsList [featureTag "c2sc", featureTag "smcp"]
+    fontFeatureSettingsList [ featureTag "c2sc", featureTag "smcp" ]
 
 -}
 fontFeatureSettingsList : List (FeatureTagValue a) -> Style
@@ -6873,8 +6470,9 @@ fontFeatureSettingsList featureTagValues =
 
 {-| Sets [`font-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
 
-    fontSize  xxSmall
-    fontSize  (px 12)
+    fontSize xxSmall
+
+    fontSize (px 12)
 
 -}
 fontSize : FontSize a -> Style
@@ -6884,7 +6482,7 @@ fontSize =
 
 {-| Sets [`font-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
 
-    fontStyle  italic
+    fontStyle italic
 
 -}
 fontStyle : FontStyle a -> Style
@@ -6894,8 +6492,9 @@ fontStyle =
 
 {-| Sets [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 
-    fontWeight  bold
-    fontWeight  (int 300)
+    fontWeight bold
+
+    fontWeight (int 300)
 
 -}
 fontWeight : FontWeight a -> Style
@@ -6905,10 +6504,13 @@ fontWeight { value } =
 
 {-| Sets [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
 
-    fontVariant   smallCaps
-    fontVariant2  commonLigatures smallCaps
-    fontVariant3  commonLigatures smallCaps slashedZero
-    fontVariants  [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
+    fontVariant smallCaps
+
+    fontVariant2 commonLigatures smallCaps
+
+    fontVariant3 commonLigatures smallCaps slashedZero
+
+    fontVariants [ oldstyleNums tabularNums stackedFractions ordinal slashedZero ]
 
 -}
 fontVariant : FontVariant a -> Style
@@ -7190,14 +6792,18 @@ grabbing =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    textDecoration  underline
+    textDecoration underline
+
     textDecoration2 underline wavy
+
     textDecoration3 underline wavy (rgb 128 64 32)
 
 You can specify multiple line decorations with `textDecorations`.
 
-    textDecorations  [ underline, overline ]
+    textDecorations [ underline, overline ]
+
     textDecorations2 [ underline, overline ] wavy
+
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
@@ -7208,14 +6814,18 @@ textDecoration =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    textDecoration  underline
+    textDecoration underline
+
     textDecoration2 underline wavy
+
     textDecoration3 underline wavy (rgb 128 64 32)
 
 You can specify multiple line decorations with `textDecorations`.
 
-    textDecorations  [ underline, overline ]
+    textDecorations [ underline, overline ]
+
     textDecorations2 [ underline, overline ] wavy
+
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
@@ -7226,14 +6836,18 @@ textDecoration2 =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    textDecoration  underline
+    textDecoration underline
+
     textDecoration2 underline wavy
+
     textDecoration3 underline wavy (rgb 128 64 32)
 
 You can specify multiple line decorations with `textDecorations`.
 
-    textDecorations  [ underline, overline ]
+    textDecorations [ underline, overline ]
+
     textDecorations2 [ underline, overline ] wavy
+
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
@@ -7244,8 +6858,10 @@ textDecoration3 =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    textDecorations  [ underline, overline ]
+    textDecorations [ underline, overline ]
+
     textDecorations2 [ underline, overline ] wavy
+
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
@@ -7256,8 +6872,10 @@ textDecorations =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    textDecorations  [ underline, overline ]
+    textDecorations [ underline, overline ]
+
     textDecorations2 [ underline, overline ] wavy
+
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
@@ -7268,8 +6886,10 @@ textDecorations2 =
 
 {-| Sets [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration)
 
-    textDecorations  [ underline, overline ]
+    textDecorations [ underline, overline ]
+
     textDecorations2 [ underline, overline ] wavy
+
     textDecorations3 [ underline, overline ] wavy (rgb 128 64 32)
 
 -}
@@ -7284,7 +6904,7 @@ textDecorations3 =
 
 You can specify multiple line decorations with `textDecorationLines`.
 
-    textDecorationLines  [ underline, overline ]
+    textDecorationLines [ underline, overline ]
 
 -}
 textDecorationLine : TextDecorationLine compatible -> Style
@@ -7294,7 +6914,7 @@ textDecorationLine =
 
 {-| Sets [`text-decoration-line`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-line)
 
-    textDecorationLines  [ underline, overline ]
+    textDecorationLines [ underline, overline ]
 
 -}
 textDecorationLines : List (TextDecorationLine compatible) -> Style

@@ -1,26 +1,10 @@
-module Html.Styled.Events
-    exposing
-        ( Options
-        , defaultOptions
-        , keyCode
-        , on
-        , onBlur
-        , onCheck
-        , onClick
-        , onDoubleClick
-        , onFocus
-        , onInput
-        , onMouseDown
-        , onMouseEnter
-        , onMouseLeave
-        , onMouseOut
-        , onMouseOver
-        , onMouseUp
-        , onSubmit
-        , onWithOptions
-        , targetChecked
-        , targetValue
-        )
+module Html.Styled.Events exposing
+    ( onClick, onDoubleClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave, onMouseOver, onMouseOut
+    , onInput, onCheck, onSubmit
+    , onBlur, onFocus
+    , on, onWithOptions, Options, defaultOptions
+    , targetValue, targetChecked, keyCode
+    )
 
 {-| Drop-in replacement for the `Html.Events` module from the `elm-lang/html` package.
 

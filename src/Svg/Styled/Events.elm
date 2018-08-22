@@ -1,26 +1,9 @@
-module Svg.Styled.Events
-    exposing
-        ( on
-        , onAbort
-        , onActivate
-        , onBegin
-        , onClick
-        , onEnd
-        , onError
-        , onFocusIn
-        , onFocusOut
-        , onLoad
-        , onMouseDown
-        , onMouseMove
-        , onMouseOut
-        , onMouseOver
-        , onMouseUp
-        , onRepeat
-        , onResize
-        , onScroll
-        , onUnload
-        , onZoom
-        )
+module Svg.Styled.Events exposing
+    ( onBegin, onEnd, onRepeat
+    , onAbort, onError, onResize, onScroll, onLoad, onUnload, onZoom
+    , onActivate, onClick, onFocusIn, onFocusOut, onMouseDown, onMouseMove, onMouseOut, onMouseOver, onMouseUp
+    , on
+    )
 
 {-| Drop-in replacement for the `Svg.Events` module from the `elm-lang/svg` package.
 

@@ -1,27 +1,26 @@
-module VirtualDom.Styled
-    exposing
-        ( Classname
-        , Node
-        , Property(Property)
-        , attribute
-        , attributeNS
-        , getClassname
-        , keyedNode
-        , lazy
-        , lazy2
-        , lazy3
-        , makeSnippet
-        , map
-        , mapProperty
-        , node
-        , on
-        , onWithOptions
-        , property
-        , text
-        , toUnstyled
-        , unstyledNode
-        , unstyledProperty
-        )
+module VirtualDom.Styled exposing
+    ( Classname
+    , Node
+    , Property(Property)
+    , attribute
+    , attributeNS
+    , getClassname
+    , keyedNode
+    , lazy
+    , lazy2
+    , lazy3
+    , makeSnippet
+    , map
+    , mapProperty
+    , node
+    , on
+    , onWithOptions
+    , property
+    , text
+    , toUnstyled
+    , unstyledNode
+    , unstyledProperty
+    )
 
 import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve

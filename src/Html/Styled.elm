@@ -1,115 +1,24 @@
-module Html.Styled
-    exposing
-        ( Attribute
-        , Html
-        , a
-        , abbr
-        , address
-        , article
-        , aside
-        , audio
-        , b
-        , bdi
-        , bdo
-        , beginnerProgram
-        , blockquote
-        , body
-        , br
-        , button
-        , canvas
-        , caption
-        , cite
-        , code
-        , col
-        , colgroup
-        , datalist
-        , dd
-        , del
-        , details
-        , dfn
-        , div
-        , dl
-        , dt
-        , em
-        , embed
-        , fieldset
-        , figcaption
-        , figure
-        , footer
-        , form
-        , fromUnstyled
-        , h1
-        , h2
-        , h3
-        , h4
-        , h5
-        , h6
-        , header
-        , hr
-        , i
-        , iframe
-        , img
-        , input
-        , ins
-        , kbd
-        , keygen
-        , label
-        , legend
-        , li
-        , main_
-        , map
-        , mark
-        , math
-        , menu
-        , menuitem
-        , meter
-        , nav
-        , node
-        , object
-        , ol
-        , optgroup
-        , option
-        , output
-        , p
-        , param
-        , pre
-        , program
-        , programWithFlags
-        , progress
-        , q
-        , rp
-        , rt
-        , ruby
-        , s
-        , samp
-        , section
-        , select
-        , small
-        , source
-        , span
-        , strong
-        , styled
-        , sub
-        , summary
-        , sup
-        , table
-        , tbody
-        , td
-        , text
-        , textarea
-        , tfoot
-        , th
-        , thead
-        , time
-        , toUnstyled
-        , tr
-        , track
-        , u
-        , ul
-        , var
-        , video
-        , wbr
-        )
+module Html.Styled exposing
+    ( styled, fromUnstyled, toUnstyled
+    , Html, Attribute, text, node, map
+    , beginnerProgram, program, programWithFlags
+    , h1, h2, h3, h4, h5, h6
+    , div, p, hr, pre, blockquote
+    , span, a, code, em, strong, i, b, u, sub, sup, br
+    , ol, ul, li, dl, dt, dd
+    , img, iframe, canvas, math
+    , form, input, textarea, button, select, option
+    , section, nav, article, aside, header, footer, address, main_, body
+    , figure, figcaption
+    , table, caption, colgroup, col, tbody, thead, tfoot, tr, td, th
+    , details, menu, menuitem, summary
+    , fieldset, legend, label, datalist, optgroup, keygen, output, progress, meter
+    , audio, video, source, track
+    , embed, object, param
+    , ins, del
+    , small, cite, dfn, abbr, time, var, samp, kbd, s, q
+    , mark, ruby, rt, rp, bdi, bdo, wbr
+    )
 
 {-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
 The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:

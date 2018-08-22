@@ -1,4 +1,4 @@
-module Css.Structure exposing (..)
+module Css.Structure exposing (Compatible(..), Declaration(..), KeyframeProperty, MediaExpression, MediaQuery(..), MediaType(..), Number, Property, PseudoElement(..), RepeatableSimpleSelector(..), Selector(..), SelectorCombinator(..), SimpleSelectorSequence(..), StyleBlock(..), Stylesheet, TypeSelector(..), appendProperty, appendPseudoElementToLastSelector, appendRepeatable, appendRepeatableSelector, appendRepeatableToLastSelector, appendRepeatableWithCombinator, appendToLastSelector, applyPseudoElement, compactHelp, compactStylesheet, concatMapLast, concatMapLastStyleBlock, extendLastSelector, mapLast, styleBlockToMediaRule, withKeyframeDeclarations, withPropertyAppended)
 
 {-| A representation of the structure of a stylesheet. This module is concerned
 solely with representing valid stylesheets; it is not concerned with the

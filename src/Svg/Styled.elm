@@ -1,86 +1,18 @@
-module Svg.Styled
-    exposing
-        ( Attribute
-        , Svg
-        , a
-        , altGlyph
-        , altGlyphDef
-        , altGlyphItem
-        , animate
-        , animateColor
-        , animateMotion
-        , animateTransform
-        , circle
-        , clipPath
-        , colorProfile
-        , cursor
-        , defs
-        , desc
-        , ellipse
-        , feBlend
-        , feColorMatrix
-        , feComponentTransfer
-        , feComposite
-        , feConvolveMatrix
-        , feDiffuseLighting
-        , feDisplacementMap
-        , feDistantLight
-        , feFlood
-        , feFuncA
-        , feFuncB
-        , feFuncG
-        , feFuncR
-        , feGaussianBlur
-        , feImage
-        , feMerge
-        , feMergeNode
-        , feMorphology
-        , feOffset
-        , fePointLight
-        , feSpecularLighting
-        , feSpotLight
-        , feTile
-        , feTurbulence
-        , filter
-        , font
-        , foreignObject
-        , fromUnstyled
-        , g
-        , glyph
-        , glyphRef
-        , image
-        , line
-        , linearGradient
-        , map
-        , marker
-        , mask
-        , metadata
-        , mpath
-        , node
-        , path
-        , pattern
-        , polygon
-        , polyline
-        , radialGradient
-        , rect
-        , script
-        , set
-        , stop
-        , style
-        , styled
-        , svg
-        , switch
-        , symbol
-        , text
-        , textPath
-        , text_
-        , title
-        , toUnstyled
-        , tref
-        , tspan
-        , use
-        , view
-        )
+module Svg.Styled exposing
+    ( styled, fromUnstyled, toUnstyled
+    , Svg, Attribute, text, node, map
+    , svg, foreignObject
+    , circle, ellipse, image, line, path, polygon, polyline, rect, use
+    , animate, animateColor, animateMotion, animateTransform, mpath, set
+    , desc, metadata, title
+    , a, defs, g, marker, mask, pattern, switch, symbol
+    , altGlyph, altGlyphDef, altGlyphItem, glyph, glyphRef, textPath, text_, tref, tspan
+    , font
+    , linearGradient, radialGradient, stop
+    , feBlend, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feFlood, feFuncA, feFuncB, feFuncG, feFuncR, feGaussianBlur, feImage, feMerge, feMergeNode, feMorphology, feOffset, feSpecularLighting, feTile, feTurbulence
+    , feDistantLight, fePointLight, feSpotLight
+    , clipPath, colorProfile, cursor, filter, script, style, view
+    )
 
 {-| Drop-in replacement for the `Svg` module from the `elm-lang/svg` package.
 The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
