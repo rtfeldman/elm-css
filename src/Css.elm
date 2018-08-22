@@ -103,6 +103,7 @@ module Css
         , allPetiteCaps
         , allScroll
         , allSmallCaps
+        , animationName
         , any
         , arabicIndic
         , armenian
@@ -1003,6 +1004,11 @@ functions let you define custom properties and selectors, respectively.
 @docs FontSize, ColorValue, ColorStop, IntOrAuto
 
 
+# Animation
+
+@docs animationName
+
+
 # Intentionally Unsupported
 
 These are features you might expect to be in elm-css (because they are in the
@@ -1014,6 +1020,8 @@ deprecated or discouraged.
 -}
 
 import Color
+import Css.Animations exposing (Keyframes)
+import Css.Internal exposing (getOverloadedProperty, lengthConverter, lengthForOverloadedProperty, numberToString)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
 import Css.Structure as Structure exposing (..)
 import Hex
@@ -1035,63 +1043,6 @@ cssFunction funcName args =
         ++ "("
         ++ String.join ", " args
         ++ ")"
-
-
-{-| Caution: trickery ahead!
-
-This is for use with overloaded CSS properties like `left` that need to be keys
-in some places and values in othes. You give it a Style that evaluates to the
-relevant key, and then use that key as your value.
-
-For example, `left` is a Style that takes a Length and adds a property like
-"left: 3px". What this does is take `left`, pass it `zero` (to create a
-"left: 0" definition), then inspects that definition that it just created to
-extract the key (in this case the string "left"), then uses that key as the
-value for this property.
-
-In this way you can use this function to define textAlign, and allow textAlign
-to accept `left` as a value, in which case it will construct "text-align: left"
-as the end user expects.
-
-Other notes:
-
-`desiredKey` is the key of the property.
-`functionName` is just for better error messages.
-
--}
-getOverloadedProperty : String -> String -> Style -> Style
-getOverloadedProperty functionName desiredKey style =
-    case style of
-        Preprocess.AppendProperty str ->
-            let
-                key =
-                    String.split ":" str
-                        |> List.head
-                        |> Maybe.withDefault ""
-            in
-            -- Use the given style's Key as the resulting property's value.
-            property desiredKey key
-
-        Preprocess.ExtendSelector selector _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-selector")
-
-        Preprocess.NestSnippet combinator _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-combinator")
-
-        Preprocess.WithPseudoElement pseudoElement _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
-
-        Preprocess.WithMedia mediaQuery _ ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-media-query")
-
-        Preprocess.ApplyStyles [] ->
-            property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-empty-Style")
-
-        Preprocess.ApplyStyles (only :: []) ->
-            getOverloadedProperty functionName desiredKey only
-
-        Preprocess.ApplyStyles (first :: rest) ->
-            getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
 
 
 {-| -}
@@ -1329,7 +1280,7 @@ type alias WhiteSpace compatible =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/color#Values>
 -}
 type alias ColorValue compatible =
-    { compatible | value : String, color : Compatible }
+    Css.Internal.ColorValue compatible
 
 
 colorValueForOverloadedProperty : ColorValue NonMixable
@@ -1397,19 +1348,13 @@ type alias BackgroundImage compatible =
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/background-size>
 -}
 type alias LengthOrAutoOrCoverOrContain compatible =
-    { compatible | value : String, lengthOrAutoOrCoverOrContain : Compatible }
+    Css.Internal.LengthOrAutoOrCoverOrContain compatible
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
 -}
 type alias Length compatible units =
-    { compatible
-        | value : String
-        , length : Compatible
-        , numericValue : Float
-        , units : units
-        , unitLabel : String
-    }
+    Css.Internal.Length compatible units
 
 
 {-| <https://developer.mozilla.org/en/docs/Web/CSS/calc>
@@ -1596,24 +1541,7 @@ type alias LengthOrNumber compatible =
 
 {-| -}
 type alias ExplicitLength units =
-    { value : String
-    , numericValue : Float
-    , units : units
-    , unitLabel : String
-    , length : Compatible
-    , lengthOrAuto : Compatible
-    , lengthOrNumber : Compatible
-    , lengthOrNone : Compatible
-    , lengthOrMinMaxDimension : Compatible
-    , lengthOrNoneOrMinMaxDimension : Compatible
-    , textIndent : Compatible
-    , flexBasis : Compatible
-    , absoluteLength : Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent : Compatible
-    , fontSize : Compatible
-    , lengthOrAutoOrCoverOrContain : Compatible
-    , calc : Compatible
-    }
+    Css.Internal.ExplicitLength units
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/transform#Values>
@@ -2049,6 +1977,7 @@ type alias BasicProperty =
     , justifyContent : Compatible
     , none : Compatible
     , number : Compatible
+    , keyframes : Compatible
     , outline : Compatible
     , overflow : Compatible
     , pointerEvents : Compatible
@@ -2126,6 +2055,7 @@ initial =
     , color = Compatible
     , cursor = Compatible
     , display = Compatible
+    , keyframes = Compatible
     , all = Compatible
     , alignItems = Compatible
     , justifyContent = Compatible
@@ -2150,7 +2080,7 @@ initial =
     , fontVariant = Compatible
     , outline = Compatible
     , pointerEvents = Compatible
-    , units = IncompatibleUnits
+    , units = Css.Internal.IncompatibleUnits
     , numericValue = 0
     , unitLabel = ""
     , backgroundRepeat = Compatible
@@ -2648,28 +2578,6 @@ true =
 {- LENGTHS -}
 
 
-lengthConverter : units -> String -> Float -> ExplicitLength units
-lengthConverter units unitLabel numericValue =
-    { value = numberToString numericValue ++ unitLabel
-    , numericValue = numericValue
-    , units = units
-    , unitLabel = unitLabel
-    , length = Compatible
-    , lengthOrAuto = Compatible
-    , lengthOrNumber = Compatible
-    , lengthOrNone = Compatible
-    , lengthOrMinMaxDimension = Compatible
-    , lengthOrNoneOrMinMaxDimension = Compatible
-    , textIndent = Compatible
-    , flexBasis = Compatible
-    , lengthOrNumberOrAutoOrNoneOrContent = Compatible
-    , fontSize = Compatible
-    , absoluteLength = Compatible
-    , lengthOrAutoOrCoverOrContain = Compatible
-    , calc = Compatible
-    }
-
-
 {-| Convenience length value that compiles to 0 with no units.
 
     css [ padding zero ]
@@ -3009,14 +2917,9 @@ type UnitlessFloat
     = UnitlessFloat
 
 
-lengthForOverloadedProperty : ExplicitLength IncompatibleUnits
-lengthForOverloadedProperty =
-    lengthConverter IncompatibleUnits "" 0
-
-
 {-| -}
-type IncompatibleUnits
-    = IncompatibleUnits
+type alias IncompatibleUnits =
+    Css.Internal.IncompatibleUnits
 
 
 
@@ -3347,6 +3250,17 @@ translate3d tx ty tz =
     { value = cssFunction "translate3d" [ tx.value, ty.value, tz.value ]
     , transform = Compatible
     }
+
+
+{-| See [`keyframes`](Css-Animations#keyframes) in the [`Css.Animations`](Css-Animations) module.
+-}
+animationName : Keyframes compatible -> Style
+animationName arg =
+    if arg.value == "none" || arg.value == "inherit" || arg.value == "unset" || arg.value == "initial" then
+        prop1 "animation-name" arg
+
+    else
+        Preprocess.WithKeyframes arg.value
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
@@ -4472,6 +4386,7 @@ none :
     , display : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
     , none : Compatible
+    , keyframes : Compatible
     , lengthOrNone : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
     , listStyleType : Compatible
@@ -4503,6 +4418,7 @@ none =
     , listStyleType = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
     , display = Compatible
+    , keyframes = Compatible
     , outline = Compatible
     , pointerEvents = Compatible
     , resize = Compatible
@@ -7436,40 +7352,6 @@ preLine =
     }
 
 
-{-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
-
-    animationName  Foo
-
-You can also use [`animationNames`](#animationNames) to set multiple animation
-names, or to set `animation-name: none;`
-
-    animationNames [ Foo, Bar ]
-    animationNames [] -- outputs "animation-name: none;"
-
--}
-animationName : String -> Style
-animationName identifier =
-    animationNames [ identifier ]
-
-
-{-| Sets [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)
-
-    animationNames [ Foo, Bar ]
-
-Pass `[]` to set `animation-name: none;`
-
-    animationNames [] -- outputs "animation-name: none;"
-
--}
-animationNames : List String -> Style
-animationNames ids =
-    let
-        value =
-            String.join ", " ids
-    in
-    property "animation-name" value
-
-
 {-| Create a style from multiple other styles.
 
     underlineOnHover =
@@ -7922,11 +7804,6 @@ from elm-css.
 blink : IntentionallyUnsupportedPleaseSeeDocs
 blink =
     IntentionallyUnsupportedPleaseSeeDocs
-
-
-numberToString : number -> String
-numberToString num =
-    toString (num + 0)
 
 
 stringToInt : String -> Int

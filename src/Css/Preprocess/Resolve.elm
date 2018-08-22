@@ -4,9 +4,10 @@ module Css.Preprocess.Resolve exposing (compile)
 Structure data structures.
 -}
 
-import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
 import Css.Structure as Structure exposing (Property, mapLast, styleBlockToMediaRule)
 import Css.Structure.Output as Output
+import Hash
 import String
 
 
@@ -17,7 +18,7 @@ compile styles =
 
 compile1 : Preprocess.Stylesheet -> String
 compile1 sheet =
-    Output.prettyPrint (Structure.dropEmpty (toStructure sheet))
+    Output.prettyPrint (Structure.compactStylesheet (toStructure sheet))
 
 
 resolveMediaRule : List Structure.MediaQuery -> List Preprocess.StyleBlock -> List Structure.Declaration
@@ -61,7 +62,7 @@ toMediaRule mediaQueries declaration =
         Structure.FontFace _ ->
             declaration
 
-        Structure.Keyframes _ _ ->
+        Structure.Keyframes _ ->
             declaration
 
         Structure.Viewport _ ->
@@ -112,9 +113,6 @@ toDeclarations snippetDeclaration =
 
         Preprocess.FontFace properties ->
             [ Structure.FontFace properties ]
-
-        Preprocess.Keyframes str properties ->
-            [ Structure.Keyframes str properties ]
 
         Preprocess.Viewport properties ->
             [ Structure.Viewport properties ]
@@ -198,9 +196,6 @@ applyStyles styles declarations =
                         Preprocess.FontFace properties ->
                             [ Structure.FontFace properties ]
 
-                        Preprocess.Keyframes str properties ->
-                            [ Structure.Keyframes str properties ]
-
                         Preprocess.Viewport properties ->
                             [ Structure.Viewport properties ]
 
@@ -222,6 +217,22 @@ applyStyles styles declarations =
                 rest
                 (Structure.appendPseudoElementToLastSelector pseudoElement)
                 declarations
+
+        (Preprocess.WithKeyframes str) :: rest ->
+            let
+                name =
+                    Hash.fromString str
+
+                newProperty =
+                    "animation-name:" ++ name
+
+                newDeclarations =
+                    declarations
+                        |> Structure.appendProperty newProperty
+                        |> applyStyles rest
+            in
+            List.append newDeclarations
+                [ Structure.Keyframes { name = name, declaration = str } ]
 
         (Preprocess.WithMedia mediaQueries nestedStyles) :: rest ->
             let

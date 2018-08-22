@@ -27,10 +27,9 @@ import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Dict exposing (Dict)
-import Hex
+import Hash
 import Json.Decode
 import Json.Encode
-import Murmur3
 import VirtualDom
 
 
@@ -186,9 +185,7 @@ getClassname styles =
             |> Preprocess.stylesheet
             |> List.singleton
             |> Resolve.compile
-            |> Murmur3.hashString murmurSeed
-            |> Hex.toString
-            |> String.cons '_'
+            |> Hash.fromString
 
 
 makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Preprocess.Snippet
@@ -199,11 +196,6 @@ makeSnippet styles sequence =
     in
     [ Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles) ]
         |> Preprocess.Snippet
-
-
-murmurSeed : Int
-murmurSeed =
-    15739
 
 
 unstyle :

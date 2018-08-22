@@ -5,6 +5,8 @@ solely with representing valid stylesheets; it is not concerned with the
 elm-css DSL, collecting warnings, or
 -}
 
+import Dict exposing (Dict)
+
 
 {-| For typing
 -}
@@ -66,7 +68,7 @@ type Declaration
     | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
-    | Keyframes String (List KeyframeProperty)
+    | Keyframes { name : String, declaration : String }
     | Viewport (List Property)
     | CounterStyle (List Property)
     | FontFeatureValues (List ( String, List Property ))
@@ -178,7 +180,7 @@ appendProperty property declarations =
         --| DocumentRule String String String String StyleBlock
         --| PageRule String (List Property)
         --| FontFace (List Property)
-        --| Keyframes String (List KeyframeProperty)
+        --| Keyframes { name : String, declaration : String }
         --| Viewport (List Property)
         --| CounterStyle (List Property)
         --| FontFeatureValues (List ( String, List Property ))
@@ -258,7 +260,7 @@ extendLastSelector selector declarations =
         (FontFace _) :: [] ->
             declarations
 
-        (Keyframes _ _) :: [] ->
+        (Keyframes _) :: [] ->
             declarations
 
         (Viewport _) :: [] ->
@@ -345,7 +347,7 @@ concatMapLastStyleBlock update declarations =
         (FontFace _) :: [] ->
             declarations
 
-        (Keyframes _ _) :: [] ->
+        (Keyframes _) :: [] ->
             declarations
 
         (Viewport _) :: [] ->
@@ -423,86 +425,103 @@ concatMapLast update list =
             first :: concatMapLast update rest
 
 
-dropEmpty : Stylesheet -> Stylesheet
-dropEmpty { charset, imports, namespaces, declarations } =
+compactStylesheet : Stylesheet -> Stylesheet
+compactStylesheet { charset, imports, namespaces, declarations } =
+    let
+        ( keyframesByName, compactedDeclarations ) =
+            List.foldr compactHelp ( Dict.empty, [] ) declarations
+
+        finalDeclarations =
+            withKeyframeDeclarations keyframesByName compactedDeclarations
+    in
     { charset = charset
     , imports = imports
     , namespaces = namespaces
-    , declarations = dropEmptyDeclarations declarations
+    , declarations = finalDeclarations
     }
 
 
-dropEmptyDeclarations : List Declaration -> List Declaration
-dropEmptyDeclarations declarations =
-    case declarations of
-        [] ->
-            []
+withKeyframeDeclarations : Dict String String -> List Declaration -> List Declaration
+withKeyframeDeclarations keyframesByName compactedDeclarations =
+    List.append
+        (List.map (\( name, decl ) -> Keyframes { name = name, declaration = decl }) (Dict.toList keyframesByName))
+        compactedDeclarations
 
-        ((StyleBlockDeclaration (StyleBlock _ _ properties)) as declaration) :: rest ->
+
+{-| Gather the @keyframes declarations into the given dict, to make sure we
+don't output multiple identical declarations for the same keyframe.
+-}
+compactHelp : Declaration -> ( Dict String String, List Declaration ) -> ( Dict String String, List Declaration )
+compactHelp declaration ( keyframesByName, declarations ) =
+    case declaration of
+        StyleBlockDeclaration (StyleBlock _ _ properties) ->
             if List.isEmpty properties then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
-        ((MediaRule _ styleBlocks) as declaration) :: rest ->
+        MediaRule _ styleBlocks ->
             if List.all (\(StyleBlock _ _ properties) -> List.isEmpty properties) styleBlocks then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
-        ((SupportsRule _ otherDeclarations) as declaration) :: rest ->
+        SupportsRule _ otherDeclarations ->
             if List.isEmpty otherDeclarations then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
-        ((DocumentRule _ _ _ _ _) as declaration) :: rest ->
-            declaration :: dropEmptyDeclarations rest
+        DocumentRule _ _ _ _ _ ->
+            ( keyframesByName, declaration :: declarations )
 
-        ((PageRule _ properties) as declaration) :: rest ->
+        PageRule _ properties ->
             if List.isEmpty properties then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
-        ((FontFace properties) as declaration) :: rest ->
+        FontFace properties ->
             if List.isEmpty properties then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
-        ((Keyframes _ properties) as declaration) :: rest ->
+        Keyframes record ->
+            if String.isEmpty record.declaration then
+                ( keyframesByName, declarations )
+
+            else
+                -- move the keyframes declaration to the dictionary
+                ( Dict.insert record.name record.declaration keyframesByName
+                , declarations
+                )
+
+        Viewport properties ->
             if List.isEmpty properties then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
-        ((Viewport properties) as declaration) :: rest ->
+        CounterStyle properties ->
             if List.isEmpty properties then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
-        ((CounterStyle properties) as declaration) :: rest ->
-            if List.isEmpty properties then
-                dropEmptyDeclarations rest
-
-            else
-                declaration :: dropEmptyDeclarations rest
-
-        ((FontFeatureValues tuples) as declaration) :: rest ->
+        FontFeatureValues tuples ->
             if List.all (\( _, properties ) -> List.isEmpty properties) tuples then
-                dropEmptyDeclarations rest
+                ( keyframesByName, declarations )
 
             else
-                declaration :: dropEmptyDeclarations rest
+                ( keyframesByName, declaration :: declarations )
 
 
 styleBlockToMediaRule : List MediaQuery -> Declaration -> Declaration
