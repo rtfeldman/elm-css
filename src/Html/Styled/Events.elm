@@ -1,46 +1,51 @@
 module Html.Styled.Events exposing
-    ( onClick, onDoubleClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave, onMouseOver, onMouseOut
+    ( onClick, onDoubleClick
+    , onMouseDown, onMouseUp
+    , onMouseEnter, onMouseLeave
+    , onMouseOver, onMouseOut
     , onInput, onCheck, onSubmit
     , onBlur, onFocus
-    , on, onWithOptions, Options, defaultOptions
+    , on, stopPropagationOn, preventDefaultOn, custom
     , targetValue, targetChecked, keyCode
     )
 
-{-| Drop-in replacement for the `Html.Events` module from the `elm-lang/html` package.
-
-It is often helpful to create an [Union Type] so you can have many different kinds
+{-| It is often helpful to create an [Union Type] so you can have many different kinds
 of events as seen in the [TodoMVC] example.
-[Union Type]: <http://elm-lang.org/learn/Union-Types.elm>
-[TodoMVC]: <https://github.com/evancz/elm-todomvc/blob/master/Todo.elm>
+
+[Union Type]: https://elm-lang.org/learn/Union-Types.elm
+[TodoMVC]: https://github.com/evancz/elm-todomvc/blob/master/Todo.elm
 
 
-# Mouse Helpers
+# Mouse
 
-@docs onClick, onDoubleClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave, onMouseOver, onMouseOut
+@docs onClick, onDoubleClick
+@docs onMouseDown, onMouseUp
+@docs onMouseEnter, onMouseLeave
+@docs onMouseOver, onMouseOut
 
 
-# Form Helpers
+# Forms
 
 @docs onInput, onCheck, onSubmit
 
 
-# Focus Helpers
+# Focus
 
 @docs onBlur, onFocus
 
 
-# Custom Event Handlers
+# Custom
 
-@docs on, onWithOptions, Options, defaultOptions
+@docs on, stopPropagationOn, preventDefaultOn, custom
 
 
-# Custom Decoders
+## Custom Decoders
 
 @docs targetValue, targetChecked, keyCode
 
 -}
 
-import Html.Styled as Html exposing (Attribute)
+import Html.Styled exposing (Attribute)
 import Json.Decode as Json
 import VirtualDom
 import VirtualDom.Styled
@@ -102,26 +107,38 @@ onMouseOut msg =
 -- FORM EVENTS
 
 
-{-| Capture [input](https://developer.mozilla.org/en-US/docs/Web/Events/input)
+{-| Detect [input](https://developer.mozilla.org/en-US/docs/Web/Events/input)
 events for things like text fields or text areas.
 
-It grabs the **string** value at `event.target.value`, so it will not work if
-you need some other type of information. For example, if you want to track
+For more details on how `onInput` works, check out [`targetValue`](#targetValue).
+
+**Note 1:** It grabs the **string** value at `event.target.value`, so it will
+not work if you need some other information. For example, if you want to track
 inputs on a range slider, make a custom handler with [`on`](#on).
 
-For more details on how `onInput` works, check out [targetValue](#targetValue).
+**Note 2:** It uses `stopPropagationOn` internally to always stop propagation
+of the event. This is important for complicated reasons explained [here][1] and
+[here][2].
+
+[1]: /packages/elm/virtual-dom/latest/VirtualDom#Handler
+[2]: https://github.com/elm/virtual-dom/issues/125
 
 -}
 onInput : (String -> msg) -> Attribute msg
 onInput tagger =
-    on "input" (Json.map tagger targetValue)
+    stopPropagationOn "input" (Json.map alwaysStop (Json.map tagger targetValue))
 
 
-{-| Capture [change](https://developer.mozilla.org/en-US/docs/Web/Events/change)
+alwaysStop : a -> ( a, Bool )
+alwaysStop x =
+    ( x, True )
+
+
+{-| Detect [change](https://developer.mozilla.org/en-US/docs/Web/Events/change)
 events on checkboxes. It will grab the boolean value from `event.target.checked`
 on any input event.
 
-Check out [targetChecked](#targetChecked) for more details on how this works.
+Check out [`targetChecked`](#targetChecked) for more details on how this works.
 
 -}
 onCheck : (Bool -> msg) -> Attribute msg
@@ -129,20 +146,19 @@ onCheck tagger =
     on "change" (Json.map tagger targetChecked)
 
 
-{-| Capture a [submit](https://developer.mozilla.org/en-US/docs/Web/Events/submit)
+{-| Detect a [submit](https://developer.mozilla.org/en-US/docs/Web/Events/submit)
 event with [`preventDefault`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
 in order to prevent the form from changing the page’s location. If you need
-different behavior, use `onWithOptions` to create a customized version of
-`onSubmit`.
+different behavior, create a custom event handler.
 -}
 onSubmit : msg -> Attribute msg
 onSubmit msg =
-    onWithOptions "submit" onSubmitOptions (Json.succeed msg)
+    preventDefaultOn "submit" (Json.map alwaysPreventDefault (Json.succeed msg))
 
 
-onSubmitOptions : Options
-onSubmitOptions =
-    { defaultOptions | preventDefault = True }
+alwaysPreventDefault : msg -> ( msg, Bool )
+alwaysPreventDefault msg =
+    ( msg, True )
 
 
 
@@ -168,11 +184,11 @@ onFocus msg =
 {-| Create a custom event listener. Normally this will not be necessary, but
 you have the power! Here is how `onClick` is defined for example:
 
-    import Json.Decode as Json
+    import Json.Decode as Decode
 
     onClick : msg -> Attribute msg
     onClick message =
-        on "click" (Json.succeed message)
+        on "click" (Decode.succeed message)
 
 The first argument is the event name in the same format as with JavaScript's
 [`addEventListener`][aEL] function.
@@ -183,48 +199,76 @@ value. If successful, the value is routed to your `update` function. In the
 case of `onClick` we always just succeed with the given `message`.
 
 If this is confusing, work through the [Elm Architecture Tutorial][tutorial].
-It really does help!
+It really helps!
 
 [aEL]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
-[decoder]: http://package.elm-lang.org/packages/elm-lang/core/latest/Json-Decode
+[decoder]: /packages/elm/json/latest/Json-Decode
 [tutorial]: https://github.com/evancz/elm-architecture-tutorial/
+
+**Note:** This creates a [passive] event listener, enabling optimizations for
+touch, scroll, and wheel events in some browsers.
+
+[passive]: https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
 
 -}
 on : String -> Json.Decoder msg -> Attribute msg
-on =
-    VirtualDom.Styled.on
+on event decoder =
+    VirtualDom.Styled.on event (VirtualDom.Normal decoder)
 
 
-{-| Same as `on` but you can set a few options.
--}
-onWithOptions : String -> Options -> Json.Decoder msg -> Attribute msg
-onWithOptions =
-    VirtualDom.Styled.onWithOptions
+{-| Create an event listener that may [`stopPropagation`][stop]. Your decoder
+must produce a message and a `Bool` that decides if `stopPropagation` should
+be called.
 
+[stop]: https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
 
-{-| Options for an event listener. If `stopPropagation` is true, it means the
-event stops traveling through the DOM so it will not trigger any other event
-listeners. If `preventDefault` is true, any built-in browser behavior related
-to the event is prevented. For example, this is used with touch events when you
-want to treat them as gestures of your own, not as scrolls.
--}
-type alias Options =
-    { stopPropagation : Bool
-    , preventDefault : Bool
-    }
+**Note:** This creates a [passive] event listener, enabling optimizations for
+touch, scroll, and wheel events in some browsers.
 
-
-{-| Everything is `False` by default.
-
-    defaultOptions =
-        { stopPropagation = False
-        , preventDefault = False
-        }
+[passive]: https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
 
 -}
-defaultOptions : Options
-defaultOptions =
-    VirtualDom.defaultOptions
+stopPropagationOn : String -> Json.Decoder ( msg, Bool ) -> Attribute msg
+stopPropagationOn event decoder =
+    VirtualDom.Styled.on event (VirtualDom.MayStopPropagation decoder)
+
+
+{-| Create an event listener that may [`preventDefault`][prevent]. Your decoder
+must produce a message and a `Bool` that decides if `preventDefault` should
+be called.
+
+For example, the `onSubmit` function in this library _always_ prevents the
+default behavior:
+
+[prevent]: https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
+
+    onSubmit : msg -> Attribute msg
+    onSubmit msg =
+        preventDefaultOn "submit" (Json.map alwaysPreventDefault (Json.succeed msg))
+
+    alwaysPreventDefault : msg -> ( msg, Bool )
+    alwaysPreventDefault msg =
+        ( msg, True )
+
+-}
+preventDefaultOn : String -> Json.Decoder ( msg, Bool ) -> Attribute msg
+preventDefaultOn event decoder =
+    VirtualDom.Styled.on event (VirtualDom.MayPreventDefault decoder)
+
+
+{-| Create an event listener that may [`stopPropagation`][stop] or
+[`preventDefault`][prevent].
+
+[stop]: https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
+[prevent]: https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
+
+**Note:** If you need something even more custom (like capture phase) check
+out the lower-level event API in `elm/virtual-dom`.
+
+-}
+custom : String -> Json.Decoder { message : msg, stopPropagation : Bool, preventDefault : Bool } -> Attribute msg
+custom event decoder =
+    VirtualDom.Styled.on event (VirtualDom.Custom decoder)
 
 
 
@@ -238,7 +282,12 @@ defaultOptions =
 
     onInput : (String -> msg) -> Attribute msg
     onInput tagger =
-        on "input" (Json.map tagger targetValue)
+        stopPropagationOn "input" <|
+            Json.map alwaysStop (Json.map tagger targetValue)
+
+    alwaysStop : a -> ( a, Bool )
+    alwaysStop x =
+        ( x, True )
 
 You probably will never need this, but hopefully it gives some insights into
 how to make custom event handlers.
