@@ -216,8 +216,14 @@ unstyle elemType properties children =
         styleNode =
             toStyleNode styles
 
+        ( unstyledPropList, styledPropList ) =
+            List.partition isNotClassName properties
+
+        unstyledPropertiesWithoutStyleClass =
+            List.map extractUnstyledProperty unstyledPropList
+
         unstyledProperties =
-            List.map extractUnstyledProperty properties
+            List.append (lastStyleClassFromProperties styledPropList) unstyledPropertiesWithoutStyleClass
     in
     VirtualDom.node
         elemType
@@ -243,8 +249,14 @@ unstyleKeyed elemType properties keyedChildren =
         keyedStyleNode =
             toKeyedStyleNode styles keyedChildNodes
 
+        ( unstyledPropList, styledPropList ) =
+            List.partition isNotClassName properties
+
+        unstyledPropertiesWithoutStyleClass =
+            List.map extractUnstyledProperty unstyledPropList
+
         unstyledProperties =
-            List.map extractUnstyledProperty properties
+            List.append (lastStyleClassFromProperties styledPropList) unstyledPropertiesWithoutStyleClass
     in
     VirtualDom.keyedNode
         elemType
@@ -294,6 +306,16 @@ toStyleNode styles =
 
 
 -- INTERNAL --
+
+
+lastStyleClassFromProperties : List (Property msg) -> List (VirtualDom.Property msg)
+lastStyleClassFromProperties propList =
+    case List.head (List.reverse propList) of
+        Nothing ->
+            []
+
+        Just (Property val _ _) ->
+            [ val ]
 
 
 stylesFromProperties : List (Property msg) -> Dict Classname (List Style)
@@ -351,9 +373,18 @@ accumulateStyledHtml html ( nodes, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
+                ( unstyledPropList, styledPropList ) =
+                    List.partition isNotClassName properties
+
+                unstyledPropertiesWithoutStyleClass =
+                    List.map extractUnstyledProperty unstyledPropList
+
+                unstyledProperties =
+                    List.append (lastStyleClassFromProperties styledPropList) unstyledPropertiesWithoutStyleClass
+
                 node =
                     VirtualDom.node elemType
-                        (List.map extractUnstyledProperty properties)
+                        unstyledProperties
                         (List.reverse childNodes)
             in
             ( node :: nodes, finalStyles )
@@ -366,9 +397,18 @@ accumulateStyledHtml html ( nodes, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
+                ( unstyledPropList, styledPropList ) =
+                    List.partition isNotClassName properties
+
+                unstyledPropertiesWithoutStyleClass =
+                    List.map extractUnstyledProperty unstyledPropList
+
+                unstyledProperties =
+                    List.append (lastStyleClassFromProperties styledPropList) unstyledPropertiesWithoutStyleClass
+
                 node =
                     VirtualDom.keyedNode elemType
-                        (List.map extractUnstyledProperty properties)
+                        unstyledProperties
                         (List.reverse childNodes)
             in
             ( node :: nodes, finalStyles )
@@ -391,9 +431,18 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateStyledHtml ( [], combinedStyles ) children
 
+                ( unstyledPropList, styledPropList ) =
+                    List.partition isNotClassName properties
+
+                unstyledPropertiesWithoutStyleClass =
+                    List.map extractUnstyledProperty unstyledPropList
+
+                unstyledProperties =
+                    List.append (lastStyleClassFromProperties styledPropList) unstyledPropertiesWithoutStyleClass
+
                 vdom =
                     VirtualDom.node elemType
-                        (List.map extractUnstyledProperty properties)
+                        unstyledProperties
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
@@ -406,9 +455,18 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
                 ( childNodes, finalStyles ) =
                     List.foldl accumulateKeyedStyledHtml ( [], combinedStyles ) children
 
+                ( unstyledPropList, styledPropList ) =
+                    List.partition isNotClassName properties
+
+                unstyledPropertiesWithoutStyleClass =
+                    List.map extractUnstyledProperty unstyledPropList
+
+                unstyledProperties =
+                    List.append (lastStyleClassFromProperties styledPropList) unstyledPropertiesWithoutStyleClass
+
                 vdom =
                     VirtualDom.keyedNode elemType
-                        (List.map extractUnstyledProperty properties)
+                        unstyledProperties
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
@@ -464,3 +522,11 @@ containsKey key pairs =
 
             else
                 containsKey key rest
+
+
+isNotClassName : Property msg -> Bool
+isNotClassName (Property _ _ class) =
+    if class == "" then
+        True
+    else
+        False
