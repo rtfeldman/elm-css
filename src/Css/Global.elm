@@ -490,10 +490,10 @@ typeSelector selectorStr styles =
         sequence =
             Structure.TypeSelectorSequence (Structure.TypeSelector selectorStr) []
 
-        selector =
+        sel =
             Structure.Selector sequence [] Nothing
     in
-    [ StyleBlockDeclaration (StyleBlock selector [] styles) ]
+    [ StyleBlockDeclaration (StyleBlock sel [] styles) ]
         |> Snippet
 
 
