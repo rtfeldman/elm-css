@@ -20,7 +20,6 @@ module VirtualDom.Styled exposing
     , nodeNS
     , on
     , property
-    , style
     , text
     , toUnstyled
     , unstyledAttribute
@@ -90,13 +89,8 @@ unstyledNode =
 
 
 text : String -> Node msg
-text =
-    VirtualDom.text >> Unstyled
-
-
-style : String -> String -> Attribute msg
-style key val =
-    Attribute (VirtualDom.style key val) [] ""
+text str =
+    Unstyled (VirtualDom.text str)
 
 
 map : (a -> b) -> Node a -> Node b
