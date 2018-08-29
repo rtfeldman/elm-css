@@ -25,7 +25,13 @@ charsetToString charset =
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
     -- TODO
-    "@import \"" ++ name ++ toString mediaQueries ++ "\""
+    List.map (importMediaQueryToString name) mediaQueries
+        |> String.join "\n"
+
+
+importMediaQueryToString : String -> MediaQuery -> String
+importMediaQueryToString name mediaQuery =
+    "@import \"" ++ name ++ mediaQueryToString mediaQuery ++ "\""
 
 
 namespaceToString : ( String, String ) -> String
@@ -49,7 +55,7 @@ prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors prope
         [ selectorStr
         , " {\n"
         , indentLevel
-        , prettyPrintProperties properties
+        , emitProperties properties
         , "\n"
         , indentLevel
         , "}"
@@ -57,8 +63,8 @@ prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors prope
 
 
 prettyPrintDeclaration : Declaration -> String
-prettyPrintDeclaration declaration =
-    case declaration of
+prettyPrintDeclaration decl =
+    case decl of
         StyleBlockDeclaration styleBlock ->
             prettyPrintStyleBlock noIndent styleBlock
 
@@ -74,8 +80,29 @@ prettyPrintDeclaration declaration =
             in
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
-        _ ->
-            Debug.crash "not yet implemented :x"
+        SupportsRule _ _ ->
+            "TODO"
+
+        DocumentRule _ _ _ _ _ ->
+            "TODO"
+
+        PageRule _ _ ->
+            "TODO"
+
+        FontFace _ ->
+            "TODO"
+
+        Keyframes { name, declaration } ->
+            "@keyframes " ++ name ++ " {\n" ++ declaration ++ "\n}"
+
+        Viewport _ ->
+            "TODO"
+
+        CounterStyle _ ->
+            "TODO"
+
+        FontFeatureValues _ ->
+            "TODO"
 
 
 mediaQueryToString : MediaQuery -> String
@@ -140,6 +167,7 @@ simpleSelectorSequenceToString simpleSelectorSequence =
         UniversalSelectorSequence repeatableSimpleSelectors ->
             if List.isEmpty repeatableSimpleSelectors then
                 "*"
+
             else
                 List.map repeatableSimpleSelectorToString repeatableSimpleSelectors
                     |> String.join ""
@@ -161,6 +189,9 @@ repeatableSimpleSelectorToString repeatableSimpleSelector =
         PseudoClassSelector str ->
             ":" ++ str
 
+        AttributeSelector str ->
+            "[" ++ str ++ "]"
+
 
 selectorChainToString : ( SelectorCombinator, SimpleSelectorSequence ) -> String
 selectorChainToString ( combinator, sequence ) =
@@ -179,16 +210,18 @@ selectorToString : Selector -> String
 selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
     let
         segments =
-            [ simpleSelectorSequenceToString simpleSelectorSequence ]
-                ++ List.map selectorChainToString chain
+            simpleSelectorSequenceToString simpleSelectorSequence
+                :: List.map selectorChainToString chain
 
         pseudoElementsString =
             String.join "" [ Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement) ]
     in
-    segments
-        |> List.filter (not << String.isEmpty)
-        |> String.join " "
-        |> flip (++) pseudoElementsString
+    String.append
+        (segments
+            |> List.filter (not << String.isEmpty)
+            |> String.join " "
+        )
+        pseudoElementsString
 
 
 combinatorToString : SelectorCombinator -> String
@@ -207,16 +240,9 @@ combinatorToString combinator =
             ""
 
 
-prettyPrintProperty : Property -> String
-prettyPrintProperty { key, value, important } =
-    let
-        suffix =
-            if important then
-                " !important;"
-            else
-                ";"
-    in
-    key ++ ": " ++ value ++ suffix
+emitProperty : Property -> String
+emitProperty str =
+    str ++ ";"
 
 
 {-| Indent the given string with 4 spaces
@@ -236,8 +262,8 @@ noIndent =
     ""
 
 
-prettyPrintProperties : List Property -> String
-prettyPrintProperties properties =
+emitProperties : List Property -> String
+emitProperties properties =
     properties
-        |> List.map (indent << prettyPrintProperty)
+        |> List.map (indent << emitProperty)
         |> String.join "\n"

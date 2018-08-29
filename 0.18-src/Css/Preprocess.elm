@@ -1,10 +1,10 @@
-module Css.Preprocess exposing (..)
+module Css.Preprocess exposing (Snippet(..), SnippetDeclaration(..), Style(..), StyleBlock(..), Stylesheet, mapAllLastProperty, mapLastProperty, stylesheet, toMediaRule, toPropertyStrings, unwrapSnippet)
 
 {-| A representation of the preprocessing to be done. The elm-css DSL generates
 the data structures found in this module.
 -}
 
-import Css.Structure as Structure exposing (MediaQuery, concatMapLast, mapLast)
+import Css.Structure as Structure exposing (MediaQuery, Property, mapLast)
 
 
 stylesheet : List Snippet -> Stylesheet
@@ -13,14 +13,6 @@ stylesheet snippets =
     , imports = []
     , namespaces = []
     , snippets = snippets
-    }
-
-
-type alias Property =
-    { key : String
-    , value : String
-    , important : Bool
-    , warnings : List String
     }
 
 
@@ -38,6 +30,7 @@ type Style
     | NestSnippet Structure.SelectorCombinator (List Snippet)
     | WithPseudoElement Structure.PseudoElement (List Style)
     | WithMedia (List MediaQuery) (List Style)
+    | WithKeyframes String
     | ApplyStyles (List Style)
 
 
@@ -52,7 +45,6 @@ type SnippetDeclaration
     | DocumentRule String String String String StyleBlock
     | PageRule String (List Property)
     | FontFace (List Property)
-    | Keyframes String (List Structure.KeyframeProperty)
     | Viewport (List Property)
     | CounterStyle (List Property)
     | FontFeatureValues (List ( String, List Property ))
@@ -84,7 +76,7 @@ toMediaRule mediaQueries declaration =
         Structure.FontFace _ ->
             declaration
 
-        Structure.Keyframes _ _ ->
+        Structure.Keyframes _ ->
             declaration
 
         Structure.Viewport _ ->
@@ -115,6 +107,9 @@ mapLastProperty update style =
         WithMedia _ _ ->
             style
 
+        WithKeyframes _ ->
+            style
+
         ApplyStyles otherStyles ->
             ApplyStyles (mapLast (mapLastProperty update) otherStyles)
 
@@ -137,29 +132,17 @@ unwrapSnippet (Snippet declarations) =
     declarations
 
 
-toPropertyPairs : List Style -> List ( String, String )
-toPropertyPairs styles =
+toPropertyStrings : List Style -> List String
+toPropertyStrings styles =
     case styles of
         [] ->
             []
 
-        (AppendProperty property) :: rest ->
-            propertyToPair property :: toPropertyPairs rest
+        (AppendProperty str) :: rest ->
+            str :: toPropertyStrings rest
 
-        (ApplyStyles styles) :: rest ->
-            toPropertyPairs styles ++ toPropertyPairs rest
+        (ApplyStyles otherStyles) :: rest ->
+            toPropertyStrings otherStyles ++ toPropertyStrings rest
 
         _ :: rest ->
-            toPropertyPairs rest
-
-
-propertyToPair : Property -> ( String, String )
-propertyToPair property =
-    let
-        value =
-            if property.important then
-                property.value ++ " !important"
-            else
-                property.value
-    in
-    ( property.key, value )
+            toPropertyStrings rest
