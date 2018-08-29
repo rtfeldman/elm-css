@@ -1,16 +1,8 @@
-module Css.Animations
-    exposing
-        ( Keyframes
-        , Property
-        , all
-        , backgroundColor
-        , backgroundSize
-        , backgroundSize2
-        , border
-        , keyframes
-        , opacity
-        , transform
-        )
+module Css.Animations exposing
+    ( Property, keyframes, Keyframes
+    , opacity, transform, all, backgroundSize, backgroundSize2, border, property
+    , backgroundColor
+    )
 
 {-|
 
@@ -28,7 +20,7 @@ Some of the animatable properties (except for experimental properties, or proper
 
 **NOTE:** We're looking to expand this list, but only on the `phantom-types` branch! See <https://github.com/rtfeldman/elm-css/issues/392>
 
-@docs opacity, transform, transformOrigin, translate, all, backgroundSize, backgroundSize2, border
+@docs opacity, transform, transformOrigin, translate, all, backgroundSize, backgroundSize2, border, property
 
 border2 : Length compatible units -> Length compatible units -> Property
 border2 arg1 arg2 =
