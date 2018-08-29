@@ -1,16 +1,7 @@
-module DEPRECATED.Css.File
-    exposing
-        ( CssCompilerProgram
-        , CssFileStructure
-        , Stylesheet
-        , UniqueClass
-        , UniqueSvgClass
-        , compile
-        , compiler
-        , stylesheet
-        , uniqueClass
-        , uniqueSvgClass
-        )
+module DEPRECATED.Css.File exposing
+    ( Stylesheet, stylesheet, compile, compiler, CssFileStructure, CssCompilerProgram
+    , UniqueClass, uniqueClass, UniqueSvgClass, uniqueSvgClass
+    )
 
 {-|
 

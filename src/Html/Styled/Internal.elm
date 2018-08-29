@@ -6,7 +6,7 @@ import VirtualDom
 import VirtualDom.Styled
 
 
-css : List Css.Style -> VirtualDom.Styled.Property msg
+css : List Css.Style -> VirtualDom.Styled.Attribute msg
 css styles =
     let
         classname =
@@ -15,4 +15,4 @@ css styles =
         classProperty =
             VirtualDom.property "className" (Json.string classname)
     in
-    VirtualDom.Styled.Property classProperty styles classname
+    VirtualDom.Styled.Attribute classProperty styles classname

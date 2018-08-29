@@ -1,4 +1,4 @@
-module CompileFixtures exposing (..)
+module CompileFixtures exposing (basicStyle1, basicStyle2, dreamwriter, pageBackground, pageDefaultText, unstyledDiv)
 
 import Css exposing (..)
 import Css.Global exposing (..)

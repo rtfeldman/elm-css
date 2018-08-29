@@ -1,4 +1,4 @@
-module Compile exposing (..)
+module Compile exposing (compileTest, dreamwriter, unstyledDiv)
 
 import CompileFixtures
 import Css.Preprocess.Resolve exposing (compile)

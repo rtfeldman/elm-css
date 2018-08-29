@@ -1,8 +1,6 @@
 module Svg.Styled.Keyed exposing (node)
 
-{-| Drop-in replacement for the `Svg.Keyed` module from the `elm-lang/svg` package.
-
-A keyed node helps optimize cases where children are getting added, moved,
+{-| A keyed node helps optimize cases where children are getting added, moved,
 removed, etc. Common examples include:
 
   - The user can delete items from a list.
@@ -22,8 +20,12 @@ efficiently.
 
 import Json.Encode as Json
 import Svg.Styled exposing (Attribute, Svg)
-import Svg.Styled.Internal as Internal
 import VirtualDom.Styled
+
+
+svgNamespace : Attribute msg
+svgNamespace =
+    VirtualDom.Styled.property "namespace" (Json.string "http://www.w3.org/2000/svg")
 
 
 {-| Works just like `Svg.node`, but you add a unique identifier to each child
@@ -32,5 +34,6 @@ nodes, removing nodes, etc. In these cases, the unique identifiers help make
 the DOM modifications more efficient.
 -}
 node : String -> List (Attribute msg) -> List ( String, Svg msg ) -> Svg msg
-node name attrs children =
-    VirtualDom.Styled.keyedNode name (Internal.svgNamespace :: attrs) children
+node name =
+    \attributes children ->
+        VirtualDom.Styled.keyedNode name (svgNamespace :: attributes) children

@@ -1,4 +1,4 @@
-module TestUtil exposing (..)
+module TestUtil exposing (invalidAlphaValue, invalidRgbValue, outdented, prettyPrint, validAlphaValue, validRgbValue)
 
 import Css.Preprocess exposing (Stylesheet)
 import Css.Preprocess.Resolve exposing (compile)

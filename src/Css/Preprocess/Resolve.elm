@@ -13,11 +13,11 @@ import String
 
 compile : List Preprocess.Stylesheet -> String
 compile styles =
-    String.join "\n\n" (List.map compile1 styles)
+    String.join "\n\n" (List.map compileHelp styles)
 
 
-compile1 : Preprocess.Stylesheet -> String
-compile1 sheet =
+compileHelp : Preprocess.Stylesheet -> String
+compileHelp sheet =
     Output.prettyPrint (Structure.compactStylesheet (toStructure sheet))
 
 

@@ -1,4 +1,4 @@
-module Css.Preprocess exposing (..)
+module Css.Preprocess exposing (Snippet(..), SnippetDeclaration(..), Style(..), StyleBlock(..), Stylesheet, mapAllLastProperty, mapLastProperty, stylesheet, toMediaRule, toPropertyStrings, unwrapSnippet)
 
 {-| A representation of the preprocessing to be done. The elm-css DSL generates
 the data structures found in this module.

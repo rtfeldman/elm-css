@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "elm-test",
-    "format": "elm-format --elm-version=0.18 src tests examples readme-example"
+    "format": "elm-format src tests examples readme-example"
   },
   "repository": {
     "type": "git",
@@ -40,11 +40,12 @@
     "glob": "7.1.2",
     "lodash": "4.17.4",
     "mkdirp": "0.5.1",
-    "node-elm-compiler": "4.3.3",
+    "node-elm-compiler": "5.0.1",
     "tmp": "0.0.28"
   },
   "devDependencies": {
-    "elm-format": "^0.7.0-exp",
+    "elm-test": "0.19.0-beta4",
+    "elm-format": "0.8.0",
     "chai": "3.4.1"
   },
   "engineStrict": true,

@@ -1,16 +1,8 @@
-module Css.Animations
-    exposing
-        ( Keyframes
-        , Property
-        , all
-        , backgroundColor
-        , backgroundSize
-        , backgroundSize2
-        , border
-        , keyframes
-        , opacity
-        , transform
-        )
+module Css.Animations exposing
+    ( Property, keyframes, Keyframes
+    , opacity, transform, all, backgroundSize, backgroundSize2, border
+    , backgroundColor
+    )
 
 {-|
 

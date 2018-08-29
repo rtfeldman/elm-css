@@ -1,93 +1,16 @@
-module Css.Global
-    exposing
-        ( Snippet
-        , a
-        , adjacentSiblings
-        , article
-        , aside
-        , audio
-        , blockquote
-        , body
-        , button
-        , canvas
-        , caption
-        , children
-        , circle
-        , class
-        , code
-        , col
-        , colgroup
-        , dd
-        , descendants
-        , details
-        , div
-        , dl
-        , dt
-        , each
-        , ellipse
-        , em
-        , everything
-        , fieldset
-        , footer
-        , form
-        , generalSiblings
-        , global
-        , h1
-        , h2
-        , h3
-        , h4
-        , h5
-        , h6
-        , header
-        , hr
-        , html
-        , i
-        , id
-        , img
-        , input
-        , label
-        , legend
-        , li
-        , line
-        , main_
-        , media
-        , mediaQuery
-        , menu
-        , nav
-        , ol
-        , optgroup
-        , option
-        , p
-        , path
-        , polygon
-        , polyline
-        , pre
-        , progress
-        , q
-        , rect
-        , section
-        , select
-        , selector
-        , small
-        , span
-        , strong
-        , summary
-        , svg
-        , table
-        , tbody
-        , td
-        , textarea
-        , tfoot
-        , th
-        , thead
-        , time
-        , tr
-        , typeSelector
-        , ul
-        , video
-        , withAttribute
-        , withClass
-        )
+module Css.Global exposing
+    ( global, Snippet
+    , class, id, selector, everything, media, mediaQuery
+    , children, descendants, adjacentSiblings, generalSiblings, each, withAttribute, withClass
+    , typeSelector, html, body
+    , article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time, details, summary
+    , div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, blockquote
+    , a, code, small, span, strong, i, em, q
+    , img, audio, video, canvas
+    , caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
+    , button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea
+    , svg, path, rect, circle, ellipse, line, polyline, polygon
+    )
 
 {-| Apply global CSS to things like foreign DOM structures (e.g. generated
 from markdown) where you cannot add attributes.
@@ -157,10 +80,10 @@ do to it using `Style` instead!
 import Css.Media exposing (MediaQuery)
 import Css.Preprocess as Preprocess
     exposing
-        ( Snippet(Snippet)
-        , SnippetDeclaration(StyleBlockDeclaration)
+        ( Snippet(..)
+        , SnippetDeclaration(..)
         , Style
-        , StyleBlock(StyleBlock)
+        , StyleBlock(..)
         , unwrapSnippet
         )
 import Css.Preprocess.Resolve as Resolve
@@ -244,13 +167,13 @@ selector selectorStr styles =
 {-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
 
     class Foo
-      [ children
-          [ everything
-              [ color (rgb 14 15 16)
-              , borderRadius (px 5)
-              ]
-          ]
-      ]
+        [ children
+            [ everything
+                [ color (rgb 14 15 16)
+                , borderRadius (px 5)
+                ]
+            ]
+        ]
 
 ...compiles to:
 
@@ -269,8 +192,8 @@ everything styles =
 {-| Combines media queries into a `@media` rule.
 
     global
-        [  media [ only screen [ Media.minWidth (px 300) ] ]
-               [ footer [ Css.maxWidth (px 300) ] ]
+        [ media [ only screen [ Media.minWidth (px 300) ] ]
+            [ footer [ Css.maxWidth (px 300) ] ]
         ]
 
 The above code translates into the following CSS.
@@ -336,7 +259,7 @@ media queries snippets =
 {-| Manually specify a `@media` rule using a List of strings.
 
     mediaQuery [ "screen and (min-width: 320px)", "screen and (max-height: 400px)" ]
-        [ body [ fontSize (px 14)] ]
+        [ body [ fontSize (px 14) ] ]
 
 The above code translates into the following CSS.
 
@@ -567,10 +490,10 @@ typeSelector selectorStr styles =
         sequence =
             Structure.TypeSelectorSequence (Structure.TypeSelector selectorStr) []
 
-        selector =
+        sel =
             Structure.Selector sequence [] Nothing
     in
-    [ StyleBlockDeclaration (StyleBlock selector [] styles) ]
+    [ StyleBlockDeclaration (StyleBlock sel [] styles) ]
         |> Snippet
 
 
@@ -756,7 +679,7 @@ pre =
 
 {-| Selector for a dl element.
 
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+    <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl>
 
 -}
 dl : List Style -> Snippet
@@ -766,7 +689,7 @@ dl =
 
 {-| Selector for a dt element.
 
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt
+    <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt>
 
 -}
 dt : List Style -> Snippet
@@ -776,7 +699,7 @@ dt =
 
 {-| Selector for a dd element.
 
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd
+    <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd>
 
 -}
 dd : List Style -> Snippet

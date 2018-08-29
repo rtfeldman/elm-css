@@ -1,121 +1,51 @@
-module Html.Styled.Attributes
-    exposing
-        ( accept
-        , acceptCharset
-        , accesskey
-        , action
-        , align
-        , alt
-        , async
-        , attribute
-        , autocomplete
-        , autofocus
-        , autoplay
-        , challenge
-        , charset
-        , checked
-        , cite
-        , class
-        , classList
-        , cols
-        , colspan
-        , content
-        , contenteditable
-        , contextmenu
-        , controls
-        , coords
-        , css
-        , datetime
-        , default
-        , defaultValue
-        , defer
-        , dir
-        , disabled
-        , download
-        , downloadAs
-        , draggable
-        , dropzone
-        , enctype
-        , for
-        , form
-        , formaction
-        , fromUnstyled
-        , headers
-        , height
-        , hidden
-        , href
-        , hreflang
-        , httpEquiv
-        , id
-        , ismap
-        , itemprop
-        , keytype
-        , kind
-        , lang
-        , language
-        , list
-        , loop
-        , manifest
-        , map
-        , max
-        , maxlength
-        , media
-        , method
-        , min
-        , minlength
-        , multiple
-        , name
-        , novalidate
-        , pattern
-        , ping
-        , placeholder
-        , poster
-        , preload
-        , property
-        , pubdate
-        , readonly
-        , rel
-        , required
-        , reversed
-        , rows
-        , rowspan
-        , sandbox
-        , scope
-        , scoped
-        , seamless
-        , selected
-        , shape
-        , size
-        , spellcheck
-        , src
-        , srcdoc
-        , srclang
-        , start
-        , step
-        , style
-        , tabindex
-        , target
-        , title
-        , type_
-        , usemap
-        , value
-        , width
-        , wrap
-        )
+module Html.Styled.Attributes exposing
+    ( css, fromUnstyled
+    , property, attribute, map, style
+    , class, classList, id, title, hidden
+    , type_, value, checked, placeholder, selected
+    , accept, acceptCharset, action, autocomplete, autofocus
+    , disabled, enctype, list, maxlength, minlength, method, multiple
+    , name, novalidate, pattern, readonly, required, size, for, form
+    , max, min, step
+    , cols, rows, wrap
+    , href, target, download, hreflang, media, ping, rel
+    , ismap, usemap, shape, coords
+    , src, height, width, alt
+    , autoplay, controls, loop, preload, poster, default, kind, srclang
+    , sandbox, srcdoc
+    , reversed, start
+    , align, colspan, rowspan, headers, scope
+    , accesskey, contenteditable, contextmenu, dir, draggable, dropzone
+    , itemprop, lang, spellcheck, tabindex
+    , cite, datetime, pubdate, manifest
+    )
 
 {-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.
+
 The only functions added are `css` and `fromUnstyled`:
 
 @docs css, fromUnstyled
 
+There is one function removed: `style` - because the main point of this library
+is to use `css` instead of the `style` attribute!
+
+(If you really must use it, there's always [`attribute "style"`](#attribute).)
+
+Note that there is no `toUnstyled` for Attributes! This is because the process
+of going from styled to unstyled involves adding a `<style>` element to the DOM,
+and Attributes cannot do that. So it would be impossible to implement
+`toUnstyled` for Attributes without throwing the styles away - which is definitely
+undesirable!
+
 Helper functions for HTML attributes. They are organized roughly by
+
 category. Each attribute is labeled with the HTML tags it can be used with, so
 just search the page for `video` if you want video stuff.
 
 
 # Primitives
 
-@docs style, property, attribute, map
+@docs property, attribute, map, style
 
 
 # Super Common Attributes
@@ -125,12 +55,14 @@ just search the page for `video` if you want video stuff.
 
 # Inputs
 
-@docs type_, value, defaultValue, checked, placeholder, selected
+@docs type_, value, checked, placeholder, selected
 
 
 ## Input Helpers
 
-@docs accept, acceptCharset, action, autocomplete, autofocus, disabled, enctype, formaction, list, maxlength, minlength, method, multiple, name, novalidate, pattern, readonly, required, size, for, form
+@docs accept, acceptCharset, action, autocomplete, autofocus
+@docs disabled, enctype, list, maxlength, minlength, method, multiple
+@docs name, novalidate, pattern, readonly, required, size, for, form
 
 
 ## Input Ranges
@@ -145,7 +77,7 @@ just search the page for `video` if you want video stuff.
 
 # Links and Areas
 
-@docs href, target, download, downloadAs, hreflang, media, ping, rel
+@docs href, target, download, hreflang, media, ping, rel
 
 
 ## Maps
@@ -165,7 +97,7 @@ just search the page for `video` if you want video stuff.
 
 ## iframes
 
-@docs sandbox, seamless, srcdoc
+@docs sandbox, srcdoc
 
 
 # Ordered Lists
@@ -178,35 +110,34 @@ just search the page for `video` if you want video stuff.
 @docs align, colspan, rowspan, headers, scope
 
 
-# Header Stuff
-
-@docs async, charset, content, defer, httpEquiv, language, scoped
-
-
 # Less Common Global Attributes
 
 Attributes that can be attached to any HTML tag but are less commonly used.
 
-@docs accesskey, contenteditable, contextmenu, dir, draggable, dropzone, itemprop, lang, spellcheck, tabindex
-
-
-# Key Generation
-
-@docs challenge, keytype
+@docs accesskey, contenteditable, contextmenu, dir, draggable, dropzone
+@docs itemprop, lang, spellcheck, tabindex
 
 
 # Miscellaneous
 
-@docs cite, datetime, manifest, pubdate
+@docs cite, datetime, pubdate, manifest
 
 -}
 
 import Css exposing (Style)
-import Html.Styled exposing (Attribute, Html)
+import Html.Styled exposing (Attribute)
 import Html.Styled.Internal as Internal
 import Json.Encode as Json
 import VirtualDom
 import VirtualDom.Styled
+
+
+{-| Apply styles to an element.
+See the [`Css` module documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css) for an overview of how to use this function.
+-}
+css : List Style -> Attribute msg
+css =
+    Internal.css
 
 
 
@@ -215,33 +146,45 @@ import VirtualDom.Styled
 -- PRIMITIVES
 
 
-{-| Specify a list of styles to be used with the `style` attribute.
+{-| Convert from an unstyled `Attribute` to a styled one.
 
-**NOTE:** Since you're using `elm-css`, this is probably not what you want!
-Try the [`css`](#css) function instead.
-
-    myStyle : Attribute msg
-    myStyle =
-        style
-            [ ( "backgroundColor", "red" )
-            , ( "height", "90px" )
-            , ( "width", "100%" )
-            ]
-
-    greeting : Html msg
-    greeting =
-        div [ myStyle ] [ text "Hello!" ]
+Note that there is no `toUnstyled` for Attributes! This is because the process
+of going from styled to unstyled involves adding a `<style>` element to the DOM,
+and Attributes cannot do that. So it would be impossible to implement
+`toUnstyled` for Attributes without throwing the styles away - which is definitely
+undesirable!
 
 -}
-style : List ( String, String ) -> Attribute msg
-style =
-    VirtualDom.style >> fromUnstyled
-
-
-{-| -}
-fromUnstyled : VirtualDom.Property msg -> Attribute msg
+fromUnstyled : VirtualDom.Attribute msg -> Attribute msg
 fromUnstyled =
-    VirtualDom.Styled.unstyledProperty
+    VirtualDom.Styled.unstyledAttribute
+
+
+{-| **NOTE:** If you're using `elm-css`, you **probably do not want this!**
+
+This is the `style` **attribute**, which has higher precedence than anything
+`elm-css` does. It's probably best to use this as a workaround only.
+
+    Specify a style.
+
+    greeting : Node msg
+    greeting =
+      div
+        [ style "background-color" "red"
+        , style "height" "90px"
+        , style "width" "100%"
+        ]
+        [ text "Hello!"
+        ]
+
+There is no `Html.Styles` module because best practices for working with HTML
+suggest that this should primarily be specified in CSS files. So the general
+recommendation is to use this function lightly.
+
+-}
+style : String -> String -> Html.Styled.Attribute msg
+style =
+    VirtualDom.Styled.style
 
 
 {-| This function makes it easier to build a space-separated class attribute.
@@ -259,14 +202,17 @@ is paired with. For example, maybe we want a way to view notices:
             ]
             [ text notice.content ]
 
+**Note:** You can have as many `class` and `classList` attributes as you want.
+They all get applied, so if you say `[ class "notice", class "notice-seen" ]`
+you will get both classes!
+
 -}
 classList : List ( String, Bool ) -> Attribute msg
-classList list =
-    list
-        |> List.filter Tuple.second
-        |> List.map Tuple.first
-        |> String.join " "
-        |> class
+classList classes =
+    class <|
+        String.join " " <|
+            List.map Tuple.first <|
+                List.filter Tuple.second classes
 
 
 
@@ -284,7 +230,7 @@ JavaScript.
 
 Read more about the difference between properties and attributes [here].
 
-[here]: https://github.com/elm-lang/html/blob/master/properties-vs-attributes.md
+[here]: https://github.com/elm/html/blob/master/properties-vs-attributes.md
 
 -}
 property : String -> Json.Value -> Attribute msg
@@ -293,13 +239,13 @@ property =
 
 
 stringProperty : String -> String -> Attribute msg
-stringProperty name string =
-    property name (Json.string string)
+stringProperty key string =
+    VirtualDom.Styled.property key (Json.string string)
 
 
 boolProperty : String -> Bool -> Attribute msg
-boolProperty name bool =
-    property name (Json.bool bool)
+boolProperty key bool =
+    VirtualDom.Styled.property key (Json.bool bool)
 
 
 {-| Create _attributes_, like saying `domNode.setAttribute('class', 'greeting')`
@@ -311,7 +257,7 @@ in JavaScript.
 
 Read more about the difference between properties and attributes [here].
 
-[here]: https://github.com/elm-lang/html/blob/master/properties-vs-attributes.md
+[here]: https://github.com/elm/html/blob/master/properties-vs-attributes.md
 
 -}
 attribute : String -> String -> Attribute msg
@@ -323,7 +269,7 @@ attribute =
 -}
 map : (a -> msg) -> Attribute a -> Attribute msg
 map =
-    VirtualDom.Styled.mapProperty
+    VirtualDom.Styled.mapAttribute
 
 
 
@@ -331,32 +277,37 @@ map =
 
 
 {-| Often used with CSS to style elements with common properties.
+
+**Note:** You can have as many `class` and `classList` attributes as you want.
+They all get applied, so if you say `[ class "notice", class "notice-seen" ]`
+you will get both classes!
+
 -}
 class : String -> Attribute msg
-class name =
-    stringProperty "className" name
+class =
+    stringProperty "className"
 
 
 {-| Indicates the relevance of an element.
 -}
 hidden : Bool -> Attribute msg
-hidden bool =
-    boolProperty "hidden" bool
+hidden =
+    boolProperty "hidden"
 
 
 {-| Often used with CSS to style a specific element. The value of this
 attribute must be unique.
 -}
 id : String -> Attribute msg
-id name =
-    stringProperty "id" name
+id =
+    stringProperty "id"
 
 
 {-| Text to be displayed in a tooltip when hovering over the element.
 -}
 title : String -> Attribute msg
-title name =
-    stringProperty "title" name
+title =
+    stringProperty "title"
 
 
 
@@ -373,58 +324,58 @@ accesskey char =
 {-| Indicates whether the element's content is editable.
 -}
 contenteditable : Bool -> Attribute msg
-contenteditable bool =
-    boolProperty "contentEditable" bool
+contenteditable =
+    boolProperty "contentEditable"
 
 
 {-| Defines the ID of a `menu` element which will serve as the element's
 context menu.
 -}
 contextmenu : String -> Attribute msg
-contextmenu value =
-    attribute "contextmenu" value
+contextmenu =
+    VirtualDom.Styled.attribute "contextmenu"
 
 
 {-| Defines the text direction. Allowed values are ltr (Left-To-Right) or rtl
 (Right-To-Left).
 -}
 dir : String -> Attribute msg
-dir value =
-    stringProperty "dir" value
+dir =
+    stringProperty "dir"
 
 
 {-| Defines whether the element can be dragged.
 -}
 draggable : String -> Attribute msg
-draggable value =
-    attribute "draggable" value
+draggable =
+    VirtualDom.Styled.attribute "draggable"
 
 
 {-| Indicates that the element accept the dropping of content on it.
 -}
 dropzone : String -> Attribute msg
-dropzone value =
-    stringProperty "dropzone" value
+dropzone =
+    stringProperty "dropzone"
 
 
 {-| -}
 itemprop : String -> Attribute msg
-itemprop value =
-    attribute "itemprop" value
+itemprop =
+    VirtualDom.Styled.attribute "itemprop"
 
 
 {-| Defines the language used in the element.
 -}
 lang : String -> Attribute msg
-lang value =
-    stringProperty "lang" value
+lang =
+    stringProperty "lang"
 
 
 {-| Indicates whether spell checking is allowed for the element.
 -}
 spellcheck : Bool -> Attribute msg
-spellcheck bool =
-    boolProperty "spellcheck" bool
+spellcheck =
+    boolProperty "spellcheck"
 
 
 {-| Overrides the browser's default tab order and follows the one specified
@@ -432,71 +383,7 @@ instead.
 -}
 tabindex : Int -> Attribute msg
 tabindex n =
-    attribute "tabIndex" (toString n)
-
-
-
--- HEADER STUFF
-
-
-{-| Indicates that the `script` should be executed asynchronously.
--}
-async : Bool -> Attribute msg
-async bool =
-    boolProperty "async" bool
-
-
-{-| Declares the character encoding of the page or script. Common values include:
-
-  - UTF-8 - Character encoding for Unicode
-  - ISO-8859-1 - Character encoding for the Latin alphabet
-
-For `meta` and `script`.
-
--}
-charset : String -> Attribute msg
-charset value =
-    attribute "charset" value
-
-
-{-| A value associated with http-equiv or name depending on the context. For
-`meta`.
--}
-content : String -> Attribute msg
-content value =
-    stringProperty "content" value
-
-
-{-| Indicates that a `script` should be executed after the page has been
-parsed.
--}
-defer : Bool -> Attribute msg
-defer bool =
-    boolProperty "defer" bool
-
-
-{-| This attribute is an indicator that is paired with the `content` attribute,
-indicating what that content means. `httpEquiv` can take on three different
-values: content-type, default-style, or refresh. For `meta`.
--}
-httpEquiv : String -> Attribute msg
-httpEquiv value =
-    stringProperty "httpEquiv" value
-
-
-{-| Defines the script language used in a `script`.
--}
-language : String -> Attribute msg
-language value =
-    stringProperty "language" value
-
-
-{-| Indicates that a `style` should only apply to its parent and all of the
-parents children.
--}
-scoped : Bool -> Attribute msg
-scoped bool =
-    boolProperty "scoped" bool
+    VirtualDom.Styled.attribute "tabIndex" (String.fromInt n)
 
 
 
@@ -507,32 +394,32 @@ scoped bool =
 `input`, `script`, `source`, `track`, and `video`.
 -}
 src : String -> Attribute msg
-src value =
-    stringProperty "src" value
+src url =
+    stringProperty "src" url
 
 
 {-| Declare the height of a `canvas`, `embed`, `iframe`, `img`, `input`,
 `object`, or `video`.
 -}
 height : Int -> Attribute msg
-height value =
-    attribute "height" (toString value)
+height n =
+    VirtualDom.Styled.attribute "height" (String.fromInt n)
 
 
 {-| Declare the width of a `canvas`, `embed`, `iframe`, `img`, `input`,
 `object`, or `video`.
 -}
 width : Int -> Attribute msg
-width value =
-    attribute "width" (toString value)
+width n =
+    VirtualDom.Styled.attribute "width" (String.fromInt n)
 
 
 {-| Alternative text in case an image can't be displayed. Works with `img`,
 `area`, and `input`.
 -}
 alt : String -> Attribute msg
-alt value =
-    stringProperty "alt" value
+alt =
+    stringProperty "alt"
 
 
 
@@ -542,70 +429,70 @@ alt value =
 {-| The `audio` or `video` should play as soon as possible.
 -}
 autoplay : Bool -> Attribute msg
-autoplay bool =
-    boolProperty "autoplay" bool
+autoplay =
+    boolProperty "autoplay"
 
 
 {-| Indicates whether the browser should show playback controls for the `audio`
 or `video`.
 -}
 controls : Bool -> Attribute msg
-controls bool =
-    boolProperty "controls" bool
+controls =
+    boolProperty "controls"
 
 
 {-| Indicates whether the `audio` or `video` should start playing from the
 start when it's finished.
 -}
 loop : Bool -> Attribute msg
-loop bool =
-    boolProperty "loop" bool
+loop =
+    boolProperty "loop"
 
 
 {-| Control how much of an `audio` or `video` resource should be preloaded.
 -}
 preload : String -> Attribute msg
-preload value =
-    stringProperty "preload" value
+preload =
+    stringProperty "preload"
 
 
 {-| A URL indicating a poster frame to show until the user plays or seeks the
 `video`.
 -}
 poster : String -> Attribute msg
-poster value =
-    stringProperty "poster" value
+poster =
+    stringProperty "poster"
 
 
 {-| Indicates that the `track` should be enabled unless the user's preferences
 indicate something different.
 -}
 default : Bool -> Attribute msg
-default bool =
-    boolProperty "default" bool
+default =
+    boolProperty "default"
 
 
 {-| Specifies the kind of text `track`.
 -}
 kind : String -> Attribute msg
-kind value =
-    stringProperty "kind" value
+kind =
+    stringProperty "kind"
 
 
 
 {--TODO: maybe reintroduce once there's a better way to disambiguate imports
 {-| Specifies a user-readable title of the text `track`. -}
 label : String -> Attribute msg
-label value =
-  stringProperty "label" value
+label =
+  stringProperty "label"
 --}
 
 
 {-| A two letter language code indicating the language of the `track` text data.
 -}
 srclang : String -> Attribute msg
-srclang value =
-    stringProperty "srclang" value
+srclang =
+    stringProperty "srclang"
 
 
 
@@ -616,23 +503,16 @@ srclang value =
 `iframe`.
 -}
 sandbox : String -> Attribute msg
-sandbox value =
-    stringProperty "sandbox" value
-
-
-{-| Make an `iframe` look like part of the containing document.
--}
-seamless : Bool -> Attribute msg
-seamless bool =
-    boolProperty "seamless" bool
+sandbox =
+    stringProperty "sandbox"
 
 
 {-| An HTML document that will be displayed as the body of an `iframe`. It will
 override the content of the `src` attribute if it has been specified.
 -}
 srcdoc : String -> Attribute msg
-srcdoc value =
-    stringProperty "srcdoc" value
+srcdoc =
+    stringProperty "srcdoc"
 
 
 
@@ -643,47 +523,38 @@ srcdoc value =
 `source`, `style`, or `menu`.
 -}
 type_ : String -> Attribute msg
-type_ value =
-    stringProperty "type" value
+type_ =
+    stringProperty "type"
 
 
 {-| Defines a default value which will be displayed in a `button`, `option`,
 `input`, `li`, `meter`, `progress`, or `param`.
 -}
 value : String -> Attribute msg
-value value =
-    stringProperty "value" value
-
-
-{-| Defines an initial value which will be displayed in an `input` when that
-`input` is added to the DOM. Unlike `value`, altering `defaultValue` after the
-`input` element has been added to the DOM has no effect.
--}
-defaultValue : String -> Attribute msg
-defaultValue value =
-    stringProperty "defaultValue" value
+value =
+    stringProperty "value"
 
 
 {-| Indicates whether an `input` of type checkbox is checked.
 -}
 checked : Bool -> Attribute msg
-checked bool =
-    boolProperty "checked" bool
+checked =
+    boolProperty "checked"
 
 
 {-| Provides a hint to the user of what can be entered into an `input` or
 `textarea`.
 -}
 placeholder : String -> Attribute msg
-placeholder value =
-    stringProperty "placeholder" value
+placeholder =
+    stringProperty "placeholder"
 
 
 {-| Defines which `option` will be selected on page load.
 -}
 selected : Bool -> Attribute msg
-selected bool =
-    boolProperty "selected" bool
+selected =
+    boolProperty "selected"
 
 
 
@@ -694,22 +565,22 @@ selected bool =
 For `form` and `input`.
 -}
 accept : String -> Attribute msg
-accept value =
-    stringProperty "accept" value
+accept =
+    stringProperty "accept"
 
 
 {-| List of supported charsets in a `form`.
 -}
 acceptCharset : String -> Attribute msg
-acceptCharset value =
-    stringProperty "acceptCharset" value
+acceptCharset =
+    stringProperty "acceptCharset"
 
 
 {-| The URI of a program that processes the information submitted via a `form`.
 -}
 action : String -> Attribute msg
-action value =
-    stringProperty "action" value
+action uri =
+    stringProperty "action" uri
 
 
 {-| Indicates whether a `form` or an `input` can have their values automatically
@@ -727,19 +598,19 @@ autocomplete bool =
 
 
 {-| The element should be automatically focused after the page loaded.
-For `button`, `input`, `keygen`, `select`, and `textarea`.
+For `button`, `input`, `select`, and `textarea`.
 -}
 autofocus : Bool -> Attribute msg
-autofocus bool =
-    boolProperty "autofocus" bool
+autofocus =
+    boolProperty "autofocus"
 
 
 {-| Indicates whether the user can interact with a `button`, `fieldset`,
-`input`, `keygen`, `optgroup`, `option`, `select` or `textarea`.
+`input`, `optgroup`, `option`, `select` or `textarea`.
 -}
 disabled : Bool -> Attribute msg
-disabled bool =
-    boolProperty "disabled" bool
+disabled =
+    boolProperty "disabled"
 
 
 {-| How `form` data should be encoded when submitted with the POST method.
@@ -747,16 +618,8 @@ Options include: application/x-www-form-urlencoded, multipart/form-data, and
 text/plain.
 -}
 enctype : String -> Attribute msg
-enctype value =
-    stringProperty "enctype" value
-
-
-{-| Indicates the action of an `input` or `button`. This overrides the action
-defined in the surrounding `form`.
--}
-formaction : String -> Attribute msg
-formaction value =
-    attribute "formAction" value
+enctype =
+    stringProperty "enctype"
 
 
 {-| Associates an `input` with a `datalist` tag. The datalist gives some
@@ -765,8 +628,8 @@ The value of the list attribute must match the id of a `datalist` node.
 For `input`.
 -}
 list : String -> Attribute msg
-list value =
-    attribute "list" value
+list =
+    VirtualDom.Styled.attribute "list"
 
 
 {-| Defines the minimum number of characters allowed in an `input` or
@@ -774,7 +637,7 @@ list value =
 -}
 minlength : Int -> Attribute msg
 minlength n =
-    attribute "minLength" (toString n)
+    VirtualDom.Styled.attribute "minLength" (String.fromInt n)
 
 
 {-| Defines the maximum number of characters allowed in an `input` or
@@ -782,63 +645,63 @@ minlength n =
 -}
 maxlength : Int -> Attribute msg
 maxlength n =
-    attribute "maxlength" (toString n)
+    VirtualDom.Styled.attribute "maxlength" (String.fromInt n)
 
 
 {-| Defines which HTTP method to use when submitting a `form`. Can be GET
 (default) or POST.
 -}
 method : String -> Attribute msg
-method value =
-    stringProperty "method" value
+method =
+    stringProperty "method"
 
 
 {-| Indicates whether multiple values can be entered in an `input` of type
 email or file. Can also indicate that you can `select` many options.
 -}
 multiple : Bool -> Attribute msg
-multiple bool =
-    boolProperty "multiple" bool
+multiple =
+    boolProperty "multiple"
 
 
 {-| Name of the element. For example used by the server to identify the fields
-in form submits. For `button`, `form`, `fieldset`, `iframe`, `input`, `keygen`,
+in form submits. For `button`, `form`, `fieldset`, `iframe`, `input`,
 `object`, `output`, `select`, `textarea`, `map`, `meta`, and `param`.
 -}
 name : String -> Attribute msg
-name value =
-    stringProperty "name" value
+name =
+    stringProperty "name"
 
 
 {-| This attribute indicates that a `form` shouldn't be validated when
 submitted.
 -}
 novalidate : Bool -> Attribute msg
-novalidate bool =
-    boolProperty "noValidate" bool
+novalidate =
+    boolProperty "noValidate"
 
 
 {-| Defines a regular expression which an `input`'s value will be validated
 against.
 -}
 pattern : String -> Attribute msg
-pattern value =
-    stringProperty "pattern" value
+pattern =
+    stringProperty "pattern"
 
 
 {-| Indicates whether an `input` or `textarea` can be edited.
 -}
 readonly : Bool -> Attribute msg
-readonly bool =
-    boolProperty "readOnly" bool
+readonly =
+    boolProperty "readOnly"
 
 
 {-| Indicates whether this element is required to fill out or not.
 For `input`, `select`, and `textarea`.
 -}
 required : Bool -> Attribute msg
-required bool =
-    boolProperty "required" bool
+required =
+    boolProperty "required"
 
 
 {-| For `input` specifies the width of an input in characters.
@@ -848,24 +711,24 @@ For `select` specifies the number of visible options in a drop-down list.
 -}
 size : Int -> Attribute msg
 size n =
-    attribute "size" (toString n)
+    VirtualDom.Styled.attribute "size" (String.fromInt n)
 
 
 {-| The element ID described by this `label` or the element IDs that are used
 for an `output`.
 -}
 for : String -> Attribute msg
-for value =
-    stringProperty "htmlFor" value
+for =
+    stringProperty "htmlFor"
 
 
 {-| Indicates the element ID of the `form` that owns this particular `button`,
-`fieldset`, `input`, `keygen`, `label`, `meter`, `object`, `output`,
-`progress`, `select`, or `textarea`.
+`fieldset`, `input`, `label`, `meter`, `object`, `output`, `progress`,
+`select`, or `textarea`.
 -}
 form : String -> Attribute msg
-form value =
-    attribute "form" value
+form =
+    VirtualDom.Styled.attribute "form"
 
 
 
@@ -876,16 +739,16 @@ form value =
 date, the max value must be a number or date. For `input`, `meter`, and `progress`.
 -}
 max : String -> Attribute msg
-max value =
-    stringProperty "max" value
+max =
+    stringProperty "max"
 
 
 {-| Indicates the minimum value allowed. When using an input of type number or
 date, the min value must be a number or date. For `input` and `meter`.
 -}
 min : String -> Attribute msg
-min value =
-    stringProperty "min" value
+min =
+    stringProperty "min"
 
 
 {-| Add a step size to an `input`. Use `step "any"` to allow any floating-point
@@ -904,35 +767,35 @@ step n =
 -}
 cols : Int -> Attribute msg
 cols n =
-    attribute "cols" (toString n)
+    VirtualDom.Styled.attribute "cols" (String.fromInt n)
 
 
 {-| Defines the number of rows in a `textarea`.
 -}
 rows : Int -> Attribute msg
 rows n =
-    attribute "rows" (toString n)
+    VirtualDom.Styled.attribute "rows" (String.fromInt n)
 
 
 {-| Indicates whether the text should be wrapped in a `textarea`. Possible
 values are "hard" and "soft".
 -}
 wrap : String -> Attribute msg
-wrap value =
-    stringProperty "wrap" value
+wrap =
+    stringProperty "wrap"
 
 
 
 -- MAPS
 
 
-{-| When an `img` is a descendent of an `a` tag, the `ismap` attribute
+{-| When an `img` is a descendant of an `a` tag, the `ismap` attribute
 indicates that the click location should be added to the parent `a`'s href as
 a query string.
 -}
 ismap : Bool -> Attribute msg
-ismap value =
-    boolProperty "isMap" value
+ismap =
+    boolProperty "isMap"
 
 
 {-| Specify the hash name reference of a `map` that should be used for an `img`
@@ -940,8 +803,8 @@ or `object`. A hash name reference is a hash symbol followed by the element's na
 E.g. `"#planet-map"`.
 -}
 usemap : String -> Attribute msg
-usemap value =
-    stringProperty "useMap" value
+usemap =
+    stringProperty "useMap"
 
 
 {-| Declare the shape of the clickable area in an `a` or `area`. Valid values
@@ -949,35 +812,16 @@ include: default, rect, circle, poly. This attribute can be paired with
 `coords` to create more particular shapes.
 -}
 shape : String -> Attribute msg
-shape value =
-    stringProperty "shape" value
+shape =
+    stringProperty "shape"
 
 
 {-| A set of values specifying the coordinates of the hot-spot region in an
 `area`. Needs to be paired with a `shape` attribute to be meaningful.
 -}
 coords : String -> Attribute msg
-coords value =
-    stringProperty "coords" value
-
-
-
--- KEY GEN
-
-
-{-| A challenge string that is submitted along with the public key in a `keygen`.
--}
-challenge : String -> Attribute msg
-challenge value =
-    attribute "challenge" value
-
-
-{-| Specifies the type of key generated by a `keygen`. Possible values are:
-rsa, dsa, and ec.
--}
-keytype : String -> Attribute msg
-keytype value =
-    stringProperty "keytype" value
+coords =
+    stringProperty "coords"
 
 
 
@@ -989,16 +833,16 @@ keytype value =
 `tr`.
 -}
 align : String -> Attribute msg
-align value =
-    stringProperty "align" value
+align =
+    stringProperty "align"
 
 
 {-| Contains a URI which points to the source of the quote or change in a
 `blockquote`, `del`, `ins`, or `q`.
 -}
 cite : String -> Attribute msg
-cite value =
-    stringProperty "cite" value
+cite =
+    stringProperty "cite"
 
 
 
@@ -1008,71 +852,82 @@ cite value =
 {-| The URL of a linked resource, such as `a`, `area`, `base`, or `link`.
 -}
 href : String -> Attribute msg
-href value =
-    stringProperty "href" value
+href url =
+    stringProperty "href" url
 
 
 {-| Specify where the results of clicking an `a`, `area`, `base`, or `form`
 should appear. Possible special values include:
 
-  - _blank &mdash; a new window or tab
-  - _self &mdash; the same frame (this is default)
-  - _parent &mdash; the parent frame
-  - _top &mdash; the full body of the window
+  - \_blank &mdash; a new window or tab
+  - \_self &mdash; the same frame (this is default)
+  - \_parent &mdash; the parent frame
+  - \_top &mdash; the full body of the window
 
 You can also give the name of any `frame` you have created.
 
 -}
 target : String -> Attribute msg
-target value =
-    stringProperty "target" value
+target =
+    stringProperty "target"
 
 
 {-| Indicates that clicking an `a` and `area` will download the resource
-directly.
+directly. The `String` argument determins the name of the downloaded file.
+Say the file you are serving is named `hats.json`.
+
+    download "" -- hats.json
+
+    download "my-hats.json" -- my-hats.json
+
+    download "snakes.json" -- snakes.json
+
+The empty `String` says to just name it whatever it was called on the server.
+
 -}
-download : Bool -> Attribute msg
-download bool =
-    boolProperty "download" bool
+download : String -> Attribute msg
+download fileName =
+    stringProperty "download" fileName
 
 
 {-| Indicates that clicking an `a` and `area` will download the resource
 directly, and that the downloaded resource with have the given filename.
+So `downloadAs "hats.json"` means the person gets a file named `hats.json`.
 -}
 downloadAs : String -> Attribute msg
-downloadAs value =
-    stringProperty "download" value
+downloadAs =
+    stringProperty "download"
 
 
 {-| Two-letter language code of the linked resource of an `a`, `area`, or `link`.
 -}
 hreflang : String -> Attribute msg
-hreflang value =
-    stringProperty "hreflang" value
+hreflang =
+    stringProperty "hreflang"
 
 
 {-| Specifies a hint of the target media of a `a`, `area`, `link`, `source`,
 or `style`.
 -}
 media : String -> Attribute msg
-media value =
-    attribute "media" value
+media =
+    VirtualDom.Styled.attribute "media"
 
 
 {-| Specify a URL to send a short POST request to when the user clicks on an
 `a` or `area`. Useful for monitoring and tracking.
 -}
 ping : String -> Attribute msg
-ping value =
-    stringProperty "ping" value
+ping =
+    stringProperty "ping"
 
 
 {-| Specifies the relationship of the target object to the link object.
 For `a`, `area`, `link`.
 -}
 rel : String -> Attribute msg
-rel value =
-    attribute "rel" value
+rel =
+    VirtualDom.Styled.attribute "rel"
 
 
 
@@ -1083,16 +938,16 @@ rel value =
 For `del`, `ins`, `time`.
 -}
 datetime : String -> Attribute msg
-datetime value =
-    attribute "datetime" value
+datetime =
+    VirtualDom.Styled.attribute "datetime"
 
 
 {-| Indicates whether this date and time is the date of the nearest `article`
 ancestor element. For `time`.
 -}
 pubdate : String -> Attribute msg
-pubdate value =
-    attribute "pubdate" value
+pubdate =
+    VirtualDom.Styled.attribute "pubdate"
 
 
 
@@ -1103,8 +958,8 @@ pubdate value =
 order instead of a ascending.
 -}
 reversed : Bool -> Attribute msg
-reversed bool =
-    boolProperty "reversed" bool
+reversed =
+    boolProperty "reversed"
 
 
 {-| Defines the first number of an ordered list if you want it to be something
@@ -1112,7 +967,7 @@ besides 1.
 -}
 start : Int -> Attribute msg
 start n =
-    stringProperty "start" (toString n)
+    stringProperty "start" (String.fromInt n)
 
 
 
@@ -1124,15 +979,15 @@ For `td` and `th`.
 -}
 colspan : Int -> Attribute msg
 colspan n =
-    attribute "colspan" (toString n)
+    VirtualDom.Styled.attribute "colspan" (String.fromInt n)
 
 
 {-| A space separated list of element IDs indicating which `th` elements are
 headers for this cell. For `td` and `th`.
 -}
 headers : String -> Attribute msg
-headers value =
-    stringProperty "headers" value
+headers =
+    stringProperty "headers"
 
 
 {-| Defines the number of rows a table cell should span over.
@@ -1140,29 +995,28 @@ For `td` and `th`.
 -}
 rowspan : Int -> Attribute msg
 rowspan n =
-    attribute "rowspan" (toString n)
+    VirtualDom.Styled.attribute "rowspan" (String.fromInt n)
 
 
 {-| Specifies the scope of a header cell `th`. Possible values are: col, row,
 colgroup, rowgroup.
 -}
 scope : String -> Attribute msg
-scope value =
-    stringProperty "scope" value
+scope =
+    stringProperty "scope"
 
 
 {-| Specifies the URL of the cache manifest for an `html` tag.
 -}
 manifest : String -> Attribute msg
-manifest value =
-    attribute "manifest" value
+manifest =
+    VirtualDom.Styled.attribute "manifest"
 
 
-{-| Apply styles to an element.
 
-See the [`Css` module documentation](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css) for an overview of how to use this function.
-
--}
-css : List Style -> Attribute msg
-css =
-    Internal.css
+{--TODO: maybe reintroduce once there's a better way to disambiguate imports
+{-| The number of columns a `col` or `colgroup` should span. -}
+span : Int -> Attribute msg
+span n =
+    stringProperty "span" (String.fromInt n)
+--}
