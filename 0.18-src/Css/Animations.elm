@@ -1,8 +1,16 @@
-module Css.Animations exposing
-    ( Property, keyframes, Keyframes
-    , opacity, transform, all, backgroundSize, backgroundSize2, border
-    , backgroundColor
-    )
+module Css.Animations
+    exposing
+        ( Keyframes
+        , Property
+        , all
+        , backgroundColor
+        , backgroundSize
+        , backgroundSize2
+        , border
+        , keyframes
+        , opacity
+        , transform
+        )
 
 {-|
 
@@ -73,7 +81,6 @@ keyframes tuples =
         , none = Compatible
         , keyframes = Compatible
         }
-
     else
         { value = Css.Internal.compileKeyframes tuples
         , none = Compatible
@@ -162,7 +169,6 @@ transform values =
     Property <|
         if List.isEmpty values then
             "transform:none"
-
         else
             "transform:" ++ String.join " " (List.map .value values)
 

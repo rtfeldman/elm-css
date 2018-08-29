@@ -1,16 +1,93 @@
-module Css.Global exposing
-    ( global, Snippet
-    , class, id, selector, everything, media, mediaQuery
-    , children, descendants, adjacentSiblings, generalSiblings, each, withAttribute, withClass
-    , typeSelector, html, body
-    , article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time, details, summary
-    , div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, blockquote
-    , a, code, small, span, strong, i, em, q
-    , img, audio, video, canvas
-    , caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
-    , button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea
-    , svg, path, rect, circle, ellipse, line, polyline, polygon
-    )
+module Css.Global
+    exposing
+        ( Snippet
+        , a
+        , adjacentSiblings
+        , article
+        , aside
+        , audio
+        , blockquote
+        , body
+        , button
+        , canvas
+        , caption
+        , children
+        , circle
+        , class
+        , code
+        , col
+        , colgroup
+        , dd
+        , descendants
+        , details
+        , div
+        , dl
+        , dt
+        , each
+        , ellipse
+        , em
+        , everything
+        , fieldset
+        , footer
+        , form
+        , generalSiblings
+        , global
+        , h1
+        , h2
+        , h3
+        , h4
+        , h5
+        , h6
+        , header
+        , hr
+        , html
+        , i
+        , id
+        , img
+        , input
+        , label
+        , legend
+        , li
+        , line
+        , main_
+        , media
+        , mediaQuery
+        , menu
+        , nav
+        , ol
+        , optgroup
+        , option
+        , p
+        , path
+        , polygon
+        , polyline
+        , pre
+        , progress
+        , q
+        , rect
+        , section
+        , select
+        , selector
+        , small
+        , span
+        , strong
+        , summary
+        , svg
+        , table
+        , tbody
+        , td
+        , textarea
+        , tfoot
+        , th
+        , thead
+        , time
+        , tr
+        , typeSelector
+        , ul
+        , video
+        , withAttribute
+        , withClass
+        )
 
 {-| Apply global CSS to things like foreign DOM structures (e.g. generated
 from markdown) where you cannot add attributes.

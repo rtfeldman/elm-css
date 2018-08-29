@@ -457,21 +457,18 @@ compactHelp declaration ( keyframesByName, declarations ) =
         StyleBlockDeclaration (StyleBlock _ _ properties) ->
             if List.isEmpty properties then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 
         MediaRule _ styleBlocks ->
             if List.all (\(StyleBlock _ _ properties) -> List.isEmpty properties) styleBlocks then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 
         SupportsRule _ otherDeclarations ->
             if List.isEmpty otherDeclarations then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 
@@ -481,21 +478,18 @@ compactHelp declaration ( keyframesByName, declarations ) =
         PageRule _ properties ->
             if List.isEmpty properties then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 
         FontFace properties ->
             if List.isEmpty properties then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 
         Keyframes record ->
             if String.isEmpty record.declaration then
                 ( keyframesByName, declarations )
-
             else
                 -- move the keyframes declaration to the dictionary
                 ( Dict.insert record.name record.declaration keyframesByName
@@ -505,21 +499,18 @@ compactHelp declaration ( keyframesByName, declarations ) =
         Viewport properties ->
             if List.isEmpty properties then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 
         CounterStyle properties ->
             if List.isEmpty properties then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 
         FontFeatureValues tuples ->
             if List.all (\( _, properties ) -> List.isEmpty properties) tuples then
                 ( keyframesByName, declarations )
-
             else
                 ( keyframesByName, declaration :: declarations )
 

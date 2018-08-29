@@ -167,7 +167,6 @@ simpleSelectorSequenceToString simpleSelectorSequence =
         UniversalSelectorSequence repeatableSimpleSelectors ->
             if List.isEmpty repeatableSimpleSelectors then
                 "*"
-
             else
                 List.map repeatableSimpleSelectorToString repeatableSimpleSelectors
                     |> String.join ""

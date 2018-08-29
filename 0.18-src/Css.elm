@@ -1,69 +1,663 @@
-module Css exposing
-    ( Style, batch
-    , property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, pointerEvents, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
-    , Color, all, important, solid, transparent, rgb, rgba, hsl, hsla, hex
-    , featureTag, featureTag2, featureOn, featureOff
-    , borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBottomColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text_, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing, visiblePainted, visibleFill, visibleStroke, painted, stroke
-    , Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, calc, plus, minus
-    , Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax, Mm, Cm, In, Pt, Pc
-    , deg, rad, grad, turn
-    , pseudoClass, active, any, checked, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
-    , pseudoElement, after, before, firstLetter, firstLine, selection
-    , src_
-    , qt
-    , listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
-    , listStylePosition, inside, outside
-    , listStyle, listStyle2, listStyle3
-    , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-    , AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
-    , url, vertical, tableRowGroup, tableRow, tableLayout, tableHeaderGroup, tableFooterGroup, tableColumnGroup, tableCell, tableColumn, tableCaption, table, space, softLight, separate, screenBlendMode, saturation, round, repeatY, repeatX, repeat, pointerEventsFill, pointerEventsAll
-    , Compatible
-    , backgroundAttachment
-    , backgroundBlendMode
-    , backgroundClip
-    , backgroundImage
-    , backgroundOrigin
-    , backgroundPosition
-    , backgroundPosition2
-    , backgroundRepeat
-    , backgroundRepeat2
-    , backgroundSize
-    , backgroundSize2
-    , both
-    , breakWord
-    , collapse
-    , colorBurn
-    , colorDodge
-    , contain
-    , cover
-    , darken
-    , difference
-    , displayFlex
-    , exclusion
-    , hardLight
-    , horizontal
-    , hue
-    , inlineListItem
-    , inlineTable
-    , lighten
-    , listItem
-    , local
-    , luminosity
-    , manipulation
-    , multiply
-    , noRepeat
-    , overlay
-    , paddingBox
-    , panDown
-    , panLeft
-    , panRight
-    , panUp
-    , panX
-    , panY
-    , pinchZoom
-    , FontSize, ColorValue, ColorStop, IntOrAuto
-    , thin, thick, blink
-    )
+module Css
+    exposing
+        ( AlignItems
+        , All
+        , Angle
+        , AngleOrDirection
+        , BackgroundAttachment
+        , BackgroundBlendMode
+        , BackgroundClip
+        , BackgroundImage
+        , BackgroundOrigin
+        , BackgroundRepeat
+        , BackgroundRepeatShorthand
+        , BasicProperty
+        , BorderCollapse
+        , BorderStyle
+        , BoxSizing
+        , Calc
+        , CalcExpression
+        , Ch
+        , Cm
+        , Color
+        , ColorStop
+        , ColorValue
+        , Compatible
+        , Cursor
+        , Display
+        , Em
+        , Ex
+        , ExplicitLength
+        , FeatureTagValue
+        , FlexBasis
+        , FlexDirection
+        , FlexDirectionOrWrap
+        , FlexWrap
+        , FontFamily
+        , FontSize
+        , FontStyle
+        , FontStyleOrFeatureTagValue
+        , FontVariant
+        , FontVariantCaps
+        , FontVariantLigatures
+        , FontVariantNumeric
+        , FontWeight
+        , ImportType
+        , In
+        , IncompatibleUnits
+        , IntOrAuto
+        , JustifyContent
+        , Length
+        , LengthOrAuto
+        , LengthOrAutoOrCoverOrContain
+        , LengthOrMinMaxDimension
+        , LengthOrNone
+        , LengthOrNoneOrMinMaxDimension
+        , LengthOrNumber
+        , LengthOrNumberOrAutoOrNoneOrContent
+        , ListStyle
+        , ListStylePosition
+        , ListStyleType
+        , MinMaxDimension
+        , Mm
+        , NonMixable
+        , None
+        , Number
+        , Outline
+        , Overflow
+        , Pc
+        , Pct
+        , Position
+        , Pt
+        , Px
+        , Rem
+        , Resize
+        , Style
+        , TableLayout
+        , TextDecorationLine
+        , TextDecorationStyle
+        , TextIndent
+        , TextOrientation
+        , TextOverflow
+        , TextRendering
+        , TextTransform
+        , TouchAction
+        , Transform
+        , TransformBox
+        , TransformStyle
+        , Value
+        , VerticalAlign
+        , Vh
+        , Visibility
+        , Vmax
+        , Vmin
+        , Vw
+        , WhiteSpace
+        , Wrap
+        , absolute
+        , active
+        , after
+        , alignItems
+        , alignSelf
+        , all
+        , allPetiteCaps
+        , allScroll
+        , allSmallCaps
+        , any
+        , arabicIndic
+        , armenian
+        , auto
+        , backgroundAttachment
+        , backgroundBlendMode
+        , backgroundClip
+        , backgroundColor
+        , backgroundImage
+        , backgroundOrigin
+        , backgroundPosition
+        , backgroundPosition2
+        , backgroundRepeat
+        , backgroundRepeat2
+        , backgroundSize
+        , backgroundSize2
+        , baseline
+        , batch
+        , before
+        , bengali
+        , blink
+        , block
+        , bold
+        , bolder
+        , border
+        , border2
+        , border3
+        , borderBottom
+        , borderBottom2
+        , borderBottom3
+        , borderBottomColor
+        , borderBottomLeftRadius
+        , borderBottomLeftRadius2
+        , borderBottomRightRadius
+        , borderBottomRightRadius2
+        , borderBottomStyle
+        , borderBottomWidth
+        , borderBox
+        , borderCollapse
+        , borderColor
+        , borderColor2
+        , borderColor3
+        , borderColor4
+        , borderImageOutset
+        , borderImageOutset2
+        , borderImageOutset3
+        , borderImageOutset4
+        , borderImageWidth
+        , borderImageWidth2
+        , borderImageWidth3
+        , borderImageWidth4
+        , borderLeft
+        , borderLeft2
+        , borderLeft3
+        , borderLeftColor
+        , borderLeftStyle
+        , borderLeftWidth
+        , borderRadius
+        , borderRadius2
+        , borderRadius3
+        , borderRadius4
+        , borderRight
+        , borderRight2
+        , borderRight3
+        , borderRightColor
+        , borderRightStyle
+        , borderRightWidth
+        , borderSpacing
+        , borderSpacing2
+        , borderStyle
+        , borderTop
+        , borderTop2
+        , borderTop3
+        , borderTopColor
+        , borderTopLeftRadius
+        , borderTopLeftRadius2
+        , borderTopRightRadius
+        , borderTopRightRadius2
+        , borderTopStyle
+        , borderTopWidth
+        , borderWidth
+        , borderWidth2
+        , borderWidth3
+        , borderWidth4
+        , both
+        , bottom
+        , boxShadow
+        , boxShadow2
+        , boxShadow3
+        , boxShadow4
+        , boxShadow5
+        , boxShadow6
+        , boxSizing
+        , breakWord
+        , calc
+        , capitalize
+        , cell
+        , center
+        , ch
+        , checked
+        , circle
+        , cjkEarthlyBranch
+        , cjkHeavenlyStem
+        , clip
+        , cm
+        , colResize
+        , collapse
+        , color
+        , colorBurn
+        , colorDodge
+        , column
+        , columnReverse
+        , commonLigatures
+        , contain
+        , content
+        , contentBox
+        , contextMenu
+        , contextual
+        , copy
+        , cover
+        , crosshair
+        , currentColor
+        , cursive
+        , cursor
+        , cursorAlias
+        , darken
+        , dashed
+        , decimal
+        , decimalLeadingZero
+        , default
+        , deg
+        , devanagari
+        , diagonalFractions
+        , difference
+        , disabled
+        , disc
+        , discretionaryLigatures
+        , display
+        , displayFlex
+        , dotted
+        , double
+        , eResize
+        , eachLine
+        , ellipsis
+        , em
+        , empty
+        , enabled
+        , end
+        , ewResize
+        , ex
+        , exclusion
+        , fantasy
+        , featureOff
+        , featureOn
+        , featureTag
+        , featureTag2
+        , fill
+        , fillAvailable
+        , fillBox
+        , first
+        , firstChild
+        , firstLetter
+        , firstLine
+        , firstOfType
+        , fitContent
+        , fixed
+        , flat
+        , flex
+        , flex2
+        , flex3
+        , flexBasis
+        , flexDirection
+        , flexEnd
+        , flexFlow1
+        , flexFlow2
+        , flexGrow
+        , flexShrink
+        , flexStart
+        , flexWrap
+        , float
+        , focus
+        , fontFace
+        , fontFamilies
+        , fontFamily
+        , fontFeatureSettings
+        , fontFeatureSettingsList
+        , fontSize
+        , fontStyle
+        , fontVariant
+        , fontVariant2
+        , fontVariant3
+        , fontVariantCaps
+        , fontVariantLigatures
+        , fontVariantNumeric
+        , fontVariantNumeric2
+        , fontVariantNumeric3
+        , fontVariantNumerics
+        , fontWeight
+        , fullWidth
+        , fullscreen
+        , geometricPrecision
+        , georgian
+        , grab
+        , grabbing
+        , grad
+        , groove
+        , gujarati
+        , gurmukhi
+        , hanging
+        , hardLight
+        , height
+        , help
+        , hex
+        , hidden
+        , historicalLigatures
+        , horizontal
+        , hover
+        , hsl
+        , hsla
+        , hue
+        , important
+        , inches
+        , indeterminate
+        , inherit
+        , initial
+        , inline
+        , inlineBlock
+        , inlineFlex
+        , inlineListItem
+        , inlineTable
+        , inset
+        , inside
+        , int
+        , invalid
+        , italic
+        , justify
+        , justifyAll
+        , justifyContent
+        , kannada
+        , khmer
+        , lang
+        , lao
+        , large
+        , larger
+        , lastChild
+        , lastOfType
+        , left
+        , letterSpacing
+        , lighten
+        , lighter
+        , lineHeight
+        , lineThrough
+        , linearGradient
+        , linearGradient2
+        , liningNums
+        , link
+        , listItem
+        , listStyle
+        , listStyle2
+        , listStyle3
+        , listStylePosition
+        , listStyleType
+        , local
+        , lowerAlpha
+        , lowerGreek
+        , lowerLatin
+        , lowerRoman
+        , lowercase
+        , luminosity
+        , malayalam
+        , manipulation
+        , margin
+        , margin2
+        , margin3
+        , margin4
+        , marginBlockEnd
+        , marginBlockStart
+        , marginBottom
+        , marginInlineEnd
+        , marginInlineStart
+        , marginLeft
+        , marginRight
+        , marginTop
+        , matchParent
+        , matrix
+        , matrix3d
+        , maxContent
+        , maxHeight
+        , maxWidth
+        , medium
+        , middle
+        , minContent
+        , minHeight
+        , minWidth
+        , minus
+        , mm
+        , monospace
+        , move
+        , multiply
+        , myanmar
+        , nResize
+        , neResize
+        , neswResize
+        , noCommonLigatures
+        , noContextual
+        , noDiscretionaryLigatures
+        , noDrop
+        , noHistoricalLigatures
+        , noRepeat
+        , noWrap
+        , none
+        , normal
+        , notAllowed
+        , nsResize
+        , nthChild
+        , nthLastChild
+        , nthLastOfType
+        , nthOfType
+        , num
+        , nwResize
+        , nwseResize
+        , oblique
+        , oldstyleNums
+        , onlyChild
+        , onlyOfType
+        , opacity
+        , optimizeLegibility
+        , optimizeSpeed
+        , optional
+        , order
+        , ordinal
+        , oriya
+        , outOfRange
+        , outline
+        , outline3
+        , outlineColor
+        , outlineOffset
+        , outlineStyle
+        , outlineWidth
+        , outset
+        , outside
+        , overflow
+        , overflowWrap
+        , overflowX
+        , overflowY
+        , overlay
+        , overline
+        , padding
+        , padding2
+        , padding3
+        , padding4
+        , paddingBottom
+        , paddingBox
+        , paddingLeft
+        , paddingRight
+        , paddingTop
+        , painted
+        , panDown
+        , panLeft
+        , panRight
+        , panUp
+        , panX
+        , panY
+        , pc
+        , pct
+        , perspective
+        , petiteCaps
+        , pinchZoom
+        , plus
+        , pointer
+        , pointerEvents
+        , pointerEventsAll
+        , pointerEventsFill
+        , position
+        , pre
+        , preLine
+        , preWrap
+        , preserve3d
+        , progress
+        , property
+        , proportionalNums
+        , pseudoClass
+        , pseudoElement
+        , pt
+        , px
+        , qt
+        , rad
+        , readWrite
+        , relative
+        , rem
+        , repeat
+        , repeatX
+        , repeatY
+        , required
+        , resize
+        , rgb
+        , rgba
+        , ridge
+        , right
+        , root
+        , rotate
+        , rotate3d
+        , rotateX
+        , rotateY
+        , rotateZ
+        , round
+        , row
+        , rowResize
+        , rowReverse
+        , sResize
+        , sansSerif
+        , saturation
+        , scale
+        , scale2
+        , scale3d
+        , scaleX
+        , scaleY
+        , scope
+        , screenBlendMode
+        , scroll
+        , seResize
+        , selection
+        , separate
+        , serif
+        , skew
+        , skew2
+        , skewX
+        , skewY
+        , slashedZero
+        , small
+        , smallCaps
+        , smaller
+        , softLight
+        , solid
+        , space
+        , spaceAround
+        , spaceBetween
+        , square
+        , src_
+        , stackedFractions
+        , start
+        , static
+        , sticky
+        , stop
+        , stop2
+        , stretch
+        , stroke
+        , sub
+        , super
+        , swResize
+        , table
+        , tableCaption
+        , tableCell
+        , tableColumn
+        , tableColumnGroup
+        , tableFooterGroup
+        , tableHeaderGroup
+        , tableLayout
+        , tableRow
+        , tableRowGroup
+        , tabularNums
+        , target
+        , telugu
+        , textAlign
+        , textAlignLast
+        , textBottom
+        , textDecoration
+        , textDecoration2
+        , textDecoration3
+        , textDecorationLine
+        , textDecorationLines
+        , textDecorationStyle
+        , textDecorations
+        , textDecorations2
+        , textDecorations3
+        , textEmphasisColor
+        , textIndent
+        , textIndent2
+        , textIndent3
+        , textOrientation
+        , textOverflow
+        , textRendering
+        , textShadow
+        , textShadow2
+        , textShadow3
+        , textShadow4
+        , textTop
+        , textTransform
+        , text_
+        , thai
+        , thick
+        , thin
+        , titlingCaps
+        , toBottom
+        , toBottomLeft
+        , toBottomRight
+        , toLeft
+        , toRight
+        , toTop
+        , toTopLeft
+        , toTopRight
+        , top
+        , touchAction
+        , transform
+        , transformBox
+        , transformStyle
+        , transforms
+        , translate
+        , translate2
+        , translate3d
+        , translateX
+        , translateY
+        , translateZ
+        , transparent
+        , true
+        , turn
+        , underline
+        , unicase
+        , unset
+        , upperAlpha
+        , upperLatin
+        , upperRoman
+        , uppercase
+        , url
+        , valid
+        , vertical
+        , verticalAlign
+        , verticalText
+        , vh
+        , viewBox
+        , visibility
+        , visible
+        , visibleFill
+        , visiblePainted
+        , visibleStroke
+        , visited
+        , vmax
+        , vmin
+        , vw
+        , wResize
+        , wait
+        , wavy
+        , whiteSpace
+        , width
+        , wrap
+        , wrapReverse
+        , xLarge
+        , xSmall
+        , xxLarge
+        , xxSmall
+        , zIndex
+        , zero
+        , zoomIn
+        , zoomOut
+        )
 
 {-| Define CSS styles in Elm.
 
@@ -863,6 +1457,7 @@ type alias TableLayout compatible =
 
 
     -- calc(100vh - (2px + 2rem))
+
     screenMinusBorderAndFooter =
         calc (vh 100) minus (calc (px 2) plus (rem 2))
 
@@ -872,7 +1467,7 @@ type alias TableLayout compatible =
     myHeight =
         height screenMinusBorderAndFooter
 
-Using \* and / with calc isn't supported. Use arithmetics from elm instead.
+Using * and / with calc isn't supported. Use arithmetics from elm instead.
 
 -}
 calc : Calc compatibleA -> CalcExpression -> Calc compatibleB -> CalculatedLength
@@ -881,7 +1476,6 @@ calc firstExpr expression secondExpr =
         withoutCalcStr l =
             if String.startsWith "calc(" l.value then
                 String.dropLeft 4 l.value
-
             else
                 l.value
 
@@ -1141,7 +1735,6 @@ makeImportant : Property -> Property
 makeImportant str =
     if String.endsWith " !important" (String.toLower str) then
         str
-
     else
         str ++ " !important"
 
@@ -1618,7 +2211,6 @@ hex str =
         withoutHash =
             if String.startsWith "#" str then
                 String.dropLeft 1 str
-
             else
                 str
     in
@@ -1672,7 +2264,6 @@ withPrecedingHash : String -> String
 withPrecedingHash str =
     if String.startsWith "#" str then
         str
-
     else
         String.cons '#' str
 
@@ -1722,25 +2313,18 @@ hslToRgb hueVal saturationVal lightness =
         ( r, g, b ) =
             if normHue < 0 then
                 ( 0, 0, 0 )
-
             else if normHue < 1 then
                 ( chroma, x, 0 )
-
             else if normHue < 2 then
                 ( x, chroma, 0 )
-
             else if normHue < 3 then
                 ( 0, chroma, x )
-
             else if normHue < 4 then
                 ( 0, x, chroma )
-
             else if normHue < 5 then
                 ( x, 0, chroma )
-
             else if normHue < 6 then
                 ( chroma, 0, x )
-
             else
                 ( 0, 0, 0 )
 
@@ -2290,13 +2874,13 @@ type PxUnits
     = PxUnits
 
 
-{-| [\`\`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 type alias Mm =
     ExplicitLength MMUnits
 
 
-{-| [\`\`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [``](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 mm : Float -> Mm
 mm =
@@ -2761,7 +3345,6 @@ animationName : Keyframes compatible -> Style
 animationName arg =
     if arg.value == "none" || arg.value == "inherit" || arg.value == "unset" || arg.value == "initial" then
         prop1 "animation-name" arg
-
     else
         Preprocess.WithKeyframes arg.value
 
@@ -7577,7 +8160,6 @@ valuesOrNone : List (Value compatible) -> Value {}
 valuesOrNone list =
     if List.isEmpty list then
         { value = "none" }
-
     else
         { value = String.join " " (List.map .value list) }
 
@@ -7586,7 +8168,6 @@ stringsToValue : List String -> Value {}
 stringsToValue list =
     if List.isEmpty list then
         { value = "none" }
-
     else
         { value = String.join ", " (List.map (\s -> s) list) }
 

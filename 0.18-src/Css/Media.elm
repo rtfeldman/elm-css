@@ -1,22 +1,90 @@
-module Css.Media exposing
-    ( MediaQuery, MediaType, Expression
-    , withMedia, withMediaQuery
-    , all, only, not
-    , screen, print, speech
-    , minWidth, width, maxWidth, minHeight, height, maxHeight, Ratio, ratio
-    , minAspectRatio, aspectRatio, maxAspectRatio, Landscape, Portrait
-    , landscape, portrait, orientation
-    , Resolution, dpi, dpcm, dppx, minResolution, resolution, maxResolution
-    , Progressive, Interlace, progressive, interlace, scan, grid, Slow
-    , Fast, slow, fast, update, Paged, OptionalPaged, paged, optionalPaged
-    , overflowBlock, overflowInline
-    , Bits, bits, minColor, color, maxColor, minMonochrome, monochrome
-    , maxMonochrome, minColorIndex, colorIndex, maxColorIndex, SRGB, P3
-    , Rec2020, srgb, p3, rec2020, colorGamut
-    , Fine, Coarse, fine, coarse, pointer, anyPointer, CanHover, canHover
-    , hover, anyHover
-    , InitialOnly, Enabled, initialOnly, enabled, scripting
-    )
+module Css.Media
+    exposing
+        ( Bits
+        , CanHover
+        , Coarse
+        , Enabled
+        , Expression
+        , Fast
+        , Fine
+        , InitialOnly
+        , Interlace
+        , Landscape
+        , MediaQuery
+        , MediaType
+        , OptionalPaged
+        , P3
+        , Paged
+        , Portrait
+        , Progressive
+        , Ratio
+        , Rec2020
+        , Resolution
+        , SRGB
+        , Slow
+        , all
+        , anyHover
+        , anyPointer
+        , aspectRatio
+        , bits
+        , canHover
+        , coarse
+        , color
+        , colorGamut
+        , colorIndex
+        , dpcm
+        , dpi
+        , dppx
+        , enabled
+        , fast
+        , fine
+        , grid
+        , height
+        , hover
+        , initialOnly
+        , interlace
+        , landscape
+        , maxAspectRatio
+        , maxColor
+        , maxColorIndex
+        , maxHeight
+        , maxMonochrome
+        , maxResolution
+        , maxWidth
+        , minAspectRatio
+        , minColor
+        , minColorIndex
+        , minHeight
+        , minMonochrome
+        , minResolution
+        , minWidth
+        , monochrome
+        , not
+        , only
+        , optionalPaged
+        , orientation
+        , overflowBlock
+        , overflowInline
+        , p3
+        , paged
+        , pointer
+        , portrait
+        , print
+        , progressive
+        , ratio
+        , rec2020
+        , resolution
+        , scan
+        , screen
+        , scripting
+        , slow
+        , speech
+        , srgb
+        , update
+        , width
+        , withMedia
+        , withMediaQuery
+        )
 
 {-| Functions for building [`@media` queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries).
 
@@ -104,7 +172,7 @@ type alias MediaQuery =
 
 {-| A media type.
 
-[[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_types](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
+[[[[[[<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types>](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
 
 -}
 type alias MediaType =
@@ -122,7 +190,7 @@ In the media query `screen and (min-width: 768px)`,
   - `min-width` is a media feature, and
   - `(min-width: 768px)` is an expression.
 
-[[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
+[[[[[[<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features>](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
 
 -}
 type alias Expression =
