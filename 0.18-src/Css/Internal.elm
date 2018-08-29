@@ -166,7 +166,7 @@ lengthForOverloadedProperty =
 
 lengthConverter : units -> String -> Float -> ExplicitLength units
 lengthConverter units unitLabel numericValue =
-    { value = String.fromFloat numericValue ++ unitLabel
+    { value = toString numericValue ++ unitLabel
     , numericValue = numericValue
     , units = units
     , unitLabel = unitLabel

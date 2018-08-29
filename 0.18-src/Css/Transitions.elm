@@ -3153,7 +3153,7 @@ propToString prop =
 
 timeToString : Float -> String
 timeToString time =
-    String.fromFloat time ++ "ms"
+    toString time ++ "ms"
 
 
 timingFunctionToString : TimingFunction -> String
@@ -3182,13 +3182,13 @@ timingFunctionToString tf =
 
         CubicBezier float float2 float3 float4 ->
             "cubic-bezier("
-                ++ String.fromFloat float
+                ++ toString float
                 ++ " , "
-                ++ String.fromFloat float2
+                ++ toString float2
                 ++ " , "
-                ++ String.fromFloat float3
+                ++ toString float3
                 ++ " , "
-                ++ String.fromFloat float4
+                ++ toString float4
                 ++ ")"
 
 

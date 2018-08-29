@@ -524,7 +524,7 @@ type alias Resolution =
 -}
 dpi : Float -> Resolution
 dpi value =
-    { value = String.fromFloat value ++ "dpi", resolution = Compatible }
+    { value = toString value ++ "dpi", resolution = Compatible }
 
 
 {-| `dpcm`: Dots per centimeter. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -534,7 +534,7 @@ dpi value =
 -}
 dpcm : Float -> Resolution
 dpcm value =
-    { value = String.fromFloat value ++ "dpcm", resolution = Compatible }
+    { value = toString value ++ "dpcm", resolution = Compatible }
 
 
 {-| `dppx`: Dots per pixel. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -544,7 +544,7 @@ dpcm value =
 -}
 dppx : Float -> Resolution
 dppx value =
-    { value = String.fromFloat value ++ "dppx", resolution = Compatible }
+    { value = toString value ++ "dppx", resolution = Compatible }
 
 
 {-| Media feature [`min-resolution`](https://drafts.csswg.org/mediaqueries/#resolution).
