@@ -8148,7 +8148,7 @@ blink =
 
 stringToInt : String -> Int
 stringToInt str =
-    Maybe.withDefault 0 <| String.toInt str
+    Result.withDefault 0 <| String.toInt str
 
 
 numericalPercentageToString : Float -> String
