@@ -102,10 +102,7 @@ type alias MediaQuery =
     Structure.MediaQuery
 
 
-{-| A media type.
-
-[[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_types](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
-
+{-| A [media type](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types).
 -}
 type alias MediaType =
     Structure.MediaType
@@ -113,7 +110,7 @@ type alias MediaType =
 
 {-| A media expression.
 
-An expression is a media feature with an optional value, which resolves to
+An expression is a [media feature](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features) with an optional value, which resolves to
 either true or false.
 
 In the media query `screen and (min-width: 768px)`,
@@ -121,8 +118,6 @@ In the media query `screen and (min-width: 768px)`,
   - `screen` is a media type,
   - `min-width` is a media feature, and
   - `(min-width: 768px)` is an expression.
-
-[[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
 
 -}
 type alias Expression =
