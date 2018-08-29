@@ -1,6 +1,6 @@
 module Html.Styled.Attributes exposing
     ( css, fromUnstyled
-    , property, attribute, map
+    , property, attribute, map, style
     , class, classList, id, title, hidden
     , type_, value, checked, placeholder, selected
     , accept, acceptCharset, action, autocomplete, autofocus
@@ -45,7 +45,7 @@ just search the page for `video` if you want video stuff.
 
 # Primitives
 
-@docs property, attribute, map
+@docs property, attribute, map, style
 
 
 # Super Common Attributes
@@ -158,6 +158,33 @@ undesirable!
 fromUnstyled : VirtualDom.Attribute msg -> Attribute msg
 fromUnstyled =
     VirtualDom.Styled.unstyledAttribute
+
+
+{-| **NOTE:** If you're using `elm-css`, you **probably do not want this!**
+
+This is the `style` **attribute**, which has higher precedence than anything
+`elm-css` does. It's probably best to use this as a workaround only.
+
+    Specify a style.
+
+    greeting : Node msg
+    greeting =
+      div
+        [ style "background-color" "red"
+        , style "height" "90px"
+        , style "width" "100%"
+        ]
+        [ text "Hello!"
+        ]
+
+There is no `Html.Styles` module because best practices for working with HTML
+suggest that this should primarily be specified in CSS files. So the general
+recommendation is to use this function lightly.
+
+-}
+style : String -> String -> Html.Styled.Attribute msg
+style =
+    VirtualDom.Styled.style
 
 
 {-| This function makes it easier to build a space-separated class attribute.

@@ -20,6 +20,7 @@ module VirtualDom.Styled exposing
     , nodeNS
     , on
     , property
+    , style
     , text
     , toUnstyled
     , unstyledAttribute
@@ -554,6 +555,11 @@ accumulateStyledHtml html ( nodes, styles ) =
                         (List.reverse childNodes)
             in
             ( vdomNode :: nodes, finalStyles )
+
+
+style : String -> String -> Attribute msg
+style key val =
+    Attribute (VirtualDom.style key val) [] ""
 
 
 accumulateKeyedStyledHtml :
