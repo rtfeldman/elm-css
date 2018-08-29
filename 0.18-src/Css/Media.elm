@@ -438,7 +438,7 @@ type alias Ratio =
 -}
 ratio : Int -> Int -> Ratio
 ratio numerator denominator =
-    { value = String.fromInt numerator ++ "/" ++ String.fromInt denominator, ratio = Compatible }
+    { value = toString numerator ++ "/" ++ toString denominator, ratio = Compatible }
 
 
 {-| Media feature [`min-aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
@@ -724,7 +724,7 @@ type alias Bits =
 -}
 bits : Int -> Bits
 bits value =
-    { value = String.fromInt value, bits = Compatible }
+    { value = toString value, bits = Compatible }
 
 
 {-| Media Feature [`min-nncolor`](https://drafts.csswg.org/mediaqueries/#color)

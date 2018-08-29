@@ -2139,7 +2139,7 @@ in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
 rgb r g b =
-    { value = cssFunction "rgb" (List.map String.fromInt [ r, g, b ])
+    { value = cssFunction "rgb" (List.map toString [ r, g, b ])
     , color = Compatible
     , red = r
     , green = g
@@ -2152,7 +2152,7 @@ rgb r g b =
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba r g b alpha =
-    { value = cssFunction "rgba" (List.map String.fromInt [ r, g, b ] ++ [ String.fromFloat alpha ])
+    { value = cssFunction "rgba" (List.map toString [ r, g, b ] ++ [ String.fromFloat alpha ])
     , color = Compatible
     , red = r
     , green = g
@@ -2967,7 +2967,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
-    { value = String.fromInt val
+    { value = toString val
     , lengthOrNumber = Compatible
     , number = Compatible
     , fontWeight = Compatible
@@ -5990,7 +5990,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = "\"" ++ tag ++ "\" " ++ String.fromInt value
+    { value = "\"" ++ tag ++ "\" " ++ toString value
     , featureTagValue = Compatible
     }
 
