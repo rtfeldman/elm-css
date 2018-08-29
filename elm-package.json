@@ -1,0 +1,37 @@
+{
+    "version": "14.0.0",
+    "summary": "Typed CSS in Elm.",
+    "repository": "https://github.com/rtfeldman/elm-css.git",
+    "license": "BSD-3-Clause",
+    "source-directories": [
+        "src"
+    ],
+    "exposed-modules": [
+        "Css",
+        "Css.Colors",
+        "Css.Foreign",
+        "Css.Media",
+        "Css.Transitions",
+        "Html.Styled",
+        "Html.Styled.Attributes",
+        "Html.Styled.Events",
+        "Html.Styled.Keyed",
+        "Html.Styled.Lazy",
+        "Svg.Styled",
+        "Svg.Styled.Attributes",
+        "Svg.Styled.Events",
+        "Svg.Styled.Keyed",
+        "Svg.Styled.Lazy",
+        "DEPRECATED.Css",
+        "DEPRECATED.Css.File",
+        "DEPRECATED.Css.Namespace"
+    ],
+    "dependencies": {
+        "Skinney/murmur3": "2.0.4 <= v < 3.0.0",
+        "elm-lang/core": "5.0.0 <= v < 6.0.0",
+        "elm-lang/virtual-dom": "2.0.0 <= v < 3.0.0",
+        "rtfeldman/elm-css-util": "1.0.2 <= v < 2.0.0",
+        "rtfeldman/hex": "1.0.0 <= v < 2.0.0"
+    },
+    "elm-version": "0.18.0 <= v < 0.19.0"
+}
