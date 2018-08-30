@@ -73,7 +73,6 @@ keyframes tuples =
         , none = Compatible
         , keyframes = Compatible
         }
-
     else
         { value = Css.Internal.compileKeyframes tuples
         , none = Compatible
@@ -162,7 +161,6 @@ transform values =
     Property <|
         if List.isEmpty values then
             "transform:none"
-
         else
             "transform:" ++ String.join " " (List.map .value values)
 

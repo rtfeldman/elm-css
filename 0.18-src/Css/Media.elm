@@ -1,22 +1,90 @@
-module Css.Media exposing
-    ( MediaQuery, MediaType, Expression
-    , withMedia, withMediaQuery
-    , all, only, not
-    , screen, print, speech
-    , minWidth, width, maxWidth, minHeight, height, maxHeight, Ratio, ratio
-    , minAspectRatio, aspectRatio, maxAspectRatio, Landscape, Portrait
-    , landscape, portrait, orientation
-    , Resolution, dpi, dpcm, dppx, minResolution, resolution, maxResolution
-    , Progressive, Interlace, progressive, interlace, scan, grid, Slow
-    , Fast, slow, fast, update, Paged, OptionalPaged, paged, optionalPaged
-    , overflowBlock, overflowInline
-    , Bits, bits, minColor, color, maxColor, minMonochrome, monochrome
-    , maxMonochrome, minColorIndex, colorIndex, maxColorIndex, SRGB, P3
-    , Rec2020, srgb, p3, rec2020, colorGamut
-    , Fine, Coarse, fine, coarse, pointer, anyPointer, CanHover, canHover
-    , hover, anyHover
-    , InitialOnly, Enabled, initialOnly, enabled, scripting
-    )
+module Css.Media
+    exposing
+        ( Bits
+        , CanHover
+        , Coarse
+        , Enabled
+        , Expression
+        , Fast
+        , Fine
+        , InitialOnly
+        , Interlace
+        , Landscape
+        , MediaQuery
+        , MediaType
+        , OptionalPaged
+        , P3
+        , Paged
+        , Portrait
+        , Progressive
+        , Ratio
+        , Rec2020
+        , Resolution
+        , SRGB
+        , Slow
+        , all
+        , anyHover
+        , anyPointer
+        , aspectRatio
+        , bits
+        , canHover
+        , coarse
+        , color
+        , colorGamut
+        , colorIndex
+        , dpcm
+        , dpi
+        , dppx
+        , enabled
+        , fast
+        , fine
+        , grid
+        , height
+        , hover
+        , initialOnly
+        , interlace
+        , landscape
+        , maxAspectRatio
+        , maxColor
+        , maxColorIndex
+        , maxHeight
+        , maxMonochrome
+        , maxResolution
+        , maxWidth
+        , minAspectRatio
+        , minColor
+        , minColorIndex
+        , minHeight
+        , minMonochrome
+        , minResolution
+        , minWidth
+        , monochrome
+        , not
+        , only
+        , optionalPaged
+        , orientation
+        , overflowBlock
+        , overflowInline
+        , p3
+        , paged
+        , pointer
+        , portrait
+        , print
+        , progressive
+        , ratio
+        , rec2020
+        , resolution
+        , scan
+        , screen
+        , scripting
+        , slow
+        , speech
+        , srgb
+        , update
+        , width
+        , withMedia
+        , withMediaQuery
+        )
 
 {-| Functions for building [`@media` queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries).
 
@@ -102,7 +170,10 @@ type alias MediaQuery =
     Structure.MediaQuery
 
 
-{-| A [media type](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types).
+{-| A media type.
+
+[[[[[[<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types>](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
+
 -}
 type alias MediaType =
     Structure.MediaType
@@ -110,7 +181,7 @@ type alias MediaType =
 
 {-| A media expression.
 
-An expression is a [media feature](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features) with an optional value, which resolves to
+An expression is a media feature with an optional value, which resolves to
 either true or false.
 
 In the media query `screen and (min-width: 768px)`,
@@ -118,6 +189,8 @@ In the media query `screen and (min-width: 768px)`,
   - `screen` is a media type,
   - `min-width` is a media feature, and
   - `(min-width: 768px)` is an expression.
+
+[[[[[[<https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features>](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
 
 -}
 type alias Expression =
@@ -365,7 +438,7 @@ type alias Ratio =
 -}
 ratio : Int -> Int -> Ratio
 ratio numerator denominator =
-    { value = String.fromInt numerator ++ "/" ++ String.fromInt denominator, ratio = Compatible }
+    { value = toString numerator ++ "/" ++ toString denominator, ratio = Compatible }
 
 
 {-| Media feature [`min-aspect-ratio`](https://drafts.csswg.org/mediaqueries/#aspect-ratio)
@@ -451,7 +524,7 @@ type alias Resolution =
 -}
 dpi : Float -> Resolution
 dpi value =
-    { value = String.fromFloat value ++ "dpi", resolution = Compatible }
+    { value = toString value ++ "dpi", resolution = Compatible }
 
 
 {-| `dpcm`: Dots per centimeter. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -461,7 +534,7 @@ dpi value =
 -}
 dpcm : Float -> Resolution
 dpcm value =
-    { value = String.fromFloat value ++ "dpcm", resolution = Compatible }
+    { value = toString value ++ "dpcm", resolution = Compatible }
 
 
 {-| `dppx`: Dots per pixel. <https://www.w3.org/TR/css3-values/#resolution-value>
@@ -471,7 +544,7 @@ dpcm value =
 -}
 dppx : Float -> Resolution
 dppx value =
-    { value = String.fromFloat value ++ "dppx", resolution = Compatible }
+    { value = toString value ++ "dppx", resolution = Compatible }
 
 
 {-| Media feature [`min-resolution`](https://drafts.csswg.org/mediaqueries/#resolution).
@@ -651,7 +724,7 @@ type alias Bits =
 -}
 bits : Int -> Bits
 bits value =
-    { value = String.fromInt value, bits = Compatible }
+    { value = toString value, bits = Compatible }
 
 
 {-| Media Feature [`min-nncolor`](https://drafts.csswg.org/mediaqueries/#color)
