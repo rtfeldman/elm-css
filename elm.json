@@ -3,10 +3,11 @@
     "name": "rtfeldman/elm-css",
     "summary": "Typed CSS in Elm.",
     "license": "BSD-3-Clause",
-    "version": "15.0.0",
+    "version": "15.1.0",
     "exposed-modules": {
         "Styling": [
             "Css",
+            "Css.Animations",
             "Css.Transitions",
             "Css.Media",
             "Css.Global"
