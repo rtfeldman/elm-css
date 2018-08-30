@@ -1,8 +1,23 @@
-module Css.Animations exposing
-    ( Property, keyframes, Keyframes
-    , opacity, transform, all, backgroundSize, backgroundSize2, border, property
-    , backgroundColor
-    )
+module Css.Animations
+    exposing
+        ( Keyframes
+        , Property
+        , all
+        , backgroundColor
+        , backgroundSize
+        , backgroundSize2
+        , border
+        , border2
+        , border3
+        , borderBottom
+        , borderBottom2
+        , borderBottom3
+        , custom
+        , keyframes
+        , opacity
+        , property
+        , transform
+        )
 
 {-|
 
@@ -20,15 +35,7 @@ Some of the animatable properties (except for experimental properties, or proper
 
 **NOTE:** We're looking to expand this list, but only on the `phantom-types` branch! See <https://github.com/rtfeldman/elm-css/issues/392>
 
-@docs opacity, transform, transformOrigin, translate, all, backgroundSize, backgroundSize2, border, property
-
-border2 : Length compatible units -> Length compatible units -> Property
-border2 arg1 arg2 =
-Property ("border:" ++ arg1.value ++ " " ++ arg2.value)
-
-border3 : Length compatible units -> Length compatible units -> Length compatible units -> Property
-border3 arg1 arg2 arg3 =
-Property ("border:" ++ arg1.value ++ " " ++ arg2.value ++ " " ++ arg3.value)
+@docs opacity, transform, all, backgroundSize, backgroundSize2, border, property, backgroundColor, border2, border3, borderBottom, borderBottom2, borderBottom3, custom
 
 -}
 
@@ -99,51 +106,61 @@ custom name value =
     Property (name ++ ":" ++ value)
 
 
+{-| -}
 all : { compatible | value : String, all : Compatible } -> Property
 all { value } =
     Property ("all:" ++ value)
 
 
+{-| -}
 backgroundColor : { compatible | value : String, color : Compatible } -> Property
 backgroundColor { value } =
     Property ("background-color:" ++ value)
 
 
+{-| -}
 backgroundSize : LengthOrAutoOrCoverOrContain compatible -> Property
 backgroundSize { value } =
     Property ("background-size:" ++ value)
 
 
+{-| -}
 backgroundSize2 : LengthOrAutoOrCoverOrContain compatible -> LengthOrAutoOrCoverOrContain compatible -> Property
 backgroundSize2 arg1 arg2 =
     Property ("background-size:" ++ arg1.value ++ " " ++ arg2.value)
 
 
+{-| -}
 border : Length compatible units -> Property
 border { value } =
     Property ("border:" ++ value)
 
 
+{-| -}
 border2 : Length compatible units -> Length compatible units -> Property
 border2 arg1 arg2 =
     Property ("border:" ++ arg1.value ++ " " ++ arg2.value)
 
 
+{-| -}
 border3 : Length compatible units -> Length compatible units -> Length compatible units -> Property
 border3 arg1 arg2 arg3 =
     Property ("border:" ++ arg1.value ++ " " ++ arg2.value ++ " " ++ arg3.value)
 
 
+{-| -}
 borderBottom : Length compatible units -> Property
 borderBottom { value } =
     Property ("border-bottom:" ++ value)
 
 
+{-| -}
 borderBottom2 : Length compatible units -> Length compatible units -> Property
 borderBottom2 arg1 arg2 =
     Property ("border-bottom:" ++ arg1.value ++ " " ++ arg2.value)
 
 
+{-| -}
 borderBottom3 : Length compatible units -> Length compatible units -> Length compatible units -> Property
 borderBottom3 arg1 arg2 arg3 =
     Property ("border-bottom:" ++ arg1.value ++ " " ++ arg2.value ++ " " ++ arg3.value)
