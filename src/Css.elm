@@ -238,14 +238,14 @@ to convert this value to a normal `Html` value, it adds two elements to the DOM:
 To sum up what's happening here:
 
 1.  When you define values using the `css` attribute, elm-css generates a classname and some style information.
-2.  That classname gets added to the element receiving the attiibute, and the style information gets stored in the `Html.Styled` value which wraps that element.
+2.  That classname gets added to the element receiving the attribute, and the style information gets stored in the `Html.Styled` value which wraps that element.
 3.  Calling `toUnstyled` converts this `Html.Styled` value to a normal `Html` value which represents both the requested element as well as a `<style>` element
 
 This is how the `css` attribute is able to support things like `hover` and media
 queries.
 
 If you give an element multiple `css` attributes, they will **not** stack. For
-example, in this code, only the second `css` attiibute will be used. The first
+example, in this code, only the second `css` attribute will be used. The first
 one will be ignored.
 
     button
