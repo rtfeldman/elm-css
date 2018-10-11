@@ -22,24 +22,24 @@ before_install:
 
 
 install:
-  - npm install -g elm@0.18.0 elm-test@0.18.12 elm-format@rc
-  - mv $(npm config get prefix)/bin/elm-make $(npm config get prefix)/bin/elm-make-old
-  - printf '%s\n\n' '#!/bin/bash' 'echo "Running elm-make with sysconfcpus -n 2"' '$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 elm-make-old "$@"' > $(npm config get prefix)/bin/elm-make
-  - chmod +x $(npm config get prefix)/bin/elm-make
-  - travis_retry elm-package install --yes
+  - npm install
+  - mv $(npm bin)/elm-make $(npm bin)/elm-make-old
+  - printf '%s\n\n' '#!/bin/bash' 'echo "Running elm-make with sysconfcpus -n 2"' '$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 elm-make-old "$@"' > $(npm bin)/elm-make
+  - chmod +x $(npm bin)/elm-make
+  - travis_retry $(npm bin)/elm-package install --yes
   - cd tests
   - npm install
-  - travis_retry elm-package install --yes
+  - travis_retry $(npm bin)/elm-package install --yes
   - cd ..
 
 script:
-  - elm-format --validate src tests examples readme-example
+  - $(npm bin)/elm-format --validate src tests examples readme-example
   - cd examples
-  - elm-make --output=/dev/null --yes
+  - $(npm bin)/elm-make --output=/dev/null --yes
   - cd ../readme-example
-  - elm-make --output=/dev/null --yes
+  - $(npm bin)/elm-make --output=/dev/null --yes
   - cd ..
   # this line is here to catch type errors until phantom-types is merged into
   # master, at which point it can be replaced by the test script again. :)
-  - elm-make --docs=/dev/null --yes
+  - $(npm bin)/elm-make --docs=/dev/null --yes
   # - npm test
