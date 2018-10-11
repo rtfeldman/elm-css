@@ -44,6 +44,7 @@
     "tmp": "0.0.28"
   },
   "devDependencies": {
+    "elm": "^0.18.0",
     "elm-format": "^0.7.0-exp",
     "chai": "3.4.1"
   },
