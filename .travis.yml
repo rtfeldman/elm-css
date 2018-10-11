@@ -24,7 +24,7 @@ before_install:
 install:
   - npm install
   - mv $(npm bin)/elm-make $(npm bin)/elm-make-old
-  - printf '%s\n\n' '#!/bin/bash' 'echo "Running elm-make with sysconfcpus -n 2"' '$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 elm-make-old "$@"' > $(npm bin)/elm-make
+  - printf '%s\n\n' '#!/bin/bash' 'echo "Running elm-make with sysconfcpus -n 2"' '$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 $(npm bin)/elm-make-old "$@"' > $(npm bin)/elm-make
   - chmod +x $(npm bin)/elm-make
   - travis_retry $(npm bin)/elm-package install --yes
   - cd tests
