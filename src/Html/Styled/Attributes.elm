@@ -209,7 +209,6 @@ import VirtualDom
 import VirtualDom.Styled
 
 
-
 -- This library does not include low, high, or optimum because the idea of a
 -- `meter` is just too crazy.
 -- PRIMITIVES
@@ -720,7 +719,6 @@ autocomplete bool =
     stringProperty "autocomplete"
         (if bool then
             "on"
-
          else
             "off"
         )
