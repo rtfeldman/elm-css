@@ -176,7 +176,6 @@ getClassname styles =
         -- This way img [ css [ foo bar ], css [] ] wipes out the styles
         -- as expected. (The latter will generate a classname of "_unstyled")
         "unstyled"
-
     else
         -- TODO Replace this comically inefficient implementation
         -- with crawling these union types and building up a hash along the way.
@@ -271,7 +270,6 @@ accumulateStyles :
 accumulateStyles (Property _ newStyles classname) styles =
     if List.isEmpty newStyles then
         styles
-
     else
         Dict.insert classname newStyles styles
 
@@ -332,7 +330,6 @@ stylesFromPropertiesHelp candidate properties =
                 -- so that img [ css [ foo bar ], css [] ] wipes out the styles
                 -- as expected. (The latter will generate a classname of "_unstyled")
                 stylesFromPropertiesHelp candidate rest
-
             else
                 stylesFromPropertiesHelp (Just ( classname, styles )) rest
 
@@ -455,7 +452,6 @@ getUnusedKey default pairs =
             in
             if containsKey newKey rest then
                 getUnusedKey newKey rest
-
             else
                 newKey
 
@@ -469,6 +465,5 @@ containsKey key pairs =
         ( str, _ ) :: rest ->
             if key == str then
                 True
-
             else
                 containsKey key rest
