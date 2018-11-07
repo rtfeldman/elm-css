@@ -3437,6 +3437,12 @@ spaceBetween : JustifyContent a b
 spaceBetween =
     prop1 "space-between"
 
+{-| The[`space-evenly`](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#Values) value for the
+justify-content property.
+-}
+spaceEvenly : JustifyContent a b
+spaceEvenly =
+    prop1 "space-evenly"
 
 {-| The[`stretch`](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#Values) value for the
 align-items property.
