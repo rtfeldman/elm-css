@@ -863,7 +863,6 @@ type alias TableLayout compatible =
     almostPct100 =
         calc (pct 100) minus (px 2)
 
-
     -- calc(100vh - (2px + 2rem))
     screenMinusBorderAndFooter =
         calc (vh 100) minus (calc (px 2) plus (rem 2))
@@ -2292,13 +2291,13 @@ type PxUnits
     = PxUnits
 
 
-{-| [\`\`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [\`\`](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
 -}
 type alias Mm =
     ExplicitLength MMUnits
 
 
-{-| [\`\`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
+{-| [\`\`](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
 -}
 mm : Float -> Mm
 mm =

@@ -33,7 +33,7 @@ install:
   - cd ..
 
 script:
-  - elm-format --validate src # tests examples readme-example
+  - elm-format --validate .
   - cd examples
   - elm-make --output=/dev/null --yes
   - cd ../readme-example
