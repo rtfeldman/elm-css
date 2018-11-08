@@ -7,6 +7,7 @@ module Css exposing
     , Length, pct, px, em, pt, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pc, int, num, zero, calc, plus, minus
     , Px, Em, Rem, Pct, Ex, Ch, Vh, Vw, Vmin, Vmax, Mm, Cm, In, Pt, Pc
     , deg, rad, grad, turn
+    , Duration, sec, ms
     , pseudoClass, active, any, checked, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
     , pseudoElement, after, before, firstLetter, firstLine, selection
     , src_
@@ -372,6 +373,11 @@ functions let you define custom properties and selectors, respectively.
 # Angle
 
 @docs deg, rad, grad, turn
+
+
+# Duration
+
+@docs Duration, sec, ms
 
 
 # Pseudo-Classes
@@ -2118,6 +2124,37 @@ zero =
     , unitLabel = ""
     , numericValue = 0
     , lengthOrAutoOrCoverOrContain = Compatible
+    }
+
+
+{-| A CSS [time](https://developer.mozilla.org/en-US/docs/Web/CSS/time) duration.
+
+The spec says that a unitless [zero](#zero) is not allowed for these. You must
+specify either [`ms`](#ms) or [`sec`](#sec)!
+
+-}
+type alias Duration compatible =
+    { compatible
+        | value : String
+        , duration : Compatible
+    }
+
+
+{-| A [duration](#Duration) in seconds.
+-}
+sec : Float -> Duration {}
+sec amount =
+    { value = toString amount ++ "sec"
+    , duration = Compatible
+    }
+
+
+{-| A [duration](#Duration) in milliseconds.
+-}
+ms : Float -> Duration {}
+ms amount =
+    { value = toString amount ++ "ms"
+    , duration = Compatible
     }
 
 
