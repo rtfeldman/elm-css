@@ -2291,13 +2291,13 @@ type PxUnits
     = PxUnits
 
 
-{-| [\`\`](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
+{-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 type alias Mm =
     ExplicitLength MMUnits
 
 
-{-| [\`\`](<https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm>) units.
+{-| [`mm`](https://developer.mozilla.org/en-US/docs/Web/CSS/length#mm) units.
 -}
 mm : Float -> Mm
 mm =
