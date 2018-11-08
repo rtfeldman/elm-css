@@ -2163,7 +2163,7 @@ type alias Duration compatible =
 -}
 sec : Float -> Duration {}
 sec amount =
-    { value = toString amount ++ "sec"
+    { value = String.fromFloat amount ++ "sec"
     , duration = Compatible
     }
 
@@ -2172,7 +2172,7 @@ sec amount =
 -}
 ms : Float -> Duration {}
 ms amount =
-    { value = toString amount ++ "ms"
+    { value = String.fromFloat amount ++ "ms"
     , duration = Compatible
     }
 
@@ -2440,7 +2440,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
-    { value = toString val
+    { value = String.fromInt val
     , lengthOrNumber = Compatible
     , number = Compatible
     , numberOrInfinite = Compatible
@@ -2472,7 +2472,7 @@ which accept unitless numbers.
 -}
 num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
 num val =
-    { value = toString val
+    { value = String.fromFloat val
     , lengthOrNumber = Compatible
     , number = Compatible
     , numberOrInfinite = Compatible
