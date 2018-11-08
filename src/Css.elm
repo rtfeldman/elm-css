@@ -64,6 +64,7 @@ module Css exposing
     , pinchZoom
     , animationName
     , animationDelay
+    , animationDuration
     , FontSize, ColorValue, ColorStop, IntOrAuto
     , thin, thick, blink
     )
@@ -458,6 +459,7 @@ functions let you define custom properties and selectors, respectively.
 @docs pinchZoom
 @docs animationName
 @docs animationDelay
+@docs animationDuration
 
 
 # Types
@@ -2811,6 +2813,14 @@ animationName arg =
 animationDelay : Duration compatible -> Style
 animationDelay arg =
     prop1 "animation-delay" arg
+
+
+{-| An [`animation-duration`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration)
+) property.
+-}
+animationDuration : Duration compatible -> Style
+animationDuration arg =
+    prop1 "animation-duration" arg
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
