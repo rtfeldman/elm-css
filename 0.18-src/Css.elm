@@ -970,7 +970,7 @@ combineLengths operation firstLength secondLength =
             operation firstLength.numericValue secondLength.numericValue
 
         value =
-            [ String.fromFloat numericValue
+            [ toString numericValue
             , firstLength.unitLabel
             ]
                 |> List.filter (not << String.isEmpty)
@@ -1572,7 +1572,7 @@ in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
 rgb r g b =
-    { value = cssFunction "rgb" (List.map String.fromInt [ r, g, b ])
+    { value = cssFunction "rgb" (List.map toString [ r, g, b ])
     , color = Compatible
     , red = r
     , green = g
@@ -1585,7 +1585,7 @@ rgb r g b =
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba r g b alpha =
-    { value = cssFunction "rgba" (List.map String.fromInt [ r, g, b ] ++ [ String.fromFloat alpha ])
+    { value = cssFunction "rgba" (List.map toString [ r, g, b ] ++ [ toString alpha ])
     , color = Compatible
     , red = r
     , green = g
@@ -1602,7 +1602,7 @@ hsl : Float -> Float -> Float -> Color
 hsl hueVal saturationVal lightnessVal =
     let
         valuesList =
-            [ String.fromFloat hueVal
+            [ toString hueVal
             , numericalPercentageToString saturationVal
             , numericalPercentageToString lightnessVal
             ]
@@ -1621,10 +1621,10 @@ hsla : Float -> Float -> Float -> Float -> Color
 hsla hueVal saturationVal lightnessVal alpha =
     let
         valuesList =
-            [ String.fromFloat hueVal
+            [ toString hueVal
             , numericalPercentageToString saturationVal
             , numericalPercentageToString lightnessVal
-            , String.fromFloat alpha
+            , toString alpha
             ]
 
         value =
@@ -1784,7 +1784,7 @@ fmod f n =
         integer =
             floor f
     in
-    toFloat (modBy n integer) + f - toFloat integer
+    toFloat (integer % n) + f - toFloat integer
 
 
 degreesToRadians : Float -> Float
@@ -2163,7 +2163,7 @@ type alias Duration compatible =
 -}
 sec : Float -> Duration {}
 sec amount =
-    { value = String.fromFloat amount ++ "sec"
+    { value = toString amount ++ "sec"
     , duration = Compatible
     }
 
@@ -2172,7 +2172,7 @@ sec amount =
 -}
 ms : Float -> Duration {}
 ms amount =
-    { value = String.fromFloat amount ++ "ms"
+    { value = toString amount ++ "ms"
     , duration = Compatible
     }
 
@@ -2440,7 +2440,7 @@ which accept either length units or unitless numbers for some properties.
 -}
 int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
-    { value = String.fromInt val
+    { value = toString val
     , lengthOrNumber = Compatible
     , number = Compatible
     , numberOrInfinite = Compatible
@@ -2472,7 +2472,7 @@ which accept unitless numbers.
 -}
 num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
 num val =
-    { value = String.fromFloat val
+    { value = toString val
     , lengthOrNumber = Compatible
     , number = Compatible
     , numberOrInfinite = Compatible
@@ -2498,7 +2498,7 @@ type alias IncompatibleUnits =
 
 angleConverter : String -> Float -> AngleOrDirection (Angle {})
 angleConverter suffix angleVal =
-    { value = String.fromFloat angleVal ++ suffix
+    { value = toString angleVal ++ suffix
     , angle = Compatible
     , angleOrDirection = Compatible
     }
@@ -2543,7 +2543,7 @@ turn =
 -}
 matrix : Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix a b c d tx ty =
-    { value = cssFunction "matrix" (List.map String.fromFloat [ a, b, c, d, tx, ty ])
+    { value = cssFunction "matrix" (List.map toString [ a, b, c, d, tx, ty ])
     , transform = Compatible
     }
 
@@ -2555,7 +2555,7 @@ matrix a b c d tx ty =
 -}
 matrix3d : Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Transform {}
 matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
-    { value = cssFunction "matrix3d" (List.map String.fromFloat [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
+    { value = cssFunction "matrix3d" (List.map toString [ a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 ])
     , transform = Compatible
     }
 
@@ -2567,7 +2567,7 @@ matrix3d a1 a2 a3 a4 b1 b2 b3 b4 c1 c2 c3 c4 d1 d2 d3 d4 =
 -}
 perspective : Float -> Transform {}
 perspective l =
-    { value = cssFunction "perspective" [ String.fromFloat l ]
+    { value = cssFunction "perspective" [ toString l ]
     , transform = Compatible
     }
 
@@ -2629,7 +2629,7 @@ rotate3d : Float -> Float -> Float -> Angle compatible -> Transform {}
 rotate3d x y z { value } =
     let
         coordsAsStrings =
-            List.map String.fromFloat [ x, y, z ]
+            List.map toString [ x, y, z ]
     in
     { value = cssFunction "rotate3d" (coordsAsStrings ++ [ value ])
     , transform = Compatible
@@ -2644,7 +2644,7 @@ rotate3d x y z { value } =
 -}
 scale : Float -> Transform {}
 scale x =
-    { value = cssFunction "scale" [ String.fromFloat x ]
+    { value = cssFunction "scale" [ toString x ]
     , transform = Compatible
     }
 
@@ -2657,7 +2657,7 @@ scale x =
 -}
 scale2 : Float -> Float -> Transform {}
 scale2 x y =
-    { value = cssFunction "scale" (List.map String.fromFloat [ x, y ])
+    { value = cssFunction "scale" (List.map toString [ x, y ])
     , transform = Compatible
     }
 
@@ -2669,7 +2669,7 @@ scale2 x y =
 -}
 scaleX : Float -> Transform {}
 scaleX x =
-    { value = cssFunction "scaleX" [ String.fromFloat x ]
+    { value = cssFunction "scaleX" [ toString x ]
     , transform = Compatible
     }
 
@@ -2681,7 +2681,7 @@ scaleX x =
 -}
 scaleY : Float -> Transform {}
 scaleY y =
-    { value = cssFunction "scaleY" [ String.fromFloat y ]
+    { value = cssFunction "scaleY" [ toString y ]
     , transform = Compatible
     }
 
@@ -2693,7 +2693,7 @@ scaleY y =
 -}
 scale3d : Float -> Float -> Float -> Transform {}
 scale3d x y z =
-    { value = cssFunction "scale3d" (List.map String.fromFloat [ x, y, z ])
+    { value = cssFunction "scale3d" (List.map toString [ x, y, z ])
     , transform = Compatible
     }
 
@@ -5499,7 +5499,7 @@ with a particular integer value
 -}
 featureTag2 : String -> Int -> FeatureTagValue {}
 featureTag2 tag value =
-    { value = "\"" ++ tag ++ "\" " ++ String.fromInt value
+    { value = "\"" ++ tag ++ "\" " ++ toString value
     , featureTagValue = Compatible
     }
 
@@ -7657,12 +7657,12 @@ blink =
 
 stringToInt : String -> Int
 stringToInt str =
-    Maybe.withDefault 0 <| String.toInt str
+    Result.withDefault 0 <| String.toInt str
 
 
 numericalPercentageToString : Float -> String
 numericalPercentageToString value =
-    String.fromFloat (value * 100) ++ "%"
+    toString (value * 100) ++ "%"
 
 
 valuesOrNone : List (Value compatible) -> Value {}
