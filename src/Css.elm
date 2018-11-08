@@ -16,7 +16,7 @@ module Css exposing
     , listStylePosition, inside, outside
     , listStyle, listStyle2, listStyle3
     , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-    , AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
+    , AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Infinite, NumberOrInfinite, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap, infinite
     , url, vertical, tableRowGroup, tableRow, tableLayout, tableHeaderGroup, tableFooterGroup, tableColumnGroup, tableCell, tableColumn, tableCaption, table, space, softLight, separate, screenBlendMode, saturation, round, repeatY, repeatX, repeat, pointerEventsFill, pointerEventsAll
     , Compatible
     , backgroundAttachment
@@ -65,6 +65,7 @@ module Css exposing
     , animationName
     , animationDelay
     , animationDuration
+    , animationIterationCount
     , FontSize, ColorValue, ColorStop, IntOrAuto
     , thin, thick, blink
     )
@@ -409,7 +410,7 @@ functions let you define custom properties and selectors, respectively.
 @docs listStyle, listStyle2, listStyle3
 @docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
-@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap
+@docs AlignItems, All, Angle, AngleOrDirection, BackgroundAttachment, BackgroundBlendMode, BackgroundClip, BackgroundImage, BackgroundOrigin, BackgroundRepeat, BackgroundRepeatShorthand, BasicProperty, BorderCollapse, BorderStyle, BoxSizing, Calc, CalcExpression, Cursor, Display, ExplicitLength, FeatureTagValue, FlexBasis, FlexDirection, FlexDirectionOrWrap, FlexWrap, FontFamily, FontStyle, FontStyleOrFeatureTagValue, FontVariant, FontVariantCaps, FontVariantLigatures, FontVariantNumeric, FontWeight, ImportType, IncompatibleUnits, JustifyContent, LengthOrAuto, LengthOrAutoOrCoverOrContain, LengthOrMinMaxDimension, LengthOrNone, LengthOrNoneOrMinMaxDimension, LengthOrNumber, LengthOrNumberOrAutoOrNoneOrContent, ListStyle, ListStylePosition, ListStyleType, MinMaxDimension, NonMixable, None, Number, Infinite, NumberOrInfinite, Outline, Overflow, Visibility, Position, Resize, TableLayout, TextDecorationLine, TextDecorationStyle, TextIndent, TextOrientation, TextOverflow, TextRendering, TextTransform, TouchAction, Transform, TransformBox, TransformStyle, Value, VerticalAlign, WhiteSpace, Wrap, pre, preLine, preWrap, infinite
 
 @docs url, vertical, tableRowGroup, tableRow, tableLayout, tableHeaderGroup, tableFooterGroup, tableColumnGroup, tableCell, tableColumn, tableCaption, table, space, softLight, separate, screenBlendMode, saturation, round, repeatY, repeatX, repeat, pointerEventsFill, pointerEventsAll
 
@@ -460,6 +461,7 @@ functions let you define custom properties and selectors, respectively.
 @docs animationName
 @docs animationDelay
 @docs animationDuration
+@docs animationIterationCount
 
 
 # Types
@@ -520,6 +522,19 @@ type alias All compatible =
 {-| -}
 type alias Number compatible =
     { compatible | value : String, number : Compatible }
+
+
+{-| -}
+type alias NumberOrInfinite compatible =
+    Number { compatible | numberOrInfinite : Compatible }
+
+
+{-| -}
+type alias Infinite =
+    { value : String
+    , numberOrInfinite : Compatible
+    , infinite : Compatible
+    }
 
 
 {-| -}
@@ -2423,11 +2438,12 @@ type PcUnits
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (Number { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
+int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
 int val =
-    { value = String.fromInt val
+    { value = toString val
     , lengthOrNumber = Compatible
     , number = Compatible
+    , numberOrInfinite = Compatible
     , fontWeight = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , intOrAuto = Compatible
@@ -2441,14 +2457,25 @@ type UnitlessInteger
     = UnitlessInteger
 
 
+{-| The [`infinite`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count#Values) value.
+-}
+infinite : Infinite
+infinite =
+    { value = "infinite"
+    , infinite = Compatible
+    , numberOrInfinite = Compatible
+    }
+
+
 {-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
 which accept unitless numbers.
 -}
-num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (Number { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
+num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
 num val =
-    { value = String.fromFloat val
+    { value = toString val
     , lengthOrNumber = Compatible
     , number = Compatible
+    , numberOrInfinite = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , numericValue = val
     , unitLabel = ""
@@ -2821,6 +2848,14 @@ animationDelay arg =
 animationDuration : Duration compatible -> Style
 animationDuration arg =
     prop1 "animation-duration" arg
+
+
+{-| An [`animation-iteration-count`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count)
+) property.
+-}
+animationIterationCount : NumberOrInfinite compatible -> Style
+animationIterationCount arg =
+    prop1 "animation-iteration-count" arg
 
 
 {-| Sets [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
