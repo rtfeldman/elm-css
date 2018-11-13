@@ -108,6 +108,14 @@ See [the `Css` module documentation](http://package.elm-lang.org/packages/rtfeld
 - [mixins](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#batch)
 - [nested media queries](https://davidwalsh.name/write-media-queries-sass) (as well as pseudo-classes like `:hover` and pseudo-elements like `::after`)
 
+### Installation
+
+To install with the Elm package manager (i.e. you have a `elm.json` file), use the following command:
+
+```bash
+elm install rtfeldman/elm-css
+```
+
 ### Examples
 
 - A [reusable datepicker](https://github.com/abadi199/datetimepicker) built by Abadi Kurniawan
