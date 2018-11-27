@@ -2163,7 +2163,7 @@ type alias Duration compatible =
 -}
 sec : Float -> Duration {}
 sec amount =
-    { value = String.fromFloat amount ++ "sec"
+    { value = String.fromFloat amount ++ "s"
     , duration = Compatible
     }
 
