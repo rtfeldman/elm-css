@@ -166,7 +166,7 @@ selector selectorStr styles =
 
 {-| A [`*` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors).
 
-    class Foo
+    class "Foo"
         [ children
             [ everything
                 [ color (rgb 14 15 16)
