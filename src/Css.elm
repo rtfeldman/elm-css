@@ -5724,7 +5724,7 @@ borderRight3 =
 
     borderImageOutset2 (int 2) (px 15)
 
-    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset3 (int 2) (px 15) (num 1.5)
 
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
@@ -5740,7 +5740,7 @@ borderImageOutset =
 
     borderImageOutset2 (int 2) (px 15)
 
-    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset3 (int 2) (px 15) (num 1.5)
 
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
@@ -5756,7 +5756,7 @@ borderImageOutset2 =
 
     borderImageOutset2 (int 2) (px 15)
 
-    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset3 (int 2) (px 15) (num 1.5)
 
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
@@ -5772,7 +5772,7 @@ borderImageOutset3 =
 
     borderImageOutset2 (int 2) (px 15)
 
-    borderImageOutset3 (int 2) (px 15) (int 1.5)
+    borderImageOutset3 (int 2) (px 15) (num 1.5)
 
     borderImageOutset4 (int 2) (px 15) (int 14) (em 3)
 
