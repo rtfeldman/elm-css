@@ -10,5 +10,5 @@ script:
   - cd ..
   # this line is here to catch type errors until phantom-types is merged into
   # master, at which point it can be replaced by the test script again. :)
-  - elm make --docs=/dev/null
+  - elm diff > /dev/null
   # - npm test
