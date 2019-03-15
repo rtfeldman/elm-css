@@ -2699,7 +2699,6 @@ defaultBoxShadow =
 
     boxShadow [] -- "box-shadow: none"
 
-
     -- "box-shadow: 3px 5px #aabbcc"
     button
         [ css
@@ -2779,7 +2778,6 @@ boxShadowConfigToString config =
 
     almostPct100 =
         calc (pct 100) (minus (px 2))
-
 
     -- The following compiles to: calc(100vh - (2px + 2rem))
     screenMinusBorderAndFooter =
