@@ -1,45 +1,14 @@
 sudo: false
-
-cache:
-  directories:
-    - tests/elm-stuff/build-artifacts
-    - sysconfcpus
-
-before_install:
-  - if [ ${TRAVIS_OS_NAME} == "osx" ];
-    then brew update; brew install nvm; mkdir ~/.nvm; export NVM_DIR=~/.nvm; source $(brew --prefix nvm)/nvm.sh;
-    fi
-  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - | # epic build time improvement - see https://github.com/elm-lang/elm-compiler/issues/1473#issuecomment-245704142
-    if [ ! -d sysconfcpus/bin ];
-    then
-      git clone https://github.com/obmarg/libsysconfcpus.git;
-      cd libsysconfcpus;
-      ./configure --prefix=$TRAVIS_BUILD_DIR/sysconfcpus;
-      make && make install;
-      cd ..;
-    fi
-
-
-install:
-  - npm install
-  - mv $(npm bin)/elm-make $(npm bin)/elm-make-old
-  - printf '%s\n\n' '#!/bin/bash' 'echo "Running elm-make with sysconfcpus -n 2"' '$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 $(npm bin)/elm-make-old "$@"' > $(npm bin)/elm-make
-  - chmod +x $(npm bin)/elm-make
-  - travis_retry $(npm bin)/elm-package install --yes
-  - cd tests
-  - npm install
-  - travis_retry $(npm bin)/elm-package install --yes
-  - cd ..
+language: elm
 
 script:
-  - $(npm bin)/elm-format --validate src tests examples readme-example
+  - elm-format --validate src tests examples readme-example
   - cd examples
-  - $(npm bin)/elm-make --output=/dev/null --yes
+  - elm make --output=/dev/null
   - cd ../readme-example
-  - $(npm bin)/elm-make --output=/dev/null --yes
+  - elm make --output=/dev/null
   - cd ..
   # this line is here to catch type errors until phantom-types is merged into
   # master, at which point it can be replaced by the test script again. :)
-  - $(npm bin)/elm-make --docs=/dev/null --yes
+  - elm make --docs=/dev/null
   # - npm test
