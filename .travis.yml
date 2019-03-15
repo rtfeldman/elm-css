@@ -2,7 +2,7 @@ sudo: false
 language: elm
 
 script:
-  - elm-format --validate src tests examples readme-example
+  - elm-format --validate src examples readme-example # tests
   - cd examples
   - elm make --output=/dev/null
   - cd ../readme-example
