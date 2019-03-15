@@ -173,6 +173,7 @@ module Css
         , diagonalFractions
         , difference
         , direction
+        , disabled
         , discretionaryLigatures
         , display
         , displayFlex
@@ -552,7 +553,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Pseudo-Classes
 
-@docs pseudoClass, active
+@docs pseudoClass, active, disabled
 
 
 ## Pseudo-Elements
@@ -2629,6 +2630,17 @@ pseudoClass pseudoClassName =
 active : List Style -> Style
 active =
     Preprocess.ExtendSelector (Structure.PseudoClassSelector "active")
+
+
+{-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    button [ disabled [ color (rgb 194 194 194) ] ]
+
+-}
+disabled : List Style -> Style
+disabled =
+    Preprocess.ExtendSelector (Structure.PseudoClassSelector "disabled")
 
 
 
