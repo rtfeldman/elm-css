@@ -1,4 +1,4 @@
-module CompileFixtures exposing (..)
+module CompileFixtures exposing (basicStyle1, basicStyle2, dreamwriter, pageBackground, pageDefaultText, unstyledDiv)
 
 import Css exposing (..)
 import Css.Global exposing (..)
@@ -13,16 +13,6 @@ pageBackground =
 pageDefaultText : Color
 pageDefaultText =
     rgb 40 35 76
-
-
-type CssClasses
-    = Hidden
-    | BasicStyle1
-    | BasicStyle2
-
-
-type CssIds
-    = Page
 
 
 unstyledDiv : Stylesheet
@@ -50,8 +40,8 @@ dreamwriter =
                     ]
                 ]
             ]
-        , class Hidden [ display none |> important ]
-        , id Page
+        , class "Hidden" [ display none |> important ]
+        , id "Page"
             [ width (pct 100)
             , height (pct 100)
             , boxSizing borderBox
@@ -66,7 +56,7 @@ dreamwriter =
 basicStyle1 : Stylesheet
 basicStyle1 =
     stylesheet
-        [ class BasicStyle1
+        [ class "BasicStyle1"
             [ display none ]
         ]
 
@@ -74,6 +64,6 @@ basicStyle1 =
 basicStyle2 : Stylesheet
 basicStyle2 =
     stylesheet
-        [ class BasicStyle2
+        [ class "BasicStyle2"
             [ display none ]
         ]

@@ -1,43 +1,25 @@
-module Svg.Styled.Lazy exposing (lazy, lazy2, lazy3)
+module Svg.Styled.Lazy exposing (lazy, lazy2, lazy3, lazy4, lazy5, lazy6, lazy7)
 
-{-| A not-quite-drop-in replacement for the `Svg.Lazy` module from the
-`elm-lang/svg` package.
+{-| **NOTE:** `Svg.Lazy` goes up to `lazy8`, but `Svg.Styled.Lazy` can only go
+up to `lazy7` because it uses one of the arguments to track styling info.
 
-The only difference between this and the `lazy` from `elm-lang/svg` is that the
-caller must call `toUnstyled` inside the function being passed to `lazy`.
+Since all Elm functions are pure we have a guarantee that the same input
+will always result in the same output. This module gives us tools to be lazy
+about building `Svg` that utilize this fact.
 
-For example:
+Rather than immediately applying functions to their arguments, the `lazy`
+functions just bundle the function and arguments up for later. When diffing
+the old and new virtual DOM, it checks to see if all the arguments are equal.
+If so, it skips calling the function!
 
-        import Css exposing (backgroundColor, rgb)
-        import Svg.Styled exposing (Svg, circle, svg, toUnstyled)
-        import Svg.Styled.Attributes exposing (css, cx, cy, r, viewBox)
-        import Svg.Styled.Lazy exposing (lazy)
-        import VirtualDom
+This is a really cheap test and often makes things a lot faster, but definitely
+benchmark to be sure!
 
-
-        view : Model -> Svg Msg
-        view model =
-            svg [ viewBox "0 0 100 100" ]
-                [ lazy viewCircle model.radius
-                ]
-
-
-        viewCircle : Int -> VirtualDom.Node msg
-        viewCircle radius =
-            circle
-                [ cx "60"
-                , cy "60"
-                , r (toString radius)
-                , css [ backgroundColor (rgb 200 0 0) ]
-                ]
-                |> toUnstyled -- toUnstyled must happen inside viewCircle!
-
-@docs lazy, lazy2, lazy3
+@docs lazy, lazy2, lazy3, lazy4, lazy5, lazy6, lazy7
 
 -}
 
 import Svg.Styled exposing (Svg)
-import VirtualDom
 import VirtualDom.Styled
 
 
@@ -50,20 +32,48 @@ and if so, we just stop. No need to build up the tree structure and diff it,
 we know if the input to `view` is the same, the output must be the same!
 
 -}
-lazy : (a -> VirtualDom.Node msg) -> a -> Svg msg
+lazy : (a -> Svg msg) -> a -> Svg msg
 lazy =
     VirtualDom.Styled.lazy
 
 
 {-| Same as `lazy` but checks on two arguments.
 -}
-lazy2 : (a -> b -> VirtualDom.Node msg) -> a -> b -> Svg msg
+lazy2 : (a -> b -> Svg msg) -> a -> b -> Svg msg
 lazy2 =
     VirtualDom.Styled.lazy2
 
 
 {-| Same as `lazy` but checks on three arguments.
 -}
-lazy3 : (a -> b -> c -> VirtualDom.Node msg) -> a -> b -> c -> Svg msg
+lazy3 : (a -> b -> c -> Svg msg) -> a -> b -> c -> Svg msg
 lazy3 =
     VirtualDom.Styled.lazy3
+
+
+{-| Same as `lazy` but checks on four arguments.
+-}
+lazy4 : (a -> b -> c -> d -> Svg msg) -> a -> b -> c -> d -> Svg msg
+lazy4 =
+    VirtualDom.Styled.lazy4
+
+
+{-| Same as `lazy` but checks on five arguments.
+-}
+lazy5 : (a -> b -> c -> d -> e -> Svg msg) -> a -> b -> c -> d -> e -> Svg msg
+lazy5 =
+    VirtualDom.Styled.lazy5
+
+
+{-| Same as `lazy` but checks on six arguments.
+-}
+lazy6 : (a -> b -> c -> d -> e -> f -> Svg msg) -> a -> b -> c -> d -> e -> f -> Svg msg
+lazy6 =
+    VirtualDom.Styled.lazy6
+
+
+{-| Same as `lazy` but checks on seven arguments.
+-}
+lazy7 : (a -> b -> c -> d -> e -> f -> g -> Svg msg) -> a -> b -> c -> d -> e -> f -> g -> Svg msg
+lazy7 =
+    VirtualDom.Styled.lazy7

@@ -1,115 +1,23 @@
-module Html.Styled
-    exposing
-        ( Attribute
-        , Html
-        , a
-        , abbr
-        , address
-        , article
-        , aside
-        , audio
-        , b
-        , bdi
-        , bdo
-        , beginnerProgram
-        , blockquote
-        , body
-        , br
-        , button
-        , canvas
-        , caption
-        , cite
-        , code
-        , col
-        , colgroup
-        , datalist
-        , dd
-        , del
-        , details
-        , dfn
-        , div
-        , dl
-        , dt
-        , em
-        , embed
-        , fieldset
-        , figcaption
-        , figure
-        , footer
-        , form
-        , fromUnstyled
-        , h1
-        , h2
-        , h3
-        , h4
-        , h5
-        , h6
-        , header
-        , hr
-        , i
-        , iframe
-        , img
-        , input
-        , ins
-        , kbd
-        , keygen
-        , label
-        , legend
-        , li
-        , main_
-        , map
-        , mark
-        , math
-        , menu
-        , menuitem
-        , meter
-        , nav
-        , node
-        , object
-        , ol
-        , optgroup
-        , option
-        , output
-        , p
-        , param
-        , pre
-        , program
-        , programWithFlags
-        , progress
-        , q
-        , rp
-        , rt
-        , ruby
-        , s
-        , samp
-        , section
-        , select
-        , small
-        , source
-        , span
-        , strong
-        , styled
-        , sub
-        , summary
-        , sup
-        , table
-        , tbody
-        , td
-        , text
-        , textarea
-        , tfoot
-        , th
-        , thead
-        , time
-        , toUnstyled
-        , tr
-        , track
-        , u
-        , ul
-        , var
-        , video
-        , wbr
-        )
+module Html.Styled exposing
+    ( styled, fromUnstyled, toUnstyled
+    , Html, Attribute, text, node, map
+    , h1, h2, h3, h4, h5, h6
+    , div, p, hr, pre, blockquote
+    , span, a, code, em, strong, i, b, u, sub, sup, br
+    , ol, ul, li, dl, dt, dd
+    , img, iframe, canvas, math
+    , form, input, textarea, button, select, option
+    , section, nav, article, aside, header, footer, address, main_
+    , figure, figcaption
+    , table, caption, colgroup, col, tbody, thead, tfoot, tr, td, th
+    , fieldset, legend, label, datalist, optgroup, output, progress, meter
+    , audio, video, source, track
+    , embed, object, param
+    , ins, del
+    , small, cite, dfn, abbr, time, var, samp, kbd, s, q
+    , mark, ruby, rt, rp, bdi, bdo, wbr
+    , details, summary, menuitem, menu
+    )
 
 {-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
 The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
@@ -123,11 +31,6 @@ expect to use frequently will be closer to the top.
 # Primitives
 
 @docs Html, Attribute, text, node, map
-
-
-# Programs
-
-@docs beginnerProgram, program, programWithFlags
 
 
 # Tags
@@ -153,7 +56,7 @@ expect to use frequently will be closer to the top.
 @docs ol, ul, li, dl, dt, dd
 
 
-## Emdedded Content
+## Embedded Content
 
 @docs img, iframe, canvas, math
 
@@ -165,7 +68,7 @@ expect to use frequently will be closer to the top.
 
 ## Sections
 
-@docs section, nav, article, aside, header, footer, address, main_, body
+@docs section, nav, article, aside, header, footer, address, main_
 
 
 ## Figures
@@ -180,12 +83,10 @@ expect to use frequently will be closer to the top.
 
 ## Less Common Elements
 
-@docs details, menu, menuitem, summary
-
 
 ### Less Common Inputs
 
-@docs fieldset, legend, label, datalist, optgroup, keygen, output, progress, meter
+@docs fieldset, legend, label, datalist, optgroup, output, progress, meter
 
 
 ### Audio and Video
@@ -215,6 +116,8 @@ expect to use frequently will be closer to the top.
 
 ## Interactive Elements
 
+@docs details, summary, menuitem, menu
+
 -}
 
 import Css exposing (Style)
@@ -223,74 +126,52 @@ import VirtualDom
 import VirtualDom.Styled
 
 
-{-| Styled [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html).
 
-You can convert from this to the normal [`Html`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
-(which is a type alias for [`VirtualDom.Node`](http://package.elm-lang.org/packages/elm-lang/virtual-dom/latest/VirtualDom#Node))
+-- CORE TYPES
+
+
+{-| Styled [`Html`](https://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html).
+You can convert from this to the normal [`Html`](https://package.elm-lang.org/packages/elm-lang/html/latest/Html#Html) type from [`elm-lang/html`](https://package.elm-lang.org/packages/elm-lang/html/latest)
+(which is a type alias for [`VirtualDom.Node`](https://package.elm-lang.org/packages/elm-lang/virtual-dom/latest/VirtualDom#Node))
 by using [`toUnstyled`](#toUnstyled).
-
 You can convert the other way using [`fromUnstyled`](#fromUnstyled).
-
 -}
 type alias Html msg =
     VirtualDom.Styled.Node msg
 
 
-{-| An [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) which supports the [`css`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Html-Styled-Attributes#css) attribute.
-
-You can obtain one of these from the normal [`Attribute`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html#Attribute) type from [`elm-lang/html`](http://package.elm-lang.org/packages/elm-lang/html/latest)
-by using [`fromUnstyled`](http://package.elm-lang.org/packages/elm-lang/html/latest/Html-Styled-Attributes#fromUnstyled).
-
+{-| Set attributes on your `Html`. Learn more in the
+[`Html.Attributes`](Html-Attributes) module.
 -}
 type alias Attribute msg =
-    VirtualDom.Styled.Property msg
+    VirtualDom.Styled.Attribute msg
 
 
 
--- MAKING HTML VALUES --
-
-
-{-| -}
-node : String -> List (Attribute msg) -> List (Html msg) -> Html msg
-node =
-    VirtualDom.Styled.node
-
-
-{-| -}
-text : String -> Html msg
-text =
-    VirtualDom.Styled.text
-
-
-{-| -}
-map : (a -> b) -> Html a -> Html b
-map =
-    VirtualDom.Styled.map
+-- STYLING & UNSTYLING --
 
 
 {-| Takes a function that creates an element, and pre-applies styles to it.
-
-    bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
-    bigButton =
-        styled button
-            [ padding (px 30)
-            , fontWeight bold
-            ]
-
-    view : Model -> Html msg
-    view model =
-        [ text "These two buttons are identical:"
-        , bigButton [] [ text "Hi!" ]
-        , button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
-        ]
-
+bigButton : List (Attribute msg) -> List (Html msg) -> Html msg
+bigButton =
+styled button
+[ padding (px 30)
+, fontWeight bold
+]
+view : Model -> Html msg
+view model =
+[ text "These two buttons are identical:"
+, bigButton [][ text "Hi!" ]
+, button [ css [ padding (px 30), fontWeight bold ] ][ text "Hi!" ]
+][ text "These two buttons are identical:"
+, bigButton [] [ text "Hi!" ]
+, button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
+]
 Here, the `bigButton` function we've defined using `styled button` is
 identical to the normal `button` function, except that it has pre-applied
 the attribute of `css [ padding (px 30), fontWeight bold ]`.
-
 You can pass more attributes to `bigButton` as usual (including other `css`
 attributes). They will be applied after the pre-applied styles.
-
 -}
 styled :
     (List (Attribute a) -> List (Html b) -> Html msg)
@@ -315,77 +196,72 @@ fromUnstyled =
 
 
 
--- CREATING PROGRAMS
+-- PRIMITIVES
 
 
-{-| Create a [`Program`][program] that describes how your whole app works.
-Read about [The Elm Architecture][tea] to learn how to use this. Just do it.
-The additional context is very worthwhile! (Honestly, it is best to just read
-that guide from front to back instead of muddling around and reading it
-piecemeal.)
-[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
-[tea]: <https://guide.elm-lang.org/architecture/>
+{-| General way to create HTML nodes. It is used to define all of the helper
+functions in this library.
+
+    div : List (Attribute msg) -> List (Html msg) -> Html msg
+    div attributes children =
+        node "div" attributes children
+
+You can use this to create custom nodes if you need to create something that
+is not covered by the helper functions in this library.
+
 -}
-beginnerProgram :
-    { model : model
-    , view : model -> Html msg
-    , update : msg -> model -> model
-    }
-    -> Program Never model msg
-beginnerProgram { model, view, update } =
-    program
-        { init = model ! []
-        , update = \msg model -> update msg model ! []
-        , view = view
-        , subscriptions = \_ -> Sub.none
-        }
+node : String -> List (Attribute msg) -> List (Html msg) -> Html msg
+node =
+    VirtualDom.Styled.node
 
 
-{-| Create a [`Program`][program] that describes how your whole app works.
-Read about [The Elm Architecture][tea] to learn how to use this. Just do it.
-Commands and subscriptions make way more sense when you work up to them
-gradually and see them in context with examples.
-[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
-[tea]: <https://guide.elm-lang.org/architecture/>
+{-| Just put plain text in the DOM. It will escape the string so that it appears
+exactly as you specify.
+
+    text "Hello World!"
+
 -}
-program :
-    { init : ( model, Cmd msg )
-    , update : msg -> model -> ( model, Cmd msg )
-    , subscriptions : model -> Sub msg
-    , view : model -> Html msg
-    }
-    -> Program Never model msg
-program config =
-    VirtualDom.program { config | view = config.view >> toUnstyled }
+text : String -> Html msg
+text =
+    VirtualDom.Styled.text
 
 
-{-| Create a [`Program`][program] that describes how your whole app works.
-It works just like `program` but you can provide &ldquo;flags&rdquo; from
-JavaScript to configure your application. Read more about that [here].
-[program]: <http://package.elm-lang.org/packages/elm-lang/core/latest/Platform#Program>
-[here]: <https://guide.elm-lang.org/interop/javascript.html>
+
+-- NESTING VIEWS
+
+
+{-| Transform the messages produced by some `Html`. In the following example,
+we have `viewButton` that produces `()` messages, and we transform those values
+into `Msg` values in `view`.
+
+    type Msg
+        = Left
+        | Right
+
+    view : model -> Html Msg
+    view model =
+        div []
+            [ map (\_ -> Left) (viewButton "Left")
+            , map (\_ -> Right) (viewButton "Right")
+            ]
+
+    viewButton : String -> Html ()
+    viewButton name =
+        button [ onClick () ] [ text name ]
+
+This should not come in handy too often. Definitely read [this][reuse] before
+deciding if this is what you want.
+
+[reuse]: https://guide.elm-lang.org/reuse/
+
 -}
-programWithFlags :
-    { init : flags -> ( model, Cmd msg )
-    , update : msg -> model -> ( model, Cmd msg )
-    , subscriptions : model -> Sub msg
-    , view : model -> Html msg
-    }
-    -> Program flags model msg
-programWithFlags config =
-    VirtualDom.programWithFlags { config | view = config.view >> toUnstyled }
+map : (a -> msg) -> Html a -> Html msg
+map =
+    VirtualDom.Styled.map
 
 
 
 -- SECTIONS
-
-
-{-| Represents the content of an HTML document. There is only one `body`
-element in a document.
--}
-body : List (Attribute msg) -> List (Html msg) -> Html msg
-body =
-    node "body"
 
 
 {-| Defines a section in a document.
@@ -725,7 +601,7 @@ b =
     node "b"
 
 
-{-| Represents a non-textual annoatation for which the conventional
+{-| Represents a non-textual annotation for which the conventional
 presentation is underlining, such labeling the text as being misspelt or
 labeling a proper name in Chinese text.
 -}

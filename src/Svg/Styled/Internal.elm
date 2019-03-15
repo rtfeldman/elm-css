@@ -6,7 +6,7 @@ import VirtualDom
 import VirtualDom.Styled
 
 
-css : List Css.Style -> VirtualDom.Styled.Property msg
+css : List Css.Style -> VirtualDom.Styled.Attribute msg
 css styles =
     let
         classname =
@@ -15,10 +15,10 @@ css styles =
         classAttribute =
             VirtualDom.attribute "class" classname
     in
-    VirtualDom.Styled.Property classAttribute styles classname
+    VirtualDom.Styled.Attribute classAttribute styles classname
 
 
-svgNamespace : VirtualDom.Styled.Property msg
+svgNamespace : VirtualDom.Styled.Attribute msg
 svgNamespace =
     VirtualDom.Styled.property "namespace"
         (Json.string "http://www.w3.org/2000/svg")

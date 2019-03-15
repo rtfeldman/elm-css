@@ -1,304 +1,8 @@
-module Css.Transitions
-    exposing
-        ( Transition
-        , background
-        , background2
-        , background3
-        , backgroundColor
-        , backgroundColor2
-        , backgroundColor3
-        , backgroundPosition
-        , backgroundPosition2
-        , backgroundPosition3
-        , backgroundSize
-        , backgroundSize2
-        , backgroundSize3
-        , border
-        , border2
-        , border3
-        , borderBottom
-        , borderBottom2
-        , borderBottom3
-        , borderBottomColor
-        , borderBottomColor2
-        , borderBottomColor3
-        , borderBottomLeftRadius
-        , borderBottomLeftRadius2
-        , borderBottomLeftRadius3
-        , borderBottomRightRadius
-        , borderBottomRightRadius2
-        , borderBottomRightRadius3
-        , borderBottomWidth
-        , borderBottomWidth2
-        , borderBottomWidth3
-        , borderColor
-        , borderColor2
-        , borderColor3
-        , borderLeft
-        , borderLeft2
-        , borderLeft3
-        , borderLeftColor
-        , borderLeftColor2
-        , borderLeftColor3
-        , borderLeftWidth
-        , borderLeftWidth2
-        , borderLeftWidth3
-        , borderRadius
-        , borderRadius2
-        , borderRadius3
-        , borderRight
-        , borderRight2
-        , borderRight3
-        , borderRightColor
-        , borderRightColor2
-        , borderRightColor3
-        , borderRightWidth
-        , borderRightWidth2
-        , borderRightWidth3
-        , borderTop
-        , borderTop2
-        , borderTop3
-        , borderTopColor
-        , borderTopColor2
-        , borderTopColor3
-        , borderTopLeftRadius
-        , borderTopLeftRadius2
-        , borderTopLeftRadius3
-        , borderTopRightRadius
-        , borderTopRightRadius2
-        , borderTopRightRadius3
-        , borderTopWidth
-        , borderTopWidth2
-        , borderTopWidth3
-        , borderWidth
-        , borderWidth2
-        , borderWidth3
-        , bottom
-        , bottom2
-        , bottom3
-        , boxShadow
-        , boxShadow2
-        , boxShadow3
-        , caretColor
-        , caretColor2
-        , caretColor3
-        , clip
-        , clip2
-        , clip3
-        , clipPath
-        , clipPath2
-        , clipPath3
-        , color
-        , color2
-        , color3
-        , columnCount
-        , columnCount2
-        , columnCount3
-        , columnGap
-        , columnGap2
-        , columnGap3
-        , columnRule
-        , columnRule2
-        , columnRule3
-        , columnRuleColor
-        , columnRuleColor2
-        , columnRuleColor3
-        , columnRuleWidth
-        , columnRuleWidth2
-        , columnRuleWidth3
-        , columnWidth
-        , columnWidth2
-        , columnWidth3
-        , columns
-        , columns2
-        , columns3
-        , cubicBezier
-        , ease
-        , easeIn
-        , easeInOut
-        , easeOut
-        , filter
-        , filter2
-        , filter3
-        , flex
-        , flex2
-        , flex3
-        , flexBasis
-        , flexBasis2
-        , flexBasis3
-        , flexGrow
-        , flexGrow2
-        , flexGrow3
-        , flexShrink
-        , flexShrink2
-        , flexShrink3
-        , font
-        , font2
-        , font3
-        , fontSize
-        , fontSize2
-        , fontSize3
-        , fontSizeAdjust
-        , fontSizeAdjust2
-        , fontSizeAdjust3
-        , fontStretch
-        , fontStretch2
-        , fontStretch3
-        , fontVariationSettings
-        , fontVariationSettings2
-        , fontVariationSettings3
-        , fontWeight
-        , fontWeight2
-        , fontWeight3
-        , gridColumnGap
-        , gridColumnGap2
-        , gridColumnGap3
-        , gridGap
-        , gridGap2
-        , gridGap3
-        , gridRowGap
-        , gridRowGap2
-        , gridRowGap3
-        , height
-        , height2
-        , height3
-        , left
-        , left2
-        , left3
-        , letterSpacing
-        , letterSpacing2
-        , letterSpacing3
-        , lineHeight
-        , lineHeight2
-        , lineHeight3
-        , linear
-        , margin
-        , margin2
-        , margin3
-        , marginBottom
-        , marginBottom2
-        , marginBottom3
-        , marginLeft
-        , marginLeft2
-        , marginLeft3
-        , marginRight
-        , marginRight2
-        , marginRight3
-        , marginTop
-        , marginTop2
-        , marginTop3
-        , mask
-        , mask2
-        , mask3
-        , maskPosition
-        , maskPosition2
-        , maskPosition3
-        , maskSize
-        , maskSize2
-        , maskSize3
-        , maxHeight
-        , maxHeight2
-        , maxHeight3
-        , maxWidth
-        , maxWidth2
-        , maxWidth3
-        , minHeight
-        , minHeight2
-        , minHeight3
-        , minWidth
-        , minWidth2
-        , minWidth3
-        , objectPosition
-        , objectPosition2
-        , objectPosition3
-        , offset
-        , offset2
-        , offset3
-        , offsetAnchor
-        , offsetAnchor2
-        , offsetAnchor3
-        , offsetDistance
-        , offsetDistance2
-        , offsetDistance3
-        , offsetPath
-        , offsetPath2
-        , offsetPath3
-        , offsetRotate
-        , offsetRotate2
-        , offsetRotate3
-        , opacity
-        , opacity2
-        , opacity3
-        , order
-        , order2
-        , order3
-        , outline
-        , outline2
-        , outline3
-        , outlineColor
-        , outlineColor2
-        , outlineColor3
-        , outlineOffset
-        , outlineOffset2
-        , outlineOffset3
-        , outlineWidth
-        , outlineWidth2
-        , outlineWidth3
-        , padding
-        , padding2
-        , padding3
-        , paddingBottom
-        , paddingBottom2
-        , paddingBottom3
-        , paddingLeft
-        , paddingLeft2
-        , paddingLeft3
-        , paddingRight
-        , paddingRight2
-        , paddingRight3
-        , paddingTop
-        , paddingTop2
-        , paddingTop3
-        , right
-        , right2
-        , right3
-        , stepEnd
-        , stepStart
-        , tabSize
-        , tabSize2
-        , tabSize3
-        , textIndent
-        , textIndent2
-        , textIndent3
-        , textShadow
-        , textShadow2
-        , textShadow3
-        , top
-        , top2
-        , top3
-        , transform
-        , transform2
-        , transform3
-        , transformOrigin
-        , transformOrigin2
-        , transformOrigin3
-        , transition
-        , verticalAlign
-        , verticalAlign2
-        , verticalAlign3
-        , visibility
-        , visibility2
-        , visibility3
-        , width
-        , width2
-        , width3
-        , wordSpacing
-        , wordSpacing2
-        , wordSpacing3
-        , zIndex
-        , zIndex2
-        , zIndex3
-        )
+module Css.Transitions exposing
+    ( Transition, transition
+    , ease, linear, easeIn, easeOut, easeInOut, stepStart, stepEnd, cubicBezier
+    , background, background2, background3, backgroundColor, backgroundColor2, backgroundColor3, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundSize, backgroundSize2, backgroundSize3, border, border2, border3, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomColor2, borderBottomColor3, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomLeftRadius3, borderBottomRightRadius, borderBottomRightRadius2, borderBottomRightRadius3, borderBottomWidth, borderBottomWidth2, borderBottomWidth3, borderColor, borderColor2, borderColor3, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftColor2, borderLeftColor3, borderLeftWidth, borderLeftWidth2, borderLeftWidth3, borderRadius, borderRadius2, borderRadius3, borderRight, borderRight2, borderRight3, borderRightColor, borderRightColor2, borderRightColor3, borderRightWidth, borderRightWidth2, borderRightWidth3, borderTop, borderTop2, borderTop3, borderTopColor, borderTopColor2, borderTopColor3, borderTopLeftRadius, borderTopLeftRadius2, borderTopLeftRadius3, borderTopRightRadius, borderTopRightRadius2, borderTopRightRadius3, borderTopWidth, borderTopWidth2, borderTopWidth3, borderWidth, borderWidth2, borderWidth3, bottom, bottom2, bottom3, boxShadow, boxShadow2, boxShadow3, caretColor, caretColor2, caretColor3, clip, clip2, clip3, clipPath, clipPath2, clipPath3, color, color2, color3, columnCount, columnCount2, columnCount3, columnGap, columnGap2, columnGap3, columnRule, columnRule2, columnRule3, columnRuleColor, columnRuleColor2, columnRuleColor3, columnRuleWidth, columnRuleWidth2, columnRuleWidth3, columnWidth, columnWidth2, columnWidth3, columns, columns2, columns3, filter, filter2, filter3, flex, flex2, flex3, flexBasis, flexBasis2, flexBasis3, flexGrow, flexGrow2, flexGrow3, flexShrink, flexShrink2, flexShrink3, font, font2, font3, fontSize, fontSize2, fontSize3, fontSizeAdjust, fontSizeAdjust2, fontSizeAdjust3, fontStretch, fontStretch2, fontStretch3, fontVariationSettings, fontVariationSettings2, fontVariationSettings3, fontWeight, fontWeight2, fontWeight3, gridColumnGap, gridColumnGap2, gridColumnGap3, gridGap, gridGap2, gridGap3, gridRowGap, gridRowGap2, gridRowGap3, height, height2, height3, left, left2, left3, letterSpacing, letterSpacing2, letterSpacing3, lineHeight, lineHeight2, lineHeight3, margin, margin2, margin3, marginBottom, marginBottom2, marginBottom3, marginLeft, marginLeft2, marginLeft3, marginRight, marginRight2, marginRight3, marginTop, marginTop2, marginTop3, mask, mask2, mask3, maskPosition, maskPosition2, maskPosition3, maskSize, maskSize2, maskSize3, maxHeight, maxHeight2, maxHeight3, maxWidth, maxWidth2, maxWidth3, minHeight, minHeight2, minHeight3, minWidth, minWidth2, minWidth3, objectPosition, objectPosition2, objectPosition3, offset, offset2, offset3, offsetAnchor, offsetAnchor2, offsetAnchor3, offsetDistance, offsetDistance2, offsetDistance3, offsetPath, offsetPath2, offsetPath3, offsetRotate, offsetRotate2, offsetRotate3, opacity, opacity2, opacity3, order, order2, order3, outline, outline2, outline3, outlineColor, outlineColor2, outlineColor3, outlineOffset, outlineOffset2, outlineOffset3, outlineWidth, outlineWidth2, outlineWidth3, padding, padding2, padding3, paddingBottom, paddingBottom2, paddingBottom3, paddingLeft, paddingLeft2, paddingLeft3, paddingRight, paddingRight2, paddingRight3, paddingTop, paddingTop2, paddingTop3, right, right2, right3, tabSize, tabSize2, tabSize3, textIndent, textIndent2, textIndent3, textShadow, textShadow2, textShadow3, top, top2, top3, transform, transform2, transform3, transformOrigin, transformOrigin2, transformOrigin3, verticalAlign, verticalAlign2, verticalAlign3, visibility, visibility2, visibility3, width, width2, width3, wordSpacing, wordSpacing2, wordSpacing3, zIndex, zIndex2, zIndex3
+    )
 
 {-| Define [CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions).
 
@@ -356,7 +60,7 @@ These functions are used to create a transition, generally they come in three fl
 
 An example of this would be the [`background3`](#background3), [`background2`](#background2) and [`background`](#background) functions
 
-@docs background, background2, background3, backgroundColor, backgroundColor2, backgroundColor3, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundSize, backgroundSize2, backgroundSize3, border, border2, border3, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomColor2, borderBottomColor3, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomLeftRadius3, borderBottomRightRadius, borderBottomRightRadius2, borderBottomRightRadius3, borderBottomWidth, borderBottomWidth2, borderBottomWidth3, borderColor, borderColor2, borderColor3, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftColor2, borderLeftColor3, borderLeftWidth, borderLeftWidth2, borderLeftWidth3, borderRadius, borderRadius2, borderRadius3, borderRight, borderRight2, borderRight3, borderRightColor, borderRightColor2, borderRightColor3, borderRightWidth, borderRightWidth2, borderRightWidth3, borderTop, borderTop2, borderTop3, borderTopColor, borderTopColor2, borderTopColor3, borderTopLeftRadius, borderTopLeftRadius2, borderTopLeftRadius3, borderTopRightRadius, borderTopRightRadius2, borderTopRightRadius3, borderTopWidth, borderTopWidth2, borderTopWidth3, borderWidth, borderWidth2, borderWidth3, bottom, bottom2, bottom3, boxShadow, boxShadow2, boxShadow3, caretColor, caretColor2, caretColor3, clip, clip2, clip3, clipPath, clipPath2, clipPath3, color, color2, color3, columnCount, columnCount2, columnCount3, columnGap, columnGap2, columnGap3, columnRule, columnRule2, columnRule3, columnRuleColor, columnRuleColor2, columnRuleColor3, columnRuleWidth, columnRuleWidth2, columnRuleWidth3, columnWidth, columnWidth2, columnWidth3, columns, columns2, columns3, filter, filter2, filter3, flex, flex2, flex3, flexBasis, flexBasis2, flexBasis3, flexGrow, flexGrow2, flexGrow3, flexShrink, flexShrink2, flexShrink3, font, font2, font3, fontSize, fontSize2, fontSize3, fontSizeAdjust, fontSizeAdjust2, fontSizeAdjust3, fontStretch, fontStretch2, fontStretch3, fontVariationSettings, fontVariationSettings2, fontVariationSettings3, fontWeight, fontWeight2, fontWeight3, gridColumnGap, gridColumnGap2, gridColumnGap3, gridGap, gridGap2, gridGap3, gridRowGap, gridRowGap2, gridRowGap3, height, height2, height3, left, left2, left3, letterSpacing, letterSpacing2, letterSpacing3, lineHeight, lineHeight2, lineHeight3, linear, margin, margin2, margin3, marginBottom, marginBottom2, marginBottom3, marginLeft, marginLeft2, marginLeft3, marginRight, marginRight2, marginRight3, marginTop, marginTop2, marginTop3, mask, mask2, mask3, maskPosition, maskPosition2, maskPosition3, maskSize, maskSize2, maskSize3, maxHeight, maxHeight2, maxHeight3, maxWidth, maxWidth2, maxWidth3, minHeight, minHeight2, minHeight3, minWidth, minWidth2, minWidth3, objectPosition, objectPosition2, objectPosition3, offset, offset2, offset3, offsetAnchor, offsetAnchor2, offsetAnchor3, offsetDistance, offsetDistance2, offsetDistance3, offsetPath, offsetPath2, offsetPath3, offsetRotate, offsetRotate2, offsetRotate3, opacity, opacity2, opacity3, order, order2, order3, outline, outline2, outline3, outlineColor, outlineColor2, outlineColor3, outlineOffset, outlineOffset2, outlineOffset3, outlineWidth, outlineWidth2, outlineWidth3, padding, padding2, padding3, paddingBottom, paddingBottom2, paddingBottom3, paddingLeft, paddingLeft2, paddingLeft3, paddingRight, paddingRight2, paddingRight3, paddingTop, paddingTop2, paddingTop3, right, right2, right3, tabSize, tabSize2, tabSize3, textIndent, textIndent2, textIndent3, textShadow, textShadow2, textShadow3, top, top2, top3, transform, transform2, transform3, transformOrigin, transformOrigin2, transformOrigin3, verticalAlign, verticalAlign2, verticalAlign3, visibility, visibility2, visibility3, width, width2, width3, wordSpacing, wordSpacing2, wordSpacing3, zIndex, zIndex2, zIndex3
+@docs background, background2, background3, backgroundColor, backgroundColor2, backgroundColor3, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundSize, backgroundSize2, backgroundSize3, border, border2, border3, borderBottom, borderBottom2, borderBottom3, borderBottomColor, borderBottomColor2, borderBottomColor3, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomLeftRadius3, borderBottomRightRadius, borderBottomRightRadius2, borderBottomRightRadius3, borderBottomWidth, borderBottomWidth2, borderBottomWidth3, borderColor, borderColor2, borderColor3, borderLeft, borderLeft2, borderLeft3, borderLeftColor, borderLeftColor2, borderLeftColor3, borderLeftWidth, borderLeftWidth2, borderLeftWidth3, borderRadius, borderRadius2, borderRadius3, borderRight, borderRight2, borderRight3, borderRightColor, borderRightColor2, borderRightColor3, borderRightWidth, borderRightWidth2, borderRightWidth3, borderTop, borderTop2, borderTop3, borderTopColor, borderTopColor2, borderTopColor3, borderTopLeftRadius, borderTopLeftRadius2, borderTopLeftRadius3, borderTopRightRadius, borderTopRightRadius2, borderTopRightRadius3, borderTopWidth, borderTopWidth2, borderTopWidth3, borderWidth, borderWidth2, borderWidth3, bottom, bottom2, bottom3, boxShadow, boxShadow2, boxShadow3, caretColor, caretColor2, caretColor3, clip, clip2, clip3, clipPath, clipPath2, clipPath3, color, color2, color3, columnCount, columnCount2, columnCount3, columnGap, columnGap2, columnGap3, columnRule, columnRule2, columnRule3, columnRuleColor, columnRuleColor2, columnRuleColor3, columnRuleWidth, columnRuleWidth2, columnRuleWidth3, columnWidth, columnWidth2, columnWidth3, columns, columns2, columns3, filter, filter2, filter3, flex, flex2, flex3, flexBasis, flexBasis2, flexBasis3, flexGrow, flexGrow2, flexGrow3, flexShrink, flexShrink2, flexShrink3, font, font2, font3, fontSize, fontSize2, fontSize3, fontSizeAdjust, fontSizeAdjust2, fontSizeAdjust3, fontStretch, fontStretch2, fontStretch3, fontVariationSettings, fontVariationSettings2, fontVariationSettings3, fontWeight, fontWeight2, fontWeight3, gridColumnGap, gridColumnGap2, gridColumnGap3, gridGap, gridGap2, gridGap3, gridRowGap, gridRowGap2, gridRowGap3, height, height2, height3, left, left2, left3, letterSpacing, letterSpacing2, letterSpacing3, lineHeight, lineHeight2, lineHeight3, margin, margin2, margin3, marginBottom, marginBottom2, marginBottom3, marginLeft, marginLeft2, marginLeft3, marginRight, marginRight2, marginRight3, marginTop, marginTop2, marginTop3, mask, mask2, mask3, maskPosition, maskPosition2, maskPosition3, maskSize, maskSize2, maskSize3, maxHeight, maxHeight2, maxHeight3, maxWidth, maxWidth2, maxWidth3, minHeight, minHeight2, minHeight3, minWidth, minWidth2, minWidth3, objectPosition, objectPosition2, objectPosition3, offset, offset2, offset3, offsetAnchor, offsetAnchor2, offsetAnchor3, offsetDistance, offsetDistance2, offsetDistance3, offsetPath, offsetPath2, offsetPath3, offsetRotate, offsetRotate2, offsetRotate3, opacity, opacity2, opacity3, order, order2, order3, outline, outline2, outline3, outlineColor, outlineColor2, outlineColor3, outlineOffset, outlineOffset2, outlineOffset3, outlineWidth, outlineWidth2, outlineWidth3, padding, padding2, padding3, paddingBottom, paddingBottom2, paddingBottom3, paddingLeft, paddingLeft2, paddingLeft3, paddingRight, paddingRight2, paddingRight3, paddingTop, paddingTop2, paddingTop3, right, right2, right3, tabSize, tabSize2, tabSize3, textIndent, textIndent2, textIndent3, textShadow, textShadow2, textShadow3, top, top2, top3, transform, transform2, transform3, transformOrigin, transformOrigin2, transformOrigin3, verticalAlign, verticalAlign2, verticalAlign3, visibility, visibility2, visibility3, width, width2, width3, wordSpacing, wordSpacing2, wordSpacing3, zIndex, zIndex2, zIndex3
 
 -}
 
@@ -444,8 +148,8 @@ compiled down to a string and added as a style property on elements
 type Transition
     = Transition
         { animation : Animatable
-        , duration : Time.Time
-        , delay : Maybe Time.Time
+        , duration : Float
+        , delay : Maybe Float
         , timing : Maybe TimingFunction
         }
 
@@ -453,7 +157,7 @@ type Transition
 {-| Create a [`Transition`](#Transition) for the [background](https://developer.mozilla.org/en-US/docs/Web/CSS/background)
 property specifying duration, delay and timing function
 -}
-background3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+background3 : Float -> Float -> TimingFunction -> Transition
 background3 =
     fullTransition Background
 
@@ -461,7 +165,7 @@ background3 =
 {-| Create a [`Transition`](#Transition) for the [background-color](https://developer.mozilla.org/en-US/docs/Web/CSS/background-color)
 property specifying duration, delay and timing function
 -}
-backgroundColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+backgroundColor3 : Float -> Float -> TimingFunction -> Transition
 backgroundColor3 =
     fullTransition BackgroundColor
 
@@ -469,7 +173,7 @@ backgroundColor3 =
 {-| Create a [`Transition`](#Transition) for the [background-position](https://developer.mozilla.org/en-US/docs/Web/CSS/background-position)
 property specifying duration, delay and timing function
 -}
-backgroundPosition3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+backgroundPosition3 : Float -> Float -> TimingFunction -> Transition
 backgroundPosition3 =
     fullTransition BackgroundPosition
 
@@ -477,7 +181,7 @@ backgroundPosition3 =
 {-| Create a [`Transition`](#Transition) for the [background-size](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
 property specifying duration, delay and timing function
 -}
-backgroundSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+backgroundSize3 : Float -> Float -> TimingFunction -> Transition
 backgroundSize3 =
     fullTransition BackgroundSize
 
@@ -485,7 +189,7 @@ backgroundSize3 =
 {-| Create a [`Transition`](#Transition) for the [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
 property specifying duration, delay and timing function
 -}
-border3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+border3 : Float -> Float -> TimingFunction -> Transition
 border3 =
     fullTransition Border
 
@@ -493,7 +197,7 @@ border3 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
 property specifying duration, delay and timing function
 -}
-borderBottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderBottom3 : Float -> Float -> TimingFunction -> Transition
 borderBottom3 =
     fullTransition BorderBottom
 
@@ -501,7 +205,7 @@ borderBottom3 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
 property specifying duration, delay and timing function
 -}
-borderBottomColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderBottomColor3 : Float -> Float -> TimingFunction -> Transition
 borderBottomColor3 =
     fullTransition BorderBottomColor
 
@@ -509,7 +213,7 @@ borderBottomColor3 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-left-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
 property specifying duration, delay and timing function
 -}
-borderBottomLeftRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderBottomLeftRadius3 : Float -> Float -> TimingFunction -> Transition
 borderBottomLeftRadius3 =
     fullTransition BorderBottomLeftRadius
 
@@ -517,7 +221,7 @@ borderBottomLeftRadius3 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-right-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
 property specifying duration, delay and timing function
 -}
-borderBottomRightRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderBottomRightRadius3 : Float -> Float -> TimingFunction -> Transition
 borderBottomRightRadius3 =
     fullTransition BorderBottomRightRadius
 
@@ -525,7 +229,7 @@ borderBottomRightRadius3 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
 property specifying duration, delay and timing function
 -}
-borderBottomWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderBottomWidth3 : Float -> Float -> TimingFunction -> Transition
 borderBottomWidth3 =
     fullTransition BorderBottomWidth
 
@@ -533,7 +237,7 @@ borderBottomWidth3 =
 {-| Create a [`Transition`](#Transition) for the [border-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
 property specifying duration, delay and timing function
 -}
-borderColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderColor3 : Float -> Float -> TimingFunction -> Transition
 borderColor3 =
     fullTransition BorderColor
 
@@ -541,7 +245,7 @@ borderColor3 =
 {-| Create a [`Transition`](#Transition) for the [border-left](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
 property specifying duration, delay and timing function
 -}
-borderLeft3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderLeft3 : Float -> Float -> TimingFunction -> Transition
 borderLeft3 =
     fullTransition BorderLeft
 
@@ -549,7 +253,7 @@ borderLeft3 =
 {-| Create a [`Transition`](#Transition) for the [border-left-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
 property specifying duration, delay and timing function
 -}
-borderLeftColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderLeftColor3 : Float -> Float -> TimingFunction -> Transition
 borderLeftColor3 =
     fullTransition BorderLeftColor
 
@@ -557,7 +261,7 @@ borderLeftColor3 =
 {-| Create a [`Transition`](#Transition) for the [border-left-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width)
 property specifying duration, delay and timing function
 -}
-borderLeftWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderLeftWidth3 : Float -> Float -> TimingFunction -> Transition
 borderLeftWidth3 =
     fullTransition BorderLeftWidth
 
@@ -565,7 +269,7 @@ borderLeftWidth3 =
 {-| Create a [`Transition`](#Transition) for the [border-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
 property specifying duration, delay and timing function
 -}
-borderRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderRadius3 : Float -> Float -> TimingFunction -> Transition
 borderRadius3 =
     fullTransition BorderRadius
 
@@ -573,7 +277,7 @@ borderRadius3 =
 {-| Create a [`Transition`](#Transition) for the [border-right](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
 property specifying duration, delay and timing function
 -}
-borderRight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderRight3 : Float -> Float -> TimingFunction -> Transition
 borderRight3 =
     fullTransition BorderRight
 
@@ -581,7 +285,7 @@ borderRight3 =
 {-| Create a [`Transition`](#Transition) for the [border-right-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
 property specifying duration, delay and timing function
 -}
-borderRightColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderRightColor3 : Float -> Float -> TimingFunction -> Transition
 borderRightColor3 =
     fullTransition BorderRightColor
 
@@ -589,7 +293,7 @@ borderRightColor3 =
 {-| Create a [`Transition`](#Transition) for the [border-right-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width)
 property specifying duration, delay and timing function
 -}
-borderRightWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderRightWidth3 : Float -> Float -> TimingFunction -> Transition
 borderRightWidth3 =
     fullTransition BorderRightWidth
 
@@ -597,7 +301,7 @@ borderRightWidth3 =
 {-| Create a [`Transition`](#Transition) for the [border-top](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
 property specifying duration, delay and timing function
 -}
-borderTop3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderTop3 : Float -> Float -> TimingFunction -> Transition
 borderTop3 =
     fullTransition BorderTop
 
@@ -605,7 +309,7 @@ borderTop3 =
 {-| Create a [`Transition`](#Transition) for the [border-top-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
 property specifying duration, delay and timing function
 -}
-borderTopColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderTopColor3 : Float -> Float -> TimingFunction -> Transition
 borderTopColor3 =
     fullTransition BorderTopColor
 
@@ -613,7 +317,7 @@ borderTopColor3 =
 {-| Create a [`Transition`](#Transition) for the [border-top-left-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
 property specifying duration, delay and timing function
 -}
-borderTopLeftRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderTopLeftRadius3 : Float -> Float -> TimingFunction -> Transition
 borderTopLeftRadius3 =
     fullTransition BorderTopLeftRadius
 
@@ -621,7 +325,7 @@ borderTopLeftRadius3 =
 {-| Create a [`Transition`](#Transition) for the [border-top-right-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
 property specifying duration, delay and timing function
 -}
-borderTopRightRadius3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderTopRightRadius3 : Float -> Float -> TimingFunction -> Transition
 borderTopRightRadius3 =
     fullTransition BorderTopRightRadius
 
@@ -629,7 +333,7 @@ borderTopRightRadius3 =
 {-| Create a [`Transition`](#Transition) for the [border-top-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
 property specifying duration, delay and timing function
 -}
-borderTopWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderTopWidth3 : Float -> Float -> TimingFunction -> Transition
 borderTopWidth3 =
     fullTransition BorderTopWidth
 
@@ -637,7 +341,7 @@ borderTopWidth3 =
 {-| Create a [`Transition`](#Transition) for the [border-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 property specifying duration, delay and timing function
 -}
-borderWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+borderWidth3 : Float -> Float -> TimingFunction -> Transition
 borderWidth3 =
     fullTransition BorderWidth
 
@@ -645,7 +349,7 @@ borderWidth3 =
 {-| Create a [`Transition`](#Transition) for the [bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom)
 property specifying duration, delay and timing function
 -}
-bottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+bottom3 : Float -> Float -> TimingFunction -> Transition
 bottom3 =
     fullTransition Bottom
 
@@ -653,7 +357,7 @@ bottom3 =
 {-| Create a [`Transition`](#Transition) for the [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow)
 property specifying duration, delay and timing function
 -}
-boxShadow3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+boxShadow3 : Float -> Float -> TimingFunction -> Transition
 boxShadow3 =
     fullTransition BoxShadow
 
@@ -661,7 +365,7 @@ boxShadow3 =
 {-| Create a [`Transition`](#Transition) for the [caret-color](https://developer.mozilla.org/en-US/docs/Web/CSS/caret-color)
 property specifying duration, delay and timing function
 -}
-caretColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+caretColor3 : Float -> Float -> TimingFunction -> Transition
 caretColor3 =
     fullTransition CaretColor
 
@@ -669,7 +373,7 @@ caretColor3 =
 {-| Create a [`Transition`](#Transition) for the [clip](https://developer.mozilla.org/en-US/docs/Web/CSS/clip)
 property specifying duration, delay and timing function
 -}
-clip3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+clip3 : Float -> Float -> TimingFunction -> Transition
 clip3 =
     fullTransition Clip
 
@@ -677,7 +381,7 @@ clip3 =
 {-| Create a [`Transition`](#Transition) for the [clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
 property specifying duration, delay and timing function
 -}
-clipPath3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+clipPath3 : Float -> Float -> TimingFunction -> Transition
 clipPath3 =
     fullTransition ClipPath
 
@@ -685,7 +389,7 @@ clipPath3 =
 {-| Create a [`Transition`](#Transition) for the [color](https://developer.mozilla.org/en-US/docs/Web/CSS/color)
 property specifying duration, delay and timing function
 -}
-color3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+color3 : Float -> Float -> TimingFunction -> Transition
 color3 =
     fullTransition Color
 
@@ -693,7 +397,7 @@ color3 =
 {-| Create a [`Transition`](#Transition) for the [column-count](https://developer.mozilla.org/en-US/docs/Web/CSS/column-count)
 property specifying duration, delay and timing function
 -}
-columnCount3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+columnCount3 : Float -> Float -> TimingFunction -> Transition
 columnCount3 =
     fullTransition ColumnCount
 
@@ -701,7 +405,7 @@ columnCount3 =
 {-| Create a [`Transition`](#Transition) for the [column-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap)
 property specifying duration, delay and timing function
 -}
-columnGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+columnGap3 : Float -> Float -> TimingFunction -> Transition
 columnGap3 =
     fullTransition ColumnGap
 
@@ -709,7 +413,7 @@ columnGap3 =
 {-| Create a [`Transition`](#Transition) for the [column-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule)
 property specifying duration, delay and timing function
 -}
-columnRule3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+columnRule3 : Float -> Float -> TimingFunction -> Transition
 columnRule3 =
     fullTransition ColumnRule
 
@@ -717,7 +421,7 @@ columnRule3 =
 {-| Create a [`Transition`](#Transition) for the [column-rule-color](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule-color)
 property specifying duration, delay and timing function
 -}
-columnRuleColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+columnRuleColor3 : Float -> Float -> TimingFunction -> Transition
 columnRuleColor3 =
     fullTransition ColumnRuleColor
 
@@ -725,7 +429,7 @@ columnRuleColor3 =
 {-| Create a [`Transition`](#Transition) for the [column-rule-width](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule-width)
 property specifying duration, delay and timing function
 -}
-columnRuleWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+columnRuleWidth3 : Float -> Float -> TimingFunction -> Transition
 columnRuleWidth3 =
     fullTransition ColumnRuleWidth
 
@@ -733,7 +437,7 @@ columnRuleWidth3 =
 {-| Create a [`Transition`](#Transition) for the [column-width](https://developer.mozilla.org/en-US/docs/Web/CSS/column-width)
 property specifying duration, delay and timing function
 -}
-columnWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+columnWidth3 : Float -> Float -> TimingFunction -> Transition
 columnWidth3 =
     fullTransition ColumnWidth
 
@@ -741,7 +445,7 @@ columnWidth3 =
 {-| Create a [`Transition`](#Transition) for the [columns](https://developer.mozilla.org/en-US/docs/Web/CSS/columns)
 property specifying duration, delay and timing function
 -}
-columns3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+columns3 : Float -> Float -> TimingFunction -> Transition
 columns3 =
     fullTransition Columns
 
@@ -749,7 +453,7 @@ columns3 =
 {-| Create a [`Transition`](#Transition) for the [filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
 property specifying duration, delay and timing function
 -}
-filter3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+filter3 : Float -> Float -> TimingFunction -> Transition
 filter3 =
     fullTransition Filter
 
@@ -757,7 +461,7 @@ filter3 =
 {-| Create a [`Transition`](#Transition) for the [flex](https://developer.mozilla.org/en-US/docs/Web/CSS/flex)
 property specifying duration, delay and timing function
 -}
-flex3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+flex3 : Float -> Float -> TimingFunction -> Transition
 flex3 =
     fullTransition Flex
 
@@ -765,7 +469,7 @@ flex3 =
 {-| Create a [`Transition`](#Transition) for the [flex-basis](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis)
 property specifying duration, delay and timing function
 -}
-flexBasis3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+flexBasis3 : Float -> Float -> TimingFunction -> Transition
 flexBasis3 =
     fullTransition FlexBasis
 
@@ -773,7 +477,7 @@ flexBasis3 =
 {-| Create a [`Transition`](#Transition) for the [flex-grow](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow)
 property specifying duration, delay and timing function
 -}
-flexGrow3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+flexGrow3 : Float -> Float -> TimingFunction -> Transition
 flexGrow3 =
     fullTransition FlexGrow
 
@@ -781,7 +485,7 @@ flexGrow3 =
 {-| Create a [`Transition`](#Transition) for the [flex-shrink](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink)
 property specifying duration, delay and timing function
 -}
-flexShrink3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+flexShrink3 : Float -> Float -> TimingFunction -> Transition
 flexShrink3 =
     fullTransition FlexShrink
 
@@ -789,7 +493,7 @@ flexShrink3 =
 {-| Create a [`Transition`](#Transition) for the [font](https://developer.mozilla.org/en-US/docs/Web/CSS/font)
 property specifying duration, delay and timing function
 -}
-font3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+font3 : Float -> Float -> TimingFunction -> Transition
 font3 =
     fullTransition Font
 
@@ -797,7 +501,7 @@ font3 =
 {-| Create a [`Transition`](#Transition) for the [font-size](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
 property specifying duration, delay and timing function
 -}
-fontSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+fontSize3 : Float -> Float -> TimingFunction -> Transition
 fontSize3 =
     fullTransition FontSize
 
@@ -805,7 +509,7 @@ fontSize3 =
 {-| Create a [`Transition`](#Transition) for the [font-size-adjust](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size-adjust)
 property specifying duration, delay and timing function
 -}
-fontSizeAdjust3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+fontSizeAdjust3 : Float -> Float -> TimingFunction -> Transition
 fontSizeAdjust3 =
     fullTransition FontSizeAdjust
 
@@ -813,7 +517,7 @@ fontSizeAdjust3 =
 {-| Create a [`Transition`](#Transition) for the [font-stretch](https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch)
 property specifying duration, delay and timing function
 -}
-fontStretch3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+fontStretch3 : Float -> Float -> TimingFunction -> Transition
 fontStretch3 =
     fullTransition FontStretch
 
@@ -821,7 +525,7 @@ fontStretch3 =
 {-| Create a [`Transition`](#Transition) for the [font-variation-settings](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
 property specifying duration, delay and timing function
 -}
-fontVariationSettings3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+fontVariationSettings3 : Float -> Float -> TimingFunction -> Transition
 fontVariationSettings3 =
     fullTransition FontVariationSettings
 
@@ -829,7 +533,7 @@ fontVariationSettings3 =
 {-| Create a [`Transition`](#Transition) for the [font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 property specifying duration, delay and timing function
 -}
-fontWeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+fontWeight3 : Float -> Float -> TimingFunction -> Transition
 fontWeight3 =
     fullTransition FontWeight
 
@@ -837,7 +541,7 @@ fontWeight3 =
 {-| Create a [`Transition`](#Transition) for the [grid-column-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-gap)
 property specifying duration, delay and timing function
 -}
-gridColumnGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+gridColumnGap3 : Float -> Float -> TimingFunction -> Transition
 gridColumnGap3 =
     fullTransition GridColumnGap
 
@@ -845,7 +549,7 @@ gridColumnGap3 =
 {-| Create a [`Transition`](#Transition) for the [grid-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap)
 property specifying duration, delay and timing function
 -}
-gridGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+gridGap3 : Float -> Float -> TimingFunction -> Transition
 gridGap3 =
     fullTransition GridGap
 
@@ -853,7 +557,7 @@ gridGap3 =
 {-| Create a [`Transition`](#Transition) for the [grid-row-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap)
 property specifying duration, delay and timing function
 -}
-gridRowGap3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+gridRowGap3 : Float -> Float -> TimingFunction -> Transition
 gridRowGap3 =
     fullTransition GridRowGap
 
@@ -861,7 +565,7 @@ gridRowGap3 =
 {-| Create a [`Transition`](#Transition) for the [height](https://developer.mozilla.org/en-US/docs/Web/CSS/height)
 property specifying duration, delay and timing function
 -}
-height3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+height3 : Float -> Float -> TimingFunction -> Transition
 height3 =
     fullTransition Height
 
@@ -869,7 +573,7 @@ height3 =
 {-| Create a [`Transition`](#Transition) for the [left](https://developer.mozilla.org/en-US/docs/Web/CSS/left)
 property specifying duration, delay and timing function
 -}
-left3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+left3 : Float -> Float -> TimingFunction -> Transition
 left3 =
     fullTransition Left
 
@@ -877,7 +581,7 @@ left3 =
 {-| Create a [`Transition`](#Transition) for the [letter-spacing](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
 property specifying duration, delay and timing function
 -}
-letterSpacing3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+letterSpacing3 : Float -> Float -> TimingFunction -> Transition
 letterSpacing3 =
     fullTransition LetterSpacing
 
@@ -885,7 +589,7 @@ letterSpacing3 =
 {-| Create a [`Transition`](#Transition) for the [line-height](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
 property specifying duration, delay and timing function
 -}
-lineHeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+lineHeight3 : Float -> Float -> TimingFunction -> Transition
 lineHeight3 =
     fullTransition LineHeight
 
@@ -893,7 +597,7 @@ lineHeight3 =
 {-| Create a [`Transition`](#Transition) for the [margin](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
 property specifying duration, delay and timing function
 -}
-margin3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+margin3 : Float -> Float -> TimingFunction -> Transition
 margin3 =
     fullTransition Margin
 
@@ -901,7 +605,7 @@ margin3 =
 {-| Create a [`Transition`](#Transition) for the [margin-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom)
 property specifying duration, delay and timing function
 -}
-marginBottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+marginBottom3 : Float -> Float -> TimingFunction -> Transition
 marginBottom3 =
     fullTransition MarginBottom
 
@@ -909,7 +613,7 @@ marginBottom3 =
 {-| Create a [`Transition`](#Transition) for the [margin-left](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left)
 property specifying duration, delay and timing function
 -}
-marginLeft3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+marginLeft3 : Float -> Float -> TimingFunction -> Transition
 marginLeft3 =
     fullTransition MarginLeft
 
@@ -917,7 +621,7 @@ marginLeft3 =
 {-| Create a [`Transition`](#Transition) for the [margin-right](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right)
 property specifying duration, delay and timing function
 -}
-marginRight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+marginRight3 : Float -> Float -> TimingFunction -> Transition
 marginRight3 =
     fullTransition MarginRight
 
@@ -925,7 +629,7 @@ marginRight3 =
 {-| Create a [`Transition`](#Transition) for the [margin-top](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top)
 property specifying duration, delay and timing function
 -}
-marginTop3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+marginTop3 : Float -> Float -> TimingFunction -> Transition
 marginTop3 =
     fullTransition MarginTop
 
@@ -933,7 +637,7 @@ marginTop3 =
 {-| Create a [`Transition`](#Transition) for the [mask](https://developer.mozilla.org/en-US/docs/Web/CSS/mask)
 property specifying duration, delay and timing function
 -}
-mask3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+mask3 : Float -> Float -> TimingFunction -> Transition
 mask3 =
     fullTransition Mask
 
@@ -941,7 +645,7 @@ mask3 =
 {-| Create a [`Transition`](#Transition) for the [mask-position](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position)
 property specifying duration, delay and timing function
 -}
-maskPosition3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+maskPosition3 : Float -> Float -> TimingFunction -> Transition
 maskPosition3 =
     fullTransition MaskPosition
 
@@ -949,7 +653,7 @@ maskPosition3 =
 {-| Create a [`Transition`](#Transition) for the [mask-size](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-size)
 property specifying duration, delay and timing function
 -}
-maskSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+maskSize3 : Float -> Float -> TimingFunction -> Transition
 maskSize3 =
     fullTransition MaskSize
 
@@ -957,7 +661,7 @@ maskSize3 =
 {-| Create a [`Transition`](#Transition) for the [max-height](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height)
 property specifying duration, delay and timing function
 -}
-maxHeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+maxHeight3 : Float -> Float -> TimingFunction -> Transition
 maxHeight3 =
     fullTransition MaxHeight
 
@@ -965,7 +669,7 @@ maxHeight3 =
 {-| Create a [`Transition`](#Transition) for the [max-width](https://developer.mozilla.org/en-US/docs/Web/CSS/max-width)
 property specifying duration, delay and timing function
 -}
-maxWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+maxWidth3 : Float -> Float -> TimingFunction -> Transition
 maxWidth3 =
     fullTransition MaxWidth
 
@@ -973,7 +677,7 @@ maxWidth3 =
 {-| Create a [`Transition`](#Transition) for the [min-height](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height)
 property specifying duration, delay and timing function
 -}
-minHeight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+minHeight3 : Float -> Float -> TimingFunction -> Transition
 minHeight3 =
     fullTransition MinHeight
 
@@ -981,7 +685,7 @@ minHeight3 =
 {-| Create a [`Transition`](#Transition) for the [min-width](https://developer.mozilla.org/en-US/docs/Web/CSS/min-width)
 property specifying duration, delay and timing function
 -}
-minWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+minWidth3 : Float -> Float -> TimingFunction -> Transition
 minWidth3 =
     fullTransition MinWidth
 
@@ -989,7 +693,7 @@ minWidth3 =
 {-| Create a [`Transition`](#Transition) for the [object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position)
 property specifying duration, delay and timing function
 -}
-objectPosition3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+objectPosition3 : Float -> Float -> TimingFunction -> Transition
 objectPosition3 =
     fullTransition ObjectPosition
 
@@ -997,7 +701,7 @@ objectPosition3 =
 {-| Create a [`Transition`](#Transition) for the [offset](https://developer.mozilla.org/en-US/docs/Web/CSS/offset)
 property specifying duration, delay and timing function
 -}
-offset3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+offset3 : Float -> Float -> TimingFunction -> Transition
 offset3 =
     fullTransition Offset
 
@@ -1005,7 +709,7 @@ offset3 =
 {-| Create a [`Transition`](#Transition) for the [offset-anchor](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-anchor)
 property specifying duration, delay and timing function
 -}
-offsetAnchor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+offsetAnchor3 : Float -> Float -> TimingFunction -> Transition
 offsetAnchor3 =
     fullTransition OffsetAnchor
 
@@ -1013,7 +717,7 @@ offsetAnchor3 =
 {-| Create a [`Transition`](#Transition) for the [offset-distance](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-distance)
 property specifying duration, delay and timing function
 -}
-offsetDistance3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+offsetDistance3 : Float -> Float -> TimingFunction -> Transition
 offsetDistance3 =
     fullTransition OffsetDistance
 
@@ -1021,7 +725,7 @@ offsetDistance3 =
 {-| Create a [`Transition`](#Transition) for the [offset-path](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-path)
 property specifying duration, delay and timing function
 -}
-offsetPath3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+offsetPath3 : Float -> Float -> TimingFunction -> Transition
 offsetPath3 =
     fullTransition OffsetPath
 
@@ -1029,7 +733,7 @@ offsetPath3 =
 {-| Create a [`Transition`](#Transition) for the [offset-rotate](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-rotate)
 property specifying duration, delay and timing function
 -}
-offsetRotate3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+offsetRotate3 : Float -> Float -> TimingFunction -> Transition
 offsetRotate3 =
     fullTransition OffsetRotate
 
@@ -1037,7 +741,7 @@ offsetRotate3 =
 {-| Create a [`Transition`](#Transition) for the [opacity](https://developer.mozilla.org/en-US/docs/Web/CSS/opacity)
 property specifying duration, delay and timing function
 -}
-opacity3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+opacity3 : Float -> Float -> TimingFunction -> Transition
 opacity3 =
     fullTransition Opacity
 
@@ -1045,7 +749,7 @@ opacity3 =
 {-| Create a [`Transition`](#Transition) for the [order](https://developer.mozilla.org/en-US/docs/Web/CSS/order)
 property specifying duration, delay and timing function
 -}
-order3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+order3 : Float -> Float -> TimingFunction -> Transition
 order3 =
     fullTransition Order
 
@@ -1053,7 +757,7 @@ order3 =
 {-| Create a [`Transition`](#Transition) for the [outline](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
 property specifying duration, delay and timing function
 -}
-outline3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+outline3 : Float -> Float -> TimingFunction -> Transition
 outline3 =
     fullTransition Outline
 
@@ -1061,7 +765,7 @@ outline3 =
 {-| Create a [`Transition`](#Transition) for the [outline-color](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color)
 property specifying duration, delay and timing function
 -}
-outlineColor3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+outlineColor3 : Float -> Float -> TimingFunction -> Transition
 outlineColor3 =
     fullTransition OutlineColor
 
@@ -1069,7 +773,7 @@ outlineColor3 =
 {-| Create a [`Transition`](#Transition) for the [outline-offset](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset)
 property specifying duration, delay and timing function
 -}
-outlineOffset3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+outlineOffset3 : Float -> Float -> TimingFunction -> Transition
 outlineOffset3 =
     fullTransition OutlineOffset
 
@@ -1077,7 +781,7 @@ outlineOffset3 =
 {-| Create a [`Transition`](#Transition) for the [outline-width](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width)
 property specifying duration, delay and timing function
 -}
-outlineWidth3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+outlineWidth3 : Float -> Float -> TimingFunction -> Transition
 outlineWidth3 =
     fullTransition OutlineWidth
 
@@ -1085,7 +789,7 @@ outlineWidth3 =
 {-| Create a [`Transition`](#Transition) for the [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
 property specifying duration, delay and timing function
 -}
-padding3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+padding3 : Float -> Float -> TimingFunction -> Transition
 padding3 =
     fullTransition Padding
 
@@ -1093,7 +797,7 @@ padding3 =
 {-| Create a [`Transition`](#Transition) for the [padding-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom)
 property specifying duration, delay and timing function
 -}
-paddingBottom3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+paddingBottom3 : Float -> Float -> TimingFunction -> Transition
 paddingBottom3 =
     fullTransition PaddingBottom
 
@@ -1101,7 +805,7 @@ paddingBottom3 =
 {-| Create a [`Transition`](#Transition) for the [padding-left](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left)
 property specifying duration, delay and timing function
 -}
-paddingLeft3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+paddingLeft3 : Float -> Float -> TimingFunction -> Transition
 paddingLeft3 =
     fullTransition PaddingLeft
 
@@ -1109,7 +813,7 @@ paddingLeft3 =
 {-| Create a [`Transition`](#Transition) for the [padding-right](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right)
 property specifying duration, delay and timing function
 -}
-paddingRight3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+paddingRight3 : Float -> Float -> TimingFunction -> Transition
 paddingRight3 =
     fullTransition PaddingRight
 
@@ -1117,7 +821,7 @@ paddingRight3 =
 {-| Create a [`Transition`](#Transition) for the [padding-top](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top)
 property specifying duration, delay and timing function
 -}
-paddingTop3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+paddingTop3 : Float -> Float -> TimingFunction -> Transition
 paddingTop3 =
     fullTransition PaddingTop
 
@@ -1125,7 +829,7 @@ paddingTop3 =
 {-| Create a [`Transition`](#Transition) for the [padding-right](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right)
 property specifying duration, delay and timing function
 -}
-right3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+right3 : Float -> Float -> TimingFunction -> Transition
 right3 =
     fullTransition Right
 
@@ -1133,7 +837,7 @@ right3 =
 {-| Create a [`Transition`](#Transition) for the [tab-size](https://developer.mozilla.org/en-US/docs/Web/CSS/tab-size)
 property specifying duration, delay and timing function
 -}
-tabSize3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+tabSize3 : Float -> Float -> TimingFunction -> Transition
 tabSize3 =
     fullTransition TabSize
 
@@ -1141,7 +845,7 @@ tabSize3 =
 {-| Create a [`Transition`](#Transition) for the [text-indent](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent)
 property specifying duration, delay and timing function
 -}
-textIndent3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+textIndent3 : Float -> Float -> TimingFunction -> Transition
 textIndent3 =
     fullTransition TextIndent
 
@@ -1149,7 +853,7 @@ textIndent3 =
 {-| Create a [`Transition`](#Transition) for the [text-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow)
 property specifying duration, delay and timing function
 -}
-textShadow3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+textShadow3 : Float -> Float -> TimingFunction -> Transition
 textShadow3 =
     fullTransition TextShadow
 
@@ -1157,7 +861,7 @@ textShadow3 =
 {-| Create a [`Transition`](#Transition) for the [top](https://developer.mozilla.org/en-US/docs/Web/CSS/top)
 property specifying duration, delay and timing function
 -}
-top3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+top3 : Float -> Float -> TimingFunction -> Transition
 top3 =
     fullTransition Top
 
@@ -1165,7 +869,7 @@ top3 =
 {-| Create a [`Transition`](#Transition) for the [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 property specifying duration, delay and timing function
 -}
-transform3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+transform3 : Float -> Float -> TimingFunction -> Transition
 transform3 =
     fullTransition Transform
 
@@ -1173,7 +877,7 @@ transform3 =
 {-| Create a [`Transition`](#Transition) for the [transform-origin](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin)
 property specifying duration, delay and timing function
 -}
-transformOrigin3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+transformOrigin3 : Float -> Float -> TimingFunction -> Transition
 transformOrigin3 =
     fullTransition TransformOrigin
 
@@ -1181,7 +885,7 @@ transformOrigin3 =
 {-| Create a [`Transition`](#Transition) for the [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align)
 property specifying duration, delay and timing function
 -}
-verticalAlign3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+verticalAlign3 : Float -> Float -> TimingFunction -> Transition
 verticalAlign3 =
     fullTransition VerticalAlign
 
@@ -1189,7 +893,7 @@ verticalAlign3 =
 {-| Create a [`Transition`](#Transition) for the [visibility](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility)
 property specifying duration, delay and timing function
 -}
-visibility3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+visibility3 : Float -> Float -> TimingFunction -> Transition
 visibility3 =
     fullTransition Visibility
 
@@ -1197,7 +901,7 @@ visibility3 =
 {-| Create a [`Transition`](#Transition) for the [width](https://developer.mozilla.org/en-US/docs/Web/CSS/width)
 property specifying duration, delay and timing function
 -}
-width3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+width3 : Float -> Float -> TimingFunction -> Transition
 width3 =
     fullTransition Width
 
@@ -1205,7 +909,7 @@ width3 =
 {-| Create a [`Transition`](#Transition) for the [word-spacing](https://developer.mozilla.org/en-US/docs/Web/CSS/word-spacing)
 property specifying duration, delay and timing function
 -}
-wordSpacing3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+wordSpacing3 : Float -> Float -> TimingFunction -> Transition
 wordSpacing3 =
     fullTransition WordSpacing
 
@@ -1213,7 +917,7 @@ wordSpacing3 =
 {-| Create a [`Transition`](#Transition) for the [z-index](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
 property specifying duration, delay and timing function
 -}
-zIndex3 : Time.Time -> Time.Time -> TimingFunction -> Transition
+zIndex3 : Float -> Float -> TimingFunction -> Transition
 zIndex3 =
     fullTransition ZIndex
 
@@ -1225,7 +929,7 @@ zIndex3 =
 {-| Create a [`Transition`](#Transition) for the [background](https://developer.mozilla.org/en-US/docs/Web/CSS/background)
 property specifying duration and delay
 -}
-background2 : Time.Time -> Time.Time -> Transition
+background2 : Float -> Float -> Transition
 background2 =
     durationDelayTransition Background
 
@@ -1233,7 +937,7 @@ background2 =
 {-| Create a [`Transition`](#Transition) for the [background-color](https://developer.mozilla.org/en-US/docs/Web/CSS/background-color)
 property specifying duration and delay
 -}
-backgroundColor2 : Time.Time -> Time.Time -> Transition
+backgroundColor2 : Float -> Float -> Transition
 backgroundColor2 =
     durationDelayTransition BackgroundColor
 
@@ -1241,7 +945,7 @@ backgroundColor2 =
 {-| Create a [`Transition`](#Transition) for the [background-position](https://developer.mozilla.org/en-US/docs/Web/CSS/background-position)
 property specifying duration and delay
 -}
-backgroundPosition2 : Time.Time -> Time.Time -> Transition
+backgroundPosition2 : Float -> Float -> Transition
 backgroundPosition2 =
     durationDelayTransition BackgroundPosition
 
@@ -1249,7 +953,7 @@ backgroundPosition2 =
 {-| Create a [`Transition`](#Transition) for the [background-size](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
 property specifying duration and delay
 -}
-backgroundSize2 : Time.Time -> Time.Time -> Transition
+backgroundSize2 : Float -> Float -> Transition
 backgroundSize2 =
     durationDelayTransition BackgroundSize
 
@@ -1257,7 +961,7 @@ backgroundSize2 =
 {-| Create a [`Transition`](#Transition) for the [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
 property specifying duration and delay
 -}
-border2 : Time.Time -> Time.Time -> Transition
+border2 : Float -> Float -> Transition
 border2 =
     durationDelayTransition Border
 
@@ -1265,7 +969,7 @@ border2 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
 property specifying duration and delay
 -}
-borderBottom2 : Time.Time -> Time.Time -> Transition
+borderBottom2 : Float -> Float -> Transition
 borderBottom2 =
     durationDelayTransition BorderBottom
 
@@ -1273,7 +977,7 @@ borderBottom2 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
 property specifying duration and delay
 -}
-borderBottomColor2 : Time.Time -> Time.Time -> Transition
+borderBottomColor2 : Float -> Float -> Transition
 borderBottomColor2 =
     durationDelayTransition BorderBottomColor
 
@@ -1281,7 +985,7 @@ borderBottomColor2 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-left-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
 property specifying duration and delay
 -}
-borderBottomLeftRadius2 : Time.Time -> Time.Time -> Transition
+borderBottomLeftRadius2 : Float -> Float -> Transition
 borderBottomLeftRadius2 =
     durationDelayTransition BorderBottomLeftRadius
 
@@ -1289,7 +993,7 @@ borderBottomLeftRadius2 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-right-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
 property specifying duration and delay
 -}
-borderBottomRightRadius2 : Time.Time -> Time.Time -> Transition
+borderBottomRightRadius2 : Float -> Float -> Transition
 borderBottomRightRadius2 =
     durationDelayTransition BorderBottomRightRadius
 
@@ -1297,7 +1001,7 @@ borderBottomRightRadius2 =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
 property specifying duration and delay
 -}
-borderBottomWidth2 : Time.Time -> Time.Time -> Transition
+borderBottomWidth2 : Float -> Float -> Transition
 borderBottomWidth2 =
     durationDelayTransition BorderBottomWidth
 
@@ -1305,7 +1009,7 @@ borderBottomWidth2 =
 {-| Create a [`Transition`](#Transition) for the [border-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
 property specifying duration and delay
 -}
-borderColor2 : Time.Time -> Time.Time -> Transition
+borderColor2 : Float -> Float -> Transition
 borderColor2 =
     durationDelayTransition BorderColor
 
@@ -1313,7 +1017,7 @@ borderColor2 =
 {-| Create a [`Transition`](#Transition) for the [border-left](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
 property specifying duration and delay
 -}
-borderLeft2 : Time.Time -> Time.Time -> Transition
+borderLeft2 : Float -> Float -> Transition
 borderLeft2 =
     durationDelayTransition BorderLeft
 
@@ -1321,7 +1025,7 @@ borderLeft2 =
 {-| Create a [`Transition`](#Transition) for the [border-left-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
 property specifying duration and delay
 -}
-borderLeftColor2 : Time.Time -> Time.Time -> Transition
+borderLeftColor2 : Float -> Float -> Transition
 borderLeftColor2 =
     durationDelayTransition BorderLeftColor
 
@@ -1329,7 +1033,7 @@ borderLeftColor2 =
 {-| Create a [`Transition`](#Transition) for the [border-left-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width)
 property specifying duration and delay
 -}
-borderLeftWidth2 : Time.Time -> Time.Time -> Transition
+borderLeftWidth2 : Float -> Float -> Transition
 borderLeftWidth2 =
     durationDelayTransition BorderLeftWidth
 
@@ -1337,7 +1041,7 @@ borderLeftWidth2 =
 {-| Create a [`Transition`](#Transition) for the [border-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
 property specifying duration and delay
 -}
-borderRadius2 : Time.Time -> Time.Time -> Transition
+borderRadius2 : Float -> Float -> Transition
 borderRadius2 =
     durationDelayTransition BorderRadius
 
@@ -1345,7 +1049,7 @@ borderRadius2 =
 {-| Create a [`Transition`](#Transition) for the [border-right](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
 property specifying duration and delay
 -}
-borderRight2 : Time.Time -> Time.Time -> Transition
+borderRight2 : Float -> Float -> Transition
 borderRight2 =
     durationDelayTransition BorderRight
 
@@ -1353,7 +1057,7 @@ borderRight2 =
 {-| Create a [`Transition`](#Transition) for the [border-right-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
 property specifying duration and delay
 -}
-borderRightColor2 : Time.Time -> Time.Time -> Transition
+borderRightColor2 : Float -> Float -> Transition
 borderRightColor2 =
     durationDelayTransition BorderRightColor
 
@@ -1361,7 +1065,7 @@ borderRightColor2 =
 {-| Create a [`Transition`](#Transition) for the [border-right-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width)
 property specifying duration and delay
 -}
-borderRightWidth2 : Time.Time -> Time.Time -> Transition
+borderRightWidth2 : Float -> Float -> Transition
 borderRightWidth2 =
     durationDelayTransition BorderRightWidth
 
@@ -1369,7 +1073,7 @@ borderRightWidth2 =
 {-| Create a [`Transition`](#Transition) for the [border-top](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
 property specifying duration and delay
 -}
-borderTop2 : Time.Time -> Time.Time -> Transition
+borderTop2 : Float -> Float -> Transition
 borderTop2 =
     durationDelayTransition BorderTop
 
@@ -1377,7 +1081,7 @@ borderTop2 =
 {-| Create a [`Transition`](#Transition) for the [border-top-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
 property specifying duration and delay
 -}
-borderTopColor2 : Time.Time -> Time.Time -> Transition
+borderTopColor2 : Float -> Float -> Transition
 borderTopColor2 =
     durationDelayTransition BorderTopColor
 
@@ -1385,7 +1089,7 @@ borderTopColor2 =
 {-| Create a [`Transition`](#Transition) for the [border-top-left-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
 property specifying duration and delay
 -}
-borderTopLeftRadius2 : Time.Time -> Time.Time -> Transition
+borderTopLeftRadius2 : Float -> Float -> Transition
 borderTopLeftRadius2 =
     durationDelayTransition BorderTopLeftRadius
 
@@ -1393,7 +1097,7 @@ borderTopLeftRadius2 =
 {-| Create a [`Transition`](#Transition) for the [border-top-right-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
 property specifying duration and delay
 -}
-borderTopRightRadius2 : Time.Time -> Time.Time -> Transition
+borderTopRightRadius2 : Float -> Float -> Transition
 borderTopRightRadius2 =
     durationDelayTransition BorderTopRightRadius
 
@@ -1401,7 +1105,7 @@ borderTopRightRadius2 =
 {-| Create a [`Transition`](#Transition) for the [border-top-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
 property specifying duration and delay
 -}
-borderTopWidth2 : Time.Time -> Time.Time -> Transition
+borderTopWidth2 : Float -> Float -> Transition
 borderTopWidth2 =
     durationDelayTransition BorderTopWidth
 
@@ -1409,7 +1113,7 @@ borderTopWidth2 =
 {-| Create a [`Transition`](#Transition) for the [border-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 property specifying duration and delay
 -}
-borderWidth2 : Time.Time -> Time.Time -> Transition
+borderWidth2 : Float -> Float -> Transition
 borderWidth2 =
     durationDelayTransition BorderWidth
 
@@ -1417,7 +1121,7 @@ borderWidth2 =
 {-| Create a [`Transition`](#Transition) for the [bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom)
 property specifying duration and delay
 -}
-bottom2 : Time.Time -> Time.Time -> Transition
+bottom2 : Float -> Float -> Transition
 bottom2 =
     durationDelayTransition Bottom
 
@@ -1425,7 +1129,7 @@ bottom2 =
 {-| Create a [`Transition`](#Transition) for the [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom)
 property specifying duration and delay
 -}
-boxShadow2 : Time.Time -> Time.Time -> Transition
+boxShadow2 : Float -> Float -> Transition
 boxShadow2 =
     durationDelayTransition BoxShadow
 
@@ -1433,7 +1137,7 @@ boxShadow2 =
 {-| Create a [`Transition`](#Transition) for the [caret-color](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom)
 property specifying duration and delay
 -}
-caretColor2 : Time.Time -> Time.Time -> Transition
+caretColor2 : Float -> Float -> Transition
 caretColor2 =
     durationDelayTransition CaretColor
 
@@ -1441,7 +1145,7 @@ caretColor2 =
 {-| Create a [`Transition`](#Transition) for the [clip](https://developer.mozilla.org/en-US/docs/Web/CSS/clip)
 property specifying duration and delay
 -}
-clip2 : Time.Time -> Time.Time -> Transition
+clip2 : Float -> Float -> Transition
 clip2 =
     durationDelayTransition Clip
 
@@ -1449,7 +1153,7 @@ clip2 =
 {-| Create a [`Transition`](#Transition) for the [clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
 property specifying duration and delay
 -}
-clipPath2 : Time.Time -> Time.Time -> Transition
+clipPath2 : Float -> Float -> Transition
 clipPath2 =
     durationDelayTransition ClipPath
 
@@ -1457,7 +1161,7 @@ clipPath2 =
 {-| Create a [`Transition`](#Transition) for the [color](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
 property specifying duration and delay
 -}
-color2 : Time.Time -> Time.Time -> Transition
+color2 : Float -> Float -> Transition
 color2 =
     durationDelayTransition Color
 
@@ -1465,7 +1169,7 @@ color2 =
 {-| Create a [`Transition`](#Transition) for the [column-count](https://developer.mozilla.org/en-US/docs/Web/CSS/column-count)
 property specifying duration and delay
 -}
-columnCount2 : Time.Time -> Time.Time -> Transition
+columnCount2 : Float -> Float -> Transition
 columnCount2 =
     durationDelayTransition ColumnCount
 
@@ -1473,7 +1177,7 @@ columnCount2 =
 {-| Create a [`Transition`](#Transition) for the [column-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap)
 property specifying duration and delay
 -}
-columnGap2 : Time.Time -> Time.Time -> Transition
+columnGap2 : Float -> Float -> Transition
 columnGap2 =
     durationDelayTransition ColumnGap
 
@@ -1481,7 +1185,7 @@ columnGap2 =
 {-| Create a [`Transition`](#Transition) for the [column-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule)
 property specifying duration and delay
 -}
-columnRule2 : Time.Time -> Time.Time -> Transition
+columnRule2 : Float -> Float -> Transition
 columnRule2 =
     durationDelayTransition ColumnRule
 
@@ -1489,7 +1193,7 @@ columnRule2 =
 {-| Create a [`Transition`](#Transition) for the [column-rule-color](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule-color)
 property specifying duration and delay
 -}
-columnRuleColor2 : Time.Time -> Time.Time -> Transition
+columnRuleColor2 : Float -> Float -> Transition
 columnRuleColor2 =
     durationDelayTransition ColumnRuleColor
 
@@ -1497,7 +1201,7 @@ columnRuleColor2 =
 {-| Create a [`Transition`](#Transition) for the [column-rule-width](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule-width)
 property specifying duration and delay
 -}
-columnRuleWidth2 : Time.Time -> Time.Time -> Transition
+columnRuleWidth2 : Float -> Float -> Transition
 columnRuleWidth2 =
     durationDelayTransition ColumnRuleWidth
 
@@ -1505,7 +1209,7 @@ columnRuleWidth2 =
 {-| Create a [`Transition`](#Transition) for the [column-width](https://developer.mozilla.org/en-US/docs/Web/CSS/column-width)
 property specifying duration and delay
 -}
-columnWidth2 : Time.Time -> Time.Time -> Transition
+columnWidth2 : Float -> Float -> Transition
 columnWidth2 =
     durationDelayTransition ColumnWidth
 
@@ -1513,7 +1217,7 @@ columnWidth2 =
 {-| Create a [`Transition`](#Transition) for the [columns](https://developer.mozilla.org/en-US/docs/Web/CSS/columns)
 property specifying duration and delay
 -}
-columns2 : Time.Time -> Time.Time -> Transition
+columns2 : Float -> Float -> Transition
 columns2 =
     durationDelayTransition Columns
 
@@ -1521,7 +1225,7 @@ columns2 =
 {-| Create a [`Transition`](#Transition) for the [filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
 property specifying duration and delay
 -}
-filter2 : Time.Time -> Time.Time -> Transition
+filter2 : Float -> Float -> Transition
 filter2 =
     durationDelayTransition Filter
 
@@ -1529,7 +1233,7 @@ filter2 =
 {-| Create a [`Transition`](#Transition) for the [flex](https://developer.mozilla.org/en-US/docs/Web/CSS/flex)
 property specifying duration and delay
 -}
-flex2 : Time.Time -> Time.Time -> Transition
+flex2 : Float -> Float -> Transition
 flex2 =
     durationDelayTransition Flex
 
@@ -1537,7 +1241,7 @@ flex2 =
 {-| Create a [`Transition`](#Transition) for the [flex-basis](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis)
 property specifying duration and delay
 -}
-flexBasis2 : Time.Time -> Time.Time -> Transition
+flexBasis2 : Float -> Float -> Transition
 flexBasis2 =
     durationDelayTransition FlexBasis
 
@@ -1545,7 +1249,7 @@ flexBasis2 =
 {-| Create a [`Transition`](#Transition) for the [flex-grow](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow)
 property specifying duration and delay
 -}
-flexGrow2 : Time.Time -> Time.Time -> Transition
+flexGrow2 : Float -> Float -> Transition
 flexGrow2 =
     durationDelayTransition FlexGrow
 
@@ -1553,7 +1257,7 @@ flexGrow2 =
 {-| Create a [`Transition`](#Transition) for the [flex-shrink](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink)
 property specifying duration and delay
 -}
-flexShrink2 : Time.Time -> Time.Time -> Transition
+flexShrink2 : Float -> Float -> Transition
 flexShrink2 =
     durationDelayTransition FlexShrink
 
@@ -1561,7 +1265,7 @@ flexShrink2 =
 {-| Create a [`Transition`](#Transition) for the [font](https://developer.mozilla.org/en-US/docs/Web/CSS/font)
 property specifying duration and delay
 -}
-font2 : Time.Time -> Time.Time -> Transition
+font2 : Float -> Float -> Transition
 font2 =
     durationDelayTransition Font
 
@@ -1569,7 +1273,7 @@ font2 =
 {-| Create a [`Transition`](#Transition) for the [font-size](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
 property specifying duration and delay
 -}
-fontSize2 : Time.Time -> Time.Time -> Transition
+fontSize2 : Float -> Float -> Transition
 fontSize2 =
     durationDelayTransition FontSize
 
@@ -1577,7 +1281,7 @@ fontSize2 =
 {-| Create a [`Transition`](#Transition) for the [font-size-adjust](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size-adjust)
 property specifying duration and delay
 -}
-fontSizeAdjust2 : Time.Time -> Time.Time -> Transition
+fontSizeAdjust2 : Float -> Float -> Transition
 fontSizeAdjust2 =
     durationDelayTransition FontSizeAdjust
 
@@ -1585,7 +1289,7 @@ fontSizeAdjust2 =
 {-| Create a [`Transition`](#Transition) for the [font-stretch](https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch)
 property specifying duration and delay
 -}
-fontStretch2 : Time.Time -> Time.Time -> Transition
+fontStretch2 : Float -> Float -> Transition
 fontStretch2 =
     durationDelayTransition FontStretch
 
@@ -1593,7 +1297,7 @@ fontStretch2 =
 {-| Create a [`Transition`](#Transition) for the [font-variation-settings](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
 property specifying duration and delay
 -}
-fontVariationSettings2 : Time.Time -> Time.Time -> Transition
+fontVariationSettings2 : Float -> Float -> Transition
 fontVariationSettings2 =
     durationDelayTransition FontVariationSettings
 
@@ -1601,7 +1305,7 @@ fontVariationSettings2 =
 {-| Create a [`Transition`](#Transition) for the [font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 property specifying duration and delay
 -}
-fontWeight2 : Time.Time -> Time.Time -> Transition
+fontWeight2 : Float -> Float -> Transition
 fontWeight2 =
     durationDelayTransition FontWeight
 
@@ -1609,7 +1313,7 @@ fontWeight2 =
 {-| Create a [`Transition`](#Transition) for the [grid-column-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-gap)
 property specifying duration and delay
 -}
-gridColumnGap2 : Time.Time -> Time.Time -> Transition
+gridColumnGap2 : Float -> Float -> Transition
 gridColumnGap2 =
     durationDelayTransition GridColumnGap
 
@@ -1617,7 +1321,7 @@ gridColumnGap2 =
 {-| Create a [`Transition`](#Transition) for the [grid-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap)
 property specifying duration and delay
 -}
-gridGap2 : Time.Time -> Time.Time -> Transition
+gridGap2 : Float -> Float -> Transition
 gridGap2 =
     durationDelayTransition GridGap
 
@@ -1625,7 +1329,7 @@ gridGap2 =
 {-| Create a [`Transition`](#Transition) for the [grid-row-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap)
 property specifying duration and delay
 -}
-gridRowGap2 : Time.Time -> Time.Time -> Transition
+gridRowGap2 : Float -> Float -> Transition
 gridRowGap2 =
     durationDelayTransition GridRowGap
 
@@ -1633,7 +1337,7 @@ gridRowGap2 =
 {-| Create a [`Transition`](#Transition) for the [height](https://developer.mozilla.org/en-US/docs/Web/CSS/height)
 property specifying duration and delay
 -}
-height2 : Time.Time -> Time.Time -> Transition
+height2 : Float -> Float -> Transition
 height2 =
     durationDelayTransition Height
 
@@ -1641,7 +1345,7 @@ height2 =
 {-| Create a [`Transition`](#Transition) for the [left](https://developer.mozilla.org/en-US/docs/Web/CSS/left)
 property specifying duration and delay
 -}
-left2 : Time.Time -> Time.Time -> Transition
+left2 : Float -> Float -> Transition
 left2 =
     durationDelayTransition Left
 
@@ -1649,7 +1353,7 @@ left2 =
 {-| Create a [`Transition`](#Transition) for the [letter-spacing](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
 property specifying duration and delay
 -}
-letterSpacing2 : Time.Time -> Time.Time -> Transition
+letterSpacing2 : Float -> Float -> Transition
 letterSpacing2 =
     durationDelayTransition LetterSpacing
 
@@ -1657,7 +1361,7 @@ letterSpacing2 =
 {-| Create a [`Transition`](#Transition) for the [line-height](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
 property specifying duration and delay
 -}
-lineHeight2 : Time.Time -> Time.Time -> Transition
+lineHeight2 : Float -> Float -> Transition
 lineHeight2 =
     durationDelayTransition LineHeight
 
@@ -1665,7 +1369,7 @@ lineHeight2 =
 {-| Create a [`Transition`](#Transition) for the [margin](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
 property specifying duration and delay
 -}
-margin2 : Time.Time -> Time.Time -> Transition
+margin2 : Float -> Float -> Transition
 margin2 =
     durationDelayTransition Margin
 
@@ -1673,7 +1377,7 @@ margin2 =
 {-| Create a [`Transition`](#Transition) for the [margin-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom)
 property specifying duration and delay
 -}
-marginBottom2 : Time.Time -> Time.Time -> Transition
+marginBottom2 : Float -> Float -> Transition
 marginBottom2 =
     durationDelayTransition MarginBottom
 
@@ -1681,7 +1385,7 @@ marginBottom2 =
 {-| Create a [`Transition`](#Transition) for the [margin-left](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left)
 property specifying duration and delay
 -}
-marginLeft2 : Time.Time -> Time.Time -> Transition
+marginLeft2 : Float -> Float -> Transition
 marginLeft2 =
     durationDelayTransition MarginLeft
 
@@ -1689,7 +1393,7 @@ marginLeft2 =
 {-| Create a [`Transition`](#Transition) for the [margin-right](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right)
 property specifying duration and delay
 -}
-marginRight2 : Time.Time -> Time.Time -> Transition
+marginRight2 : Float -> Float -> Transition
 marginRight2 =
     durationDelayTransition MarginRight
 
@@ -1697,7 +1401,7 @@ marginRight2 =
 {-| Create a [`Transition`](#Transition) for the [margin-top](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top)
 property specifying duration and delay
 -}
-marginTop2 : Time.Time -> Time.Time -> Transition
+marginTop2 : Float -> Float -> Transition
 marginTop2 =
     durationDelayTransition MarginTop
 
@@ -1705,7 +1409,7 @@ marginTop2 =
 {-| Create a [`Transition`](#Transition) for the [mask](https://developer.mozilla.org/en-US/docs/Web/CSS/mask)
 property specifying duration and delay
 -}
-mask2 : Time.Time -> Time.Time -> Transition
+mask2 : Float -> Float -> Transition
 mask2 =
     durationDelayTransition Mask
 
@@ -1713,7 +1417,7 @@ mask2 =
 {-| Create a [`Transition`](#Transition) for the [mask-position](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position)
 property specifying duration and delay
 -}
-maskPosition2 : Time.Time -> Time.Time -> Transition
+maskPosition2 : Float -> Float -> Transition
 maskPosition2 =
     durationDelayTransition MaskPosition
 
@@ -1721,7 +1425,7 @@ maskPosition2 =
 {-| Create a [`Transition`](#Transition) for the [mask-size](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-size)
 property specifying duration and delay
 -}
-maskSize2 : Time.Time -> Time.Time -> Transition
+maskSize2 : Float -> Float -> Transition
 maskSize2 =
     durationDelayTransition MaskSize
 
@@ -1729,7 +1433,7 @@ maskSize2 =
 {-| Create a [`Transition`](#Transition) for the [max-height](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height)
 property specifying duration and delay
 -}
-maxHeight2 : Time.Time -> Time.Time -> Transition
+maxHeight2 : Float -> Float -> Transition
 maxHeight2 =
     durationDelayTransition MaxHeight
 
@@ -1737,7 +1441,7 @@ maxHeight2 =
 {-| Create a [`Transition`](#Transition) for the [max-width](https://developer.mozilla.org/en-US/docs/Web/CSS/max-width)
 property specifying duration and delay
 -}
-maxWidth2 : Time.Time -> Time.Time -> Transition
+maxWidth2 : Float -> Float -> Transition
 maxWidth2 =
     durationDelayTransition MaxWidth
 
@@ -1745,7 +1449,7 @@ maxWidth2 =
 {-| Create a [`Transition`](#Transition) for the [min-height](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height)
 property specifying duration and delay
 -}
-minHeight2 : Time.Time -> Time.Time -> Transition
+minHeight2 : Float -> Float -> Transition
 minHeight2 =
     durationDelayTransition MinHeight
 
@@ -1753,7 +1457,7 @@ minHeight2 =
 {-| Create a [`Transition`](#Transition) for the [min-width](https://developer.mozilla.org/en-US/docs/Web/CSS/min-width)
 property specifying duration and delay
 -}
-minWidth2 : Time.Time -> Time.Time -> Transition
+minWidth2 : Float -> Float -> Transition
 minWidth2 =
     durationDelayTransition MinWidth
 
@@ -1761,7 +1465,7 @@ minWidth2 =
 {-| Create a [`Transition`](#Transition) for the [object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position)
 property specifying duration and delay
 -}
-objectPosition2 : Time.Time -> Time.Time -> Transition
+objectPosition2 : Float -> Float -> Transition
 objectPosition2 =
     durationDelayTransition ObjectPosition
 
@@ -1769,7 +1473,7 @@ objectPosition2 =
 {-| Create a [`Transition`](#Transition) for the [offset](https://developer.mozilla.org/en-US/docs/Web/CSS/offset)
 property specifying duration and delay
 -}
-offset2 : Time.Time -> Time.Time -> Transition
+offset2 : Float -> Float -> Transition
 offset2 =
     durationDelayTransition Offset
 
@@ -1777,7 +1481,7 @@ offset2 =
 {-| Create a [`Transition`](#Transition) for the [offset-anchor](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-anchor)
 property specifying duration and delay
 -}
-offsetAnchor2 : Time.Time -> Time.Time -> Transition
+offsetAnchor2 : Float -> Float -> Transition
 offsetAnchor2 =
     durationDelayTransition OffsetAnchor
 
@@ -1785,7 +1489,7 @@ offsetAnchor2 =
 {-| Create a [`Transition`](#Transition) for the [offset-distance](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-distance)
 property specifying duration and delay
 -}
-offsetDistance2 : Time.Time -> Time.Time -> Transition
+offsetDistance2 : Float -> Float -> Transition
 offsetDistance2 =
     durationDelayTransition OffsetDistance
 
@@ -1793,7 +1497,7 @@ offsetDistance2 =
 {-| Create a [`Transition`](#Transition) for the [offset-path](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-path)
 property specifying duration and delay
 -}
-offsetPath2 : Time.Time -> Time.Time -> Transition
+offsetPath2 : Float -> Float -> Transition
 offsetPath2 =
     durationDelayTransition OffsetPath
 
@@ -1801,7 +1505,7 @@ offsetPath2 =
 {-| Create a [`Transition`](#Transition) for the [offset-rotate](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-rotate)
 property specifying duration and delay
 -}
-offsetRotate2 : Time.Time -> Time.Time -> Transition
+offsetRotate2 : Float -> Float -> Transition
 offsetRotate2 =
     durationDelayTransition OffsetRotate
 
@@ -1809,7 +1513,7 @@ offsetRotate2 =
 {-| Create a [`Transition`](#Transition) for the [opacity](https://developer.mozilla.org/en-US/docs/Web/CSS/opacity)
 property specifying duration and delay
 -}
-opacity2 : Time.Time -> Time.Time -> Transition
+opacity2 : Float -> Float -> Transition
 opacity2 =
     durationDelayTransition Opacity
 
@@ -1817,7 +1521,7 @@ opacity2 =
 {-| Create a [`Transition`](#Transition) for the [order](https://developer.mozilla.org/en-US/docs/Web/CSS/order)
 property specifying duration and delay
 -}
-order2 : Time.Time -> Time.Time -> Transition
+order2 : Float -> Float -> Transition
 order2 =
     durationDelayTransition Order
 
@@ -1825,7 +1529,7 @@ order2 =
 {-| Create a [`Transition`](#Transition) for the [outline](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
 property specifying duration and delay
 -}
-outline2 : Time.Time -> Time.Time -> Transition
+outline2 : Float -> Float -> Transition
 outline2 =
     durationDelayTransition Outline
 
@@ -1833,7 +1537,7 @@ outline2 =
 {-| Create a [`Transition`](#Transition) for the [outline-color](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color)
 property specifying duration and delay
 -}
-outlineColor2 : Time.Time -> Time.Time -> Transition
+outlineColor2 : Float -> Float -> Transition
 outlineColor2 =
     durationDelayTransition OutlineColor
 
@@ -1841,7 +1545,7 @@ outlineColor2 =
 {-| Create a [`Transition`](#Transition) for the [outline-offset](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset)
 property specifying duration and delay
 -}
-outlineOffset2 : Time.Time -> Time.Time -> Transition
+outlineOffset2 : Float -> Float -> Transition
 outlineOffset2 =
     durationDelayTransition OutlineOffset
 
@@ -1849,7 +1553,7 @@ outlineOffset2 =
 {-| Create a [`Transition`](#Transition) for the [outline-width](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width)
 property specifying duration and delay
 -}
-outlineWidth2 : Time.Time -> Time.Time -> Transition
+outlineWidth2 : Float -> Float -> Transition
 outlineWidth2 =
     durationDelayTransition OutlineWidth
 
@@ -1857,7 +1561,7 @@ outlineWidth2 =
 {-| Create a [`Transition`](#Transition) for the [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
 property specifying duration and delay
 -}
-padding2 : Time.Time -> Time.Time -> Transition
+padding2 : Float -> Float -> Transition
 padding2 =
     durationDelayTransition Padding
 
@@ -1865,7 +1569,7 @@ padding2 =
 {-| Create a [`Transition`](#Transition) for the [padding-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom)
 property specifying duration and delay
 -}
-paddingBottom2 : Time.Time -> Time.Time -> Transition
+paddingBottom2 : Float -> Float -> Transition
 paddingBottom2 =
     durationDelayTransition PaddingBottom
 
@@ -1873,7 +1577,7 @@ paddingBottom2 =
 {-| Create a [`Transition`](#Transition) for the [padding-left](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left)
 property specifying duration and delay
 -}
-paddingLeft2 : Time.Time -> Time.Time -> Transition
+paddingLeft2 : Float -> Float -> Transition
 paddingLeft2 =
     durationDelayTransition PaddingLeft
 
@@ -1881,7 +1585,7 @@ paddingLeft2 =
 {-| Create a [`Transition`](#Transition) for the [padding-right](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right)
 property specifying duration and delay
 -}
-paddingRight2 : Time.Time -> Time.Time -> Transition
+paddingRight2 : Float -> Float -> Transition
 paddingRight2 =
     durationDelayTransition PaddingRight
 
@@ -1889,7 +1593,7 @@ paddingRight2 =
 {-| Create a [`Transition`](#Transition) for the [padding-top](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top)
 property specifying duration and delay
 -}
-paddingTop2 : Time.Time -> Time.Time -> Transition
+paddingTop2 : Float -> Float -> Transition
 paddingTop2 =
     durationDelayTransition PaddingTop
 
@@ -1897,7 +1601,7 @@ paddingTop2 =
 {-| Create a [`Transition`](#Transition) for the [right](https://developer.mozilla.org/en-US/docs/Web/CSS/right)
 property specifying duration and delay
 -}
-right2 : Time.Time -> Time.Time -> Transition
+right2 : Float -> Float -> Transition
 right2 =
     durationDelayTransition Right
 
@@ -1905,7 +1609,7 @@ right2 =
 {-| Create a [`Transition`](#Transition) for the [tab-size](https://developer.mozilla.org/en-US/docs/Web/CSS/tab-size)
 property specifying duration and delay
 -}
-tabSize2 : Time.Time -> Time.Time -> Transition
+tabSize2 : Float -> Float -> Transition
 tabSize2 =
     durationDelayTransition TabSize
 
@@ -1913,7 +1617,7 @@ tabSize2 =
 {-| Create a [`Transition`](#Transition) for the [text-indent](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent)
 property specifying duration and delay
 -}
-textIndent2 : Time.Time -> Time.Time -> Transition
+textIndent2 : Float -> Float -> Transition
 textIndent2 =
     durationDelayTransition TextIndent
 
@@ -1921,7 +1625,7 @@ textIndent2 =
 {-| Create a [`Transition`](#Transition) for the [text-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow)
 property specifying duration and delay
 -}
-textShadow2 : Time.Time -> Time.Time -> Transition
+textShadow2 : Float -> Float -> Transition
 textShadow2 =
     durationDelayTransition TextShadow
 
@@ -1929,7 +1633,7 @@ textShadow2 =
 {-| Create a [`Transition`](#Transition) for the [top](https://developer.mozilla.org/en-US/docs/Web/CSS/top)
 property specifying duration and delay
 -}
-top2 : Time.Time -> Time.Time -> Transition
+top2 : Float -> Float -> Transition
 top2 =
     durationDelayTransition Top
 
@@ -1937,7 +1641,7 @@ top2 =
 {-| Create a [`Transition`](#Transition) for the [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 property specifying duration and delay
 -}
-transform2 : Time.Time -> Time.Time -> Transition
+transform2 : Float -> Float -> Transition
 transform2 =
     durationDelayTransition Transform
 
@@ -1945,7 +1649,7 @@ transform2 =
 {-| Create a [`Transition`](#Transition) for the [transform-origin](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin)
 property specifying duration and delay
 -}
-transformOrigin2 : Time.Time -> Time.Time -> Transition
+transformOrigin2 : Float -> Float -> Transition
 transformOrigin2 =
     durationDelayTransition TransformOrigin
 
@@ -1953,7 +1657,7 @@ transformOrigin2 =
 {-| Create a [`Transition`](#Transition) for the [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align)
 property specifying duration and delay
 -}
-verticalAlign2 : Time.Time -> Time.Time -> Transition
+verticalAlign2 : Float -> Float -> Transition
 verticalAlign2 =
     durationDelayTransition VerticalAlign
 
@@ -1961,7 +1665,7 @@ verticalAlign2 =
 {-| Create a [`Transition`](#Transition) for the [visibility](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility)
 property specifying duration and delay
 -}
-visibility2 : Time.Time -> Time.Time -> Transition
+visibility2 : Float -> Float -> Transition
 visibility2 =
     durationDelayTransition Visibility
 
@@ -1969,7 +1673,7 @@ visibility2 =
 {-| Create a [`Transition`](#Transition) for the [width](https://developer.mozilla.org/en-US/docs/Web/CSS/width)
 property specifying duration and delay
 -}
-width2 : Time.Time -> Time.Time -> Transition
+width2 : Float -> Float -> Transition
 width2 =
     durationDelayTransition Width
 
@@ -1977,7 +1681,7 @@ width2 =
 {-| Create a [`Transition`](#Transition) for the [word-spacing](https://developer.mozilla.org/en-US/docs/Web/CSS/word-spacing)
 property specifying duration and delay
 -}
-wordSpacing2 : Time.Time -> Time.Time -> Transition
+wordSpacing2 : Float -> Float -> Transition
 wordSpacing2 =
     durationDelayTransition WordSpacing
 
@@ -1985,7 +1689,7 @@ wordSpacing2 =
 {-| Create a [`Transition`](#Transition) for the [z-index](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
 property specifying duration and delay
 -}
-zIndex2 : Time.Time -> Time.Time -> Transition
+zIndex2 : Float -> Float -> Transition
 zIndex2 =
     durationDelayTransition ZIndex
 
@@ -1997,7 +1701,7 @@ zIndex2 =
 {-| Create a [`Transition`](#Transition) for the [background](https://developer.mozilla.org/en-US/docs/Web/CSS/background)
 property specifying only the duration
 -}
-background : Time.Time -> Transition
+background : Float -> Transition
 background =
     durationTransition Background
 
@@ -2005,7 +1709,7 @@ background =
 {-| Create a [`Transition`](#Transition) for the [background-color](https://developer.mozilla.org/en-US/docs/Web/CSS/background-color)
 property specifying only the duration
 -}
-backgroundColor : Time.Time -> Transition
+backgroundColor : Float -> Transition
 backgroundColor =
     durationTransition BackgroundColor
 
@@ -2013,7 +1717,7 @@ backgroundColor =
 {-| Create a [`Transition`](#Transition) for the [background-position](https://developer.mozilla.org/en-US/docs/Web/CSS/background-position)
 property specifying only the duration
 -}
-backgroundPosition : Time.Time -> Transition
+backgroundPosition : Float -> Transition
 backgroundPosition =
     durationTransition BackgroundPosition
 
@@ -2021,7 +1725,7 @@ backgroundPosition =
 {-| Create a [`Transition`](#Transition) for the [background-size](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
 property specifying only the duration
 -}
-backgroundSize : Time.Time -> Transition
+backgroundSize : Float -> Transition
 backgroundSize =
     durationTransition BackgroundSize
 
@@ -2029,7 +1733,7 @@ backgroundSize =
 {-| Create a [`Transition`](#Transition) for the [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
 property specifying only the duration
 -}
-border : Time.Time -> Transition
+border : Float -> Transition
 border =
     durationTransition Border
 
@@ -2037,7 +1741,7 @@ border =
 {-| Create a [`Transition`](#Transition) for the [border-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom)
 property specifying only the duration
 -}
-borderBottom : Time.Time -> Transition
+borderBottom : Float -> Transition
 borderBottom =
     durationTransition BorderBottom
 
@@ -2045,7 +1749,7 @@ borderBottom =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color)
 property specifying only the duration
 -}
-borderBottomColor : Time.Time -> Transition
+borderBottomColor : Float -> Transition
 borderBottomColor =
     durationTransition BorderBottomColor
 
@@ -2053,7 +1757,7 @@ borderBottomColor =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-left-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius)
 property specifying only the duration
 -}
-borderBottomLeftRadius : Time.Time -> Transition
+borderBottomLeftRadius : Float -> Transition
 borderBottomLeftRadius =
     durationTransition BorderBottomLeftRadius
 
@@ -2061,7 +1765,7 @@ borderBottomLeftRadius =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-right-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius)
 property specifying only the duration
 -}
-borderBottomRightRadius : Time.Time -> Transition
+borderBottomRightRadius : Float -> Transition
 borderBottomRightRadius =
     durationTransition BorderBottomRightRadius
 
@@ -2069,7 +1773,7 @@ borderBottomRightRadius =
 {-| Create a [`Transition`](#Transition) for the [border-bottom-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width)
 property specifying only the duration
 -}
-borderBottomWidth : Time.Time -> Transition
+borderBottomWidth : Float -> Transition
 borderBottomWidth =
     durationTransition BorderBottomWidth
 
@@ -2077,7 +1781,7 @@ borderBottomWidth =
 {-| Create a [`Transition`](#Transition) for the [border-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color)
 property specifying only the duration
 -}
-borderColor : Time.Time -> Transition
+borderColor : Float -> Transition
 borderColor =
     durationTransition BorderColor
 
@@ -2085,7 +1789,7 @@ borderColor =
 {-| Create a [`Transition`](#Transition) for the [border-left](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left)
 property specifying only the duration
 -}
-borderLeft : Time.Time -> Transition
+borderLeft : Float -> Transition
 borderLeft =
     durationTransition BorderLeft
 
@@ -2093,7 +1797,7 @@ borderLeft =
 {-| Create a [`Transition`](#Transition) for the [border-left-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color)
 property specifying only the duration
 -}
-borderLeftColor : Time.Time -> Transition
+borderLeftColor : Float -> Transition
 borderLeftColor =
     durationTransition BorderLeftColor
 
@@ -2101,7 +1805,7 @@ borderLeftColor =
 {-| Create a [`Transition`](#Transition) for the [border-left-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width)
 property specifying only the duration
 -}
-borderLeftWidth : Time.Time -> Transition
+borderLeftWidth : Float -> Transition
 borderLeftWidth =
     durationTransition BorderLeftWidth
 
@@ -2109,7 +1813,7 @@ borderLeftWidth =
 {-| Create a [`Transition`](#Transition) for the [border-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius)
 property specifying only the duration
 -}
-borderRadius : Time.Time -> Transition
+borderRadius : Float -> Transition
 borderRadius =
     durationTransition BorderRadius
 
@@ -2117,7 +1821,7 @@ borderRadius =
 {-| Create a [`Transition`](#Transition) for the [border-right](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right)
 property specifying only the duration
 -}
-borderRight : Time.Time -> Transition
+borderRight : Float -> Transition
 borderRight =
     durationTransition BorderRight
 
@@ -2125,7 +1829,7 @@ borderRight =
 {-| Create a [`Transition`](#Transition) for the [border-right-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color)
 property specifying only the duration
 -}
-borderRightColor : Time.Time -> Transition
+borderRightColor : Float -> Transition
 borderRightColor =
     durationTransition BorderRightColor
 
@@ -2133,7 +1837,7 @@ borderRightColor =
 {-| Create a [`Transition`](#Transition) for the [border-right-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width)
 property specifying only the duration
 -}
-borderRightWidth : Time.Time -> Transition
+borderRightWidth : Float -> Transition
 borderRightWidth =
     durationTransition BorderRightWidth
 
@@ -2141,7 +1845,7 @@ borderRightWidth =
 {-| Create a [`Transition`](#Transition) for the [border-top](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top)
 property specifying only the duration
 -}
-borderTop : Time.Time -> Transition
+borderTop : Float -> Transition
 borderTop =
     durationTransition BorderTop
 
@@ -2149,7 +1853,7 @@ borderTop =
 {-| Create a [`Transition`](#Transition) for the [border-top-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color)
 property specifying only the duration
 -}
-borderTopColor : Time.Time -> Transition
+borderTopColor : Float -> Transition
 borderTopColor =
     durationTransition BorderTopColor
 
@@ -2157,7 +1861,7 @@ borderTopColor =
 {-| Create a [`Transition`](#Transition) for the [border-top-left-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius)
 property specifying only the duration
 -}
-borderTopLeftRadius : Time.Time -> Transition
+borderTopLeftRadius : Float -> Transition
 borderTopLeftRadius =
     durationTransition BorderTopLeftRadius
 
@@ -2165,7 +1869,7 @@ borderTopLeftRadius =
 {-| Create a [`Transition`](#Transition) for the [border-top-right-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius)
 property specifying only the duration
 -}
-borderTopRightRadius : Time.Time -> Transition
+borderTopRightRadius : Float -> Transition
 borderTopRightRadius =
     durationTransition BorderTopRightRadius
 
@@ -2173,7 +1877,7 @@ borderTopRightRadius =
 {-| Create a [`Transition`](#Transition) for the [border-top-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width)
 property specifying only the duration
 -}
-borderTopWidth : Time.Time -> Transition
+borderTopWidth : Float -> Transition
 borderTopWidth =
     durationTransition BorderTopWidth
 
@@ -2181,7 +1885,7 @@ borderTopWidth =
 {-| Create a [`Transition`](#Transition) for the [border-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width)
 property specifying only the duration
 -}
-borderWidth : Time.Time -> Transition
+borderWidth : Float -> Transition
 borderWidth =
     durationTransition BorderWidth
 
@@ -2189,7 +1893,7 @@ borderWidth =
 {-| Create a [`Transition`](#Transition) for the [bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom)
 property specifying only the duration
 -}
-bottom : Time.Time -> Transition
+bottom : Float -> Transition
 bottom =
     durationTransition Bottom
 
@@ -2197,7 +1901,7 @@ bottom =
 {-| Create a [`Transition`](#Transition) for the [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow)
 property specifying only the duration
 -}
-boxShadow : Time.Time -> Transition
+boxShadow : Float -> Transition
 boxShadow =
     durationTransition BoxShadow
 
@@ -2205,7 +1909,7 @@ boxShadow =
 {-| Create a [`Transition`](#Transition) for the [caret-color](https://developer.mozilla.org/en-US/docs/Web/CSS/caret-color)
 property specifying only the duration
 -}
-caretColor : Time.Time -> Transition
+caretColor : Float -> Transition
 caretColor =
     durationTransition CaretColor
 
@@ -2213,7 +1917,7 @@ caretColor =
 {-| Create a [`Transition`](#Transition) for the [clip](https://developer.mozilla.org/en-US/docs/Web/CSS/clip)
 property specifying only the duration
 -}
-clip : Time.Time -> Transition
+clip : Float -> Transition
 clip =
     durationTransition Clip
 
@@ -2221,7 +1925,7 @@ clip =
 {-| Create a [`Transition`](#Transition) for the [clip-path](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path)
 property specifying only the duration
 -}
-clipPath : Time.Time -> Transition
+clipPath : Float -> Transition
 clipPath =
     durationTransition ClipPath
 
@@ -2229,7 +1933,7 @@ clipPath =
 {-| Create a [`Transition`](#Transition) for the [color](https://developer.mozilla.org/en-US/docs/Web/CSS/color)
 property specifying only the duration
 -}
-color : Time.Time -> Transition
+color : Float -> Transition
 color =
     durationTransition Color
 
@@ -2237,7 +1941,7 @@ color =
 {-| Create a [`Transition`](#Transition) for the [column-count](https://developer.mozilla.org/en-US/docs/Web/CSS/column-count)
 property specifying only the duration
 -}
-columnCount : Time.Time -> Transition
+columnCount : Float -> Transition
 columnCount =
     durationTransition ColumnCount
 
@@ -2245,7 +1949,7 @@ columnCount =
 {-| Create a [`Transition`](#Transition) for the [column-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap)
 property specifying only the duration
 -}
-columnGap : Time.Time -> Transition
+columnGap : Float -> Transition
 columnGap =
     durationTransition ColumnGap
 
@@ -2253,7 +1957,7 @@ columnGap =
 {-| Create a [`Transition`](#Transition) for the [column-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule)
 property specifying only the duration
 -}
-columnRule : Time.Time -> Transition
+columnRule : Float -> Transition
 columnRule =
     durationTransition ColumnRule
 
@@ -2261,7 +1965,7 @@ columnRule =
 {-| Create a [`Transition`](#Transition) for the [column-rule-color](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule-color)
 property specifying only the duration
 -}
-columnRuleColor : Time.Time -> Transition
+columnRuleColor : Float -> Transition
 columnRuleColor =
     durationTransition ColumnRuleColor
 
@@ -2269,7 +1973,7 @@ columnRuleColor =
 {-| Create a [`Transition`](#Transition) for the [column-rule-width](https://developer.mozilla.org/en-US/docs/Web/CSS/column-rule-width)
 property specifying only the duration
 -}
-columnRuleWidth : Time.Time -> Transition
+columnRuleWidth : Float -> Transition
 columnRuleWidth =
     durationTransition ColumnRuleWidth
 
@@ -2277,7 +1981,7 @@ columnRuleWidth =
 {-| Create a [`Transition`](#Transition) for the [column-width](https://developer.mozilla.org/en-US/docs/Web/CSS/column-width)
 property specifying only the duration
 -}
-columnWidth : Time.Time -> Transition
+columnWidth : Float -> Transition
 columnWidth =
     durationTransition ColumnWidth
 
@@ -2285,7 +1989,7 @@ columnWidth =
 {-| Create a [`Transition`](#Transition) for the [columns](https://developer.mozilla.org/en-US/docs/Web/CSS/columns)
 property specifying only the duration
 -}
-columns : Time.Time -> Transition
+columns : Float -> Transition
 columns =
     durationTransition Columns
 
@@ -2293,7 +1997,7 @@ columns =
 {-| Create a [`Transition`](#Transition) for the [filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
 property specifying only the duration
 -}
-filter : Time.Time -> Transition
+filter : Float -> Transition
 filter =
     durationTransition Filter
 
@@ -2301,7 +2005,7 @@ filter =
 {-| Create a [`Transition`](#Transition) for the [flex](https://developer.mozilla.org/en-US/docs/Web/CSS/flex)
 property specifying only the duration
 -}
-flex : Time.Time -> Transition
+flex : Float -> Transition
 flex =
     durationTransition Flex
 
@@ -2309,7 +2013,7 @@ flex =
 {-| Create a [`Transition`](#Transition) for the [flex-basis](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis)
 property specifying only the duration
 -}
-flexBasis : Time.Time -> Transition
+flexBasis : Float -> Transition
 flexBasis =
     durationTransition FlexBasis
 
@@ -2317,7 +2021,7 @@ flexBasis =
 {-| Create a [`Transition`](#Transition) for the [flex-grow](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow)
 property specifying only the duration
 -}
-flexGrow : Time.Time -> Transition
+flexGrow : Float -> Transition
 flexGrow =
     durationTransition FlexGrow
 
@@ -2325,7 +2029,7 @@ flexGrow =
 {-| Create a [`Transition`](#Transition) for the [flex-shrink](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink)
 property specifying only the duration
 -}
-flexShrink : Time.Time -> Transition
+flexShrink : Float -> Transition
 flexShrink =
     durationTransition FlexShrink
 
@@ -2333,7 +2037,7 @@ flexShrink =
 {-| Create a [`Transition`](#Transition) for the [font](https://developer.mozilla.org/en-US/docs/Web/CSS/font)
 property specifying only the duration
 -}
-font : Time.Time -> Transition
+font : Float -> Transition
 font =
     durationTransition Font
 
@@ -2341,7 +2045,7 @@ font =
 {-| Create a [`Transition`](#Transition) for the [font-size](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
 property specifying only the duration
 -}
-fontSize : Time.Time -> Transition
+fontSize : Float -> Transition
 fontSize =
     durationTransition FontSize
 
@@ -2349,7 +2053,7 @@ fontSize =
 {-| Create a [`Transition`](#Transition) for the [font-size-adjust](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size-adjust)
 property specifying only the duration
 -}
-fontSizeAdjust : Time.Time -> Transition
+fontSizeAdjust : Float -> Transition
 fontSizeAdjust =
     durationTransition FontSizeAdjust
 
@@ -2357,7 +2061,7 @@ fontSizeAdjust =
 {-| Create a [`Transition`](#Transition) for the [font-size-stretch](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size-stretch)
 property specifying only the duration
 -}
-fontStretch : Time.Time -> Transition
+fontStretch : Float -> Transition
 fontStretch =
     durationTransition FontStretch
 
@@ -2365,7 +2069,7 @@ fontStretch =
 {-| Create a [`Transition`](#Transition) for the [font-variation-settings](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
 property specifying only the duration
 -}
-fontVariationSettings : Time.Time -> Transition
+fontVariationSettings : Float -> Transition
 fontVariationSettings =
     durationTransition FontVariationSettings
 
@@ -2373,7 +2077,7 @@ fontVariationSettings =
 {-| Create a [`Transition`](#Transition) for the [font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 property specifying only the duration
 -}
-fontWeight : Time.Time -> Transition
+fontWeight : Float -> Transition
 fontWeight =
     durationTransition FontWeight
 
@@ -2381,7 +2085,7 @@ fontWeight =
 {-| Create a [`Transition`](#Transition) for the [grid-column-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-gap)
 property specifying only the duration
 -}
-gridColumnGap : Time.Time -> Transition
+gridColumnGap : Float -> Transition
 gridColumnGap =
     durationTransition GridColumnGap
 
@@ -2389,7 +2093,7 @@ gridColumnGap =
 {-| Create a [`Transition`](#Transition) for the [grid-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap)
 property specifying only the duration
 -}
-gridGap : Time.Time -> Transition
+gridGap : Float -> Transition
 gridGap =
     durationTransition GridGap
 
@@ -2397,7 +2101,7 @@ gridGap =
 {-| Create a [`Transition`](#Transition) for the [grid-row-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap)
 property specifying only the duration
 -}
-gridRowGap : Time.Time -> Transition
+gridRowGap : Float -> Transition
 gridRowGap =
     durationTransition GridRowGap
 
@@ -2405,7 +2109,7 @@ gridRowGap =
 {-| Create a [`Transition`](#Transition) for the [height](https://developer.mozilla.org/en-US/docs/Web/CSS/height)
 property specifying only the duration
 -}
-height : Time.Time -> Transition
+height : Float -> Transition
 height =
     durationTransition Height
 
@@ -2413,7 +2117,7 @@ height =
 {-| Create a [`Transition`](#Transition) for the [left](https://developer.mozilla.org/en-US/docs/Web/CSS/left)
 property specifying only the duration
 -}
-left : Time.Time -> Transition
+left : Float -> Transition
 left =
     durationTransition Left
 
@@ -2421,7 +2125,7 @@ left =
 {-| Create a [`Transition`](#Transition) for the [letter-spacing](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
 property specifying only the duration
 -}
-letterSpacing : Time.Time -> Transition
+letterSpacing : Float -> Transition
 letterSpacing =
     durationTransition LetterSpacing
 
@@ -2429,7 +2133,7 @@ letterSpacing =
 {-| Create a [`Transition`](#Transition) for the [line-height](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height)
 property specifying only the duration
 -}
-lineHeight : Time.Time -> Transition
+lineHeight : Float -> Transition
 lineHeight =
     durationTransition LineHeight
 
@@ -2437,7 +2141,7 @@ lineHeight =
 {-| Create a [`Transition`](#Transition) for the [margin](https://developer.mozilla.org/en-US/docs/Web/CSS/margin)
 property specifying only the duration
 -}
-margin : Time.Time -> Transition
+margin : Float -> Transition
 margin =
     durationTransition Margin
 
@@ -2445,7 +2149,7 @@ margin =
 {-| Create a [`Transition`](#Transition) for the [margin-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom)
 property specifying only the duration
 -}
-marginBottom : Time.Time -> Transition
+marginBottom : Float -> Transition
 marginBottom =
     durationTransition MarginBottom
 
@@ -2453,7 +2157,7 @@ marginBottom =
 {-| Create a [`Transition`](#Transition) for the [margin-left](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left)
 property specifying only the duration
 -}
-marginLeft : Time.Time -> Transition
+marginLeft : Float -> Transition
 marginLeft =
     durationTransition MarginLeft
 
@@ -2461,7 +2165,7 @@ marginLeft =
 {-| Create a [`Transition`](#Transition) for the [margin-right](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right)
 property specifying only the duration
 -}
-marginRight : Time.Time -> Transition
+marginRight : Float -> Transition
 marginRight =
     durationTransition MarginRight
 
@@ -2469,7 +2173,7 @@ marginRight =
 {-| Create a [`Transition`](#Transition) for the [margin-top](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top)
 property specifying only the duration
 -}
-marginTop : Time.Time -> Transition
+marginTop : Float -> Transition
 marginTop =
     durationTransition MarginTop
 
@@ -2477,7 +2181,7 @@ marginTop =
 {-| Create a [`Transition`](#Transition) for the [mask](https://developer.mozilla.org/en-US/docs/Web/CSS/mask)
 property specifying only the duration
 -}
-mask : Time.Time -> Transition
+mask : Float -> Transition
 mask =
     durationTransition Mask
 
@@ -2485,7 +2189,7 @@ mask =
 {-| Create a [`Transition`](#Transition) for the [mask-position](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position)
 property specifying only the duration
 -}
-maskPosition : Time.Time -> Transition
+maskPosition : Float -> Transition
 maskPosition =
     durationTransition MaskPosition
 
@@ -2493,7 +2197,7 @@ maskPosition =
 {-| Create a [`Transition`](#Transition) for the [mask-size](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-size)
 property specifying only the duration
 -}
-maskSize : Time.Time -> Transition
+maskSize : Float -> Transition
 maskSize =
     durationTransition MaskSize
 
@@ -2501,7 +2205,7 @@ maskSize =
 {-| Create a [`Transition`](#Transition) for the [max-height](https://developer.mozilla.org/en-US/docs/Web/CSS/max-height)
 property specifying only the duration
 -}
-maxHeight : Time.Time -> Transition
+maxHeight : Float -> Transition
 maxHeight =
     durationTransition MaxHeight
 
@@ -2509,7 +2213,7 @@ maxHeight =
 {-| Create a [`Transition`](#Transition) for the [max-width](https://developer.mozilla.org/en-US/docs/Web/CSS/max-width)
 property specifying only the duration
 -}
-maxWidth : Time.Time -> Transition
+maxWidth : Float -> Transition
 maxWidth =
     durationTransition MaxWidth
 
@@ -2517,7 +2221,7 @@ maxWidth =
 {-| Create a [`Transition`](#Transition) for the [min-height](https://developer.mozilla.org/en-US/docs/Web/CSS/min-height)
 property specifying only the duration
 -}
-minHeight : Time.Time -> Transition
+minHeight : Float -> Transition
 minHeight =
     durationTransition MinHeight
 
@@ -2525,7 +2229,7 @@ minHeight =
 {-| Create a [`Transition`](#Transition) for the [min-width](https://developer.mozilla.org/en-US/docs/Web/CSS/min-width)
 property specifying only the duration
 -}
-minWidth : Time.Time -> Transition
+minWidth : Float -> Transition
 minWidth =
     durationTransition MinWidth
 
@@ -2533,7 +2237,7 @@ minWidth =
 {-| Create a [`Transition`](#Transition) for the [object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position)
 property specifying only the duration
 -}
-objectPosition : Time.Time -> Transition
+objectPosition : Float -> Transition
 objectPosition =
     durationTransition ObjectPosition
 
@@ -2541,7 +2245,7 @@ objectPosition =
 {-| Create a [`Transition`](#Transition) for the [offset](https://developer.mozilla.org/en-US/docs/Web/CSS/offset)
 property specifying only the duration
 -}
-offset : Time.Time -> Transition
+offset : Float -> Transition
 offset =
     durationTransition Offset
 
@@ -2549,7 +2253,7 @@ offset =
 {-| Create a [`Transition`](#Transition) for the [offset-anchor](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-anchor)
 property specifying only the duration
 -}
-offsetAnchor : Time.Time -> Transition
+offsetAnchor : Float -> Transition
 offsetAnchor =
     durationTransition OffsetAnchor
 
@@ -2557,7 +2261,7 @@ offsetAnchor =
 {-| Create a [`Transition`](#Transition) for the [offset-distance](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-distance)
 property specifying only the duration
 -}
-offsetDistance : Time.Time -> Transition
+offsetDistance : Float -> Transition
 offsetDistance =
     durationTransition OffsetDistance
 
@@ -2565,7 +2269,7 @@ offsetDistance =
 {-| Create a [`Transition`](#Transition) for the [offset-path](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-path)
 property specifying only the duration
 -}
-offsetPath : Time.Time -> Transition
+offsetPath : Float -> Transition
 offsetPath =
     durationTransition OffsetPath
 
@@ -2573,7 +2277,7 @@ offsetPath =
 {-| Create a [`Transition`](#Transition) for the [offset-rotate](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-rotate)
 property specifying only the duration
 -}
-offsetRotate : Time.Time -> Transition
+offsetRotate : Float -> Transition
 offsetRotate =
     durationTransition OffsetRotate
 
@@ -2581,7 +2285,7 @@ offsetRotate =
 {-| Create a [`Transition`](#Transition) for the [opacity](https://developer.mozilla.org/en-US/docs/Web/CSS/order)
 property specifying only the duration
 -}
-opacity : Time.Time -> Transition
+opacity : Float -> Transition
 opacity =
     durationTransition Opacity
 
@@ -2589,7 +2293,7 @@ opacity =
 {-| Create a [`Transition`](#Transition) for the [order](https://developer.mozilla.org/en-US/docs/Web/CSS/order)
 property specifying only the duration
 -}
-order : Time.Time -> Transition
+order : Float -> Transition
 order =
     durationTransition Order
 
@@ -2597,7 +2301,7 @@ order =
 {-| Create a [`Transition`](#Transition) for the [outline](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
 property specifying only the duration
 -}
-outline : Time.Time -> Transition
+outline : Float -> Transition
 outline =
     durationTransition Outline
 
@@ -2605,7 +2309,7 @@ outline =
 {-| Create a [`Transition`](#Transition) for the [outline-color](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color)
 property specifying only the duration
 -}
-outlineColor : Time.Time -> Transition
+outlineColor : Float -> Transition
 outlineColor =
     durationTransition OutlineColor
 
@@ -2613,7 +2317,7 @@ outlineColor =
 {-| Create a [`Transition`](#Transition) for the [outline-offset](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset)
 property specifying only the duration
 -}
-outlineOffset : Time.Time -> Transition
+outlineOffset : Float -> Transition
 outlineOffset =
     durationTransition OutlineOffset
 
@@ -2621,7 +2325,7 @@ outlineOffset =
 {-| Create a [`Transition`](#Transition) for the [outline-width](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width)
 property specifying only the duration
 -}
-outlineWidth : Time.Time -> Transition
+outlineWidth : Float -> Transition
 outlineWidth =
     durationTransition OutlineWidth
 
@@ -2629,7 +2333,7 @@ outlineWidth =
 {-| Create a [`Transition`](#Transition) for the [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding)
 property specifying only the duration
 -}
-padding : Time.Time -> Transition
+padding : Float -> Transition
 padding =
     durationTransition Padding
 
@@ -2637,7 +2341,7 @@ padding =
 {-| Create a [`Transition`](#Transition) for the [padding-bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom)
 property specifying only the duration
 -}
-paddingBottom : Time.Time -> Transition
+paddingBottom : Float -> Transition
 paddingBottom =
     durationTransition PaddingBottom
 
@@ -2645,7 +2349,7 @@ paddingBottom =
 {-| Create a [`Transition`](#Transition) for the [padding-left](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left)
 property specifying only the duration
 -}
-paddingLeft : Time.Time -> Transition
+paddingLeft : Float -> Transition
 paddingLeft =
     durationTransition PaddingLeft
 
@@ -2653,7 +2357,7 @@ paddingLeft =
 {-| Create a [`Transition`](#Transition) for the [padding-right](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right)
 property specifying only the duration
 -}
-paddingRight : Time.Time -> Transition
+paddingRight : Float -> Transition
 paddingRight =
     durationTransition PaddingRight
 
@@ -2661,7 +2365,7 @@ paddingRight =
 {-| Create a [`Transition`](#Transition) for the [padding-top](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top)
 property specifying only the duration
 -}
-paddingTop : Time.Time -> Transition
+paddingTop : Float -> Transition
 paddingTop =
     durationTransition PaddingTop
 
@@ -2669,7 +2373,7 @@ paddingTop =
 {-| Create a [`Transition`](#Transition) for the [right](https://developer.mozilla.org/en-US/docs/Web/CSS/right)
 property specifying only the duration
 -}
-right : Time.Time -> Transition
+right : Float -> Transition
 right =
     durationTransition Right
 
@@ -2677,7 +2381,7 @@ right =
 {-| Create a [`Transition`](#Transition) for the [tab-size](https://developer.mozilla.org/en-US/docs/Web/CSS/tab-size)
 property specifying only the duration
 -}
-tabSize : Time.Time -> Transition
+tabSize : Float -> Transition
 tabSize =
     durationTransition TabSize
 
@@ -2685,7 +2389,7 @@ tabSize =
 {-| Create a [`Transition`](#Transition) for the [text-indent](https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent)
 property specifying only the duration
 -}
-textIndent : Time.Time -> Transition
+textIndent : Float -> Transition
 textIndent =
     durationTransition TextIndent
 
@@ -2693,7 +2397,7 @@ textIndent =
 {-| Create a [`Transition`](#Transition) for the [text-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow)
 property specifying only the duration
 -}
-textShadow : Time.Time -> Transition
+textShadow : Float -> Transition
 textShadow =
     durationTransition TextShadow
 
@@ -2701,7 +2405,7 @@ textShadow =
 {-| Create a [`Transition`](#Transition) for the [top](https://developer.mozilla.org/en-US/docs/Web/CSS/top)
 property specifying only the duration
 -}
-top : Time.Time -> Transition
+top : Float -> Transition
 top =
     durationTransition Top
 
@@ -2709,7 +2413,7 @@ top =
 {-| Create a [`Transition`](#Transition) for the [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 property specifying only the duration
 -}
-transform : Time.Time -> Transition
+transform : Float -> Transition
 transform =
     durationTransition Transform
 
@@ -2717,7 +2421,7 @@ transform =
 {-| Create a [`Transition`](#Transition) for the [transform-origin](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin)
 property specifying only the duration
 -}
-transformOrigin : Time.Time -> Transition
+transformOrigin : Float -> Transition
 transformOrigin =
     durationTransition TransformOrigin
 
@@ -2725,7 +2429,7 @@ transformOrigin =
 {-| Create a [`Transition`](#Transition) for the [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align)
 property specifying only the duration
 -}
-verticalAlign : Time.Time -> Transition
+verticalAlign : Float -> Transition
 verticalAlign =
     durationTransition VerticalAlign
 
@@ -2733,7 +2437,7 @@ verticalAlign =
 {-| Create a [`Transition`](#Transition) for the [visibility](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility)
 property specifying only the duration
 -}
-visibility : Time.Time -> Transition
+visibility : Float -> Transition
 visibility =
     durationTransition Visibility
 
@@ -2741,7 +2445,7 @@ visibility =
 {-| Create a [`Transition`](#Transition) for the [width](https://developer.mozilla.org/en-US/docs/Web/CSS/width)
 property specifying only the duration
 -}
-width : Time.Time -> Transition
+width : Float -> Transition
 width =
     durationTransition Width
 
@@ -2749,7 +2453,7 @@ width =
 {-| Create a [`Transition`](#Transition) for the [word-spacing](https://developer.mozilla.org/en-US/docs/Web/CSS/word-spacing)
 property specifying only the duration
 -}
-wordSpacing : Time.Time -> Transition
+wordSpacing : Float -> Transition
 wordSpacing =
     durationTransition WordSpacing
 
@@ -2757,7 +2461,7 @@ wordSpacing =
 {-| Create a [`Transition`](#Transition) for the [z-index](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)
 property specifying only the duration
 -}
-zIndex : Time.Time -> Transition
+zIndex : Float -> Transition
 zIndex =
     durationTransition ZIndex
 
@@ -3153,9 +2857,9 @@ propToString prop =
             "z-index"
 
 
-timeToString : Time.Time -> String
+timeToString : Float -> String
 timeToString time =
-    toString time ++ "ms"
+    String.fromFloat time ++ "ms"
 
 
 timingFunctionToString : TimingFunction -> String
@@ -3184,13 +2888,13 @@ timingFunctionToString tf =
 
         CubicBezier float float2 float3 float4 ->
             "cubic-bezier("
-                ++ toString float
+                ++ String.fromFloat float
                 ++ " , "
-                ++ toString float2
+                ++ String.fromFloat float2
                 ++ " , "
-                ++ toString float3
+                ++ String.fromFloat float3
                 ++ " , "
-                ++ toString float4
+                ++ String.fromFloat float4
                 ++ ")"
 
 
@@ -3227,7 +2931,7 @@ transition options =
 
 {-| Create a transition suppling all arguments
 -}
-fullTransition : Animatable -> Time.Time -> Time.Time -> TimingFunction -> Transition
+fullTransition : Animatable -> Float -> Float -> TimingFunction -> Transition
 fullTransition animation duration delay timing =
     Transition
         { animation = animation
@@ -3240,7 +2944,7 @@ fullTransition animation duration delay timing =
 {-| Create a transition supplying all arguments except for timing function (in this case CSS would use an ease timing
 function as its default)
 -}
-durationDelayTransition : Animatable -> Time.Time -> Time.Time -> Transition
+durationDelayTransition : Animatable -> Float -> Float -> Transition
 durationDelayTransition animation duration delay =
     Transition
         { animation = animation
@@ -3253,7 +2957,7 @@ durationDelayTransition animation duration delay =
 {-| Create a transition with no deplay and no timing function specified (in this case CSS would default to use an ease timing
 with no delay as you might expect)
 -}
-durationTransition : Animatable -> Time.Time -> Transition
+durationTransition : Animatable -> Float -> Transition
 durationTransition animation duration =
     Transition
         { animation = animation

@@ -1,4 +1,4 @@
-module Selectors exposing (..)
+module Selectors exposing (elements, nonElements, testSelector)
 
 import Css exposing (..)
 import Css.Global exposing (..)
