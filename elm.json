@@ -6,9 +6,7 @@
     "version": "17.0.0",
     "exposed-modules": {
       "Css": [
-        "Css",
-        "Css.Global",
-        "Css.Media"
+        "Css"
       ],
       "Html.Styled": [
         "Html.Styled",
