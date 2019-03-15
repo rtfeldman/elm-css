@@ -63,8 +63,8 @@ prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors prope
 
 
 prettyPrintDeclaration : Declaration -> String
-prettyPrintDeclaration declaration =
-    case declaration of
+prettyPrintDeclaration decl =
+    case decl of
         StyleBlockDeclaration styleBlock ->
             prettyPrintStyleBlock noIndent styleBlock
 
@@ -81,28 +81,28 @@ prettyPrintDeclaration declaration =
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
         SupportsRule _ _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         DocumentRule _ _ _ _ _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         PageRule _ _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         FontFace _ ->
-            Debug.crash "TODO"
+            "TODO"
 
-        Keyframes _ _ ->
-            Debug.crash "TODO"
+        Keyframes { name, declaration } ->
+            "@keyframes " ++ name ++ " {\n" ++ declaration ++ "\n}"
 
         Viewport _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         CounterStyle _ ->
-            Debug.crash "TODO"
+            "TODO"
 
         FontFeatureValues _ ->
-            Debug.crash "TODO"
+            "TODO"
 
 
 mediaQueryToString : MediaQuery -> String
@@ -167,6 +167,7 @@ simpleSelectorSequenceToString simpleSelectorSequence =
         UniversalSelectorSequence repeatableSimpleSelectors ->
             if List.isEmpty repeatableSimpleSelectors then
                 "*"
+
             else
                 List.map repeatableSimpleSelectorToString repeatableSimpleSelectors
                     |> String.join ""
