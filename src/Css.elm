@@ -1062,7 +1062,7 @@ rgba red green blue alpha =
             ++ ","
             ++ String.fromInt blue
             ++ ","
-            ++ String.fromInt alpha
+            ++ String.fromFloat alpha
             ++ ")"
 
 
@@ -1074,14 +1074,14 @@ The `s` and `l` values are expressed as a number between 0 and 1 and are convert
 
 -}
 hsl : Float -> Float -> Float -> Value { provides | hsl : Supported }
-hsl hue saturation lightness =
+hsl hueVal sat lightness =
     Value <|
         "hsl("
-            ++ String.fromInt hue
+            ++ String.fromFloat hueVal
             ++ ","
-            ++ String.fromInt (saturation * 100)
+            ++ String.fromFloat (sat * 100)
             ++ "%,"
-            ++ String.fromInt (lightness * 100)
+            ++ String.fromFloat (lightness * 100)
             ++ "%,"
             ++ ")"
 
@@ -1094,16 +1094,16 @@ The `s` and `l` values are expressed as a number between 0 and 1 and are convert
 
 -}
 hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
-hsla hue saturation lightness alpha =
+hsla hueVal sat lightness alpha =
     Value <|
         "hsl("
-            ++ String.fromInt hue
+            ++ String.fromFloat hueVal
             ++ ","
-            ++ String.fromInt (saturation * 100)
+            ++ String.fromFloat (sat * 100)
             ++ "%,"
-            ++ String.fromInt (lightness * 100)
+            ++ String.fromFloat (lightness * 100)
             ++ "%,"
-            ++ String.fromInt alpha
+            ++ String.fromFloat alpha
             ++ ")"
 
 
@@ -2400,7 +2400,7 @@ zero =
 -}
 px : Float -> Value { provides | px : Supported }
 px value =
-    Value (String.fromInt value ++ "px")
+    Value (String.fromFloat value ++ "px")
 
 
 {-| [`em`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2410,7 +2410,7 @@ px value =
 -}
 em : Float -> Value { provides | em : Supported }
 em value =
-    Value (String.fromInt value ++ "em")
+    Value (String.fromFloat value ++ "em")
 
 
 {-| [`ex`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2420,7 +2420,7 @@ em value =
 -}
 ex : Float -> Value { provides | ex : Supported }
 ex value =
-    Value (String.fromInt value ++ "ex")
+    Value (String.fromFloat value ++ "ex")
 
 
 {-| [`ch`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2430,7 +2430,7 @@ ex value =
 -}
 ch : Float -> Value { provides | ch : Supported }
 ch value =
-    Value (String.fromInt value ++ "ch")
+    Value (String.fromFloat value ++ "ch")
 
 
 {-| [`rem`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2440,7 +2440,7 @@ ch value =
 -}
 rem : Float -> Value { provides | rem : Supported }
 rem value =
-    Value (String.fromInt value ++ "rem")
+    Value (String.fromFloat value ++ "rem")
 
 
 {-| [`vh`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2450,7 +2450,7 @@ rem value =
 -}
 vh : Float -> Value { provides | vh : Supported }
 vh value =
-    Value (String.fromInt value ++ "vh")
+    Value (String.fromFloat value ++ "vh")
 
 
 {-| [`vw`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2460,7 +2460,7 @@ vh value =
 -}
 vw : Float -> Value { provides | vw : Supported }
 vw value =
-    Value (String.fromInt value ++ "vw")
+    Value (String.fromFloat value ++ "vw")
 
 
 {-| [`vmin`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2470,7 +2470,7 @@ vw value =
 -}
 vmin : Float -> Value { provides | vmin : Supported }
 vmin value =
-    Value (String.fromInt value ++ "vmin")
+    Value (String.fromFloat value ++ "vmin")
 
 
 {-| [`vmax`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2480,7 +2480,7 @@ vmin value =
 -}
 vmax : Float -> Value { provides | vmax : Supported }
 vmax value =
-    Value (String.fromInt value ++ "vmax")
+    Value (String.fromFloat value ++ "vmax")
 
 
 {-| [`mm`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2490,7 +2490,7 @@ vmax value =
 -}
 mm : Float -> Value { provides | mm : Supported }
 mm value =
-    Value (String.fromInt value ++ "mm")
+    Value (String.fromFloat value ++ "mm")
 
 
 {-| [`cm`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2500,7 +2500,7 @@ mm value =
 -}
 cm : Float -> Value { provides | cm : Supported }
 cm value =
-    Value (String.fromInt value ++ "cm")
+    Value (String.fromFloat value ++ "cm")
 
 
 {-| [`in`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2512,7 +2512,7 @@ cm value =
 -}
 inches : Float -> Value { provides | inches : Supported }
 inches value =
-    Value (String.fromInt value ++ "in")
+    Value (String.fromFloat value ++ "in")
 
 
 {-| [`pt`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2522,7 +2522,7 @@ inches value =
 -}
 pt : Float -> Value { provides | pt : Supported }
 pt value =
-    Value (String.fromInt value ++ "pt")
+    Value (String.fromFloat value ++ "pt")
 
 
 {-| [`pc`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2532,7 +2532,7 @@ pt value =
 -}
 pc : Float -> Value { provides | pc : Supported }
 pc value =
-    Value (String.fromInt value ++ "pc")
+    Value (String.fromFloat value ++ "pc")
 
 
 {-| [`pct`](https://css-tricks.com/the-lengths-of-css/) length units.
@@ -2542,7 +2542,7 @@ pc value =
 -}
 pct : Float -> Value { provides | pct : Supported }
 pct value =
-    Value (String.fromInt value ++ "%")
+    Value (String.fromFloat value ++ "%")
 
 
 {-| A unitless number. Useful with properties like
@@ -2557,7 +2557,7 @@ which accept unitless numbers.
 -}
 num : Float -> Value { provides | num : Supported }
 num value =
-    Value (String.fromInt value)
+    Value (String.fromFloat value)
 
 
 {-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
@@ -2763,12 +2763,12 @@ boxShadowConfigToString config =
             else
                 ""
 
-        color =
+        colorVal =
             config.color
                 |> Maybe.map (unpackValue >> (++) " ")
                 |> Maybe.withDefault ""
     in
-    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ color
+    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
 
 
 
@@ -3705,7 +3705,6 @@ bolder =
 fontVariantCaps :
     Value
         { normal : Supported
-        , smallCaps : Supported
         , smallCaps : Supported
         , petiteCaps : Supported
         , allPetiteCaps : Supported
@@ -5225,8 +5224,8 @@ backgroundRepeat :
         , inherit : Supported
         }
     -> Style
-backgroundRepeat (Value repeat) =
-    AppendProperty ("background-repeat:" ++ repeat)
+backgroundRepeat (Value amount) =
+    AppendProperty ("background-repeat:" ++ amount)
 
 
 {-| Sets [`background-repeat`](https://css-tricks.com/almanac/properties/b/background-repeat/) along the horizontal axis, then the vertical axis.
@@ -5508,8 +5507,8 @@ See also [`stop2`](#stop2) for controlling stop positioning.
 
 -}
 stop : Color -> Value { provides | colorStop : Supported }
-stop (Value color) =
-    Value color
+stop (Value colorVal) =
+    Value colorVal
 
 
 {-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
@@ -5542,8 +5541,8 @@ stop2 :
             , calc : Supported
             }
     -> Value { supported | colorStop : Supported }
-stop2 (Value color) (Value position) =
-    Value (color ++ " " ++ position)
+stop2 (Value colorVal) (Value pos) =
+    Value (colorVal ++ " " ++ pos)
 
 
 {-| Provides the [`to bottom` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
@@ -5963,8 +5962,8 @@ border3 :
             , currentColor : Supported
             }
     -> Style
-border3 (Value width) (Value style) (Value color) =
-    AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ color)
+border3 (Value width) (Value style) (Value colorVal) =
+    AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -6110,8 +6109,8 @@ borderTop3 :
             , currentColor : Supported
             }
     -> Style
-borderTop3 (Value width) (Value style) (Value color) =
-    AppendProperty ("border-top:" ++ width ++ " " ++ style ++ " " ++ color)
+borderTop3 (Value width) (Value style) (Value colorVal) =
+    AppendProperty ("border-top:" ++ width ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -6257,8 +6256,8 @@ borderRight3 :
             , currentColor : Supported
             }
     -> Style
-borderRight3 (Value width) (Value style) (Value color) =
-    AppendProperty ("border-right:" ++ width ++ " " ++ style ++ " " ++ color)
+borderRight3 (Value width) (Value style) (Value colorVal) =
+    AppendProperty ("border-right:" ++ width ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -6404,8 +6403,8 @@ borderBottom3 :
             , currentColor : Supported
             }
     -> Style
-borderBottom3 (Value width) (Value style) (Value color) =
-    AppendProperty ("border-bottom:" ++ width ++ " " ++ style ++ " " ++ color)
+borderBottom3 (Value width) (Value style) (Value colorVal) =
+    AppendProperty ("border-bottom:" ++ width ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -6551,8 +6550,8 @@ borderLeft3 :
             , currentColor : Supported
             }
     -> Style
-borderLeft3 (Value width) (Value style) (Value color) =
-    AppendProperty ("border-left:" ++ width ++ " " ++ style ++ " " ++ color)
+borderLeft3 (Value width) (Value style) (Value colorVal) =
+    AppendProperty ("border-left:" ++ width ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
@@ -7309,8 +7308,8 @@ borderColor :
         , unset : Supported
         }
     -> Style
-borderColor (Value color) =
-    AppendProperty ("border-color:" ++ color)
+borderColor (Value colorVal) =
+    AppendProperty ("border-color:" ++ colorVal)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
@@ -7470,8 +7469,8 @@ borderTopColor :
         , unset : Supported
         }
     -> Style
-borderTopColor (Value color) =
-    AppendProperty ("border-top-color:" ++ color)
+borderTopColor (Value colorVal) =
+    AppendProperty ("border-top-color:" ++ colorVal)
 
 
 {-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color) property.
@@ -7493,8 +7492,8 @@ borderRightColor :
         , unset : Supported
         }
     -> Style
-borderRightColor (Value color) =
-    AppendProperty ("border-right-color:" ++ color)
+borderRightColor (Value colorVal) =
+    AppendProperty ("border-right-color:" ++ colorVal)
 
 
 {-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color) property.
@@ -7516,8 +7515,8 @@ borderBottomColor :
         , unset : Supported
         }
     -> Style
-borderBottomColor (Value color) =
-    AppendProperty ("border-bottom-color:" ++ color)
+borderBottomColor (Value colorVal) =
+    AppendProperty ("border-bottom-color:" ++ colorVal)
 
 
 {-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color) property.
@@ -7539,8 +7538,8 @@ borderLeftColor :
         , unset : Supported
         }
     -> Style
-borderLeftColor (Value color) =
-    AppendProperty ("border-left-color:" ++ color)
+borderLeftColor (Value colorVal) =
+    AppendProperty ("border-left-color:" ++ colorVal)
 
 
 
@@ -9188,8 +9187,8 @@ textDecoration3 :
             , currentColor : Supported
             }
     -> Style
-textDecoration3 (Value line) (Value style) (Value color) =
-    AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ color)
+textDecoration3 (Value line) (Value style) (Value colorVal) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`text-decoration-line`][text-decoration-line] property.
@@ -9324,8 +9323,8 @@ textDecorationColor :
         , unset : Supported
         }
     -> Style
-textDecorationColor (Value color) =
-    AppendProperty ("text-decoration-color:" ++ color)
+textDecorationColor (Value colorVal) =
+    AppendProperty ("text-decoration-color:" ++ colorVal)
 
 
 
@@ -9341,7 +9340,7 @@ textDecorationColor (Value color) =
 -}
 deg : Float -> Value { provides | deg : Supported }
 deg degrees =
-    Value (String.fromInt degrees ++ "deg")
+    Value (String.fromFloat degrees ++ "deg")
 
 
 {-| A [`grad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
@@ -9353,7 +9352,7 @@ deg degrees =
 -}
 grad : Float -> Value { provides | grad : Supported }
 grad gradians =
-    Value (String.fromInt gradians ++ "grad")
+    Value (String.fromFloat gradians ++ "grad")
 
 
 {-| A [`rad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
@@ -9365,7 +9364,7 @@ grad gradians =
 -}
 rad : Float -> Value { provides | rad : Supported }
 rad radians =
-    Value (String.fromInt radians ++ "rad")
+    Value (String.fromFloat radians ++ "rad")
 
 
 {-| A [`turn` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
@@ -9377,7 +9376,7 @@ rad radians =
 -}
 turn : Float -> Value { provides | turn : Supported }
 turn turns =
-    Value (String.fromInt turns ++ "turn")
+    Value (String.fromFloat turns ++ "turn")
 
 
 
@@ -10395,8 +10394,8 @@ columnRuleColor :
         , unset : Supported
         }
     -> Style
-columnRuleColor (Value color) =
-    AppendProperty ("column-rule-color:" ++ color)
+columnRuleColor (Value colorVal) =
+    AppendProperty ("column-rule-color:" ++ colorVal)
 
 
 
@@ -10974,8 +10973,8 @@ strokeRepeat :
         , inherit : Supported
         }
     -> Style
-strokeRepeat (Value repeat) =
-    AppendProperty ("stroke-repeat:" ++ repeat)
+strokeRepeat (Value amount) =
+    AppendProperty ("stroke-repeat:" ++ amount)
 
 
 {-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat) along the horizontal axis, then the vertical axis.
@@ -11445,8 +11444,8 @@ columnRule3 :
             , currentColor : Supported
             }
     -> Style
-columnRule3 (Value width) (Value style) (Value color) =
-    AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ color)
+columnRule3 (Value width) (Value style) (Value colorVal) =
+    AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ colorVal)
 
 
 
@@ -11559,17 +11558,17 @@ matrix :
 matrix a b c d tx ty =
     Value
         ("matrix("
-            ++ String.fromInt a
+            ++ String.fromFloat a
             ++ " "
-            ++ String.fromInt b
+            ++ String.fromFloat b
             ++ " "
-            ++ String.fromInt c
+            ++ String.fromFloat c
             ++ " "
-            ++ String.fromInt d
+            ++ String.fromFloat d
             ++ " "
-            ++ String.fromInt tx
+            ++ String.fromFloat tx
             ++ " "
-            ++ String.fromInt ty
+            ++ String.fromFloat ty
             ++ ")"
         )
 
@@ -11602,37 +11601,37 @@ matrix3d :
 matrix3d a1 b1 c1 d1 a2 b2 c2 d2 a3 b3 c3 d3 a4 b4 c4 d4 =
     Value
         ("matrix3d:"
-            ++ String.fromInt a1
+            ++ String.fromFloat a1
             ++ ","
-            ++ String.fromInt b1
+            ++ String.fromFloat b1
             ++ ","
-            ++ String.fromInt c1
+            ++ String.fromFloat c1
             ++ ","
-            ++ String.fromInt d1
+            ++ String.fromFloat d1
             ++ ","
-            ++ String.fromInt a2
+            ++ String.fromFloat a2
             ++ ","
-            ++ String.fromInt b2
+            ++ String.fromFloat b2
             ++ ","
-            ++ String.fromInt c2
+            ++ String.fromFloat c2
             ++ ","
-            ++ String.fromInt d2
+            ++ String.fromFloat d2
             ++ ","
-            ++ String.fromInt a3
+            ++ String.fromFloat a3
             ++ ","
-            ++ String.fromInt b3
+            ++ String.fromFloat b3
             ++ ","
-            ++ String.fromInt c3
+            ++ String.fromFloat c3
             ++ ","
-            ++ String.fromInt d3
+            ++ String.fromFloat d3
             ++ ","
-            ++ String.fromInt a4
+            ++ String.fromFloat a4
             ++ ","
-            ++ String.fromInt b4
+            ++ String.fromFloat b4
             ++ ","
-            ++ String.fromInt c4
+            ++ String.fromFloat c4
             ++ ","
-            ++ String.fromInt d4
+            ++ String.fromFloat d4
             ++ ")"
         )
 
@@ -11886,7 +11885,7 @@ translate3d (Value x) (Value y) (Value z) =
 -}
 scale : Float -> Value { provides | scale : Supported }
 scale val =
-    Value ("scale(" ++ String.fromInt val ++ ")")
+    Value ("scale(" ++ String.fromFloat val ++ ")")
 
 
 {-| Sets `scale` value for usage with [`transform`](#transform).
@@ -11896,7 +11895,7 @@ scale val =
 -}
 scale2 : Float -> Float -> Value { provides | scale2 : Supported }
 scale2 x y =
-    Value ("scale(" ++ String.fromInt x ++ ", " ++ String.fromInt y ++ ")")
+    Value ("scale(" ++ String.fromFloat x ++ ", " ++ String.fromFloat y ++ ")")
 
 
 {-| Sets `scaleX` value for usage with [`transform`](#transform).
@@ -11906,7 +11905,7 @@ scale2 x y =
 -}
 scaleX : Float -> Value { provides | scaleX : Supported }
 scaleX x =
-    Value ("scaleX(" ++ String.fromInt x ++ ")")
+    Value ("scaleX(" ++ String.fromFloat x ++ ")")
 
 
 {-| Sets `scaleY` value for usage with [`transform`](#transform).
@@ -11916,7 +11915,7 @@ scaleX x =
 -}
 scaleY : Float -> Value { provides | scaleY : Supported }
 scaleY y =
-    Value ("scaleY(" ++ String.fromInt y ++ ")")
+    Value ("scaleY(" ++ String.fromFloat y ++ ")")
 
 
 {-| Sets `scaleZ` value for usage with [`transform`](#transform).
@@ -11926,7 +11925,7 @@ scaleY y =
 -}
 scaleZ : Float -> Value { provides | scaleZ : Supported }
 scaleZ z =
-    Value ("scaleZ(" ++ String.fromInt z ++ ")")
+    Value ("scaleZ(" ++ String.fromFloat z ++ ")")
 
 
 {-| Sets `scale3d` value for usage with [`transform`](#transform).
@@ -11940,7 +11939,7 @@ scale3d :
     -> Float
     -> Value { provides | scale3d : Supported }
 scale3d x y z =
-    Value ("scale3d(" ++ String.fromInt x ++ "," ++ String.fromInt y ++ "," ++ String.fromInt z ++ ")")
+    Value ("scale3d(" ++ String.fromFloat x ++ "," ++ String.fromFloat y ++ "," ++ String.fromFloat z ++ ")")
 
 
 
@@ -12114,11 +12113,11 @@ rotate3d :
 rotate3d x y z (Value angle) =
     Value
         ("rotate3d("
-            ++ String.fromInt x
+            ++ String.fromFloat x
             ++ ","
-            ++ String.fromInt y
+            ++ String.fromFloat y
             ++ ","
-            ++ String.fromInt z
+            ++ String.fromFloat z
             ++ ","
             ++ angle
             ++ ")"
