@@ -112,6 +112,7 @@ module Css exposing
     , bleed
     , caretColor
     , breakInside, avoid, avoidPage, avoidColumn, avoidRegion
+    , boxDecorationBreak
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -540,6 +541,7 @@ Multiple CSS properties use these values.
 @docs bleed
 @docs caretColor
 @docs breakInside, avoid, avoidPage, avoidColumn, avoidRegion
+@docs boxDecorationBreak
 
 -}
 
@@ -12679,3 +12681,23 @@ breakInside :
     -> Style
 breakInside (Value val) =
     AppendProperty ("break-inside:" ++ val)
+
+
+{-| Sets [`box-decoration-break`](https://css-tricks.com/almanac/properties/b/box-decoration-break/)
+
+    boxDecorationBreak slice
+
+    boxDecorationBreak clone
+
+-}
+boxDecorationBreak :
+    Value
+        { slice : Supported
+        , clone : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+boxDecorationBreak (Value val) =
+    AppendProperty ("box-decoration-break:" ++ val)
