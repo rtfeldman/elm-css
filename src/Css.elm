@@ -109,6 +109,7 @@ module Css exposing
     , opacity
     , zoom
     , backfaceVisibility
+    , bleed
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -534,6 +535,8 @@ Multiple CSS properties use these values.
 # Other
 
 @docs backfaceVisibility
+
+@docs bleed
 
 -}
 
@@ -12555,3 +12558,25 @@ backfaceVisibility :
     -> Style
 backfaceVisibility (Value val) =
     AppendProperty ("backface-visibility" ++ val)
+
+
+{-| Sets [`bleed`](https://css-tricks.com/almanac/properties/b/bleed/)
+
+    bleed auto
+
+    bleed (pt 10)
+
+-}
+bleed :
+    Value
+        { auto : Supported
+        , pt : Supported
+        , cm : Supported
+        , inches : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+bleed (Value val) =
+    AppendProperty ("bleed" ++ val)
