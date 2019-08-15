@@ -111,6 +111,7 @@ module Css exposing
     , backfaceVisibility
     , bleed
     , caretColor
+    , breakInside, avoid, avoidPage, avoidColumn, avoidRegion
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -538,6 +539,7 @@ Multiple CSS properties use these values.
 @docs backfaceVisibility
 @docs bleed
 @docs caretColor
+@docs breakInside, avoid, avoidPage, avoidColumn, avoidRegion
 
 -}
 
@@ -12608,3 +12610,72 @@ caretColor :
     -> Style
 caretColor (Value val) =
     AppendProperty ("caret-color:" ++ val)
+
+
+{-| Sets `avoid` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoid
+
+-}
+avoid : Value { provides | avoid : Supported }
+avoid =
+    Value "avoid"
+
+
+{-| Sets `avoid-page` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoidPage
+
+-}
+avoidPage : Value { provides | avoidPage : Supported }
+avoidPage =
+    Value "avoid-page"
+
+
+{-| Sets `avoid-column` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoidColumn
+
+-}
+avoidColumn : Value { provides | avoidColumn : Supported }
+avoidColumn =
+    Value "avoid-column"
+
+
+{-| Sets `avoid-region` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoidRegion
+
+-}
+avoidRegion : Value { provides | avoidRegion : Supported }
+avoidRegion =
+    Value "avoid-region"
+
+
+{-| Sets [`break-inside`](https://css-tricks.com/almanac/properties/b/break-inside/)
+
+    breakInside auto
+
+    breakInside avoid
+
+    breakInside avoidPage
+
+    breakInside avoidColumn
+
+    breakInside avoidRegion
+
+-}
+breakInside :
+    Value
+        { auto : Supported
+        , avoid : Supported
+        , avoidPage : Supported
+        , avoidColumn : Supported
+        , avoidRegion : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+breakInside (Value val) =
+    AppendProperty ("break-inside:" ++ val)
