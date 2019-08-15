@@ -108,6 +108,7 @@ module Css exposing
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , opacity
     , zoom
+    , backfaceVisibility
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -528,6 +529,11 @@ Multiple CSS properties use these values.
 # Viewport
 
 @docs zoom
+
+
+# Other
+
+@docs backfaceVisibility
 
 -}
 
@@ -12525,10 +12531,27 @@ maxWidth :
         , auto : Supported
         , zero : Supported
         , calc : Supported
+        }
+    -> Style
+maxWidth (Value size) =
+    AppendProperty ("max-width:" ++ size)
+
+
+{-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
+
+    backfaceVisibility visible
+
+    backfaceVisibility hidden
+
+-}
+backfaceVisibility :
+    Value
+        { visible : Supported
+        , hidden : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
     -> Style
-maxWidth (Value size) =
-    AppendProperty ("max-width:" ++ size)
+backfaceVisibility (Value val) =
+    AppendProperty ("backface-visibility" ++ val)
