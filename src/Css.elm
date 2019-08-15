@@ -110,6 +110,7 @@ module Css exposing
     , zoom
     , backfaceVisibility
     , bleed
+    , caretColor
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -535,8 +536,8 @@ Multiple CSS properties use these values.
 # Other
 
 @docs backfaceVisibility
-
 @docs bleed
+@docs caretColor
 
 -}
 
@@ -12580,3 +12581,30 @@ bleed :
     -> Style
 bleed (Value val) =
     AppendProperty ("bleed" ++ val)
+
+
+{-| Sets [`caret-color`](https://css-tricks.com/almanac/properties/c/caret-color/)
+
+    caretColor (hex "#60b5cc")
+
+    caretColor (rgb 96 181 204)
+
+    caretColor (rgba 96 181 204 0.5)
+
+-}
+caretColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , currentColor : Supported
+        , transparent : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+caretColor (Value val) =
+    AppendProperty ("caret-color:" ++ val)
