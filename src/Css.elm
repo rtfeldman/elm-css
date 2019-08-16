@@ -124,6 +124,7 @@ module Css exposing
     , mixBlendMode
     , objectFit, fill_, scaleDown
     , objectPosition, objectPosition2, objectPosition4
+    , orphans
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -572,6 +573,7 @@ Multiple CSS properties use these values.
 @docs mixBlendMode
 @docs objectFit, fill_, scaleDown
 @docs objectPosition, objectPosition2, objectPosition4
+@docs orphans
 
 -}
 
@@ -13431,3 +13433,21 @@ objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount
             ++ " "
             ++ vertAmount
         )
+
+
+{-| Sets [`orphans`](https://css-tricks.com/almanac/properties/o/orphans/)
+**Note:** This function accepts only positve integers.
+
+    orphans (int 2)
+
+-}
+orphans :
+    Value
+        { int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+orphans (Value val) =
+    AppendProperty ("orphans:" ++ val)
