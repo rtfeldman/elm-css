@@ -137,7 +137,7 @@ module Css exposing
     , tabSize
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
     , userSelect
-    , letterSpacing
+    , letterSpacing, wordSpacing
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -608,7 +608,7 @@ Multiple CSS properties use these values.
 @docs tabSize
 @docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
 @docs userSelect
-@docs letterSpacing
+@docs letterSpacing, wordSpacing
 
 -}
 
@@ -15177,3 +15177,40 @@ letterSpacing :
     -> Style
 letterSpacing (Value str) =
     AppendProperty ("letter-spacing:" ++ str)
+
+
+{-| Sets [`word-spacing`](https://css-tricks.com/almanac/properties/w/word-spacing/).
+
+    wordSpacing normal
+
+    wordSpacing zero
+
+    wordSpacing (px 5)
+
+-}
+wordSpacing :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , normal : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+wordSpacing (Value str) =
+    AppendProperty ("word-spacing:" ++ str)
