@@ -74,7 +74,7 @@ module Css exposing
     , geometricPrecision, optimizeLegibility, optimizeSpeed
     , textTransform
     , capitalize, uppercase, lowercase, fullWidth
-    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationSkip, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
     , borderCollapse
     , collapse, separate
@@ -429,7 +429,7 @@ Multiple CSS properties use these values.
 
 ## Text Decoration
 
-@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationSkip, objects, spaces, ink, edges, boxDecoration
 
 @docs wavy, underline, overline, lineThrough
 
@@ -9491,6 +9491,88 @@ textDecorationColor :
     -> Style
 textDecorationColor (Value colorVal) =
     AppendProperty ("text-decoration-color:" ++ colorVal)
+
+
+{-| Sets [`text-decoration-color`][https://css-tricks.com/almanac/properties/t/text-decoration-skip/] property.
+
+    textDecorationSkip objects
+
+    textDecorationSkip none
+
+    textDecorationSkip spaces
+
+    textDecorationSkip ink
+
+    textDecorationSkip edges
+
+    textDecorationSkip boxDecoration
+
+-}
+textDecorationSkip :
+    Value
+        { objects : Supported
+        , none : Supported
+        , spaces : Supported
+        , ink : Supported
+        , edges : Supported
+        , boxDecoration : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationSkip (Value val) =
+    AppendProperty ("text-decoration-skip:" ++ val)
+
+
+{-| Sets `objects` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip objects
+
+-}
+objects : Value { provides | objects : Supported }
+objects =
+    Value "objects"
+
+
+{-| Sets `spaces` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip spaces
+
+-}
+spaces : Value { provides | spaces : Supported }
+spaces =
+    Value "spaces"
+
+
+{-| Sets `ink` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip ink
+
+-}
+ink : Value { provides | ink : Supported }
+ink =
+    Value "ink"
+
+
+{-| Sets `edges` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip edges
+
+-}
+edges : Value { provides | edges : Supported }
+edges =
+    Value "edges"
+
+
+{-| Sets `boxDecoration` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip boxDecoration
+
+-}
+boxDecoration : Value { provides | boxDecoration : Supported }
+boxDecoration =
+    Value "box-decoration"
 
 
 
