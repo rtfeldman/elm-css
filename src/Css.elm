@@ -117,6 +117,7 @@ module Css exposing
     , breakInside, avoid, avoidPage, avoidColumn, avoidRegion
     , boxDecorationBreak
     , hangingPunctuation, first, last, forceEnd, allowEnd
+    , hyphens, manual
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -558,6 +559,7 @@ Multiple CSS properties use these values.
 @docs breakInside, avoid, avoidPage, avoidColumn, avoidRegion
 @docs boxDecorationBreak
 @docs hangingPunctuation, first, last, forceEnd, allowEnd
+@docs hyphens, manual
 
 -}
 
@@ -12989,3 +12991,36 @@ hangingPunctuation :
     -> Style
 hangingPunctuation (Value val) =
     AppendProperty ("hanging-punctuation:" ++ val)
+
+
+{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
+
+    hyphens manual
+
+-}
+manual : Value { provides | manual : Supported }
+manual =
+    Value "manual"
+
+
+{-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
+
+    hyphens none
+
+    hyphens manual
+
+    hyphens auto
+
+-}
+hyphens :
+    Value
+        { none : Supported
+        , manual : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+hyphens (Value val) =
+    AppendProperty ("hyphens:" ++ val)
