@@ -62,6 +62,7 @@ module Css exposing
     , hidden, visible
     , contentBox, borderBox
     , overflow, overflowX, overflowY
+    , overflowAnchor
     , overflowWrap
     , breakWord
     , deg, grad, rad, turn
@@ -379,6 +380,7 @@ Multiple CSS properties use these values.
 ## Overflow
 
 @docs overflow, overflowX, overflowY
+@docs overflowAnchor
 
 @docs overflowWrap
 @docs breakWord
@@ -13451,3 +13453,23 @@ orphans :
     -> Style
 orphans (Value val) =
     AppendProperty ("orphans:" ++ val)
+
+
+{-| Sets [`overflow-anchor`](https://css-tricks.com/almanac/properties/o/overflow-anchor/)
+
+    overflowAnchor auto
+
+    overflowAnchor none
+
+-}
+overflowAnchor :
+    Value
+        { auto : Supported
+        , none : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowAnchor (Value val) =
+    AppendProperty ("overflow-anchor:" ++ val)
