@@ -122,6 +122,7 @@ module Css exposing
     , isolation, isolate
     , lineClamp
     , mixBlendMode
+    , objectFit, fill_, scaleDown
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -568,6 +569,7 @@ Multiple CSS properties use these values.
 @docs isolation, isolate
 @docs lineClamp
 @docs mixBlendMode
+@docs objectFit, fill_, scaleDown
 
 -}
 
@@ -13184,3 +13186,52 @@ mixBlendMode :
     -> Style
 mixBlendMode (Value val) =
     AppendProperty ("mix-blend-mode:" ++ val)
+
+
+{-| Sets `fill` value for usage with [`objectFit`](#objectFit).
+
+    objectFit fill_
+
+-}
+fill_ : Value { provides | fill_ : Supported }
+fill_ =
+    Value "fill"
+
+
+{-| Sets `scale-down` value for usage with [`objectFit`](#objectFit).
+
+    objectFit scaleDown
+
+-}
+scaleDown : Value { provides | scaleDown : Supported }
+scaleDown =
+    Value "scale-down"
+
+
+{-| Sets [`object-fit`](https://css-tricks.com/almanac/properties/o/object-fit/)
+
+    objectFit fill_
+
+    objectFit contain
+
+    objectFit cover
+
+    objectFit scaleDown
+
+    objectFit none
+
+-}
+objectFit :
+    Value
+        { fill_ : Supported
+        , contain : Supported
+        , cover : Supported
+        , none : Supported
+        , scaleDown : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+objectFit (Value val) =
+    AppendProperty ("object-fit:" ++ val)
