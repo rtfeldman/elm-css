@@ -44,10 +44,11 @@ module Css exposing
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
+    , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+    , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
     , url
     , cursor, pointer, default, contextMenu, help, progress, wait, cell
     , crosshair, text, verticalText, alias, copy, move, noDrop
@@ -312,6 +313,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs fontWeight, bold, lighter, bolder
 
 [`normal`](#normal) is also a supported font weight.
+
+@docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
 
 
 ## Font Variant Caps
@@ -12794,3 +12797,124 @@ fontSizeAdjust :
     -> Style
 fontSizeAdjust (Value val) =
     AppendProperty ("font-size-adjust:" ++ val)
+
+
+{-| Sets `ultra-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay ultraCondensed
+
+-}
+ultraCondensed : Value { provides | ultraCondensed : Supported }
+ultraCondensed =
+    Value "ultra-condensed"
+
+
+{-| Sets `extra-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay extraCondensed
+
+-}
+extraCondensed : Value { provides | extraCondensed : Supported }
+extraCondensed =
+    Value "extra-condensed"
+
+
+{-| Sets `condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay Condensed
+
+-}
+condensed : Value { provides | condensed : Supported }
+condensed =
+    Value "condensed"
+
+
+{-| Sets `semi-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay semiCondensed
+
+-}
+semiCondensed : Value { provides | semiCondensed : Supported }
+semiCondensed =
+    Value "semi-condensed"
+
+
+{-| Sets `ultra-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay ultraExpanded
+
+-}
+ultraExpanded : Value { provides | ultraExpanded : Supported }
+ultraExpanded =
+    Value "ultra-expanded"
+
+
+{-| Sets `extra-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay extraExpanded
+
+-}
+extraExpanded : Value { provides | extraExpanded : Supported }
+extraExpanded =
+    Value "extra-expanded"
+
+
+{-| Sets `expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay Expanded
+
+-}
+expanded : Value { provides | expanded : Supported }
+expanded =
+    Value "expanded"
+
+
+{-| Sets `semi-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay semiExpanded
+
+-}
+semiExpanded : Value { provides | semiExpanded : Supported }
+semiExpanded =
+    Value "semi-expanded"
+
+
+{-| Sets [`font-stretch`](https://css-tricks.com/almanac/properties/f/font-stretch/)
+
+    fontStretch ultraCondensed
+
+    fontStretch extraCondensed
+
+    fontStretch condensed
+
+    fontStretch semiCondensed
+
+    fontStretch normal
+
+    fontStretch semiExpanded
+
+    fontStretch expanded
+
+    fontStretch extraExpanded
+
+    fontStretch ultraExpanded
+
+-}
+fontStretch :
+    Value
+        { ultraCondensed : Supported
+        , extraCondensed : Supported
+        , condensed : Supported
+        , semiCondensed : Supported
+        , normal : Supported
+        , semiExpanded : Supported
+        , expanded : Supported
+        , extraExpanded : Supported
+        , ultraExpanded : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontStretch (Value val) =
+    AppendProperty ("font-stretch:" ++ val)
