@@ -136,6 +136,7 @@ module Css exposing
     , speak, spellOut
     , tabSize
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
+    , userSelect
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -605,6 +606,7 @@ Multiple CSS properties use these values.
 @docs speak, spellOut
 @docs tabSize
 @docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
+@docs userSelect
 
 -}
 
@@ -4321,7 +4323,7 @@ crosshair =
     Value "crosshair"
 
 
-{-| The `text` value for the [`cursor`](#cursor) property.
+{-| The `text` value for the [`cursor`](#cursor), and [`user-select`](#userSelect) properties.
 -}
 text : Value { provides | text : Supported }
 text =
@@ -15089,3 +15091,32 @@ unicodeBidi :
     -> Style
 unicodeBidi (Value val) =
     AppendProperty ("unicode-bidi:" ++ val)
+
+
+{-| Sets [`user-select`](https://css-tricks.com/almanac/properties/u/user-select/)
+
+    userSelect none
+
+    userSelect auto
+
+    userSelect text
+
+    userSelect contain
+
+    userSelect all_
+
+-}
+userSelect :
+    Value
+        { none : Supported
+        , auto : Supported
+        , text : Supported
+        , contain : Supported
+        , all_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+userSelect (Value val) =
+    AppendProperty ("user-select:" ++ val)
