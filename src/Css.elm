@@ -67,7 +67,7 @@ module Css exposing
     , breakWord
     , deg, grad, rad, turn
     , direction, ltr, rtl
-    , justify, matchParent, textAlign, textJustify, interWord, interCharacter
+    , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePositon, under
     , textOrientation
     , mixed, sideways, upright
     , textRendering
@@ -406,7 +406,7 @@ Multiple CSS properties use these values.
 
 ## Text Align
 
-@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter
+@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePositon, under
 
 
 ## Text Orientation
@@ -10114,6 +10114,42 @@ interWord =
 interCharacter : Value { provides | interCharacter : Supported }
 interCharacter =
     Value "inter-character"
+
+
+{-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
+
+    textUnderlinePositon auto
+
+    textUnderlinePositon under
+
+    textUnderlinePositon left_
+
+    textUnderlinePositon right_
+
+-}
+textUnderlinePositon :
+    Value
+        { auto : Supported
+        , under : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textUnderlinePositon (Value val) =
+    AppendProperty ("text-underline-position:" ++ val)
+
+
+{-| A `under` value for the [`textUnderlinePositon`](#textUnderlinePositon) property.
+
+    textUnderlinePositon under
+
+-}
+under : Value { provides | under : Supported }
+under =
+    Value "under"
 
 
 {-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
