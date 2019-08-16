@@ -116,6 +116,7 @@ module Css exposing
     , caretColor
     , breakInside, avoid, avoidPage, avoidColumn, avoidRegion
     , boxDecorationBreak
+    , hangingPunctuation, first, last, forceEnd, allowEnd
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -556,6 +557,7 @@ Multiple CSS properties use these values.
 @docs caretColor
 @docs breakInside, avoid, avoidPage, avoidColumn, avoidRegion
 @docs boxDecorationBreak
+@docs hangingPunctuation, first, last, forceEnd, allowEnd
 
 -}
 
@@ -12918,3 +12920,72 @@ fontStretch :
     -> Style
 fontStretch (Value val) =
     AppendProperty ("font-stretch:" ++ val)
+
+
+{-| Sets `first` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation first
+
+-}
+first : Value { provides | first : Supported }
+first =
+    Value "first"
+
+
+{-| Sets `last` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation last
+
+-}
+last : Value { provides | last : Supported }
+last =
+    Value "last"
+
+
+{-| Sets `force-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation forceEnd
+
+-}
+forceEnd : Value { provides | forceEnd : Supported }
+forceEnd =
+    Value "force-end"
+
+
+{-| Sets `allow-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation allowEnd
+
+-}
+allowEnd : Value { provides | allowEnd : Supported }
+allowEnd =
+    Value "allow-end"
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation none
+
+    hangingPunctuation first
+
+    hangingPunctuation forceEnd
+
+    hangingPunctuation allowEnd
+
+    hangingPunctuation last
+
+-}
+hangingPunctuation :
+    Value
+        { none : Supported
+        , first : Supported
+        , forceEnd : Supported
+        , allowEnd : Supported
+        , last : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+hangingPunctuation (Value val) =
+    AppendProperty ("hanging-punctuation:" ++ val)
