@@ -127,6 +127,7 @@ module Css exposing
     , objectFit, fill_, scaleDown
     , objectPosition, objectPosition2, objectPosition4
     , orphans
+    , pointerEvents
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -582,6 +583,7 @@ Multiple CSS properties use these values.
 @docs objectFit, fill_, scaleDown
 @docs objectPosition, objectPosition2, objectPosition4
 @docs orphans
+@docs pointerEvents
 
 -}
 
@@ -13561,3 +13563,23 @@ pageBreakAfter :
     -> Style
 pageBreakAfter (Value val) =
     AppendProperty ("page-break-after:" ++ val)
+
+
+{-| Sets [`pointer-events`](https://css-tricks.com/almanac/properties/b/pointer-events/)
+
+    pointerEvents none
+
+    pointerEvents auto
+
+-}
+pointerEvents :
+    Value
+        { auto : Supported
+        , none : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pointerEvents (Value val) =
+    AppendProperty ("pointer-events:" ++ val)
