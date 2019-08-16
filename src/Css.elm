@@ -118,6 +118,7 @@ module Css exposing
     , boxDecorationBreak
     , hangingPunctuation, first, last, forceEnd, allowEnd
     , hyphens, manual
+    , imageRendering, crispEdges, pixelated
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -560,6 +561,7 @@ Multiple CSS properties use these values.
 @docs boxDecorationBreak
 @docs hangingPunctuation, first, last, forceEnd, allowEnd
 @docs hyphens, manual
+@docs imageRendering, crispEdges, pixelated
 
 -}
 
@@ -13024,3 +13026,46 @@ hyphens :
     -> Style
 hyphens (Value val) =
     AppendProperty ("hyphens:" ++ val)
+
+
+{-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering pixelated
+
+-}
+pixelated : Value { provides | pixelated : Supported }
+pixelated =
+    Value "pixelated"
+
+
+{-| Sets `crisp-edges` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering crispEdges
+
+-}
+crispEdges : Value { provides | crispEdges : Supported }
+crispEdges =
+    Value "crisp-edges"
+
+
+{-| Sets [`image-rendering`](https://css-tricks.com/almanac/properties/i/image-rendering/)
+
+    imageRendering auto
+
+    imageRendering crispEdges
+
+    imageRendering pixelated
+
+-}
+imageRendering :
+    Value
+        { auto : Supported
+        , crispEdges : Supported
+        , pixelated : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+imageRendering (Value val) =
+    AppendProperty ("image-rendering:" ++ val)
