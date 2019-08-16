@@ -133,6 +133,7 @@ module Css exposing
     , orphans
     , pointerEvents
     , speak, spellOut
+    , tabSize
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -598,6 +599,7 @@ Multiple CSS properties use these values.
 @docs orphans
 @docs pointerEvents
 @docs speak, spellOut
+@docs tabSize
 
 -}
 
@@ -14629,3 +14631,21 @@ speak :
     -> Style
 speak (Value val) =
     AppendProperty ("speak:" ++ val)
+
+
+{-| Sets [`tabSize`](https://css-tricks.com/almanac/properties/t/tab-size/)
+**Note:** only positive integer values are allowed.
+
+    tabSize (int 4)
+
+-}
+tabSize :
+    Value
+        { int : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+tabSize (Value val) =
+    AppendProperty ("tab-size:" ++ val)
