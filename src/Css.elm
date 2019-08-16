@@ -40,6 +40,7 @@ module Css exposing
     , alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
     , fontDisplay, fallback, swap, optional
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+    , fontSizeAdjust
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
@@ -291,6 +292,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Font Size
 
 @docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+@docs fontSizeAdjust
 
 
 ## Font Family
@@ -12769,3 +12771,26 @@ fontDisplay :
     -> Style
 fontDisplay (Value val) =
     AppendProperty ("font-display:" ++ val)
+
+
+{-| Sets [`font-size-adjust`](https://css-tricks.com/almanac/properties/f/font-size-adjust/)
+
+    fontSizeAdjust zero
+
+    fontSizeAdjust none
+
+    fontSizeAdjust (num 0.5)
+
+-}
+fontSizeAdjust :
+    Value
+        { none : Supported
+        , zero : Supported
+        , num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontSizeAdjust (Value val) =
+    AppendProperty ("font-size-adjust:" ++ val)
