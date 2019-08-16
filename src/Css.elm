@@ -104,7 +104,7 @@ module Css exposing
     , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan, all_
-    , transform
+    , transform, transformOrigin, transformOrigin2
     , matrix, matrix3d
     , perspective
     , rotate, rotateX, rotateY, rotateZ, rotate3d
@@ -528,7 +528,7 @@ Multiple CSS properties use these values.
 
 # Transformation
 
-@docs transform
+@docs transform, transformOrigin, transformOrigin2
 
 
 ## Matrix transformation
@@ -14953,3 +14953,58 @@ textStrokeColor :
     -> Style
 textStrokeColor (Value val) =
     AppendProperty ("text-stroke-color:" ++ val)
+
+
+{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
+
+    transformOrigin top_
+
+    transformOrigin center
+
+    transformOrigin bottom
+
+    transformOrigin (pct 50)
+
+-}
+transformOrigin :
+    Value
+        { top_ : Supported
+        , center : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        , inherit : Supported
+        , initial : Supported
+        }
+    -> Style
+transformOrigin (Value vert) =
+    AppendProperty ("transform-origin:" ++ vert)
+
+
+{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
+
+    transformOrigin2 top_ left
+
+    transformOrigin2 center right_
+
+    transformOrigin2 bottom_ right_
+
+    transformOrigin2 (pct 50) (pct 50)
+
+-}
+transformOrigin2 :
+    Value
+        { top_ : Supported
+        , center : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        }
+    ->
+        Value
+            { left_ : Supported
+            , center : Supported
+            , right_ : Supported
+            , pct : Supported
+            }
+    -> Style
+transformOrigin2 (Value vert) (Value horiz) =
+    AppendProperty ("transform-origin:" ++ vert ++ " " ++ horiz)
