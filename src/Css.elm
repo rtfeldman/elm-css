@@ -132,6 +132,7 @@ module Css exposing
     , objectPosition, objectPosition2, objectPosition4
     , orphans
     , pointerEvents
+    , speak, spellOut
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -596,6 +597,7 @@ Multiple CSS properties use these values.
 @docs objectPosition, objectPosition2, objectPosition4
 @docs orphans
 @docs pointerEvents
+@docs speak, spellOut
 
 -}
 
@@ -14594,3 +14596,36 @@ scrollSnapType2 :
     -> Style
 scrollSnapType2 (Value val1) (Value val2) =
     AppendProperty ("scroll-snap-type:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets `spellOut` value for usage with [`speak`](#speak).
+
+    speak spellOut
+
+-}
+spellOut : Value { provides | spellOut : Supported }
+spellOut =
+    Value "spell-out"
+
+
+{-| Sets [`speak`](https://css-tricks.com/almanac/properties/s/speak/)
+
+    speak none
+
+    speak normal
+
+    speak spellOut
+
+-}
+speak :
+    Value
+        { none : Supported
+        , normal : Supported
+        , spellOut : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+speak (Value val) =
+    AppendProperty ("speak:" ++ val)
