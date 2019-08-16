@@ -120,6 +120,7 @@ module Css exposing
     , hyphens, manual
     , imageRendering, crispEdges, pixelated
     , isolation, isolate
+    , lineClamp
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -564,6 +565,7 @@ Multiple CSS properties use these values.
 @docs hyphens, manual
 @docs imageRendering, crispEdges, pixelated
 @docs isolation, isolate
+@docs lineClamp
 
 -}
 
@@ -13102,3 +13104,26 @@ isolation :
     -> Style
 isolation (Value val) =
     AppendProperty ("isolation:" ++ val)
+
+
+{-| Sets [`lineClamp`](https://css-tricks.com/almanac/properties/l/line-clamp/)
+
+    lineClamp none
+
+    lineClamp zero
+
+    lineClamp (int 3)
+
+-}
+lineClamp :
+    Value
+        { none : Supported
+        , zero : Supported
+        , int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+lineClamp (Value val) =
+    AppendProperty ("line-clamp:" ++ val)
