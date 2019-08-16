@@ -2858,10 +2858,10 @@ calc :
         }
     -> CalcOperation
     -> Value { provides | calc : Supported }
-calc (Value first) (CalcOperation operation) =
+calc (Value head) (CalcOperation operation) =
     Value
         ("calc("
-            ++ getCalcExpression first
+            ++ getCalcExpression head
             ++ operation
             ++ ")"
         )
@@ -5078,13 +5078,13 @@ backgroundImages :
                 }
             )
     -> Style
-backgroundImages (Value first) rest =
+backgroundImages (Value head) rest =
     let
         peeled =
             List.map unpackValue rest
 
         values =
-            String.join "," (first :: peeled)
+            String.join "," (head :: peeled)
     in
     AppendProperty ("background-image:" ++ values)
 
