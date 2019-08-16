@@ -131,7 +131,7 @@ module Css exposing
     , mixBlendMode
     , objectFit, fill_, scaleDown
     , objectPosition, objectPosition2, objectPosition4
-    , orphans
+    , orphans, widows
     , pointerEvents
     , speak, spellOut
     , tabSize
@@ -601,7 +601,7 @@ Multiple CSS properties use these values.
 @docs mixBlendMode
 @docs objectFit, fill_, scaleDown
 @docs objectPosition, objectPosition2, objectPosition4
-@docs orphans
+@docs orphans, widows
 @docs pointerEvents
 @docs speak, spellOut
 @docs tabSize
@@ -13636,7 +13636,7 @@ objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount
 
 
 {-| Sets [`orphans`](https://css-tricks.com/almanac/properties/o/orphans/)
-**Note:** This function accepts only positve integers.
+**Note:** This function accepts only positive integers.
 
     orphans (int 2)
 
@@ -15120,3 +15120,21 @@ userSelect :
     -> Style
 userSelect (Value val) =
     AppendProperty ("user-select:" ++ val)
+
+
+{-| Sets [`widows`](https://css-tricks.com/almanac/properties/w/widows/)
+**Note:** This function accepts only positive integers.
+
+    widows (int 2)
+
+-}
+widows :
+    Value
+        { int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+widows (Value val) =
+    AppendProperty ("widows:" ++ val)
