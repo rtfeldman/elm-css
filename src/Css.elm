@@ -38,6 +38,7 @@ module Css exposing
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
     , alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
+    , fontDisplay, fallback, swap, optional
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
@@ -277,6 +278,14 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Flexbox
 
 @docs alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
+
+
+# Fonts
+
+
+## Font display
+
+@docs fontDisplay, fallback, swap, optional
 
 
 ## Font Size
@@ -12701,3 +12710,62 @@ boxDecorationBreak :
     -> Style
 boxDecorationBreak (Value val) =
     AppendProperty ("box-decoration-break:" ++ val)
+
+
+{-| Sets `swap` value for usage with [`fontDisplay`](#fontDisplay).
+
+    fontDisplay swap
+
+-}
+swap : Value { provides | swap : Supported }
+swap =
+    Value "swap"
+
+
+{-| Sets `fallback` value for usage with [`fontDisplay`](#fontDisplay).
+
+      fontDisplay fallback
+
+-}
+fallback : Value { provides | fallback : Supported }
+fallback =
+    Value "fallback"
+
+
+{-| Sets `optional` value for usage with [`fontDisplay`](#fontDisplay).
+
+      fontDisplay optional
+
+-}
+optional : Value { provides | optional : Supported }
+optional =
+    Value "optional"
+
+
+{-| Sets [`font-display`](https://css-tricks.com/almanac/properties/f/font-display/)
+
+    fontDisplay auto
+
+    fontDisplay block
+
+    fontDisplay swap
+
+    fontDisplay fallback
+
+    fontDisplay optional
+
+-}
+fontDisplay :
+    Value
+        { auto : Supported
+        , block : Supported
+        , swap : Supported
+        , fallback : Supported
+        , optional : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontDisplay (Value val) =
+    AppendProperty ("font-display:" ++ val)
