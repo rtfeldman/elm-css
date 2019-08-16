@@ -13667,7 +13667,7 @@ overflowAnchor (Value val) =
 -- Page break
 
 
-{-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/b/page-break-before/)
+{-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/p/page-break/)
 
     pageBreakBefore auto
 
@@ -13696,7 +13696,7 @@ pageBreakBefore (Value val) =
     AppendProperty ("page-break-before:" ++ val)
 
 
-{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/b/page-break-inside/)
+{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/p/page-break/)
 
     pageBreakInside auto
 
@@ -13716,7 +13716,7 @@ pageBreakInside (Value val) =
     AppendProperty ("page-break-inside:" ++ val)
 
 
-{-| Sets [`page-break-after`](https://css-tricks.com/almanac/properties/b/page-break-after/)
+{-| Sets [`page-break-after`](https://css-tricks.com/almanac/properties/p/page-break/)
 
     pageBreakAfter auto
 
