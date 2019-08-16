@@ -67,7 +67,7 @@ module Css exposing
     , breakWord
     , deg, grad, rad, turn
     , direction, ltr, rtl
-    , justify, matchParent, textAlign
+    , justify, matchParent, textAlign, textJustify, interWord, interCharacter
     , textOrientation
     , mixed, sideways, upright
     , textRendering
@@ -406,7 +406,7 @@ Multiple CSS properties use these values.
 
 ## Text Align
 
-@docs justify, matchParent, textAlign
+@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter
 
 
 ## Text Orientation
@@ -10070,6 +10070,52 @@ matchParent =
     Value "match-parent"
 
 
+{-| Sets [`text-justify`](https://css-tricks.com/almanac/properties/t/text-justify/)
+
+    textJustify interWord
+
+    textJustify interCharacter
+
+    textJustify auto
+
+    textJustify none
+
+-}
+textJustify :
+    Value
+        { interWord : Supported
+        , interCharacter : Supported
+        , auto : Supported
+        , none : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textJustify (Value val) =
+    AppendProperty ("text-justify:" ++ val)
+
+
+{-| A `inter-word` value for the [`textJustify`](#textJustify) property.
+
+    textJustify interWord
+
+-}
+interWord : Value { provides | interWord : Supported }
+interWord =
+    Value "inter-word"
+
+
+{-| A `inter-character` value for the [`textJustify`](#textJustify) property.
+
+    textJustify interCharacter
+
+-}
+interCharacter : Value { provides | interCharacter : Supported }
+interCharacter =
+    Value "inter-character"
+
+
 {-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
 
     direction ltr
@@ -14715,7 +14761,7 @@ speak (Value val) =
     AppendProperty ("speak:" ++ val)
 
 
-{-| Sets [`tabSize`](https://css-tricks.com/almanac/properties/t/tab-size/)
+{-| Sets [`tab-size`](https://css-tricks.com/almanac/properties/t/tab-size/)
 **Note:** only positive integer values are allowed.
 
     tabSize (int 4)
