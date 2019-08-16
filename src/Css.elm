@@ -121,6 +121,7 @@ module Css exposing
     , imageRendering, crispEdges, pixelated
     , isolation, isolate
     , lineClamp
+    , mixBlendMode
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -566,6 +567,7 @@ Multiple CSS properties use these values.
 @docs imageRendering, crispEdges, pixelated
 @docs isolation, isolate
 @docs lineClamp
+@docs mixBlendMode
 
 -}
 
@@ -13127,3 +13129,58 @@ lineClamp :
     -> Style
 lineClamp (Value val) =
     AppendProperty ("line-clamp:" ++ val)
+
+
+{-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
+
+    mixBlendMode normal
+
+    mixBlendMode multiply
+
+    mixBlendMode screen
+
+    mixBlendMode overlay
+
+    mixBlendMode darken
+
+    mixBlendMode lighten
+
+    mixBlendMode colorDodge
+
+    mixBlendMode colorBurn
+
+    mixBlendMode hardLight
+
+    mixBlendMode softLight
+
+    mixBlendMode difference
+
+    mixBlendMode exclusion
+
+    mixBlendMode saturation
+
+-}
+mixBlendMode :
+    Value
+        { normal : Supported
+        , multiply : Supported
+        , screen : Supported
+        , overlay : Supported
+        , darken : Supported
+        , lighten : Supported
+        , colorDodge : Supported
+        , colorBurn : Supported
+        , hardLight : Supported
+        , softLight : Supported
+        , difference : Supported
+        , exclusion : Supported
+        , saturation : Supported
+        , color_ : Supported
+        , luminosity : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+mixBlendMode (Value val) =
+    AppendProperty ("mix-blend-mode:" ++ val)
