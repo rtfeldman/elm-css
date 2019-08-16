@@ -112,6 +112,7 @@ module Css exposing
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , opacity
     , zoom
+    , pageBreakBefore, pageBreakInside, pageBreakAfter
     , backfaceVisibility
     , bleed
     , caretColor
@@ -558,6 +559,11 @@ Multiple CSS properties use these values.
 # Viewport
 
 @docs zoom
+
+
+# Page break
+
+@docs pageBreakBefore, pageBreakInside, pageBreakAfter
 
 
 # Other
@@ -13473,3 +13479,85 @@ overflowAnchor :
     -> Style
 overflowAnchor (Value val) =
     AppendProperty ("overflow-anchor:" ++ val)
+
+
+
+-- Page break
+
+
+{-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/b/page-break-before/)
+
+    pageBreakBefore auto
+
+    pageBreakBefore always
+
+    pageBreakBefore avoid
+
+    pageBreakBefore left_
+
+    pageBreakBefore right_
+
+-}
+pageBreakBefore :
+    Value
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pageBreakBefore (Value val) =
+    AppendProperty ("page-break-before:" ++ val)
+
+
+{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/b/page-break-inside/)
+
+    pageBreakInside auto
+
+    pageBreakInside avoid
+
+-}
+pageBreakInside :
+    Value
+        { auto : Supported
+        , avoid : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pageBreakInside (Value val) =
+    AppendProperty ("page-break-inside:" ++ val)
+
+
+{-| Sets [`page-break-after`](https://css-tricks.com/almanac/properties/b/page-break-after/)
+
+    pageBreakAfter auto
+
+    pageBreakAfter always
+
+    pageBreakAfter avoid
+
+    pageBreakAfter left_
+
+    pageBreakAfter right_
+
+-}
+pageBreakAfter :
+    Value
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pageBreakAfter (Value val) =
+    AppendProperty ("page-break-after:" ++ val)
