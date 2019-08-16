@@ -76,6 +76,7 @@ module Css exposing
     , capitalize, uppercase, lowercase, fullWidth
     , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationSkip, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
+    , textStroke, textStroke2, textStrokeColor, textStrokeWidth
     , borderCollapse
     , collapse, separate
     , borderSpacing, borderSpacing2
@@ -113,7 +114,7 @@ module Css exposing
     , opacity
     , zoom
     , pageBreakBefore, pageBreakInside, pageBreakAfter
-    , scrollBehavior, scrollSnapAlign, scrollSnapStop
+    , scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
     , scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
@@ -352,7 +353,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -432,6 +433,8 @@ Multiple CSS properties use these values.
 @docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationSkip, objects, spaces, ink, edges, boxDecoration
 
 @docs wavy, underline, overline, lineThrough
+
+@docs textStroke, textStroke2, textStrokeColor, textStrokeWidth
 
 
 # Tables
@@ -14813,3 +14816,140 @@ tabSize :
     -> Style
 tabSize (Value val) =
     AppendProperty ("tab-size:" ++ val)
+
+
+
+--- Text stroke ---
+
+
+{-| Sets [`text-stroke`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+This is a shorthand for [`text-stroke-width`](#textStrokeWidth) and [`text-stroke-color`](#textStrokeColor).
+
+    tabStroke (px 2)
+
+-}
+textStroke :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textStroke (Value val) =
+    AppendProperty ("text-stroke:" ++ val)
+
+
+{-| Sets [`text-stroke`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+
+    tabStroke2 (px 2) (hex "#60b5cc")
+
+-}
+textStroke2 :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+textStroke2 (Value val1) (Value val2) =
+    AppendProperty ("text-stroke:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`text-stroke-width`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+
+    tabStrokeWidth (px 2)
+
+-}
+textStrokeWidth :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textStrokeWidth (Value val) =
+    AppendProperty ("text-stroke-width:" ++ val)
+
+
+{-| Sets [`text-stroke-color`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+
+    tabStrokeColor (hex "#60b5cc")
+
+-}
+textStrokeColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textStrokeColor (Value val) =
+    AppendProperty ("text-stroke-color:" ++ val)
