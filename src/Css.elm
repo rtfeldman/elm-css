@@ -135,6 +135,7 @@ module Css exposing
     , pointerEvents
     , speak, spellOut
     , tabSize
+    , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -603,6 +604,7 @@ Multiple CSS properties use these values.
 @docs pointerEvents
 @docs speak, spellOut
 @docs tabSize
+@docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
 
 -}
 
@@ -13276,9 +13278,12 @@ imageRendering (Value val) =
     AppendProperty ("image-rendering:" ++ val)
 
 
-{-| Sets `isolate` value for usage with [`isolation`](#isolation).
+{-| Sets `isolate` value for usage with [`isolation`](#isolation), and
+[`unicodeBidi`](#unicodeBidi).
 
     isolation isolate
+
+    unicodeBidi isolate
 
 -}
 isolate : Value { provides | isolate : Supported }
@@ -15008,3 +15013,79 @@ transformOrigin2 :
     -> Style
 transformOrigin2 (Value vert) (Value horiz) =
     AppendProperty ("transform-origin:" ++ vert ++ " " ++ horiz)
+
+
+
+--- unicode-bidi ---
+
+
+{-| Sets `embed` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi embed
+
+-}
+embed : Value { provides | embed : Supported }
+embed =
+    Value "embed"
+
+
+{-| Sets `plaintext` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi plaintext
+
+-}
+plaintext : Value { provides | plaintext : Supported }
+plaintext =
+    Value "plaintext"
+
+
+{-| Sets `bidi-override` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi bidiOverride
+
+-}
+bidiOverride : Value { provides | bidiOverride : Supported }
+bidiOverride =
+    Value "bidi-override"
+
+
+{-| Sets `isolate-override` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi isolateOverride
+
+-}
+isolateOverride : Value { provides | isolateOverride : Supported }
+isolateOverride =
+    Value "isolate-override"
+
+
+{-| Sets [`unicode-bidi`](https://css-tricks.com/almanac/properties/u/unicode-bidi/)
+
+    unicodeBidi normal
+
+    unicodeBidi embed
+
+    unicodeBidi isolate
+
+    unicodeBidi bidiOverride
+
+    unicodeBidi isolateOverride
+
+    unicodeBidi plaintext
+
+-}
+unicodeBidi :
+    Value
+        { normal : Supported
+        , embed : Supported
+        , isolate : Supported
+        , bidiOverride : Supported
+        , isolateOverride : Supported
+        , plaintext : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+unicodeBidi (Value val) =
+    AppendProperty ("unicode-bidi:" ++ val)
