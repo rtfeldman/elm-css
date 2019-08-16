@@ -138,6 +138,7 @@ module Css exposing
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
     , userSelect
     , letterSpacing, wordSpacing
+    , writingMode, verticalLr, verticalRl, horizontalTb
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -609,6 +610,7 @@ Multiple CSS properties use these values.
 @docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
 @docs userSelect
 @docs letterSpacing, wordSpacing
+@docs writingMode, verticalLr, verticalRl, horizontalTb
 
 -}
 
@@ -15214,3 +15216,56 @@ wordSpacing :
     -> Style
 wordSpacing (Value str) =
     AppendProperty ("word-spacing:" ++ str)
+
+
+{-| Sets `horizontal-tb` value for usage with [`writingMode`](#writingMode).
+
+    writingMode horizontalTb
+
+-}
+horizontalTb : Value { provides | horizontalTb : Supported }
+horizontalTb =
+    Value "horizontal-tb"
+
+
+{-| Sets `vertical-lr` value for usage with [`writingMode`](#writingMode).
+
+    writingMode verticalLr
+
+-}
+verticalLr : Value { provides | verticalLr : Supported }
+verticalLr =
+    Value "vertical-lr"
+
+
+{-| Sets `vertical-rl` value for usage with [`writingMode`](#writingMode).
+
+    writingMode verticalRl
+
+-}
+verticalRl : Value { provides | verticalRl : Supported }
+verticalRl =
+    Value "vertical-rl"
+
+
+{-| Sets [`writing-mode`](https://css-tricks.com/almanac/properties/w/writing-mode/).
+
+    writingMode horizontalTb
+
+    writingMode verticalRl
+
+    writingMode verticalLr
+
+-}
+writingMode :
+    Value
+        { horizontalTb : Supported
+        , verticalRl : Supported
+        , verticalLr : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+writingMode (Value str) =
+    AppendProperty ("writing-mode:" ++ str)
