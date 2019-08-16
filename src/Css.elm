@@ -119,6 +119,7 @@ module Css exposing
     , hangingPunctuation, first, last, forceEnd, allowEnd
     , hyphens, manual
     , imageRendering, crispEdges, pixelated
+    , isolation, isolate
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -562,6 +563,7 @@ Multiple CSS properties use these values.
 @docs hangingPunctuation, first, last, forceEnd, allowEnd
 @docs hyphens, manual
 @docs imageRendering, crispEdges, pixelated
+@docs isolation, isolate
 
 -}
 
@@ -13069,3 +13071,34 @@ imageRendering :
     -> Style
 imageRendering (Value val) =
     AppendProperty ("image-rendering:" ++ val)
+
+
+{-| Sets `isolate` value for usage with [`isolation`](#isolation).
+
+    isolation isolate
+
+-}
+isolate : Value { provides | isolate : Supported }
+isolate =
+    Value "isolate"
+
+
+{-| Sets [`isolation`](https://css-tricks.com/almanac/properties/i/isolation/)
+
+    isolation auto
+
+    isolation isolate
+
+-}
+isolation :
+    Value
+        { auto : Supported
+        , crispEdges : Supported
+        , pixelated : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+isolation (Value val) =
+    AppendProperty ("isolation:" ++ val)
