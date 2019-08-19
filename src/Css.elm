@@ -38,8 +38,14 @@ module Css exposing
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
     , alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
+    , letterSpacing, wordSpacing
+    , tabSize
     , fontDisplay, fallback, swap, optional
-    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+    , writingMode, verticalLr, verticalRl, horizontalTb
+    , hyphens, manual
+    , hangingPunctuation, first, last, forceEnd, allowEnd
+    , lineClamp
+    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight
     , fontSizeAdjust
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
@@ -74,7 +80,8 @@ module Css exposing
     , geometricPrecision, optimizeLegibility, optimizeSpeed
     , textTransform
     , capitalize, uppercase, lowercase, fullWidth
-    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationSkip, objects, spaces, ink, edges, boxDecoration
+    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+    , textDecorationSkip, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
     , textStroke, textStroke2, textStrokeColor, textStrokeWidth
     , borderCollapse
@@ -113,32 +120,26 @@ module Css exposing
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , opacity
     , zoom
-    , pageBreakBefore, pageBreakInside, pageBreakAfter
     , scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
     , scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
-    , backfaceVisibility
+    , speak, spellOut
+    , userSelect
+    , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
     , bleed
-    , caretColor
+    , orphans, widows
     , breakInside, avoid, avoidPage, avoidColumn, avoidRegion
-    , boxDecorationBreak
-    , hangingPunctuation, first, last, forceEnd, allowEnd
-    , hyphens, manual
-    , imageRendering, crispEdges, pixelated
-    , isolation, isolate
-    , lineClamp
+    , pageBreakBefore, pageBreakInside, pageBreakAfter
     , mixBlendMode
+    , imageRendering, crispEdges, pixelated
+    , backfaceVisibility
     , objectFit, fill_, scaleDown
     , objectPosition, objectPosition2, objectPosition4
-    , orphans, widows
+    , boxDecorationBreak
+    , isolation, isolate
+    , caretColor
     , pointerEvents
-    , speak, spellOut
-    , tabSize
-    , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
-    , userSelect
-    , letterSpacing, wordSpacing
-    , writingMode, verticalLr, verticalRl, horizontalTb
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -305,17 +306,27 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
 
 
-# Fonts
+# Typography
 
 
-## Font display
+## Spacing
+
+@docs letterSpacing, wordSpacing
+@docs tabSize
+
+
+## Display
 
 @docs fontDisplay, fallback, swap, optional
+@docs writingMode, verticalLr, verticalRl, horizontalTb
+@docs hyphens, manual
+@docs hangingPunctuation, first, last, forceEnd, allowEnd
+@docs lineClamp
 
 
 ## Font Size
 
-@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight
 @docs fontSizeAdjust
 
 
@@ -434,7 +445,8 @@ Multiple CSS properties use these values.
 
 ## Text Decoration
 
-@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationSkip, objects, spaces, ink, edges, boxDecoration
+@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+@docs textDecorationSkip, objects, spaces, ink, edges, boxDecoration
 
 @docs wavy, underline, overline, lineThrough
 
@@ -575,11 +587,6 @@ Multiple CSS properties use these values.
 @docs zoom
 
 
-# Page break
-
-@docs pageBreakBefore, pageBreakInside, pageBreakAfter
-
-
 # Scroll
 
 @docs scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
@@ -588,29 +595,36 @@ Multiple CSS properties use these values.
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
 
 
-# Other
+# Accesibility
 
-@docs backfaceVisibility
+@docs speak, spellOut
+@docs userSelect
+@docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
+
+
+# Printing
+
 @docs bleed
-@docs caretColor
+@docs orphans, widows
 @docs breakInside, avoid, avoidPage, avoidColumn, avoidRegion
-@docs boxDecorationBreak
-@docs hangingPunctuation, first, last, forceEnd, allowEnd
-@docs hyphens, manual
-@docs imageRendering, crispEdges, pixelated
-@docs isolation, isolate
-@docs lineClamp
+@docs pageBreakBefore, pageBreakInside, pageBreakAfter
+
+
+# Rendering
+
 @docs mixBlendMode
+@docs imageRendering, crispEdges, pixelated
+@docs backfaceVisibility
 @docs objectFit, fill_, scaleDown
 @docs objectPosition, objectPosition2, objectPosition4
-@docs orphans, widows
+@docs boxDecorationBreak
+@docs isolation, isolate
+
+
+# Other
+
+@docs caretColor
 @docs pointerEvents
-@docs speak, spellOut
-@docs tabSize
-@docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
-@docs userSelect
-@docs letterSpacing, wordSpacing
-@docs writingMode, verticalLr, verticalRl, horizontalTb
 
 -}
 
@@ -15142,43 +15156,6 @@ widows :
     -> Style
 widows (Value val) =
     AppendProperty ("widows:" ++ val)
-
-
-{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/).
-
-    letterSpacing normal
-
-    letterSpacing zero
-
-    letterSpacing (px 5)
-
--}
-letterSpacing :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , normal : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
-    -> Style
-letterSpacing (Value str) =
-    AppendProperty ("letter-spacing:" ++ str)
 
 
 {-| Sets [`word-spacing`](https://css-tricks.com/almanac/properties/w/word-spacing/).
