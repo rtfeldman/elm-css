@@ -38,7 +38,7 @@ module Css exposing
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
     , alignItems, alignSelf
-    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
+    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
@@ -275,7 +275,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Font Size
 
-@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
+@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
 
 
 ## Font Family
@@ -12264,3 +12264,57 @@ zoom :
     -> Style
 zoom (Value val) =
     AppendProperty ("zoom:" ++ val)
+
+
+{-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
+
+    lineHeight (pct 150)
+
+    lineHeight (em 2)
+
+    lineHeight (num 1.5)
+
+    lineHeight normal
+
+-}
+lineHeight :  
+    Value
+        { pct : Supported
+        , normal : Supported
+        , num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , px : Supported
+        , em : Supported
+        , rem : Supported
+        }
+        -> Style
+lineHeight (Value val) =
+    AppendProperty ("line-height:" ++ val)
+
+
+{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/)
+
+    letterSpacing (pct 150)
+
+    letterSpacing (em 2)
+
+    letterSpacing (num 1.5)
+
+    letterSpacing normal
+
+-}
+letterSpacing : 
+    Value
+        { inherit : Supported
+        , normal : Supported
+        , initial : Supported
+        , unset : Supported
+        , rem : Supported
+        , px : Supported
+        , em : Supported
+        }
+        -> Style
+letterSpacing (Value val) =
+    AppendProperty ("letter-spacing:" ++ val)
