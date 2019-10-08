@@ -52,7 +52,7 @@ module Css exposing
     , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
-    , listStyle, listStyle2, listStyle3, listStylePosition
+    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside
     , arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
     , auto, none
     , hidden, visible
