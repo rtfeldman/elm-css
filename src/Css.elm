@@ -12288,6 +12288,8 @@ lineHeight :
         , px : Supported
         , em : Supported
         , rem : Supported
+        , zero : Supported
+        , calc : Supported
         }
         -> Style
 lineHeight (Value val) =
@@ -12314,6 +12316,8 @@ letterSpacing :
         , rem : Supported
         , px : Supported
         , em : Supported
+        , zero : Supported
+        , calc : Supported
         }
         -> Style
 letterSpacing (Value val) =
