@@ -5431,8 +5431,8 @@ backgroundSize2 :
             , auto : Supported
             }
     -> Style
-backgroundSize2 (Value width) (Value height) =
-    AppendProperty ("background-size:" ++ width ++ " " ++ height)
+backgroundSize2 (Value width_) (Value height) =
+    AppendProperty ("background-size:" ++ width_ ++ " " ++ height)
 
 
 {-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
@@ -5852,8 +5852,8 @@ border :
         , unset : Supported
         }
     -> Style
-border (Value width) =
-    AppendProperty ("border:" ++ width)
+border (Value width_) =
+    AppendProperty ("border:" ++ width_)
 
 
 {-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
@@ -5901,8 +5901,8 @@ border2 :
             , outset : Supported
             }
     -> Style
-border2 (Value width) (Value style) =
-    AppendProperty ("border:" ++ width ++ " " ++ style)
+border2 (Value width_) (Value style) =
+    AppendProperty ("border:" ++ width_ ++ " " ++ style)
 
 
 {-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
@@ -5960,8 +5960,8 @@ border3 :
             , currentColor : Supported
             }
     -> Style
-border3 (Value width) (Value style) (Value colorVal) =
-    AppendProperty ("border:" ++ width ++ " " ++ style ++ " " ++ colorVal)
+border3 (Value width_) (Value style) (Value colorVal) =
+    AppendProperty ("border:" ++ width_ ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -5999,8 +5999,8 @@ borderTop :
         , unset : Supported
         }
     -> Style
-borderTop (Value width) =
-    AppendProperty ("border-top:" ++ width)
+borderTop (Value width_) =
+    AppendProperty ("border-top:" ++ width_)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -6048,8 +6048,8 @@ borderTop2 :
             , outset : Supported
             }
     -> Style
-borderTop2 (Value width) (Value style) =
-    AppendProperty ("border-top:" ++ width ++ " " ++ style)
+borderTop2 (Value width_) (Value style) =
+    AppendProperty ("border-top:" ++ width_ ++ " " ++ style)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -6107,8 +6107,8 @@ borderTop3 :
             , currentColor : Supported
             }
     -> Style
-borderTop3 (Value width) (Value style) (Value colorVal) =
-    AppendProperty ("border-top:" ++ width ++ " " ++ style ++ " " ++ colorVal)
+borderTop3 (Value width_) (Value style) (Value colorVal) =
+    AppendProperty ("border-top:" ++ width_ ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -6146,8 +6146,8 @@ borderRight :
         , unset : Supported
         }
     -> Style
-borderRight (Value width) =
-    AppendProperty ("border-right:" ++ width)
+borderRight (Value width_) =
+    AppendProperty ("border-right:" ++ width_)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -6195,8 +6195,8 @@ borderRight2 :
             , outset : Supported
             }
     -> Style
-borderRight2 (Value width) (Value style) =
-    AppendProperty ("border-right:" ++ width ++ " " ++ style)
+borderRight2 (Value width_) (Value style) =
+    AppendProperty ("border-right:" ++ width_ ++ " " ++ style)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -6254,8 +6254,8 @@ borderRight3 :
             , currentColor : Supported
             }
     -> Style
-borderRight3 (Value width) (Value style) (Value colorVal) =
-    AppendProperty ("border-right:" ++ width ++ " " ++ style ++ " " ++ colorVal)
+borderRight3 (Value width_) (Value style) (Value colorVal) =
+    AppendProperty ("border-right:" ++ width_ ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -6293,8 +6293,8 @@ borderBottom :
         , unset : Supported
         }
     -> Style
-borderBottom (Value width) =
-    AppendProperty ("border-bottom:" ++ width)
+borderBottom (Value width_) =
+    AppendProperty ("border-bottom:" ++ width_)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -6342,8 +6342,8 @@ borderBottom2 :
             , outset : Supported
             }
     -> Style
-borderBottom2 (Value width) (Value style) =
-    AppendProperty ("border-bottom:" ++ width ++ " " ++ style)
+borderBottom2 (Value width_) (Value style) =
+    AppendProperty ("border-bottom:" ++ width_ ++ " " ++ style)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -6401,8 +6401,8 @@ borderBottom3 :
             , currentColor : Supported
             }
     -> Style
-borderBottom3 (Value width) (Value style) (Value colorVal) =
-    AppendProperty ("border-bottom:" ++ width ++ " " ++ style ++ " " ++ colorVal)
+borderBottom3 (Value width_) (Value style) (Value colorVal) =
+    AppendProperty ("border-bottom:" ++ width_ ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -6440,8 +6440,8 @@ borderLeft :
         , unset : Supported
         }
     -> Style
-borderLeft (Value width) =
-    AppendProperty ("border-left:" ++ width)
+borderLeft (Value width_) =
+    AppendProperty ("border-left:" ++ width_)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -6489,8 +6489,8 @@ borderLeft2 :
             , outset : Supported
             }
     -> Style
-borderLeft2 (Value width) (Value style) =
-    AppendProperty ("border-left:" ++ width ++ " " ++ style)
+borderLeft2 (Value width_) (Value style) =
+    AppendProperty ("border-left:" ++ width_ ++ " " ++ style)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -6548,8 +6548,8 @@ borderLeft3 :
             , currentColor : Supported
             }
     -> Style
-borderLeft3 (Value width) (Value style) (Value colorVal) =
-    AppendProperty ("border-left:" ++ width ++ " " ++ style ++ " " ++ colorVal)
+borderLeft3 (Value width_) (Value style) (Value colorVal) =
+    AppendProperty ("border-left:" ++ width_ ++ " " ++ style ++ " " ++ colorVal)
 
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
@@ -6589,8 +6589,8 @@ borderWidth :
         , unset : Supported
         }
     -> Style
-borderWidth (Value width) =
-    AppendProperty ("border-width:" ++ width)
+borderWidth (Value width_) =
+    AppendProperty ("border-width:" ++ width_)
 
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
@@ -6871,8 +6871,8 @@ borderTopWidth :
         , unset : Supported
         }
     -> Style
-borderTopWidth (Value width) =
-    AppendProperty ("border-top-width:" ++ width)
+borderTopWidth (Value width_) =
+    AppendProperty ("border-top-width:" ++ width_)
 
 
 {-| Sets [`border-right-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width) property.
@@ -6906,8 +6906,8 @@ borderRightWidth :
         , unset : Supported
         }
     -> Style
-borderRightWidth (Value width) =
-    AppendProperty ("border-right-width:" ++ width)
+borderRightWidth (Value width_) =
+    AppendProperty ("border-right-width:" ++ width_)
 
 
 {-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width) property.
@@ -6941,8 +6941,8 @@ borderBottomWidth :
         , unset : Supported
         }
     -> Style
-borderBottomWidth (Value width) =
-    AppendProperty ("border-bottom-width:" ++ width)
+borderBottomWidth (Value width_) =
+    AppendProperty ("border-bottom-width:" ++ width_)
 
 
 {-| Sets [`border-left-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width) property.
@@ -6976,8 +6976,8 @@ borderLeftWidth :
         , unset : Supported
         }
     -> Style
-borderLeftWidth (Value width) =
-    AppendProperty ("border-left-width:" ++ width)
+borderLeftWidth (Value width_) =
+    AppendProperty ("border-left-width:" ++ width_)
 
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
@@ -8376,8 +8376,8 @@ borderImageOutset :
         , unset : Supported
         }
     -> Style
-borderImageOutset (Value width) =
-    AppendProperty ("border-image-outset:" ++ width)
+borderImageOutset (Value width_) =
+    AppendProperty ("border-image-outset:" ++ width_)
 
 
 {-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
@@ -8653,8 +8653,8 @@ borderImageWidth :
         , unset : Supported
         }
     -> Style
-borderImageWidth (Value width) =
-    AppendProperty ("border-image-width:" ++ width)
+borderImageWidth (Value width_) =
+    AppendProperty ("border-image-width:" ++ width_)
 
 
 {-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
@@ -10100,8 +10100,8 @@ columns :
         , unset : Supported
         }
     -> Style
-columns (Value width) =
-    AppendProperty ("columns:" ++ width)
+columns (Value width_) =
+    AppendProperty ("columns:" ++ width_)
 
 
 {-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
@@ -10137,8 +10137,8 @@ columns2 :
             , num : Supported
             }
     -> Style
-columns2 (Value width) (Value count) =
-    AppendProperty ("columns:" ++ width ++ " " ++ count)
+columns2 (Value width_) (Value count) =
+    AppendProperty ("columns:" ++ width_ ++ " " ++ count)
 
 
 {-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
@@ -10172,8 +10172,8 @@ columnWidth :
         , unset : Supported
         }
     -> Style
-columnWidth (Value width) =
-    AppendProperty ("column-width:" ++ width)
+columnWidth (Value width_) =
+    AppendProperty ("column-width:" ++ width_)
 
 
 {-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
@@ -10300,8 +10300,8 @@ columnGap :
         , unset : Supported
         }
     -> Style
-columnGap (Value width) =
-    AppendProperty ("column-gap:" ++ width)
+columnGap (Value width_) =
+    AppendProperty ("column-gap:" ++ width_)
 
 
 {-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
@@ -10337,8 +10337,8 @@ columnRuleWidth :
         , unset : Supported
         }
     -> Style
-columnRuleWidth (Value width) =
-    AppendProperty ("column-rule-width:" ++ width)
+columnRuleWidth (Value width_) =
+    AppendProperty ("column-rule-width:" ++ width_)
 
 
 {-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
@@ -11092,8 +11092,8 @@ strokeSize2 :
             , auto : Supported
             }
     -> Style
-strokeSize2 (Value width) (Value height) =
-    AppendProperty ("stroke-size:" ++ width ++ " " ++ height)
+strokeSize2 (Value width_) (Value height) =
+    AppendProperty ("stroke-size:" ++ width_ ++ " " ++ height)
 
 
 {-| Sets [`stroke-dash-corner`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-corner).
@@ -11329,8 +11329,8 @@ columnRule :
         , unset : Supported
         }
     -> Style
-columnRule (Value width) =
-    AppendProperty ("column-rule:" ++ width)
+columnRule (Value width_) =
+    AppendProperty ("column-rule:" ++ width_)
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
@@ -11381,8 +11381,8 @@ columnRule2 :
             , outset : Supported
             }
     -> Style
-columnRule2 (Value width) (Value style) =
-    AppendProperty ("column-rule:" ++ width ++ " " ++ style)
+columnRule2 (Value width_) (Value style) =
+    AppendProperty ("column-rule:" ++ width_ ++ " " ++ style)
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
@@ -11442,8 +11442,8 @@ columnRule3 :
             , currentColor : Supported
             }
     -> Style
-columnRule3 (Value width) (Value style) (Value colorVal) =
-    AppendProperty ("column-rule:" ++ width ++ " " ++ style ++ " " ++ colorVal)
+columnRule3 (Value width_) (Value style) (Value colorVal) =
+    AppendProperty ("column-rule:" ++ width_ ++ " " ++ style ++ " " ++ colorVal)
 
 
 
@@ -12264,3 +12264,117 @@ zoom :
     -> Style
 zoom (Value val) =
     AppendProperty ("zoom:" ++ val)
+
+
+{-| Sets [`width`](https://css-tricks.com/almanac/properties/w/width/).
+
+    width (px 150)
+
+    width (em 1.5)
+
+    width auto
+
+-}
+width :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+width (Value size) =
+    AppendProperty ("width:" ++ size)
+
+
+{-| Sets [`minWidth`](https://css-tricks.com/almanac/properties/m/min-width/).
+
+    minWidth (px 150)
+
+    minWidth (em 1.5)
+
+    minWidth auto
+
+-}
+minWidth :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+minWidth (Value size) =
+    AppendProperty ("min-width:" ++ size)
+
+
+{-| Sets [`maxWidth`](https://css-tricks.com/almanac/properties/m/max-width/).
+
+    maxWidth (px 150)
+
+    maxWidth (em 1.5)
+
+    maxWidth auto
+
+-}
+maxWidth :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+maxWidth (Value size) =
+    AppendProperty ("max-width:" ++ size)
