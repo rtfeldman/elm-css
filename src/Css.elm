@@ -71,7 +71,7 @@ module Css exposing
     , capitalize, uppercase, lowercase, fullWidth
     , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
     , wavy, underline, overline, lineThrough
-    , borderCollapse 
+    , borderCollapse
     , collapse, separate
     , borderSpacing, borderSpacing2
     , captionSide
@@ -333,7 +333,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## List Style Type
 
-@docs listStyle, listStyle2, listStyle3
+@docs listStyle, listStyle2, listStyle3, listStylePosition
+@docs inside, outside
 @docs arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 
 
@@ -5816,7 +5817,7 @@ listStyle3 (Value val1) (Value val2) (Value val3) =
 {-| The [`list-style-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position) property
 
     listStylePosition inside
-    
+
     listStylePosition outside
 
 -}
@@ -5838,7 +5839,7 @@ listStylePosition (Value pos) =
     listStylePosition inside
 
 -}
-inside : Value { provides | inside : Supported } 
+inside : Value { provides | inside : Supported }
 inside =
     Value "inside"
 
@@ -5851,6 +5852,7 @@ inside =
 outside : Value { provides | outside : Supported }
 outside =
     Value "outside"
+
 
 
 -- BORDERS --
