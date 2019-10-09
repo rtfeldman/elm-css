@@ -52,7 +52,8 @@ module Css exposing
     , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
-    , listStyle, listStyle2, listStyle3
+    , listStyle, listStyle2, listStyle3, listStylePosition
+    , inside, outside
     , arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
     , auto, none
     , hidden, visible
@@ -333,7 +334,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## List Style Type
 
-@docs listStyle, listStyle2, listStyle3
+@docs listStyle, listStyle2, listStyle3, listStylePosition
+@docs inside, outside
 @docs arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
 
 
@@ -5865,6 +5867,46 @@ listStyle3 :
     -> Style
 listStyle3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| The [`list-style-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position) property
+
+    listStylePosition inside
+
+    listStylePosition outside
+
+-}
+listStylePosition :
+    Value
+        { inside : Supported
+        , outside : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+listStylePosition (Value pos) =
+    AppendProperty ("list-style-position:" ++ pos)
+
+
+{-| The `inside` value for [`list-style-position`](#listStylePosition)
+
+    listStylePosition inside
+
+-}
+inside : Value { provides | inside : Supported }
+inside =
+    Value "inside"
+
+
+{-| The `inside` value for [`list-style-position`](#listStylePosition)
+
+    listStylePosition outside
+
+-}
+outside : Value { provides | outside : Supported }
+outside =
+    Value "outside"
 
 
 
