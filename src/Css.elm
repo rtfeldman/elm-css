@@ -37,7 +37,7 @@ module Css exposing
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
-    , alignItems, alignSelf, justifyContent
+    , alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
@@ -270,7 +270,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Flexbox
 
-@docs alignItems, alignSelf, justifyContent
+@docs alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
 
 
 ## Font Size
@@ -3309,6 +3309,38 @@ justifyContent :
     -> Style
 justifyContent (Value val) =
     AppendProperty ("justify-content:" ++ val)
+
+
+{-| Distribute items evenly, with the first and last items aligned to the start
+and end.
+
+    justifyContent spaceBetween
+
+-}
+spaceBetween : Value { provides | spaceBetween : Supported }
+spaceBetween =
+    Value "space-between"
+
+
+{-| Distribute items evenly, with a half-size space on either end.
+
+    justifyContent spaceAround
+
+-}
+spaceAround : Value { provides | spaceAround : Supported }
+spaceAround =
+    Value "space-around"
+
+
+{-| Distribute items evenly, with an equal size space between each element and
+the start and end.
+
+    justifyContent spaceEvenly
+
+-}
+spaceEvenly : Value { provides | spaceEvenly : Supported }
+spaceEvenly =
+    Value "space-evenly"
 
 
 
