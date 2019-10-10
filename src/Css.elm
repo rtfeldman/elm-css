@@ -12834,7 +12834,7 @@ bleed :
         }
     -> Style
 bleed (Value val) =
-    AppendProperty ("bleed" ++ val)
+    AppendProperty ("bleed:" ++ val)
 
 
 {-| Sets [`caret-color`](https://css-tricks.com/almanac/properties/c/caret-color/)
