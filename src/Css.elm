@@ -13360,29 +13360,7 @@ lineClamp (Value val) =
 
 {-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
 
-    mixBlendMode normal
-
     mixBlendMode multiply
-
-    mixBlendMode screen
-
-    mixBlendMode overlay
-
-    mixBlendMode darken
-
-    mixBlendMode lighten
-
-    mixBlendMode colorDodge
-
-    mixBlendMode colorBurn
-
-    mixBlendMode hardLight
-
-    mixBlendMode softLight
-
-    mixBlendMode difference
-
-    mixBlendMode exclusion
 
     mixBlendMode saturation
 
