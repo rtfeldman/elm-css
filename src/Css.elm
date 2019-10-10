@@ -38,7 +38,7 @@ module Css exposing
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
     , alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
-    , letterSpacing, wordSpacing
+    , wordSpacing
     , tabSize
     , fontDisplay, fallback, swap, optional
     , writingMode, verticalLr, verticalRl, horizontalTb
@@ -311,7 +311,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Spacing
 
-@docs letterSpacing, wordSpacing
+@docs wordSpacing
 @docs tabSize
 
 
@@ -625,6 +625,9 @@ Multiple CSS properties use these values.
 
 @docs caretColor
 @docs pointerEvents
+@docs speak, spellOut
+@docs tabSize
+@docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
 
 -}
 
