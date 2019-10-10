@@ -12331,7 +12331,7 @@ zoom (Value val) =
     lineHeight normal
 
 -}
-lineHeight :  
+lineHeight :
     Value
         { pct : Supported
         , normal : Supported
@@ -12345,7 +12345,7 @@ lineHeight :
         , zero : Supported
         , calc : Supported
         }
-        -> Style
+    -> Style
 lineHeight (Value val) =
     AppendProperty ("line-height:" ++ val)
 
@@ -12361,7 +12361,7 @@ lineHeight (Value val) =
     letterSpacing normal
 
 -}
-letterSpacing : 
+letterSpacing :
     Value
         { inherit : Supported
         , normal : Supported
@@ -12373,7 +12373,7 @@ letterSpacing :
         , zero : Supported
         , calc : Supported
         }
-        -> Style
+    -> Style
 letterSpacing (Value val) =
     AppendProperty ("letter-spacing:" ++ val)
 
