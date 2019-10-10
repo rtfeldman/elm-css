@@ -625,9 +625,6 @@ Multiple CSS properties use these values.
 
 @docs caretColor
 @docs pointerEvents
-@docs speak, spellOut
-@docs tabSize
-@docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
 
 -}
 
@@ -14235,14 +14232,24 @@ scrollMarginLeft (Value value) =
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
 
-    scrollPadding (em 4)
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom paddings are set to the first value and the right and
+left paddings are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
 
-    scrollPadding2 (em 4) (px 2)
+    scrollPadding (em 4) -- set all margins to 4em
 
-    scrollPadding3 (em 4) (px 2) (pct 5)
+    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
-    scrollPadding4 (em 4) (px 2) (pct 5) (px 3)
+    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 -}
 scrollPadding :
@@ -14275,6 +14282,7 @@ scrollPadding (Value value) =
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+_Note:_ See [`scrollPadding`](#scrollPadding) for documentation about the order of arguments.
 
     scrollPadding (em 4)
 
@@ -14333,6 +14341,7 @@ scrollPadding2 (Value valueTopBottom) (Value valueRightLeft) =
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+_Note:_ See [`scrollPadding`](#scrollPadding) for documentation about the order of arguments.
 
     scrollPadding (em 4)
 
@@ -14412,6 +14421,7 @@ scrollPadding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+_Note:_ See [`scrollPadding`](#scrollPadding) for documentation about the order of arguments.
 
     scrollPadding (em 4)
 
