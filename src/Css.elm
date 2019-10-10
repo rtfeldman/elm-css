@@ -595,7 +595,7 @@ Multiple CSS properties use these values.
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
 
 
-# Accesibility
+# Accessibility
 
 @docs speak, spellOut
 @docs userSelect
