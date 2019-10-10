@@ -13809,14 +13809,24 @@ scrollBehavior (Value val) =
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    scrollMargin (em 4)
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom margins are set to the first value and the right and
+left margins are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
 
-    scrollMargin2 (em 4) (px 2)
+    scrollMargin (em 4) -- set all margins to 4em
 
-    scrollMargin3 (em 4) (px 2) (pct 5)
+    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3)
+    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 -}
 scrollMargin :
@@ -13849,6 +13859,7 @@ scrollMargin (Value value) =
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+_Note:_ See [`scrollMargin`](#scrollMargin) for documentation about the order of arguments.
 
     scrollMargin (em 4)
 
@@ -13907,6 +13918,7 @@ scrollMargin2 (Value valueTopBottom) (Value valueRightLeft) =
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+_Note:_ See [`scrollMargin`](#scrollMargin) for documentation about the order of arguments.
 
     scrollMargin (em 4)
 
@@ -13986,6 +13998,7 @@ scrollMargin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+_Note:_ See [`scrollMargin`](#scrollMargin) for documentation about the order of arguments.
 
     scrollMargin (em 4)
 
