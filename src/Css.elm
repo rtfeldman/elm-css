@@ -38,14 +38,23 @@ module Css exposing
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
     , alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
-    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+    , wordSpacing
+    , tabSize
+    , fontDisplay, fallback, swap, optional
+    , writingMode, verticalLr, verticalRl, horizontalTb
+    , hyphens, manual
+    , hangingPunctuation, first, last, forceEnd, allowEnd
+    , lineClamp
+    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight
+    , fontSizeAdjust
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
+    , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+    , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
     , url
     , cursor, pointer, default, contextMenu, help, progress, wait, cell
     , crosshair, text, verticalText, alias, copy, move, noDrop
@@ -59,11 +68,12 @@ module Css exposing
     , hidden, visible
     , contentBox, borderBox
     , overflow, overflowX, overflowY
+    , overflowAnchor
     , overflowWrap
     , breakWord
     , deg, grad, rad, turn
     , direction, ltr, rtl
-    , justify, matchParent, textAlign
+    , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePositon, under
     , textOrientation
     , mixed, sideways, upright
     , textRendering
@@ -71,7 +81,9 @@ module Css exposing
     , textTransform
     , capitalize, uppercase, lowercase, fullWidth
     , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+    , textDecorationSkip, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
+    , textStroke, textStroke2, textStrokeColor, textStrokeWidth
     , borderCollapse
     , collapse, separate
     , borderSpacing, borderSpacing2
@@ -99,7 +111,7 @@ module Css exposing
     , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan, all_
-    , transform
+    , transform, transformOrigin, transformOrigin2
     , matrix, matrix3d
     , perspective
     , rotate, rotateX, rotateY, rotateZ, rotate3d
@@ -108,6 +120,26 @@ module Css exposing
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , opacity
     , zoom
+    , scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
+    , scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
+    , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
+    , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+    , speak, spellOut
+    , userSelect
+    , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
+    , bleed
+    , orphans, widows
+    , breakInside, avoid, avoidPage, avoidColumn, avoidRegion
+    , pageBreakBefore, pageBreakInside, pageBreakAfter
+    , mixBlendMode
+    , imageRendering, crispEdges, pixelated
+    , backfaceVisibility
+    , objectFit, fill_, scaleDown
+    , objectPosition, objectPosition2, objectPosition4
+    , boxDecorationBreak
+    , isolation, isolate
+    , caretColor
+    , pointerEvents
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -274,9 +306,28 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
 
 
+# Typography
+
+
+## Spacing
+
+@docs wordSpacing
+@docs tabSize
+
+
+## Display
+
+@docs fontDisplay, fallback, swap, optional
+@docs writingMode, verticalLr, verticalRl, horizontalTb
+@docs hyphens, manual
+@docs hangingPunctuation, first, last, forceEnd, allowEnd
+@docs lineClamp
+
+
 ## Font Size
 
-@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight
+@docs fontSizeAdjust
 
 
 ## Font Family
@@ -297,6 +348,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 [`normal`](#normal) is also a supported font weight.
 
+@docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
+
 
 ## Font Variant Caps
 
@@ -315,7 +368,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -351,6 +404,7 @@ Multiple CSS properties use these values.
 ## Overflow
 
 @docs overflow, overflowX, overflowY
+@docs overflowAnchor
 
 @docs overflowWrap
 @docs breakWord
@@ -368,7 +422,7 @@ Multiple CSS properties use these values.
 
 ## Text Align
 
-@docs justify, matchParent, textAlign
+@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePositon, under
 
 
 ## Text Orientation
@@ -392,8 +446,11 @@ Multiple CSS properties use these values.
 ## Text Decoration
 
 @docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+@docs textDecorationSkip, objects, spaces, ink, edges, boxDecoration
 
 @docs wavy, underline, overline, lineThrough
+
+@docs textStroke, textStroke2, textStrokeColor, textStrokeWidth
 
 
 # Tables
@@ -487,7 +544,7 @@ Multiple CSS properties use these values.
 
 # Transformation
 
-@docs transform
+@docs transform, transformOrigin, transformOrigin2
 
 
 ## Matrix transformation
@@ -528,6 +585,46 @@ Multiple CSS properties use these values.
 # Viewport
 
 @docs zoom
+
+
+# Scroll
+
+@docs scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
+@docs scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
+@docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
+@docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+
+
+# Accessibility
+
+@docs speak, spellOut
+@docs userSelect
+@docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
+
+
+# Printing
+
+@docs bleed
+@docs orphans, widows
+@docs breakInside, avoid, avoidPage, avoidColumn, avoidRegion
+@docs pageBreakBefore, pageBreakInside, pageBreakAfter
+
+
+# Rendering
+
+@docs mixBlendMode
+@docs imageRendering, crispEdges, pixelated
+@docs backfaceVisibility
+@docs objectFit, fill_, scaleDown
+@docs objectPosition, objectPosition2, objectPosition4
+@docs boxDecorationBreak
+@docs isolation, isolate
+
+
+# Other
+
+@docs caretColor
+@docs pointerEvents
 
 -}
 
@@ -2822,10 +2919,10 @@ calc :
         }
     -> CalcOperation
     -> Value { provides | calc : Supported }
-calc (Value first) (CalcOperation operation) =
+calc (Value head) (CalcOperation operation) =
     Value
         ("calc("
-            ++ getCalcExpression first
+            ++ getCalcExpression head
             ++ operation
             ++ ")"
         )
@@ -4244,7 +4341,7 @@ crosshair =
     Value "crosshair"
 
 
-{-| The `text` value for the [`cursor`](#cursor) property.
+{-| The `text` value for the [`cursor`](#cursor), and [`user-select`](#userSelect) properties.
 -}
 text : Value { provides | text : Supported }
 text =
@@ -5042,13 +5139,13 @@ backgroundImages :
                 }
             )
     -> Style
-backgroundImages (Value first) rest =
+backgroundImages (Value head) rest =
     let
         peeled =
             List.map unpackValue rest
 
         values =
-            String.join "," (first :: peeled)
+            String.join "," (head :: peeled)
     in
     AppendProperty ("background-image:" ++ values)
 
@@ -9421,6 +9518,88 @@ textDecorationColor (Value colorVal) =
     AppendProperty ("text-decoration-color:" ++ colorVal)
 
 
+{-| Sets [`text-decoration-color`][https://css-tricks.com/almanac/properties/t/text-decoration-skip/] property.
+
+    textDecorationSkip objects
+
+    textDecorationSkip none
+
+    textDecorationSkip spaces
+
+    textDecorationSkip ink
+
+    textDecorationSkip edges
+
+    textDecorationSkip boxDecoration
+
+-}
+textDecorationSkip :
+    Value
+        { objects : Supported
+        , none : Supported
+        , spaces : Supported
+        , ink : Supported
+        , edges : Supported
+        , boxDecoration : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+textDecorationSkip (Value val) =
+    AppendProperty ("text-decoration-skip:" ++ val)
+
+
+{-| Sets `objects` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip objects
+
+-}
+objects : Value { provides | objects : Supported }
+objects =
+    Value "objects"
+
+
+{-| Sets `spaces` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip spaces
+
+-}
+spaces : Value { provides | spaces : Supported }
+spaces =
+    Value "spaces"
+
+
+{-| Sets `ink` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip ink
+
+-}
+ink : Value { provides | ink : Supported }
+ink =
+    Value "ink"
+
+
+{-| Sets `edges` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip edges
+
+-}
+edges : Value { provides | edges : Supported }
+edges =
+    Value "edges"
+
+
+{-| Sets `boxDecoration` value for usage with [`textDecorationSkip`](#textDecorationSkip).
+
+    textDecorationSkip boxDecoration
+
+-}
+boxDecoration : Value { provides | boxDecoration : Supported }
+boxDecoration =
+    Value "box-decoration"
+
+
 
 -- ANGLES --
 
@@ -9914,6 +10093,88 @@ and [`strokeOrigin`](#strokeOrigin) properties.
 matchParent : Value { provides | matchParent : Supported }
 matchParent =
     Value "match-parent"
+
+
+{-| Sets [`text-justify`](https://css-tricks.com/almanac/properties/t/text-justify/)
+
+    textJustify interWord
+
+    textJustify interCharacter
+
+    textJustify auto
+
+    textJustify none
+
+-}
+textJustify :
+    Value
+        { interWord : Supported
+        , interCharacter : Supported
+        , auto : Supported
+        , none : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textJustify (Value val) =
+    AppendProperty ("text-justify:" ++ val)
+
+
+{-| A `inter-word` value for the [`textJustify`](#textJustify) property.
+
+    textJustify interWord
+
+-}
+interWord : Value { provides | interWord : Supported }
+interWord =
+    Value "inter-word"
+
+
+{-| A `inter-character` value for the [`textJustify`](#textJustify) property.
+
+    textJustify interCharacter
+
+-}
+interCharacter : Value { provides | interCharacter : Supported }
+interCharacter =
+    Value "inter-character"
+
+
+{-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
+
+    textUnderlinePositon auto
+
+    textUnderlinePositon under
+
+    textUnderlinePositon left_
+
+    textUnderlinePositon right_
+
+-}
+textUnderlinePositon :
+    Value
+        { auto : Supported
+        , under : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textUnderlinePositon (Value val) =
+    AppendProperty ("text-underline-position:" ++ val)
+
+
+{-| A `under` value for the [`textUnderlinePositon`](#textUnderlinePositon) property.
+
+    textUnderlinePositon under
+
+-}
+under : Value { provides | under : Supported }
+under =
+    Value "under"
 
 
 {-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
@@ -11759,8 +12020,8 @@ translate :
         , pt : Supported
         }
     -> Value { provides | translate : Supported }
-translate (Value x) =
-    Value ("translate(" ++ x ++ ")")
+translate (Value valX) =
+    Value ("translate(" ++ valX ++ ")")
 
 
 {-| Sets `translate` value for usage with [`transform`](#transform).
@@ -11807,8 +12068,8 @@ translate2 :
             , pt : Supported
             }
     -> Value { provides | translate2 : Supported }
-translate2 (Value x) (Value y) =
-    Value ("translate(" ++ x ++ "," ++ y ++ ")")
+translate2 (Value valX) (Value valY) =
+    Value ("translate(" ++ valX ++ "," ++ valY ++ ")")
 
 
 {-| Sets `translateX` value for usage with [`transform`](#transform).
@@ -11836,8 +12097,8 @@ translateX :
         , pt : Supported
         }
     -> Value { provides | translateX : Supported }
-translateX (Value x) =
-    Value ("translateX(" ++ x ++ ")")
+translateX (Value valX) =
+    Value ("translateX(" ++ valX ++ ")")
 
 
 {-| Sets `translateY` value for usage with [`transform`](#transform).
@@ -11865,8 +12126,8 @@ translateY :
         , pt : Supported
         }
     -> Value { provides | translateY : Supported }
-translateY (Value y) =
-    Value ("translateY(" ++ y ++ ")")
+translateY (Value valY) =
+    Value ("translateY(" ++ valY ++ ")")
 
 
 {-| Sets `translateZ` value for usage with [`transform`](#transform).
@@ -11964,8 +12225,8 @@ translate3d :
             , pct : Supported
             }
     -> Value { provides | translate3d : Supported }
-translate3d (Value x) (Value y) (Value z) =
-    Value ("translate3d(" ++ x ++ "," ++ y ++ "," ++ z ++ ")")
+translate3d (Value valX) (Value valY) (Value z) =
+    Value ("translate3d(" ++ valX ++ "," ++ valY ++ "," ++ z ++ ")")
 
 
 
@@ -11988,8 +12249,8 @@ scale val =
 
 -}
 scale2 : Float -> Float -> Value { provides | scale2 : Supported }
-scale2 x y =
-    Value ("scale(" ++ String.fromFloat x ++ ", " ++ String.fromFloat y ++ ")")
+scale2 valX valY =
+    Value ("scale(" ++ String.fromFloat valX ++ ", " ++ String.fromFloat valY ++ ")")
 
 
 {-| Sets `scaleX` value for usage with [`transform`](#transform).
@@ -11998,8 +12259,8 @@ scale2 x y =
 
 -}
 scaleX : Float -> Value { provides | scaleX : Supported }
-scaleX x =
-    Value ("scaleX(" ++ String.fromFloat x ++ ")")
+scaleX valX =
+    Value ("scaleX(" ++ String.fromFloat valX ++ ")")
 
 
 {-| Sets `scaleY` value for usage with [`transform`](#transform).
@@ -12008,8 +12269,8 @@ scaleX x =
 
 -}
 scaleY : Float -> Value { provides | scaleY : Supported }
-scaleY y =
-    Value ("scaleY(" ++ String.fromFloat y ++ ")")
+scaleY valY =
+    Value ("scaleY(" ++ String.fromFloat valY ++ ")")
 
 
 {-| Sets `scaleZ` value for usage with [`transform`](#transform).
@@ -12032,8 +12293,8 @@ scale3d :
     -> Float
     -> Float
     -> Value { provides | scale3d : Supported }
-scale3d x y z =
-    Value ("scale3d(" ++ String.fromFloat x ++ "," ++ String.fromFloat y ++ "," ++ String.fromFloat z ++ ")")
+scale3d valX valY z =
+    Value ("scale3d(" ++ String.fromFloat valX ++ "," ++ String.fromFloat valY ++ "," ++ String.fromFloat z ++ ")")
 
 
 
@@ -12204,12 +12465,12 @@ rotate3d :
             , turn : Supported
             }
     -> Value { provides | rotate3d : Supported }
-rotate3d x y z (Value angle) =
+rotate3d valX valY z (Value angle) =
     Value
         ("rotate3d("
-            ++ String.fromFloat x
+            ++ String.fromFloat valX
             ++ ","
-            ++ String.fromFloat y
+            ++ String.fromFloat valY
             ++ ","
             ++ String.fromFloat z
             ++ ","
@@ -12525,10 +12786,2459 @@ maxWidth :
         , auto : Supported
         , zero : Supported
         , calc : Supported
+        }
+    -> Style
+maxWidth (Value size) =
+    AppendProperty ("max-width:" ++ size)
+
+
+{-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
+
+    backfaceVisibility visible
+
+    backfaceVisibility hidden
+
+-}
+backfaceVisibility :
+    Value
+        { visible : Supported
+        , hidden : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
     -> Style
-maxWidth (Value size) =
-    AppendProperty ("max-width:" ++ size)
+backfaceVisibility (Value val) =
+    AppendProperty ("backface-visibility" ++ val)
+
+
+{-| Sets [`bleed`](https://css-tricks.com/almanac/properties/b/bleed/)
+
+    bleed auto
+
+    bleed (pt 10)
+
+-}
+bleed :
+    Value
+        { auto : Supported
+        , pt : Supported
+        , cm : Supported
+        , inches : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+bleed (Value val) =
+    AppendProperty ("bleed:" ++ val)
+
+
+{-| Sets [`caret-color`](https://css-tricks.com/almanac/properties/c/caret-color/)
+
+    caretColor (hex "#60b5cc")
+
+    caretColor (rgb 96 181 204)
+
+    caretColor (rgba 96 181 204 0.5)
+
+-}
+caretColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , currentColor : Supported
+        , transparent : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+caretColor (Value val) =
+    AppendProperty ("caret-color:" ++ val)
+
+
+{-| Sets `avoid` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoid
+
+-}
+avoid : Value { provides | avoid : Supported }
+avoid =
+    Value "avoid"
+
+
+{-| Sets `avoid-page` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoidPage
+
+-}
+avoidPage : Value { provides | avoidPage : Supported }
+avoidPage =
+    Value "avoid-page"
+
+
+{-| Sets `avoid-column` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoidColumn
+
+-}
+avoidColumn : Value { provides | avoidColumn : Supported }
+avoidColumn =
+    Value "avoid-column"
+
+
+{-| Sets `avoid-region` value for usage with [`breakInside`](#breakInside).
+
+      breakInside avoidRegion
+
+-}
+avoidRegion : Value { provides | avoidRegion : Supported }
+avoidRegion =
+    Value "avoid-region"
+
+
+{-| Sets [`break-inside`](https://css-tricks.com/almanac/properties/b/break-inside/)
+
+    breakInside auto
+
+    breakInside avoid
+
+    breakInside avoidPage
+
+    breakInside avoidColumn
+
+    breakInside avoidRegion
+
+-}
+breakInside :
+    Value
+        { auto : Supported
+        , avoid : Supported
+        , avoidPage : Supported
+        , avoidColumn : Supported
+        , avoidRegion : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+breakInside (Value val) =
+    AppendProperty ("break-inside:" ++ val)
+
+
+{-| Sets [`box-decoration-break`](https://css-tricks.com/almanac/properties/b/box-decoration-break/)
+
+    boxDecorationBreak slice
+
+    boxDecorationBreak clone
+
+-}
+boxDecorationBreak :
+    Value
+        { slice : Supported
+        , clone : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+boxDecorationBreak (Value val) =
+    AppendProperty ("box-decoration-break:" ++ val)
+
+
+{-| Sets `swap` value for usage with [`fontDisplay`](#fontDisplay).
+
+    fontDisplay swap
+
+-}
+swap : Value { provides | swap : Supported }
+swap =
+    Value "swap"
+
+
+{-| Sets `fallback` value for usage with [`fontDisplay`](#fontDisplay).
+
+      fontDisplay fallback
+
+-}
+fallback : Value { provides | fallback : Supported }
+fallback =
+    Value "fallback"
+
+
+{-| Sets `optional` value for usage with [`fontDisplay`](#fontDisplay).
+
+      fontDisplay optional
+
+-}
+optional : Value { provides | optional : Supported }
+optional =
+    Value "optional"
+
+
+{-| Sets [`font-display`](https://css-tricks.com/almanac/properties/f/font-display/)
+
+    fontDisplay auto
+
+    fontDisplay block
+
+    fontDisplay swap
+
+    fontDisplay fallback
+
+    fontDisplay optional
+
+-}
+fontDisplay :
+    Value
+        { auto : Supported
+        , block : Supported
+        , swap : Supported
+        , fallback : Supported
+        , optional : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontDisplay (Value val) =
+    AppendProperty ("font-display:" ++ val)
+
+
+{-| Sets [`font-size-adjust`](https://css-tricks.com/almanac/properties/f/font-size-adjust/)
+
+    fontSizeAdjust zero
+
+    fontSizeAdjust none
+
+    fontSizeAdjust (num 0.5)
+
+-}
+fontSizeAdjust :
+    Value
+        { none : Supported
+        , zero : Supported
+        , num : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontSizeAdjust (Value val) =
+    AppendProperty ("font-size-adjust:" ++ val)
+
+
+{-| Sets `ultra-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay ultraCondensed
+
+-}
+ultraCondensed : Value { provides | ultraCondensed : Supported }
+ultraCondensed =
+    Value "ultra-condensed"
+
+
+{-| Sets `extra-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay extraCondensed
+
+-}
+extraCondensed : Value { provides | extraCondensed : Supported }
+extraCondensed =
+    Value "extra-condensed"
+
+
+{-| Sets `condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay Condensed
+
+-}
+condensed : Value { provides | condensed : Supported }
+condensed =
+    Value "condensed"
+
+
+{-| Sets `semi-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay semiCondensed
+
+-}
+semiCondensed : Value { provides | semiCondensed : Supported }
+semiCondensed =
+    Value "semi-condensed"
+
+
+{-| Sets `ultra-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay ultraExpanded
+
+-}
+ultraExpanded : Value { provides | ultraExpanded : Supported }
+ultraExpanded =
+    Value "ultra-expanded"
+
+
+{-| Sets `extra-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay extraExpanded
+
+-}
+extraExpanded : Value { provides | extraExpanded : Supported }
+extraExpanded =
+    Value "extra-expanded"
+
+
+{-| Sets `expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay Expanded
+
+-}
+expanded : Value { provides | expanded : Supported }
+expanded =
+    Value "expanded"
+
+
+{-| Sets `semi-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay semiExpanded
+
+-}
+semiExpanded : Value { provides | semiExpanded : Supported }
+semiExpanded =
+    Value "semi-expanded"
+
+
+{-| Sets [`font-stretch`](https://css-tricks.com/almanac/properties/f/font-stretch/)
+
+    fontStretch ultraCondensed
+
+    fontStretch extraCondensed
+
+    fontStretch condensed
+
+    fontStretch semiCondensed
+
+    fontStretch normal
+
+    fontStretch semiExpanded
+
+    fontStretch expanded
+
+    fontStretch extraExpanded
+
+    fontStretch ultraExpanded
+
+-}
+fontStretch :
+    Value
+        { ultraCondensed : Supported
+        , extraCondensed : Supported
+        , condensed : Supported
+        , semiCondensed : Supported
+        , normal : Supported
+        , semiExpanded : Supported
+        , expanded : Supported
+        , extraExpanded : Supported
+        , ultraExpanded : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+fontStretch (Value val) =
+    AppendProperty ("font-stretch:" ++ val)
+
+
+{-| Sets `first` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation first
+
+-}
+first : Value { provides | first : Supported }
+first =
+    Value "first"
+
+
+{-| Sets `last` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation last
+
+-}
+last : Value { provides | last : Supported }
+last =
+    Value "last"
+
+
+{-| Sets `force-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation forceEnd
+
+-}
+forceEnd : Value { provides | forceEnd : Supported }
+forceEnd =
+    Value "force-end"
+
+
+{-| Sets `allow-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation allowEnd
+
+-}
+allowEnd : Value { provides | allowEnd : Supported }
+allowEnd =
+    Value "allow-end"
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation none
+
+    hangingPunctuation first
+
+    hangingPunctuation forceEnd
+
+    hangingPunctuation allowEnd
+
+    hangingPunctuation last
+
+-}
+hangingPunctuation :
+    Value
+        { none : Supported
+        , first : Supported
+        , forceEnd : Supported
+        , allowEnd : Supported
+        , last : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+hangingPunctuation (Value val) =
+    AppendProperty ("hanging-punctuation:" ++ val)
+
+
+{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
+
+    hyphens manual
+
+-}
+manual : Value { provides | manual : Supported }
+manual =
+    Value "manual"
+
+
+{-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
+
+    hyphens none
+
+    hyphens manual
+
+    hyphens auto
+
+-}
+hyphens :
+    Value
+        { none : Supported
+        , manual : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+hyphens (Value val) =
+    AppendProperty ("hyphens:" ++ val)
+
+
+{-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering pixelated
+
+-}
+pixelated : Value { provides | pixelated : Supported }
+pixelated =
+    Value "pixelated"
+
+
+{-| Sets `crisp-edges` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering crispEdges
+
+-}
+crispEdges : Value { provides | crispEdges : Supported }
+crispEdges =
+    Value "crisp-edges"
+
+
+{-| Sets [`image-rendering`](https://css-tricks.com/almanac/properties/i/image-rendering/)
+
+    imageRendering auto
+
+    imageRendering crispEdges
+
+    imageRendering pixelated
+
+-}
+imageRendering :
+    Value
+        { auto : Supported
+        , crispEdges : Supported
+        , pixelated : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+imageRendering (Value val) =
+    AppendProperty ("image-rendering:" ++ val)
+
+
+{-| Sets `isolate` value for usage with [`isolation`](#isolation), and
+[`unicodeBidi`](#unicodeBidi).
+
+    isolation isolate
+
+    unicodeBidi isolate
+
+-}
+isolate : Value { provides | isolate : Supported }
+isolate =
+    Value "isolate"
+
+
+{-| Sets [`isolation`](https://css-tricks.com/almanac/properties/i/isolation/)
+
+    isolation auto
+
+    isolation isolate
+
+-}
+isolation :
+    Value
+        { auto : Supported
+        , crispEdges : Supported
+        , pixelated : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+isolation (Value val) =
+    AppendProperty ("isolation:" ++ val)
+
+
+{-| Sets [`lineClamp`](https://css-tricks.com/almanac/properties/l/line-clamp/)
+
+    lineClamp none
+
+    lineClamp zero
+
+    lineClamp (int 3)
+
+-}
+lineClamp :
+    Value
+        { none : Supported
+        , zero : Supported
+        , int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+lineClamp (Value val) =
+    AppendProperty ("line-clamp:" ++ val)
+
+
+{-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
+
+    mixBlendMode multiply
+
+    mixBlendMode saturation
+
+-}
+mixBlendMode :
+    Value
+        { normal : Supported
+        , multiply : Supported
+        , screen : Supported
+        , overlay : Supported
+        , darken : Supported
+        , lighten : Supported
+        , colorDodge : Supported
+        , colorBurn : Supported
+        , hardLight : Supported
+        , softLight : Supported
+        , difference : Supported
+        , exclusion : Supported
+        , saturation : Supported
+        , color_ : Supported
+        , luminosity : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+mixBlendMode (Value val) =
+    AppendProperty ("mix-blend-mode:" ++ val)
+
+
+{-| Sets `fill` value for usage with [`objectFit`](#objectFit).
+
+    objectFit fill_
+
+-}
+fill_ : Value { provides | fill_ : Supported }
+fill_ =
+    Value "fill"
+
+
+{-| Sets `scale-down` value for usage with [`objectFit`](#objectFit).
+
+    objectFit scaleDown
+
+-}
+scaleDown : Value { provides | scaleDown : Supported }
+scaleDown =
+    Value "scale-down"
+
+
+{-| Sets [`object-fit`](https://css-tricks.com/almanac/properties/o/object-fit/)
+
+    objectFit fill_
+
+    objectFit contain
+
+    objectFit cover
+
+    objectFit scaleDown
+
+    objectFit none
+
+-}
+objectFit :
+    Value
+        { fill_ : Supported
+        , contain : Supported
+        , cover : Supported
+        , none : Supported
+        , scaleDown : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+objectFit (Value val) =
+    AppendProperty ("object-fit:" ++ val)
+
+
+{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
+
+    objectPosition left_
+
+    objectPosition (px 45)
+
+`objectPosition` sets the horizontal direction. If you need the vertical
+direction instead, use [`objectPosition2`](#objectPosition2) like this:
+
+    objectPosition zero (px 45)
+
+If you need to set the offsets from the right or bottom, use
+[`objectPosition4`](#objectPosition4) like this:
+
+    objectPosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+objectPosition :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        , inherit : Supported
+        , unset : Supported
+        , initial : Supported
+        }
+    -> Style
+objectPosition (Value horiz) =
+    AppendProperty ("object-position:" ++ horiz)
+
+
+{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
+
+    objectPosition2 left_ top_
+
+    objectPosition2 (px 45) (pct 50)
+
+`objectPosition2` sets both the horizontal and vertical directions (in that
+order, same as CSS.) If you need only the horizontal, you can use
+[`objectPosition`](#objectPosition) instead:
+
+    objectPosition left_
+
+If you need to set the offsets from the right or bottom, use
+[`objectPosition4`](#objectPosition4) like this:
+
+    objectPosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+objectPosition2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , center : Supported
+            }
+    -> Style
+objectPosition2 (Value horiz) (Value vert) =
+    AppendProperty ("object-position:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
+
+    objectPosition4 right_ (px 20) bottom_ (pct 30)
+
+The four-argument form of object position alternates sides and offets. So the
+example above would position the object image 20px from the right, and 30%
+from the bottom.
+
+See also [`objectPosition`](#objectPosition) for horizontal alignment and
+[`objectPosition2`](#objectPosition2) for horizontal (from left) and
+vertical (from top) alignment.
+
+-}
+objectPosition4 :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    ->
+        Value
+            { top_ : Supported
+            , bottom_ : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    -> Style
+objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
+    AppendProperty
+        ("object-position:"
+            ++ horiz
+            ++ " "
+            ++ horizAmount
+            ++ " "
+            ++ vert
+            ++ " "
+            ++ vertAmount
+        )
+
+
+{-| Sets [`orphans`](https://css-tricks.com/almanac/properties/o/orphans/)
+**Note:** This function accepts only positive integers.
+
+    orphans (int 2)
+
+-}
+orphans :
+    Value
+        { int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+orphans (Value val) =
+    AppendProperty ("orphans:" ++ val)
+
+
+{-| Sets [`overflow-anchor`](https://css-tricks.com/almanac/properties/o/overflow-anchor/)
+
+    overflowAnchor auto
+
+    overflowAnchor none
+
+-}
+overflowAnchor :
+    Value
+        { auto : Supported
+        , none : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+overflowAnchor (Value val) =
+    AppendProperty ("overflow-anchor:" ++ val)
+
+
+
+-- Page break
+
+
+{-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+    pageBreakBefore auto
+
+    pageBreakBefore always
+
+    pageBreakBefore avoid
+
+    pageBreakBefore left_
+
+    pageBreakBefore right_
+
+-}
+pageBreakBefore :
+    Value
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pageBreakBefore (Value val) =
+    AppendProperty ("page-break-before:" ++ val)
+
+
+{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+    pageBreakInside auto
+
+    pageBreakInside avoid
+
+-}
+pageBreakInside :
+    Value
+        { auto : Supported
+        , avoid : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pageBreakInside (Value val) =
+    AppendProperty ("page-break-inside:" ++ val)
+
+
+{-| Sets [`page-break-after`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+    pageBreakAfter auto
+
+    pageBreakAfter always
+
+    pageBreakAfter avoid
+
+    pageBreakAfter left_
+
+    pageBreakAfter right_
+
+-}
+pageBreakAfter :
+    Value
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pageBreakAfter (Value val) =
+    AppendProperty ("page-break-after:" ++ val)
+
+
+{-| Sets [`pointer-events`](https://css-tricks.com/almanac/properties/b/pointer-events/)
+
+    pointerEvents none
+
+    pointerEvents auto
+
+-}
+pointerEvents :
+    Value
+        { auto : Supported
+        , none : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+pointerEvents (Value val) =
+    AppendProperty ("pointer-events:" ++ val)
+
+
+
+--- Scroll ---
+
+
+{-| Sets `smooth` value for usage with [`scrollBehavior`](#scrollBehavior).
+
+    scrollBehavior smooth
+
+-}
+smooth : Value { provides | smooth : Supported }
+smooth =
+    Value "smooth"
+
+
+{-| Sets [`scroll-behavior`](https://css-tricks.com/almanac/properties/s/scroll-behavior/)
+
+    scrollBehavior auto
+
+    scrollBehavior smooth
+
+-}
+scrollBehavior :
+    Value
+        { auto : Supported
+        , smooth : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+scrollBehavior (Value val) =
+    AppendProperty ("scroll-behavior:" ++ val)
+
+
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
+
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom margins are set to the first value and the right and
+left margins are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
+
+    scrollMargin (em 4) -- set all margins to 4em
+
+    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+-}
+scrollMargin :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+scrollMargin (Value value) =
+    AppendProperty ("scroll-margin:" ++ value)
+
+
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin2` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
+
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
+
+    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+-}
+scrollMargin2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    -> Style
+scrollMargin2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("scroll-margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin3` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
+
+The top margin is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
+
+    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+-}
+scrollMargin3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    -> Style
+scrollMargin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin4` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
+
+The four values apply to the top, right, bottom, and left margins.
+
+    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+-}
+scrollMargin4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    -> Style
+scrollMargin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`scroll-margin-top`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+
+    scrollMarginTop (px 4)
+
+-}
+scrollMarginTop :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollMarginTop (Value value) =
+    AppendProperty ("scroll-margin-top:" ++ value)
+
+
+{-| Sets [`scroll-margin-right`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+
+    scrollMarginRight (px 4)
+
+-}
+scrollMarginRight :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollMarginRight (Value value) =
+    AppendProperty ("scroll-margin-right:" ++ value)
+
+
+{-| Sets [`scroll-margin-bottom`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+
+    scrollMarginBottom (px 4)
+
+-}
+scrollMarginBottom :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollMarginBottom (Value value) =
+    AppendProperty ("scroll-margin-bottom:" ++ value)
+
+
+{-| Sets [`scroll-margin-left`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+
+    scrollMarginLeft (px 4)
+
+-}
+scrollMarginLeft :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollMarginLeft (Value value) =
+    AppendProperty ("scroll-margin-left:" ++ value)
+
+
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
+
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom paddings are set to the first value and the right and
+left paddings are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
+
+    scrollPadding (em 4) -- set all margins to 4em
+
+    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+-}
+scrollPadding :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+scrollPadding (Value value) =
+    AppendProperty ("scroll-padding:" ++ value)
+
+
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding2` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
+
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
+
+    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+-}
+scrollPadding2 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    -> Style
+scrollPadding2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("scroll-padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding3` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
+
+The top padding is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
+
+    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+-}
+scrollPadding3 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    -> Style
+scrollPadding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding4` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
+
+The four values apply to the top, right, bottom, and left paddings.
+
+    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+-}
+scrollPadding4 :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , auto : Supported
+        }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    ->
+        Value
+            { ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pt : Supported
+            , pct : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            , auto : Supported
+            }
+    -> Style
+scrollPadding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`scroll-padding-top`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingTop (px 4)
+
+-}
+scrollPaddingTop :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollPaddingTop (Value value) =
+    AppendProperty ("scroll-padding-top:" ++ value)
+
+
+{-| Sets [`scroll-padding-right`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingRight (px 4)
+
+-}
+scrollPaddingRight :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollPaddingRight (Value value) =
+    AppendProperty ("scroll-padding-right:" ++ value)
+
+
+{-| Sets [`scroll-padding-bottom`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingBottom (px 4)
+
+-}
+scrollPaddingBottom :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollPaddingBottom (Value value) =
+    AppendProperty ("scroll-padding-bottom:" ++ value)
+
+
+{-| Sets [`scroll-padding-left`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingLeft (px 4)
+
+-}
+scrollPaddingLeft :
+    Value
+        { ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , pct : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        , auto : Supported
+        }
+    -> Style
+scrollPaddingLeft (Value value) =
+    AppendProperty ("scroll-padding-left:" ++ value)
+
+
+{-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
+
+    scrollSnapAlign none
+
+    scrollSnapAlign start
+
+    scrollSnapAlign center
+
+    scrollSnapAlign end
+
+-}
+scrollSnapAlign :
+    Value
+        { none : Supported
+        , start : Supported
+        , center : Supported
+        , end : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+scrollSnapAlign (Value val) =
+    AppendProperty ("scroll-snap-align:" ++ val)
+
+
+{-| Sets `always` value for usage with [`scrollSnapStop`](#scrollSnapStop), [`pageBreakBefore`](#pageBreakBefore), and [`pageBreakAfter`](#pageBreakAfter).
+
+    scrollSnapStop always
+
+    pageBreakBefore always
+
+    pageBreakAfter always
+
+-}
+always : Value { provides | always : Supported }
+always =
+    Value "always"
+
+
+{-| Sets [`scroll-snap-stop`](https://css-tricks.com/almanac/properties/s/scroll-snap-stop/)
+
+    scrollSnapStop normal
+
+    scrollSnapStop always
+
+-}
+scrollSnapStop :
+    Value
+        { normal : Supported
+        , always : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+scrollSnapStop (Value val) =
+    AppendProperty ("scroll-snap-stop:" ++ val)
+
+
+{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
+
+    scrollSnapType none
+
+-}
+scrollSnapType :
+    Value
+        { normal : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+scrollSnapType (Value val) =
+    AppendProperty ("scroll-snap-type:" ++ val)
+
+
+{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+
+    scrollSnapType2 x mandatory
+
+-}
+x : Value { provides | x : Supported }
+x =
+    Value "x"
+
+
+{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+
+    scrollSnapType2 y mandatory
+
+-}
+y : Value { provides | y : Supported }
+y =
+    Value "y"
+
+
+{-| Sets `mandatory` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+
+    scrollSnapType2 x mandatory
+
+-}
+mandatory : Value { provides | mandatory : Supported }
+mandatory =
+    Value "mandatory"
+
+
+{-| Sets `proximity` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+
+    scrollSnapType2 x proximity
+
+-}
+proximity : Value { provides | proximity : Supported }
+proximity =
+    Value "proximity"
+
+
+{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
+
+    scrollSnapType2 x mandatory
+
+    scrollSnapType2 both proximity
+
+-}
+scrollSnapType2 :
+    Value
+        { x : Supported
+        , y : Supported
+        , block : Supported
+        , inline : Supported
+        , both : Supported
+        }
+    ->
+        Value
+            { mandatory : Supported
+            , proximity : Supported
+            }
+    -> Style
+scrollSnapType2 (Value val1) (Value val2) =
+    AppendProperty ("scroll-snap-type:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets `spellOut` value for usage with [`speak`](#speak).
+
+    speak spellOut
+
+-}
+spellOut : Value { provides | spellOut : Supported }
+spellOut =
+    Value "spell-out"
+
+
+{-| Sets [`speak`](https://css-tricks.com/almanac/properties/s/speak/)
+
+    speak none
+
+    speak normal
+
+    speak spellOut
+
+-}
+speak :
+    Value
+        { none : Supported
+        , normal : Supported
+        , spellOut : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+speak (Value val) =
+    AppendProperty ("speak:" ++ val)
+
+
+{-| Sets [`tab-size`](https://css-tricks.com/almanac/properties/t/tab-size/)
+**Note:** only positive integer values are allowed.
+
+    tabSize (int 4)
+
+-}
+tabSize :
+    Value
+        { int : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+tabSize (Value val) =
+    AppendProperty ("tab-size:" ++ val)
+
+
+
+--- Text stroke ---
+
+
+{-| Sets [`text-stroke`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+This is a shorthand for [`text-stroke-width`](#textStrokeWidth) and [`text-stroke-color`](#textStrokeColor).
+
+    tabStroke (px 2)
+
+-}
+textStroke :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textStroke (Value val) =
+    AppendProperty ("text-stroke:" ++ val)
+
+
+{-| Sets [`text-stroke`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+
+    tabStroke2 (px 2) (hex "#60b5cc")
+
+-}
+textStroke2 :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    ->
+        Value
+            { rgb : Supported
+            , rgba : Supported
+            , hsl : Supported
+            , hsla : Supported
+            , hex : Supported
+            , transparent : Supported
+            , currentColor : Supported
+            }
+    -> Style
+textStroke2 (Value val1) (Value val2) =
+    AppendProperty ("text-stroke:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`text-stroke-width`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+
+    tabStrokeWidth (px 2)
+
+-}
+textStrokeWidth :
+    Value
+        { px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textStrokeWidth (Value val) =
+    AppendProperty ("text-stroke-width:" ++ val)
+
+
+{-| Sets [`text-stroke-color`](https://css-tricks.com/almanac/properties/t/text-stroke/)
+
+    tabStrokeColor (hex "#60b5cc")
+
+-}
+textStrokeColor :
+    Value
+        { rgb : Supported
+        , rgba : Supported
+        , hsl : Supported
+        , hsla : Supported
+        , hex : Supported
+        , transparent : Supported
+        , currentColor : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+textStrokeColor (Value val) =
+    AppendProperty ("text-stroke-color:" ++ val)
+
+
+{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
+
+    transformOrigin top_
+
+    transformOrigin center
+
+    transformOrigin bottom
+
+    transformOrigin (pct 50)
+
+-}
+transformOrigin :
+    Value
+        { top_ : Supported
+        , center : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        , inherit : Supported
+        , initial : Supported
+        }
+    -> Style
+transformOrigin (Value vert) =
+    AppendProperty ("transform-origin:" ++ vert)
+
+
+{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
+
+    transformOrigin2 top_ left
+
+    transformOrigin2 center right_
+
+    transformOrigin2 bottom_ right_
+
+    transformOrigin2 (pct 50) (pct 50)
+
+-}
+transformOrigin2 :
+    Value
+        { top_ : Supported
+        , center : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        }
+    ->
+        Value
+            { left_ : Supported
+            , center : Supported
+            , right_ : Supported
+            , pct : Supported
+            }
+    -> Style
+transformOrigin2 (Value vert) (Value horiz) =
+    AppendProperty ("transform-origin:" ++ vert ++ " " ++ horiz)
+
+
+
+--- unicode-bidi ---
+
+
+{-| Sets `embed` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi embed
+
+-}
+embed : Value { provides | embed : Supported }
+embed =
+    Value "embed"
+
+
+{-| Sets `plaintext` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi plaintext
+
+-}
+plaintext : Value { provides | plaintext : Supported }
+plaintext =
+    Value "plaintext"
+
+
+{-| Sets `bidi-override` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi bidiOverride
+
+-}
+bidiOverride : Value { provides | bidiOverride : Supported }
+bidiOverride =
+    Value "bidi-override"
+
+
+{-| Sets `isolate-override` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi isolateOverride
+
+-}
+isolateOverride : Value { provides | isolateOverride : Supported }
+isolateOverride =
+    Value "isolate-override"
+
+
+{-| Sets [`unicode-bidi`](https://css-tricks.com/almanac/properties/u/unicode-bidi/)
+
+    unicodeBidi normal
+
+    unicodeBidi embed
+
+    unicodeBidi isolate
+
+    unicodeBidi bidiOverride
+
+    unicodeBidi isolateOverride
+
+    unicodeBidi plaintext
+
+-}
+unicodeBidi :
+    Value
+        { normal : Supported
+        , embed : Supported
+        , isolate : Supported
+        , bidiOverride : Supported
+        , isolateOverride : Supported
+        , plaintext : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+unicodeBidi (Value val) =
+    AppendProperty ("unicode-bidi:" ++ val)
+
+
+{-| Sets [`user-select`](https://css-tricks.com/almanac/properties/u/user-select/)
+
+    userSelect none
+
+    userSelect auto
+
+    userSelect text
+
+    userSelect contain
+
+    userSelect all_
+
+-}
+userSelect :
+    Value
+        { none : Supported
+        , auto : Supported
+        , text : Supported
+        , contain : Supported
+        , all_ : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+userSelect (Value val) =
+    AppendProperty ("user-select:" ++ val)
+
+
+{-| Sets [`widows`](https://css-tricks.com/almanac/properties/w/widows/)
+**Note:** This function accepts only positive integers.
+
+    widows (int 2)
+
+-}
+widows :
+    Value
+        { int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+widows (Value val) =
+    AppendProperty ("widows:" ++ val)
+
+
+{-| Sets [`word-spacing`](https://css-tricks.com/almanac/properties/w/word-spacing/).
+
+    wordSpacing normal
+
+    wordSpacing zero
+
+    wordSpacing (px 5)
+
+-}
+wordSpacing :
+    Value
+        { zero : Supported
+        , calc : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , normal : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+wordSpacing (Value str) =
+    AppendProperty ("word-spacing:" ++ str)
+
+
+{-| Sets `horizontal-tb` value for usage with [`writingMode`](#writingMode).
+
+    writingMode horizontalTb
+
+-}
+horizontalTb : Value { provides | horizontalTb : Supported }
+horizontalTb =
+    Value "horizontal-tb"
+
+
+{-| Sets `vertical-lr` value for usage with [`writingMode`](#writingMode).
+
+    writingMode verticalLr
+
+-}
+verticalLr : Value { provides | verticalLr : Supported }
+verticalLr =
+    Value "vertical-lr"
+
+
+{-| Sets `vertical-rl` value for usage with [`writingMode`](#writingMode).
+
+    writingMode verticalRl
+
+-}
+verticalRl : Value { provides | verticalRl : Supported }
+verticalRl =
+    Value "vertical-rl"
+
+
+{-| Sets [`writing-mode`](https://css-tricks.com/almanac/properties/w/writing-mode/).
+
+    writingMode horizontalTb
+
+    writingMode verticalRl
+
+    writingMode verticalLr
+
+-}
+writingMode :
+    Value
+        { horizontalTb : Supported
+        , verticalRl : Supported
+        , verticalLr : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
+        }
+    -> Style
+writingMode (Value str) =
+    AppendProperty ("writing-mode:" ++ str)
