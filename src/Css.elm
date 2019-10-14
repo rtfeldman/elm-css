@@ -13856,15 +13856,14 @@ scrollMargin (Value value) =
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-_Note:_ See [`scrollMargin`](#scrollMargin) for documentation about the order of arguments.
+The `scrollMargin2` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    scrollMargin (em 4)
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
 
-    scrollMargin2 (em 4) (px 2)
-
-    scrollMargin3 (em 4) (px 2) (pct 5)
-
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3)
+    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
 -}
 scrollMargin2 :
@@ -13915,15 +13914,14 @@ scrollMargin2 (Value valueTopBottom) (Value valueRightLeft) =
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-_Note:_ See [`scrollMargin`](#scrollMargin) for documentation about the order of arguments.
+The `scrollMargin3` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    scrollMargin (em 4)
+The top margin is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
 
-    scrollMargin2 (em 4) (px 2)
-
-    scrollMargin3 (em 4) (px 2) (pct 5)
-
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3)
+    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
 
 -}
 scrollMargin3 :
@@ -13995,15 +13993,13 @@ scrollMargin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-_Note:_ See [`scrollMargin`](#scrollMargin) for documentation about the order of arguments.
+The `scrollMargin4` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    scrollMargin (em 4)
+The four values apply to the top, right, bottom, and left margins.
 
-    scrollMargin2 (em 4) (px 2)
-
-    scrollMargin3 (em 4) (px 2) (pct 5)
-
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3)
+    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 -}
 scrollMargin4 :
@@ -14282,15 +14278,14 @@ scrollPadding (Value value) =
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-_Note:_ See [`scrollPadding`](#scrollPadding) for documentation about the order of arguments.
+The `scrollPadding2` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
 
-    scrollPadding (em 4)
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
 
-    scrollPadding2 (em 4) (px 2)
-
-    scrollPadding3 (em 4) (px 2) (pct 5)
-
-    scrollPadding4 (em 4) (px 2) (pct 5) (px 3)
+    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
 -}
 scrollPadding2 :
@@ -14341,15 +14336,14 @@ scrollPadding2 (Value valueTopBottom) (Value valueRightLeft) =
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-_Note:_ See [`scrollPadding`](#scrollPadding) for documentation about the order of arguments.
+The `scrollPadding3` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
 
-    scrollPadding (em 4)
+The top padding is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
 
-    scrollPadding2 (em 4) (px 2)
-
-    scrollPadding3 (em 4) (px 2) (pct 5)
-
-    scrollPadding4 (em 4) (px 2) (pct 5) (px 3)
+    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
 
 -}
 scrollPadding3 :
@@ -14421,15 +14415,13 @@ scrollPadding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-_Note:_ See [`scrollPadding`](#scrollPadding) for documentation about the order of arguments.
+The `scrollPadding4` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
 
-    scrollPadding (em 4)
+The four values apply to the top, right, bottom, and left paddings.
 
-    scrollPadding2 (em 4) (px 2)
-
-    scrollPadding3 (em 4) (px 2) (pct 5)
-
-    scrollPadding4 (em 4) (px 2) (pct 5) (px 3)
+    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 -}
 scrollPadding4 :
