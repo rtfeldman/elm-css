@@ -106,7 +106,7 @@ module Css exposing
     , strokeLinecap, butt, square
     , strokeBreak, boundingBox, slice, clone
     , strokeOrigin, fillBox, strokeBox
-    , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, stupid
+    , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, fallback
     , strokeDashJustify, compress, dashes, gaps
     , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
@@ -531,7 +531,7 @@ Multiple CSS properties use these values.
 @docs strokeLinecap, butt, square
 @docs strokeBreak, boundingBox, slice, clone
 @docs strokeOrigin, fillBox, strokeBox
-@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, stupid
+@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, fallback
 @docs strokeDashJustify, compress, dashes, gaps
 
 
@@ -11523,7 +11523,7 @@ strokeLinejoin (Value val) =
 
     strokeLinejoin arcs round
 
-    strokeLinejoin miter stupid
+    strokeLinejoin miter fallback
 
 -}
 strokeLinejoin2 :
@@ -11536,7 +11536,7 @@ strokeLinejoin2 :
         Value
             { bevel : Supported
             , round : Supported
-            , stupid : Supported
+            , fallback : Supported
             }
     -> Style
 strokeLinejoin2 (Value extendCorner) (Value capRender) =
@@ -11583,14 +11583,14 @@ bevel =
     Value "bevel"
 
 
-{-| Sets `stupid` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
+{-| Sets `fallback` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
 
-    strokeLinejoin miter stupid
+    strokeLinejoin miter fallback
 
 -}
-stupid : Value { provides | stupid : Supported }
-stupid =
-    Value "stupid"
+fallback : Value { provides | fallback : Supported }
+fallback =
+    Value "fallback"
 
 
 {-| Sets [`stroke-dash-justify`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-justify).
