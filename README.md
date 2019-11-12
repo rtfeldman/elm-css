@@ -1,7 +1,7 @@
 # elm-css
 
 `elm-css` lets you define CSS in Elm. (For an Elm styling system that is a
-complete departure from CSS, check out [style-elements](http://package.elm-lang.org/packages/mdgriffith/style-elements/latest).)
+complete departure from CSS, check out [Elm-UI](https://github.com/mdgriffith/elm-ui).)
 
 Here's an example of how to define some `elm-css` styles:
 
