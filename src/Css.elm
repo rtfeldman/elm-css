@@ -1517,14 +1517,23 @@ zIndex (Value val) =
 
 
 {-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
 
-    padding (em 4)
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom paddings are set to the first value and the right and
+left paddings are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
 
-    padding2 (em 4) (px 2)
+    padding (em 4) -- set all margins to 4em
 
-    padding3 (em 4) (px 2) (pct 5)
+    padding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
-    padding4 (em 4) (px 2) (pct 5) (px 3)
+    padding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    padding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 -}
 padding :
@@ -1556,14 +1565,13 @@ padding (Value value) =
 
 
 {-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding2` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
 
-    padding (em 4)
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
 
-    padding2 (em 4) (px 2)
-
-    padding3 (em 4) (px 2) (pct 5)
-
-    padding4 (em 4) (px 2) (pct 5) (px 3)
+    padding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
 -}
 padding2 :
@@ -1612,14 +1620,13 @@ padding2 (Value valueTopBottom) (Value valueRightLeft) =
 
 
 {-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding3` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
 
-    padding (em 4)
+The top padding is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
 
-    padding2 (em 4) (px 2)
-
-    padding3 (em 4) (px 2) (pct 5)
-
-    padding4 (em 4) (px 2) (pct 5) (px 3)
+    padding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
 
 -}
 padding3 :
@@ -1688,14 +1695,12 @@ padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 
 
 {-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding4` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
 
-    padding (em 4)
+The four values apply to the top, right, bottom, and left paddings.
 
-    padding2 (em 4) (px 2)
-
-    padding3 (em 4) (px 2) (pct 5)
-
-    padding4 (em 4) (px 2) (pct 5) (px 3)
+    padding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 -}
 padding4 :
