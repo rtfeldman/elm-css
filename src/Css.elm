@@ -1920,14 +1920,23 @@ paddingLeft (Value value) =
 
 
 {-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
 
-    margin (em 4)
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom margins are set to the first value and the right and
+left margins are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
 
-    margin2 (em 4) (px 2)
+    margin (em 4) -- set all margins to 4em
 
-    margin3 (em 4) (px 2) (pct 5)
+    margin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
-    margin4 (em 4) (px 2) (pct 5) (px 3)
+    margin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    margin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
 
@@ -1962,14 +1971,13 @@ margin (Value value) =
 
 
 {-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin2` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
 
-    margin (em 4)
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
 
-    margin2 (em 4) (px 2)
-
-    margin3 (em 4) (px 2) (pct 5)
-
-    margin4 (em 4) (px 2) (pct 5) (px 3)
+    margin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
 
@@ -2022,14 +2030,13 @@ margin2 (Value valueTopBottom) (Value valueRightLeft) =
 
 
 {-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin3` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
 
-    margin (em 4)
+The top margin is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
 
-    margin2 (em 4) (px 2)
-
-    margin3 (em 4) (px 2) (pct 5)
-
-    margin4 (em 4) (px 2) (pct 5) (px 3)
+    margin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
 
@@ -2103,14 +2110,12 @@ margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
 
 
 {-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin4` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
 
-    margin (em 4)
+The four values apply to the top, right, bottom, and left margins.
 
-    margin2 (em 4) (px 2)
-
-    margin3 (em 4) (px 2) (pct 5)
-
-    margin4 (em 4) (px 2) (pct 5) (px 3)
+    margin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
 
