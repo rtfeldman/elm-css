@@ -5,7 +5,7 @@ import Css.Global exposing (Snippet, a, body, button, class, li, media, mediaQue
 import Css.Media as Media exposing (..)
 import Css.Preprocess exposing (stylesheet)
 import Expect
-import Test exposing (Test, describe, test, todo)
+import Test exposing (Test, describe, test)
 import TestUtil exposing (outdented, prettyPrint)
 
 
@@ -178,7 +178,7 @@ expectFeatureWorks featureName n ( component, expectedStr ) =
         expected =
             "@media (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
     in
-    test ("pretty prints the expected feature output for:" ++ featureName ++ toString n) <| \() -> Expect.equal expected actual
+    test ("pretty prints the expected feature output for:" ++ featureName ++ String.fromInt n) <| \() -> Expect.equal expected actual
 
 
 basicMediaQuery : MediaQuery -> Snippet
