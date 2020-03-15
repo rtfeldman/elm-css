@@ -10718,6 +10718,7 @@ columnGap :
         , inches : Supported
         , pc : Supported
         , pt : Supported
+        , pct : Supported
         , initial : Supported
         , inherit : Supported
         , unset : Supported
