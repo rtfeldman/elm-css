@@ -5527,6 +5527,7 @@ backgroundSize :
         , vmax : Supported
         , auto : Supported
         , cover : Supported
+        , contain : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
