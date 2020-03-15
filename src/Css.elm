@@ -6923,7 +6923,6 @@ borderWidth3 :
             , thin : Supported
             , medium : Supported
             , thick : Supported
-            , inherit : Supported
             }
     -> Style
 borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
