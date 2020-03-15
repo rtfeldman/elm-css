@@ -4730,7 +4730,7 @@ backgroundBlendMode :
         , exclusion : Supported
         , hue : Supported
         , saturation : Supported
-        , color : Supported
+        , color_ : Supported
         , luminosity : Supported
         , initial : Supported
         , inherit : Supported
