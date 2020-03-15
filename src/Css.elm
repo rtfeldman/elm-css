@@ -12852,6 +12852,7 @@ caretColor :
         , hex : Supported
         , currentColor : Supported
         , transparent : Supported
+        , auto : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
