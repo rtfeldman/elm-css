@@ -3078,7 +3078,6 @@ display :
         , tableHeaderGroup : Supported
         , tableRow : Supported
         , tableRowGroup : Supported
-        , for_display_flex_see_docs_for_displayFlex : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
