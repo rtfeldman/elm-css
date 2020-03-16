@@ -12654,6 +12654,7 @@ opacity :
         { num : Supported
         , zero : Supported
         , calc : Supported
+        , pct : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
