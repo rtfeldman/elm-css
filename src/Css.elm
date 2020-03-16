@@ -14119,7 +14119,6 @@ scrollMarginTop :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14153,7 +14152,6 @@ scrollMarginRight :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14187,7 +14185,6 @@ scrollMarginBottom :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14221,7 +14218,6 @@ scrollMarginLeft :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
