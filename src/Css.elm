@@ -15214,6 +15214,7 @@ wordSpacing :
         , inches : Supported
         , pc : Supported
         , pt : Supported
+        , pct : Supported
         , normal : Supported
         , initial : Supported
         , inherit : Supported
