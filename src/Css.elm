@@ -12705,14 +12705,25 @@ lineHeight :
         { pct : Supported
         , normal : Supported
         , num : Supported
+        , ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
-        , px : Supported
-        , em : Supported
-        , rem : Supported
-        , zero : Supported
-        , calc : Supported
         }
     -> Style
 lineHeight (Value val) =
