@@ -13844,9 +13844,9 @@ bottom, and left, respectively.
 
     scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
-    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
 
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
 
 -}
 scrollMargin :
@@ -13859,7 +13859,6 @@ scrollMargin :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -13899,7 +13898,6 @@ scrollMargin2 :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -13920,7 +13918,6 @@ scrollMargin2 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -13944,7 +13941,7 @@ and `scroll-margin-left` in a single declaration.
 The top margin is set to the first value, the left and right are set to the
 second, and the bottom is set to the third.
 
-    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
 
 -}
 scrollMargin3 :
@@ -13957,7 +13954,6 @@ scrollMargin3 :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -13978,7 +13974,6 @@ scrollMargin3 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -13999,7 +13994,6 @@ scrollMargin3 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14022,7 +14016,7 @@ and `scroll-margin-left` in a single declaration.
 
 The four values apply to the top, right, bottom, and left margins.
 
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
 
 -}
 scrollMargin4 :
@@ -14035,7 +14029,6 @@ scrollMargin4 :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14056,7 +14049,6 @@ scrollMargin4 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14077,7 +14069,6 @@ scrollMargin4 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14098,7 +14089,6 @@ scrollMargin4 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
