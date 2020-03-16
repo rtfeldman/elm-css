@@ -9,6 +9,7 @@ module Css exposing
     , Color, color, backgroundColor, hex, rgb, rgba, hsl, hsla
     , pseudoClass, active, disabled
     , pseudoElement, before, after
+    , width
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
@@ -195,6 +196,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Pseudo-Elements
 
 @docs pseudoElement, before, after
+
+
+## Sizing
+
+@docs width
 
 
 ## Background Attachment
