@@ -13389,8 +13389,7 @@ isolate =
 isolation :
     Value
         { auto : Supported
-        , crispEdges : Supported
-        , pixelated : Supported
+        , isolate : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
