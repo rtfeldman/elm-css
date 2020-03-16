@@ -12598,13 +12598,14 @@ opacity :
         { num : Supported
         , zero : Supported
         , calc : Supported
+        , pct : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
     -> Style
 opacity (Value val) =
-    AppendProperty ("stroke-opacity:" ++ val)
+    AppendProperty ("opacity:" ++ val)
 
 
 {-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
