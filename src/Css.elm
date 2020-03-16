@@ -14903,6 +14903,23 @@ speak (Value val) =
 tabSize :
     Value
         { int : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
         , initial : Supported
         , inherit : Supported
         , unset : Supported
