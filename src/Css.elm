@@ -13454,6 +13454,7 @@ mixBlendMode :
         , softLight : Supported
         , difference : Supported
         , exclusion : Supported
+        , hue : Supported
         , saturation : Supported
         , color_ : Supported
         , luminosity : Supported
