@@ -3873,7 +3873,18 @@ oblique =
     fontWeight (int 300)
 
 -}
-fontWeight : Value { normal : Supported, bold : Supported, bolder : Supported, lighter : Supported } -> Style
+fontWeight :
+    Value
+        { normal : Supported
+        , bold : Supported
+        , bolder : Supported
+        , lighter : Supported
+        , int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
 fontWeight (Value val) =
     AppendProperty ("font-weight:" ++ val)
 
