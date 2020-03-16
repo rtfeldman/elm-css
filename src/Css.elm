@@ -3839,9 +3839,8 @@ enquoteIfNotGeneric fontName =
 fontStyle :
     Value
         { normal : Supported
-        , bold : Supported
-        , bolder : Supported
-        , lighter : Supported
+        , italic : Supported
+        , oblique : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
