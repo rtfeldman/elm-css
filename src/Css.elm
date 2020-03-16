@@ -14724,7 +14724,13 @@ scrollSnapStop (Value val) =
 -}
 scrollSnapType :
     Value
-        { normal : Supported
+        { none : Supported
+        , x : Supported
+        , y : Supported
+        , block : Supported
+        , inline : Supported
+        , both : Supported
+        , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
