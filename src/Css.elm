@@ -14765,6 +14765,7 @@ scrollSnapStop :
     Value
         { normal : Supported
         , always : Supported
+        , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
