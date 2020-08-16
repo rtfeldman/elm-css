@@ -18,14 +18,8 @@ efficiently.
 
 -}
 
-import Json.Encode as Json
 import Svg.Styled exposing (Attribute, Svg)
 import VirtualDom.Styled
-
-
-svgNamespace : Attribute msg
-svgNamespace =
-    VirtualDom.Styled.property "namespace" (Json.string "http://www.w3.org/2000/svg")
 
 
 {-| Works just like `Svg.node`, but you add a unique identifier to each child
@@ -35,5 +29,4 @@ the DOM modifications more efficient.
 -}
 node : String -> List (Attribute msg) -> List ( String, Svg msg ) -> Svg msg
 node name =
-    \attributes children ->
-        VirtualDom.Styled.keyedNode name (svgNamespace :: attributes) children
+    VirtualDom.Styled.keyedNodeNS "http://www.w3.org/2000/svg" name

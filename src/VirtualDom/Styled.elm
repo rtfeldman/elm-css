@@ -6,6 +6,7 @@ module VirtualDom.Styled exposing
     , attributeNS
     , getClassname
     , keyedNode
+    , keyedNodeNS
     , lazy
     , lazy2
     , lazy3
