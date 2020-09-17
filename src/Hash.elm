@@ -1,7 +1,7 @@
 module Hash exposing (fromString)
 
+import ElmCssVendor.Murmur3 as Murmur3
 import Hex
-import Murmur3
 
 
 fromString : String -> String
