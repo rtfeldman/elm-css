@@ -1,6 +1,7 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [16.1.0](https://github.com/rtfeldman/elm-css/tree/16.1.0) | Expose `CalculatedLength` ([#519](https://github.com/rtfeldman/elm-css/pull/519)), vendor Murmur3 dependency for now ([#528](https://github.com/rtfeldman/elm-css/pull/528))
 | [16.0.2](https://github.com/rtfeldman/elm-css/tree/16.0.2) | Fix SVGKeyed ([#520](https://github.com/rtfeldman/elm-css/pull/520))
 | [16.0.1](https://github.com/rtfeldman/elm-css/tree/16.0.1) | Fix bug with outputting "sec" instead of "s" for seconds.
 | [**16.0.0**](https://github.com/rtfeldman/elm-css/tree/16.0.0) | Add first-class animation keyframes support. (#431) Remove `asPairs`, `Css.Namespace`, and arithmetic operators. Don't report warnings, just emit CSS. Make `Property` opaque and more efficient. Fix `withMedia` nesting bug. (#352) Rename `Css.Foreign` to `Css.Global`. (#360) Remove `Css.Colors`. (#358) Remove experimental border properties. (#438) Remove experimental `dir` pseudo-class. (#442) Change `class`, `id`, and `animationName` to accept a `String`.
