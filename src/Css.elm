@@ -106,7 +106,7 @@ module Css exposing
     , strokeLinecap, butt, square
     , strokeBreak, boundingBox, slice, clone
     , strokeOrigin, fillBox, strokeBox
-    , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, fallback
+    , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
     , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
@@ -531,7 +531,7 @@ Multiple CSS properties use these values.
 @docs strokeLinecap, butt, square
 @docs strokeBreak, boundingBox, slice, clone
 @docs strokeOrigin, fillBox, strokeBox
-@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel, fallback
+@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
 @docs strokeDashJustify, compress, dashes, gaps
 
 
@@ -11593,16 +11593,6 @@ bevel =
     Value "bevel"
 
 
-{-| Sets `fallback` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
-
-    strokeLinejoin miter fallback
-
--}
-fallback : Value { provides | fallback : Supported }
-fallback =
-    Value "fallback"
-
-
 {-| Sets [`stroke-dash-justify`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-justify).
 
       strokeDashJustify none
@@ -12970,9 +12960,10 @@ swap =
     Value "swap"
 
 
-{-| Sets `fallback` value for usage with [`fontDisplay`](#fontDisplay).
+{-| Sets `fallback` value for usage with [`fontDisplay`](#fontDisplay) or [`strokeLinejoin`](#strokeLinejoin2).
 
       fontDisplay fallback
+      strokeLinejoin2 miter fallback
 
 -}
 fallback : Value { provides | fallback : Supported }
