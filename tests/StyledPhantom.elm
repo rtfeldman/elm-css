@@ -1,9 +1,9 @@
-module Styled exposing (all)
+module StyledPhantom exposing (all)
 
 -- import ReadmeExample
 
 import Css exposing (..)
-import Html.Styled exposing (Html, a, button, div, header, img, nav, text, toUnstyled)
+import Html.Styled as Html exposing (Html, a, button, div, header, img, nav, toUnstyled)
 import Html.Styled.Attributes exposing (css, src)
 import Test exposing (Test, describe)
 import Test.Html.Query as Query
@@ -65,7 +65,7 @@ buyTickets =
 
 viewBuyTickets : String -> Html msg
 viewBuyTickets caption =
-    buyTickets [ text caption ]
+    buyTickets [ Html.text caption ]
 
 
 view : String -> Html msg
@@ -84,7 +84,7 @@ view ticketsCaption =
 navElems : List (Html msg)
 navElems =
     [ "SPEAKERS", "SCHEDULE", "WORKSHOPS", "VENUE", "BLOG", "CONTACT" ]
-        |> List.map (\name -> navLink [ text name ])
+        |> List.map (\name -> navLink [ Html.text name ])
 
 
 
