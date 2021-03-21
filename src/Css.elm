@@ -1181,7 +1181,7 @@ hsl hueVal sat lightness =
             ++ String.fromFloat (sat * 100)
             ++ "%,"
             ++ String.fromFloat (lightness * 100)
-            ++ "%,"
+            ++ "%"
             ++ ")"
 
 
@@ -1195,7 +1195,7 @@ The `s` and `l` values are expressed as a number between 0 and 1 and are convert
 hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
 hsla hueVal sat lightness alpha =
     Value <|
-        "hsl("
+        "hsla("
             ++ String.fromFloat hueVal
             ++ ","
             ++ String.fromFloat (sat * 100)
@@ -1219,10 +1219,10 @@ hex : String -> Value { provides | hex : Supported }
 hex str =
     Value <|
         if String.startsWith "#" str then
-            String.dropLeft 1 str
+            str
 
         else
-            str
+            "#" ++ str
 
 
 
@@ -3108,88 +3108,144 @@ displayFlex =
     AppendProperty "display:flex"
 
 
-{-| -}
+{-| The `block` value used by [`display`](#display)
+
+    display block
+
+-}
 block : Value { provides | block : Supported }
 block =
     Value "block"
 
 
-{-| -}
+{-| The `grid` value used by [`display`](#display)
+
+    display grid
+
+-}
 grid : Value { provides | block : Supported }
 grid =
     Value "grid"
 
 
-{-| -}
+{-| The `inline` value used by [`display`](#display)
+
+    display inline
+
+-}
 inline : Value { provides | inline : Supported }
 inline =
     Value "inline"
 
 
-{-| -}
+{-| The `inline-block` value used by [`display`](#display)
+
+    display inlineBlock
+
+-}
 inlineBlock : Value { provides | inlineBlock : Supported }
 inlineBlock =
-    Value "inlineBlock"
+    Value "inline-block"
 
 
-{-| -}
+{-| The `inline-flex` value used by [`display`](#display)
+
+    display inlineFlex
+
+-}
 inlineFlex : Value { provides | inlineFlex : Supported }
 inlineFlex =
-    Value "inlineFlex"
+    Value "inline-flex"
 
 
-{-| -}
+{-| The `table` value used by [`display`](#display)
+
+    display table
+
+-}
 table : Value { provides | table : Supported }
 table =
     Value "table"
 
 
-{-| -}
+{-| The `table-caption` value used by [`display`](#display)
+
+    display tableCaption
+
+-}
 tableCaption : Value { provides | tableCaption : Supported }
 tableCaption =
-    Value "tableCaption"
+    Value "table-caption"
 
 
-{-| -}
+{-| The `table-cell` value used by [`display`](#display)
+
+    display tableCell
+
+-}
 tableCell : Value { provides | tableCell : Supported }
 tableCell =
-    Value "tableCell"
+    Value "table-cell"
 
 
-{-| -}
+{-| The `table-column` value used by [`display`](#display)
+
+    display tableColumn
+
+-}
 tableColumn : Value { provides | tableColumn : Supported }
 tableColumn =
-    Value "tableColumn"
+    Value "table-column"
 
 
-{-| -}
+{-| The `table-column-group` value used by [`display`](#display)
+
+    display tableColumnGroup
+
+-}
 tableColumnGroup : Value { provides | tableColumnGroup : Supported }
 tableColumnGroup =
-    Value "tableColumnGroup"
+    Value "table-column-group"
 
 
-{-| -}
+{-| The `table-footer-group` value used by [`display`](#display)
+
+    display tableFooterGroup
+
+-}
 tableFooterGroup : Value { provides | tableFooterGroup : Supported }
 tableFooterGroup =
-    Value "tableFooterGroup"
+    Value "table-footer-group"
 
 
-{-| -}
+{-| The `table-header-group` value used by [`display`](#display)
+
+    display tableHeaderGroup
+
+-}
 tableHeaderGroup : Value { provides | tableHeaderGroup : Supported }
 tableHeaderGroup =
-    Value "tableHeaderGroup"
+    Value "table-header-group"
 
 
-{-| -}
+{-| The `table-row` value used by [`display`](#display)
+
+    display tableRow
+
+-}
 tableRow : Value { provides | tableRow : Supported }
 tableRow =
-    Value "tableRow"
+    Value "table-row"
 
 
-{-| -}
+{-| The `table-row-group` value used by [`display`](#display)
+
+    display tableRowGroup
+
+-}
 tableRowGroup : Value { provides | tableRowGroup : Supported }
 tableRowGroup =
-    Value "tableRowGroup"
+    Value "table-row-group"
 
 
 
@@ -4512,11 +4568,11 @@ zoomIn =
     Value "zoom-in"
 
 
-{-| The `zoomOut` value for the [`cursor`](#cursor) property.
+{-| The `zoom-out` value for the [`cursor`](#cursor) property.
 -}
 zoomOut : Value { provides | zoomOut : Supported }
 zoomOut =
-    Value "zoomOut"
+    Value "zoom-out"
 
 
 {-| The `grab` value for the [`cursor`](#cursor) property.
@@ -12604,7 +12660,7 @@ opacity :
         }
     -> Style
 opacity (Value val) =
-    AppendProperty ("stroke-opacity:" ++ val)
+    AppendProperty ("opacity:" ++ val)
 
 
 {-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
