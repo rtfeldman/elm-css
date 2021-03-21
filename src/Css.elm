@@ -31,14 +31,19 @@ module Css exposing
     , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
-    , display, displayFlex
-    , block, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+    , display
+    , block, flex_, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     , position, top, right, bottom, left, zIndex
     , absolute, fixed, relative, static, sticky
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
-    , alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
+    , alignItems, alignSelf, justifyContent, alignContent
+    , flexDirection, row, rowReverse, column, columnReverse
+    , order
+    , flexGrow, flexShrink, flexBasis, content
+    , flexWrap, nowrap, wrap, wrapReverse
+    , flex, flex2, flex3, flexFlow, flexFlow2
     , wordSpacing
     , tabSize
     , fontDisplay, fallback, swap, optional
@@ -55,7 +60,7 @@ module Css exposing
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+    , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
     , url
     , cursor, pointer, default, contextMenu, help, progress, wait, cell
     , crosshair, text, verticalText, alias, copy, move, noDrop
@@ -95,13 +100,12 @@ module Css exposing
     , verticalAlign
     , sub, super, textTop, textBottom, middle
     , whiteSpace
-    , pre, preWrap, preLine, nowrap
+    , pre, preWrap, preLine
     , wordBreak
     , breakAll, keepAll
     , float
     , clear, both, inlineStart, inlineEnd
     , visibility
-    , order
     , fill
     , strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
     , strokeLinecap, butt, square
@@ -141,6 +145,7 @@ module Css exposing
     , isolation, isolate
     , caretColor
     , pointerEvents
+    , spaceEvenly
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -280,9 +285,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Display
 
-@docs display, displayFlex
+@docs display
 
-@docs block, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+@docs block, flex_, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
 
 
 ## Positions
@@ -309,7 +314,38 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Flexbox
 
-@docs alignItems, alignSelf, justifyContent, spaceBetween, spaceAround, spaceEvenly
+The CSS Flexible Box Layout Module.
+See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
+
+
+### Flexbox Alignment
+
+@docs alignItems, alignSelf, justifyContent, alignContent
+
+
+### Flexbox Direction
+
+@docs flexDirection, row, rowReverse, column, columnReverse
+
+
+### Flexbox Order
+
+@docs order
+
+
+### Flexbox Sizing
+
+@docs flexGrow, flexShrink, flexBasis, content
+
+
+### Flexbox Wrapping
+
+@docs flexWrap, nowrap, wrap, wrapReverse
+
+
+### Flexbox Shorthands
+
+@docs flex, flex2, flex3, flexFlow, flexFlow2
 
 
 # Typography
@@ -374,7 +410,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 # Align Items
 
-@docs stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs normal, stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
 
 
 # Url
@@ -516,11 +552,6 @@ Multiple CSS properties use these values.
 # Visibility
 
 @docs visibility
-
-
-# Flexbox
-
-@docs order
 
 
 # SVG
@@ -794,11 +825,10 @@ unset =
 -}
 all :
     Value
-        { accepts
-            | revert : Supported
-            , initial : Supported
-            , inherit : Supported
-            , unset : Supported
+        { revert : Supported
+        , initial : Supported
+        , inherit : Supported
+        , unset : Supported
         }
     -> Style
 all (Value val) =
@@ -830,11 +860,14 @@ url str =
 
 
 {-| The `auto` value used for properties such as [`width`](#width),
-and [`zoom`](#zoom).
+[`zoom`](#zoom),
+and [`flexBasis`](#flexBasis).
 
     width auto
 
     zoom auto
+
+    flexBasis auto
 
 -}
 auto : Value { provides | auto : Supported }
@@ -845,13 +878,16 @@ auto =
 {-| The `none` value used for properties such as [`display`](#display),
 [`borderStyle`](#borderStyle),
 [`clear`](#clear),
-and [`strokeDashJustify`](#strokeDashJustify).
+[`strokeDashJustify`](#strokeDashJustify),
+and [`flex`](#flex).
 
     display none
 
     borderStyle none
 
     strokeDashJustify none
+
+    flex none
 
 -}
 none : Value { provides | none : Supported }
@@ -3231,12 +3267,13 @@ dividedBy (Value second) =
 
     display block
 
-For `display: flex`, use [`displayFlex`](#displayFlex).
+**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a function](#flex).
 
 -}
 display :
     Value
         { block : Supported
+        , flex_ : Supported
         , grid : Supported
         , inline : Supported
         , inlineBlock : Supported
@@ -3261,20 +3298,22 @@ display (Value val) =
     AppendProperty ("display:" ++ val)
 
 
-{-| [`display: flex`](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). This works around the fact that [`flex` is already taken](#flex).
-
-    div [ displayFlex ]
-
--}
-displayFlex : Style
-displayFlex =
-    AppendProperty "display:flex"
-
-
 {-| -}
 block : Value { provides | block : Supported }
 block =
     Value "block"
+
+
+{-| `flex` value use by [`display`](#display)
+
+    display flex_
+
+The value is called `flex_` instead of `flex` because [`flex` is already a function](#flex).
+
+-}
+flex_ : Value { provides | flex_ : Supported }
+flex_ =
+    Value "flex"
 
 
 {-| -}
@@ -3383,13 +3422,33 @@ end =
     Value "end"
 
 
-{-| -}
+{-| The `flex-start` value used by [`alignItems`](#alignItems),
+[`justifyContent`](#justifyContent),
+and [`alignContent`](#alignContent).
+
+    alignItems flexStart
+
+    justifyContent flexStart
+
+    alignContent flexStart
+
+-}
 flexStart : Value { provides | flexStart : Supported }
 flexStart =
     Value "flex-start"
 
 
-{-| -}
+{-| The `flex-end` value used by [`alignItems`](#alignItems),
+[`justifyContent`](#justifyContent),
+and [`alignContent`](#alignContent).
+
+    alignItems flexEnd
+
+    justifyContent flexEnd
+
+    alignContent flexEnd
+
+-}
 flexEnd : Value { provides | flexEnd : Supported }
 flexEnd =
     Value "flex-end"
@@ -3405,6 +3464,43 @@ selfStart =
 selfEnd : Value { provides | selfEnd : Supported }
 selfEnd =
     Value "self-end"
+
+
+{-| The `space-between` value used by [`justifyContent`](#justifyContent)
+and [`alignContent`](#alignContent).
+
+    justifyContent spaceBetween
+
+    alignContent spaceBetween
+
+-}
+spaceBetween : Value { provides | spaceBetween : Supported }
+spaceBetween =
+    Value "space-between"
+
+
+{-| The `space-around` value used by [`justifyContent`](#justifyContent)
+and [`alignContent`](#alignContent).
+
+    justifyContent spaceAround
+
+    alignContent spaceAround
+
+-}
+spaceAround : Value { provides | spaceAround : Supported }
+spaceAround =
+    Value "space-around"
+
+
+{-| Distribute items evenly, with an equal size space between each element and
+the start and end.
+
+    justifyContent spaceEvenly
+
+-}
+spaceEvenly : Value { provides | spaceEvenly : Supported }
+spaceEvenly =
+    Value "space-evenly"
 
 
 {-| The `left` value used for alignment.
@@ -3489,6 +3585,30 @@ unsafeCenter =
 -- FLEXBOX --
 
 
+{-| Sets [`align-content`](https://css-tricks.com/almanac/properties/a/align-content/).
+
+    alignContent flexStart
+
+**Note:** This property has no effect when the flexbox has only a single line.
+
+-}
+alignContent :
+    Value
+        { flexStart : Supported
+        , flexEnd : Supported
+        , center : Supported
+        , spaceBetween : Supported
+        , spaceAround : Supported
+        , stretch : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+alignContent (Value val) =
+    AppendProperty ("align-content:" ++ val)
+
+
 {-| Sets [`align-items`](https://css-tricks.com/almanac/properties/a/align-items/).
 
     alignItems firstBaseline
@@ -3499,26 +3619,25 @@ because `Css.left` and `Css.right` are functions!
 -}
 alignItems :
     Value
-        { accepts
-            | normal : Supported
-            , stretch : Supported
-            , center : Supported
-            , start : Supported
-            , end : Supported
-            , flexStart : Supported
-            , flexEnd : Supported
-            , selfStart : Supported
-            , selfEnd : Supported
-            , left_ : Supported
-            , right_ : Supported
-            , baseline : Supported
-            , firstBaseline : Supported
-            , lastBaseline : Supported
-            , safeCenter : Supported
-            , unsafeCenter : Supported
-            , inherit : Supported
-            , initial : Supported
-            , unset : Supported
+        { normal : Supported
+        , stretch : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , selfStart : Supported
+        , selfEnd : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        , safeCenter : Supported
+        , unsafeCenter : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
         }
     -> Style
 alignItems (Value val) =
@@ -3563,7 +3682,7 @@ alignSelf (Value val) =
 
 {-| Sets [`justify-content`](https://css-tricks.com/almanac/properties/j/justify-content/).
 
-    justifyContent center
+    justifyContent flexStart
 
 -}
 justifyContent :
@@ -3583,36 +3702,402 @@ justifyContent (Value val) =
     AppendProperty ("justify-content:" ++ val)
 
 
-{-| Distribute items evenly, with the first and last items aligned to the start
-and end.
+{-| Sets [`flex-basis`](https://css-tricks.com/almanac/properties/f/flex-basis/).
 
-    justifyContent spaceBetween
+    flexBasis (em 10)
 
--}
-spaceBetween : Value { provides | spaceBetween : Supported }
-spaceBetween =
-    Value "space-between"
+    flexBasis (px 3)
 
+    flexBasis (pct 100)
 
-{-| Distribute items evenly, with a half-size space on either end.
-
-    justifyContent spaceAround
+    flexBasis auto
 
 -}
-spaceAround : Value { provides | spaceAround : Supported }
-spaceAround =
-    Value "space-around"
+flexBasis :
+    Value
+        { auto : Supported
+        , content : Supported
+        , ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexBasis (Value val) =
+    AppendProperty ("flex-basis:" ++ val)
 
 
-{-| Distribute items evenly, with an equal size space between each element and
-the start and end.
+{-| The `content` [`flex-basis` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values).
 
-    justifyContent spaceEvenly
+    flexBasis content
 
 -}
-spaceEvenly : Value { provides | spaceEvenly : Supported }
-spaceEvenly =
-    Value "space-evenly"
+content : Value { provides | content : Supported }
+content =
+    Value "content"
+
+
+{-| Sets [`flex-grow`](https://css-tricks.com/almanac/properties/f/flex-grow/).
+
+    flexGrow (num 3)
+
+    flexGrow (num 0.6)
+
+-}
+flexGrow :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexGrow (Value val) =
+    AppendProperty ("flex-grow:" ++ val)
+
+
+{-| Sets [`flex-shrink`](https://css-tricks.com/almanac/properties/f/flex-shrink/).
+
+    flexShrink (num 2)
+
+    flexShrink (num 0.6)
+
+-}
+flexShrink :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexShrink (Value val) =
+    AppendProperty ("flex-shrink:" ++ val)
+
+
+{-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
+
+    flex none
+
+    flex auto
+
+    flex (num 1)
+
+    flex2 zero auto
+
+    flex3 (num 1) zero (pct 50)
+
+-}
+flex :
+    Value
+        { none : Supported
+        , auto : Supported
+        , content : Supported
+        , ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pct : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , num : Supported
+        , zero : Supported
+        , calc : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flex (Value growOrBasis) =
+    AppendProperty ("flex:" ++ growOrBasis)
+
+
+{-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
+
+    flex none
+
+    flex auto
+
+    flex (num 1)
+
+    flex2 zero auto
+
+    flex3 (num 1) zero (pct 50)
+
+-}
+flex2 :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , content : Supported
+            , ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , num : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    -> Style
+flex2 (Value grow) (Value shrinkOrBasis) =
+    AppendProperty ("flex:" ++ grow ++ " " ++ shrinkOrBasis)
+
+
+{-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
+
+    flex none
+
+    flex auto
+
+    flex (num 1)
+
+    flex2 zero auto
+
+    flex3 (num 1) zero (pct 50)
+
+-}
+flex3 :
+    Value
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    ->
+        Value
+            { auto : Supported
+            , content : Supported
+            , ch : Supported
+            , cm : Supported
+            , em : Supported
+            , ex : Supported
+            , inches : Supported
+            , mm : Supported
+            , pc : Supported
+            , pct : Supported
+            , pt : Supported
+            , px : Supported
+            , rem : Supported
+            , vh : Supported
+            , vmax : Supported
+            , vmin : Supported
+            , vw : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    -> Style
+flex3 (Value grow) (Value shrink) (Value basis) =
+    AppendProperty ("flex:" ++ grow ++ " " ++ shrink ++ " " ++ basis)
+
+
+{-| Sets [`flex-direction`](https://css-tricks.com/almanac/properties/f/flex-direction/).
+
+    flexDirection column
+
+-}
+flexDirection :
+    Value
+        { row : Supported
+        , rowReverse : Supported
+        , column : Supported
+        , columnReverse : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexDirection (Value val) =
+    AppendProperty ("flex-direction:" ++ val)
+
+
+{-| The `row` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection row
+
+-}
+row : Value { provides | row : Supported }
+row =
+    Value "row"
+
+
+{-| The `row-reverse` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection rowReverse
+
+-}
+rowReverse : Value { provides | rowReverse : Supported }
+rowReverse =
+    Value "row-reverse"
+
+
+{-| The `column` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection column
+
+-}
+column : Value { provides | column : Supported }
+column =
+    Value "column"
+
+
+{-| The `column-reverse` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
+
+    flexDirection columnReverse
+
+-}
+columnReverse : Value { provides | columnReverse : Supported }
+columnReverse =
+    Value "column-reverse"
+
+
+{-| Sets [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/).
+
+    flexWrap wrap
+
+    flexWrap wrapReverse
+
+    flexWrap nowrap
+
+-}
+flexWrap :
+    Value
+        { nowrap : Supported
+        , wrap : Supported
+        , wrapReverse : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexWrap (Value val) =
+    AppendProperty ("flex-wrap:" ++ val)
+
+
+{-| The `wrap` [`flex-wrap` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values).
+
+    flexWrap wrap
+
+-}
+wrap : Value { provides | wrap : Supported }
+wrap =
+    Value "wrap"
+
+
+{-| The `wrap-reverse` [`flex-wrap` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap#Values).
+
+    flexWrap wrapReverse
+
+-}
+wrapReverse : Value { provides | wrapReverse : Supported }
+wrapReverse =
+    Value "wrap-reverse"
+
+
+{-| The [`flex-flow`](https://css-tricks.com/almanac/properties/f/flex-flow/) shorthand property.
+
+    flexFlow rowReverse
+
+    flexFlow wrap
+
+    flexFlow inherit
+
+    flexFlow2 column wrapReverse
+
+-}
+flexFlow :
+    Value
+        { row : Supported
+        , rowReverse : Supported
+        , column : Supported
+        , columnReverse : Supported
+        , nowrap : Supported
+        , wrap : Supported
+        , wrapReverse : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
+flexFlow (Value directionOrWrapping) =
+    AppendProperty ("flex-flow:" ++ directionOrWrapping)
+
+
+{-| The [`flex-flow`](https://css-tricks.com/almanac/properties/f/flex-flow/) shorthand property.
+
+    flexFlow rowReverse
+
+    flexFlow wrap
+
+    flexFlow inherit
+
+    flexFlow2 column wrapReverse
+
+-}
+flexFlow2 :
+    Value
+        { row : Supported
+        , rowReverse : Supported
+        , column : Supported
+        , columnReverse : Supported
+        }
+    ->
+        Value
+            { nowrap : Supported
+            , wrap : Supported
+            , wrapReverse : Supported
+            }
+    -> Style
+flexFlow2 (Value direction_) (Value wrapping) =
+    AppendProperty ("flex-flow:" ++ direction_ ++ " " ++ wrapping)
 
 
 
@@ -10401,9 +10886,12 @@ whiteSpace (Value str) =
     AppendProperty ("white-space:" ++ str)
 
 
-{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
 
     whiteSpace nowrap
+
+    flexWrap nowrap
 
 -}
 nowrap : Value { provides | nowrap : Supported }
@@ -10555,6 +11043,7 @@ order :
     Value
         { num : Supported
         , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
