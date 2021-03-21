@@ -103,9 +103,9 @@ all =
     background-color:#333333;
     padding:20px;
 }"""
-                        , Selector.text """._9052bb8e {
+                        , Selector.text """._7054f5bf {
     margin:12px;
-    color:rgb(255, 255, 255);
+    color:rgb(255,255,255);
 }"""
                         , Selector.text """._7bfd0c7b {
     display:inline-block;
@@ -120,14 +120,14 @@ all =
                         , Selector.text """._1b2cec01 {
     background-color:#222222;
 }"""
-                        , Selector.text """._4503f439 {
+                        , Selector.text """._95fb808a {
     padding:16px;
     padding-left:24px;
     padding-right:24px;
     margin-left:50px;
     margin-right:auto;
-    color:rgb(255, 255, 255);
-    background-color:rgb(27, 217, 130);
+    color:rgb(255,255,255);
+    background-color:rgb(27,217,130);
     vertical-align:middle;
 }"""
                         ]
