@@ -9,6 +9,7 @@ module Css exposing
     , Color, color, backgroundColor, hex, rgb, rgba, hsl, hsla
     , pseudoClass, active, disabled
     , pseudoElement, before, after
+    , width
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
@@ -201,6 +202,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Pseudo-Elements
 
 @docs pseudoElement, before, after
+
+
+## Sizing
+
+@docs width
 
 
 ## Background Attachment
@@ -3288,7 +3294,6 @@ display :
         , tableHeaderGroup : Supported
         , tableRow : Supported
         , tableRowGroup : Supported
-        , for_display_flex_see_docs_for_displayFlex : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -4488,9 +4493,8 @@ enquoteIfNotGeneric fontName =
 fontStyle :
     Value
         { normal : Supported
-        , bold : Supported
-        , bolder : Supported
-        , lighter : Supported
+        , italic : Supported
+        , oblique : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -4523,7 +4527,18 @@ oblique =
     fontWeight (int 300)
 
 -}
-fontWeight : Value { normal : Supported, bold : Supported, bolder : Supported, lighter : Supported } -> Style
+fontWeight :
+    Value
+        { normal : Supported
+        , bold : Supported
+        , bolder : Supported
+        , lighter : Supported
+        , int : Supported
+        , inherit : Supported
+        , initial : Supported
+        , unset : Supported
+        }
+    -> Style
 fontWeight (Value val) =
     AppendProperty ("font-weight:" ++ val)
 
@@ -5444,7 +5459,7 @@ backgroundBlendMode :
         , exclusion : Supported
         , hue : Supported
         , saturation : Supported
-        , color : Supported
+        , color_ : Supported
         , luminosity : Supported
         , initial : Supported
         , inherit : Supported
@@ -6241,6 +6256,7 @@ backgroundSize :
         , vmax : Supported
         , auto : Supported
         , cover : Supported
+        , contain : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -7636,7 +7652,6 @@ borderWidth3 :
             , thin : Supported
             , medium : Supported
             , thick : Supported
-            , inherit : Supported
             }
     -> Style
 borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
@@ -11370,6 +11385,7 @@ columnGap :
         , inches : Supported
         , pc : Supported
         , pt : Supported
+        , pct : Supported
         , initial : Supported
         , inherit : Supported
         , unset : Supported
@@ -13296,6 +13312,7 @@ opacity :
         { num : Supported
         , zero : Supported
         , calc : Supported
+        , pct : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -13347,14 +13364,25 @@ lineHeight :
         { pct : Supported
         , normal : Supported
         , num : Supported
+        , ch : Supported
+        , cm : Supported
+        , em : Supported
+        , ex : Supported
+        , inches : Supported
+        , mm : Supported
+        , pc : Supported
+        , pt : Supported
+        , px : Supported
+        , rem : Supported
+        , vh : Supported
+        , vmax : Supported
+        , vmin : Supported
+        , vw : Supported
+        , zero : Supported
+        , calc : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
-        , px : Supported
-        , em : Supported
-        , rem : Supported
-        , zero : Supported
-        , calc : Supported
         }
     -> Style
 lineHeight (Value val) =
@@ -13560,6 +13588,7 @@ caretColor :
         , hex : Supported
         , currentColor : Supported
         , transparent : Supported
+        , auto : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -14030,8 +14059,7 @@ isolate =
 isolation :
     Value
         { auto : Supported
-        , crispEdges : Supported
-        , pixelated : Supported
+        , isolate : Supported
         , inherit : Supported
         , initial : Supported
         , unset : Supported
@@ -14085,6 +14113,7 @@ mixBlendMode :
         , softLight : Supported
         , difference : Supported
         , exclusion : Supported
+        , hue : Supported
         , saturation : Supported
         , color_ : Supported
         , luminosity : Supported
@@ -14530,9 +14559,9 @@ bottom, and left, respectively.
 
     scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
-    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
 
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
 
 -}
 scrollMargin :
@@ -14545,7 +14574,6 @@ scrollMargin :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14585,7 +14613,6 @@ scrollMargin2 :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14606,7 +14633,6 @@ scrollMargin2 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14630,7 +14656,7 @@ and `scroll-margin-left` in a single declaration.
 The top margin is set to the first value, the left and right are set to the
 second, and the bottom is set to the third.
 
-    scrollMargin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
 
 -}
 scrollMargin3 :
@@ -14643,7 +14669,6 @@ scrollMargin3 :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14664,7 +14689,6 @@ scrollMargin3 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14685,7 +14709,6 @@ scrollMargin3 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14708,7 +14731,7 @@ and `scroll-margin-left` in a single declaration.
 
 The four values apply to the top, right, bottom, and left margins.
 
-    scrollMargin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
 
 -}
 scrollMargin4 :
@@ -14721,7 +14744,6 @@ scrollMargin4 :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14742,7 +14764,6 @@ scrollMargin4 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14763,7 +14784,6 @@ scrollMargin4 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14784,7 +14804,6 @@ scrollMargin4 :
             , mm : Supported
             , pc : Supported
             , pt : Supported
-            , pct : Supported
             , px : Supported
             , rem : Supported
             , vh : Supported
@@ -14815,7 +14834,6 @@ scrollMarginTop :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14849,7 +14867,6 @@ scrollMarginRight :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14883,7 +14900,6 @@ scrollMarginBottom :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -14917,7 +14933,6 @@ scrollMarginLeft :
         , mm : Supported
         , pc : Supported
         , pt : Supported
-        , pct : Supported
         , px : Supported
         , rem : Supported
         , vh : Supported
@@ -15408,6 +15423,7 @@ scrollSnapStop :
     Value
         { normal : Supported
         , always : Supported
+        , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
@@ -15423,7 +15439,13 @@ scrollSnapStop (Value val) =
 -}
 scrollSnapType :
     Value
-        { normal : Supported
+        { none : Supported
+        , x : Supported
+        , y : Supported
+        , block : Supported
+        , inline : Supported
+        , both : Supported
+        , inherit : Supported
         , initial : Supported
         , unset : Supported
         }
@@ -15539,6 +15561,23 @@ speak (Value val) =
 tabSize :
     Value
         { int : Supported
+        , px : Supported
+        , cm : Supported
+        , mm : Supported
+        , inches : Supported
+        , pc : Supported
+        , pt : Supported
+        , ch : Supported
+        , em : Supported
+        , ex : Supported
+        , rem : Supported
+        , vh : Supported
+        , vw : Supported
+        , vmin : Supported
+        , vmax : Supported
+        , auto : Supported
+        , zero : Supported
+        , calc : Supported
         , initial : Supported
         , inherit : Supported
         , unset : Supported
@@ -15890,6 +15929,7 @@ wordSpacing :
         , inches : Supported
         , pc : Supported
         , pt : Supported
+        , pct : Supported
         , normal : Supported
         , initial : Supported
         , inherit : Supported
