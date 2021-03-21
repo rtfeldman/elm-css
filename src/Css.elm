@@ -3108,85 +3108,141 @@ displayFlex =
     AppendProperty "display:flex"
 
 
-{-| -}
+{-| The `block` value used by [`display`](#display)
+
+    display block
+
+-}
 block : Value { provides | block : Supported }
 block =
     Value "block"
 
 
-{-| -}
+{-| The `grid` value used by [`display`](#display)
+
+    display grid
+
+-}
 grid : Value { provides | block : Supported }
 grid =
     Value "grid"
 
 
-{-| -}
+{-| The `inline` value used by [`display`](#display)
+
+    display inline
+
+-}
 inline : Value { provides | inline : Supported }
 inline =
     Value "inline"
 
 
-{-| -}
+{-| The `inline-block` value used by [`display`](#display)
+
+    display inlineBlock
+
+-}
 inlineBlock : Value { provides | inlineBlock : Supported }
 inlineBlock =
     Value "inline-block"
 
 
-{-| -}
+{-| The `inline-flex` value used by [`display`](#display)
+
+    display inlineFlex
+
+-}
 inlineFlex : Value { provides | inlineFlex : Supported }
 inlineFlex =
     Value "inline-flex"
 
 
-{-| -}
+{-| The `table` value used by [`display`](#display)
+
+    display table
+
+-}
 table : Value { provides | table : Supported }
 table =
     Value "table"
 
 
-{-| -}
+{-| The `table-caption` value used by [`display`](#display)
+
+    display tableCaption
+
+-}
 tableCaption : Value { provides | tableCaption : Supported }
 tableCaption =
     Value "table-caption"
 
 
-{-| -}
+{-| The `table-cell` value used by [`display`](#display)
+
+    display tableCell
+
+-}
 tableCell : Value { provides | tableCell : Supported }
 tableCell =
     Value "table-cell"
 
 
-{-| -}
+{-| The `table-column` value used by [`display`](#display)
+
+    display tableColumn
+
+-}
 tableColumn : Value { provides | tableColumn : Supported }
 tableColumn =
     Value "table-column"
 
 
-{-| -}
+{-| The `table-column-group` value used by [`display`](#display)
+
+    display tableColumnGroup
+
+-}
 tableColumnGroup : Value { provides | tableColumnGroup : Supported }
 tableColumnGroup =
     Value "table-column-group"
 
 
-{-| -}
+{-| The `table-footer-group` value used by [`display`](#display)
+
+    display tableFooterGroup
+
+-}
 tableFooterGroup : Value { provides | tableFooterGroup : Supported }
 tableFooterGroup =
     Value "table-footer-group"
 
 
-{-| -}
+{-| The `table-header-group` value used by [`display`](#display)
+
+    display tableHeaderGroup
+
+-}
 tableHeaderGroup : Value { provides | tableHeaderGroup : Supported }
 tableHeaderGroup =
     Value "table-header-group"
 
 
-{-| -}
+{-| The `table-row` value used by [`display`](#display)
+
+    display tableRow
+
+-}
 tableRow : Value { provides | tableRow : Supported }
 tableRow =
     Value "table-row"
 
 
-{-| -}
+{-| The `table-row-group` value used by [`display`](#display)
+
+    display tableRowGroup
+
+-}
 tableRowGroup : Value { provides | tableRowGroup : Supported }
 tableRowGroup =
     Value "table-row-group"
@@ -4512,7 +4568,7 @@ zoomIn =
     Value "zoom-in"
 
 
-{-| The `zoomOut` value for the [`cursor`](#cursor) property.
+{-| The `zoom-out` value for the [`cursor`](#cursor) property.
 -}
 zoomOut : Value { provides | zoomOut : Supported }
 zoomOut =
