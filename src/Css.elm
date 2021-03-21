@@ -1223,7 +1223,7 @@ hsl hueVal sat lightness =
             ++ String.fromFloat (sat * 100)
             ++ "%,"
             ++ String.fromFloat (lightness * 100)
-            ++ "%,"
+            ++ "%"
             ++ ")"
 
 
@@ -1237,7 +1237,7 @@ The `s` and `l` values are expressed as a number between 0 and 1 and are convert
 hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
 hsla hueVal sat lightness alpha =
     Value <|
-        "hsl("
+        "hsla("
             ++ String.fromFloat hueVal
             ++ ","
             ++ String.fromFloat (sat * 100)
@@ -1261,10 +1261,10 @@ hex : String -> Value { provides | hex : Supported }
 hex str =
     Value <|
         if String.startsWith "#" str then
-            String.dropLeft 1 str
+            str
 
         else
-            str
+            "#" ++ str
 
 
 
@@ -3331,13 +3331,13 @@ inline =
 {-| -}
 inlineBlock : Value { provides | inlineBlock : Supported }
 inlineBlock =
-    Value "inlineBlock"
+    Value "inline-block"
 
 
 {-| -}
 inlineFlex : Value { provides | inlineFlex : Supported }
 inlineFlex =
-    Value "inlineFlex"
+    Value "inline-flex"
 
 
 {-| -}
@@ -3349,49 +3349,49 @@ table =
 {-| -}
 tableCaption : Value { provides | tableCaption : Supported }
 tableCaption =
-    Value "tableCaption"
+    Value "table-caption"
 
 
 {-| -}
 tableCell : Value { provides | tableCell : Supported }
 tableCell =
-    Value "tableCell"
+    Value "table-cell"
 
 
 {-| -}
 tableColumn : Value { provides | tableColumn : Supported }
 tableColumn =
-    Value "tableColumn"
+    Value "table-column"
 
 
 {-| -}
 tableColumnGroup : Value { provides | tableColumnGroup : Supported }
 tableColumnGroup =
-    Value "tableColumnGroup"
+    Value "table-column-group"
 
 
 {-| -}
 tableFooterGroup : Value { provides | tableFooterGroup : Supported }
 tableFooterGroup =
-    Value "tableFooterGroup"
+    Value "table-footer-group"
 
 
 {-| -}
 tableHeaderGroup : Value { provides | tableHeaderGroup : Supported }
 tableHeaderGroup =
-    Value "tableHeaderGroup"
+    Value "table-header-group"
 
 
 {-| -}
 tableRow : Value { provides | tableRow : Supported }
 tableRow =
-    Value "tableRow"
+    Value "table-row"
 
 
 {-| -}
 tableRowGroup : Value { provides | tableRowGroup : Supported }
 tableRowGroup =
-    Value "tableRowGroup"
+    Value "table-row-group"
 
 
 
@@ -5164,7 +5164,7 @@ zoomIn =
 -}
 zoomOut : Value { provides | zoomOut : Supported }
 zoomOut =
-    Value "zoomOut"
+    Value "zoom-out"
 
 
 {-| The `grab` value for the [`cursor`](#cursor) property.
@@ -13246,7 +13246,7 @@ opacity :
         }
     -> Style
 opacity (Value val) =
-    AppendProperty ("stroke-opacity:" ++ val)
+    AppendProperty ("opacity:" ++ val)
 
 
 {-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
