@@ -17,6 +17,7 @@ module Css exposing
     , repeat, noRepeat, repeatX, repeatY, space, round
     , cover, contain
     , BoxShadowConfig, boxShadow, defaultBoxShadow
+    , TextShadowConfig, textShadow, defaultTextShadow
     , border, border2, border3
     , borderTop, borderTop2, borderTop3
     , borderRight, borderRight2, borderRight3
@@ -226,6 +227,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Box Shadow
 
 @docs BoxShadowConfig, boxShadow, defaultBoxShadow
+
+
+## Text Shadow
+
+@docs TextShadowConfig, textShadow, defaultTextShadow
 
 
 ## Border
@@ -2877,6 +2883,163 @@ boxShadowConfigToString config =
                 |> Maybe.withDefault ""
     in
     insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
+
+
+
+-- TEXT SHADOW --
+
+
+{-| Configuration for [`textShadow`](#textShadow).
+-}
+type alias TextShadowConfig =
+    { offsetX :
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    , offsetY :
+        Value
+            { px : Supported
+            , em : Supported
+            , ex : Supported
+            , ch : Supported
+            , rem : Supported
+            , vh : Supported
+            , vw : Supported
+            , vmin : Supported
+            , vmax : Supported
+            , mm : Supported
+            , cm : Supported
+            , inches : Supported
+            , pt : Supported
+            , pc : Supported
+            , pct : Supported
+            , zero : Supported
+            , calc : Supported
+            }
+    , blurRadius :
+        Maybe
+            (Value
+                { px : Supported
+                , em : Supported
+                , ex : Supported
+                , ch : Supported
+                , rem : Supported
+                , vh : Supported
+                , vw : Supported
+                , vmin : Supported
+                , vmax : Supported
+                , mm : Supported
+                , cm : Supported
+                , inches : Supported
+                , pt : Supported
+                , pc : Supported
+                , pct : Supported
+                , zero : Supported
+                , calc : Supported
+                }
+            )
+    , color :
+        Maybe
+            (Value
+                { rgb : Supported
+                , rgba : Supported
+                , hsl : Supported
+                , hsla : Supported
+                , hex : Supported
+                , transparent : Supported
+                , currentColor : Supported
+                }
+            )
+    }
+
+
+{-| Default [`textShadow`](#textShadow) configuration.
+
+It is equivalent to the following CSS:
+
+    text-shadow: 0 0;
+
+-}
+defaultTextShadow : TextShadowConfig
+defaultTextShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , color = Nothing
+    }
+
+
+{-| Sets [`text-shadow`](https://css-tricks.com/almanac/properties/t/text-shadow/).
+
+    textShadow [] -- "text-shadow: none"
+
+    -- "text-shadow: 3px 5px #aabbcc"
+    span
+        [ css
+            [ textShadow
+                [ { defaultTextShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
+
+-}
+textShadow : List TextShadowConfig -> Style
+textShadow configs =
+    let
+        values =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map textShadowConfigToString
+                        |> String.join ","
+    in
+    AppendProperty ("text-shadow:" ++ values)
+
+
+textShadowConfigToString : TextShadowConfig -> String
+textShadowConfigToString config =
+    let
+        offsetX =
+            unpackValue config.offsetX
+
+        offsetY =
+            unpackValue config.offsetY
+
+        blurRadius =
+            config.blurRadius
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+
+        colorSetting =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+    in
+    offsetX ++ " " ++ offsetY ++ blurRadius ++ colorSetting
 
 
 
