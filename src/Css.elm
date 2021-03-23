@@ -2,15 +2,15 @@ module Css exposing
     ( Value, BaseValue, Supported
     , Style, batch
     , property
-    , unset, initial, inherit
-    , all, revert
+    , unset, initial, inherit, revert
+    , all
     , Length, LengthSupported, Angle, AngleSupported
     , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
     , pseudoClass, active, disabled
     , pseudoElement, before, after
-    , width
+    , width, minWidth
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
@@ -175,9 +175,9 @@ functions let you define custom properties and selectors, respectively.
 
 All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
-@docs unset, initial, inherit
+@docs unset, initial, inherit, revert
 
-@docs all, revert
+@docs all
 
 @docs Length, LengthSupported, Angle, AngleSupported
 
@@ -209,7 +209,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Sizing
 
-@docs width
+@docs width, minWidth
 
 
 ## Background Attachment
@@ -729,18 +729,22 @@ reused. [`Color`](#Color) is one of these.
 type Value supports
     = Value String
 
+
 unpackValue : Value a -> String
 unpackValue (Value value) =
     value
 
+
 {-| A type that is used in properties for CSS wide values.
-See [CSS-wide values](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units#css-wide_values). -}
+See [CSS-wide values](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units#css-wide_values).
+-}
 type alias BaseValue supported =
     Value
         { supported
             | initial : Supported
             , inherit : Supported
             , unset : Supported
+            , revert : Supported
         }
 
 
@@ -956,23 +960,6 @@ unset =
     Value "unset"
 
 
-{-| Sets an [`all`](https://css-tricks.com/almanac/properties/a/all/) property.
-
-    all inherit
-
--}
-all :
-    Value
-        { revert : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
-    -> Style
-all (Value val) =
-    AppendProperty ("all:" ++ val)
-
-
 {-| The `revert` value for the [`all`](#all) property.
 
     all revert
@@ -981,6 +968,16 @@ all (Value val) =
 revert : Value { provides | revert : Supported }
 revert =
     Value "revert"
+
+
+{-| Sets an [`all`](https://css-tricks.com/almanac/properties/a/all/) property.
+
+    all inherit
+
+-}
+all : BaseValue {} -> Style
+all (Value val) =
+    AppendProperty ("all:" ++ val)
 
 
 
@@ -2440,78 +2437,25 @@ boxShadowConfigToString config =
 type alias TextShadowConfig =
     { offsetX :
         Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     , offsetY :
         Value
-            { px : Supported
-            , em : Supported
-            , ex : Supported
-            , ch : Supported
-            , rem : Supported
-            , vh : Supported
-            , vw : Supported
-            , vmin : Supported
-            , vmax : Supported
-            , mm : Supported
-            , cm : Supported
-            , inches : Supported
-            , pt : Supported
-            , pc : Supported
-            , pct : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     , blurRadius :
         Maybe
             (Value
-                { px : Supported
-                , em : Supported
-                , ex : Supported
-                , ch : Supported
-                , rem : Supported
-                , vh : Supported
-                , vw : Supported
-                , vmin : Supported
-                , vmax : Supported
-                , mm : Supported
-                , cm : Supported
-                , inches : Supported
-                , pt : Supported
-                , pc : Supported
-                , pct : Supported
-                , zero : Supported
-                , calc : Supported
-                }
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
             )
-    , color :
-        Maybe
-            (Value
-                { rgb : Supported
-                , rgba : Supported
-                , hsl : Supported
-                , hsla : Supported
-                , hex : Supported
-                , transparent : Supported
-                , currentColor : Supported
-                }
-            )
+    , color : Maybe (Value Color)
     }
 
 
@@ -3113,16 +3057,13 @@ unsafeCenter =
 
 -}
 alignContent :
-    Value
+    BaseValue
         { flexStart : Supported
         , flexEnd : Supported
         , center : Supported
         , spaceBetween : Supported
         , spaceAround : Supported
         , stretch : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 alignContent (Value val) =
@@ -3138,7 +3079,7 @@ because `Css.left` and `Css.right` are functions!
 
 -}
 alignItems :
-    Value
+    BaseValue
         { normal : Supported
         , stretch : Supported
         , center : Supported
@@ -3155,9 +3096,6 @@ alignItems :
         , lastBaseline : Supported
         , safeCenter : Supported
         , unsafeCenter : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 alignItems (Value val) =
@@ -3203,16 +3141,13 @@ alignSelf (Value val) =
 
 -}
 justifyContent :
-    Value
+    BaseValue
         { flexStart : Supported
         , flexEnd : Supported
         , center : Supported
         , spaceBetween : Supported
         , spaceAround : Supported
         , spaceEvenly : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 justifyContent (Value val) =
@@ -3231,30 +3166,13 @@ justifyContent (Value val) =
 
 -}
 flexBasis :
-    Value
-        { auto : Supported
-        , content : Supported
-        , ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , content : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 flexBasis (Value val) =
     AppendProperty ("flex-basis:" ++ val)
@@ -3278,13 +3196,10 @@ content =
 
 -}
 flexGrow :
-    Value
+    BaseValue
         { num : Supported
         , zero : Supported
         , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 flexGrow (Value val) =
@@ -3299,13 +3214,10 @@ flexGrow (Value val) =
 
 -}
 flexShrink :
-    Value
+    BaseValue
         { num : Supported
         , zero : Supported
         , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 flexShrink (Value val) =
@@ -3326,32 +3238,15 @@ flexShrink (Value val) =
 
 -}
 flex :
-    Value
-        { none : Supported
-        , auto : Supported
-        , content : Supported
-        , ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , num : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { none : Supported
+            , auto : Supported
+            , content : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
     -> Style
 flex (Value growOrBasis) =
     AppendProperty ("flex:" ++ growOrBasis)
@@ -3378,27 +3273,13 @@ flex2 :
         }
     ->
         Value
-            { auto : Supported
-            , content : Supported
-            , ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , num : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , content : Supported
+                , pct : Supported
+                , num : Supported
+                }
+            )
     -> Style
 flex2 (Value grow) (Value shrinkOrBasis) =
     AppendProperty ("flex:" ++ grow ++ " " ++ shrinkOrBasis)
@@ -3431,26 +3312,12 @@ flex3 :
             }
     ->
         Value
-            { auto : Supported
-            , content : Supported
-            , ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , content : Supported
+                , pct : Supported
+                }
+            )
     -> Style
 flex3 (Value grow) (Value shrink) (Value basis) =
     AppendProperty ("flex:" ++ grow ++ " " ++ shrink ++ " " ++ basis)
@@ -3462,14 +3329,11 @@ flex3 (Value grow) (Value shrink) (Value basis) =
 
 -}
 flexDirection :
-    Value
+    BaseValue
         { row : Supported
         , rowReverse : Supported
         , column : Supported
         , columnReverse : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 flexDirection (Value val) =
@@ -3526,13 +3390,10 @@ columnReverse =
 
 -}
 flexWrap :
-    Value
+    BaseValue
         { nowrap : Supported
         , wrap : Supported
         , wrapReverse : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 flexWrap (Value val) =
@@ -3571,7 +3432,7 @@ wrapReverse =
 
 -}
 flexFlow :
-    Value
+    BaseValue
         { row : Supported
         , rowReverse : Supported
         , column : Supported
@@ -3579,9 +3440,6 @@ flexFlow :
         , nowrap : Supported
         , wrap : Supported
         , wrapReverse : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 flexFlow (Value directionOrWrapping) =
@@ -3961,15 +3819,12 @@ oblique =
 
 -}
 fontWeight :
-    Value
+    BaseValue
         { normal : Supported
         , bold : Supported
         , bolder : Supported
         , lighter : Supported
         , int : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 fontWeight (Value val) =
@@ -5890,12 +5745,9 @@ listStyle3 (Value val1) (Value val2) (Value val3) =
 
 -}
 listStylePosition :
-    Value
+    BaseValue
         { inside : Supported
         , outside : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 listStylePosition (Value pos) =
@@ -6248,7 +6100,7 @@ borderLeftWidth (Value widthVal) =
 
     borderStyle3 solid none dotted
 
-    borderStyle4 solid none dotted inherit
+    borderStyle4 solid none dotted groove
 
 -}
 borderStyle : BaseValue BorderStyle -> Style
@@ -6260,12 +6112,6 @@ borderStyle (Value style) =
 
     borderStyle solid
 
-    borderStyle2 solid none
-
-    borderStyle3 solid none dotted
-
-    borderStyle4 solid none dotted inherit
-
 -}
 borderStyle2 : Value BorderStyle -> Value BorderStyle -> Style
 borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
@@ -6274,13 +6120,7 @@ borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
 
-    borderStyle solid
-
     borderStyle2 solid none
-
-    borderStyle3 solid none dotted
-
-    borderStyle4 solid none dotted inherit
 
 -}
 borderStyle3 : Value BorderStyle -> Value BorderStyle -> Value BorderStyle -> Style
@@ -6290,13 +6130,7 @@ borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
 
-    borderStyle solid
-
-    borderStyle2 solid none
-
-    borderStyle3 solid none dotted
-
-    borderStyle4 solid none dotted inherit
+    borderStyle4 solid none dotted groove
 
 -}
 borderStyle4 : Value BorderStyle -> Value BorderStyle -> Value BorderStyle -> Value BorderStyle -> Style
@@ -7599,16 +7433,13 @@ textDecorationColor (Value colorVal) =
 
 -}
 textDecorationSkip :
-    Value
+    BaseValue
         { objects : Supported
         , none : Supported
         , spaces : Supported
         , ink : Supported
         , edges : Supported
         , boxDecoration : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 textDecorationSkip (Value val) =
@@ -8077,14 +7908,11 @@ matchParent =
 
 -}
 textJustify :
-    Value
+    BaseValue
         { interWord : Supported
         , interCharacter : Supported
         , auto : Supported
         , none : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
     -> Style
 textJustify (Value val) =
@@ -8123,14 +7951,11 @@ interCharacter =
 
 -}
 textUnderlinePositon :
-    Value
+    BaseValue
         { auto : Supported
         , under : Supported
         , left_ : Supported
         , right_ : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
     -> Style
 textUnderlinePositon (Value val) =
@@ -9388,7 +9213,6 @@ transform values =
 
 
 
-
 -- MATRIX TRANSFORMATION
 
 
@@ -9910,30 +9734,13 @@ zoom (Value val) =
 
 -}
 lineHeight :
-    Value
-        { pct : Supported
-        , normal : Supported
-        , num : Supported
-        , ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , normal : Supported
+            , num : Supported
+            }
+        )
     -> Style
 lineHeight (Value val) =
     AppendProperty ("line-height:" ++ val)
@@ -9951,17 +9758,11 @@ lineHeight (Value val) =
 
 -}
 letterSpacing :
-    Value
-        { inherit : Supported
-        , normal : Supported
-        , initial : Supported
-        , unset : Supported
-        , rem : Supported
-        , px : Supported
-        , em : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            }
+        )
     -> Style
 letterSpacing (Value val) =
     AppendProperty ("letter-spacing:" ++ val)
@@ -9977,29 +9778,12 @@ letterSpacing (Value val) =
 
 -}
 width :
-    Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
     -> Style
 width (Value size) =
     AppendProperty ("width:" ++ size)
@@ -10015,29 +9799,12 @@ width (Value size) =
 
 -}
 minWidth :
-    Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 minWidth (Value size) =
     AppendProperty ("min-width:" ++ size)
@@ -10053,26 +9820,12 @@ minWidth (Value size) =
 
 -}
 maxWidth :
-    Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 maxWidth (Value size) =
     AppendProperty ("max-width:" ++ size)
@@ -10086,12 +9839,9 @@ maxWidth (Value size) =
 
 -}
 backfaceVisibility :
-    Value
+    BaseValue
         { visible : Supported
         , hidden : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 backfaceVisibility (Value val) =
@@ -10106,15 +9856,11 @@ backfaceVisibility (Value val) =
 
 -}
 bleed :
-    Value
-        { auto : Supported
-        , pt : Supported
-        , cm : Supported
-        , inches : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     -> Style
 bleed (Value val) =
     AppendProperty ("bleed:" ++ val)
@@ -10130,19 +9876,11 @@ bleed (Value val) =
 
 -}
 caretColor :
-    Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , currentColor : Supported
-        , transparent : Supported
-        , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (ColorSupported
+            { auto : Supported
+            }
+        )
     -> Style
 caretColor (Value val) =
     AppendProperty ("caret-color:" ++ val)
@@ -10202,15 +9940,12 @@ avoidRegion =
 
 -}
 breakInside :
-    Value
+    BaseValue
         { auto : Supported
         , avoid : Supported
         , avoidPage : Supported
         , avoidColumn : Supported
         , avoidRegion : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 breakInside (Value val) =
@@ -10225,12 +9960,9 @@ breakInside (Value val) =
 
 -}
 boxDecorationBreak :
-    Value
+    BaseValue
         { slice : Supported
         , clone : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 boxDecorationBreak (Value val) =
@@ -10283,15 +10015,12 @@ optional =
 
 -}
 fontDisplay :
-    Value
+    BaseValue
         { auto : Supported
         , block : Supported
         , swap : Supported
         , fallback : Supported
         , optional : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 fontDisplay (Value val) =
@@ -10308,13 +10037,10 @@ fontDisplay (Value val) =
 
 -}
 fontSizeAdjust :
-    Value
+    BaseValue
         { none : Supported
         , zero : Supported
         , num : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 fontSizeAdjust (Value val) =
@@ -10423,7 +10149,7 @@ semiExpanded =
 
 -}
 fontStretch :
-    Value
+    BaseValue
         { ultraCondensed : Supported
         , extraCondensed : Supported
         , condensed : Supported
@@ -10433,9 +10159,6 @@ fontStretch :
         , expanded : Supported
         , extraExpanded : Supported
         , ultraExpanded : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 fontStretch (Value val) =
@@ -10496,15 +10219,12 @@ allowEnd =
 
 -}
 hangingPunctuation :
-    Value
+    BaseValue
         { none : Supported
         , first : Supported
         , forceEnd : Supported
         , allowEnd : Supported
         , last : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 hangingPunctuation (Value val) =
@@ -10531,13 +10251,10 @@ manual =
 
 -}
 hyphens :
-    Value
+    BaseValue
         { none : Supported
         , manual : Supported
         , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 hyphens (Value val) =
@@ -10574,13 +10291,10 @@ crispEdges =
 
 -}
 imageRendering :
-    Value
+    BaseValue
         { auto : Supported
         , crispEdges : Supported
         , pixelated : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 imageRendering (Value val) =
@@ -10608,12 +10322,9 @@ isolate =
 
 -}
 isolation :
-    Value
+    BaseValue
         { auto : Supported
         , isolate : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 isolation (Value val) =
@@ -10630,13 +10341,10 @@ isolation (Value val) =
 
 -}
 lineClamp :
-    Value
+    BaseValue
         { none : Supported
         , zero : Supported
         , int : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 lineClamp (Value val) =
@@ -10651,7 +10359,7 @@ lineClamp (Value val) =
 
 -}
 mixBlendMode :
-    Value
+    BaseValue
         { normal : Supported
         , multiply : Supported
         , screen : Supported
@@ -10668,9 +10376,6 @@ mixBlendMode :
         , saturation : Supported
         , color_ : Supported
         , luminosity : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 mixBlendMode (Value val) =
@@ -10711,15 +10416,12 @@ scaleDown =
 
 -}
 objectFit :
-    Value
+    BaseValue
         { fill_ : Supported
         , contain : Supported
         , cover : Supported
         , none : Supported
         , scaleDown : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 objectFit (Value val) =
@@ -10744,31 +10446,14 @@ If you need to set the offsets from the right or bottom, use
 
 -}
 objectPosition :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , center : Supported
-        , inherit : Supported
-        , unset : Supported
-        , initial : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 objectPosition (Value horiz) =
     AppendProperty ("object-position:" ++ horiz)
@@ -10794,50 +10479,22 @@ If you need to set the offsets from the right or bottom, use
 -}
 objectPosition2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , center : Supported
-        }
+        (LengthSupported
+            { left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            , pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , top_ : Supported
-            , bottom_ : Supported
-            , center : Supported
-            }
+            (LengthSupported
+                { top_ : Supported
+                , bottom_ : Supported
+                , center : Supported
+                , pct : Supported
+                }
+            )
     -> Style
 objectPosition2 (Value horiz) (Value vert) =
     AppendProperty ("object-position:" ++ horiz ++ " " ++ vert)
@@ -10863,24 +10520,10 @@ objectPosition4 :
         }
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     ->
         Value
             { top_ : Supported
@@ -10888,24 +10531,10 @@ objectPosition4 :
             }
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pct : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            }
+            (LengthSupported
+                { pct : Supported
+                }
+            )
     -> Style
 objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
     AppendProperty
@@ -10927,11 +10556,8 @@ objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount
 
 -}
 orphans :
-    Value
+    BaseValue
         { int : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 orphans (Value val) =
@@ -10946,12 +10572,9 @@ orphans (Value val) =
 
 -}
 overflowAnchor :
-    Value
+    BaseValue
         { auto : Supported
         , none : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 overflowAnchor (Value val) =
@@ -10976,15 +10599,12 @@ overflowAnchor (Value val) =
 
 -}
 pageBreakBefore :
-    Value
+    BaseValue
         { auto : Supported
         , always : Supported
         , avoid : Supported
         , left_ : Supported
         , right_ : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 pageBreakBefore (Value val) =
@@ -10999,12 +10619,9 @@ pageBreakBefore (Value val) =
 
 -}
 pageBreakInside :
-    Value
+    BaseValue
         { auto : Supported
         , avoid : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 pageBreakInside (Value val) =
@@ -11025,15 +10642,12 @@ pageBreakInside (Value val) =
 
 -}
 pageBreakAfter :
-    Value
+    BaseValue
         { auto : Supported
         , always : Supported
         , avoid : Supported
         , left_ : Supported
         , right_ : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 pageBreakAfter (Value val) =
@@ -11048,12 +10662,9 @@ pageBreakAfter (Value val) =
 
 -}
 pointerEvents :
-    Value
+    BaseValue
         { auto : Supported
         , none : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 pointerEvents (Value val) =
@@ -11082,12 +10693,9 @@ smooth =
 
 -}
 scrollBehavior :
-    Value
+    BaseValue
         { auto : Supported
         , smooth : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 scrollBehavior (Value val) =
@@ -11116,28 +10724,11 @@ bottom, and left, respectively.
 
 -}
 scrollMargin :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     -> Style
 scrollMargin (Value value) =
     AppendProperty ("scroll-margin:" ++ value)
@@ -11156,44 +10747,16 @@ margins are set to the second.
 -}
 scrollMargin2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                }
+            )
     -> Style
 scrollMargin2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("scroll-margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -11212,64 +10775,22 @@ second, and the bottom is set to the third.
 -}
 scrollMargin3 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                }
+            )
     -> Style
 scrollMargin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
@@ -11287,84 +10808,28 @@ The four values apply to the top, right, bottom, and left margins.
 -}
 scrollMargin4 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                }
+            )
     -> Style
 scrollMargin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
@@ -11376,28 +10841,11 @@ scrollMargin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value val
 
 -}
 scrollMarginTop :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     -> Style
 scrollMarginTop (Value value) =
     AppendProperty ("scroll-margin-top:" ++ value)
@@ -11409,28 +10857,11 @@ scrollMarginTop (Value value) =
 
 -}
 scrollMarginRight :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     -> Style
 scrollMarginRight (Value value) =
     AppendProperty ("scroll-margin-right:" ++ value)
@@ -11442,28 +10873,11 @@ scrollMarginRight (Value value) =
 
 -}
 scrollMarginBottom :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     -> Style
 scrollMarginBottom (Value value) =
     AppendProperty ("scroll-margin-bottom:" ++ value)
@@ -11475,28 +10889,11 @@ scrollMarginBottom (Value value) =
 
 -}
 scrollMarginLeft :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
     -> Style
 scrollMarginLeft (Value value) =
     AppendProperty ("scroll-margin-left:" ++ value)
@@ -11524,29 +10921,12 @@ bottom, and left, respectively.
 
 -}
 scrollPadding :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 scrollPadding (Value value) =
     AppendProperty ("scroll-padding:" ++ value)
@@ -11565,46 +10945,18 @@ margins are set to the second.
 -}
 scrollPadding2 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     -> Style
 scrollPadding2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("scroll-padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -11623,67 +10975,25 @@ second, and the bottom is set to the third.
 -}
 scrollPadding3 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     -> Style
 scrollPadding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
@@ -11701,88 +11011,32 @@ The four values apply to the top, right, bottom, and left paddings.
 -}
 scrollPadding4 :
     Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , auto : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     ->
         Value
-            { ch : Supported
-            , cm : Supported
-            , em : Supported
-            , ex : Supported
-            , inches : Supported
-            , mm : Supported
-            , pc : Supported
-            , pt : Supported
-            , pct : Supported
-            , px : Supported
-            , rem : Supported
-            , vh : Supported
-            , vmax : Supported
-            , vmin : Supported
-            , vw : Supported
-            , zero : Supported
-            , calc : Supported
-            , auto : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     -> Style
 scrollPadding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
@@ -11794,29 +11048,12 @@ scrollPadding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value va
 
 -}
 scrollPaddingTop :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 scrollPaddingTop (Value value) =
     AppendProperty ("scroll-padding-top:" ++ value)
@@ -11828,29 +11065,12 @@ scrollPaddingTop (Value value) =
 
 -}
 scrollPaddingRight :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 scrollPaddingRight (Value value) =
     AppendProperty ("scroll-padding-right:" ++ value)
@@ -11862,29 +11082,12 @@ scrollPaddingRight (Value value) =
 
 -}
 scrollPaddingBottom :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 scrollPaddingBottom (Value value) =
     AppendProperty ("scroll-padding-bottom:" ++ value)
@@ -11896,29 +11099,12 @@ scrollPaddingBottom (Value value) =
 
 -}
 scrollPaddingLeft :
-    Value
-        { ch : Supported
-        , cm : Supported
-        , em : Supported
-        , ex : Supported
-        , inches : Supported
-        , mm : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , px : Supported
-        , rem : Supported
-        , vh : Supported
-        , vmax : Supported
-        , vmin : Supported
-        , vw : Supported
-        , zero : Supported
-        , calc : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
-        , auto : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 scrollPaddingLeft (Value value) =
     AppendProperty ("scroll-padding-left:" ++ value)
@@ -11936,13 +11122,11 @@ scrollPaddingLeft (Value value) =
 
 -}
 scrollSnapAlign :
-    Value
+    BaseValue
         { none : Supported
         , start : Supported
         , center : Supported
         , end : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 scrollSnapAlign (Value val) =
@@ -11971,12 +11155,9 @@ always =
 
 -}
 scrollSnapStop :
-    Value
+    BaseValue
         { normal : Supported
         , always : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 scrollSnapStop (Value val) =
@@ -11989,16 +11170,13 @@ scrollSnapStop (Value val) =
 
 -}
 scrollSnapType :
-    Value
+    BaseValue
         { none : Supported
         , x : Supported
         , y : Supported
         , block : Supported
         , inline : Supported
         , both : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 scrollSnapType (Value val) =
@@ -12090,13 +11268,10 @@ spellOut =
 
 -}
 speak :
-    Value
+    BaseValue
         { none : Supported
         , normal : Supported
         , spellOut : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
     -> Style
 speak (Value val) =
@@ -12110,29 +11285,12 @@ speak (Value val) =
 
 -}
 tabSize :
-    Value
-        { int : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , int : Supported
+            }
+        )
     -> Style
 tabSize (Value val) =
     AppendProperty ("tab-size:" ++ val)
@@ -12149,29 +11307,12 @@ This is a shorthand for [`text-stroke-width`](#textStrokeWidth) and [`text-strok
 
 -}
 textStroke :
-    Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 textStroke (Value val) =
     AppendProperty ("text-stroke:" ++ val)
@@ -12184,35 +11325,12 @@ textStroke (Value val) =
 -}
 textStroke2 :
     Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        }
-    ->
-        Value
-            { rgb : Supported
-            , rgba : Supported
-            , hsl : Supported
-            , hsla : Supported
-            , hex : Supported
-            , transparent : Supported
-            , currentColor : Supported
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
             }
+        )
+    -> Value Color
     -> Style
 textStroke2 (Value val1) (Value val2) =
     AppendProperty ("text-stroke:" ++ val1 ++ " " ++ val2)
@@ -12224,29 +11342,12 @@ textStroke2 (Value val1) (Value val2) =
 
 -}
 textStrokeWidth :
-    Value
-        { px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pct : Supported
-        , pt : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , auto : Supported
-        , zero : Supported
-        , calc : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 textStrokeWidth (Value val) =
     AppendProperty ("text-stroke-width:" ++ val)
@@ -12257,20 +11358,7 @@ textStrokeWidth (Value val) =
     tabStrokeColor (hex "#60b5cc")
 
 -}
-textStrokeColor :
-    Value
-        { rgb : Supported
-        , rgba : Supported
-        , hsl : Supported
-        , hsla : Supported
-        , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
-    -> Style
+textStrokeColor : BaseValue Color -> Style
 textStrokeColor (Value val) =
     AppendProperty ("text-stroke-color:" ++ val)
 
@@ -12287,13 +11375,11 @@ textStrokeColor (Value val) =
 
 -}
 transformOrigin :
-    Value
+    BaseValue
         { top_ : Supported
         , center : Supported
         , bottom_ : Supported
         , pct : Supported
-        , inherit : Supported
-        , initial : Supported
         }
     -> Style
 transformOrigin (Value vert) =
@@ -12390,16 +11476,13 @@ isolateOverride =
 
 -}
 unicodeBidi :
-    Value
+    BaseValue
         { normal : Supported
         , embed : Supported
         , isolate : Supported
         , bidiOverride : Supported
         , isolateOverride : Supported
         , plaintext : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
     -> Style
 unicodeBidi (Value val) =
@@ -12420,15 +11503,12 @@ unicodeBidi (Value val) =
 
 -}
 userSelect :
-    Value
+    BaseValue
         { none : Supported
         , auto : Supported
         , text : Supported
         , contain : Supported
         , all_ : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
     -> Style
 userSelect (Value val) =
@@ -12442,11 +11522,8 @@ userSelect (Value val) =
 
 -}
 widows :
-    Value
+    BaseValue
         { int : Supported
-        , inherit : Supported
-        , initial : Supported
-        , unset : Supported
         }
     -> Style
 widows (Value val) =
@@ -12463,29 +11540,12 @@ widows (Value val) =
 
 -}
 wordSpacing :
-    Value
-        { zero : Supported
-        , calc : Supported
-        , ch : Supported
-        , em : Supported
-        , ex : Supported
-        , rem : Supported
-        , vh : Supported
-        , vw : Supported
-        , vmin : Supported
-        , vmax : Supported
-        , px : Supported
-        , cm : Supported
-        , mm : Supported
-        , inches : Supported
-        , pc : Supported
-        , pt : Supported
-        , pct : Supported
-        , normal : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
-        }
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            , pct : Supported
+            }
+        )
     -> Style
 wordSpacing (Value str) =
     AppendProperty ("word-spacing:" ++ str)
@@ -12531,13 +11591,10 @@ verticalRl =
 
 -}
 writingMode :
-    Value
+    BaseValue
         { horizontalTb : Supported
         , verticalRl : Supported
         , verticalLr : Supported
-        , initial : Supported
-        , inherit : Supported
-        , unset : Supported
         }
     -> Style
 writingMode (Value str) =
