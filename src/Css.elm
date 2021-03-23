@@ -10,7 +10,8 @@ module Css exposing
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
     , pseudoClass, active, disabled
     , pseudoElement, before, after
-    , width, minWidth
+    , width, minWidth, maxWidth
+    , minContent, maxContent, fitContent
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
@@ -209,7 +210,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Sizing
 
-@docs width, minWidth
+@docs width, minWidth, maxWidth
+@docs minContent, maxContent, fitContent
 
 
 ## Background Attachment
@@ -1012,6 +1014,7 @@ auto =
 
 {-| The `none` value used for properties such as [`display`](#display),
 [`borderStyle`](#borderStyle),
+[`maxWidth`](#maxWidth),
 [`clear`](#clear),
 [`strokeDashJustify`](#strokeDashJustify),
 and [`flex`](#flex).
@@ -9776,12 +9779,17 @@ letterSpacing (Value val) =
 
     width auto
 
+    width minContent
+
 -}
 width :
     BaseValue
         (LengthSupported
-            { pct : Supported
-            , auto : Supported
+            { auto : Supported
+            , fitContent : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , pct : Supported
             }
         )
     -> Style
@@ -9802,6 +9810,9 @@ minWidth :
     BaseValue
         (LengthSupported
             { auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
             , pct : Supported
             }
         )
@@ -9822,13 +9833,52 @@ minWidth (Value size) =
 maxWidth :
     BaseValue
         (LengthSupported
-            { auto : Supported
+            { maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            , none : Supported
             , pct : Supported
             }
         )
     -> Style
 maxWidth (Value size) =
     AppendProperty ("max-width:" ++ size)
+
+
+{-| The `min-content` value used for properties such as [`width`](#width),
+[`minWidth`](#minWidth)
+and [`maxWidth`](#maxWidth)
+
+    width minContent
+
+-}
+minContent : Value { provides | minContent : Supported }
+minContent =
+    Value "min-content"
+
+
+{-| The `max-content` value used for properties such as [`width`](#width),
+[`minWidth`](#minWidth)
+and [`maxWidth`](#maxWidth)
+
+    width maxContent
+
+-}
+maxContent : Value { provides | maxContent : Supported }
+maxContent =
+    Value "max-content"
+
+
+{-| The `fit-content` value used for properties such as [`width`](#width),
+[`minWidth`](#minWidth)
+and [`maxWidth`](#maxWidth)
+
+    width fitContent
+
+-}
+fitContent : Value { provides | fitContent : Supported }
+fitContent =
+    Value "fit-content"
 
 
 {-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
