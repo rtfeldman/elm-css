@@ -1,4 +1,4 @@
-module Tests exposing (atRule, attributeCombinator, backgrounds, borders, bug140, bug280, bug335, bug99, divWidthHeight, fonts, greenOnHoverStyle, keyValue, leftRightTopBottom, multiDescendent, multiSelector, nestedAtRule, nestedEach, pseudoClasses, pseudoElements, simpleEach, transformsStyle, underlineOnHoverManual, underlineOnHoverStyle, universal, unstyledDiv)
+module Tests exposing (atRule, attributeCombinator, backgrounds, borders, bug140, bug280, bug335, bug99, divWidthHeight, fonts, greenOnHoverStyle, importantOnBatch, keyValue, leftRightTopBottom, multiDescendent, multiSelector, nestedAtRule, nestedEach, pseudoClasses, pseudoElements, simpleEach, transformsStyle, underlineOnHoverManual, underlineOnHoverStyle, universal, unstyledDiv)
 
 import Expect exposing (Expectation)
 import Fixtures
@@ -418,6 +418,28 @@ keyValue =
     in
     describe "Custom key-value properties"
         [ test "pretty prints the expected output" <|
+            \_ ->
+                outdented (prettyPrint input)
+                    |> Expect.equal (outdented output)
+        ]
+
+
+importantOnBatch : Test
+importantOnBatch =
+    let
+        input =
+            Fixtures.importantOnBatch
+
+        output =
+            """
+            div {
+                color:#000 !important;
+                width:100% !important;
+            }
+            """
+    in
+    describe "Important on batch"
+        [ test "Using important on batch" <|
             \_ ->
                 outdented (prettyPrint input)
                     |> Expect.equal (outdented output)
