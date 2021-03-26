@@ -61,6 +61,7 @@ module Css exposing
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
     , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
+    , fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
@@ -404,6 +405,13 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 [`normal`](#normal) is also a supported font weight.
 
 @docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
+
+
+## Font Feature Settings
+
+@docs fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
+
+[`normal`](#normal) is also a supported font feature settings.
 
 
 ## Font Variant Caps
@@ -3775,7 +3783,12 @@ enquoteIfNotGeneric fontName =
             fontName
 
         _ ->
-            "\"" ++ fontName ++ "\""
+            enquoteString fontName
+
+
+enquoteString : String -> String
+enquoteString str =
+    "\"" ++ str ++ "\""
 
 
 
@@ -3808,6 +3821,79 @@ italic =
 oblique : Value { provides | oblique : Supported }
 oblique =
     Value "oblique"
+
+
+
+-- FONT FEATURE SETTINGS --
+
+
+{-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
+
+    fontFeatureSettings normal
+
+    fontFeatureSettings (featureTag "liga")
+
+    fontFeatureSettings (featureTag2 "swsh" 2)
+
+-}
+fontFeatureSettings :
+    BaseValue
+        { featureTag : Supported
+        , normal : Supported
+        }
+    -> Style
+fontFeatureSettings (Value val) =
+    AppendProperty ("font-feature-settings:" ++ val)
+
+
+{-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
+
+    fontFeatureSettingsList [] -- equivalent to fontFeatureSettings normal
+
+    fontFeatureSettingsList [ featureTag "liga", featureTag2 "swsh" 2 ]
+
+-}
+fontFeatureSettingsList :
+    List
+        (Value { featureTag : Supported })
+    -> Style
+fontFeatureSettingsList values =
+    let
+        str =
+            case values of
+                [] ->
+                    "normal"
+
+                _ ->
+                    values
+                        |> List.map unpackValue
+                        |> String.join ","
+    in
+    AppendProperty ("font-feature-settings:" ++ str)
+
+{-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
+for use with [`fontFeatureSettings`](#fontFeatureSettings)
+and [`fontFeatureSettingsList`](#fontFeatureSettingsList)
+
+    featureTag "smcp"
+
+-}
+featureTag : String -> Value { provides | featureTag : Supported }
+featureTag tag =
+    Value (enquoteString tag)
+
+
+{-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
+with an specific value
+for use with [`fontFeatureSettings`](#fontFeatureSettings)
+and [`fontFeatureSettingsList`](#fontFeatureSettingsList)
+
+    featureTag2 "swsh" 2
+
+-}
+featureTag2 : String -> Int -> Value { provides | featureTag : Supported }
+featureTag2 tag value =
+    Value (enquoteString tag ++ " " ++ String.fromInt value)
 
 
 
