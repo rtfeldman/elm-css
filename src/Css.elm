@@ -15,6 +15,7 @@ module Css exposing
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
+    , ImageSupported, Image
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
     , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
@@ -232,6 +233,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Image
 
+@docs ImageSupported, Image
 @docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
 
 @docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
@@ -875,6 +877,25 @@ type alias AngleSupported v =
 -}
 type alias Angle =
     AngleSupported {}
+
+
+{-| A type alias used to accept an [image](https://developer.mozilla.org/en-US/docs/Web/CSS/image)
+among other values.
+-}
+type alias ImageSupported supported =
+    { supported
+        | url : Supported
+        , linearGradient : Supported
+        , radialGradient : Supported
+        , repeatingLinearGradient : Supported
+        , repeatingRadialGradient : Supported
+    }
+
+
+{-| A type alias used to accept an [image](https://developer.mozilla.org/en-US/docs/Web/CSS/image).
+-}
+type alias Image =
+    ImageSupported {}
 
 
 
@@ -5185,13 +5206,7 @@ backgroundOrigins firstValue values =
 See also [`backgroundImages`](#backgroundImages) if you need multiple images.
 
 -}
-backgroundImage :
-    BaseValue
-        { url : Supported
-        , linearGradient : Supported
-        , none : Supported
-        }
-    -> Style
+backgroundImage : BaseValue (ImageSupported { none : Supported }) -> Style
 backgroundImage (Value value) =
     AppendProperty ("background-image:" ++ value)
 
@@ -5206,17 +5221,8 @@ See also [`backgroundImage`](#backgroundImage) if you need only one.
 
 -}
 backgroundImages :
-    Value
-        { url : Supported
-        , linearGradient : Supported
-        }
-    ->
-        List
-            (Value
-                { url : Supported
-                , linearGradient : Supported
-                }
-            )
+    Value Image
+    -> List (Value Image)
     -> Style
 backgroundImages (Value head) rest =
     let
