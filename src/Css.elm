@@ -36,6 +36,7 @@ module Css exposing
     , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
+    , outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
     , display
     , block, flex_, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     , position, top, right, bottom, left, zIndex
@@ -297,6 +298,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
 
 @docs borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
+
+
+## Outline
+
+@docs outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
 
 
 ## Display
@@ -1027,6 +1033,7 @@ url str =
 
 {-| The `auto` value used for properties such as [`width`](#width),
 [`zoom`](#zoom),
+[`outlineStyle`](#outlineStyle)
 and [`flexBasis`](#flexBasis).
 
     width auto
@@ -7168,6 +7175,110 @@ borderImageWidth4 :
     -> Style
 borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+
+-- OUTLINE --
+
+
+{-| Sets [`outline`](https://css-tricks.com/almanac/properties/o/outline/).
+
+    outline zero
+
+    outline none
+
+-}
+outline :
+    BaseValue
+        (LineWidthSupported
+            (LineStyleSupported
+                (ColorSupported
+                    { auto : Supported
+                    , invert : Supported
+                    }
+                )
+            )
+        )
+    -> Style
+outline (Value val) =
+    AppendProperty ("outline:" ++ val)
+
+
+{-| Sets [`outline`](https://css-tricks.com/almanac/properties/o/outline/).
+
+    outline3 (em 0.25) auto (rgb 120 250 32)
+
+-}
+outline3 :
+    Value LineWidth
+    -> Value (LineStyleSupported { auto : Supported })
+    -> Value (ColorSupported { invert : Supported })
+    -> Style
+outline3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty
+        ("outline:"
+            ++ widthVal
+            ++ " "
+            ++ styleVal
+            ++ " "
+            ++ colorVal
+        )
+
+
+{-| Sets [`outline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width).
+
+    outlineWidth (px 2)
+
+    outlineWidth thin
+
+-}
+outlineWidth : BaseValue LineWidth -> Style
+outlineWidth (Value val) =
+    AppendProperty ("outline-width:" ++ val)
+
+
+{-| Sets [`outline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color).
+
+    outlineColor (hex "eee")
+
+    outlineColor invert
+
+-}
+outlineColor : BaseValue (ColorSupported { invert : Supported }) -> Style
+outlineColor (Value val) =
+    AppendProperty ("outline-color:" ++ val)
+
+
+{-| The `invert` value used by properties such as [`outlineColor`](#outlineColor)
+
+    outlineColor invert
+
+-}
+invert : Value { provides | invert : Supported }
+invert =
+    Value "invert"
+
+
+{-| Sets [`outline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-style).
+
+    outlineStyle auto
+
+    outlineStyle dashed
+
+-}
+outlineStyle : BaseValue (LineStyleSupported { auto : Supported }) -> Style
+outlineStyle (Value val) =
+    AppendProperty ("outline-style:" ++ val)
+
+
+{-| Sets [`outline-offset`](https://css-tricks.com/almanac/properties/o/outline-offset/).
+
+    outlineOffset (px 2)
+
+-}
+outlineOffset : BaseValue Length -> Style
+outlineOffset (Value val) =
+    AppendProperty ("outline-offset:" ++ val)
 
 
 
