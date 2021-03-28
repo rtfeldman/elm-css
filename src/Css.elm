@@ -16,7 +16,7 @@ module Css exposing
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
-    , linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+    , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
     , cover, contain
     , BoxShadowConfig, boxShadow, defaultBoxShadow
@@ -234,7 +234,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 @docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
 
-@docs linearGradient, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+@docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 @docs repeat, noRepeat, repeatX, repeatY, space, round
 
@@ -5583,24 +5583,58 @@ cover =
 {- GRADIENTS -}
 
 
-{-| Sets [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
+{-| Produces [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
+values used by properties such as [`backgroundImage`](#backgroundImage),
+and [`listStyleImage`](#listStyleImage)
 
-    linearGradient toTop (stop red) (stop blue) []
+    linearGradient (stop red) (stop blue) []
 
-    linearGradient toTop (stop red) (stop blue) [ stop green ]
+    linearGradient (stop red) (stop blue) [ stop green ]
 
 -}
 linearGradient :
+    Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map unpackValue moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ stops ++ ")")
+
+
+{-| Produces [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
+values used by properties such as [`backgroundImage`](#backgroundImage),
+and [`listStyleImage`](#listStyleImage)
+
+    linearGradient2 toTop (stop red) (stop blue) []
+
+    linearGradient2 toTop (stop red) (stop blue) [ stop green ]
+
+-}
+linearGradient2 :
     Value
         (AngleSupported
-            { to : Supported
+            { toBottom : Supported
+            , toBottomLeft : Supported
+            , toBottomRight : Supported
+            , toLeft : Supported
+            , toRight : Supported
+            , toTop : Supported
+            , toTopLeft : Supported
+            , toTopRight : Supported
             }
         )
     -> Value { colorStop : Supported }
     -> Value { colorStop : Supported }
     -> List (Value { colorStop : Supported })
     -> Value { provides | linearGradient : Supported }
-linearGradient (Value angle) (Value firstStop) (Value secondStop) moreStops =
+linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
     let
         peeledStops =
             List.map unpackValue moreStops
@@ -5654,7 +5688,7 @@ If you want your gradient to go to a corner, use [`toBottomLeft`](#toBottomLeft)
     linearGradient toBottomRight (stop red) (stop blue) []
 
 -}
-toBottom : Value { provides | provides : Supported }
+toBottom : Value { provides | toBottom : Supported }
 toBottom =
     Value "to bottom"
 
