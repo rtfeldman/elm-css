@@ -22,7 +22,7 @@ module Css exposing
     , cover, contain
     , BoxShadowConfig, boxShadow, defaultBoxShadow
     , TextShadowConfig, textShadow, defaultTextShadow
-    , BorderWidth, BorderWidthSupported, BorderStyle, BorderStyleSupported
+    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
     , border, border2, border3
     , borderTop, borderTop2, borderTop3
     , borderRight, borderRight2, borderRight3
@@ -255,7 +255,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Border
 
-@docs BorderWidth, BorderWidthSupported, BorderStyle, BorderStyleSupported
+@docs LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
 
 @docs border, border2, border3
 
@@ -817,11 +817,11 @@ type alias Color =
     ColorSupported {}
 
 
-{-| A type alias used to accept a [border-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values)
+{-| A type alias used to accept a [line-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#line-style)
 among other values.
 -}
-type alias BorderStyleSupported v =
-    { v
+type alias LineStyleSupported supported =
+    { supported
         | none : Supported
         , hidden : Supported
         , dotted : Supported
@@ -835,28 +835,28 @@ type alias BorderStyleSupported v =
     }
 
 
-{-| A type alias used to accept a [border-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#Values).
+{-| A type alias used to accept a [line-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#line-style).
 -}
-type alias BorderStyle =
-    BorderStyleSupported {}
+type alias LineStyle =
+    LineStyleSupported {}
 
 
-{-| A type alias used to accept a [border-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values)
+{-| A type alias used to accept a [line-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#line-width)
 among other values.
 -}
-type alias BorderWidthSupported v =
+type alias LineWidthSupported supported =
     LengthSupported
-        { v
+        { supported
             | thin : Supported
             , medium : Supported
             , thick : Supported
         }
 
 
-{-| A type alias used to accept a [border-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#Values).
+{-| A type alias used to accept a [line-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#line-width).
 -}
-type alias BorderWidth =
-    BorderWidthSupported {}
+type alias LineWidth =
+    LineWidthSupported {}
 
 
 {-| A type alias used to accept an [angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
@@ -5916,7 +5916,7 @@ outside =
     border3 (px 1) solid (hex "#f00")
 
 -}
-border : BaseValue BorderWidth -> Style
+border : BaseValue LineWidth -> Style
 border (Value widthVal) =
     AppendProperty ("border:" ++ widthVal)
 
@@ -5930,7 +5930,7 @@ border (Value widthVal) =
     border3 (px 1) solid (hex "#f00")
 
 -}
-border2 : Value BorderWidth -> Value BorderStyle -> Style
+border2 : Value LineWidth -> Value LineStyle -> Style
 border2 (Value widthVal) (Value style) =
     AppendProperty ("border:" ++ widthVal ++ " " ++ style)
 
@@ -5944,7 +5944,7 @@ border2 (Value widthVal) (Value style) =
     border3 (px 1) solid (hex "#f00")
 
 -}
-border3 : Value BorderWidth -> Value BorderStyle -> Value Color -> Style
+border3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
 border3 (Value widthVal) (Value style) (Value colorVal) =
     AppendProperty ("border:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
 
@@ -5958,7 +5958,7 @@ border3 (Value widthVal) (Value style) (Value colorVal) =
     borderTop3 (px 1) solid (hex "#f00")
 
 -}
-borderTop : BaseValue BorderWidth -> Style
+borderTop : BaseValue LineWidth -> Style
 borderTop (Value widthVal) =
     AppendProperty ("border-top:" ++ widthVal)
 
@@ -5972,7 +5972,7 @@ borderTop (Value widthVal) =
     borderTop3 (px 1) solid (hex "#f00")
 
 -}
-borderTop2 : Value BorderWidth -> Value BorderStyle -> Style
+borderTop2 : Value LineWidth -> Value LineStyle -> Style
 borderTop2 (Value widthVal) (Value style) =
     AppendProperty ("border-top:" ++ widthVal ++ " " ++ style)
 
@@ -5986,7 +5986,7 @@ borderTop2 (Value widthVal) (Value style) =
     borderTop3 (px 1) solid (hex "#f00")
 
 -}
-borderTop3 : Value BorderWidth -> Value BorderStyle -> Value Color -> Style
+borderTop3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
 borderTop3 (Value widthVal) (Value style) (Value colorVal) =
     AppendProperty ("border-top:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
 
@@ -6000,7 +6000,7 @@ borderTop3 (Value widthVal) (Value style) (Value colorVal) =
     borderRight3 (px 1) solid (hex "#f00")
 
 -}
-borderRight : BaseValue BorderWidth -> Style
+borderRight : BaseValue LineWidth -> Style
 borderRight (Value widthVal) =
     AppendProperty ("border-right:" ++ widthVal)
 
@@ -6014,7 +6014,7 @@ borderRight (Value widthVal) =
     borderRight3 (px 1) solid (hex "#f00")
 
 -}
-borderRight2 : Value BorderWidth -> Value BorderStyle -> Style
+borderRight2 : Value LineWidth -> Value LineStyle -> Style
 borderRight2 (Value widthVal) (Value style) =
     AppendProperty ("border-right:" ++ widthVal ++ " " ++ style)
 
@@ -6028,7 +6028,7 @@ borderRight2 (Value widthVal) (Value style) =
     borderRight3 (px 1) solid (hex "#f00")
 
 -}
-borderRight3 : Value BorderWidth -> Value BorderStyle -> Value Color -> Style
+borderRight3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
 borderRight3 (Value widthVal) (Value style) (Value colorVal) =
     AppendProperty ("border-right:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
 
@@ -6042,7 +6042,7 @@ borderRight3 (Value widthVal) (Value style) (Value colorVal) =
     borderBottom3 (px 1) solid (hex "#f00")
 
 -}
-borderBottom : BaseValue BorderWidth -> Style
+borderBottom : BaseValue LineWidth -> Style
 borderBottom (Value widthVal) =
     AppendProperty ("border-bottom:" ++ widthVal)
 
@@ -6056,7 +6056,7 @@ borderBottom (Value widthVal) =
     borderBottom3 (px 1) solid (hex "#f00")
 
 -}
-borderBottom2 : Value BorderWidth -> Value BorderStyle -> Style
+borderBottom2 : Value LineWidth -> Value LineStyle -> Style
 borderBottom2 (Value widthVal) (Value style) =
     AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ style)
 
@@ -6070,7 +6070,7 @@ borderBottom2 (Value widthVal) (Value style) =
     borderBottom3 (px 1) solid (hex "#f00")
 
 -}
-borderBottom3 : Value BorderWidth -> Value BorderStyle -> Value Color -> Style
+borderBottom3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
 borderBottom3 (Value widthVal) (Value style) (Value colorVal) =
     AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
 
@@ -6084,7 +6084,7 @@ borderBottom3 (Value widthVal) (Value style) (Value colorVal) =
     borderLeft3 (px 1) solid (hex "#f00")
 
 -}
-borderLeft : BaseValue BorderWidth -> Style
+borderLeft : BaseValue LineWidth -> Style
 borderLeft (Value widthVal) =
     AppendProperty ("border-left:" ++ widthVal)
 
@@ -6098,7 +6098,7 @@ borderLeft (Value widthVal) =
     borderLeft3 (px 1) solid (hex "#f00")
 
 -}
-borderLeft2 : Value BorderWidth -> Value BorderStyle -> Style
+borderLeft2 : Value LineWidth -> Value LineStyle -> Style
 borderLeft2 (Value widthVal) (Value style) =
     AppendProperty ("border-left:" ++ widthVal ++ " " ++ style)
 
@@ -6112,7 +6112,7 @@ borderLeft2 (Value widthVal) (Value style) =
     borderLeft3 (px 1) solid (hex "#f00")
 
 -}
-borderLeft3 : Value BorderWidth -> Value BorderStyle -> Value Color -> Style
+borderLeft3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
 borderLeft3 (Value widthVal) (Value style) (Value colorVal) =
     AppendProperty ("border-left:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
 
@@ -6128,7 +6128,7 @@ borderLeft3 (Value widthVal) (Value style) (Value colorVal) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth : BaseValue BorderWidth -> Style
+borderWidth : BaseValue LineWidth -> Style
 borderWidth (Value widthVal) =
     AppendProperty ("border-width:" ++ widthVal)
 
@@ -6144,7 +6144,7 @@ borderWidth (Value widthVal) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth2 : Value BorderWidth -> Value BorderWidth -> Style
+borderWidth2 : Value LineWidth -> Value LineWidth -> Style
 borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
     AppendProperty ("border-width:" ++ widthTopBottom ++ " " ++ widthRightLeft)
 
@@ -6160,7 +6160,7 @@ borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth3 : Value BorderWidth -> Value BorderWidth -> Value BorderWidth -> Style
+borderWidth3 : Value LineWidth -> Value LineWidth -> Value LineWidth -> Style
 borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
     AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRightLeft ++ " " ++ widthBottom)
 
@@ -6176,7 +6176,7 @@ borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
     borderWidth4 (px 1) thin zero (em 1)
 
 -}
-borderWidth4 : Value BorderWidth -> Value BorderWidth -> Value BorderWidth -> Value BorderWidth -> Style
+borderWidth4 : Value LineWidth -> Value LineWidth -> Value LineWidth -> Value LineWidth -> Style
 borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
     AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRight ++ " " ++ widthBottom ++ " " ++ widthLeft)
 
@@ -6186,7 +6186,7 @@ borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widt
     borderTopWidth (px 1)
 
 -}
-borderTopWidth : BaseValue BorderWidth -> Style
+borderTopWidth : BaseValue LineWidth -> Style
 borderTopWidth (Value widthVal) =
     AppendProperty ("border-top-width:" ++ widthVal)
 
@@ -6196,7 +6196,7 @@ borderTopWidth (Value widthVal) =
     borderRightWidth (px 1)
 
 -}
-borderRightWidth : BaseValue BorderWidth -> Style
+borderRightWidth : BaseValue LineWidth -> Style
 borderRightWidth (Value widthVal) =
     AppendProperty ("border-right-width:" ++ widthVal)
 
@@ -6206,7 +6206,7 @@ borderRightWidth (Value widthVal) =
     borderBottomWidth (px 1)
 
 -}
-borderBottomWidth : BaseValue BorderWidth -> Style
+borderBottomWidth : BaseValue LineWidth -> Style
 borderBottomWidth (Value widthVal) =
     AppendProperty ("border-bottom-width:" ++ widthVal)
 
@@ -6216,7 +6216,7 @@ borderBottomWidth (Value widthVal) =
     borderLeftWidth (px 1)
 
 -}
-borderLeftWidth : BaseValue BorderWidth -> Style
+borderLeftWidth : BaseValue LineWidth -> Style
 borderLeftWidth (Value widthVal) =
     AppendProperty ("border-left-width:" ++ widthVal)
 
@@ -6232,7 +6232,7 @@ borderLeftWidth (Value widthVal) =
     borderStyle4 solid none dotted groove
 
 -}
-borderStyle : BaseValue BorderStyle -> Style
+borderStyle : BaseValue LineStyle -> Style
 borderStyle (Value style) =
     AppendProperty ("border-style:" ++ style)
 
@@ -6242,7 +6242,7 @@ borderStyle (Value style) =
     borderStyle solid
 
 -}
-borderStyle2 : Value BorderStyle -> Value BorderStyle -> Style
+borderStyle2 : Value LineStyle -> Value LineStyle -> Style
 borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
     AppendProperty ("border-style:" ++ styleTopBottom ++ " " ++ styleRigthLeft)
 
@@ -6252,7 +6252,7 @@ borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
     borderStyle2 solid none
 
 -}
-borderStyle3 : Value BorderStyle -> Value BorderStyle -> Value BorderStyle -> Style
+borderStyle3 : Value LineStyle -> Value LineStyle -> Value LineStyle -> Style
 borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
     AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigthLeft ++ " " ++ styleBottom)
 
@@ -6262,7 +6262,7 @@ borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
     borderStyle4 solid none dotted groove
 
 -}
-borderStyle4 : Value BorderStyle -> Value BorderStyle -> Value BorderStyle -> Value BorderStyle -> Style
+borderStyle4 : Value LineStyle -> Value LineStyle -> Value LineStyle -> Value LineStyle -> Style
 borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value styleLeft) =
     AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigt ++ " " ++ styleBottom ++ " " ++ styleLeft)
 
@@ -6272,7 +6272,7 @@ borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value style
     borderTopStyle solid
 
 -}
-borderTopStyle : BaseValue BorderStyle -> Style
+borderTopStyle : BaseValue LineStyle -> Style
 borderTopStyle (Value style) =
     AppendProperty ("border-top-style:" ++ style)
 
@@ -6282,7 +6282,7 @@ borderTopStyle (Value style) =
     borderRightStyle solid
 
 -}
-borderRightStyle : BaseValue BorderStyle -> Style
+borderRightStyle : BaseValue LineStyle -> Style
 borderRightStyle (Value style) =
     AppendProperty ("border-right-style:" ++ style)
 
@@ -6292,7 +6292,7 @@ borderRightStyle (Value style) =
     borderBottomStyle solid
 
 -}
-borderBottomStyle : BaseValue BorderStyle -> Style
+borderBottomStyle : BaseValue LineStyle -> Style
 borderBottomStyle (Value style) =
     AppendProperty ("border-bottom-style:" ++ style)
 
@@ -6302,7 +6302,7 @@ borderBottomStyle (Value style) =
     borderLeftStyle solid
 
 -}
-borderLeftStyle : BaseValue BorderStyle -> Style
+borderLeftStyle : BaseValue LineStyle -> Style
 borderLeftStyle (Value style) =
     AppendProperty ("border-left-style:" ++ style)
 
@@ -8498,7 +8498,7 @@ columnGap (Value widthVal) =
     columnRuleWidth (px 2)
 
 -}
-columnRuleWidth : BaseValue BorderWidth -> Style
+columnRuleWidth : BaseValue LineWidth -> Style
 columnRuleWidth (Value widthVal) =
     AppendProperty ("column-rule-width:" ++ widthVal)
 
@@ -8512,7 +8512,7 @@ columnRuleWidth (Value widthVal) =
     columnRuleStyle dashed
 
 -}
-columnRuleStyle : BaseValue BorderStyle -> Style
+columnRuleStyle : BaseValue LineStyle -> Style
 columnRuleStyle (Value style) =
     AppendProperty ("column-rule-style:" ++ style)
 
@@ -9219,7 +9219,7 @@ properties.
     columnRule3 thin solid (hex "#000000")
 
 -}
-columnRule : BaseValue BorderWidth -> Style
+columnRule : BaseValue LineWidth -> Style
 columnRule (Value widthVal) =
     AppendProperty ("column-rule:" ++ widthVal)
 
@@ -9236,7 +9236,7 @@ properties.
     columnRule3 thin solid (hex "#000000")
 
 -}
-columnRule2 : Value BorderWidth -> Value BorderStyle -> Style
+columnRule2 : Value LineWidth -> Value LineStyle -> Style
 columnRule2 (Value widthVal) (Value style) =
     AppendProperty ("column-rule:" ++ widthVal ++ " " ++ style)
 
@@ -9253,7 +9253,7 @@ properties.
     columnRule3 thin solid (hex "#000000")
 
 -}
-columnRule3 : Value BorderWidth -> Value BorderStyle -> Value Color -> Style
+columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
 columnRule3 (Value widthVal) (Value style) (Value colorVal) =
     AppendProperty ("column-rule:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
 
