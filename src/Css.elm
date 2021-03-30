@@ -14,7 +14,7 @@ module Css exposing
     , minContent, maxContent, fitContent
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
-    , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
+    , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox
     , ImageSupported, Image
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
     , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
@@ -230,7 +230,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Background Clip and Origin
 
-@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox, text_
+@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox
 
 
 ## Background Image
@@ -4514,7 +4514,12 @@ crosshair =
     Value "crosshair"
 
 
-{-| The `text` value for the [`cursor`](#cursor), and [`user-select`](#userSelect) properties.
+{-| The `text` value for the [`cursor`](#cursor),
+[`backgroundClip`](#backgroundClip),
+and [`user-select`](#userSelect) properties.
+
+    backgroundClip text
+
 -}
 text : Value { provides | text : Supported }
 text =
@@ -4862,16 +4867,6 @@ local =
     Value "local"
 
 
-{-| The `text` [`background-clip` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#Values).
-
-    backgroundClip text_
-
--}
-text_ : Value { provides | text_ : Supported }
-text_ =
-    Value "text"
-
-
 {-| Sets [`background-blend-mode`](https://css-tricks.com/almanac/properties/b/background-blend-mode/).
 Note that this takes an argument of [`color_`](#color_), not [`color`](#color)!
 
@@ -5125,9 +5120,9 @@ luminosity =
 
 
 {-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
-Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
+Note that this takes an argument of [`text`](#text), not [`color`](#color)!
 
-    backgroundClip text_
+    backgroundClip text
 
     backgroundClip paddingBox
 
@@ -5141,7 +5136,7 @@ backgroundClip :
         { borderBox : Supported
         , paddingBox : Supported
         , contentBox : Supported
-        , text_ : Supported
+        , text : Supported
         }
     -> Style
 backgroundClip (Value str) =
@@ -5149,9 +5144,9 @@ backgroundClip (Value str) =
 
 
 {-| Sets [`background-clip`](https://css-tricks.com/almanac/properties/b/background-clip/).
-Note that this takes an argument of [`text_`](#text_), not [`color`](#color)!
+Note that this takes an argument of [`text`](#text), not [`color`](#color)!
 
-    backgroundClips text_ [ borderBox, text_ ]
+    backgroundClips text [ borderBox, text ]
 
 See [`backgroundClip`](#backgroundClip) to set a single `background-clip` value.
 
@@ -5161,7 +5156,7 @@ backgroundClips :
         { borderBox : Supported
         , paddingBox : Supported
         , contentBox : Supported
-        , text_ : Supported
+        , text : Supported
         }
     ->
         List
@@ -5169,7 +5164,7 @@ backgroundClips :
                 { borderBox : Supported
                 , paddingBox : Supported
                 , contentBox : Supported
-                , text_ : Supported
+                , text : Supported
                 }
             )
     -> Style
