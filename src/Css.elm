@@ -37,8 +37,8 @@ module Css exposing
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
     , outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
-    , display
-    , block, flex_, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+    , display, display2, displayListItem2, displayListItem3
+    , block, flex_, flow, flowRoot, grid, contents, listItem, inline, inlineBlock, inlineFlex, inlineTable, inlineGrid, ruby, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     , position, top, right, bottom, left, zIndex
     , absolute, fixed, relative, static, sticky
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
@@ -309,9 +309,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Display
 
-@docs display
+@docs display, display2, displayListItem2, displayListItem3
 
-@docs block, flex_, grid, inline, inlineBlock, inlineFlex, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+@docs block, flex_, flow, flowRoot, grid, contents, listItem, inline, inlineBlock, inlineFlex, inlineTable, inlineGrid, ruby, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
 
 
 ## Positions
@@ -2731,11 +2731,23 @@ display :
     BaseValue
         { block : Supported
         , flex_ : Supported
+        , flow : Supported
+        , flowRoot : Supported
         , grid : Supported
+        , listItem : Supported
         , inline : Supported
         , inlineBlock : Supported
         , inlineFlex : Supported
+        , inlineGrid : Supported
+        , inlineTable : Supported
         , none : Supported
+        , contents : Supported
+        , ruby : Supported
+        , rubyBase : Supported
+        , rubyBaseContainer : Supported
+        , rubyText : Supported
+        , rubyTextContainer : Supported
+        , runIn : Supported
         , table : Supported
         , tableCaption : Supported
         , tableCell : Supported
@@ -2749,6 +2761,78 @@ display :
     -> Style
 display (Value val) =
     AppendProperty ("display:" ++ val)
+
+
+{-| Sets [`display`](https://css-tricks.com/almanac/properties/d/display/).
+
+    display2 block flex_
+
+**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a function](#flex).
+For `display: inline list-item` and similar property values that include `list-item`
+look at [`displayListItem2`](#displayListItem2) and [`displayListItem3`](#displayListItem3).
+
+-}
+display2 :
+    Value
+        { block : Supported
+        , inline : Supported
+        , runIn : Supported
+        }
+    ->
+        Value
+            { flow : Supported
+            , flowRoot : Supported
+            , table : Supported
+            , flex_ : Supported
+            , grid : Supported
+            , ruby : Supported
+            }
+    -> Style
+display2 (Value displayOutside) (Value displayInside) =
+    AppendProperty ("display:" ++ displayOutside ++ " " ++ displayInside)
+
+
+{-| The [`display`](https://css-tricks.com/almanac/properties/d/display/) property.
+This function is used to generate complex `display: list-item` properties
+such as `display: block list-item`.
+
+    displayListItem2 block
+
+-}
+displayListItem2 :
+    Value
+        { block : Supported
+        , inline : Supported
+        , runIn : Supported
+        , flow : Supported
+        , flowRoot : Supported
+        }
+    -> Style
+displayListItem2 (Value val) =
+    AppendProperty ("display:list-item " ++ val)
+
+
+{-| The [`display`](https://css-tricks.com/almanac/properties/d/display/) property.
+This function is used to generate complex `display: list-item` properties
+such as `display: block flow-root list-item`.
+
+    displayListItem3 block flowRoot
+
+-}
+displayListItem3 :
+    Value
+        { block : Supported
+        , inline : Supported
+        , runIn : Supported
+        }
+    ->
+        Value
+            { flow : Supported
+            , flowRoot : Supported
+            }
+    -> Style
+displayListItem3 (Value displayOutside) (Value displayFlow) =
+    AppendProperty ("display:list-item " ++ displayOutside ++ " " ++ displayFlow)
 
 
 {-| The `block` value used by [`display`](#display)
@@ -2773,14 +2857,44 @@ flex_ =
     Value "flex"
 
 
+{-| The `flow` value used by [`display`](#display)
+
+    display flow
+
+-}
+flow : Value { provides | flow : Supported }
+flow =
+    Value "flow"
+
+
+{-| The `flow-root` value used by [`display`](#display)
+
+    display flowRoot
+
+-}
+flowRoot : Value { provides | flowRoot : Supported }
+flowRoot =
+    Value "flow-root"
+
+
 {-| The `grid` value used by [`display`](#display)
 
     display grid
 
 -}
-grid : Value { provides | block : Supported }
+grid : Value { provides | grid : Supported }
 grid =
     Value "grid"
+
+
+{-| The `contents` value used by [`display`](#display)
+
+    display contents
+
+-}
+contents : Value { provides | contents : Supported }
+contents =
+    Value "contents"
 
 
 {-| The `inline` value used by [`display`](#display)
@@ -2811,6 +2925,96 @@ inlineBlock =
 inlineFlex : Value { provides | inlineFlex : Supported }
 inlineFlex =
     Value "inline-flex"
+
+
+{-| The `list-item` value used by [`display`](#display)
+
+    display listItem
+
+-}
+listItem : Value { provides | listItem : Supported }
+listItem =
+    Value "list-item"
+
+
+{-| The `inline-table` value used by [`display`](#display)
+
+    display inlineTable
+
+-}
+inlineTable : Value { provides | inlineTable : Supported }
+inlineTable =
+    Value "inline-table"
+
+
+{-| The `inline-grid` value used by [`display`](#display)
+
+    display inlineGrid
+
+-}
+inlineGrid : Value { provides | inlineGrid : Supported }
+inlineGrid =
+    Value "inline-grid"
+
+
+{-| The `ruby` value used by [`display`](#display)
+
+    display ruby
+
+-}
+ruby : Value { provides | ruby : Supported }
+ruby =
+    Value "ruby"
+
+
+{-| The `ruby-base` value used by [`display`](#display)
+
+    display rubyBase
+
+-}
+rubyBase : Value { provides | rubyBase : Supported }
+rubyBase =
+    Value "ruby-base"
+
+
+{-| The `ruby-base-container` value used by [`display`](#display)
+
+    display rubyBaseContainer
+
+-}
+rubyBaseContainer : Value { provides | rubyBaseContainer : Supported }
+rubyBaseContainer =
+    Value "ruby-base-container"
+
+
+{-| The `ruby-text` value used by [`display`](#display)
+
+    display rubyText
+
+-}
+rubyText : Value { provides | rubyText : Supported }
+rubyText =
+    Value "ruby-text"
+
+
+{-| The `ruby-text-container` value used by [`display`](#display)
+
+    display rubyTextContainer
+
+-}
+rubyTextContainer : Value { provides | rubyTextContainer : Supported }
+rubyTextContainer =
+    Value "ruby-text-container"
+
+
+{-| The `run-in` value used by [`display`](#display)
+
+    display runIn
+
+-}
+runIn : Value { provides | runIn : Supported }
+runIn =
+    Value "run-in"
 
 
 {-| The `table` value used by [`display`](#display)
