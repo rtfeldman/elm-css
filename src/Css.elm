@@ -69,7 +69,8 @@ module Css exposing
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
     , url
-    , cursor, pointer, default, contextMenu, help, progress, wait, cell
+    , CursorKeyword
+    , cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
     , crosshair, text, verticalText, alias, copy, move, noDrop
     , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
@@ -449,7 +450,8 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ## Cursors
 
-@docs cursor, pointer, default, contextMenu, help, progress, wait, cell
+@docs CursorKeyword
+@docs cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
 @docs crosshair, text, verticalText, alias, copy, move, noDrop
 @docs notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
 @docs wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
@@ -4359,52 +4361,101 @@ stackedFractions =
 -- CURSOR --
 
 
+{-| A type alias used for the various [`cursor`](#cursor) properties
+-}
+type alias CursorKeyword =
+    { pointer : Supported
+    , auto : Supported
+    , default : Supported
+    , none : Supported
+    , contextMenu : Supported
+    , help : Supported
+    , progress : Supported
+    , wait : Supported
+    , cell : Supported
+    , crosshair : Supported
+    , text : Supported
+    , verticalText : Supported
+    , alias : Supported
+    , copy : Supported
+    , move : Supported
+    , noDrop : Supported
+    , notAllowed : Supported
+    , allScroll : Supported
+    , colResize : Supported
+    , rowResize : Supported
+    , nResize : Supported
+    , eResize : Supported
+    , sResize : Supported
+    , wResize : Supported
+    , neResize : Supported
+    , nwResize : Supported
+    , seResize : Supported
+    , swResize : Supported
+    , ewResize : Supported
+    , nsResize : Supported
+    , neswResize : Supported
+    , nwseResize : Supported
+    , zoomIn : Supported
+    , zoomOut : Supported
+    , grab : Supported
+    , grabbing : Supported
+    }
+
+
 {-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
 property.
+
+    cursor notAllowed
+
 -}
-cursor :
-    BaseValue
-        { pointer : Supported
-        , auto : Supported
-        , default : Supported
-        , none : Supported
-        , contextMenu : Supported
-        , help : Supported
-        , progress : Supported
-        , wait : Supported
-        , cell : Supported
-        , crosshair : Supported
-        , text : Supported
-        , verticalText : Supported
-        , alias : Supported
-        , copy : Supported
-        , move : Supported
-        , noDrop : Supported
-        , notAllowed : Supported
-        , allScroll : Supported
-        , colResize : Supported
-        , rowResize : Supported
-        , nResize : Supported
-        , eResize : Supported
-        , sResize : Supported
-        , wResize : Supported
-        , neResize : Supported
-        , nwResize : Supported
-        , seResize : Supported
-        , swResize : Supported
-        , ewResize : Supported
-        , nsResize : Supported
-        , neswResize : Supported
-        , nwseResize : Supported
-        , zoomIn : Supported
-        , zoomOut : Supported
-        , grab : Supported
-        , grabbing : Supported
-        , url : Supported
-        }
-    -> Style
+cursor : BaseValue CursorKeyword -> Style
 cursor (Value val) =
     AppendProperty ("cursor:" ++ val)
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor2 (url "https://example.com") move
+
+-}
+cursor2 : Value { url : Supported } -> Value CursorKeyword -> Style
+cursor2 (Value urlVal) (Value fallbackVal) =
+    AppendProperty ("cursor:" ++ urlVal ++ "," ++ fallbackVal)
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor4 (url "https://example.com") (num 34) zero move
+
+-}
+cursor4 :
+    Value { url : Supported }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            }
+    -> Value CursorKeyword
+    -> Style
+cursor4 (Value urlVal) (Value xVal) (Value yVal) (Value fallbackVal) =
+    AppendProperty
+        ("cursor:"
+            ++ urlVal
+            ++ " "
+            ++ xVal
+            ++ " "
+            ++ yVal
+            ++ ","
+            ++ fallbackVal
+        )
 
 
 {-| The `pointer` value for the [`cursor`](#cursor) property.
