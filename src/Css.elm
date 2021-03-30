@@ -153,6 +153,7 @@ module Css exposing
     , isolation, isolate
     , caretColor
     , pointerEvents
+    , visiblePainted, visibleFill, visibleStroke, painted, stroke
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -695,6 +696,7 @@ Multiple CSS properties use these values.
 
 @docs caretColor
 @docs pointerEvents
+@docs visiblePainted, visibleFill, visibleStroke, painted, stroke
 
 -}
 
@@ -9260,9 +9262,12 @@ columnSpan (Value span) =
     AppendProperty ("column-span:" ++ span)
 
 
-{-| A `all` value used in properties such as [`columnSpan`](#columnSpan).
+{-| The `all` value used in properties such as [`columnSpan`](#columnSpan)
+and [`pointerEvents`](#pointerEvents).
 
     columnSpan all_
+
+    pointerEvents all_
 
 -}
 all_ : Value { provides | all_ : Supported }
@@ -11428,9 +11433,12 @@ mixBlendMode (Value val) =
     AppendProperty ("mix-blend-mode:" ++ val)
 
 
-{-| Sets `fill` value for usage with [`objectFit`](#objectFit).
+{-| The `fill` value used in properties such as [`objectFit`](#objectFit)
+and [`pointerEvents`](#pointerEvents).
 
     objectFit fill_
+
+    pointerEvents fill_
 
 -}
 fill_ : Value { provides | fill_ : Supported }
@@ -11711,10 +11719,68 @@ pointerEvents :
     BaseValue
         { auto : Supported
         , none : Supported
+        , visiblePainted : Supported
+        , visibleFill : Supported
+        , visibleStroke : Supported
+        , visible : Supported
+        , painted : Supported
+        , fill_ : Supported
+        , stroke : Supported
+        , all_ : Supported
         }
     -> Style
 pointerEvents (Value val) =
     AppendProperty ("pointer-events:" ++ val)
+
+
+{-| The `visiblePainted` value used by [`pointerEvents`](#pointerEvents)
+
+    pointerEvents visiblePainted
+
+-}
+visiblePainted : Value { provides | visiblePainted : Supported }
+visiblePainted =
+    Value "visiblePainted"
+
+
+{-| The `visibleFill` value used by [`pointerEvents`](#pointerEvents)
+
+    pointerEvents visibleFill
+
+-}
+visibleFill : Value { provides | visibleFill : Supported }
+visibleFill =
+    Value "visibleFill"
+
+
+{-| The `visibleStroke` value used by [`pointerEvents`](#pointerEvents)
+
+    pointerEvents visibleStroke
+
+-}
+visibleStroke : Value { provides | visibleStroke : Supported }
+visibleStroke =
+    Value "visibleStroke"
+
+
+{-| The `painted` value used by [`pointerEvents`](#pointerEvents)
+
+    pointerEvents painted
+
+-}
+painted : Value { provides | painted : Supported }
+painted =
+    Value "painted"
+
+
+{-| The `stroke` value used by [`pointerEvents`](#pointerEvents)
+
+    pointerEvents stroke
+
+-}
+stroke : Value { provides | stroke : Supported }
+stroke =
+    Value "stroke"
 
 
 
