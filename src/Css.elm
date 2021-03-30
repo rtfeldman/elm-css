@@ -16,7 +16,7 @@ module Css exposing
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox
     , ImageSupported, Image
-    , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
+    , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
     , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
     , cover, contain
@@ -237,7 +237,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Background Image
 
 @docs ImageSupported, Image
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
+@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
 
 @docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
@@ -5440,12 +5440,12 @@ backgroundImages (Value head) rest =
 `backgroundPosition` sets the horizontal direction. If you need the vertical
 direction instead, use [`backgroundPosition2`](#backgroundPosition2) like this:
 
-    backgroundPosition zero (px 45)
+    backgroundPosition2 zero (px 45)
 
 If you need to set the offsets from the right or bottom, use
 [`backgroundPosition4`](#backgroundPosition4) like this:
 
-    backgroundPosition4 right_ (px 20) bottom_ (pct 25)
+    backgroundPosition4 right_ (px 20) bottom_ (pct 30)
 
 -}
 backgroundPosition :
@@ -5454,12 +5454,14 @@ backgroundPosition :
             { pct : Supported
             , left_ : Supported
             , right_ : Supported
+            , top_ : Supported
+            , bottom_ : Supported
             , center : Supported
             }
         )
     -> Style
-backgroundPosition (Value horiz) =
-    AppendProperty ("background-position:" ++ horiz)
+backgroundPosition (Value val) =
+    AppendProperty ("background-position:" ++ val)
 
 
 {-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
@@ -5475,9 +5477,7 @@ order, same as CSS.) If you need only the horizontal, you can use
     backgroundPosition left_
 
 If you need to set the offsets from the right or bottom, use
-[`backgroundPosition4`](#backgroundPosition4) like this:
-
-    backgroundPosition4 right_ (px 20) bottom_ (pct 25)
+[`backgroundPosition4`](#backgroundPosition4).
 
 -}
 backgroundPosition2 :
@@ -5505,6 +5505,36 @@ backgroundPosition2 (Value horiz) (Value vert) =
 
 {-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
 
+    backgroundPosition3 right_ (px 20) center
+
+The three-argument form of background position sets one side to center and the
+other to the specified offest. So the example above would position the background
+image 20px from the right, and center it vertically.
+
+-}
+backgroundPosition3 :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        , top_ : Supported
+        , bottom_ : Supported
+        }
+    -> Value (LengthSupported { pct : Supported })
+    -> Value { center : Supported }
+    -> Style
+backgroundPosition3 (Value side) (Value amount) (Value centerVal) =
+    AppendProperty
+        ("background-position:"
+            ++ side
+            ++ " "
+            ++ amount
+            ++ " "
+            ++ centerVal
+        )
+
+
+{-| Sets [`background-position`](https://css-tricks.com/almanac/properties/b/background-position/).
+
     backgroundPosition4 right_ (px 20) bottom_ (pct 30)
 
 The four-argument form of background position alternates sides and offets. So the
@@ -5521,23 +5551,13 @@ backgroundPosition4 :
         { left_ : Supported
         , right_ : Supported
         }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
+    -> Value (LengthSupported { pct : Supported })
     ->
         Value
             { top_ : Supported
             , bottom_ : Supported
             }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
+    -> Value (LengthSupported { pct : Supported })
     -> Style
 backgroundPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
     AppendProperty
