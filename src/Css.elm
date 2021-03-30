@@ -20,7 +20,7 @@ module Css exposing
     , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
     , cover, contain
-    , BoxShadowConfig, boxShadow, defaultBoxShadow
+    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
     , TextShadowConfig, textShadow, defaultTextShadow
     , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
     , border, border2, border3
@@ -248,7 +248,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Box Shadow
 
-@docs BoxShadowConfig, boxShadow, defaultBoxShadow
+@docs BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
 
 
 ## Text Shadow
@@ -2398,6 +2398,20 @@ defaultBoxShadow =
     }
 
 
+{-| The [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/) property.
+
+    boxShadow initial
+
+    boxShadow none
+
+For defining shadows look at [`boxShadows`](#boxShadows).
+
+-}
+boxShadow : BaseValue { none : Supported } -> Style
+boxShadow (Value val) =
+    AppendProperty ("box-shadow:" ++ val)
+
+
 {-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
 
     boxShadow [] -- "box-shadow: none"
@@ -2417,8 +2431,8 @@ defaultBoxShadow =
         [ text "Zap!" ]
 
 -}
-boxShadow : List BoxShadowConfig -> Style
-boxShadow configs =
+boxShadows : List BoxShadowConfig -> Style
+boxShadows configs =
     let
         value =
             case configs of
@@ -2448,7 +2462,12 @@ boxShadowConfigToString config =
                     " " ++ value
 
                 Nothing ->
-                    ""
+                    case config.spreadRadius of
+                        Just _ ->
+                            " 0"
+
+                        Nothing ->
+                            ""
 
         spreadRadius =
             case config.spreadRadius of
