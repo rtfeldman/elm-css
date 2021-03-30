@@ -98,6 +98,7 @@ module Css exposing
     , textDecorationSkip, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
     , textStroke, textStroke2, textStrokeColor, textStrokeWidth
+    , textIndent, textIndent2, textIndent3, hanging, eachLine
     , borderCollapse
     , collapse, separate
     , borderSpacing, borderSpacing2
@@ -527,6 +528,8 @@ Multiple CSS properties use these values.
 @docs wavy, underline, overline, lineThrough
 
 @docs textStroke, textStroke2, textStrokeColor, textStrokeWidth
+
+@docs textIndent, textIndent2, textIndent3, hanging, eachLine
 
 
 # Tables
@@ -12716,6 +12719,74 @@ textStrokeWidth (Value val) =
 textStrokeColor : BaseValue Color -> Style
 textStrokeColor (Value val) =
     AppendProperty ("text-stroke-color:" ++ val)
+
+
+{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
+
+    textIndent (em 1.5)
+
+-}
+textIndent : BaseValue (LengthSupported { pct : Supported }) -> Style
+textIndent (Value val) =
+    AppendProperty ("text-indent:" ++ val)
+
+
+{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
+
+    textIndent2 (em 1.5) hanging
+
+-}
+textIndent2 :
+    Value (LengthSupported { pct : Supported })
+    ->
+        Value
+            { hanging : Supported
+            , eachLine : Supported
+            }
+    -> Style
+textIndent2 (Value lengthVal) (Value optionVal) =
+    AppendProperty ("text-indent:" ++ lengthVal ++ " " ++ optionVal)
+
+
+{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
+
+    textIndent3 (em 1.5) hanging eachLine
+
+-}
+textIndent3 :
+    Value (LengthSupported { pct : Supported })
+    -> Value { hanging : Supported }
+    -> Value { eachLine : Supported }
+    -> Style
+textIndent3 (Value lengthVal) (Value hangingVal) (Value eachLineVal) =
+    AppendProperty
+        ("text-indent:"
+            ++ lengthVal
+            ++ " "
+            ++ hangingVal
+            ++ " "
+            ++ eachLineVal
+        )
+
+
+{-| The `hanging` value used for properties such as [`textIdent2`](#textIdent2).
+
+    textIdent2 (px 20) hanging
+
+-}
+hanging : Value { provides | hanging : Supported }
+hanging =
+    Value "hanging"
+
+
+{-| The `each-line` value used for properties such as [`textIdent2`](#textIdent2).
+
+    textIdent2 (px 20) eachLine
+
+-}
+eachLine : Value { provides | eachLine : Supported }
+eachLine =
+    Value "each-line"
 
 
 {-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
