@@ -10,7 +10,7 @@ module Css exposing
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
     , pseudoClass, active, disabled
     , pseudoElement, before, after
-    , width, minWidth, maxWidth
+    , width, minWidth, maxWidth, height, minHeight, maxHeight
     , minContent, maxContent, fitContent
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
@@ -213,7 +213,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 ## Sizing
 
-@docs width, minWidth, maxWidth
+@docs width, minWidth, maxWidth, height, minHeight, maxHeight
 @docs minContent, maxContent, fitContent
 
 
@@ -5562,8 +5562,8 @@ backgroundSize2 :
                 }
             )
     -> Style
-backgroundSize2 (Value widthVal) (Value height) =
-    AppendProperty ("background-size:" ++ widthVal ++ " " ++ height)
+backgroundSize2 (Value widthVal) (Value heightVal) =
+    AppendProperty ("background-size:" ++ widthVal ++ " " ++ heightVal)
 
 
 {-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
@@ -9150,8 +9150,8 @@ strokeSize2 :
                 }
             )
     -> Style
-strokeSize2 (Value widthVal) (Value height) =
-    AppendProperty ("stroke-size:" ++ widthVal ++ " " ++ height)
+strokeSize2 (Value widthVal) (Value heightVal) =
+    AppendProperty ("stroke-size:" ++ widthVal ++ " " ++ heightVal)
 
 
 {-| Sets [`stroke-dash-corner`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-corner).
@@ -10083,8 +10083,11 @@ maxWidth (Value size) =
 
 
 {-| The `min-content` value used for properties such as [`width`](#width),
-[`minWidth`](#minWidth)
-and [`maxWidth`](#maxWidth)
+[`minWidth`](#minWidth),
+[`maxWidth`](#maxWidth),
+[`height`](#height),
+[`minHeight`](#minHeight),
+and [`maxHeight`](#maxHeight)
 
     width minContent
 
@@ -10095,8 +10098,11 @@ minContent =
 
 
 {-| The `max-content` value used for properties such as [`width`](#width),
-[`minWidth`](#minWidth)
-and [`maxWidth`](#maxWidth)
+[`minWidth`](#minWidth),
+[`maxWidth`](#maxWidth),
+[`height`](#height),
+[`minHeight`](#minHeight),
+and [`maxHeight`](#maxHeight)
 
     width maxContent
 
@@ -10107,8 +10113,11 @@ maxContent =
 
 
 {-| The `fit-content` value used for properties such as [`width`](#width),
-[`minWidth`](#minWidth)
-and [`maxWidth`](#maxWidth)
+[`minWidth`](#minWidth),
+[`maxWidth`](#maxWidth),
+[`height`](#height),
+[`minHeight`](#minHeight),
+and [`maxHeight`](#maxHeight)
 
     width fitContent
 
@@ -10116,6 +10125,66 @@ and [`maxWidth`](#maxWidth)
 fitContent : Value { provides | fitContent : Supported }
 fitContent =
     Value "fit-content"
+
+
+{-| The [`height`](https://css-tricks.com/almanac/properties/h/height/) property.
+
+    height (px 34)
+
+-}
+height :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+height (Value val) =
+    AppendProperty ("height:" ++ val)
+
+
+{-| The [`min-height`](https://css-tricks.com/almanac/properties/m/min-height/) property.
+
+    minHeight (px 20)
+
+-}
+minHeight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+minHeight (Value val) =
+    AppendProperty ("min-height:" ++ val)
+
+
+{-| The [`max-height`](https://css-tricks.com/almanac/properties/m/min-height/) property.
+
+    maxHeight (px 20)
+
+-}
+maxHeight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+maxHeight (Value val) =
+    AppendProperty ("max-height:" ++ val)
 
 
 {-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
