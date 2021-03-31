@@ -44,7 +44,7 @@ module Css exposing
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
-    , alignItems, alignSelf, justifyContent, alignContent
+    , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
     , flexDirection, row, rowReverse, column, columnReverse
     , order
     , flexGrow, flexShrink, flexBasis, content
@@ -67,7 +67,7 @@ module Css exposing
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+    , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
     , url
     , CursorKeyword
     , cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
@@ -345,7 +345,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ### Flexbox Alignment
 
-@docs alignItems, alignSelf, justifyContent, alignContent
+@docs alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
 
 
 ### Flexbox Direction
@@ -442,7 +442,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 # Align Items
 
-@docs stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safeCenter, unsafeCenter
+@docs stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
 
 
 # Url
@@ -3286,34 +3286,101 @@ bottom_ =
     Value "bottom"
 
 
-{-| -}
+{-| The `baseline` value used for properties such as [`alignContent`](#alignContent),
+[`alignItems`](#alignItems),
+[`alignSelf`](#alignSelf),
+and [`verticalAlign`](#verticalAlign).
+
+    alignItems baseline
+
+-}
 baseline : Value { provides | baseline : Supported }
 baseline =
     Value "baseline"
 
 
-{-| -}
+{-| The `first baseline` value used for properties such as [`alignContent`](#alignContent),
+[`alignItems`](#alignItems),
+and [`alignSelf`](#alignSelf).
+
+    alignItems firstBaseline
+
+-}
 firstBaseline : Value { provides | firstBaseline : Supported }
 firstBaseline =
     Value "first baseline"
 
 
-{-| -}
+{-| The `last baseline` value used for properties such as [`alignContent`](#alignContent),
+[`alignItems`](#alignItems),
+and [`alignSelf`](#alignSelf).
+
+    alignItems lastBaseline
+
+-}
 lastBaseline : Value { provides | lastBaseline : Supported }
 lastBaseline =
     Value "last baseline"
 
 
-{-| -}
-safeCenter : Value { provides | safeCenter : Supported }
-safeCenter =
-    Value "safe center"
+{-| The `safe` value used for properties such as [`alignContent2`](#alignContent2).
+
+    alignContent2 safe center
+
+-}
+safe : Value { provides | safe : Supported }
+safe =
+    Value "safe"
 
 
-{-| -}
-unsafeCenter : Value { provides | unsafeCenter : Supported }
-unsafeCenter =
-    Value "unsafe center"
+{-| The `unsafe` value used for properties such as [`alignContent2`](#alignContent2).
+
+    alignContent2 unsafe center
+
+-}
+unsafe : Value { provides | unsafe : Supported }
+unsafe =
+    Value "unsafe"
+
+
+{-| The `legacy` value used for properties such as [`justifyItems`](#justifyItems).
+
+    justifyItems legacy
+
+-}
+legacy : Value { provides | legacy : Supported }
+legacy =
+    Value "legacy"
+
+
+{-| The `legacy left` value used for properties such as [`justifyItems`](#justifyItems).
+
+    justifyItems legacyLeft
+
+-}
+legacyLeft : Value { provides | legacyLeft : Supported }
+legacyLeft =
+    Value "legacy left"
+
+
+{-| The `legacy right` value used for properties such as [`justifyItems`](#justifyItems).
+
+    justifyItems legacyRight
+
+-}
+legacyRight : Value { provides | legacyRight : Supported }
+legacyRight =
+    Value "legacy right"
+
+
+{-| The `legacy center` value used for properties such as [`justifyItems`](#justifyItems).
+
+    justifyItems legacyCenter
+
+-}
+legacyCenter : Value { provides | legacyCenter : Supported }
+legacyCenter =
+    Value "legacy center"
 
 
 
@@ -3329,24 +3396,53 @@ unsafeCenter =
 -}
 alignContent :
     BaseValue
-        { flexStart : Supported
-        , flexEnd : Supported
-        , center : Supported
+        { normal : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
         , spaceBetween : Supported
         , spaceAround : Supported
+        , spaceEvenly : Supported
         , stretch : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
         }
     -> Style
 alignContent (Value val) =
     AppendProperty ("align-content:" ++ val)
 
 
+{-| Sets [`align-content`](https://css-tricks.com/almanac/properties/a/align-content/).
+
+    alignContent2 unsafe start
+
+**Note:** This property has no effect when the flexbox has only a single line.
+
+-}
+alignContent2 :
+    Value
+        { safe : Supported
+        , unsafe : Supported
+        }
+    ->
+        Value
+            { center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            }
+    -> Style
+alignContent2 (Value overflowPosition) (Value contentPosition) =
+    AppendProperty ("align-content:" ++ overflowPosition ++ " " ++ contentPosition)
+
+
 {-| Sets [`align-items`](https://css-tricks.com/almanac/properties/a/align-items/).
 
     alignItems firstBaseline
-
-**Note:** This function accepts `left_` and `right_` rather than `left` and `right`,
-because `Css.left` and `Css.right` are functions!
 
 -}
 alignItems :
@@ -3360,25 +3456,43 @@ alignItems :
         , flexEnd : Supported
         , selfStart : Supported
         , selfEnd : Supported
-        , left_ : Supported
-        , right_ : Supported
         , baseline : Supported
         , firstBaseline : Supported
         , lastBaseline : Supported
-        , safeCenter : Supported
-        , unsafeCenter : Supported
         }
     -> Style
 alignItems (Value val) =
     AppendProperty ("align-items:" ++ val)
 
 
+{-| Sets [`align-items`](https://css-tricks.com/almanac/properties/a/align-items/).
+
+    alignItems2 unsafe selfStart
+
+-}
+alignItems2 :
+    Value
+        { safe : Supported
+        , unsafe : Supported
+        }
+    ->
+        Value
+            { center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , selfStart : Supported
+            , selfEnd : Supported
+            }
+    -> Style
+alignItems2 (Value overflowPosition) (Value selfPosition) =
+    AppendProperty ("align-items:" ++ overflowPosition ++ " " ++ selfPosition)
+
+
 {-| Sets [`align-self`](https://css-tricks.com/almanac/properties/a/align-self/).
 
     alignSelf firstBaseline
-
-**Note:** This function accepts `left_` and `right_` rather than `left` and `right`,
-because `Css.left` and `Css.right` are functions!
 
 -}
 alignSelf :
@@ -3386,6 +3500,116 @@ alignSelf :
         { auto : Supported
         , normal : Supported
         , stretch : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , selfStart : Supported
+        , selfEnd : Supported
+        }
+    -> Style
+alignSelf (Value val) =
+    AppendProperty ("align-self:" ++ val)
+
+
+{-| Sets [`align-self`](https://css-tricks.com/almanac/properties/a/align-self/).
+
+    alignSelf2 unsafe flexStart
+
+-}
+alignSelf2 :
+    Value
+        { safe : Supported
+        , unsafe : Supported
+        }
+    ->
+        Value
+            { center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , selfStart : Supported
+            , selfEnd : Supported
+            }
+    -> Style
+alignSelf2 (Value overflowPosition) (Value selfPosition) =
+    AppendProperty ("align-self:" ++ overflowPosition ++ " " ++ selfPosition)
+
+
+{-| Sets [`justify-content`](https://css-tricks.com/almanac/properties/j/justify-content/).
+
+    justifyContent flexStart
+
+**Note:** This function takes [`left_`](#left_) and [`right_`](#right_) values.
+
+-}
+justifyContent :
+    BaseValue
+        { normal : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        , spaceBetween : Supported
+        , spaceAround : Supported
+        , spaceEvenly : Supported
+        , stretch : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , left_ : Supported
+        , right_ : Supported
+        }
+    -> Style
+justifyContent (Value val) =
+    AppendProperty ("justify-content:" ++ val)
+
+
+{-| Sets [`justify-content`](https://css-tricks.com/almanac/properties/j/justify-content/).
+
+    justifyContent2 safe flexStart
+
+**Note:** This function takes [`left_`](#left_) and [`right_`](#right_) values.
+
+-}
+justifyContent2 :
+    Value
+        { safe : Supported
+        , unsafe : Supported
+        }
+    ->
+        Value
+            { center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , left_ : Supported
+            , right_ : Supported
+            }
+    -> Style
+justifyContent2 (Value overflowPosition) (Value contentPosition) =
+    AppendProperty ("justify-content:" ++ overflowPosition ++ " " ++ contentPosition)
+
+
+{-| The [`justify-items`](https://css-tricks.com/almanac/properties/j/justify-items/) property.
+
+    justifyItems center
+
+-}
+justifyItems :
+    BaseValue
+        { normal : Supported
+        , stretch : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
         , center : Supported
         , start : Supported
         , end : Supported
@@ -3395,34 +3619,97 @@ alignSelf :
         , selfEnd : Supported
         , left_ : Supported
         , right_ : Supported
+        , legacy : Supported
+        , legacyLeft : Supported
+        , legacyRight : Supported
+        , legacyCenter : Supported
+        }
+    -> Style
+justifyItems (Value val) =
+    AppendProperty ("justify-items:" ++ val)
+
+
+{-| The [`justify-items`](https://css-tricks.com/almanac/properties/j/justify-items/) property.
+
+    justifyItems2 unsafe right_
+
+-}
+justifyItems2 :
+    Value
+        { safe : Supported
+        , unsafe : Supported
+        }
+    ->
+        Value
+            { center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , selfStart : Supported
+            , selfEnd : Supported
+            , left_ : Supported
+            , right_ : Supported
+            }
+    -> Style
+justifyItems2 (Value overflowPosition) (Value selfPosition) =
+    AppendProperty ("justify-items:" ++ overflowPosition ++ " " ++ selfPosition)
+
+
+{-| The [`justify-self`](https://css-tricks.com/almanac/properties/j/justify-self/) property.
+
+    jusitfySelf left_
+
+**Note:** This function takes [`left_`](#left_) and [`right_`](#right_) values.
+
+-}
+justifySelf :
+    BaseValue
+        { auto : Supported
+        , normal : Supported
+        , stretch : Supported
         , baseline : Supported
         , firstBaseline : Supported
         , lastBaseline : Supported
-        , safeCenter : Supported
-        , unsafeCenter : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , selfStart : Supported
+        , selfEnd : Supported
+        , left_ : Supported
+        , right_ : Supported
         }
     -> Style
-alignSelf (Value val) =
-    AppendProperty ("align-self:" ++ val)
+justifySelf (Value val) =
+    AppendProperty ("justify-self:" ++ val)
 
 
-{-| Sets [`justify-content`](https://css-tricks.com/almanac/properties/j/justify-content/).
+{-| The [`justify-self`](https://css-tricks.com/almanac/properties/j/justify-self/) property.
 
-    justifyContent flexStart
+    justifySelf2 unsafe left_
+
+**Note:** This function takes [`left_`](#left_) and [`right_`](#right_) values.
 
 -}
-justifyContent :
-    BaseValue
-        { flexStart : Supported
-        , flexEnd : Supported
-        , center : Supported
-        , spaceBetween : Supported
-        , spaceAround : Supported
-        , spaceEvenly : Supported
-        }
+justifySelf2 :
+    Value { safe : Supported, unsafe : Supported }
+    ->
+        Value
+            { center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , selfStart : Supported
+            , selfEnd : Supported
+            , left_ : Supported
+            , right_ : Supported
+            }
     -> Style
-justifyContent (Value val) =
-    AppendProperty ("justify-content:" ++ val)
+justifySelf2 (Value overflowPosition) (Value contentPosition) =
+    AppendProperty ("justify-self:" ++ overflowPosition ++ " " ++ contentPosition)
 
 
 {-| Sets [`flex-basis`](https://css-tricks.com/almanac/properties/f/flex-basis/).
