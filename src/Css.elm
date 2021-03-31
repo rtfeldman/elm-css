@@ -4,7 +4,7 @@ module Css exposing
     , property
     , unset, initial, inherit, revert
     , all
-    , Length, LengthSupported, Angle, AngleSupported
+    , Length, LengthSupported, Angle, AngleSupported, Width, WidthSupported
     , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
@@ -186,7 +186,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 @docs all
 
-@docs Length, LengthSupported, Angle, AngleSupported
+@docs Length, LengthSupported, Angle, AngleSupported, Width, WidthSupported
 
 
 ## Numeric Units
@@ -872,6 +872,26 @@ type alias LineWidthSupported supported =
 -}
 type alias LineWidth =
     LineWidthSupported {}
+
+
+{-| A type alias used to accept a ['width'](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values)
+among other values.
+-}
+type alias WidthSupported supported =
+    LengthSupported
+        { supported
+            | auto : Supported
+            , pct : Supported
+            , minContent : Supported
+            , maxContent : Supported
+            , fitContent : Supported
+        }
+
+
+{-| A type alias used to accept a ['width'](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values).
+-}
+type alias Width =
+    WidthSupported {}
 
 
 {-| A type alias used to accept an [angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
@@ -3723,15 +3743,7 @@ justifySelf2 (Value overflowPosition) (Value contentPosition) =
     flexBasis auto
 
 -}
-flexBasis :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , content : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
+flexBasis : BaseValue (WidthSupported { content : Supported }) -> Style
 flexBasis (Value val) =
     AppendProperty ("flex-basis:" ++ val)
 
@@ -3790,18 +3802,12 @@ flexShrink (Value val) =
 
     flex (num 1)
 
-    flex2 zero auto
-
-    flex3 (num 1) zero (pct 50)
-
 -}
 flex :
     BaseValue
-        (LengthSupported
+        (WidthSupported
             { none : Supported
-            , auto : Supported
             , content : Supported
-            , pct : Supported
             , num : Supported
             }
         )
@@ -3812,15 +3818,7 @@ flex (Value growOrBasis) =
 
 {-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
 
-    flex none
-
-    flex auto
-
-    flex (num 1)
-
     flex2 zero auto
-
-    flex3 (num 1) zero (pct 50)
 
 -}
 flex2 :
@@ -3831,10 +3829,8 @@ flex2 :
         }
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                , content : Supported
-                , pct : Supported
+            (WidthSupported
+                { content : Supported
                 , num : Supported
                 }
             )
@@ -3844,14 +3840,6 @@ flex2 (Value grow) (Value shrinkOrBasis) =
 
 
 {-| The [`flex`](https://css-tricks.com/almanac/properties/f/flex/) shorthand property.
-
-    flex none
-
-    flex auto
-
-    flex (num 1)
-
-    flex2 zero auto
 
     flex3 (num 1) zero (pct 50)
 
@@ -3868,14 +3856,7 @@ flex3 :
             , zero : Supported
             , calc : Supported
             }
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , content : Supported
-                , pct : Supported
-                }
-            )
+    -> Value (WidthSupported { content : Supported })
     -> Style
 flex3 (Value grow) (Value shrink) (Value basis) =
     AppendProperty ("flex:" ++ grow ++ " " ++ shrink ++ " " ++ basis)
@@ -11247,17 +11228,7 @@ letterSpacing (Value val) =
     width minContent
 
 -}
-width :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , fitContent : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
+width : BaseValue Width -> Style
 width (Value size) =
     AppendProperty ("width:" ++ size)
 
@@ -11360,17 +11331,7 @@ fitContent =
     height (px 34)
 
 -}
-height :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
+height : BaseValue Width -> Style
 height (Value val) =
     AppendProperty ("height:" ++ val)
 
