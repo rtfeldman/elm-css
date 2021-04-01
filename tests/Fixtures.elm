@@ -1,4 +1,4 @@
-module Fixtures exposing (CssAnimations(..), atRule, attributeCombinator, backgrounds, borders, bug140, bug99, colorHexAbbrWarning, colorHexWarning, divWidthHeight, fontStylesheet, fontWeightWarning, greenOnHover, keyValue, leftRightTopBottom, linearGradientWithAngle, linearGradientWithDirection, manualUnderlineOnHoverStylesheet, mediaQueryIndentation, multiDescendent, multiSelector, nestedAtRule, nestedEach, pseudoClassStylesheet, pseudoElementStylesheet, simpleEach, styleGreenOnHoverStylesheet, styleUnderlineOnHoverStylesheet, transformsStylesheet, underlineOnHover, universal, unstyledDiv)
+module Fixtures exposing (CssAnimations(..), atRule, attributeCombinator, backgrounds, borders, bug140, bug99, colorHexAbbrWarning, colorHexWarning, divWidthHeight, fontStylesheet, fontWeightWarning, greenOnHover, importantOnBatch, keyValue, leftRightTopBottom, linearGradientWithAngle, linearGradientWithDirection, manualUnderlineOnHoverStylesheet, mediaQueryIndentation, multiDescendent, multiSelector, nestedAtRule, nestedEach, pseudoClassStylesheet, pseudoElementStylesheet, simpleEach, styleGreenOnHoverStylesheet, styleUnderlineOnHoverStylesheet, transformsStylesheet, underlineOnHover, universal, unstyledDiv)
 
 import Css exposing (..)
 import Css.Global exposing (..)
@@ -495,5 +495,18 @@ linearGradientWithDirection =
     stylesheet
         [ div
             [ backgroundImage <| linearGradient2 toBottomLeft (stop <| hex "000") (stop <| hex "222") []
+            ]
+        ]
+
+
+importantOnBatch : Stylesheet
+importantOnBatch =
+    stylesheet
+        [ div
+            [ important <|
+                batch
+                    [ color <| hex "000"
+                    , width <| pct 100
+                    ]
             ]
         ]

@@ -1162,7 +1162,7 @@ declaration.
 -}
 important : Style -> Style
 important =
-    Preprocess.mapLastProperty makeImportant
+    Preprocess.mapProperties makeImportant
 
 
 makeImportant : Property -> Property

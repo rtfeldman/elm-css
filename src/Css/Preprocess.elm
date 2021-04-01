@@ -1,4 +1,4 @@
-module Css.Preprocess exposing (Snippet(..), SnippetDeclaration(..), Style(..), StyleBlock(..), Stylesheet, mapAllLastProperty, mapLastProperty, stylesheet, toMediaRule, toPropertyStrings, unwrapSnippet)
+module Css.Preprocess exposing (Snippet(..), SnippetDeclaration(..), Style(..), StyleBlock(..), Stylesheet, mapAllLastProperty, mapLastProperty, mapProperties, stylesheet, toMediaRule, toPropertyStrings, unwrapSnippet)
 
 {-| A representation of the preprocessing to be done. The elm-css DSL generates
 the data structures found in this module.
@@ -87,6 +87,44 @@ toMediaRule mediaQueries declaration =
 
         Structure.FontFeatureValues _ ->
             declaration
+
+
+mapProperties : (Property -> Property) -> Style -> Style
+mapProperties update style =
+    case style of
+        AppendProperty property ->
+            AppendProperty (update property)
+
+        ExtendSelector selector styles ->
+            ExtendSelector selector (mapAllProperties update styles)
+
+        NestSnippet _ _ ->
+            style
+
+        WithPseudoElement _ _ ->
+            style
+
+        WithMedia _ _ ->
+            style
+
+        WithKeyframes _ ->
+            style
+
+        ApplyStyles otherStyles ->
+            ApplyStyles (List.map (mapProperties update) otherStyles)
+
+
+mapAllProperties : (Property -> Property) -> List Style -> List Style
+mapAllProperties update styles =
+    case styles of
+        [] ->
+            styles
+
+        only :: [] ->
+            [ mapProperties update only ]
+
+        first :: rest ->
+            first :: mapAllProperties update rest
 
 
 mapLastProperty : (Property -> Property) -> Style -> Style
