@@ -8704,24 +8704,27 @@ fullWidth =
 -- TEXT DECORATION --
 
 
-{-| Sets [`text-decoration`][text-decoration] property.
+{-| Sets [`text-decoration`][text-decoration] shorthand property.
 
     textDecoration underline
-
-    textDecoration2 underline dotted
-
-    textDecoration3 underline dotted (hex "#cf0")
 
 [text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
 
 -}
 textDecoration :
     BaseValue
-        { none : Supported
-        , underline : Supported
-        , overline : Supported
-        , lineThrough : Supported
-        }
+        (ColorSupported
+            { none : Supported
+            , underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            , solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+        )
     -> Style
 textDecoration (Value line) =
     AppendProperty ("text-decoration:" ++ line)
@@ -8729,11 +8732,7 @@ textDecoration (Value line) =
 
 {-| Sets [`text-decoration`][text-decoration] property.
 
-    textDecoration underline
-
     textDecoration2 underline dotted
-
-    textDecoration3 underline dotted (hex "#cf0")
 
 [text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
 
@@ -8759,10 +8758,6 @@ textDecoration2 (Value line) (Value style) =
 
 
 {-| Sets [`text-decoration`][text-decoration] property.
-
-    textDecoration underline
-
-    textDecoration2 underline dotted
 
     textDecoration3 underline dotted (hex "#cf0")
 
@@ -8794,10 +8789,6 @@ textDecoration3 (Value line) (Value style) (Value colorVal) =
 
     textDecorationLine underline
 
-    textDecorationLine2 underline overline
-
-    textDecorationLine3 underline overline lineThrough
-
 [text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
 
 -}
@@ -8815,11 +8806,9 @@ textDecorationLine (Value line) =
 
 {-| Sets [`text-decoration-line`][text-decoration-line] property.
 
-    textDecorationLine underline
-
     textDecorationLine2 underline overline
 
-    textDecorationLine3 underline overline lineThrough
+**Note:** The first and second argument **MUST NOT** be the same.
 
 [text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
 
@@ -8843,33 +8832,15 @@ textDecorationLine2 (Value line1) (Value line2) =
 
 {-| Sets [`text-decoration-line`][text-decoration-line] property.
 
-    textDecorationLine underline
-
-    textDecorationLine2 underline overline
-
     textDecorationLine3 underline overline lineThrough
 
 [text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
 
 -}
 textDecorationLine3 :
-    Value
-        { underline : Supported
-        , overline : Supported
-        , lineThrough : Supported
-        }
-    ->
-        Value
-            { underline : Supported
-            , overline : Supported
-            , lineThrough : Supported
-            }
-    ->
-        Value
-            { underline : Supported
-            , overline : Supported
-            , lineThrough : Supported
-            }
+    Value { underline : Supported }
+    -> Value { overline : Supported }
+    -> Value { lineThrough : Supported }
     -> Style
 textDecorationLine3 (Value line1) (Value line2) (Value line3) =
     AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2 ++ " " ++ line3)
