@@ -126,7 +126,8 @@ module Css exposing
     , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan, all_
-    , transform, transformOrigin, transformOrigin2
+    , transform, transforms, transformOrigin, transformOrigin2
+    , TransformFunction, TransformFunctionSupported
     , matrix, matrix3d
     , perspective
     , rotate, rotateX, rotateY, rotateZ, rotate3d
@@ -626,7 +627,8 @@ Multiple CSS properties use these values.
 
 # Transformation
 
-@docs transform, transformOrigin, transformOrigin2
+@docs transform, transforms, transformOrigin, transformOrigin2
+@docs TransformFunction, TransformFunctionSupported
 
 
 ## Matrix transformation
@@ -4448,28 +4450,16 @@ fontFeatureSettings (Value val) =
 
 {-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
 
-    fontFeatureSettingsList [] -- equivalent to fontFeatureSettings normal
-
-    fontFeatureSettingsList [ featureTag "liga", featureTag2 "swsh" 2 ]
+    fontFeatureSettingsList featureTag "liga" [ featureTag2 "swsh" 2 ]
 
 -}
 fontFeatureSettingsList :
-    List
-        (Value { featureTag : Supported })
+    Value { featureTag : Supported }
+    -> List (Value { featureTag : Supported })
     -> Style
-fontFeatureSettingsList values =
-    let
-        str =
-            case values of
-                [] ->
-                    "normal"
+fontFeatureSettingsList head rest =
+    AppendProperty ("font-feature-settings:" ++ hashListToString head rest)
 
-                _ ->
-                    values
-                        |> List.map unpackValue
-                        |> String.join ","
-    in
-    AppendProperty ("font-feature-settings:" ++ str)
 
 {-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
 for use with [`fontFeatureSettings`](#fontFeatureSettings)
@@ -4479,8 +4469,8 @@ and [`fontFeatureSettingsList`](#fontFeatureSettingsList)
 
 -}
 featureTag : String -> Value { provides | featureTag : Supported }
-featureTag tag =
-    Value (enquoteString tag)
+featureTag =
+    Value << enquoteString
 
 
 {-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
@@ -5313,13 +5303,7 @@ backgroundAttachments :
             )
     -> Style
 backgroundAttachments firstValue values =
-    let
-        str =
-            (firstValue :: values)
-                |> List.map unpackValue
-                |> String.join ","
-    in
-    AppendProperty ("background-attachment:" ++ str)
+    AppendProperty ("background-attachment:" ++ hashListToString firstValue values)
 
 
 {-| The `local` [`background-attachment` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
@@ -5419,13 +5403,7 @@ backgroundBlendModes :
             )
     -> Style
 backgroundBlendModes firstValue values =
-    let
-        str =
-            (firstValue :: values)
-                |> List.map unpackValue
-                |> String.join ","
-    in
-    AppendProperty ("background-blend-mode:" ++ str)
+    AppendProperty ("background-blend-mode:" ++ hashListToString firstValue values)
 
 
 {-| The `multiply` [`background-blend-mode` value](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode#Values)
@@ -5634,13 +5612,7 @@ backgroundClips :
             )
     -> Style
 backgroundClips firstValue values =
-    let
-        str =
-            (firstValue :: values)
-                |> List.map unpackValue
-                |> String.join ","
-    in
-    AppendProperty ("background-clip:" ++ str)
+    AppendProperty ("background-clip:" ++ hashListToString firstValue values)
 
 
 {-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
@@ -5706,13 +5678,7 @@ backgroundOrigins :
             )
     -> Style
 backgroundOrigins firstValue values =
-    let
-        str =
-            (firstValue :: values)
-                |> List.map unpackValue
-                |> String.join ","
-    in
-    AppendProperty ("background-origin:" ++ str)
+    AppendProperty ("background-origin:" ++ hashListToString firstValue values)
 
 
 {-| Sets [`background-image`](https://css-tricks.com/almanac/properties/b/background-image/).
@@ -5742,15 +5708,8 @@ backgroundImages :
     Value Image
     -> List (Value Image)
     -> Style
-backgroundImages (Value head) rest =
-    let
-        peeled =
-            List.map unpackValue rest
-
-        values =
-            String.join "," (head :: peeled)
-    in
-    AppendProperty ("background-image:" ++ values)
+backgroundImages head rest =
+    AppendProperty ("background-image:" ++ hashListToString head rest)
 
 
 
@@ -10637,83 +10596,99 @@ columnRule3 (Value widthVal) (Value style) (Value colorVal) =
 -- TRANSFORM
 
 
-{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/)
-with a series of transform-functions. If an empty list is provided, the CSS
-output will be none, as if to state directly that the set of transforms applied
-to the current selector is empty.
+{-| A type alias used to accept a [transform-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function)
+among other values.
+-}
+type alias TransformFunctionSupported supported =
+    { supported
+        | matrix : Supported
+        , matrix3d : Supported
+        , translate : Supported
+        , translate2 : Supported
+        , translateX : Supported
+        , translateY : Supported
+        , translateZ : Supported
+        , translate3d : Supported
+        , scale : Supported
+        , scale2 : Supported
+        , scaleX : Supported
+        , scaleY : Supported
+        , scaleZ : Supported
+        , scale3d : Supported
+        , skew : Supported
+        , skew2 : Supported
+        , skewX : Supported
+        , skewY : Supported
+        , rotate : Supported
+        , rotateX : Supported
+        , rotateY : Supported
+        , rotateZ : Supported
+        , rotate3d : Supported
+        , perspective : Supported
+    }
 
-    transform [] -- transform: none;
-    transform [ (matrix 1.0 2.0 3.0 4.0 5.0 6.0) ]
-    transform [ (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1) ]
-    transform [ (translate (px 12)) ]
-    transform [ (translate2 (px 12) (pct 50)) ]
-    transform [ (translateX (em 2)) ]
-    transform [ (translateY (in 3)) ]
-    transform [ (translateZ (px 2)) ]
-    transform [ (translate3d (px 12) (pct 50) (em 3)) ]
-    transform [ (scale 2) ]
-    transform [ (scale2 2, 0.5) ]
-    transform [ (scaleX 2) ]
-    transform [ (scaleY 0.5) ]
-    transform [ (scaleZ 0.3) ]
-    transform [ (scale3d 2.5 1.2 0.3) ]
-    transform [ (skew (deg 20)) ]
-    transform [ (skew2 (deg 30) (deg 20)) ]
-    transform [ (skewX (deg 30)) ]
-    transform [ (skewY (rad 1.07)) ]
-    transform [ (rotate (turn 0.5)) ]
-    transform [ (rotateX (deg 10)) ]
-    transform [ (rotateY (deg 10)) ]
-    transform [ (rotateZ (deg 10)) ]
-    transform [ (rotate3d 1 2.0 3.0 (deg 10)) ]
-    transform [ (perspective (px 17)) ]
-    transform [ (translate (px 12)), (scale 2), (skew (deg 20)) ]
+
+{-| A type alias used to accept a [transform-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function).
+-}
+type alias TransformFunction =
+    TransformFunctionSupported {}
+
+
+{-| The [`transform`](https://css-tricks.com/almanac/properties/t/transform/) property.
+
+    transform none
+    transform (matrix 1.0 2.0 3.0 4.0 5.0 6.0)
+    transform (matrix3d 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1)
+    transform (translate (px 12))
+    transform (translate2 (px 12) (pct 50))
+    transform (translateX (em 2))
+    transform (translateY (in 3))
+    transform (translateZ (px 2))
+    transform (translate3d (px 12) (pct 50) (em 3))
+    transform (scale 2)
+    transform (scale2 2, 0.5)
+    transform (scaleX 2)
+    transform (scaleY 0.5)
+    transform (scaleZ 0.3)
+    transform (scale3d 2.5 1.2 0.3)
+    transform (skew (deg 20))
+    transform (skew2 (deg 30) (deg 20))
+    transform (skewX (deg 30))
+    transform (skewY (rad 1.07))
+    transform (rotate (turn 0.5))
+    transform (rotateX (deg 10))
+    transform (rotateY (deg 10))
+    transform (rotateZ (deg 10))
+    transform (rotate3d 1 2.0 3.0 (deg 10))
+    transform (perspective (px 17))
 
 -}
-transform :
-    List
-        (Value
-            { matrix : Supported
-            , matrix3d : Supported
-            , translate : Supported
-            , translate2 : Supported
-            , translateX : Supported
-            , translateY : Supported
-            , translateZ : Supported
-            , translate3d : Supported
-            , scale : Supported
-            , scale2 : Supported
-            , scaleX : Supported
-            , scaleY : Supported
-            , scaleZ : Supported
-            , scale3d : Supported
-            , skew : Supported
-            , skew2 : Supported
-            , skewX : Supported
-            , skewY : Supported
-            , rotate : Supported
-            , rotateX : Supported
-            , rotateY : Supported
-            , rotateZ : Supported
-            , rotate3d : Supported
-            , perspective : Supported
-            }
-        )
-    -> Style
-transform values =
-    let
-        intoTransform =
-            List.map unpackValue
-                >> String.join ","
-                >> (++) "transform:"
-                >> AppendProperty
-    in
-    case values of
-        [] ->
-            intoTransform [ none ]
+transform : BaseValue (TransformFunctionSupported { none : Supported }) -> Style
+transform (Value val) =
+    AppendProperty ("transform:" ++ val)
 
-        list ->
-            intoTransform list
+
+{-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/)
+with a series of transform-functions.
+
+    transforms (translate (px 12)) [ scale 2, skew (deg 20) ]
+
+-}
+transforms :
+    Value TransformFunction
+    -> List (Value TransformFunction)
+    -> Style
+transforms head rest =
+    AppendProperty ("transform:" ++ plusListToString head rest)
+
+
+{-| Named afte the plus symbol in the CSS specification [CSS-VALUES-3].
+-}
+plusListToString : Value a -> List (Value a) -> String
+plusListToString head rest =
+    (head :: rest)
+        |> List.map unpackValue
+        |> String.join " "
 
 
 
