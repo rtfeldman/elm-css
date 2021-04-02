@@ -2,6 +2,7 @@ module Css exposing
     ( Value, BaseValue, Supported
     , Style, batch
     , property
+    , important
     , unset, initial, inherit, revert
     , all
     , Length, LengthSupported, Angle, AngleSupported, Width, WidthSupported
@@ -182,9 +183,14 @@ functions let you define custom properties and selectors, respectively.
 @docs property
 
 
-## General Values
+## `!important`
 
-All CSS properties can have the values `unset`, `initial`, and `inherit`.
+@docs important
+
+
+# General Values
+
+All CSS properties can have the values `unset`, `initial`, `inherit`, and `revert`.
 
 @docs unset, initial, inherit, revert
 
@@ -1076,6 +1082,23 @@ revert =
 all : BaseValue {} -> Style
 all (Value val) =
     AppendProperty ("all:" ++ val)
+
+
+{-| Transforms the given property by adding !important to the end of its
+declaration.
+-}
+important : Style -> Style
+important =
+    Preprocess.mapProperties makeImportant
+
+
+makeImportant : Structure.Property -> Structure.Property
+makeImportant str =
+    if String.endsWith " !important" (String.toLower str) then
+        str
+
+    else
+        str ++ " !important"
 
 
 
