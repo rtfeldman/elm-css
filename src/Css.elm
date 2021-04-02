@@ -8,7 +8,7 @@ module Css exposing
     , Angle, AngleSupported, Width, WidthSupported
     , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
-    , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
+    , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
     , Time, TimeSupported, s, ms
     , pseudoClass, active, disabled
     , pseudoElement, before, after
@@ -19,7 +19,7 @@ module Css exposing
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox
     , ImageSupported, Image
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
-    , linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
     , cover, contain
     , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
@@ -59,7 +59,7 @@ module Css exposing
     , hyphens, manual
     , hangingPunctuation, first, last, forceEnd, allowEnd
     , lineClamp
-    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight
+    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontSizeAdjust
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
@@ -86,7 +86,7 @@ module Css exposing
     , overflow, overflowX, overflowY
     , overflowAnchor
     , overflowWrap
-    , breakWord
+    , breakWord, anywhere
     , deg, grad, rad, turn
     , direction, ltr, rtl
     , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePositon, under
@@ -95,7 +95,7 @@ module Css exposing
     , textRendering
     , geometricPrecision, optimizeLegibility, optimizeSpeed
     , textTransform
-    , capitalize, uppercase, lowercase, fullWidth
+    , capitalize, uppercase, lowercase, fullWidth, fullSizeKana
     , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
     , textDecorationSkip, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
@@ -211,7 +211,7 @@ All CSS properties can have the values `unset`, `initial`, `inherit`, and `rever
 
 ## Color
 
-@docs Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
+@docs Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
 
 
 ## Time
@@ -255,7 +255,7 @@ All CSS properties can have the values `unset`, `initial`, `inherit`, and `rever
 @docs ImageSupported, Image
 @docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
 
-@docs linearGradient, linearGradient2, stop, stop2, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+@docs linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 @docs repeat, noRepeat, repeatX, repeatY, space, round
 
@@ -408,7 +408,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ## Font Size
 
-@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight
+@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
 @docs fontSizeAdjust
 
 
@@ -499,7 +499,7 @@ Multiple CSS properties use these values.
 @docs overflowAnchor
 
 @docs overflowWrap
-@docs breakWord
+@docs breakWord, anywhere
 
 
 ## Angles
@@ -532,7 +532,7 @@ Multiple CSS properties use these values.
 ## Text Transform
 
 @docs textTransform
-@docs capitalize, uppercase, lowercase, fullWidth
+@docs capitalize, uppercase, lowercase, fullWidth, fullSizeKana
 
 
 ## Text Decoration
@@ -1312,7 +1312,8 @@ overflowY (Value val) =
 -}
 overflowWrap :
     BaseValue
-        { breakWord : Supported
+        { anywhere : Supported
+        , breakWord : Supported
         , normal : Supported
         }
     -> Style
@@ -1332,6 +1333,16 @@ and [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/).
 breakWord : Value { provides | breakWord : Supported }
 breakWord =
     Value "break-word"
+
+
+{-| The `anywhere` value used by [`overflowWrap`](#overflowWrap)
+
+    overflowWrap anywhere
+
+-}
+anywhere : Value { provides | anywhere : Supported }
+anywhere =
+    Value "anywhere"
 
 
 
@@ -1461,6 +1472,17 @@ hex str =
 
         else
             "#" ++ str
+
+
+{-| The [`currentcolor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentcolor_keyword)
+value used by properties such as [`color`](#color), [`backgroundColor`](#backgroundColor)
+
+    color currentcolor
+
+-}
+currentcolor : Value { provides | currentcolor : Supported }
+currentcolor =
+    Value "currentcolor"
 
 
 
@@ -6203,15 +6225,24 @@ See also [`stop`](#stop) if you don't need to control the stop position.
 -}
 stop2 :
     Value Color
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Value { supported | colorStop : Supported }
+    -> Value (LengthSupported { pct : Supported })
+    -> Value { provides | colorStop : Supported }
 stop2 (Value colorVal) (Value positionVal) =
     Value (colorVal ++ " " ++ positionVal)
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient (stop3 (hex "111") zero (pt 1)) (stop3 (hex "6454") (pt 2) (pct 45))
+
+-}
+stop3 :
+    Value Color
+    -> Value (LengthSupported { pct : Supported })
+    -> Value (LengthSupported { pct : Supported })
+    -> Value { provides | colorStop : Supported }
+stop3 (Value colorVal) (Value positionStart) (Value positionEnd) =
+    Value (colorVal ++ " " ++ positionStart ++ "," ++ positionEnd)
 
 
 {-| Provides the [`to bottom` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
@@ -8653,6 +8684,7 @@ textTransform :
         , uppercase : Supported
         , lowercase : Supported
         , fullWidth : Supported
+        , fullSizeKana : Supported
         , none : Supported
         }
     -> Style
@@ -8698,6 +8730,16 @@ lowercase =
 fullWidth : Value { provides | fullWidth : Supported }
 fullWidth =
     Value "full-width"
+
+
+{-| The `full-size-kana` value used by [`textTransform`](#textTransform)
+
+textTransform fullSizeKana
+
+-}
+fullSizeKana : Value { provedes | fullSizeKana : Supported }
+fullSizeKana =
+    Value "full-size-kana"
 
 
 
