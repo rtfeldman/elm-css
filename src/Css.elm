@@ -837,15 +837,14 @@ type alias Length =
 {-| A type alias used to accept a [color](https://developer.mozilla.org/en-US/docs/Web/CSS/color)
 among other values.
 -}
-type alias ColorSupported v =
-    { v
+type alias ColorSupported supported =
+    { supported
         | rgb : Supported
         , rgba : Supported
         , hsl : Supported
         , hsla : Supported
         , hex : Supported
-        , transparent : Supported
-        , currentColor : Supported
+        , currentcolor : Supported
     }
 
 
@@ -920,8 +919,8 @@ type alias Width =
 {-| A type alias used to accept an [angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
 among other values.
 -}
-type alias AngleSupported v =
-    { v
+type alias AngleSupported supported =
+    { supported
         | deg : Supported
         , grad : Supported
         , rad : Supported
@@ -1118,7 +1117,7 @@ url str =
 
 {-| The `auto` value used for properties such as [`width`](#width),
 [`zoom`](#zoom),
-[`outlineStyle`](#outlineStyle)
+[`outlineStyle`](#outlineStyle),
 and [`flexBasis`](#flexBasis).
 
     width auto
@@ -1627,7 +1626,7 @@ absolute =
 
 {-| A [`fixed` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values)
 or [`fixed` `background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
-or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/)
+or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
 
     position fixed
 
@@ -6142,7 +6141,7 @@ cover =
 {- GRADIENTS -}
 
 
-{-| Produces [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
+{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
 values used by properties such as [`backgroundImage`](#backgroundImage),
 and [`listStyleImage`](#listStyleImage)
 
@@ -6167,7 +6166,7 @@ linearGradient (Value firstStop) (Value secondStop) moreStops =
     Value ("linear-gradient(" ++ stops ++ ")")
 
 
-{-| Produces [`linear-gradient`](https://css-tricks.com/snippets/css/css-linear-gradient/)
+{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
 values used by properties such as [`backgroundImage`](#backgroundImage),
 and [`listStyleImage`](#listStyleImage)
 
@@ -11931,7 +11930,8 @@ maxWidth (Value size) =
 [`maxWidth`](#maxWidth),
 [`height`](#height),
 [`minHeight`](#minHeight),
-and [`maxHeight`](#maxHeight)
+[`maxHeight`](#maxHeight)
+and [`flexBasis`](#flexBasis)
 
     width minContent
 
@@ -11946,7 +11946,8 @@ minContent =
 [`maxWidth`](#maxWidth),
 [`height`](#height),
 [`minHeight`](#minHeight),
-and [`maxHeight`](#maxHeight)
+[`maxHeight`](#maxHeight)
+and [`flexBasis`](#flexBasis)
 
     width maxContent
 
@@ -11961,7 +11962,8 @@ maxContent =
 [`maxWidth`](#maxWidth),
 [`height`](#height),
 [`minHeight`](#minHeight),
-and [`maxHeight`](#maxHeight)
+[`maxHeight`](#maxHeight)
+and [`flexBasis`](#flexBasis)
 
     width fitContent
 
