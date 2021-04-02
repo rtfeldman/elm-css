@@ -2803,7 +2803,7 @@ times :
     -> CalcOperation
 times (Value second) =
     -- The calc `*` operator does not need to be surrounded by whitespace.
-    CalcOperation ("*" ++ getCalcExpression second)
+    CalcOperation (" * " ++ getCalcExpression second)
 
 
 {-| Use with [`calc`](#calc) to divide a value by a unitless number.
@@ -2821,7 +2821,7 @@ dividedBy :
     -> CalcOperation
 dividedBy (Value second) =
     -- The calc `/` operator does not need to be surrounded by whitespace.
-    CalcOperation ("/" ++ getCalcExpression second)
+    CalcOperation (" / " ++ getCalcExpression second)
 
 
 
