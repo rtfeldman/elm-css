@@ -8,6 +8,7 @@ module Css exposing
     , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
+    , Time, TimeSupported, s, ms
     , pseudoClass, active, disabled
     , pseudoElement, before, after
     , width, minWidth, maxWidth, height, minHeight, maxHeight
@@ -132,6 +133,8 @@ module Css exposing
     , scale, scale2, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
     , translate, translate2, translateX, translateY, translateZ, translate3d
+    , animationName, animationNames, animationDuration, animationDurations, animationTimingFunction, animationTimingFunctions, animationIterationCount, animationIterationCounts, animationDirection, animationDirections, animationPlayState, animationPlayStates, animationDelay, animationDelays, animationFillMode, animationFillModes
+    , EasingFunction, EasingFunctionSupported, linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
     , opacity
     , zoom
     , scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
@@ -202,6 +205,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 ## Color
 
 @docs Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
+
+
+## Time
+
+@docs Time, TimeSupported, s, ms
 
 
 ## Pseudo-Classes
@@ -651,6 +659,12 @@ Multiple CSS properties use these values.
 @docs translate, translate2, translateX, translateY, translateZ, translate3d
 
 
+# Animation
+
+@docs animationName, animationNames, animationDuration, animationDurations, animationTimingFunction, animationTimingFunctions, animationIterationCount, animationIterationCounts, animationDirection, animationDirections, animationPlayState, animationPlayStates, animationDelay, animationDelays, animationFillMode, animationFillModes
+@docs EasingFunction, EasingFunctionSupported, linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
+
+
 # Opacity
 
 @docs opacity
@@ -931,6 +945,22 @@ type alias ImageSupported supported =
 -}
 type alias Image =
     ImageSupported {}
+
+
+{-| A type alias used to accept an [time](https://developer.mozilla.org/en-US/docs/Web/CSS/time)
+among other values.
+-}
+type alias TimeSupported supported =
+    { supported
+        | s : Supported
+        , ms : Supported
+    }
+
+
+{-| A type alias used to accept an [time](https://developer.mozilla.org/en-US/docs/Web/CSS/time).
+-}
+type alias Time =
+    TimeSupported {}
 
 
 
@@ -3165,13 +3195,37 @@ center =
     Value "center"
 
 
-{-| -}
+{-| The `start` value used for properties such as [`alignItems`](#alignItems),
+[`alignContent`](#alignContent),
+[`alignSelf`](#alignSelf),
+[`justifyContent`](#justifyContent),
+[`justifyItems`](#justifyItems),
+[`justifySelf`](#justifySelf),
+and [`steps2`](#steps2).
+
+    alignContent start
+
+    steps2 3 start
+
+-}
 start : Value { provides | start : Supported }
 start =
     Value "start"
 
 
-{-| -}
+{-| The `end` value used for properties such as [`alignItems`](#alignItems),
+[`alignContent`](#alignContent),
+[`alignSelf`](#alignSelf),
+[`justifyContent`](#justifyContent),
+[`justifyItems`](#justifyItems),
+[`justifySelf`](#justifySelf),
+and [`steps2`](#steps2).
+
+    alignContent end
+
+    steps2 3 end
+
+-}
 end : Value { provides | end : Supported }
 end =
     Value "end"
@@ -4525,6 +4579,7 @@ fontVariantCaps (Value str) =
 [`wordBreak`](#wordBreak),
 [`columnGap`](#columnGap),
 [`zoom`](#zoom),
+[`animationDirection`](#animationDirection),
 and [`alignItems`](#alignItems).
 
     alignItems normal
@@ -11066,6 +11121,579 @@ perspective :
     -> Value { provides | perspective : Supported }
 perspective (Value length) =
     Value ("perspective(" ++ length ++ ")")
+
+
+
+-- TIME UNITS --
+
+
+{-| The [`s`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) time unit.
+
+    animationDuration (s 1)
+
+-}
+s : Float -> Value { provides | s : Supported }
+s value =
+    Value (String.fromFloat value ++ "s")
+
+
+{-| The [`ms`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) time unit.
+
+    animationDuration (ms 120)
+
+-}
+ms : Float -> Value { provides | ms : Supported }
+ms value =
+    Value (String.fromFloat value ++ "ms")
+
+
+
+-- ANIMATION --
+
+
+{-| The [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name) property.
+
+    animationName (customIdent "pulse") []
+
+-}
+animationName :
+    BaseValue
+        { none : Supported
+        , string : Supported
+        , customIdent : Supported
+        }
+    -> Style
+animationName (Value val) =
+    AppendProperty ("animation-name:" ++ val)
+
+
+{-| The [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name) property.
+
+    animationNames (customIdent "pulse") []
+
+-}
+animationNames :
+    Value
+        { none : Supported
+        , string : Supported
+        , customIdent : Supported
+        }
+    ->
+        List
+            (Value
+                { none : Supported
+                , string : Supported
+                , customIdent : Supported
+                }
+            )
+    -> Style
+animationNames head rest =
+    AppendProperty ("animation-name:" ++ hashListToString head rest)
+
+
+{-| The [`animation-duration`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration) property.
+
+    animationDuration (s 1)
+
+-}
+animationDuration : BaseValue Time -> Style
+animationDuration (Value val) =
+    AppendProperty ("animation-duration:" ++ val)
+
+
+{-| The [`animation-duration`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration) property.
+
+    animationDurations (s 1) [ ms 300, s 4.5 ]
+
+-}
+animationDurations : Value Time -> List (Value Time) -> Style
+animationDurations head rest =
+    AppendProperty ("animation-duration:" ++ hashListToString head rest)
+
+
+{-| The [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) property.
+
+    animationTimingFunction linear
+
+-}
+animationTimingFunction : BaseValue EasingFunction -> Style
+animationTimingFunction (Value val) =
+    AppendProperty ("animation-timing-function:" ++ val)
+
+
+{-| The [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) property.
+
+    animationTimingFunctions linear [ cubicBezier 0.42 0 0.38 1, stepEnd ]
+
+-}
+animationTimingFunctions : Value EasingFunction -> List (Value EasingFunction) -> Style
+animationTimingFunctions head rest =
+    AppendProperty ("animation-timing-function:" ++ hashListToString head rest)
+
+
+{-| The [`animation-iteration-count`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count) property.
+
+    animationIterationCount (num 3.5)
+
+    animationIterationCount infinite
+
+-}
+animationIterationCount :
+    BaseValue
+        { infinite : Supported
+        , num : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    -> Style
+animationIterationCount (Value val) =
+    AppendProperty ("animation-iteration-count:" ++ val)
+
+
+{-| The [`animation-iteration-count`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count) property.
+
+    animationIterationCounts (num 3.5) [ infinte, zero ]
+
+-}
+animationIterationCounts :
+    Value
+        { infinite : Supported
+        , num : Supported
+        , zero : Supported
+        , calc : Supported
+        }
+    ->
+        List
+            (Value
+                { infinite : Supported
+                , num : Supported
+                , zero : Supported
+                , calc : Supported
+                }
+            )
+    -> Style
+animationIterationCounts head rest =
+    AppendProperty ("animation-iteration-count:" ++ hashListToString head rest)
+
+
+{-| The [`animation-direction`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction) property.
+
+    animationDirection reverse
+
+-}
+animationDirection :
+    BaseValue
+        { normal : Supported
+        , reverse : Supported
+        , alternate : Supported
+        , alternateReverse : Supported
+        }
+    -> Style
+animationDirection (Value val) =
+    AppendProperty ("animation-direction:" ++ val)
+
+
+{-| The [`animation-direction`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction) property.
+
+    animationDirection reverse [ normal, alternate, alternateReverse ]
+
+-}
+animationDirections :
+    Value
+        { normal : Supported
+        , reverse : Supported
+        , alternate : Supported
+        , alternateReverse : Supported
+        }
+    ->
+        List
+            (Value
+                { normal : Supported
+                , reverse : Supported
+                , alternate : Supported
+                , alternateReverse : Supported
+                }
+            )
+    -> Style
+animationDirections head rest =
+    AppendProperty ("animation-direction:" ++ hashListToString head rest)
+
+
+{-| The [`animation-play-state`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state) property.
+
+    animationPlayState running
+
+-}
+animationPlayState :
+    BaseValue
+        { running : Supported
+        , paused : Supported
+        }
+    -> Style
+animationPlayState (Value val) =
+    AppendProperty ("animation-play-state:" ++ val)
+
+
+{-| The [`animation-play-state`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state) property.
+
+    animationPlayStates running [ paused ]
+
+-}
+animationPlayStates :
+    Value
+        { running : Supported
+        , paused : Supported
+        }
+    ->
+        List
+            (Value
+                { running : Supported
+                , paused : Supported
+                }
+            )
+    -> Style
+animationPlayStates head rest =
+    AppendProperty ("animation-play-state:" ++ hashListToString head rest)
+
+
+{-| The [`animation-delay`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay) property.
+
+    animationDelay (s 1)
+
+-}
+animationDelay : BaseValue Time -> Style
+animationDelay (Value val) =
+    AppendProperty ("animation-delay:" ++ val)
+
+
+{-| The [`animation-delay`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay) property.
+
+    animationDelays (s 1) [ ms 300, s 4.5 ]
+
+-}
+animationDelays : Value Time -> List (Value Time) -> Style
+animationDelays head rest =
+    AppendProperty ("animation-delay:" ++ hashListToString head rest)
+
+
+{-| The [`animation-fill-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode) property.
+
+    animationFillMode forwards
+
+-}
+animationFillMode :
+    BaseValue
+        { none : Supported
+        , forwards : Supported
+        , backwards : Supported
+        , both : Supported
+        }
+    -> Style
+animationFillMode (Value val) =
+    AppendProperty ("animation-fill-mode:" ++ val)
+
+
+{-| The [`animation-fill-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode) property.
+
+    animationFillModes forwards [ none, both, backwards ]
+
+-}
+animationFillModes :
+    Value
+        { none : Supported
+        , forwards : Supported
+        , backwards : Supported
+        , both : Supported
+        }
+    ->
+        List
+            (Value
+                { none : Supported
+                , forwards : Supported
+                , backwards : Supported
+                , both : Supported
+                }
+            )
+    -> Style
+animationFillModes head rest =
+    AppendProperty ("animation-fill-mode:" ++ hashListToString head rest)
+
+
+
+-- ANIMATION VALUES --
+
+
+{-| A type alias used to accept an [easing-function](https://www.w3.org/TR/css-easing-1/#typedef-easing-function)
+among other values.
+-}
+type alias EasingFunctionSupported supported =
+    { supported
+        | linear : Supported
+        , ease : Supported
+        , easeIn : Supported
+        , easeOut : Supported
+        , easeInOut : Supported
+        , cubicBezier : Supported
+        , stepStart : Supported
+        , stepEnd : Supported
+        , steps : Supported
+    }
+
+
+{-| A type alias used to accept an [easing-function](https://www.w3.org/TR/css-easing-1/#typedef-easing-function).
+-}
+type alias EasingFunction =
+    EasingFunctionSupported {}
+
+
+{-| The `linear` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction linear
+
+-}
+linear : Value { provides | linear : Supported }
+linear =
+    Value "linear"
+
+
+{-| The `ease` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction ease
+
+-}
+ease : Value { provides | ease : Supported }
+ease =
+    Value "ease"
+
+
+{-| The `ease-in` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction easeIn
+
+-}
+easeIn : Value { provides | easeIn : Supported }
+easeIn =
+    Value "ease-in"
+
+
+{-| The `ease-out` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction easeOut
+
+-}
+easeOut : Value { provides | easeOut : Supported }
+easeOut =
+    Value "ease-out"
+
+
+{-| The `ease-in-out` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction easeInOut
+
+-}
+easeInOut : Value { provides | easeInOut : Supported }
+easeInOut =
+    Value "ease-in-out"
+
+
+{-| Produces the `cubic-bezier()` value used for properties such as [`animationTimingFunction`](#animationTimingFunction)
+
+    animationTimingFunction (cubicBezier 0.2 0 0.5 1)
+
+-}
+cubicBezier : Float -> Float -> Float -> Float -> Value { provides | cubicBezier : Supported }
+cubicBezier x1 y1 x2 y2 =
+    Value
+        ("cubic-bezier("
+            ++ String.fromFloat x1
+            ++ ","
+            ++ String.fromFloat y1
+            ++ ","
+            ++ String.fromFloat x2
+            ++ ","
+            ++ String.fromFloat y2
+            ++ ")"
+        )
+
+
+{-| The `step-start` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction stepStart
+
+-}
+stepStart : Value { provides | stepStart : Supported }
+stepStart =
+    Value "step-start"
+
+
+{-| The `step-end` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction stepEnd
+
+-}
+stepEnd : Value { provides | stepEnd : Supported }
+stepEnd =
+    Value "step-end"
+
+
+{-| Produces the `steps()` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction (steps 3)
+
+-}
+steps : Int -> Value { provides | steps : Supported }
+steps value =
+    Value ("steps(" ++ String.fromInt value ++ ")")
+
+
+{-| Produces the `steps()` value used for properties such as [`animationTimingFunction`](#animationTimingFunction).
+
+    animationTimingFunction (steps2 3 jumpStart)
+
+-}
+steps2 :
+    Int
+    ->
+        Value
+            { jumpStart : Supported
+            , jumpEnd : Supported
+            , jumpNone : Supported
+            , jumpBoth : Supported
+            , start : Supported
+            , end : Supported
+            }
+    -> Value { provides | steps : Supported }
+steps2 value (Value stepPosition) =
+    Value ("steps(" ++ String.fromInt value ++ "," ++ stepPosition ++ ")")
+
+
+{-| The `jump-start` value used for functions like [`step2`](#step2)
+
+    steps2 3 jumpStart
+
+-}
+jumpStart : Value { provides | jumpStart : Supported }
+jumpStart =
+    Value "jump-start"
+
+
+{-| The `jump-end` value used for functions like [`step2`](#step2)
+
+    steps2 3 jumpEnd
+
+-}
+jumpEnd : Value { provides | jumpEnd : Supported }
+jumpEnd =
+    Value "jump-end"
+
+
+{-| The `jump-none` value used for functions like [`step2`](#step2)
+
+    steps2 3 jumpNone
+
+-}
+jumpNone : Value { provides | jumpNone : Supported }
+jumpNone =
+    Value "jump-none"
+
+
+{-| The `jump-both` value used for functions like [`step2`](#step2)
+
+    steps2 3 jumpBoth
+
+-}
+jumpBoth : Value { provides | jumpBoth : Supported }
+jumpBoth =
+    Value "jump-both"
+
+
+{-| The `infinite` value used for functions like [`animationIterationCount`](#animationIterationCount)
+
+    animationIterationCount infinite
+
+-}
+infinite : Value { provides | infinite : Supported }
+infinite =
+    Value "infinite"
+
+
+{-| The `reverse` value used for functions like [`animationDirection`](#animationDirection)
+
+    animationDirection reverse
+
+-}
+reverse : Value { provides | reverse : Supported }
+reverse =
+    Value "reverse"
+
+
+{-| The `alternate` value used for functions like [`animationDirection`](#animationDirection)
+
+    animationDirection alternate
+
+-}
+alternate : Value { provides | alternate : Supported }
+alternate =
+    Value "alternate"
+
+
+{-| The `alternate-reverse` value used for functions like [`animationDirection`](#animationDirection)
+
+    animationDirection alternateReverse
+
+-}
+alternateReverse : Value { provides | alternateReverse : Supported }
+alternateReverse =
+    Value "alternate-reverse"
+
+
+{-| The `running` value used for functions like [`animationPlayState`](#animationPlayState)
+
+    animationPlayState running
+
+-}
+running : Value { provides | running : Supported }
+running =
+    Value "running"
+
+
+{-| The `paused` value used for functions like [`animationPlayState`](#animationPlayState)
+
+    animationPlayState paused
+
+-}
+paused : Value { provides | paused : Supported }
+paused =
+    Value "paused"
+
+
+{-| The `forwards` value used for functions like [`animationFillMode`](#animationFillMode)
+
+    animationFillMode forwards
+
+-}
+forwards : Value { provides | forwards : Supported }
+forwards =
+    Value "forwards"
+
+
+{-| The `backwards` value used for functions like [`animationFillMode`](#animationFillMode)
+
+    animationFillMode backwards
+
+-}
+backwards : Value { provides | backwards : Supported }
+backwards =
+    Value "backwards"
+
+
+{-| Named after the hash mark in the CSS specification [CSS-VALUES-3].
+-}
+hashListToString : Value a -> List (Value a) -> String
+hashListToString head rest =
+    (head :: rest)
+        |> List.map unpackValue
+        |> String.join ","
 
 
 {-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
