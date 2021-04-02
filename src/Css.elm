@@ -5,8 +5,8 @@ module Css exposing
     , important
     , unset, initial, inherit, revert
     , all
-    , Length, LengthSupported, Angle, AngleSupported, Width, WidthSupported
-    , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pt, pc, pct, num, int
+    , Angle, AngleSupported, Width, WidthSupported
+    , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla
     , Time, TimeSupported, s, ms
@@ -196,12 +196,12 @@ All CSS properties can have the values `unset`, `initial`, `inherit`, and `rever
 
 @docs all
 
-@docs Length, LengthSupported, Angle, AngleSupported, Width, WidthSupported
+@docs Angle, AngleSupported, Width, WidthSupported
 
 
 ## Numeric Units
 
-@docs zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, inches, pt, pc, pct, num, int
+@docs Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
 
 
 ## Calc
@@ -806,8 +806,8 @@ type Supported
 {-| A type alias used to accept a [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
 among other values.
 -}
-type alias LengthSupported v =
-    { v
+type alias LengthSupported supported =
+    { supported
         | ch : Supported
         , em : Supported
         , ex : Supported
@@ -822,6 +822,7 @@ type alias LengthSupported v =
         , inches : Supported
         , pc : Supported
         , pt : Supported
+        , q : Supported
         , zero : Supported
         , calc : Supported
     }
@@ -2348,6 +2349,16 @@ mm value =
 cm : Float -> Value { provides | cm : Supported }
 cm value =
     Value (String.fromFloat value ++ "cm")
+
+
+{-| [`Q`](https://developer.mozilla.org/en-US/docs/Web/CSS/length) length units.
+
+    borderWidth (q 2.5)
+
+-}
+q : Float -> Value { provides | q : Supported }
+q value =
+    Value (String.fromFloat value ++ "Q")
 
 
 {-| [`in`](https://css-tricks.com/the-lengths-of-css/) length units.
