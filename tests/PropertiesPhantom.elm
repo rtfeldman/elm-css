@@ -180,6 +180,17 @@ all =
         , testProperty1 textDecorationColor
             { functionName = "textDecorationColor", property = "text-decoration-color" }
             testColor
+        , testProperty1 textUnderlinePosition
+            { functionName = "textUnderlinePosition", property = "text-underline-position" }
+            [ ( auto, "auto" )
+            , ( under, "under" )
+            , ( left_, "left" )
+            , ( right_, "right" )
+            ]
+        , testProperty { functionName = "textUnderlinePosition2", property = "text-underline-position" }
+            [ ( textUnderlinePosition2 under left_, "under left" )
+            , ( textUnderlinePosition2 under right_, "under right" )
+            ]
         , testProperty1 textTransform
             { functionName = "textTransform", property = "text-transform" }
             [ ( capitalize, "capitalize" )

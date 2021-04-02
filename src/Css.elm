@@ -89,7 +89,7 @@ module Css exposing
     , breakWord, anywhere
     , deg, grad, rad, turn
     , direction, ltr, rtl
-    , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePositon, under
+    , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2, under
     , textOrientation
     , mixed, sideways, upright
     , textRendering
@@ -514,7 +514,7 @@ Multiple CSS properties use these values.
 
 ## Text Align
 
-@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePositon, under
+@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2, under
 
 
 ## Text Orientation
@@ -9439,16 +9439,16 @@ interCharacter =
 
 {-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
 
-    textUnderlinePositon auto
+    textUnderlinePosition auto
 
-    textUnderlinePositon under
+    textUnderlinePosition under
 
-    textUnderlinePositon left_
+    textUnderlinePosition left_
 
-    textUnderlinePositon right_
+    textUnderlinePosition right_
 
 -}
-textUnderlinePositon :
+textUnderlinePosition :
     BaseValue
         { auto : Supported
         , under : Supported
@@ -9456,13 +9456,32 @@ textUnderlinePositon :
         , right_ : Supported
         }
     -> Style
-textUnderlinePositon (Value val) =
+textUnderlinePosition (Value val) =
     AppendProperty ("text-underline-position:" ++ val)
 
 
-{-| A `under` value for the [`textUnderlinePositon`](#textUnderlinePositon) property.
+{-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
 
-    textUnderlinePositon under
+    textUnderlinePosition2 under left_
+
+    textUnderlinePosition2 under right_
+
+-}
+textUnderlinePosition2 :
+    Value { under : Supported }
+    ->
+        Value
+            { left_ : Supported
+            , right_ : Supported
+            }
+    -> Style
+textUnderlinePosition2 (Value underVal) (Value val) =
+    AppendProperty ("text-underline-position:" ++ underVal ++ " " ++ val)
+
+
+{-| A `under` value for the [`textUnderlinePosition`](#textUnderlinePosition) property.
+
+    textUnderlinePosition under
 
 -}
 under : Value { provides | under : Supported }
