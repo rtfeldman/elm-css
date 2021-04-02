@@ -10757,10 +10757,10 @@ matrix3d :
     -> Float
     -> Float
     -> Float
-    -> Value { provides | matrix : Supported }
+    -> Value { provides | matrix3d : Supported }
 matrix3d a1 b1 c1 d1 a2 b2 c2 d2 a3 b3 c3 d3 a4 b4 c4 d4 =
     Value
-        ("matrix3d:"
+        ("matrix3d("
             ++ String.fromFloat a1
             ++ ","
             ++ String.fromFloat b1
@@ -10878,12 +10878,7 @@ translate3d :
                 { pct : Supported
                 }
             )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
+    -> Value Length
     -> Value { provides | translate3d : Supported }
 translate3d (Value valX) (Value valY) (Value z) =
     Value ("translate3d(" ++ valX ++ "," ++ valY ++ "," ++ z ++ ")")
@@ -13662,6 +13657,7 @@ transformOrigin :
         , center : Supported
         , bottom_ : Supported
         , pct : Supported
+        , calc : Supported
         }
     -> Style
 transformOrigin (Value vert) =
@@ -13685,6 +13681,7 @@ transformOrigin2 :
         , center : Supported
         , bottom_ : Supported
         , pct : Supported
+        , calc : Supported
         }
     ->
         Value
@@ -13692,6 +13689,7 @@ transformOrigin2 :
             , center : Supported
             , right_ : Supported
             , pct : Supported
+            , calc : Supported
             }
     -> Style
 transformOrigin2 (Value vert) (Value horiz) =
