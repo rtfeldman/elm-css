@@ -3,8 +3,8 @@ module Css exposing
     , Style, batch
     , property
     , important
-    , unset, initial, inherit, revert
-    , all
+    , unset, initial, inherit
+    , all, revert
     , Angle, AngleSupported, Width, WidthSupported
     , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
@@ -190,11 +190,11 @@ functions let you define custom properties and selectors, respectively.
 
 # General Values
 
-All CSS properties can have the values `unset`, `initial`, `inherit`, and `revert`.
+All CSS properties can have the values `unset`, `initial`, and `inherit`
 
-@docs unset, initial, inherit, revert
+@docs unset, initial, inherit
 
-@docs all
+@docs all, revert
 
 @docs Angle, AngleSupported, Width, WidthSupported
 
@@ -793,7 +793,6 @@ type alias BaseValue supported =
             | initial : Supported
             , inherit : Supported
             , unset : Supported
-            , revert : Supported
         }
 
 
@@ -855,12 +854,11 @@ type alias Color =
 
 
 {-| A type alias used to accept a [line-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#line-style)
-among other values.
+(without the `hidden`) value among other values.
 -}
 type alias LineStyleSupported supported =
     { supported
         | none : Supported
-        , hidden : Supported
         , dotted : Supported
         , dashed : Supported
         , solid : Supported
@@ -873,9 +871,10 @@ type alias LineStyleSupported supported =
 
 
 {-| A type alias used to accept a [line-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style#line-style).
+This includes `hidden` as a possible value.
 -}
 type alias LineStyle =
-    LineStyleSupported {}
+    LineStyleSupported { hidden : Supported }
 
 
 {-| A type alias used to accept a [line-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width#line-width)
@@ -1079,7 +1078,7 @@ revert =
     all inherit
 
 -}
-all : BaseValue {} -> Style
+all : BaseValue { revert : Supported } -> Style
 all (Value val) =
     AppendProperty ("all:" ++ val)
 
@@ -3682,9 +3681,6 @@ alignSelf2 (Value overflowPosition) (Value selfPosition) =
 justifyContent :
     BaseValue
         { normal : Supported
-        , baseline : Supported
-        , firstBaseline : Supported
-        , lastBaseline : Supported
         , spaceBetween : Supported
         , spaceAround : Supported
         , spaceEvenly : Supported

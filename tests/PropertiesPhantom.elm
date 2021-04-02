@@ -550,9 +550,6 @@ all =
         , testProperty1 justifyContent
             { functionName = "justifyContent", property = "justify-content" }
             [ ( normal, "normal" )
-            , ( baseline, "baseline" )
-            , ( firstBaseline, "first baseline" )
-            , ( lastBaseline, "last baseline" )
             , ( spaceAround, "space-around" )
             , ( spaceBetween, "space-between" )
             , ( spaceEvenly, "space-evenly" )
@@ -692,7 +689,7 @@ all =
             (( auto, "auto" )
                 :: testLength
                 ++ testColor
-                ++ testLineStyle
+                ++ testLineStyleWithoutHidden
             )
         , testProperty { functionName = "outline3", property = "outline" }
             [ ( outline3 (px 10) none (hsl 120 0.5 0.5), "10px none hsl(120,50%,50%)" )
@@ -700,7 +697,7 @@ all =
             , ( outline3 (cm 3.1) solid (rgb 112 22 75), "3.1cm solid rgb(112,22,75)" )
             , ( outline3 (em 0.2) dotted (rgba 112 22 75 0.1), "0.2em dotted rgba(112,22,75,0.1)" )
             , ( outline3 (ex 10.5) dashed (hex "fadffe"), "10.5ex dashed #fadffe" )
-            , ( outline3 (inches 1) hidden (hex "eef"), "1in hidden #eef" )
+            , ( outline3 (inches 1) solid (hex "eef"), "1in solid #eef" )
             , ( outline3 (mm 2.54) double (hex "#ddfead99"), "2.54mm double #ddfead99" )
             , ( outline3 (pc 8.7) groove (hex "#356265"), "8.7pc groove #356265" )
             , ( outline3 (pt 15.5) ridge (hex "#feda"), "15.5pt ridge #feda" )
@@ -721,7 +718,7 @@ all =
             (( invert, "invert" ) :: testColor)
         , testProperty1 outlineStyle
             { functionName = "outlineStyle", property = "outline-style" }
-            (( auto, "auto" ) :: testLineStyle)
+            (( auto, "auto" ) :: testLineStyleWithoutHidden)
         , testProperty1 outlineOffset
             { functionName = "outlineOffset", property = "outline-offset" }
             testLength
@@ -1249,9 +1246,25 @@ type alias PropertyDescription =
 
 
 testProperty1 :
-    (Value { provides | initial : Supported, inherit : Supported, unset : Supported, revert : Supported } -> Style)
+    (Value
+        { provides
+            | initial : Supported
+            , inherit : Supported
+            , unset : Supported
+        }
+     -> Style
+    )
     -> PropertyDescription
-    -> List ( Value { provides | initial : Supported, inherit : Supported, unset : Supported, revert : Supported }, String )
+    ->
+        List
+            ( Value
+                { provides
+                    | initial : Supported
+                    , inherit : Supported
+                    , unset : Supported
+                }
+            , String
+            )
     -> Test
 testProperty1 propertyUnderTest description valuePairs =
     testProperty
@@ -1287,7 +1300,6 @@ testCssWideValues :
             | initial : Supported
             , inherit : Supported
             , unset : Supported
-            , revert : Supported
         }
      -> Style
     )
@@ -1296,7 +1308,6 @@ testCssWideValues propertyUnderTest =
     [ ( propertyUnderTest initial, "initial" )
     , ( propertyUnderTest inherit, "inherit" )
     , ( propertyUnderTest unset, "unset" )
-    , ( propertyUnderTest revert, "revert" )
     ]
 
 
@@ -1652,6 +1663,35 @@ testLineWidth =
            ]
 
 
+testLineStyleWithoutHidden :
+    List
+        ( Value
+            { provides
+                | none : Supported
+                , solid : Supported
+                , dotted : Supported
+                , dashed : Supported
+                , double : Supported
+                , groove : Supported
+                , ridge : Supported
+                , inset : Supported
+                , outset : Supported
+            }
+        , String
+        )
+testLineStyleWithoutHidden =
+    [ ( none, "none" )
+    , ( solid, "solid" )
+    , ( dotted, "dotted" )
+    , ( dashed, "dashed" )
+    , ( double, "double" )
+    , ( groove, "groove" )
+    , ( ridge, "ridge" )
+    , ( inset, "inset" )
+    , ( outset, "outset" )
+    ]
+
+
 testLineStyle :
     List
         ( Value
@@ -1670,17 +1710,7 @@ testLineStyle :
         , String
         )
 testLineStyle =
-    [ ( none, "none" )
-    , ( solid, "solid" )
-    , ( dotted, "dotted" )
-    , ( dashed, "dashed" )
-    , ( hidden, "hidden" )
-    , ( double, "double" )
-    , ( groove, "groove" )
-    , ( ridge, "ridge" )
-    , ( inset, "inset" )
-    , ( outset, "outset" )
-    ]
+    ( hidden, "hidden" ) :: testLineStyleWithoutHidden
 
 
 testColor :
