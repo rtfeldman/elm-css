@@ -104,6 +104,9 @@ global snippets =
         |> VirtualDom.text
         |> List.singleton
         |> VirtualDom.node "style" []
+        -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
+        |> List.singleton
+        |> VirtualDom.node "div" []
         |> VirtualDom.Styled.unstyledNode
 
 
