@@ -526,14 +526,13 @@ type alias Number compatible =
 
 {-| -}
 type alias NumberOrInfinite compatible =
-    Number { compatible | numberOrInfinite : Compatible }
+    { compatible | value : String, numberOrInfinite : Compatible }
 
 
 {-| -}
 type alias Infinite =
     { value : String
     , numberOrInfinite : Compatible
-    , infinite : Compatible
     }
 
 
@@ -2440,7 +2439,7 @@ type PcUnits
 {-| A unitless integer. Useful with properties like [`borderImageOutset`](#borderImageOutset)
 which accept either length units or unitless numbers for some properties.
 -}
-int : Int -> IntOrAuto (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessInteger }))))
+int : Int -> IntOrAuto (Number (LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (FontWeight (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessInteger })))))
 int val =
     { value = String.fromInt val
     , lengthOrNumber = Compatible
@@ -2464,7 +2463,6 @@ type UnitlessInteger
 infinite : Infinite
 infinite =
     { value = "infinite"
-    , infinite = Compatible
     , numberOrInfinite = Compatible
     }
 
@@ -2472,7 +2470,7 @@ infinite =
 {-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
 which accept unitless numbers.
 -}
-num : Float -> LengthOrNumberOrAutoOrNoneOrContent (LengthOrNumber (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessFloat }))
+num : Float -> LengthOrNumberOrAutoOrNoneOrContent (Number (LengthOrNumber (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessFloat })))
 num val =
     { value = String.fromFloat val
     , lengthOrNumber = Compatible

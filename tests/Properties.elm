@@ -634,6 +634,10 @@ all =
             , ( tableLayout auto, "auto" )
             , ( tableLayout fixed, "fixed" )
             ]
+        , testProperty { function = "animationIterationCount", property = "animation-iteration-count" }
+            [ ( animationIterationCount infinite, "infinite" )
+            , ( animationIterationCount (num 12), "12" )
+            ]
         , testProperty { function = "animationName", property = "animation-name" }
             [ ( animationName inherit, "inherit" )
             , ( animationName initial, "initial" )
