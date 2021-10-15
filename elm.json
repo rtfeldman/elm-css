@@ -3,7 +3,7 @@
     "name": "rtfeldman/elm-css",
     "summary": "Typed CSS in Elm.",
     "license": "BSD-3-Clause",
-    "version": "17.0.0",
+    "version": "17.0.1",
     "exposed-modules": {
         "Styling": [
             "Css",
