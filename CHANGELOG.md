@@ -1,6 +1,7 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [17.0.1](https://github.com/rtfeldman/elm-css/tree/17.0.1) | Fix interaction with Dark Reader extension ([#542](https://github.com/rtfeldman/elm-css/pull/542))
 | [17.0.0](https://github.com/rtfeldman/elm-css/tree/17.0.0) | Make `animation-iteration-count` work with `infinite` ([#541](https://github.com/rtfeldman/elm-css/pull/541))
 | [16.1.0](https://github.com/rtfeldman/elm-css/tree/16.1.0) | Expose `CalculatedLength` ([#519](https://github.com/rtfeldman/elm-css/pull/519)), vendor Murmur3 dependency for now ([#528](https://github.com/rtfeldman/elm-css/pull/528))
 | [16.0.2](https://github.com/rtfeldman/elm-css/tree/16.0.2) | Fix SVGKeyed ([#520](https://github.com/rtfeldman/elm-css/pull/520))
