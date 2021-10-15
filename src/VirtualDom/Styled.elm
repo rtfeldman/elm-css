@@ -438,7 +438,7 @@ toKeyedStyleNode allStyles keyedChildNodes =
 toStyleNode : Dict Classname (List Style) -> VirtualDom.Node msg
 toStyleNode styles =
     -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
-    VirtualDom.node "div"
+    VirtualDom.node "span"
         []
         [ -- this <style> node will be the first child of the requested one
           toDeclaration styles
