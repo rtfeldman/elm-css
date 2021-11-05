@@ -1,4 +1,4 @@
-module Css.Structure exposing (Compatible(..), Declaration(..), KeyframeProperty, MediaExpression, MediaQuery(..), MediaType(..), Number, Property, PseudoElement(..), RepeatableSimpleSelector(..), Selector(..), SelectorCombinator(..), SimpleSelectorSequence(..), StyleBlock(..), Stylesheet, TypeSelector(..), appendProperty, appendPseudoElementToLastSelector, appendRepeatable, appendRepeatableSelector, appendRepeatableToLastSelector, appendRepeatableWithCombinator, appendToLastSelector, applyPseudoElement, compactHelp, compactStylesheet, concatMapLast, concatMapLastStyleBlock, extendLastSelector, mapLast, styleBlockToMediaRule, withKeyframeDeclarations, withPropertyAppended)
+module Css.Structure exposing (Compatible(..), Declaration(..), KeyframeProperty, MediaExpression, MediaQuery(..), MediaType(..), Number, Property, PseudoElement(..), RepeatableSimpleSelector(..), Selector(..), SelectorCombinator(..), SimpleSelectorSequence(..), StyleBlock(..), Stylesheet, TypeSelector(..), appendProperty, appendPseudoElementToLastSelector, appendRepeatable, appendRepeatableSelector, appendRepeatableToLastSelector, appendRepeatableWithCombinator, appendToLastSelector, applyPseudoElement, compactDeclarations, compactHelp, compactStylesheet, concatMapLast, concatMapLastStyleBlock, extendLastSelector, mapLast, styleBlockToMediaRule, withKeyframeDeclarations, withPropertyAppended)
 
 {-| A representation of the structure of a stylesheet. This module is concerned
 solely with representing valid stylesheets; it is not concerned with the
@@ -427,18 +427,20 @@ concatMapLast update list =
 
 compactStylesheet : Stylesheet -> Stylesheet
 compactStylesheet { charset, imports, namespaces, declarations } =
-    let
-        ( keyframesByName, compactedDeclarations ) =
-            List.foldr compactHelp ( Dict.empty, [] ) declarations
-
-        finalDeclarations =
-            withKeyframeDeclarations keyframesByName compactedDeclarations
-    in
     { charset = charset
     , imports = imports
     , namespaces = namespaces
-    , declarations = finalDeclarations
+    , declarations = compactDeclarations declarations
     }
+
+
+compactDeclarations : List Declaration -> List Declaration
+compactDeclarations declarations =
+    let
+        ( keyframesByName, compactedDeclarations ) =
+            List.foldr compactHelp ( Dict.empty, [] ) declarations
+    in
+    withKeyframeDeclarations keyframesByName compactedDeclarations
 
 
 withKeyframeDeclarations : Dict String String -> List Declaration -> List Declaration
