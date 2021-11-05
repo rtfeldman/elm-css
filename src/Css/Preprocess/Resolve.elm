@@ -5,6 +5,7 @@ Structure data structures.
 -}
 
 import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
+import Css.String as String
 import Css.Structure as Structure exposing (Property, mapLast, styleBlockToMediaRule)
 import Css.Structure.Hash as HashDec
 import Css.Structure.Output as Output
@@ -14,7 +15,7 @@ import String
 
 compile : List Preprocess.Stylesheet -> String
 compile styles =
-    String.join "\n\n" (List.map compileHelp styles)
+    String.mapJoin compileHelp "\n\n" styles
 
 
 compileHelp : Preprocess.Stylesheet -> String

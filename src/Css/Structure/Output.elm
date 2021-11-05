@@ -1,5 +1,6 @@
 module Css.Structure.Output exposing (mediaQueryToString, prettyPrint, selectorToString)
 
+import Css.String as String
 import Css.Structure exposing (..)
 import String
 
@@ -7,12 +8,11 @@ import String
 prettyPrint : Stylesheet -> String
 prettyPrint { charset, imports, namespaces, declarations } =
     [ charsetToString charset
-    , String.join "\n" (List.map importToString imports)
-    , String.join "\n" (List.map namespaceToString namespaces)
-    , String.join "\n\n" (List.map prettyPrintDeclaration declarations)
+    , String.mapJoin importToString "\n" imports
+    , String.mapJoin namespaceToString "\n" namespaces
+    , String.mapJoin prettyPrintDeclaration "\n\n" declarations
     ]
-        |> List.filter (not << String.isEmpty)
-        |> String.join "\n\n"
+        |> String.filterJoin (not << String.isEmpty) "\n\n"
 
 
 charsetToString : Maybe String -> String
@@ -25,8 +25,7 @@ charsetToString charset =
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
     -- TODO
-    List.map (importMediaQueryToString name) mediaQueries
-        |> String.join "\n"
+    String.mapJoin (importMediaQueryToString name) "\n" mediaQueries
 
 
 importMediaQueryToString : String -> MediaQuery -> String
@@ -48,18 +47,15 @@ prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors prope
     let
         selectorStr =
             (firstSelector :: otherSelectors)
-                |> List.map selectorToString
-                |> String.join ", "
+                |> String.mapJoin selectorToString ", "
     in
-    String.join ""
-        [ selectorStr
-        , " {\n"
-        , indentLevel
-        , emitProperties properties
-        , "\n"
-        , indentLevel
-        , "}"
-        ]
+    selectorStr
+        ++ " {\n"
+        ++ indentLevel
+        ++ emitProperties properties
+        ++ "\n"
+        ++ indentLevel
+        ++ "}"
 
 
 prettyPrintDeclaration : Declaration -> String
@@ -71,12 +67,10 @@ prettyPrintDeclaration decl =
         MediaRule mediaQueries styleBlocks ->
             let
                 blocks =
-                    List.map (indent << prettyPrintStyleBlock spaceIndent) styleBlocks
-                        |> String.join "\n\n"
+                    String.mapJoin (indent << prettyPrintStyleBlock spaceIndent) "\n\n" styleBlocks
 
                 query =
-                    List.map mediaQueryToString mediaQueries
-                        |> String.join ",\n"
+                    String.mapJoin mediaQueryToString ",\n" mediaQueries
             in
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
@@ -119,9 +113,7 @@ mediaQueryToString mediaQuery =
     in
     case mediaQuery of
         AllQuery expressions ->
-            expressions
-                |> List.map mediaExpressionToString
-                |> String.join " and "
+            String.mapJoin mediaExpressionToString " and " expressions
 
         OnlyQuery mediaType expressions ->
             prefixWith "only" mediaType expressions
@@ -161,20 +153,17 @@ simpleSelectorSequenceToString : SimpleSelectorSequence -> String
 simpleSelectorSequenceToString simpleSelectorSequence =
     case simpleSelectorSequence of
         TypeSelectorSequence (TypeSelector str) repeatableSimpleSelectors ->
-            (str :: List.map repeatableSimpleSelectorToString repeatableSimpleSelectors)
-                |> String.join ""
+            str ++ String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
 
         UniversalSelectorSequence repeatableSimpleSelectors ->
             if List.isEmpty repeatableSimpleSelectors then
                 "*"
 
             else
-                List.map repeatableSimpleSelectorToString repeatableSimpleSelectors
-                    |> String.join ""
+                String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
 
         CustomSelector str repeatableSimpleSelectors ->
-            (str :: List.map repeatableSimpleSelectorToString repeatableSimpleSelectors)
-                |> String.join ""
+            str ++ String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
 
 
 repeatableSimpleSelectorToString : RepeatableSimpleSelector -> String
@@ -195,10 +184,9 @@ repeatableSimpleSelectorToString repeatableSimpleSelector =
 
 selectorChainToString : ( SelectorCombinator, SimpleSelectorSequence ) -> String
 selectorChainToString ( combinator, sequence ) =
-    [ combinatorToString combinator
-    , simpleSelectorSequenceToString sequence
-    ]
-        |> String.join " "
+    combinatorToString combinator
+        ++ " "
+        ++ simpleSelectorSequenceToString sequence
 
 
 pseudoElementToString : PseudoElement -> String
@@ -214,13 +202,10 @@ selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
                 :: List.map selectorChainToString chain
 
         pseudoElementsString =
-            String.join "" [ Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement) ]
+            Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement)
     in
     String.append
-        (segments
-            |> List.filter (not << String.isEmpty)
-            |> String.join " "
-        )
+        (String.filterJoin (not << String.isEmpty) " " segments)
         pseudoElementsString
 
 
@@ -238,11 +223,6 @@ combinatorToString combinator =
 
         Descendant ->
             ""
-
-
-emitProperty : Property -> String
-emitProperty str =
-    str ++ ";"
 
 
 {-| Indent the given string with 4 spaces
@@ -264,6 +244,4 @@ noIndent =
 
 emitProperties : List Property -> String
 emitProperties properties =
-    properties
-        |> List.map (indent << emitProperty)
-        |> String.join "\n"
+    String.mapJoin (\prop -> spaceIndent ++ prop ++ ";") "\n" properties

@@ -482,6 +482,7 @@ deprecated or discouraged.
 import Css.Animations exposing (Keyframes)
 import Css.Internal exposing (getOverloadedProperty, lengthConverter, lengthForOverloadedProperty)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
+import Css.String as String
 import Css.Structure as Structure exposing (..)
 import Hex
 import String
@@ -974,8 +975,7 @@ combineLengths operation firstLength secondLength =
             [ String.fromFloat numericValue
             , firstLength.unitLabel
             ]
-                |> List.filter (not << String.isEmpty)
-                |> String.join ""
+                |> String.filterJoin (not << String.isEmpty) ""
     in
     { firstLength | value = value, numericValue = numericValue }
 
@@ -6299,7 +6299,7 @@ borderColor2 : ColorValue compatibleA -> ColorValue compatibleB -> Style
 borderColor2 c1 c2 =
     let
         value =
-            String.join " " [ c1.value, c2.value ]
+            c1.value ++ " " ++ c2.value
     in
     property "border-color" value
 
@@ -6692,8 +6692,7 @@ fontFeatureSettings { value } =
 fontFeatureSettingsList : List (FeatureTagValue a) -> Style
 fontFeatureSettingsList featureTagValues =
     featureTagValues
-        |> List.map .value
-        |> String.join ", "
+        |> String.mapJoin .value ", "
         |> property "font-feature-settings"
 
 
@@ -7671,7 +7670,7 @@ valuesOrNone list =
         { value = "none" }
 
     else
-        { value = String.join " " (List.map .value list) }
+        { value = String.mapJoin .value " " list }
 
 
 stringsToValue : List String -> Value {}
@@ -7680,7 +7679,7 @@ stringsToValue list =
         { value = "none" }
 
     else
-        { value = String.join ", " (List.map (\s -> s) list) }
+        { value = String.join ", " list }
 
 
 {-| Sets [`z-index`](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index)

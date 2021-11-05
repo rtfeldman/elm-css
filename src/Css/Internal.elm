@@ -1,6 +1,7 @@
 module Css.Internal exposing (AnimationProperty(..), ColorValue, ExplicitLength, IncompatibleUnits(..), Length, LengthOrAutoOrCoverOrContain, compileKeyframes, getOverloadedProperty, lengthConverter, lengthForOverloadedProperty)
 
 import Css.Preprocess as Preprocess exposing (Style)
+import Css.String as String
 import Css.Structure exposing (Compatible(..))
 
 
@@ -66,8 +67,7 @@ in keyframe declarations.
 compileKeyframes : List ( Int, List AnimationProperty ) -> String
 compileKeyframes tuples =
     tuples
-        |> List.map printKeyframeSelector
-        |> String.join "\n\n"
+        |> String.mapJoin printKeyframeSelector "\n\n"
 
 
 printKeyframeSelector : ( Int, List AnimationProperty ) -> String
@@ -77,9 +77,7 @@ printKeyframeSelector ( percentage, properties ) =
             String.fromInt percentage ++ "%"
 
         propertiesStr =
-            properties
-                |> List.map (\(Property prop) -> prop ++ ";")
-                |> String.join ""
+            String.mapJoin (\(Property prop) -> prop ++ ";") "" properties
     in
     percentageStr ++ " {" ++ propertiesStr ++ "}"
 
