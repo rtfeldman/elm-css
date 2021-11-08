@@ -170,7 +170,7 @@ transform values =
 
 {-| Define a custom animatable property.
 
-    css [ animationName (keyframes [ ( 5, property "backdrop-filter" "blur(3px)" ) ]) ]
+    css [ animationName (keyframes [ ( 5, [ property "backdrop-filter" "blur(3px)" ] ) ]) ]
 
 ...outputs
 
