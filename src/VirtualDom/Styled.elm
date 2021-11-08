@@ -270,15 +270,14 @@ getClassname styles =
         "unstyled"
 
     else
-        -- TODO Replace this comically inefficient implementation
-        -- with crawling these union types and building up a hash along the way.
-        Structure.UniversalSelectorSequence []
-            |> makeSnippet styles
-            |> List.singleton
-            |> Preprocess.stylesheet
-            |> List.singleton
-            |> Resolve.compile
-            |> Murmur3.hashString murmurSeed
+        let
+            selector =
+                Structure.Selector (Structure.UniversalSelectorSequence []) [] Nothing
+
+            snippetDeclaration =
+                Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles)
+        in
+        Resolve.hashSnippetDeclaration snippetDeclaration
             |> Hex.toString
             |> String.cons '_'
 
@@ -689,8 +688,3 @@ containsKey key pairs =
 
             else
                 containsKey key rest
-
-
-murmurSeed : Int
-murmurSeed =
-    15739
