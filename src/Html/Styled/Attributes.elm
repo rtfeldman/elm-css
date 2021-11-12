@@ -125,6 +125,7 @@ Attributes that can be attached to any HTML tag but are less commonly used.
 -}
 
 import Css exposing (Style)
+import Css.String
 import Html.Styled exposing (Attribute)
 import Html.Styled.Internal as Internal
 import Json.Encode as Json
@@ -210,9 +211,8 @@ you will get both classes!
 classList : List ( String, Bool ) -> Attribute msg
 classList classes =
     class <|
-        String.join " " <|
-            List.map Tuple.first <|
-                List.filter Tuple.second classes
+        Css.String.mapJoin Tuple.first " " <|
+            List.filter Tuple.second classes
 
 
 
