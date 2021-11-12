@@ -482,7 +482,7 @@ deprecated or discouraged.
 import Css.Animations exposing (Keyframes)
 import Css.Internal exposing (getOverloadedProperty, lengthConverter, lengthForOverloadedProperty)
 import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
-import Css.String as String
+import Css.String
 import Css.Structure as Structure exposing (..)
 import Hex
 import String
@@ -972,10 +972,7 @@ combineLengths operation firstLength secondLength =
             operation firstLength.numericValue secondLength.numericValue
 
         value =
-            [ String.fromFloat numericValue
-            , firstLength.unitLabel
-            ]
-                |> String.filterJoin (not << String.isEmpty) ""
+            String.fromFloat numericValue ++ firstLength.unitLabel
     in
     { firstLength | value = value, numericValue = numericValue }
 
@@ -6692,7 +6689,7 @@ fontFeatureSettings { value } =
 fontFeatureSettingsList : List (FeatureTagValue a) -> Style
 fontFeatureSettingsList featureTagValues =
     featureTagValues
-        |> String.mapJoin .value ", "
+        |> Css.String.mapJoin .value ", "
         |> property "font-feature-settings"
 
 
@@ -7670,7 +7667,7 @@ valuesOrNone list =
         { value = "none" }
 
     else
-        { value = String.mapJoin .value " " list }
+        { value = Css.String.mapJoin .value " " list }
 
 
 stringsToValue : List String -> Value {}

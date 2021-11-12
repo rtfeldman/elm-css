@@ -25,7 +25,7 @@ Some of the animatable properties (except for experimental properties, or proper
 
 import Css.Internal exposing (AnimationProperty(..), ColorValue, ExplicitLength, Length, LengthOrAutoOrCoverOrContain, lengthConverter, lengthForOverloadedProperty)
 import Css.Preprocess as Preprocess
-import Css.String as String
+import Css.String
 import Css.Structure exposing (Compatible(..))
 
 
@@ -166,7 +166,7 @@ transform values =
             "transform:none"
 
         else
-            "transform:" ++ String.mapJoin .value " " values
+            "transform:" ++ Css.String.mapJoin .value " " values
 
 
 {-| Define a custom animatable property.

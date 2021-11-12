@@ -1,6 +1,6 @@
 module Css.Structure.Output exposing (mediaQueryToString, prettyPrint, selectorToString)
 
-import Css.String as String
+import Css.String
 import Css.Structure exposing (..)
 import String
 
@@ -8,11 +8,11 @@ import String
 prettyPrint : Stylesheet -> String
 prettyPrint { charset, imports, namespaces, declarations } =
     [ charsetToString charset
-    , String.mapJoin importToString "\n" imports
-    , String.mapJoin namespaceToString "\n" namespaces
-    , String.mapJoin prettyPrintDeclaration "\n\n" declarations
+    , Css.String.mapJoin importToString "\n" imports
+    , Css.String.mapJoin namespaceToString "\n" namespaces
+    , Css.String.mapJoin prettyPrintDeclaration "\n\n" declarations
     ]
-        |> String.filterJoin (not << String.isEmpty) "\n\n"
+        |> String.concat
 
 
 charsetToString : Maybe String -> String
@@ -25,7 +25,7 @@ charsetToString charset =
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
     -- TODO
-    String.mapJoin (importMediaQueryToString name) "\n" mediaQueries
+    Css.String.mapJoin (importMediaQueryToString name) "\n" mediaQueries
 
 
 importMediaQueryToString : String -> MediaQuery -> String
@@ -47,7 +47,7 @@ prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors prope
     let
         selectorStr =
             (firstSelector :: otherSelectors)
-                |> String.mapJoin selectorToString ", "
+                |> Css.String.mapJoin selectorToString ", "
     in
     selectorStr
         ++ " {\n"
@@ -67,10 +67,10 @@ prettyPrintDeclaration decl =
         MediaRule mediaQueries styleBlocks ->
             let
                 blocks =
-                    String.mapJoin (indent << prettyPrintStyleBlock spaceIndent) "\n\n" styleBlocks
+                    Css.String.mapJoin (indent << prettyPrintStyleBlock spaceIndent) "\n\n" styleBlocks
 
                 query =
-                    String.mapJoin mediaQueryToString ",\n" mediaQueries
+                    Css.String.mapJoin mediaQueryToString ",\n" mediaQueries
             in
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
@@ -113,7 +113,7 @@ mediaQueryToString mediaQuery =
     in
     case mediaQuery of
         AllQuery expressions ->
-            String.mapJoin mediaExpressionToString " and " expressions
+            Css.String.mapJoin mediaExpressionToString " and " expressions
 
         OnlyQuery mediaType expressions ->
             prefixWith "only" mediaType expressions
@@ -153,17 +153,17 @@ simpleSelectorSequenceToString : SimpleSelectorSequence -> String
 simpleSelectorSequenceToString simpleSelectorSequence =
     case simpleSelectorSequence of
         TypeSelectorSequence (TypeSelector str) repeatableSimpleSelectors ->
-            str ++ String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
+            str ++ Css.String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
 
         UniversalSelectorSequence repeatableSimpleSelectors ->
             if List.isEmpty repeatableSimpleSelectors then
                 "*"
 
             else
-                String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
+                Css.String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
 
         CustomSelector str repeatableSimpleSelectors ->
-            str ++ String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
+            str ++ Css.String.mapJoin repeatableSimpleSelectorToString "" repeatableSimpleSelectors
 
 
 repeatableSimpleSelectorToString : RepeatableSimpleSelector -> String
@@ -205,7 +205,7 @@ selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
             Maybe.withDefault "" (Maybe.map pseudoElementToString pseudoElement)
     in
     String.append
-        (String.filterJoin (not << String.isEmpty) " " segments)
+        (String.join " " segments)
         pseudoElementsString
 
 
@@ -244,4 +244,4 @@ noIndent =
 
 emitProperties : List Property -> String
 emitProperties properties =
-    String.mapJoin (\prop -> spaceIndent ++ prop ++ ";") "\n" properties
+    Css.String.mapJoin (\prop -> spaceIndent ++ prop ++ ";") "\n" properties
