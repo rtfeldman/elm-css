@@ -30,6 +30,7 @@
         "elm/core": "1.0.0 <= v < 2.0.0",
         "elm/json": "1.0.0 <= v < 2.0.0",
         "elm/virtual-dom": "1.0.0 <= v < 2.0.0",
+        "robinheghan/fnv1a": "1.0.0 <= v < 2.0.0",
         "rtfeldman/elm-hex": "1.0.0 <= v < 2.0.0"
     },
     "test-dependencies": {

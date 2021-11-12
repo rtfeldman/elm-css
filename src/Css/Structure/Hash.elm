@@ -2,13 +2,13 @@ module Css.Structure.Hash exposing (hashDeclarations)
 
 import Css.Structure exposing (..)
 import Css.Structure.Output as Output
-import Hash exposing (hash)
+import FNV1a
 import String
 
 
 hashDeclarations : List Declaration -> Int
 hashDeclarations declarations =
-    List.foldl hashDeclaration Hash.initialSeed declarations
+    List.foldl hashDeclaration FNV1a.initialSeed declarations
 
 
 hashDeclaration : Declaration -> Int -> Int
@@ -21,12 +21,12 @@ hashDeclaration decl hash =
             let
                 queryHash =
                     List.map Output.mediaQueryToString mediaQueries
-                        |> List.foldl Hash.hash hash
+                        |> List.foldl FNV1a.hashWithSeed hash
 
                 blockHash =
                     List.foldl hashStyleBlock queryHash styleBlocks
             in
-            Hash.hash "@media" blockHash
+            FNV1a.hashWithSeed "@media" blockHash
 
         SupportsRule _ _ ->
             hash
@@ -41,7 +41,7 @@ hashDeclaration decl hash =
             hash
 
         Keyframes { name, declaration } ->
-            List.foldl Hash.hash hash [ "@keyframes", name, declaration ]
+            List.foldl FNV1a.hashWithSeed hash [ "@keyframes", name, declaration ]
 
         Viewport _ ->
             hash
@@ -61,4 +61,4 @@ hashStyleBlock (StyleBlock firstSelector otherSelectors properties) hash =
                 |> List.map Output.selectorToString
                 |> String.join ", "
     in
-    List.foldl Hash.hash hash (selectorStr :: properties)
+    List.foldl FNV1a.hashWithSeed hash (selectorStr :: properties)
