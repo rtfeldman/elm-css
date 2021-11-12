@@ -32,7 +32,6 @@ import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Dict exposing (Dict)
-import ElmCssVendor.Murmur3 as Murmur3
 import Hex
 import Json.Decode
 import Json.Encode

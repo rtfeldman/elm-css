@@ -1,22 +1,11 @@
-module Hash exposing (fromString, hash, initialSeed)
+module Hash exposing (fromString)
 
-import ElmCssVendor.Murmur3 as Murmur3
+import FNV1a
 import Hex
-
-
-hash : String -> Int -> Int
-hash str seed =
-    Murmur3.hashString seed str
 
 
 fromString : String -> String
 fromString str =
-    str
-        |> Murmur3.hashString initialSeed
+    FNV1a.hash str
         |> Hex.toString
         |> String.cons '_'
-
-
-initialSeed : Int
-initialSeed =
-    15739
