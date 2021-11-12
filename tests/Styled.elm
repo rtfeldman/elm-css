@@ -99,28 +99,28 @@ all =
             (\_ ->
                 Query.fromHtml (toUnstyled <| view "BUY TICKETS")
                     |> Query.has
-                        [ Selector.text """._3de4d102 {
+                        [ Selector.text """._2e879635 {
     background-color:#333333;
     padding:20px;
 }"""
-                        , Selector.text """._e9904f07 {
+                        , Selector.text """._322e2311 {
     margin:12px;
     color:rgb(255, 255, 255);
 }"""
-                        , Selector.text """._3ac819d0 {
+                        , Selector.text """._c6e22f50 {
     display:inline-block;
     padding-bottom:12px;
 }"""
-                        , Selector.text """._c9b3bf47 {
+                        , Selector.text """._9c310192 {
     display:inline-block;
     margin-left:150px;
     margin-right:80px;
     vertical-align:middle;
 }"""
-                        , Selector.text """._b9f3f75d {
+                        , Selector.text """._5daeac28 {
     background-color:#222222;
 }"""
-                        , Selector.text """._33ecd3f8 {
+                        , Selector.text """._36e932ea {
     padding:16px;
     padding-left:24px;
     padding-right:24px;

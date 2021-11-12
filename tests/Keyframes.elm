@@ -35,7 +35,7 @@ suite =
 
             output =
                 """
-            @keyframes _a56b5063 {
+            @keyframes _f8c0e7dc {
                 0% {background-color:#00FF00;background-size:2px;}
 
                 50% {opacity:0;}
@@ -54,12 +54,12 @@ suite =
             p {
                 color:#FF0000;
                 display:inline;
-                animation-name:_a56b5063;
+                animation-name:_f8c0e7dc;
                 background-color:rgb(11, 11, 11);
             }
 
             i {
-                animation-name:_a56b5063;
+                animation-name:_f8c0e7dc;
             }
             """
           in
@@ -97,11 +97,11 @@ suite =
 
             output =
                 """
-            @keyframes _23526425 {
+            @keyframes _70a5b6a0 {
                 10% {transform:translate(100px);}
             }
 
-            @keyframes _a56b5063 {
+            @keyframes _f8c0e7dc {
                 0% {background-color:#00FF00;background-size:2px;}
 
                 50% {opacity:0;}
@@ -115,14 +115,14 @@ suite =
 
             button {
                 margin:auto;
-                animation-name:_23526425;
+                animation-name:_70a5b6a0;
                 background-color:#0F0F0F;
             }
 
             p {
                 color:#FF0000;
                 display:inline;
-                animation-name:_a56b5063;
+                animation-name:_f8c0e7dc;
                 background-color:rgb(11, 11, 11);
             }
             """
