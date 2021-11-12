@@ -1,5 +1,6 @@
 module Css.Structure.Hash exposing (hashDeclarations)
 
+import Css.String
 import Css.Structure exposing (..)
 import Css.Structure.Output as Output
 import Hash exposing (hash)
@@ -58,7 +59,6 @@ hashStyleBlock (StyleBlock firstSelector otherSelectors properties) hash =
     let
         selectorStr =
             (firstSelector :: otherSelectors)
-                |> List.map Output.selectorToString
-                |> String.join ", "
+                |> Css.String.mapJoin Output.selectorToString ", "
     in
     List.foldl Hash.hash hash (selectorStr :: properties)
