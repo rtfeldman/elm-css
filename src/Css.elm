@@ -43,8 +43,12 @@ module Css exposing
     , block, flex_, flow, flowRoot, grid, contents, listItem, inline, inlineBlock, inlineFlex, inlineTable, inlineGrid, ruby, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     , position, top, right, bottom, left, zIndex
     , absolute, fixed, relative, static, sticky
-    , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft, paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd, paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
-    , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft, marginBlock, marginBlock2, marginBlockStart, marginBlockEnd, marginInline, marginInline2, marginInlineStart, marginInlineEnd
+    , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
+    , paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
+    , paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
+    , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+    , marginBlock, marginBlock2, marginBlockStart, marginBlockEnd
+    , marginInline, marginInline2, marginInlineStart, marginInlineEnd
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
     , flexDirection, row, rowReverse, column, columnReverse
@@ -342,9 +346,29 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
 
 
+## Block Paddings
+
+@docs paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
+
+
+## Inline Paddings
+
+@docs paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
+
+
 ## Margins
 
 @docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+
+
+## Block Margins
+
+@docs marginBlock, marginBlock2, marginBlockStart, marginBlockEnd
+
+
+## Inline Margins
+
+@docs marginInline, marginInline2, marginInlineStart, marginInlineEnd
 
 
 ## Box Sizing
@@ -1895,7 +1919,7 @@ paddingLeft (Value value) =
 
 {-| Sets [`padding-block`](https://css-tricks.com/almanac/properties/p/padding-block/) property.
 The `padding-block` property is a shorthand property for setting `padding-block-start` and
-`padding-block-end` and in a single declaration.
+`padding-block-end` in a single declaration.
 
 If there is only one argument value, it applies to both sides. If there are two
 values, the block start is set to the first value and the block end is set to the second.
@@ -1917,9 +1941,10 @@ paddingBlock (Value value) =
     AppendProperty ("padding-block:" ++ value)
 
 
-{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
-The `padding-block` property is a shorthand property for setting `padding-block-start`,
-`padding-block-end` and in a single declaration.
+{-| Sets [`padding-block`](https://css-tricks.com/almanac/properties/p/padding-block/) property.
+
+The `padding-block` property is a shorthand property for setting `padding-block-start` and
+`padding-block-end` in a single declaration.
 
 The block start value is set to the first value and the block end value is set to the second.
 
@@ -1959,7 +1984,7 @@ paddingBlockStart (Value value) =
     AppendProperty ("padding-block-start:" ++ value)
 
 
-{-| Sets [`padding-block-end](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end) property.
+{-| Sets [`padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end) property.
 
     paddingBlockEnd (px 4)
 
@@ -1978,6 +2003,7 @@ paddingBlockEnd (Value value) =
 
 
 {-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
+
 The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
 `padding-inline-end` and in a single declaration.
 
@@ -2001,9 +2027,10 @@ paddingInline (Value value) =
     AppendProperty ("padding-inline:" ++ value)
 
 
-{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
-The `padding-inline` property is a shorthand property for setting `padding-inline-start`,
-`padding-inline-end` and in a single declaration.
+{-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
+
+The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
+`padding-inline-end` in a single declaration.
 
 The inline start value is set to the first value and the inline end value is set to the second.
 
@@ -2043,7 +2070,7 @@ paddingInlineStart (Value value) =
     AppendProperty ("padding-inline-start:" ++ value)
 
 
-{-| Sets [`padding-inline-end](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end) property.
+{-| Sets [`padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end) property.
 
     paddingInlineEnd (px 4)
 
@@ -2289,9 +2316,9 @@ marginLeft (Value value) =
 The `margin-block` property is a shorthand property for setting `margin-block-start` and
 `margin-block-end` in a single declaration.
 
-If there is only one argument value, it applies to all sides. If there are two
-values, the block start margins are set to the first value and the block end margins
-are set to the second. 
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start margin is set to the first value and the block end margin
+is set to the second. 
 
     marginBlock (em 4) -- set block start and end margins to 4em
 
@@ -2315,8 +2342,8 @@ marginBlock (Value value) =
 The `margin-block` property is a shorthand property for setting `margin-block-start` and
 `margin-block-end` in a single declaration.
 
-The block start margins are set to the first value and the block end margins
-are set to the second.
+The block start margin is set to the first value and the block end margin
+is set to the second.
 
     marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
 
@@ -2379,9 +2406,9 @@ marginBlockEnd (Value value) =
 The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
 `margin-inline-end` in a single declaration.
 
-If there is only one argument value, it applies to all sides. If there are two
-values, the inline start margins are set to the first value and the inline end margins
-are set to the second. 
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start margin is set to the first value and the inline end margin
+is set to the second. 
 
     marginInline (em 4) -- set inline start and end margins to 4em
 
@@ -2405,8 +2432,8 @@ marginInline (Value value) =
 The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
 `margin-inline-end` in a single declaration.
 
-The inline start margins are set to the first value and the inline end margins
-are set to the second.
+The inline start margin is set to the first value and the inline end margin
+is set to the second.
 
     marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
 
