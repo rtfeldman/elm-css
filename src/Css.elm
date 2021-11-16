@@ -43,7 +43,7 @@ module Css exposing
     , block, flex_, flow, flowRoot, grid, contents, listItem, inline, inlineBlock, inlineFlex, inlineTable, inlineGrid, ruby, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     , position, top, right, bottom, left, zIndex
     , absolute, fixed, relative, static, sticky
-    , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
+    , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft, paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd, paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
@@ -1891,6 +1891,175 @@ paddingLeft :
     -> Style
 paddingLeft (Value value) =
     AppendProperty ("padding-left:" ++ value)
+
+
+{-| Sets [`padding-block`](https://css-tricks.com/almanac/properties/p/padding-block/) property.
+The `padding-block` property is a shorthand property for setting `padding-block-start` and
+`padding-block-end` and in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start is set to the first value and the block end is set to the second.
+
+    paddingBlock (em 4) -- set both block start and block end to 4em
+
+    paddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+
+-}
+paddingBlock :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingBlock (Value value) =
+    AppendProperty ("padding-block:" ++ value)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding-block` property is a shorthand property for setting `padding-block-start`,
+`padding-block-end` and in a single declaration.
+
+The block start value is set to the first value and the block end value is set to the second.
+
+    paddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+paddingBlock2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+paddingBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("padding-block:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-start) property.
+
+    paddingBlockStart (px 4)
+
+-}
+paddingBlockStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingBlockStart (Value value) =
+    AppendProperty ("padding-block-start:" ++ value)
+
+
+{-| Sets [`padding-block-end](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end) property.
+
+    paddingBlockEnd (px 4)
+
+-}
+paddingBlockEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingBlockEnd (Value value) =
+    AppendProperty ("padding-block-end:" ++ value)
+
+
+
+
+{-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
+The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
+`padding-inline-end` and in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start is set to the first value and the inline end is set to the second.
+
+    paddingInline (em 4) -- set both inline start and inline end to 4em
+
+    paddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+
+-}
+paddingInline :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingInline (Value value) =
+    AppendProperty ("padding-inline:" ++ value)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding-inline` property is a shorthand property for setting `padding-inline-start`,
+`padding-inline-end` and in a single declaration.
+
+The inline start value is set to the first value and the inline end value is set to the second.
+
+    paddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+paddingInline2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+paddingInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("padding-inline:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start) property.
+
+    paddingInlineStart (px 4)
+
+-}
+paddingInlineStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingInlineStart (Value value) =
+    AppendProperty ("padding-inline-start:" ++ value)
+
+
+{-| Sets [`padding-inline-end](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end) property.
+
+    paddingInlineEnd (px 4)
+
+-}
+paddingInlineEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingInlineEnd (Value value) =
+    AppendProperty ("padding-inline-end:" ++ value)
+
+
+
 
 
 
