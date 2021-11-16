@@ -35,7 +35,7 @@ module Css exposing
     , borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
     , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
-    , borderBlockStyle, borderInlineStyle
+    , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
     , dotted, dashed, solid, double, groove, ridge, inset, outset
     , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
     , borderBlockColor, borderBlockStartColor, borderBlockEndColor, borderInlineColor, borderInlineStartColor, borderInlineEndColor
@@ -309,7 +309,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
 
-@docs borderBlockStyle, borderInlineStyle
+@docs borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
 
 @docs dotted, dashed, solid, double, groove, ridge, inset, outset
 
@@ -7699,6 +7699,26 @@ borderBlockStyle (Value style) =
     AppendProperty ("border-block-style:" ++ style)
 
 
+{-| Sets [`border-block-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style) property.
+
+    borderBlockStartStyle solid
+
+-}
+borderBlockStartStyle : BaseValue LineStyle -> Style
+borderBlockStartStyle (Value style) =
+    AppendProperty ("border-block-start-style:" ++ style)
+
+
+{-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style) property.
+
+    borderBlockEndStyle solid
+
+-}
+borderBlockEndStyle : BaseValue LineStyle -> Style
+borderBlockEndStyle (Value style) =
+    AppendProperty ("border-block-end-style:" ++ style)
+
+
 {-| Sets [`border-inline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-style) property.
 
     borderInlineStyle solid
@@ -7707,6 +7727,26 @@ borderBlockStyle (Value style) =
 borderInlineStyle : BaseValue LineStyle -> Style
 borderInlineStyle (Value style) =
     AppendProperty ("border-inline-style:" ++ style)
+
+
+{-| Sets [`border-inline-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style) property.
+
+    borderInlineStartStyle solid
+
+-}
+borderInlineStartStyle : BaseValue LineStyle -> Style
+borderInlineStartStyle (Value style) =
+    AppendProperty ("border-inline-start-style:" ++ style)
+
+
+{-| Sets [`border-inline-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style) property.
+
+    borderInlineEndStyle solid
+
+-}
+borderInlineEndStyle : BaseValue LineStyle -> Style
+borderInlineEndStyle (Value style) =
+    AppendProperty ("border-inline-end-style:" ++ style)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
