@@ -36,7 +36,7 @@ module Css exposing
     , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
     , dotted, dashed, solid, double, groove, ridge, inset, outset
-    , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderBlockColor, borderInlineColor
+    , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderBlockColor, borderBlockStartColor, borderBlockEndColor, borderInlineColor, borderInlineStartColor, borderInlineEndColor
     , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
@@ -314,7 +314,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
 
-@docs borderBlockColor, borderInlineColor
+@docs borderBlockColor, borderBlockStartColor, borderBlockEndColor, borderInlineColor, borderInlineStartColor, borderInlineEndColor
 
 
 ## Border Radius
@@ -7804,6 +7804,26 @@ borderBlockColor (Value colorVal) =
     AppendProperty ("border-block-color:" ++ colorVal)
 
 
+{-| Sets [`border-block-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-color) property.
+
+    borderBlockStartColor (rgb 0 0 0)
+
+-}
+borderBlockStartColor : BaseValue Color -> Style
+borderBlockStartColor (Value colorVal) =
+    AppendProperty ("border-block-start-color:" ++ colorVal)
+
+
+{-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color) property.
+
+    borderBlockEndColor (rgb 0 0 0)
+
+-}
+borderBlockEndColor : BaseValue Color -> Style
+borderBlockEndColor (Value colorVal) =
+    AppendProperty ("border-block-end-color:" ++ colorVal)
+
+
 {-| Sets [`border-inline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-color) property.
 
     borderInlineColor (rgb 0 0 0)
@@ -7812,6 +7832,26 @@ borderBlockColor (Value colorVal) =
 borderInlineColor : BaseValue Color -> Style
 borderInlineColor (Value colorVal) =
     AppendProperty ("border-inline-color:" ++ colorVal)
+
+
+{-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color) property.
+
+    borderInlineStartColor (rgb 0 0 0)
+
+-}
+borderInlineStartColor : BaseValue Color -> Style
+borderInlineStartColor (Value colorVal) =
+    AppendProperty ("border-inline-start-color:" ++ colorVal)
+
+
+{-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color) property.
+
+    borderInlineEndColor (rgb 0 0 0)
+
+-}
+borderInlineEndColor : BaseValue Color -> Style
+borderInlineEndColor (Value colorVal) =
+    AppendProperty ("border-inline-end-color:" ++ colorVal)
 
 
 -- BORDER WIDTH --
