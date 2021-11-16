@@ -44,7 +44,7 @@ module Css exposing
     , position, top, right, bottom, left, zIndex
     , absolute, fixed, relative, static, sticky
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft, paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd, paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
-    , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+    , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft, marginBlock, marginBlock2, marginBlockStart, marginBlockEnd, marginInline, marginInline2, marginInlineStart, marginInlineEnd
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
     , flexDirection, row, rowReverse, column, columnReverse
@@ -2285,6 +2285,185 @@ marginLeft (Value value) =
     AppendProperty ("margin-left:" ++ value)
 
 
+{-| Sets [`margin-block`](https://css-tricks.com/almanac/properties/m/margin-block/) property.
+The `margin-block` property is a shorthand property for setting `margin-block-start` and
+`margin-block-end` in a single declaration.
+
+If there is only one argument value, it applies to all sides. If there are two
+values, the block start margins are set to the first value and the block end margins
+are set to the second. 
+
+    marginBlock (em 4) -- set block start and end margins to 4em
+
+    marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+-}
+marginBlock :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginBlock (Value value) =
+    AppendProperty ("margin-block:" ++ value)
+
+
+{-| Sets [`margin-block`](https://css-tricks.com/almanac/properties/m/margin-block/) property.
+The `margin-block` property is a shorthand property for setting `margin-block-start` and
+`margin-block-end` in a single declaration.
+
+The block start margins are set to the first value and the block end margins
+are set to the second.
+
+    marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+-}
+marginBlock2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+marginBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("margin-block:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-start) property.
+
+    marginBlockStart (px 4)
+
+-}
+marginBlockStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginBlockStart (Value value) =
+    AppendProperty ("margin-block-start:" ++ value)
+
+
+{-| Sets [`margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-end) property.
+
+    marginBlockEnd (px 4)
+
+-}
+marginBlockEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginBlockEnd (Value value) =
+    AppendProperty ("margin-block-end:" ++ value)
+
+
+{-| Sets [`margin-inline`](https://css-tricks.com/almanac/properties/m/margin-inline/) property.
+The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
+`margin-inline-end` in a single declaration.
+
+If there is only one argument value, it applies to all sides. If there are two
+values, the inline start margins are set to the first value and the inline end margins
+are set to the second. 
+
+    marginInline (em 4) -- set inline start and end margins to 4em
+
+    marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+-}
+marginInline :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginInline (Value value) =
+    AppendProperty ("margin-inline:" ++ value)
+
+
+{-| Sets [`margin-inline`](https://css-tricks.com/almanac/properties/m/margin-inline/) property.
+The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
+`margin-inline-end` in a single declaration.
+
+The inline start margins are set to the first value and the inline end margins
+are set to the second.
+
+    marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+-}
+marginInline2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+marginInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("margin-inline:" ++ valueStart ++ " " ++ valueEnd)
+
+
+
+{-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start) property.
+
+    marginInlineStart (px 4)
+
+-}
+marginInlineStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginInlineStart (Value value) =
+    AppendProperty ("margin-inline-start:" ++ value)
+
+
+{-| Sets [`margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end) property.
+
+    marginInlineEnd (px 4)
+
+-}
+marginInlineEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginInlineEnd (Value value) =
+    AppendProperty ("margin-inline-end:" ++ value)
 
 -- BOX SIZING --
 
