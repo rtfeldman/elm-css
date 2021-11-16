@@ -36,7 +36,7 @@ module Css exposing
     , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
     , dotted, dashed, solid, double, groove, ridge, inset, outset
-    , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
+    , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderBlockColor, borderInlineColor
     , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
@@ -313,6 +313,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 ## Border Color
 
 @docs borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
+
+@docs borderBlockColor, borderInlineColor
 
 
 ## Border Radius
@@ -7791,6 +7793,25 @@ borderLeftColor : BaseValue Color -> Style
 borderLeftColor (Value colorVal) =
     AppendProperty ("border-left-color:" ++ colorVal)
 
+
+{-| Sets [`border-block-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-color) property.
+
+    borderBlockColor (rgb 0 0 0)
+
+-}
+borderBlockColor : BaseValue Color -> Style
+borderBlockColor (Value colorVal) =
+    AppendProperty ("border-block-color:" ++ colorVal)
+
+
+{-| Sets [`border-inline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-color) property.
+
+    borderInlineColor (rgb 0 0 0)
+
+-}
+borderInlineColor : BaseValue Color -> Style
+borderInlineColor (Value colorVal) =
+    AppendProperty ("border-inline-color:" ++ colorVal)
 
 
 -- BORDER WIDTH --
