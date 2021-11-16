@@ -346,12 +346,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
 
 
-## Block Paddings
+## Logical Paddings
 
 @docs paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
-
-
-## Inline Paddings
 
 @docs paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
 
@@ -361,12 +358,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
 
 
-## Block Margins
+## Logical Margins
 
 @docs marginBlock, marginBlock2, marginBlockStart, marginBlockEnd
-
-
-## Inline Margins
 
 @docs marginInline, marginInline2, marginInlineStart, marginInlineEnd
 
