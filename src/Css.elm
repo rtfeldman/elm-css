@@ -7593,6 +7593,13 @@ firstLine : List Style -> Style
 firstLine =
     pseudoElement "first-line"
 
+{-| A [`::placeholder`](https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
+placeholder : List Style -> Style
+placeholder =
+    pseudoElement "placeholder"
+
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
