@@ -1,6 +1,6 @@
 module Css exposing
     ( Style, batch
-    , property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd, pointerEvents, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlockStart, marginBlockEnd, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
+    , property, flex, flex2, flex3, medium, alignSelf, alignItems, justifyContent, order, flexDirection, flexFlow1, flexFlow2, flexWrap, flexBasis, flexGrow, flexShrink, transformStyle, transformBox, transform, transforms, currentColor, underline, overline, lineThrough, textOrientation, textDecoration, textDecoration2, textDecoration3, textDecorations, textDecorations2, textDecorations3, textDecorationLine, textDecorationLines, textDecorationStyle, textEmphasisColor, capitalize, uppercase, lowercase, fullWidth, hanging, eachLine, textIndent, textIndent2, textIndent3, clip, ellipsis, textOverflow, optimizeSpeed, optimizeLegibility, geometricPrecision, textRendering, textTransform, textAlign, textAlignLast, left, right, center, justify, justifyAll, start, end, matchParent, true, verticalAlign, display, opacity, minContent, maxContent, fitContent, fillAvailable, width, minWidth, maxWidth, height, minHeight, maxHeight, padding, padding2, padding3, padding4, paddingTop, paddingBottom, paddingRight, paddingLeft, paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd, paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd, pointerEvents, margin, margin2, margin3, margin4, marginTop, marginBottom, marginRight, marginLeft, marginBlock, marginBlock2, marginBlockStart, marginBlockEnd, marginInline, marginInline2, marginInlineStart, marginInlineEnd, boxSizing, overflow, overflowX, overflowY, overflowWrap, whiteSpace, backgroundColor, color, textShadow, textShadow2, textShadow3, textShadow4, boxShadow, boxShadow2, boxShadow3, boxShadow4, boxShadow5, boxShadow6, lineHeight, letterSpacing, fontFace, fontFamily, fontSize, fontStyle, fontWeight, fontVariant, fontVariant2, fontVariant3, fontVariantLigatures, fontVariantCaps, fontVariantNumeric, fontVariantNumeric2, fontVariantNumeric3, fontFamilies, fontVariantNumerics, fontFeatureSettings, fontFeatureSettingsList, cursor, outline, outline3, outlineColor, outlineWidth, outlineStyle, outlineOffset, zIndex, spaceAround, spaceBetween, resize, fill, touchAction, borderSpacing, borderSpacing2, visibility
     , Color, all, important, solid, transparent, rgb, rgba, hsl, hsla, hex
     , featureTag, featureTag2, featureOn, featureOff
     , borderCollapse, borderColor, borderColor2, borderColor3, borderColor4, borderBottomLeftRadius, borderBottomLeftRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderRadius, borderRadius2, borderRadius3, borderRadius4, borderWidth, borderWidth2, borderWidth3, borderWidth4, borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomStyle, borderLeftStyle, borderRightStyle, borderTopStyle, borderStyle, borderBottomColor, borderLeftColor, borderRightColor, borderTopColor, borderBox, contentBox, border, border2, border3, borderTop, borderTop2, borderTop3, borderBottom, borderBottom2, borderBottom3, borderLeft, borderLeft2, borderLeft3, borderRight, borderRight2, borderRight3, borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4, borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4, scroll, visible, block, inlineBlock, inlineFlex, inline, none, auto, inherit, unset, initial, noWrap, top, static, fixed, sticky, relative, absolute, position, float, bottom, middle, baseline, sub, super, textTop, textBottom, hidden, wavy, dotted, dashed, double, groove, ridge, inset, outset, matrix, matrix3d, perspective, rotate3d, rotateX, rotateY, rotateZ, scale, scale2, scale3d, scaleX, scaleY, skew, skew2, skewX, skewY, translate, translate2, translate3d, translateX, translateY, translateZ, rotate, fillBox, viewBox, flat, preserve3d, content, wrapReverse, wrap, flexStart, flexEnd, stretch, row, rowReverse, column, columnReverse, serif, sansSerif, monospace, cursive, fantasy, xxSmall, xSmall, small, large, xLarge, xxLarge, smaller, larger, normal, italic, oblique, bold, lighter, bolder, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions, ordinal, slashedZero, default, pointer, crosshair, contextMenu, help, progress, wait, cell, text_, verticalText, cursorAlias, copy, move, noDrop, notAllowed, eResize, nResize, neResize, nwResize, sResize, seResize, swResize, wResize, ewResize, nsResize, neswResize, nwseResize, colResize, rowResize, allScroll, zoomIn, zoomOut, grab, grabbing, visiblePainted, visibleFill, visibleStroke, painted, stroke
@@ -4804,6 +4804,50 @@ paddingBlockEnd =
     prop1 "padding-block-end"
 
 
+
+{-| Sets [`padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline)
+
+    paddingInline (px 10)
+
+    paddingInline2 (px 10) (px 10)
+
+-}
+paddingInline : Length compatible units -> Style
+paddingInline =
+    prop1 "padding-inline"
+    
+
+{-| Sets [`padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline)
+
+    paddingInline (px 10)
+
+    paddingInline2 (px 10) (px 10)
+
+-}
+paddingInline2 : Length compatibleA unitsA -> Length compatibleB unitsB -> Style
+paddingInline2 =
+    prop2 "padding-inline"
+
+
+{-| Sets [`padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start)
+
+    paddingInlineStart (px 10)
+
+-}
+paddingInlineStart : Length compatible units -> Style
+paddingInlineStart =
+    prop1 "padding-inline-start"
+
+
+{-| Sets [`padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end)
+
+    paddingInlineEnd (px 10)
+
+-}
+paddingInlineEnd : Length compatible units -> Style
+paddingInlineEnd =
+    prop1 "padding-inline-end"
+
 {- MARGIN PROPERTIES -}
 
 
@@ -4911,6 +4955,30 @@ marginLeft =
     prop1 "margin-left"
 
 
+{-| Sets [`margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block)
+
+    marginBlock (px 10)
+
+    marginBlock2 (px 10) (px 10)
+
+-}
+marginBlock : LengthOrAuto compatible -> Style
+marginBlock =
+    prop1 "margin-block"
+
+
+{-| Sets [`margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block)
+
+    marginBlock (px 10)
+
+    marginBlock2 (px 10) (px 10)
+
+-}
+marginBlock2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
+marginBlock2 =
+    prop2 "margin-block"
+
+
 {-| Sets [`margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-start)
 
     marginBlockStart (px 10)
@@ -4929,6 +4997,30 @@ marginBlockStart =
 marginBlockEnd : LengthOrAuto compatible -> Style
 marginBlockEnd =
     prop1 "margin-block-end"
+
+
+{-| Sets [`margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline)
+
+    marginInline (px 10)
+
+    marginInline2 (px 10) (px 10)
+
+-}
+marginInline : LengthOrAuto compatible -> Style
+marginInline =
+    prop1 "margin-inline"
+
+
+{-| Sets [`margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline)
+
+    marginInline (px 10)
+
+    marginInline2 (px 10) (px 10)
+
+-}
+marginInline2 : LengthOrAuto compatibleA -> LengthOrAuto compatibleB -> Style
+marginInline2 =
+    prop2 "margin-inline"
 
 
 {-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start)
