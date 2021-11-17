@@ -143,6 +143,7 @@ module Css exposing
     , scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
     , scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
+    , scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
     , speak, spellOut
     , userSelect
@@ -690,6 +691,7 @@ Multiple CSS properties use these values.
 @docs scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
 @docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
 @docs scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
+@docs scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
 
 
@@ -13209,6 +13211,58 @@ scrollMarginInline2 :
     -> Style
 scrollMarginInline2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("scroll-margin-inline:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`scroll-margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block-start) property.
+
+    scrollMarginBlockStart (px 4)
+
+-}
+scrollMarginBlockStart :
+    BaseValue
+        Length
+    -> Style
+scrollMarginBlockStart (Value value) =
+    AppendProperty ("scroll-margin-block-start:" ++ value)
+
+
+{-| Sets [`scroll-margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block-end) property.
+
+    scrollMarginBlockEnd (px 4)
+
+-}
+scrollMarginBlockEnd :
+    BaseValue
+        Length
+    -> Style
+scrollMarginBlockEnd (Value value) =
+    AppendProperty ("scroll-margin-block-end:" ++ value)
+
+
+{-| Sets [`scroll-margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline-start) property.
+
+    scrollMarginInlineStart (px 4)
+
+-}
+scrollMarginInlineStart :
+    BaseValue
+        Length
+    -> Style
+scrollMarginInlineStart (Value value) =
+    AppendProperty ("scroll-margin-inline-start:" ++ value)
+
+
+{-| Sets [`scroll-margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline-end) property.
+
+    scrollMarginInlineEnd (px 4)
+
+-}
+scrollMarginInlineEnd :
+    BaseValue
+        Length
+    -> Style
+scrollMarginInlineEnd (Value value) =
+    AppendProperty ("scroll-margin-inline-end:" ++ value)
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
