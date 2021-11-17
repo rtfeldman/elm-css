@@ -145,6 +145,7 @@ module Css exposing
     , scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
     , scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+    , scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
     , speak, spellOut
     , userSelect
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
@@ -693,6 +694,7 @@ Multiple CSS properties use these values.
 @docs scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
 @docs scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+@docs scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
 
 
 # Accessibility
@@ -13167,8 +13169,8 @@ scrollMarginBlock2 :
         Value
             Length
     -> Style
-scrollMarginBlock2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("scroll-margin-block:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+scrollMarginBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-margin-block:" ++ valueStart ++ " " ++ valueEnd)
 
 
 {-| Sets [`scroll-margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline) property.
@@ -13209,8 +13211,8 @@ scrollMarginInline2 :
         Value
             Length
     -> Style
-scrollMarginInline2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("scroll-margin-inline:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+scrollMarginInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-margin-inline:" ++ valueStart ++ " " ++ valueEnd)
 
 
 {-| Sets [`scroll-margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block-start) property.
@@ -13277,7 +13279,7 @@ to the first value, the left and right are set to the second, and the bottom is
 set to the third. If there are four values they apply to the top, right,
 bottom, and left, respectively.
 
-    scrollPadding (em 4) -- set all margins to 4em
+    scrollPadding (em 4) -- set all paddings to 4em
 
     scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
@@ -13474,6 +13476,114 @@ scrollPaddingLeft :
     -> Style
 scrollPaddingLeft (Value value) =
     AppendProperty ("scroll-padding-left:" ++ value)
+
+
+{-| Sets [`scroll-padding-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block) property.
+The `scroll-padding-block` property is a shorthand property for setting
+`scroll-padding-block-start` and `scroll-padding-block-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start padding is set to the first value and the block end padding
+is set to the second.
+
+    scrollPaddingBlock (em 4) -- set both block paddings to 4em
+
+    scrollPaddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollPaddingBlock :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingBlock (Value value) =
+    AppendProperty ("scroll-padding-block:" ++ value)
+
+
+{-| Sets [`scroll-padding-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block) property.
+The `scroll-padding-block` property is a shorthand property for setting
+`scroll-padding-block-start` and `scroll-padding-block-end` in a single declaration.
+
+The block start padding is set to the first value and the block end padding
+is set to the second.
+
+    scrollPaddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollPaddingBlock2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    -> Style
+scrollPaddingBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-padding-block:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`scroll-padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline) property.
+The `scroll-padding-inline` property is a shorthand property for setting
+`scroll-padding-inline-start` and `scroll-padding-inline-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start padding is set to the first value and the inline end padding
+is set to the second.
+
+    scrollPaddingInline (em 4) -- set both inline paddings to 4em
+
+    scrollPaddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+scrollPaddingInline :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingInline (Value value) =
+    AppendProperty ("scroll-padding-inline:" ++ value)
+
+
+{-| Sets [`scroll-padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline) property.
+The `scroll-padding-inline` property is a shorthand property for setting
+`scroll-padding-inline-start` and `scroll-padding-inline-end` in a single declaration.
+
+The inline start padding is set to the first value and the inline end padding
+is set to the second.
+
+    scrollPaddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+scrollPaddingInline2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    -> Style
+scrollPaddingInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-padding-inline:" ++ valueStart ++ " " ++ valueEnd)
 
 
 {-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
