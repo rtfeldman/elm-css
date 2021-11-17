@@ -1541,7 +1541,7 @@ position (Value val) =
 
 -}
 inset :
-    Value
+    BaseValue
         (LengthSupported
             { pct : Supported
             , auto : Supported
@@ -1783,7 +1783,7 @@ right (Value val) =
 
 -}
 insetBlock :
-    Value
+    BaseValue
         (LengthSupported
             { pct : Supported
             , auto : Supported
@@ -1832,7 +1832,7 @@ insetBlock2 (Value valStart) (Value valEnd) =
 
 -}
 insetInline :
-    Value
+    BaseValue
         (LengthSupported
             { pct : Supported
             , auto : Supported
