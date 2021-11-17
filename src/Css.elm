@@ -33,6 +33,7 @@ module Css exposing
     , borderBlock, borderBlock2, borderBlock3
     , borderInline, borderInline2, borderInline3
     , borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
+    , borderBlockWidth, borderInlineWidth
     , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
     , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
@@ -290,9 +291,6 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs borderLeft, borderLeft2, borderLeft3
 
-
-## Logical Borders
-
 @docs borderBlock, borderBlock2, borderBlock3
 
 @docs borderInline, borderInline2, borderInline3
@@ -301,6 +299,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 ## Border Width
 
 @docs borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
+
+@docs borderBlockWidth, borderInlineWidth
 
 @docs thin, thick
 
@@ -7601,6 +7601,26 @@ borderBottomWidth (Value widthVal) =
 borderLeftWidth : BaseValue LineWidth -> Style
 borderLeftWidth (Value widthVal) =
     AppendProperty ("border-left-width:" ++ widthVal)
+
+
+{-| Sets [`border-block-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-width) property.
+
+    borderBlockWidth (px 1)
+
+-}
+borderBlockWidth : BaseValue LineWidth -> Style
+borderBlockWidth (Value widthVal) =
+    AppendProperty ("border-block-width:" ++ widthVal)
+
+
+{-| Sets [`border-inline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-width) property.
+
+    borderTopWidth (px 1)
+
+-}
+borderInlineWidth : BaseValue LineWidth -> Style
+borderInlineWidth (Value widthVal) =
+    AppendProperty ("border-inline-width:" ++ widthVal)
 
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
