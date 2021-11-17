@@ -36,6 +36,7 @@ module Css exposing
     , dotted, dashed, solid, double, groove, ridge, inset, outset
     , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
     , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+    , borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2, borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
     , outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
@@ -309,6 +310,8 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 ## Border Radius
 
 @docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+
+@docs borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2, borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
 
 
 ## Border Image
@@ -8168,6 +8171,174 @@ borderBottomLeftRadius2 :
     -> Style
 borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
     AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| Sets [`border-start-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius) property.
+
+    borderStartStartRadius (em 4)
+
+    borderStartStartRadius2 (em 4) (px 2)
+
+-}
+borderStartStartRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderStartStartRadius (Value radius) =
+    AppendProperty ("border-start-start-radius:" ++ radius)
+
+
+{-| Sets [`border-start-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius) property.
+
+    borderStartStartRadius (em 4)
+
+    borderStartStartRadius2 (em 4) (px 2)
+
+-}
+borderStartStartRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderStartStartRadius2 (Value horizontal) (Value vertical) =
+    AppendProperty ("border-start-start-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| Sets [`border-start-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius) property.
+
+    borderStartEndRadius (em 4)
+
+    borderStartEndRadius2 (em 4) (px 2)
+
+-}
+borderStartEndRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderStartEndRadius (Value radius) =
+    AppendProperty ("border-start-end-radius:" ++ radius)
+
+
+{-| Sets [`border-start-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius) property.
+
+    borderStartEndRadius (em 4)
+
+    borderStartEndRadius2 (em 4) (px 2)
+
+-}
+borderStartEndRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderStartEndRadius2 (Value horizontal) (Value vertical) =
+    AppendProperty ("border-start-end-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| Sets [`border-end-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius) property.
+
+    borderEndStartRadius (em 4)
+
+    borderEndStartRadius2 (em 4) (px 2)
+
+-}
+borderEndStartRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderEndStartRadius (Value radius) =
+    AppendProperty ("border-end-start-radius:" ++ radius)
+
+
+{-| Sets [`border-end-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius) property.
+
+    borderEndStartRadius (em 4)
+
+    borderEndStartRadius2 (em 4) (px 2)
+
+-}
+borderEndStartRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderEndStartRadius2 (Value horizontal) (Value vertical) =
+    AppendProperty ("border-end-start-radius:" ++ horizontal ++ " " ++ vertical)
+
+
+{-| Sets [`border-end-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius) property.
+
+    borderEndEndRadius (em 4)
+
+    borderEndEndRadius2 (em 4) (px 2)
+
+-}
+borderEndEndRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderEndEndRadius (Value radius) =
+    AppendProperty ("border-end-end-radius:" ++ radius)
+
+
+{-| Sets [`border-end-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius) property.
+
+    borderEndEndRadius (em 4)
+
+    borderEndEndRadius2 (em 4) (px 2)
+
+-}
+borderEndEndRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderEndEndRadius2 (Value horizontal) (Value vertical) =
+    AppendProperty ("border-end-end-radius:" ++ horizontal ++ " " ++ vertical)
 
 
 {-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
