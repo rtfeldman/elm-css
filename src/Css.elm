@@ -33,7 +33,7 @@ module Css exposing
     , borderBlock, borderBlock2, borderBlock3
     , borderInline, borderInline2, borderInline3
     , borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
-    , borderBlockWidth, borderInlineWidth
+    , borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth, borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
     , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
     , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
@@ -300,7 +300,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
 
-@docs borderBlockWidth, borderInlineWidth
+@docs borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth, borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
 
 @docs thin, thick
 
@@ -7613,6 +7613,26 @@ borderBlockWidth (Value widthVal) =
     AppendProperty ("border-block-width:" ++ widthVal)
 
 
+{-| Sets [`border-block-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-width) property.
+
+    borderBlockStartWidth (px 1)
+
+-}
+borderBlockStartWidth : BaseValue LineWidth -> Style
+borderBlockStartWidth (Value widthVal) =
+    AppendProperty ("border-block-start-width:" ++ widthVal)
+
+
+{-| Sets [`border-block-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-width) property.
+
+    borderBlockEndWidth (px 1)
+
+-}
+borderBlockEndWidth : BaseValue LineWidth -> Style
+borderBlockEndWidth (Value widthVal) =
+    AppendProperty ("border-block-end-width:" ++ widthVal)
+
+
 {-| Sets [`border-inline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-width) property.
 
     borderTopWidth (px 1)
@@ -7621,6 +7641,26 @@ borderBlockWidth (Value widthVal) =
 borderInlineWidth : BaseValue LineWidth -> Style
 borderInlineWidth (Value widthVal) =
     AppendProperty ("border-inline-width:" ++ widthVal)
+
+
+{-| Sets [`border-inline-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-width) property.
+
+    borderInlineStartWidth (px 1)
+
+-}
+borderInlineStartWidth : BaseValue LineWidth -> Style
+borderInlineStartWidth (Value widthVal) =
+    AppendProperty ("border-inline-start-width:" ++ widthVal)
+
+
+{-| Sets [`border-inline-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width) property.
+
+    borderInlineEndWidth (px 1)
+
+-}
+borderInlineEndWidth : BaseValue LineWidth -> Style
+borderInlineEndWidth (Value widthVal) =
+    AppendProperty ("border-inline-end-width:" ++ widthVal)
 
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
