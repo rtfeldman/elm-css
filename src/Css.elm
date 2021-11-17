@@ -146,6 +146,7 @@ module Css exposing
     , scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
     , scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
+    , scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
     , speak, spellOut
     , userSelect
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
@@ -695,6 +696,7 @@ Multiple CSS properties use these values.
 @docs scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
 @docs scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
+@docs scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
 
 
 # Accessibility
@@ -13584,6 +13586,74 @@ scrollPaddingInline2 :
     -> Style
 scrollPaddingInline2 (Value valueStart) (Value valueEnd) =
     AppendProperty ("scroll-padding-inline:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`scroll-padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block-start) property.
+
+    scrollPaddingBlockStart (px 4)
+
+-}
+scrollPaddingBlockStart :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingBlockStart (Value value) =
+    AppendProperty ("scroll-padding-block-start:" ++ value)
+
+
+{-| Sets [`scroll-padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block-end) property.
+
+    scrollPaddingBlockEnd (px 4)
+
+-}
+scrollPaddingBlockEnd :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingBlockEnd (Value value) =
+    AppendProperty ("scroll-padding-block-end:" ++ value)
+
+
+{-| Sets [`scroll-padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline-start) property.
+
+    scrollPaddingInlineStart (px 4)
+
+-}
+scrollPaddingInlineStart :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingInlineStart (Value value) =
+    AppendProperty ("scroll-padding-inline-start:" ++ value)
+
+
+{-| Sets [`scroll-padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline-end) property.
+
+    scrollPaddingInlineEnd (px 4)
+
+-}
+scrollPaddingInlineEnd :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingInlineEnd (Value value) =
+    AppendProperty ("scroll-padding-inline-end:" ++ value)
 
 
 {-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
