@@ -44,6 +44,7 @@ module Css exposing
     , position, zIndex
     , absolute, fixed, relative, static, sticky
     , inset, inset2, inset3, inset4, top, right, bottom, left
+    , insetBlock, insetBlock2, insetInline, insetInline2
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
@@ -342,7 +343,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs inset, inset2, inset3, inset4, top, right, bottom, left
 
--- @docs insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
+@docs insetBlock, insetBlock2, insetInline, insetInline2
 
 
 ## Paddings
@@ -1759,6 +1760,104 @@ right :
     -> Style
 right (Value val) =
     AppendProperty ("right:" ++ val)
+
+
+{-| Sets the [`inset-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block) property.
+
+`inset-block` sets the `inset-block-start` and `inset-block-end` properties.
+
+    insetBlock (px 10) -- block start and block end are both 10px.
+
+    insetBlock2 (pct 5) (pct 5) -- block start = 5%, block end = 5%
+
+-}
+insetBlock :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetBlock (Value val) =
+    AppendProperty ("inset-block:" ++ val)
+
+
+{-| Sets the [`inset-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block) property.
+
+`inset-block` sets the `inset-block-start` and `inset-block-end` properties.
+
+    insetBlock (px 10) -- block start and block end are both 10px.
+
+    insetBlock2 (pct 5) (pct 5) -- block start = 5%, block end = 5%
+
+-}
+insetBlock2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+insetBlock2 (Value valStart) (Value valEnd) =
+    AppendProperty ("inset-block:" ++ valStart ++ " " ++ valEnd)
+
+
+{-| Sets the [`inset-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline) property.
+
+`inset-inline` sets the `inset-inline-start` and `inset-inline-end` properties.
+
+    insetInline (px 10) -- inline start and inline end are both 10px.
+
+    insetInline2 (pct 5) (pct 5) -- inline start = 5%, inline end = 5%
+
+-}
+insetInline :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetInline (Value val) =
+    AppendProperty ("inset-inline:" ++ val)
+
+
+{-| Sets the [`inset-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline) property.
+
+`inset-inline` sets the `inset-inline-start` and `inset-inline-end` properties.
+
+    insetInline (px 10) -- inline start and inline end are both 10px.
+
+    insetInline2 (pct 5) (pct 5) -- inline start = 5%, inline end = 5%
+
+-}
+insetInline2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+insetInline2 (Value valStart) (Value valEnd) =
+    AppendProperty ("inset-inline:" ++ valStart ++ " " ++ valEnd)
 
 
 {-| An [`absolute` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative).
