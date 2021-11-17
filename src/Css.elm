@@ -33,7 +33,7 @@ module Css exposing
     , borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
     , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
-    , dotted, dashed, solid, double, groove, ridge, inset, outset
+    , dotted, dashed, solid, double, groove, ridge, inset_, outset
     , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
     , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
     , borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2, borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
@@ -42,8 +42,10 @@ module Css exposing
     , outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
     , display, display2, displayListItem2, displayListItem3
     , block, flex_, flow, flowRoot, grid, contents, listItem, inline, inlineBlock, inlineFlex, inlineTable, inlineGrid, ruby, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
-    , position, top, right, bottom, left, zIndex
+    , position, zIndex
     , absolute, fixed, relative, static, sticky
+    , inset, inset2, inset3, inset4, top, right, bottom, left
+    , insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
@@ -299,7 +301,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
 
-@docs dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs dotted, dashed, solid, double, groove, ridge, inset_, outset
 
 
 ## Border Color
@@ -335,9 +337,16 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 ## Positions
 
-@docs position, top, right, bottom, left, zIndex
+@docs position, zIndex
 
 @docs absolute, fixed, relative, static, sticky
+
+
+## Inset
+
+@docs inset, inset2, inset3, inset4, top, right, bottom, left
+
+@docs insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
 
 
 ## Paddings
@@ -868,7 +877,7 @@ type alias LineStyleSupported supported =
         , double : Supported
         , groove : Supported
         , ridge : Supported
-        , inset : Supported
+        , inset_ : Supported
         , outset : Supported
     }
 
@@ -1510,7 +1519,149 @@ position (Value val) =
     AppendProperty ("position:" ++ val)
 
 
-{-| Sets the [`top` property](https://css-tricks.com/almanac/properties/t/top/).
+{-| Sets the [`inset`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) property.
+
+`inset` sets the `top`, `bottom`, `left` and `right` properties.
+
+    inset (px 10) -- top, bottom, left and right are all 10px.
+
+    inset2 (pct 5) (pct 5) -- top & bottom = 5%, left & right = 5%
+
+    inset3 (px 20) (px 20) (px 20) -- top = 20px, left & right = 20px, bottom = 20px
+
+    inset4 (px 20) (px 20) (px 40) (px 20) -- top = 20px, right = 20px, bottom = 40px, left = 20px
+
+-}
+inset :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+inset (Value val) =
+    AppendProperty ("inset:" ++ val)
+
+
+{-| Sets the [`inset`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) property.
+
+`inset` sets the `top`, `bottom`, `left` and `right` properties.
+
+    inset (px 10) -- top, bottom, left and right are all 10px.
+
+    inset2 (pct 5) (pct 5) -- top & bottom = 5%, left & right = 5%
+
+    inset3 (px 20) (px 20) (px 20) -- top = 20px, left & right = 20px, bottom = 20px
+
+    inset4 (px 20) (px 20) (px 40) (px 20) -- top = 20px, right = 20px, bottom = 40px, left = 20px
+
+-}
+inset2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+inset2 (Value valTopBottom) (Value valRightLeft) =
+    AppendProperty ("inset:" ++ valTopBottom ++ " " ++ valRightLeft)
+
+
+{-| Sets the [`inset`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) property.
+
+`inset` sets the `top`, `bottom`, `left` and `right` properties.
+
+    inset (px 10) -- top, bottom, left and right are all 10px.
+
+    inset2 (pct 5) (pct 5) -- top & bottom = 5%, left & right = 5%
+
+    inset3 (px 20) (px 20) (px 20) -- top = 20px, left & right = 20px, bottom = 20px
+
+    inset4 (px 20) (px 20) (px 40) (px 20) -- top = 20px, right = 20px, bottom = 40px, left = 20px
+
+-}
+inset3 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+inset3 (Value valTop) (Value valRightLeft) (Value valBottom) =
+    AppendProperty ("inset:" ++ valTop ++ " " ++ valRightLeft ++ " " ++ valBottom)
+
+
+{-| Sets the [`inset`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) property.
+
+`inset` sets the `top`, `bottom`, `left` and `right` properties.
+
+    inset (px 10) -- top, bottom, left and right are all 10px.
+
+    inset2 (pct 5) (pct 5) -- top & bottom = 5%, left & right = 5%
+
+    inset3 (px 20) (px 20) (px 20) -- top = 20px, left & right = 20px, bottom = 20px
+
+    inset4 (px 20) (px 20) (px 40) (px 20) -- top = 20px, right = 20px, bottom = 40px, left = 20px
+
+-}
+inset4 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+inset4 (Value valTop) (Value valRight) (Value valBottom) (Value valLeft) =
+    AppendProperty ("inset:" ++ valTop ++ " " ++ valRight ++ " " ++ valBottom ++ " " ++ valLeft)
+
+
+{-| Sets the [`top`](https://css-tricks.com/almanac/properties/t/top/) property.
 
     top (px 10)
 
@@ -1536,7 +1687,7 @@ top (Value val) =
     AppendProperty ("top:" ++ val)
 
 
-{-| Sets the [`bottom` property](https://css-tricks.com/almanac/properties/b/bottom/).
+{-| Sets the [`bottom`](https://css-tricks.com/almanac/properties/b/bottom/) property.
 
     bottom (px 10)
 
@@ -1562,7 +1713,7 @@ bottom (Value val) =
     AppendProperty ("bottom:" ++ val)
 
 
-{-| Sets the [`left` property](https://css-tricks.com/almanac/properties/l/left/).
+{-| Sets the [`left`](https://css-tricks.com/almanac/properties/l/left/) property.
 
     left (px 10)
 
@@ -1588,7 +1739,7 @@ left (Value val) =
     AppendProperty ("left:" ++ val)
 
 
-{-| Sets the [`right` property](https://css-tricks.com/almanac/properties/r/right).
+{-| Sets the [`right`](https://css-tricks.com/almanac/properties/r/right) property.
 
     right (px 10)
 
@@ -1612,6 +1763,196 @@ right :
     -> Style
 right (Value val) =
     AppendProperty ("right:" ++ val)
+
+
+{-| Sets the [`inset-block`](https://css-tricks.com/almanac/properties/i/inset-block/) property.
+
+`inset-block` sets the `inset-block-start` and `inset-block-end` properties.
+
+    insetBlock (px 10) -- block start and block end are both 10px.
+
+    insetBlock2 (pct 5) (pct 5) -- block start = 5%, block end = 5%
+
+-}
+insetBlock :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetBlock (Value val) =
+    AppendProperty ("inset-block:" ++ val)
+
+
+{-| Sets the [`inset-block`](https://css-tricks.com/almanac/properties/i/inset-block/) property.
+
+`inset-block` sets the `inset-block-start` and `inset-block-end` properties.
+
+    insetBlock (px 10) -- block start and block end are both 10px.
+
+    insetBlock2 (pct 5) (pct 5) -- block start = 5%, block end = 5%
+
+-}
+insetBlock2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+insetBlock2 (Value valStart) (Value valEnd) =
+    AppendProperty ("inset-block:" ++ valStart ++ " " ++ valEnd)
+
+
+{-| Sets the [`inset-inline`](https://css-tricks.com/almanac/properties/i/inset-inline) property.
+
+`inset-inline` sets the `inset-inline-start` and `inset-inline-end` properties.
+
+    insetInline (px 10) -- inline start and inline end are both 10px.
+
+    insetInline2 (pct 5) (pct 5) -- inline start = 5%, inline end = 5%
+
+-}
+insetInline :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetInline (Value val) =
+    AppendProperty ("inset-inline:" ++ val)
+
+
+{-| Sets the [`inset-inline`](https://css-tricks.com/almanac/properties/i/inset-inline) property.
+
+`inset-inline` sets the `inset-inline-start` and `inset-inline-end` properties.
+
+    insetInline (px 10) -- inline start and inline end are both 10px.
+
+    insetInline2 (pct 5) (pct 5) -- inline start = 5%, inline end = 5%
+
+-}
+insetInline2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+insetInline2 (Value valStart) (Value valEnd) =
+    AppendProperty ("inset-inline:" ++ valStart ++ " " ++ valEnd)
+
+
+{-| Sets the [`inset-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-start) property.
+
+    insetBlockStart (px 10)
+
+    insetBlockStart (pct 50)
+
+    insetBlockStart auto
+
+    insetBlockStart zero
+
+-}
+insetBlockStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetBlockStart (Value val) =
+    AppendProperty ("inset-block-start:" ++ val)
+
+
+{-| Sets the [`inset-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-end) property.
+
+    insetBlockEnd (px 10)
+
+    insetBlockEnd (pct 50)
+
+    insetBlockEnd auto
+
+    insetBlockEnd zero
+
+-}
+insetBlockEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetBlockEnd (Value val) =
+    AppendProperty ("inset-block-end:" ++ val)
+
+
+{-| Sets the [`inset-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-start) property.
+
+    insetInlineStart (px 10)
+
+    insetInlineStart (pct 50)
+
+    insetInlineStart auto
+
+    insetInlineStart zero
+
+-}
+insetInlineStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetInlineStart (Value val) =
+    AppendProperty ("inset-inline-start:" ++ val)
+
+
+{-| Sets the [`inset-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-end) property.
+
+    insetInlineEnd (px 10)
+
+    insetInlineEnd (pct 50)
+
+    insetInlineEnd auto
+
+    insetInlineEnd zero
+
+-}
+insetInlineEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetInlineEnd (Value val) =
+    AppendProperty ("inset-inline-end:" ++ val)
 
 
 {-| An [`absolute` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative).
@@ -2488,7 +2829,7 @@ type alias BoxShadowConfig =
             )
     , color :
         Maybe (Value Color)
-    , inset : Bool
+    , inset_ : Bool
     }
 
 
@@ -2506,7 +2847,7 @@ defaultBoxShadow =
     , blurRadius = Nothing
     , spreadRadius = Nothing
     , color = Nothing
-    , inset = False
+    , inset_ = False
     }
 
 
@@ -2590,7 +2931,7 @@ boxShadowConfigToString config =
                     ""
 
         insetStr =
-            if config.inset then
+            if config.inset_ then
                 "inset "
 
             else
@@ -7840,19 +8181,19 @@ ridge =
 {-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
 [`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
-    borderStyle inset
+    borderStyle inset_
 
-    columnRuleStyle inset
+    columnRuleStyle inset_
 
-    textDecorationStyle inset
+    textDecorationStyle inset_
 
 Adds a split tone to the line that makes it appear slightly depressed.
 
 Contrast with [`outset`](#outset)
 
 -}
-inset : Value { provides | inset : Supported }
-inset =
+inset_ : Value { provides | inset_ : Supported }
+inset_ =
     Value "inset"
 
 
@@ -7869,7 +8210,7 @@ and [`strokeAlign`](#strokeAlign).
 
     textDecorationStyle outset
 
-Similar to [`inset`](#inset), but reverses the colors in a way that makes it appear slightly raised.
+Similar to [`inset_`](#inset_), but reverses the colors in a way that makes it appear slightly raised.
 
 -}
 outset : Value { provides | outset : Supported }
@@ -10213,14 +10554,14 @@ strokeWidth (Value val) =
 {-| Sets [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align)
 
       strokeAlign center
-      strokeAlign inset
+      strokeAlign inset_
       strokeAlign outset
 
 -}
 strokeAlign :
     BaseValue
         { center : Supported
-        , inset : Supported
+        , inset_ : Supported
         , outset : Supported
         }
     -> Style
