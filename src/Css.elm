@@ -12995,10 +12995,7 @@ bottom, and left, respectively.
 -}
 scrollMargin :
     BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     -> Style
 scrollMargin (Value value) =
     AppendProperty ("scroll-margin:" ++ value)
@@ -13017,16 +13014,10 @@ margins are set to the second.
 -}
 scrollMargin2 :
     Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     -> Style
 scrollMargin2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("scroll-margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -13045,22 +13036,13 @@ second, and the bottom is set to the third.
 -}
 scrollMargin3 :
     Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     -> Style
 scrollMargin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
     AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
@@ -13078,28 +13060,16 @@ The four values apply to the top, right, bottom, and left margins.
 -}
 scrollMargin4 :
     Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     -> Style
 scrollMargin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
     AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
@@ -13112,10 +13082,7 @@ scrollMargin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value val
 -}
 scrollMarginTop :
     BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     -> Style
 scrollMarginTop (Value value) =
     AppendProperty ("scroll-margin-top:" ++ value)
@@ -13128,10 +13095,7 @@ scrollMarginTop (Value value) =
 -}
 scrollMarginRight :
     BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     -> Style
 scrollMarginRight (Value value) =
     AppendProperty ("scroll-margin-right:" ++ value)
@@ -13144,10 +13108,7 @@ scrollMarginRight (Value value) =
 -}
 scrollMarginBottom :
     BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     -> Style
 scrollMarginBottom (Value value) =
     AppendProperty ("scroll-margin-bottom:" ++ value)
@@ -13160,10 +13121,7 @@ scrollMarginBottom (Value value) =
 -}
 scrollMarginLeft :
     BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     -> Style
 scrollMarginLeft (Value value) =
     AppendProperty ("scroll-margin-left:" ++ value)
@@ -13184,10 +13142,7 @@ set to the second.
 -}
 scrollMarginBlock :
     BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     -> Style
 scrollMarginBlock (Value value) =
     AppendProperty ("scroll-margin-block:" ++ value)
@@ -13205,16 +13160,10 @@ set to the second.
 -}
 scrollMarginBlock2 :
     Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     -> Style
 scrollMarginBlock2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("scroll-margin-block:" ++ valueTopBottom ++ " " ++ valueRightLeft)
@@ -13235,10 +13184,7 @@ set to the second.
 -}
 scrollMarginInline :
     BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     -> Style
 scrollMarginInline (Value value) =
     AppendProperty ("scroll-margin-inline:" ++ value)
@@ -13256,16 +13202,10 @@ set to the second.
 -}
 scrollMarginInline2 :
     Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        Length
     ->
         Value
-            (LengthSupported
-                { auto : Supported
-                }
-            )
+            Length
     -> Style
 scrollMarginInline2 (Value valueTopBottom) (Value valueRightLeft) =
     AppendProperty ("scroll-margin-inline:" ++ valueTopBottom ++ " " ++ valueRightLeft)
