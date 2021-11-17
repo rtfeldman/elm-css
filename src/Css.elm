@@ -44,7 +44,7 @@ module Css exposing
     , position, zIndex
     , absolute, fixed, relative, static, sticky
     , inset, inset2, inset3, inset4, top, right, bottom, left
-    , insetBlock, insetBlock2, insetInline, insetInline2
+    , insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
@@ -343,7 +343,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs inset, inset2, inset3, inset4, top, right, bottom, left
 
-@docs insetBlock, insetBlock2, insetInline, insetInline2
+@docs insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
 
 
 ## Paddings
@@ -1658,7 +1658,7 @@ inset4 (Value valTop) (Value valRight) (Value valBottom) (Value valLeft) =
     AppendProperty ("inset:" ++ valTop ++ " " ++ valRight ++ " " ++ valBottom ++ " " ++ valLeft)
 
 
-{-| Sets the [`top` property](https://css-tricks.com/almanac/properties/t/top/).
+{-| Sets the [`top`](https://css-tricks.com/almanac/properties/t/top/) property.
 
     top (px 10)
 
@@ -1684,7 +1684,7 @@ top (Value val) =
     AppendProperty ("top:" ++ val)
 
 
-{-| Sets the [`bottom` property](https://css-tricks.com/almanac/properties/b/bottom/).
+{-| Sets the [`bottom`](https://css-tricks.com/almanac/properties/b/bottom/) property.
 
     bottom (px 10)
 
@@ -1710,7 +1710,7 @@ bottom (Value val) =
     AppendProperty ("bottom:" ++ val)
 
 
-{-| Sets the [`left` property](https://css-tricks.com/almanac/properties/l/left/).
+{-| Sets the [`left`](https://css-tricks.com/almanac/properties/l/left/) property.
 
     left (px 10)
 
@@ -1736,7 +1736,7 @@ left (Value val) =
     AppendProperty ("left:" ++ val)
 
 
-{-| Sets the [`right` property](https://css-tricks.com/almanac/properties/r/right).
+{-| Sets the [`right`](https://css-tricks.com/almanac/properties/r/right) property.
 
     right (px 10)
 
@@ -1762,7 +1762,7 @@ right (Value val) =
     AppendProperty ("right:" ++ val)
 
 
-{-| Sets the [`inset-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block) property.
+{-| Sets the [`inset-block`](https://css-tricks.com/almanac/properties/i/inset-block/) property.
 
 `inset-block` sets the `inset-block-start` and `inset-block-end` properties.
 
@@ -1783,7 +1783,7 @@ insetBlock (Value val) =
     AppendProperty ("inset-block:" ++ val)
 
 
-{-| Sets the [`inset-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block) property.
+{-| Sets the [`inset-block`](https://css-tricks.com/almanac/properties/i/inset-block/) property.
 
 `inset-block` sets the `inset-block-start` and `inset-block-end` properties.
 
@@ -1811,7 +1811,7 @@ insetBlock2 (Value valStart) (Value valEnd) =
     AppendProperty ("inset-block:" ++ valStart ++ " " ++ valEnd)
 
 
-{-| Sets the [`inset-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline) property.
+{-| Sets the [`inset-inline`](https://css-tricks.com/almanac/properties/i/inset-inline) property.
 
 `inset-inline` sets the `inset-inline-start` and `inset-inline-end` properties.
 
@@ -1832,7 +1832,7 @@ insetInline (Value val) =
     AppendProperty ("inset-inline:" ++ val)
 
 
-{-| Sets the [`inset-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline) property.
+{-| Sets the [`inset-inline`](https://css-tricks.com/almanac/properties/i/inset-inline) property.
 
 `inset-inline` sets the `inset-inline-start` and `inset-inline-end` properties.
 
@@ -1858,6 +1858,98 @@ insetInline2 :
     -> Style
 insetInline2 (Value valStart) (Value valEnd) =
     AppendProperty ("inset-inline:" ++ valStart ++ " " ++ valEnd)
+
+
+{-| Sets the [`inset-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-start) property.
+
+    insetBlockStart (px 10)
+
+    insetBlockStart (pct 50)
+
+    insetBlockStart auto
+
+    insetBlockStart zero
+
+-}
+insetBlockStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetBlockStart (Value val) =
+    AppendProperty ("inset-block-start:" ++ val)
+
+
+{-| Sets the [`inset-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block-end) property.
+
+    insetBlockEnd (px 10)
+
+    insetBlockEnd (pct 50)
+
+    insetBlockEnd auto
+
+    insetBlockEnd zero
+
+-}
+insetBlockEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetBlockEnd (Value val) =
+    AppendProperty ("inset-block-end:" ++ val)
+
+
+{-| Sets the [`inset-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-start) property.
+
+    insetInlineStart (px 10)
+
+    insetInlineStart (pct 50)
+
+    insetInlineStart auto
+
+    insetInlineStart zero
+
+-}
+insetInlineStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetInlineStart (Value val) =
+    AppendProperty ("inset-inline-start:" ++ val)
+
+
+{-| Sets the [`inset-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-end) property.
+
+    insetInlineEnd (px 10)
+
+    insetInlineEnd (pct 50)
+
+    insetInlineEnd auto
+
+    insetInlineEnd zero
+
+-}
+insetInlineEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+insetInlineEnd (Value val) =
+    AppendProperty ("inset-inline-end:" ++ val)
 
 
 {-| An [`absolute` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative).
