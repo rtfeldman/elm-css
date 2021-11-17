@@ -1922,7 +1922,6 @@ values, the block start is set to the first value and the block end is set to th
 
     paddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
 
-
 -}
 paddingBlock :
     BaseValue
@@ -1994,8 +1993,6 @@ paddingBlockEnd (Value value) =
     AppendProperty ("padding-block-end:" ++ value)
 
 
-
-
 {-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
 
 The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
@@ -2007,7 +2004,6 @@ values, the inline start is set to the first value and the inline end is set to 
     paddingInline (em 4) -- set both inline start and inline end to 4em
 
     paddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
 
 -}
 paddingInline :
@@ -2078,9 +2074,6 @@ paddingInlineEnd :
     -> Style
 paddingInlineEnd (Value value) =
     AppendProperty ("padding-inline-end:" ++ value)
-
-
-
 
 
 
@@ -2312,13 +2305,14 @@ The `margin-block` property is a shorthand property for setting `margin-block-st
 
 If there is only one argument value, it applies to both sides. If there are two
 values, the block start margin is set to the first value and the block end margin
-is set to the second. 
+is set to the second.
 
-    marginBlock (em 4) -- set block start and end margins to 4em
+    marginBlock (em 4) -- set both block margins to 4em
 
     marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
 -}
 marginBlock :
     BaseValue
@@ -2342,6 +2336,7 @@ is set to the second.
     marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
 -}
 marginBlock2 :
     Value
@@ -2402,13 +2397,14 @@ The `margin-inline` property is a shorthand property for setting `margin-inline-
 
 If there is only one argument value, it applies to both sides. If there are two
 values, the inline start margin is set to the first value and the inline end margin
-is set to the second. 
+is set to the second.
 
-    marginInline (em 4) -- set inline start and end margins to 4em
+    marginInline (em 4) -- set both inline margins to 4em
 
     marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
 -}
 marginInline :
     BaseValue
@@ -2432,6 +2428,7 @@ is set to the second.
     marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
 
 You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
 -}
 marginInline2 :
     Value
@@ -2450,7 +2447,6 @@ marginInline2 :
     -> Style
 marginInline2 (Value valueStart) (Value valueEnd) =
     AppendProperty ("margin-inline:" ++ valueStart ++ " " ++ valueEnd)
-
 
 
 {-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start) property.
@@ -2485,6 +2481,8 @@ marginInlineEnd :
     -> Style
 marginInlineEnd (Value value) =
     AppendProperty ("margin-inline-end:" ++ value)
+
+
 
 -- BOX SIZING --
 
