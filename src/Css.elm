@@ -142,6 +142,7 @@ module Css exposing
     , scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
     , scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
+    , scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
     , speak, spellOut
     , userSelect
@@ -688,6 +689,7 @@ Multiple CSS properties use these values.
 @docs scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
 @docs scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
 @docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
+@docs scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
 
 
@@ -13165,6 +13167,108 @@ scrollMarginLeft :
     -> Style
 scrollMarginLeft (Value value) =
     AppendProperty ("scroll-margin-left:" ++ value)
+
+
+{-| Sets [`scroll-margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block) property.
+The `scrollMarginBlock` property is a shorthand property for setting
+`scroll-margin-block-start` and `scroll-margin-block-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start margin is set to the first value and the block end margin is
+set to the second.
+
+    scrollMarginBlock (em 4) -- set both block margins to 4em
+
+    scrollMarginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollMarginBlock :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+scrollMarginBlock (Value value) =
+    AppendProperty ("scroll-margin-block:" ++ value)
+
+
+{-| Sets [`scroll-margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block) property.
+The `scrollMarginBlock2` property is a shorthand property for setting
+`scroll-margin-block-start` and `scroll-margin-block-end` in a single declaration.
+
+The block start margin is set to the first value and the block end margin is
+set to the second.
+
+    scrollMarginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollMarginBlock2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                }
+            )
+    -> Style
+scrollMarginBlock2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("scroll-margin-block:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`scroll-margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline) property.
+The `scrollMarginInline` property is a shorthand property for setting
+`scroll-margin-inline-start` and `scroll-margin-inline-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start margin is set to the first value and the inline end margin is
+set to the second.
+
+    scrollMarginInline (em 4) -- set both inline margins to 4em
+
+    scrollMarginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+scrollMarginInline :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+scrollMarginInline (Value value) =
+    AppendProperty ("scroll-margin-inline:" ++ value)
+
+
+{-| Sets [`scroll-margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline) property.
+The `scrollMarginInline2` property is a shorthand property for setting
+`scroll-margin-inline-start` and `scroll-margin-inline-end` in a single declaration.
+
+The inline start margin is set to the first value and the inline end margin is
+set to the second.
+
+    scrollMarginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+scrollMarginInline2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                }
+            )
+    -> Style
+scrollMarginInline2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("scroll-margin-inline:" ++ valueTopBottom ++ " " ++ valueRightLeft)
 
 
 {-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
