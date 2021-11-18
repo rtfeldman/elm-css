@@ -13,6 +13,7 @@ module Css exposing
     , pseudoClass, active, disabled
     , pseudoElement, before, after
     , width, minWidth, maxWidth, height, minHeight, maxHeight
+    , blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
     , minContent, maxContent, fitContent
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
@@ -239,6 +240,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 ## Sizing
 
 @docs width, minWidth, maxWidth, height, minHeight, maxHeight
+@docs blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
 @docs minContent, maxContent, fitContent
 
 
@@ -12396,7 +12398,7 @@ letterSpacing (Value val) =
     AppendProperty ("letter-spacing:" ++ val)
 
 
-{-| Sets [`width`](https://css-tricks.com/almanac/properties/w/width/).
+{-| The [`width`](https://css-tricks.com/almanac/properties/w/width/) property.
 
     width (px 150)
 
@@ -12407,12 +12409,22 @@ letterSpacing (Value val) =
     width minContent
 
 -}
-width : BaseValue Width -> Style
+width :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
 width (Value size) =
     AppendProperty ("width:" ++ size)
 
 
-{-| Sets [`minWidth`](https://css-tricks.com/almanac/properties/m/min-width/).
+{-| The [`min-width`](https://css-tricks.com/almanac/properties/m/min-width/) property.
 
     minWidth (px 150)
 
@@ -12436,7 +12448,7 @@ minWidth (Value size) =
     AppendProperty ("min-width:" ++ size)
 
 
-{-| Sets [`maxWidth`](https://css-tricks.com/almanac/properties/m/max-width/).
+{-| The [`max-width`](https://css-tricks.com/almanac/properties/m/max-width/) property.
 
     maxWidth (px 150)
 
@@ -12460,60 +12472,22 @@ maxWidth (Value size) =
     AppendProperty ("max-width:" ++ size)
 
 
-{-| The `min-content` value used for properties such as [`width`](#width),
-[`minWidth`](#minWidth),
-[`maxWidth`](#maxWidth),
-[`height`](#height),
-[`minHeight`](#minHeight),
-[`maxHeight`](#maxHeight)
-and [`flexBasis`](#flexBasis)
-
-    width minContent
-
--}
-minContent : Value { provides | minContent : Supported }
-minContent =
-    Value "min-content"
-
-
-{-| The `max-content` value used for properties such as [`width`](#width),
-[`minWidth`](#minWidth),
-[`maxWidth`](#maxWidth),
-[`height`](#height),
-[`minHeight`](#minHeight),
-[`maxHeight`](#maxHeight)
-and [`flexBasis`](#flexBasis)
-
-    width maxContent
-
--}
-maxContent : Value { provides | maxContent : Supported }
-maxContent =
-    Value "max-content"
-
-
-{-| The `fit-content` value used for properties such as [`width`](#width),
-[`minWidth`](#minWidth),
-[`maxWidth`](#maxWidth),
-[`height`](#height),
-[`minHeight`](#minHeight),
-[`maxHeight`](#maxHeight)
-and [`flexBasis`](#flexBasis)
-
-    width fitContent
-
--}
-fitContent : Value { provides | fitContent : Supported }
-fitContent =
-    Value "fit-content"
-
-
 {-| The [`height`](https://css-tricks.com/almanac/properties/h/height/) property.
 
     height (px 34)
 
 -}
-height : BaseValue Width -> Style
+height :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
 height (Value val) =
     AppendProperty ("height:" ++ val)
 
@@ -12556,6 +12530,168 @@ maxHeight :
     -> Style
 maxHeight (Value val) =
     AppendProperty ("max-height:" ++ val)
+
+
+{-| The [`block-size`](https://css-tricks.com/almanac/properties/b/block-size/) property.
+
+    blockSize (px 20)
+
+-}
+blockSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+blockSize (Value val) =
+    AppendProperty ("block-size:" ++ val)
+
+
+{-| The [`min-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-block-size) property.
+
+    minBlockSize (px 20)
+
+-}
+minBlockSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+minBlockSize (Value val) =
+    AppendProperty ("min-block-size:" ++ val)
+
+
+{-| The [`max-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-block-size) property.
+
+    maxBlockSize (px 20)
+
+-}
+maxBlockSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+maxBlockSize (Value val) =
+    AppendProperty ("max-block-size:" ++ val)
+
+
+{-| The [`inline-size`](https://css-tricks.com/almanac/properties/i/inline-size/) property.
+
+    inlineSize (px 20)
+
+-}
+inlineSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+inlineSize (Value val) =
+    AppendProperty ("inline-size:" ++ val)
+
+
+{-| The [`min-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-inline-size) property.
+
+    minInlineSize (px 20)
+
+-}
+minInlineSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+minInlineSize (Value val) =
+    AppendProperty ("min-inline-size:" ++ val)
+
+
+{-| The [`max-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-inline-size) property.
+
+    maxInlineSize (px 20)
+
+-}
+maxInlineSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+maxInlineSize (Value val) =
+    AppendProperty ("max-inline-size:" ++ val)
+
+
+{-| The `min-content` value used for properties such as: 
+
+- sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
+- min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
+- [`flexBasis`](#flexBasis)
+
+    width minContent
+
+-}
+minContent : Value { provides | minContent : Supported }
+minContent =
+    Value "min-content"
+
+
+{-| The `max-content` value used for properties such as:
+
+- sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
+- min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
+- [`flexBasis`](#flexBasis)
+
+    width maxContent
+
+-}
+maxContent : Value { provides | maxContent : Supported }
+maxContent =
+    Value "max-content"
+
+
+{-| The `fit-content` value used for properties such as:
+
+- sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
+- min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
+- [`flexBasis`](#flexBasis)
+
+    width fitContent
+
+-}
+fitContent : Value { provides | fitContent : Supported }
+fitContent =
+    Value "fit-content"
 
 
 {-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
