@@ -84,7 +84,7 @@ module Css exposing
     , auto, none
     , hidden, visible
     , contentBox, borderBox
-    , overflow, overflowX, overflowY
+    , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
@@ -501,7 +501,7 @@ Multiple CSS properties use these values.
 
 ## Overflow
 
-@docs overflow, overflowX, overflowY
+@docs overflow, overflowX, overflowY, overflowBlock, overflowInline
 @docs overflowAnchor
 
 @docs overflowWrap
@@ -1305,6 +1305,52 @@ overflowY :
     -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
+
+
+{-| Sets [`overflow-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-block).
+
+    overflowBlock visible
+
+    overflowBlock hidden
+
+    overflowBlock scroll
+
+    overflowBlock auto
+
+-}
+overflowBlock :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        }
+    -> Style
+overflowBlock (Value val) =
+    AppendProperty ("overflow-block:" ++ val)
+
+
+{-| Sets [`overflow-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-inline).
+
+    overflowInline visible
+
+    overflowInline hidden
+
+    overflowInline scroll
+
+    overflowInline auto
+
+-}
+overflowInline :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        }
+    -> Style
+overflowInline (Value val) =
+    AppendProperty ("overflow-inline:" ++ val)
 
 
 {-| Sets [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
