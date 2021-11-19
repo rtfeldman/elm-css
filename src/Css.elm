@@ -45,6 +45,7 @@ module Css exposing
     , absolute, fixed, relative, static, sticky
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+    , gap, gap2, rowGap, columnGap
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
     , flexDirection, row, rowReverse, column, columnReverse
@@ -124,7 +125,7 @@ module Css exposing
     , strokeOrigin, fillBox, strokeBox
     , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
-    , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
+    , columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan, all_
     , transform, transforms, transformOrigin, transformOrigin2
@@ -345,6 +346,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 ## Margins
 
 @docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+
+
+## Gap
+
+@docs gap, gap2, rowGap, columnGap
 
 
 ## Box Sizing
@@ -626,7 +632,7 @@ Multiple CSS properties use these values.
 
 # Columns
 
-@docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
+@docs columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
 
@@ -9864,24 +9870,6 @@ all_ =
     Value "all"
 
 
-{-| Sets [`column-gap`](https://css-tricks.com/almanac/properties/c/column-gap/)
-
-    columnGap normal
-
-    columnGap (px 20)
-
--}
-columnGap :
-    BaseValue
-        (LengthSupported
-            { normal : Supported
-            }
-        )
-    -> Style
-columnGap (Value widthVal) =
-    AppendProperty ("column-gap:" ++ widthVal)
-
-
 {-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
 
     columnRuleWidth thin
@@ -9918,6 +9906,104 @@ columnRuleStyle (Value style) =
 columnRuleColor : BaseValue Color -> Style
 columnRuleColor (Value colorVal) =
     AppendProperty ("column-rule-color:" ++ colorVal)
+
+
+{-| Sets the [`gap`](https://css-tricks.com/almanac/properties/g/gap/) property.
+
+The `gap` property is a shorthand for setting `row-gap` and `column-gap`
+in a single declaration.
+
+`gap` specifies the size of spacing between items within grid, flex
+and multi-column layouts.
+
+    gap initial
+
+    gap (px 20) -- 20px gap between all items.
+
+    gap2 (px 20) (px 40) -- 20px row gap, 40px column gap.
+
+-}
+gap :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+gap (Value val) =
+    AppendProperty ("gap:" ++ val)
+
+
+{-| Sets the [`gap`](https://css-tricks.com/almanac/properties/g/gap/) property.
+
+The `gap` property is a shorthand for setting `row-gap` and `column-gap`
+in a single declaration.
+
+`gap` specifies the size of spacing between items within grid, flex
+and multi-column layouts.
+
+    gap2 (px 20) (px 40) -- 20px row gap, 40px column gap.
+
+-}
+gap2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+gap2 (Value rowVal) (Value columnVal) =
+    AppendProperty ("gap:" ++ rowVal ++ " " ++ columnVal)
+
+
+{-| Sets the [`row-gap`](https://developer.mozilla.org/en-US/docs/Web/CSS/row-gap) property.
+
+`row-gap` specifies the size of spacing between rows of items within grid, flex
+and multi-column layouts.
+
+    rowGap normal
+
+    rowGap (px 20)
+
+-}
+rowGap :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+rowGap (Value widthVal) =
+    AppendProperty ("row-gap:" ++ widthVal)
+
+
+{-| Sets the [`column-gap`](https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap) property.
+
+`column-gap` specifies the size of spacing between column of items within grid, flex
+and multi-column layouts.
+
+    columnGap normal
+
+    columnGap (px 20)
+
+-}
+columnGap :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+columnGap (Value widthVal) =
+    AppendProperty ("column-gap:" ++ widthVal)
 
 
 
