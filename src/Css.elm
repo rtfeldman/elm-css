@@ -2839,7 +2839,7 @@ type alias BoxShadowConfig =
             )
     , color :
         Maybe (Value Color)
-    , inset_ : Bool
+    , inset : Bool
     }
 
 
@@ -2857,7 +2857,7 @@ defaultBoxShadow =
     , blurRadius = Nothing
     , spreadRadius = Nothing
     , color = Nothing
-    , inset_ = False
+    , inset = False
     }
 
 
@@ -2877,12 +2877,12 @@ boxShadow (Value val) =
 
 {-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
 
-    boxShadow [] -- "box-shadow: none"
+    boxShadows [] -- "box-shadow: none"
 
     -- "box-shadow: 3px 5px #aabbcc"
     button
         [ css
-            [ boxShadow
+            [ boxShadows
                 [ { defaultBoxShadow
                     | offsetX = px 3
                     , offsetY = px 5
@@ -2941,7 +2941,7 @@ boxShadowConfigToString config =
                     ""
 
         insetStr =
-            if config.inset_ then
+            if config.inset then
                 "inset "
 
             else
@@ -8191,6 +8191,8 @@ ridge =
 {-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
 [`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
+This is called `inset_` rather than `inset` because [`inset` is already a function](#inset).
+
     borderStyle inset_
 
     columnRuleStyle inset_
@@ -10562,6 +10564,9 @@ strokeWidth (Value val) =
 
 
 {-| Sets [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align)
+
+**Note:** This function accepts `inset_` rather than `inset` because
+[`inset` is already a function](#inset).
 
       strokeAlign center
       strokeAlign inset_
