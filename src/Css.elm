@@ -6515,11 +6515,17 @@ backgroundSize2 (Value widthVal) (Value heightVal) =
     AppendProperty ("background-size:" ++ widthVal ++ " " ++ heightVal)
 
 
-{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
-for [`backgroundSize`](#backgroundSize). It always show the whole background
-image, even if it leaves empty spaces on the sides.
+{-| Sets `contain` for [`backgroundSize`](#backgroundSize) and [`overscrollBehavior`](#overscrollBehavior).
+
+For `backgroundSize`, this means this always shows the whole background image,
+even if it leaves empty spaces on the sides.
+
+For `overscrollBehavior`, this means that default scroll overflow behavior
+is observed inside the element, but scroll chaining will not happen to neighbouring elements.
 
     backgroundSize contain
+
+    overscrollBehavior contain
 
 -}
 contain : Value { provides | contain : Supported }
