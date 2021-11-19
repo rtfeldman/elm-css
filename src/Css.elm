@@ -49,6 +49,7 @@ module Css exposing
     , insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
     , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+    , gap, gap2, rowGap, columnGap
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
     , flexDirection, row, rowReverse, column, columnReverse
@@ -87,7 +88,7 @@ module Css exposing
     , auto, none
     , hidden, visible
     , contentBox, borderBox
-    , overflow, overflowX, overflowY
+    , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
@@ -128,7 +129,7 @@ module Css exposing
     , strokeOrigin, fillBox, strokeBox
     , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
-    , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
+    , columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan, all_
     , transform, transforms, transformOrigin, transformOrigin2
@@ -151,6 +152,7 @@ module Css exposing
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
     , scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
     , scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
+    , overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
     , speak, spellOut
     , userSelect
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
@@ -365,6 +367,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
 
 
+## Gap
+
+@docs gap, gap2, rowGap, columnGap
+
+
 ## Box Sizing
 
 @docs boxSizing
@@ -513,7 +520,7 @@ Multiple CSS properties use these values.
 
 ## Overflow
 
-@docs overflow, overflowX, overflowY
+@docs overflow, overflowX, overflowY, overflowBlock, overflowInline
 @docs overflowAnchor
 
 @docs overflowWrap
@@ -644,7 +651,7 @@ Multiple CSS properties use these values.
 
 # Columns
 
-@docs columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
+@docs columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
 @docs columnFill, balance, balanceAll
 @docs columnSpan, all_
 
@@ -711,6 +718,7 @@ Multiple CSS properties use these values.
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
 @docs scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
 @docs scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
+@docs overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
 
 
 # Accessibility
@@ -1321,6 +1329,52 @@ overflowY :
     -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
+
+
+{-| Sets [`overflow-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-block).
+
+    overflowBlock visible
+
+    overflowBlock hidden
+
+    overflowBlock scroll
+
+    overflowBlock auto
+
+-}
+overflowBlock :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        }
+    -> Style
+overflowBlock (Value val) =
+    AppendProperty ("overflow-block:" ++ val)
+
+
+{-| Sets [`overflow-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-inline).
+
+    overflowInline visible
+
+    overflowInline hidden
+
+    overflowInline scroll
+
+    overflowInline auto
+
+-}
+overflowInline :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        , scroll : Supported
+        , auto : Supported
+        }
+    -> Style
+overflowInline (Value val) =
+    AppendProperty ("overflow-inline:" ++ val)
 
 
 {-| Sets [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
@@ -10388,24 +10442,6 @@ all_ =
     Value "all"
 
 
-{-| Sets [`column-gap`](https://css-tricks.com/almanac/properties/c/column-gap/)
-
-    columnGap normal
-
-    columnGap (px 20)
-
--}
-columnGap :
-    BaseValue
-        (LengthSupported
-            { normal : Supported
-            }
-        )
-    -> Style
-columnGap (Value widthVal) =
-    AppendProperty ("column-gap:" ++ widthVal)
-
-
 {-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
 
     columnRuleWidth thin
@@ -10442,6 +10478,104 @@ columnRuleStyle (Value style) =
 columnRuleColor : BaseValue Color -> Style
 columnRuleColor (Value colorVal) =
     AppendProperty ("column-rule-color:" ++ colorVal)
+
+
+{-| Sets the [`gap`](https://css-tricks.com/almanac/properties/g/gap/) property.
+
+The `gap` property is a shorthand for setting `row-gap` and `column-gap`
+in a single declaration.
+
+`gap` specifies the size of spacing between items within grid, flex
+and multi-column layouts.
+
+    gap initial
+
+    gap (px 20) -- 20px gap between all items.
+
+    gap2 (px 20) (px 40) -- 20px row gap, 40px column gap.
+
+-}
+gap :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+gap (Value val) =
+    AppendProperty ("gap:" ++ val)
+
+
+{-| Sets the [`gap`](https://css-tricks.com/almanac/properties/g/gap/) property.
+
+The `gap` property is a shorthand for setting `row-gap` and `column-gap`
+in a single declaration.
+
+`gap` specifies the size of spacing between items within grid, flex
+and multi-column layouts.
+
+    gap2 (px 20) (px 40) -- 20px row gap, 40px column gap.
+
+-}
+gap2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+gap2 (Value rowVal) (Value columnVal) =
+    AppendProperty ("gap:" ++ rowVal ++ " " ++ columnVal)
+
+
+{-| Sets the [`row-gap`](https://developer.mozilla.org/en-US/docs/Web/CSS/row-gap) property.
+
+`row-gap` specifies the size of spacing between rows of items within grid, flex
+and multi-column layouts.
+
+    rowGap normal
+
+    rowGap (px 20)
+
+-}
+rowGap :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+rowGap (Value widthVal) =
+    AppendProperty ("row-gap:" ++ widthVal)
+
+
+{-| Sets the [`column-gap`](https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap) property.
+
+`column-gap` specifies the size of spacing between column of items within grid, flex
+and multi-column layouts.
+
+    columnGap normal
+
+    columnGap (px 20)
+
+-}
+columnGap :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+columnGap (Value widthVal) =
+    AppendProperty ("column-gap:" ++ widthVal)
 
 
 
@@ -14307,6 +14441,120 @@ scrollPaddingInlineEnd :
     -> Style
 scrollPaddingInlineEnd (Value value) =
     AppendProperty ("scroll-padding-inline-end:" ++ value)
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior auto -- sets both X and Y to auto
+
+    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+
+-}
+overscrollBehavior :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehavior (Value value) =
+    AppendProperty ("overscroll-behavior:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+
+-}
+overscrollBehavior2 :
+    Value
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , contain : Supported
+            , none : Supported
+            }
+    -> Style
+overscrollBehavior2 (Value xValue) (Value yValue) =
+    AppendProperty ("overscroll-behavior:" ++ xValue ++ " " ++ yValue)
+
+
+{-| Sets the [`overscroll-behavior-x`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+    overscrollBehaviorX auto
+
+    overscrollBehaviorX contain
+
+-}
+overscrollBehaviorX :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorX (Value value) =
+    AppendProperty ("overscroll-behavior-x:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-y`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+    overscrollBehaviorY auto
+
+    overscrollBehaviorY contain
+
+-}
+overscrollBehaviorY :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorY (Value value) =
+    AppendProperty ("overscroll-behavior-y:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-block) property.
+
+    overscrollBehaviorBlock auto
+
+    overscrollBehaviorBlock contain
+
+-}
+overscrollBehaviorBlock :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorBlock (Value value) =
+    AppendProperty ("overscroll-behavior-block:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-inline) property.
+
+    overscrollBehaviorInline auto
+
+    overscrollBehaviorInline contain
+
+-}
+overscrollBehaviorInline :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorInline (Value value) =
+    AppendProperty ("overscroll-behavior-inline:" ++ value)
 
 
 {-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
