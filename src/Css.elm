@@ -10,6 +10,7 @@ module Css exposing
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
     , Time, TimeSupported, s, ms
+    , string
     , pseudoClass, active, disabled
     , pseudoElement, before, after
     , width, minWidth, maxWidth, height, minHeight, maxHeight
@@ -61,7 +62,7 @@ module Css exposing
     , tabSize
     , fontDisplay, fallback, swap, optional
     , writingMode, verticalLr, verticalRl, horizontalTb
-    , hyphens, manual
+    , hyphens, quotes, quotes2, quotes4, manual
     , hangingPunctuation, first, last, forceEnd, allowEnd
     , lineClamp
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
@@ -83,7 +84,7 @@ module Css exposing
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
     , ListStyleType, ListStyleTypeSupported
-    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
+    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, customIdent, listStyleImage
     , arabicIndic, armenian, bengali, cambodian, circle, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
     , auto, none
     , hidden, visible
@@ -426,7 +427,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 @docs fontDisplay, fallback, swap, optional
 @docs writingMode, verticalLr, verticalRl, horizontalTb
-@docs hyphens, manual
+@docs hyphens, quotes, quotes2, quotes4, manual
 @docs hangingPunctuation, first, last, forceEnd, allowEnd
 @docs lineClamp
 
@@ -999,6 +1000,21 @@ type alias TimeSupported supported =
 type alias Time =
     TimeSupported {}
 
+
+{-| Produces an [`string`](https://developer.mozilla.org/en-US/docs/Web/CSS/string)
+value used by properties such as:
+- [`listStyle`](#listStyle),
+- [`listStyleType`](#listStyleType)
+- [`quotes2`](#quotes2)
+
+    listStyleType (string "> ")
+
+    quotes2 (string "«") (string "»")
+
+-}
+string : String -> Value { provides | string : Supported }
+string =
+    Value << enquoteString
 
 
 -- CUSTOM PROPERTIES --
@@ -6964,18 +6980,6 @@ outside =
 listStyleType : BaseValue ListStyleType -> Style
 listStyleType (Value val) =
     AppendProperty ("list-style-type:" ++ val)
-
-
-{-| Produces an [`string`](https://developer.mozilla.org/en-US/docs/Web/CSS/string)
-value used by properties such as [`listStyle`](#listStyle),
-and [`listStyleType`](#listStyleType)
-
-    listStyleType (string "> ")
-
--}
-string : String -> Value { provides | string : Supported }
-string =
-    Value << enquoteString
 
 
 {-| Produces an [`custom-ident`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident)
@@ -13267,6 +13271,101 @@ hyphens :
     -> Style
 hyphens (Value val) =
     AppendProperty ("hyphens:" ++ val)
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This one-argument version can only use keyword or global values.
+
+    quotes none
+
+    quotes inherit
+
+    quotes2 (string "\"") (string "\"")
+
+    quotes4 (string "\"") (string "\"") (string "\'") (string "\'")
+
+-}
+quotes :
+    BaseValue
+        { none : Supported 
+        , auto : Supported
+        }
+    -> Style
+quotes (Value val) =
+    AppendProperty ("quotes:" ++ val)
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This 2-argument version sets the starting and closing quotation marks for
+a top-level quote (a quote that is not nested within another quote). It only accepts 
+string values.
+
+    quotes auto
+
+    quotes2 (string "\"") (string "\"") -- "Hey, this is a first-level quote."
+
+    quotes2 (string "\'") (string "\'") -- 'Hey, this is a first-level quote.'
+
+    quotes2 (string "«") (string "»") -- «Hey, this is a first-level quote.»
+-}
+quotes2 :
+    Value
+        { string : Supported
+        }
+    -> Value
+        { string : Supported
+        }
+    -> Style
+quotes2 (Value lv1StartQuote) (Value lv1EndQuote) =
+    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote)
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This 4-argument version sets the starting and closing quotation marks for both
+a top-level quote and a nested quote. It only accepts 
+string values.
+
+    quotes auto
+
+    quotes2 (string "\"") (string "\"")
+    
+    -- "Hey, this is a first-level quote."
+
+
+    quotes4 (string "\"") (string "\"") (string "\'") (string "\'")
+
+    {- "Hey, this is a first-level quote.
+    'And this is someone else I made up for
+    a second-level quote!' Yeah, I did that!"
+    -}
+
+    quotes4 (string "«") (string "»") (string "👏") (string "🤔")
+
+    {- «Hey, this is a first-level quote.
+    👏And this is someone else I made up for
+    a second-level quote!🤔 Yeah, I did that!»
+    -}
+
+-}
+quotes4 :
+    Value
+        { string : Supported
+        }
+    -> Value
+        { string : Supported
+        }
+    -> Value
+        { string : Supported
+        }
+    -> Value
+        { string : Supported
+        }
+    -> Style
+quotes4 (Value lv1StartQuote) (Value lv1EndQuote) (Value lv2StartQuote) (Value lv2EndQuote) =
+    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote ++ " " ++ lv2StartQuote ++ " " ++ lv2EndQuote)
 
 
 {-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
