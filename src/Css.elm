@@ -144,6 +144,7 @@ module Css exposing
     , scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
     , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+    , overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
     , speak, spellOut
     , userSelect
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
@@ -695,6 +696,7 @@ Multiple CSS properties use these values.
 @docs scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
 @docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
 @docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+@docs overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
 
 
 # Accessibility
@@ -13508,6 +13510,122 @@ scrollPaddingLeft :
     -> Style
 scrollPaddingLeft (Value value) =
     AppendProperty ("scroll-padding-left:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior auto -- sets both X and Y to auto
+
+    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+
+-}
+overscrollBehavior :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehavior (Value value) =
+    AppendProperty ("overscroll-behavior:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+
+-}
+overscrollBehavior2 :
+    Value
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , contain : Supported
+            , none : Supported
+            }
+    -> Style
+overscrollBehavior2 (Value xValue) (Value yValue) =
+    AppendProperty ("overscroll-behavior:" ++ xValue ++ " " ++ yValue)
+
+
+{-| Sets the [`overscroll-behavior-x`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+    overscrollBehaviorX auto
+
+    overscrollBehaviorX contain
+
+-}
+overscrollBehaviorX :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorX (Value value) =
+    AppendProperty ("overscroll-behavior-x:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-y`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+    overscrollBehaviorY auto
+
+    overscrollBehaviorY contain
+
+-}
+overscrollBehaviorY :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorY (Value value) =
+    AppendProperty ("overscroll-behavior-y:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-block) property.
+
+    overscrollBehaviorBlock auto
+
+    overscrollBehaviorBlock contain
+
+-}
+overscrollBehaviorBlock :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorBlock (Value value) =
+    AppendProperty ("overscroll-behavior-block:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-inline) property.
+
+    overscrollBehaviorInline auto
+
+    overscrollBehaviorInline contain
+
+-}
+overscrollBehaviorInline :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorInline (Value value) =
+    AppendProperty ("overscroll-behavior-inline:" ++ value)
 
 
 {-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
