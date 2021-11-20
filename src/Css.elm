@@ -61,7 +61,7 @@ module Css exposing
     , tabSize
     , fontDisplay, fallback, swap, optional
     , writingMode, verticalLr, verticalRl, horizontalTb
-    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, ellipsis, manual
+    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, strict, loose
     , hangingPunctuation, first, last, forceEnd, allowEnd
     , lineClamp
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
@@ -426,7 +426,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 @docs fontDisplay, fallback, swap, optional
 @docs writingMode, verticalLr, verticalRl, horizontalTb
-@docs hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, ellipsis, manual
+@docs hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, strict, loose
 @docs hangingPunctuation, first, last, forceEnd, allowEnd
 @docs lineClamp
 
@@ -1428,9 +1428,11 @@ breakWord =
     Value "break-word"
 
 
-{-| The `anywhere` value used by [`overflowWrap`](#overflowWrap)
+{-| The `anywhere` value used by [`overflowWrap`](#overflowWrap) and [`lineBreak`](#lineBreak).
 
     overflowWrap anywhere
+
+    lineBreak anywhere
 
 -}
 anywhere : Value { provides | anywhere : Supported }
@@ -5041,14 +5043,17 @@ fontVariantCaps (Value str) =
     AppendProperty ("font-variant-caps:" ++ str)
 
 
-{-| The `normal` value, which can be used with such properties as
-[`fontVariantCaps`](#fontVariantCaps),
-[`whiteSpace`](#whiteSpace),
-[`wordBreak`](#wordBreak),
-[`columnGap`](#columnGap),
-[`zoom`](#zoom),
-[`animationDirection`](#animationDirection),
-and [`alignItems`](#alignItems).
+{-| The `normal` value, which can be used with such properties as:
+
+- [`fontVariantCaps`](#fontVariantCaps)
+- [`whiteSpace`](#whiteSpace)
+- [`wordBreak`](#wordBreak)
+- [`columnGap`](#columnGap)
+- [`zoom`](#zoom)
+- [`animationDirection`](#animationDirection)
+- [`alignItems`](#alignItems)
+- [`lineBreak`](#lineBreak)
+
 
     alignItems normal
 
@@ -13252,15 +13257,6 @@ hangingPunctuation (Value val) =
     AppendProperty ("hanging-punctuation:" ++ val)
 
 
-{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
-
-    hyphens manual
-
--}
-manual : Value { provides | manual : Supported }
-manual =
-    Value "manual"
-
 
 {-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
 
@@ -13432,6 +13428,35 @@ textOverflow2 (Value startValue) (Value endValue) =
     AppendProperty ("text-overflow:" ++ startValue ++ " " ++ endValue)
 
 
+{-| Sets the [`lineBreak`](https://css-tricks.com/almanac/properties/l/line-break/) property.
+
+    lineBreak auto
+
+    lineBreak strict
+-}
+lineBreak :
+    BaseValue
+        { auto : Supported
+        , loose : Supported
+        , normal : Supported
+        , strict : Supported
+        , anywhere : Supported
+        }
+    -> Style
+lineBreak (Value value) =
+    AppendProperty ("line-break:" ++ "value")
+
+
+{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
+
+    hyphens manual
+
+-}
+manual : Value { provides | manual : Supported }
+manual =
+    Value "manual"
+
+
 {-| Sets `ellipsis` value for usage with [`textOverflow`](#textOverflow).
 
     textOverflow ellipsis
@@ -13441,6 +13466,23 @@ ellipsis : Value { provides | ellipsis : Supported }
 ellipsis =
     Value "ellipsis"
 
+
+{-| Sets `strict` value for usage with [`lineBreak`](#lineBreak).
+
+    lineBreak strict
+-}
+strict : Value { provides | strict : Supported }
+strict =
+    Value "strict"
+
+
+{-| Sets `loose` value for usage with [`lineBreak`](#lineBreak).
+
+    lineBreak loose
+-}
+loose : Value { provides | loose : Supported }
+loose =
+    Value "loose"
 
 {-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
 
