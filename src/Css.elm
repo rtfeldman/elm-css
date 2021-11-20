@@ -47,6 +47,7 @@ module Css exposing
     , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
+    , placeContent, placeContent2, placeItems, placeItems2, placeSelf, placeSelf2
     , flexDirection, row, rowReverse, column, columnReverse
     , order
     , flexGrow, flexShrink, flexBasis, content
@@ -361,6 +362,8 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 ### Flexbox Alignment
 
 @docs alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
+
+@docs placeContent, placeContent2, placeItems, placeItems2, placeSelf, placeSelf2
 
 
 ### Flexbox Direction
@@ -3837,6 +3840,215 @@ justifySelf2 :
     -> Style
 justifySelf2 (Value overflowPosition) (Value contentPosition) =
     AppendProperty ("justify-self:" ++ overflowPosition ++ " " ++ contentPosition)
+
+
+{-| The [`place-content`](https://css-tricks.com/almanac/properties/p/place-content) property.
+
+`placeContent` is a shorthand for the [`alignContent`](#alignContent) and
+[`justifyContent`](#justifyContent) properties in a single declaration.
+
+This one-argument version only accepts global values.
+
+    placeContent inherit
+
+    placeContent2 flexStart flexEnd
+
+-}
+placeContent :
+    BaseValue {}
+    -> Style
+placeContent (Value value) =
+    AppendProperty ("place-content:" ++ value)
+
+
+{-| The [`place-content`](https://css-tricks.com/almanac/properties/p/place-content) property.
+
+`placeContent` is a shorthand for the [`alignContent`](#alignContent) and
+[`justifyContent`](#justifyContent) properties in a single declaration.
+
+This two-argumant version accepts `alignContent` and `justifyContent` values.
+
+    placeContent inherit
+
+    placeContent2 flexStart flexEnd
+
+-}
+placeContent2 :
+    Value
+        { normal : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        , spaceBetween : Supported
+        , spaceAround : Supported
+        , spaceEvenly : Supported
+        , stretch : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        }
+    ->
+        Value
+            { normal : Supported
+            , spaceBetween : Supported
+            , spaceAround : Supported
+            , spaceEvenly : Supported
+            , stretch : Supported
+            , center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , left_ : Supported
+            , right_ : Supported
+            }
+    -> Style
+placeContent2 (Value alignContentValue) (Value justifyContentValue) =
+    AppendProperty ("place-content:" ++ alignContentValue ++ " " ++ justifyContentValue)
+
+
+{-| The [`place-items`](https://css-tricks.com/almanac/properties/p/place-items) property.
+
+`placeItems` is a shorthand for the [`alignItems`](#alignItems) and
+[`justifyItems`](#justifyItems) properties in a single declaration.
+
+This one-argument version only accepts global values.
+
+    placeItems inherit
+
+    placeItems2 center selfEnd
+
+-}
+placeItems :
+    BaseValue {}
+    -> Style
+placeItems (Value value) =
+    AppendProperty ("place-items:" ++ value)
+
+
+{-| The [`place-items`](https://css-tricks.com/almanac/properties/p/place-items) property.
+
+`placeItems` is a shorthand for the [`alignItems`](#alignItems) and
+[`justifyItems`](#justifyItems) properties in a single declaration.
+
+This one-argument version only accepts global values.
+
+    placeItems inherit
+
+    placeItems2 center selfEnd
+
+-}
+placeItems2 :
+    Value
+        { normal : Supported
+        , stretch : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , selfStart : Supported
+        , selfEnd : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        }
+    ->
+        Value
+            { normal : Supported
+            , stretch : Supported
+            , baseline : Supported
+            , firstBaseline : Supported
+            , lastBaseline : Supported
+            , center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , selfStart : Supported
+            , selfEnd : Supported
+            , left_ : Supported
+            , right_ : Supported
+            , legacy : Supported
+            , legacyLeft : Supported
+            , legacyRight : Supported
+            , legacyCenter : Supported
+            }
+    -> Style
+placeItems2 (Value alignItemsValue) (Value justifyItemsValue) =
+    AppendProperty ("place-items:" ++ alignItemsValue ++ " " ++ justifyItemsValue)
+
+
+{-| The [`place-self`](https://css-tricks.com/almanac/properties/p/place-self) property.
+
+`placeSelf` is a shorthand for the [`alignSelf`](#alignSelf) and
+[`justifySelf`](#justifySelf) properties in a single declaration.
+
+This one-argument version only accepts global values.
+
+    placeSelf inherit
+
+    placeSelf2 flexStart flexEnd
+
+-}
+placeSelf :
+    BaseValue {}
+    -> Style
+placeSelf (Value value) =
+    AppendProperty ("place-self:" ++ value)
+
+
+{-| The [`place-self`](https://css-tricks.com/almanac/properties/p/place-self) property.
+
+`placeSelf` is a shorthand for the [`alignSelf`](#alignSelf) and
+[`justifySelf`](#justifySelf) properties in a single declaration.
+
+This one-argument version only accepts global values.
+
+    placeSelf inherit
+
+    placeSelf2 flexStart flexEnd
+
+-}
+placeSelf2 :
+    Value
+        { auto : Supported
+        , normal : Supported
+        , stretch : Supported
+        , baseline : Supported
+        , firstBaseline : Supported
+        , lastBaseline : Supported
+        , center : Supported
+        , start : Supported
+        , end : Supported
+        , flexStart : Supported
+        , flexEnd : Supported
+        , selfStart : Supported
+        , selfEnd : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , normal : Supported
+            , stretch : Supported
+            , baseline : Supported
+            , firstBaseline : Supported
+            , lastBaseline : Supported
+            , center : Supported
+            , start : Supported
+            , end : Supported
+            , flexStart : Supported
+            , flexEnd : Supported
+            , selfStart : Supported
+            , selfEnd : Supported
+            , left_ : Supported
+            , right_ : Supported
+            }
+    -> Style
+placeSelf2 (Value alignSelfValue) (Value justifySelfValue) =
+    AppendProperty ("place-self:" ++ alignSelfValue ++ " " ++ justifySelfValue)
 
 
 {-| Sets [`flex-basis`](https://css-tricks.com/almanac/properties/f/flex-basis/).
