@@ -124,6 +124,7 @@ module Css exposing
     , strokeOrigin, fillBox, strokeBox
     , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
+    , paintOrder, paintOrder2, paintOrder3, markers
     , columns, columns2, columnWidth, columnCount, columnGap, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan, all_
@@ -625,6 +626,8 @@ Multiple CSS properties use these values.
 @docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
 @docs strokeDashJustify, compress, dashes, gaps
 
+## Other
+@docs paintOrder, paintOrder2, paintOrder3, markers
 
 # Columns
 
@@ -10625,6 +10628,89 @@ gaps =
     Value "gaps"
 
 
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This one-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other two in their relative default order.
+
+    paintOrder normal -- normal paint order.
+
+    paintOrder2 fill_ stroke  -- fill, stroke, then markers.
+
+    paintOrder3 markers stroke fill_  -- markers, stroke, then fill.
+-}
+paintOrder :
+    BaseValue
+        { normal : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Style
+paintOrder (Value val) =
+    AppendProperty ("paint-order:" ++ val)
+
+
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This two-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other remaining one.
+
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
+-}
+paintOrder2 :
+    Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Style
+paintOrder2 (Value val1) (Value val2) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This three-argument version explicitly indicates in which order should all the parts of text
+and shape graphics be painted.
+
+    paintOrder3 markers stroke fill_  -- markers, stroke, then fill.
+-}
+paintOrder3 :
+    Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Style
+paintOrder3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Provides the `markers` value for [`paintOrder`](#paintOrder).
+
+    paintOrder markers
+-}
+markers : Value { provides | markers : Supported }
+markers =
+    Value "markers"
+
+
+
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
 This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
 [`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
@@ -12614,12 +12700,14 @@ mixBlendMode (Value val) =
     AppendProperty ("mix-blend-mode:" ++ val)
 
 
-{-| The `fill` value used in properties such as [`objectFit`](#objectFit)
-and [`pointerEvents`](#pointerEvents).
+{-| The `fill` value used in properties such as [`objectFit`](#objectFit),
+ [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder)
 
     objectFit fill_
 
     pointerEvents fill_
+
+    paintOrder2 fill markers
 
 -}
 fill_ : Value { provides | fill_ : Supported }
@@ -12954,9 +13042,11 @@ painted =
     Value "painted"
 
 
-{-| The `stroke` value used by [`pointerEvents`](#pointerEvents)
+{-| The `stroke` value used by [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
 
     pointerEvents stroke
+
+    paintOrder2 stroke markers
 
 -}
 stroke : Value { provides | stroke : Supported }
