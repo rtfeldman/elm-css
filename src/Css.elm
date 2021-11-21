@@ -160,6 +160,7 @@ module Css exposing
     , caretColor
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted, stroke
+    , resize, horizontal, vertical
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -722,7 +723,7 @@ Multiple CSS properties use these values.
 @docs caretColor
 @docs pointerEvents
 @docs visiblePainted, visibleFill, visibleStroke, painted, stroke
-
+@docs resize, horizontal, vertical
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
@@ -2963,9 +2964,11 @@ displayListItem3 (Value displayOutside) (Value displayFlow) =
     AppendProperty ("display:list-item " ++ displayOutside ++ " " ++ displayFlow)
 
 
-{-| The `block` value used by [`display`](#display)
+{-| The `block` value used by [`display`](#display) and [`resize`].
 
     display block
+
+    resize block
 
 -}
 block : Value { provides | block : Supported }
@@ -3025,9 +3028,11 @@ contents =
     Value "contents"
 
 
-{-| The `inline` value used by [`display`](#display)
+{-| The `inline` value used by [`display`](#display) and [`resize`].
 
     display inline
+
+    resize inline
 
 -}
 inline : Value { provides | inline : Supported }
@@ -8040,8 +8045,8 @@ borderTopLeftRadius2 :
                 }
             )
     -> Style
-borderTopLeftRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-top-left-radius:" ++ horizontal ++ " " ++ vertical)
+borderTopLeftRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-top-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
@@ -8082,8 +8087,8 @@ borderTopRightRadius2 :
                 }
             )
     -> Style
-borderTopRightRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-top-right-radius:" ++ horizontal ++ " " ++ vertical)
+borderTopRightRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-top-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
@@ -8124,8 +8129,8 @@ borderBottomRightRadius2 :
                 }
             )
     -> Style
-borderBottomRightRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-bottom-right-radius:" ++ horizontal ++ " " ++ vertical)
+borderBottomRightRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-bottom-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
@@ -8166,8 +8171,8 @@ borderBottomLeftRadius2 :
                 }
             )
     -> Style
-borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
+borderBottomLeftRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-bottom-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
@@ -9165,8 +9170,8 @@ borderSpacing (Value str) =
 
 -}
 borderSpacing2 : Value Length -> Value Length -> Style
-borderSpacing2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-spacing:" ++ horizontal ++ " " ++ vertical)
+borderSpacing2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-spacing:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 
@@ -11756,9 +11761,11 @@ clear (Value val) =
     AppendProperty ("clear:" ++ val)
 
 
-{-| Sets `both` value for usage with [`clear`](#clear).
+{-| Sets `both` value for usage with [`clear`](#clear) and [`resize`](#resize).
 
       clear both
+
+      resize both
 
 -}
 both : Value { provides | both : Supported }
@@ -13938,3 +13945,44 @@ writingMode :
     -> Style
 writingMode (Value str) =
     AppendProperty ("writing-mode:" ++ str)
+
+
+{-| The [`resize`](https://css-tricks.com/almanac/properties/r/resize/) property.
+
+    resize none
+
+    resize both
+
+    resize inline
+
+-}
+resize : 
+    BaseValue
+        { none : Supported
+        , both : Supported
+        , horizontal : Supported
+        , vertical : Supported
+        , block : Supported
+        , inline : Supported
+        }
+    -> Style
+resize (Value value) =
+    AppendProperty ("resize:" ++ value)
+
+
+{-| The `horizontal` value used by [`resize`](#resize).
+
+    resize horizontal
+-}
+horizontal : Value { provides | horizontal : Supported }
+horizontal =
+    Value "horizontal"
+
+
+{-| The `vertical` value used by [`resize`](#resize).
+
+    resize vertical
+-}
+vertical : Value { provides | vertical : Supported }
+vertical =
+    Value "vertical"
