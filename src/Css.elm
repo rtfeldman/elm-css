@@ -131,7 +131,7 @@ module Css exposing
     , transform, transforms, transformOrigin, transformOrigin2
     , TransformFunction, TransformFunctionSupported
     , matrix, matrix3d
-    , perspective
+    , perspective, perspective_
     , rotate, rotateX, rotateY, rotateZ, rotate3d
     , scale, scale2, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
@@ -641,7 +641,6 @@ Multiple CSS properties use these values.
 @docs transform, transforms, transformOrigin, transformOrigin2
 @docs TransformFunction, TransformFunctionSupported
 
-
 ## Matrix transformation
 
 @docs matrix, matrix3d
@@ -650,6 +649,7 @@ Multiple CSS properties use these values.
 ## Perspective
 
 @docs perspective
+@docs perspective_
 
 
 ## Rotation
@@ -10813,7 +10813,7 @@ type alias TransformFunctionSupported supported =
         , rotateY : Supported
         , rotateZ : Supported
         , rotate3d : Supported
-        , perspective : Supported
+        , perspective_ : Supported
     }
 
 
@@ -10849,7 +10849,7 @@ type alias TransformFunction =
     transform (rotateY (deg 10))
     transform (rotateZ (deg 10))
     transform (rotate3d 1 2.0 3.0 (deg 10))
-    transform (perspective (px 17))
+    transform (perspective_ (px 17))
 
 -}
 transform : BaseValue (TransformFunctionSupported { none : Supported }) -> Style
@@ -10871,14 +10871,13 @@ transforms head rest =
     AppendProperty ("transform:" ++ plusListToString head rest)
 
 
-{-| Named afte the plus symbol in the CSS specification [CSS-VALUES-3].
+{-| Named after the plus symbol in the CSS specification [CSS-VALUES-3].
 -}
 plusListToString : Value a -> List (Value a) -> String
 plusListToString head rest =
     (head :: rest)
         |> List.map unpackValue
         |> String.join " "
-
 
 
 -- MATRIX TRANSFORMATION
@@ -11270,15 +11269,38 @@ rotate3d valX valY z (Value angle) =
 -- PERSPECTIVE
 
 
-{-| Sets `perspective` value for usage with [`transform`](#transform).
+{-| The [`perspective`](https://css-tricks.com/almanac/properties/p/perspective/) property.
 
-    transform (perspective (px 17))
+Negative values are not supported and any value smaller than 1px is clamped to 1px.
 
+    perspective none
+
+    perspective (px 100)
+
+    perspective (rem 50)
 -}
 perspective :
+    BaseValue
+        ( LengthSupported
+            { none : Supported
+            }
+        )
+    -> Style
+perspective (Value val) =
+    AppendProperty ("perspective:" ++ val)
+
+
+{-| Sets `perspective` value for usage with [`transform`](#transform).
+
+    transform (perspective_ (px 17))
+
+The value is called `perspective_` instead of `perspective` because
+[`perspective`](#perspective) is already a function.
+-}
+perspective_ :
     Value Length
-    -> Value { provides | perspective : Supported }
-perspective (Value length) =
+    -> Value { provides | perspective_ : Supported }
+perspective_ (Value length) =
     Value ("perspective(" ++ length ++ ")")
 
 
