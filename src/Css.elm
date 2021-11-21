@@ -2204,7 +2204,7 @@ pseudoClass pseudoClassName =
 -}
 active : List Style -> Style
 active =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "active")
+    pseudoClass "active"
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled)
@@ -2215,7 +2215,7 @@ active =
 -}
 disabled : List Style -> Style
 disabled =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "disabled")
+    pseudoClass "disabled"
 
 
 
@@ -2254,7 +2254,7 @@ pseudoElement element =
 -}
 after : List Style -> Style
 after =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "after")
+    pseudoElement "after"
 
 
 {-| A [`::before`](https://css-tricks.com/almanac/selectors/a/after-and-before/)
@@ -2315,7 +2315,7 @@ Be careful when using placeholders as they can compromise accessibility.
     placeholder
         [ opacity (num 1) <| important
         , color (rgb 90 90 90)
-        , fontWeight (int 300)
+        , fontWeight (int 400)
         ]
 ]
 -}
