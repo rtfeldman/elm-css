@@ -14102,7 +14102,7 @@ contain3 (Value value1) (Value value2) (Value value3) =
 This version uses all 4 multiple choice values that can be used with this
 property, no values required.
 
-Equivalent to `contain size layout style paint`.
+Equivalent to `contain: size layout style paint;`.
 
     contain4
 
