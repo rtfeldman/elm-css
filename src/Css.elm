@@ -21,7 +21,7 @@ module Css exposing
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
     , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
-    , cover, contain
+    , cover, contain_
     , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
     , TextShadowConfig, textShadow, defaultTextShadow
     , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
@@ -161,6 +161,7 @@ module Css exposing
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted, stroke
     , resize, horizontal, vertical
+    , contain, contain2, contain3, contain4, strict, size, layout, style, paint
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -260,7 +261,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs repeat, noRepeat, repeatX, repeatY, space, round
 
-@docs cover, contain
+@docs cover, contain_
 
 
 ## Box Shadow
@@ -724,6 +725,8 @@ Multiple CSS properties use these values.
 @docs pointerEvents
 @docs visiblePainted, visibleFill, visibleStroke, painted, stroke
 @docs resize, horizontal, vertical
+@docs contain, contain2, contain3, contain4, strict, size, layout, style, paint
+
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
@@ -3860,9 +3863,16 @@ flexBasis (Value val) =
     AppendProperty ("flex-basis:" ++ val)
 
 
-{-| The `content` [`flex-basis` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values).
+{-| The `content` value used in:
 
-    flexBasis content
+  - [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values) (Indicates automatic sizing based on the item's content)
+  - [`contain`](#contain) (Indicates all containment rules apart from `size` and `style` are applied.)
+
+```
+flexBasis content
+
+contain content
+```
 
 -}
 content : Value { provides | content : Supported }
@@ -6076,12 +6086,12 @@ backgroundSize :
             { pct : Supported
             , auto : Supported
             , cover : Supported
-            , contain : Supported
+            , contain_ : Supported
             }
         )
     -> Style
-backgroundSize (Value size) =
-    AppendProperty ("background-size:" ++ size)
+backgroundSize (Value sizeVal) =
+    AppendProperty ("background-size:" ++ sizeVal)
 
 
 {-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/) for both width and height (in that order.)
@@ -6113,14 +6123,22 @@ backgroundSize2 (Value widthVal) (Value heightVal) =
 
 
 {-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
-for [`backgroundSize`](#backgroundSize). It always show the whole background
-image, even if it leaves empty spaces on the sides.
+for the following properties:
 
-    backgroundSize contain
+  - [`backgroundSize`](#backgroundSize) (It always show the whole background
+    image, even if it leaves empty spaces on the sides.)
+  - [`objectFit`](#objectFit) (Replaced content is scaled to maintain proportions within the element's content box.)
+  - [`userSelect`](#userSelect) (Lets selection start within the element but that selection will be contained within that element's bounds.)
+
+```
+backgroundSize contain_
+```
+
+The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a function.
 
 -}
-contain : Value { provides | contain : Supported }
-contain =
+contain_ : Value { provides | contain_ : Supported }
+contain_ =
     Value "contain"
 
 
@@ -7219,8 +7237,8 @@ border (Value widthVal) =
 
 -}
 border2 : Value LineWidth -> Value LineStyle -> Style
-border2 (Value widthVal) (Value style) =
-    AppendProperty ("border:" ++ widthVal ++ " " ++ style)
+border2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
@@ -7233,8 +7251,8 @@ border2 (Value widthVal) (Value style) =
 
 -}
 border3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-border3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+border3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -7261,8 +7279,8 @@ borderTop (Value widthVal) =
 
 -}
 borderTop2 : Value LineWidth -> Value LineStyle -> Style
-borderTop2 (Value widthVal) (Value style) =
-    AppendProperty ("border-top:" ++ widthVal ++ " " ++ style)
+borderTop2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -7275,8 +7293,8 @@ borderTop2 (Value widthVal) (Value style) =
 
 -}
 borderTop3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderTop3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-top:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderTop3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -7303,8 +7321,8 @@ borderRight (Value widthVal) =
 
 -}
 borderRight2 : Value LineWidth -> Value LineStyle -> Style
-borderRight2 (Value widthVal) (Value style) =
-    AppendProperty ("border-right:" ++ widthVal ++ " " ++ style)
+borderRight2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -7317,8 +7335,8 @@ borderRight2 (Value widthVal) (Value style) =
 
 -}
 borderRight3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderRight3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-right:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderRight3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -7345,8 +7363,8 @@ borderBottom (Value widthVal) =
 
 -}
 borderBottom2 : Value LineWidth -> Value LineStyle -> Style
-borderBottom2 (Value widthVal) (Value style) =
-    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ style)
+borderBottom2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -7359,8 +7377,8 @@ borderBottom2 (Value widthVal) (Value style) =
 
 -}
 borderBottom3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBottom3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderBottom3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -7387,8 +7405,8 @@ borderLeft (Value widthVal) =
 
 -}
 borderLeft2 : Value LineWidth -> Value LineStyle -> Style
-borderLeft2 (Value widthVal) (Value style) =
-    AppendProperty ("border-left:" ++ widthVal ++ " " ++ style)
+borderLeft2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -7401,8 +7419,8 @@ borderLeft2 (Value widthVal) (Value style) =
 
 -}
 borderLeft3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderLeft3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-left:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderLeft3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
@@ -7521,8 +7539,8 @@ borderLeftWidth (Value widthVal) =
 
 -}
 borderStyle : BaseValue LineStyle -> Style
-borderStyle (Value style) =
-    AppendProperty ("border-style:" ++ style)
+borderStyle (Value styleVal) =
+    AppendProperty ("border-style:" ++ styleVal)
 
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
@@ -7561,8 +7579,8 @@ borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value style
 
 -}
 borderTopStyle : BaseValue LineStyle -> Style
-borderTopStyle (Value style) =
-    AppendProperty ("border-top-style:" ++ style)
+borderTopStyle (Value styleVal) =
+    AppendProperty ("border-top-style:" ++ styleVal)
 
 
 {-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style) property.
@@ -7571,8 +7589,8 @@ borderTopStyle (Value style) =
 
 -}
 borderRightStyle : BaseValue LineStyle -> Style
-borderRightStyle (Value style) =
-    AppendProperty ("border-right-style:" ++ style)
+borderRightStyle (Value styleVal) =
+    AppendProperty ("border-right-style:" ++ styleVal)
 
 
 {-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style) property.
@@ -7581,8 +7599,8 @@ borderRightStyle (Value style) =
 
 -}
 borderBottomStyle : BaseValue LineStyle -> Style
-borderBottomStyle (Value style) =
-    AppendProperty ("border-bottom-style:" ++ style)
+borderBottomStyle (Value styleVal) =
+    AppendProperty ("border-bottom-style:" ++ styleVal)
 
 
 {-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style) property.
@@ -7591,8 +7609,8 @@ borderBottomStyle (Value style) =
 
 -}
 borderLeftStyle : BaseValue LineStyle -> Style
-borderLeftStyle (Value style) =
-    AppendProperty ("border-left-style:" ++ style)
+borderLeftStyle (Value styleVal) =
+    AppendProperty ("border-left-style:" ++ styleVal)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
@@ -8795,8 +8813,8 @@ textDecoration2 :
             , wavy : Supported
             }
     -> Style
-textDecoration2 (Value line) (Value style) =
-    AppendProperty ("text-decoration:" ++ line ++ " " ++ style)
+textDecoration2 (Value line) (Value styleVal) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal)
 
 
 {-| Sets [`text-decoration`][text-decoration] property.
@@ -8823,8 +8841,8 @@ textDecoration3 :
             }
     -> Value Color
     -> Style
-textDecoration3 (Value line) (Value style) (Value colorVal) =
-    AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ colorVal)
+textDecoration3 (Value line) (Value styleVal) (Value colorVal) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`text-decoration-line`][text-decoration-line] property.
@@ -8904,8 +8922,8 @@ textDecorationStyle :
         , wavy : Supported
         }
     -> Style
-textDecorationStyle (Value style) =
-    AppendProperty ("text-decoration-style:" ++ style)
+textDecorationStyle (Value styleVal) =
+    AppendProperty ("text-decoration-style:" ++ styleVal)
 
 
 {-| Sets [`text-decoration-color`][text-decoration-color] property.
@@ -9909,8 +9927,8 @@ columnRuleWidth (Value widthVal) =
 
 -}
 columnRuleStyle : BaseValue LineStyle -> Style
-columnRuleStyle (Value style) =
-    AppendProperty ("column-rule-style:" ++ style)
+columnRuleStyle (Value styleVal) =
+    AppendProperty ("column-rule-style:" ++ styleVal)
 
 
 {-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
@@ -10411,8 +10429,8 @@ strokeSize :
             }
         )
     -> Style
-strokeSize (Value size) =
-    AppendProperty ("stroke-size:" ++ size)
+strokeSize (Value sizeVal) =
+    AppendProperty ("stroke-size:" ++ sizeVal)
 
 
 {-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
@@ -10462,8 +10480,8 @@ strokeDashCorner :
             }
         )
     -> Style
-strokeDashCorner (Value size) =
-    AppendProperty ("stroke-dash-corner:" ++ size)
+strokeDashCorner (Value sizeVal) =
+    AppendProperty ("stroke-dash-corner:" ++ sizeVal)
 
 
 {-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
@@ -10637,8 +10655,8 @@ properties.
 
 -}
 columnRule2 : Value LineWidth -> Value LineStyle -> Style
-columnRule2 (Value widthVal) (Value style) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ style)
+columnRule2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
@@ -10654,8 +10672,8 @@ properties.
 
 -}
 columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-columnRule3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 
@@ -11895,8 +11913,8 @@ letterSpacing (Value val) =
 
 -}
 width : BaseValue Width -> Style
-width (Value size) =
-    AppendProperty ("width:" ++ size)
+width (Value sizeVal) =
+    AppendProperty ("width:" ++ sizeVal)
 
 
 {-| Sets [`minWidth`](https://css-tricks.com/almanac/properties/m/min-width/).
@@ -11919,8 +11937,8 @@ minWidth :
             }
         )
     -> Style
-minWidth (Value size) =
-    AppendProperty ("min-width:" ++ size)
+minWidth (Value sizeVal) =
+    AppendProperty ("min-width:" ++ sizeVal)
 
 
 {-| Sets [`maxWidth`](https://css-tricks.com/almanac/properties/m/max-width/).
@@ -11943,8 +11961,8 @@ maxWidth :
             }
         )
     -> Style
-maxWidth (Value size) =
-    AppendProperty ("max-width:" ++ size)
+maxWidth (Value sizeVal) =
+    AppendProperty ("max-width:" ++ sizeVal)
 
 
 {-| The `min-content` value used for properties such as [`width`](#width),
@@ -12623,7 +12641,7 @@ scaleDown =
 
     objectFit fill_
 
-    objectFit contain
+    objectFit contain_
 
     objectFit cover
 
@@ -12635,7 +12653,7 @@ scaleDown =
 objectFit :
     BaseValue
         { fill_ : Supported
-        , contain : Supported
+        , contain_ : Supported
         , cover : Supported
         , none : Supported
         , scaleDown : Supported
@@ -13843,7 +13861,7 @@ unicodeBidi (Value val) =
 
     userSelect text
 
-    userSelect contain
+    userSelect contain_
 
     userSelect all_
 
@@ -13853,7 +13871,7 @@ userSelect :
         { none : Supported
         , auto : Supported
         , text : Supported
-        , contain : Supported
+        , contain_ : Supported
         , all_ : Supported
         }
     -> Style
@@ -13956,7 +13974,7 @@ writingMode (Value str) =
     resize inline
 
 -}
-resize : 
+resize :
     BaseValue
         { none : Supported
         , both : Supported
@@ -13973,6 +13991,7 @@ resize (Value value) =
 {-| The `horizontal` value used by [`resize`](#resize).
 
     resize horizontal
+
 -}
 horizontal : Value { provides | horizontal : Supported }
 horizontal =
@@ -13982,7 +14001,180 @@ horizontal =
 {-| The `vertical` value used by [`resize`](#resize).
 
     resize vertical
+
 -}
 vertical : Value { provides | vertical : Supported }
 vertical =
     Value "vertical"
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+    contain none
+
+    contain content
+
+    contain2 size layout
+
+    contain3 size layout style
+
+    contain4 -- all multiple choice values in use, no value entry needed
+
+-}
+contain :
+    BaseValue
+        { none : Supported
+        , strict : Supported
+        , content : Supported
+        , size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    -> Style
+contain (Value value) =
+    AppendProperty ("contain:" ++ value)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This two-argument version lets you use 2 of the 4 multiple choice values you
+can use for this property.
+
+    contain2 size layout
+
+-}
+contain2 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain2 (Value value1) (Value value2) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This two-argument version lets you use 3 of the 4 multiple choice values you
+can use for this property.
+
+    contain3 size layout style
+
+-}
+contain3 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain3 (Value value1) (Value value2) (Value value3) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2 ++ " " ++ value3)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This version uses all 4 multiple choice values that can be used with this
+property, no values required.
+
+Equivalent to `contain size layout style paint`.
+
+    contain4
+
+-}
+contain4 : Style
+contain4 =
+    AppendProperty "contain:size layout style paint"
+
+
+{-| Sets the `strict` value for [`contain`](#contain).
+
+This indicates that all containment rules apart from `style` are applied.
+
+This is equivalent to `contain3 size layout paint`.
+
+    contain strict
+
+-}
+strict : Value { provides | strict : Supported }
+strict =
+    Value "strict"
+
+
+{-| Sets the `size` value for [`contain`](#contain).
+
+This indicates that the element can be sized without
+needing to look at the size of its descendants.
+
+    contain size
+
+-}
+size : Value { provides | size : Supported }
+size =
+    Value "size"
+
+
+{-| Sets the `layout` value for [`contain`](#contain).
+
+This indicates that nothing outside the element
+may affect its internal layout and vice versa.
+
+    contain layout
+
+-}
+layout : Value { provides | layout : Supported }
+layout =
+    Value "layout"
+
+
+{-| Sets the `style` value for [`contain`](#contain).
+
+For properties that can have effects on more than its
+element and descendenants, this indicates that those effects
+are contained by the containing element.
+
+    contain style
+
+-}
+style : Value { provides | style : Supported }
+style =
+    Value "style"
+
+
+{-| Sets the `paint` value for [`contain`](#contain).
+
+Indicates that descendants of the element will not
+display outside its bounds and will not be painted
+by the browser if the containing box is offscreen.
+
+    contain paint
+
+-}
+paint : Value { provides | paint : Supported }
+paint =
+    Value "paint"
