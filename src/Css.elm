@@ -131,7 +131,8 @@ module Css exposing
     , transform, transforms, transformOrigin, transformOrigin2
     , TransformFunction, TransformFunctionSupported
     , matrix, matrix3d
-    , perspective, perspective_
+    , perspective, perspectiveOrigin, perspectiveOrigin2
+    , perspective_
     , rotate, rotateX, rotateY, rotateZ, rotate3d
     , scale, scale2, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
@@ -626,8 +627,11 @@ Multiple CSS properties use these values.
 @docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
 @docs strokeDashJustify, compress, dashes, gaps
 
+
 ## Other
+
 @docs paintOrder, paintOrder2, paintOrder3, markers
+
 
 # Columns
 
@@ -641,6 +645,7 @@ Multiple CSS properties use these values.
 @docs transform, transforms, transformOrigin, transformOrigin2
 @docs TransformFunction, TransformFunctionSupported
 
+
 ## Matrix transformation
 
 @docs matrix, matrix3d
@@ -648,7 +653,7 @@ Multiple CSS properties use these values.
 
 ## Perspective
 
-@docs perspective
+@docs perspective, perspectiveOrigin, perspectiveOrigin2
 @docs perspective_
 
 
@@ -1323,8 +1328,6 @@ overflowY (Value val) =
 clip : Value { provides | clip : Supported }
 clip =
     Value "clip"
-
-
 
 
 {-| Sets [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
@@ -10654,9 +10657,10 @@ painted first, followed by the other two in their relative default order.
 
     paintOrder normal -- normal paint order.
 
-    paintOrder2 fill_ stroke  -- fill, stroke, then markers.
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
 
-    paintOrder3 markers stroke fill_  -- markers, stroke, then fill.
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
+
 -}
 paintOrder :
     BaseValue
@@ -10675,6 +10679,7 @@ This two-argument version indicates which parts of text and shape graphics are
 painted first, followed by the other remaining one.
 
     paintOrder2 fill_ stroke -- fill, stroke, then markers.
+
 -}
 paintOrder2 :
     Value
@@ -10682,11 +10687,12 @@ paintOrder2 :
         , stroke : Supported
         , markers : Supported
         }
-    -> Value
-        { fill_ : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
     -> Style
 paintOrder2 (Value val1) (Value val2) =
     AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2)
@@ -10697,7 +10703,8 @@ paintOrder2 (Value val1) (Value val2) =
 This three-argument version explicitly indicates in which order should all the parts of text
 and shape graphics be painted.
 
-    paintOrder3 markers stroke fill_  -- markers, stroke, then fill.
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
+
 -}
 paintOrder3 :
     Value
@@ -10705,16 +10712,18 @@ paintOrder3 :
         , stroke : Supported
         , markers : Supported
         }
-    -> Value
-        { fill_ : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
-    -> Value
-        { fill_ : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
     -> Style
 paintOrder3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
@@ -10723,11 +10732,11 @@ paintOrder3 (Value val1) (Value val2) (Value val3) =
 {-| Provides the `markers` value for [`paintOrder`](#paintOrder).
 
     paintOrder markers
+
 -}
 markers : Value { provides | markers : Supported }
 markers =
     Value "markers"
-
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
@@ -10878,6 +10887,7 @@ plusListToString head rest =
     (head :: rest)
         |> List.map unpackValue
         |> String.join " "
+
 
 
 -- MATRIX TRANSFORMATION
@@ -11278,10 +11288,11 @@ Negative values are not supported and any value smaller than 1px is clamped to 1
     perspective (px 100)
 
     perspective (rem 50)
+
 -}
 perspective :
     BaseValue
-        ( LengthSupported
+        (LengthSupported
             { none : Supported
             }
         )
@@ -11290,12 +11301,74 @@ perspective (Value val) =
     AppendProperty ("perspective:" ++ val)
 
 
+{-| The [`perspective-origin`](https://css-tricks.com/almanac/properties/p/perspective-origin/) property.
+
+This one-argument version either supports a global value or the x-position.
+
+    perspectiveOrigin inherit
+
+    perspectiveOrigin left_
+
+    perspectiveOrigin (pct 50)
+
+    perspectiveOrigin2 left_ center
+
+    perspectiveOrigin2 (rem 50) (pct 20)
+
+-}
+perspectiveOrigin :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , center : Supported
+            , right_ : Supported
+            }
+        )
+    -> Style
+perspectiveOrigin (Value val) =
+    AppendProperty ("perspective-origin:" ++ val)
+
+
+{-| The [`perspective-origin`](https://css-tricks.com/almanac/properties/p/perspective-origin/) property.
+
+This two-argument version takes an X position and then a Y position.
+
+    pperspectiveOrigin2 left_ center
+
+    perspectiveOrigin2 (rem 50) (pct 20)
+
+-}
+perspectiveOrigin2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , center : Supported
+            , right_ : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , top_ : Supported
+                , center : Supported
+                , bottom_ : Supported
+                }
+            )
+    -> Style
+perspectiveOrigin2 (Value xVal) (Value yVal) =
+    AppendProperty ("perspective-origin:" ++ xVal ++ " " ++ yVal)
+
+
 {-| Sets `perspective` value for usage with [`transform`](#transform).
 
     transform (perspective_ (px 17))
 
 The value is called `perspective_` instead of `perspective` because
 [`perspective`](#perspective) is already a function.
+
 -}
 perspective_ :
     Value Length
@@ -12787,7 +12860,7 @@ mixBlendMode (Value val) =
 
 
 {-| The `fill` value used in properties such as [`objectFit`](#objectFit),
- [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder)
+[`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder)
 
     objectFit fill_
 
