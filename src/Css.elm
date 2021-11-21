@@ -57,7 +57,7 @@ module Css exposing
     , fontDisplay, fallback, swap, optional
     , writingMode, verticalLr, verticalRl, horizontalTb
     , hyphens, manual
-    , hangingPunctuation, first, last, forceEnd, allowEnd
+    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
     , lineClamp
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontSizeAdjust
@@ -405,7 +405,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 @docs fontDisplay, fallback, swap, optional
 @docs writingMode, verticalLr, verticalRl, horizontalTb
 @docs hyphens, manual
-@docs hangingPunctuation, first, last, forceEnd, allowEnd
+@docs hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
 @docs lineClamp
 
 
@@ -12529,11 +12529,9 @@ allowEnd =
 
     hangingPunctuation first
 
-    hangingPunctuation forceEnd
+    hangingPunctuation2 first forceEnd
 
-    hangingPunctuation allowEnd
-
-    hangingPunctuation last
+    hangingPunctuation3 first allowEnd last
 
 -}
 hangingPunctuation :
@@ -12547,6 +12545,53 @@ hangingPunctuation :
     -> Style
 hangingPunctuation (Value val) =
     AppendProperty ("hanging-punctuation:" ++ val)
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation2 first forceEnd
+
+-}
+hangingPunctuation2 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { first : Supported
+            , forceEnd : Supported
+            , allowEnd : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation2 (Value val1) (Value val2) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation3 first allowEnd last
+
+-}
+hangingPunctuation3 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { forceEnd : Supported
+            , allowEnd : Supported
+            }
+    ->
+        Value
+            { first : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
 
 
 {-| Sets `manual` value for usage with [`hyphens`](#hyphens).
