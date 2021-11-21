@@ -83,7 +83,7 @@ module Css exposing
     , auto, none
     , hidden, visible
     , contentBox, borderBox
-    , overflow, overflowX, overflowY
+    , overflow, overflowX, overflowY, clip
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
@@ -498,7 +498,7 @@ Multiple CSS properties use these values.
 
 ## Overflow
 
-@docs overflow, overflowX, overflowY
+@docs overflow, overflowX, overflowY, clip
 @docs overflowAnchor
 
 @docs overflowWrap
@@ -1256,6 +1256,7 @@ overflow :
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
+        , clip : Supported
         }
     -> Style
 overflow (Value val) =
@@ -1279,6 +1280,7 @@ overflowX :
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
+        , clip : Supported
         }
     -> Style
 overflowX (Value val) =
@@ -1302,10 +1304,27 @@ overflowY :
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
+        , clip : Supported
         }
     -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
+
+
+{-| The `clip` value used by [`overflow`](#overflow).
+
+    overflow clip
+
+    overflowX clip
+
+    overflowY clip
+
+-}
+clip : Value { provides | clip : Supported }
+clip =
+    Value "clip"
+
+
 
 
 {-| Sets [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
