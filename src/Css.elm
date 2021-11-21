@@ -133,8 +133,8 @@ module Css exposing
     , matrix, matrix3d
     , perspective, perspectiveOrigin, perspectiveOrigin2
     , perspective_
-    , rotate, rotateX, rotateY, rotateZ, rotate3d
-    , scale, scale2, scaleX, scaleY, scaleZ, scale3d
+    , rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3, z
+    , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , animationName, animationNames, animationDuration, animationDurations, animationTimingFunction, animationTimingFunctions, animationIterationCount, animationIterationCounts, animationDirection, animationDirections, animationPlayState, animationPlayStates, animationDelay, animationDelays, animationFillMode, animationFillModes
@@ -659,12 +659,12 @@ Multiple CSS properties use these values.
 
 ## Rotation
 
-@docs rotate, rotateX, rotateY, rotateZ, rotate3d
+@docs rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3, z
 
 
 ## Scaling (resizing)
 
-@docs scale, scale2, scaleX, scaleY, scaleZ, scale3d
+@docs scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
 
 
 ## Skewing (distortion)
@@ -10807,8 +10807,8 @@ type alias TransformFunctionSupported supported =
         , translateY : Supported
         , translateZ : Supported
         , translate3d : Supported
-        , scale : Supported
-        , scale2 : Supported
+        , scale_ : Supported
+        , scale2_ : Supported
         , scaleX : Supported
         , scaleY : Supported
         , scaleZ : Supported
@@ -10817,7 +10817,7 @@ type alias TransformFunctionSupported supported =
         , skew2 : Supported
         , skewX : Supported
         , skewY : Supported
-        , rotate : Supported
+        , rotate_ : Supported
         , rotateX : Supported
         , rotateY : Supported
         , rotateZ : Supported
@@ -10843,8 +10843,8 @@ type alias TransformFunction =
     transform (translateY (in 3))
     transform (translateZ (px 2))
     transform (translate3d (px 12) (pct 50) (em 3))
-    transform (scale 2)
-    transform (scale2 2, 0.5)
+    transform (scale_ 2)
+    transform (scale2_ 2, 0.5)
     transform (scaleX 2)
     transform (scaleY 0.5)
     transform (scaleZ 0.3)
@@ -10853,7 +10853,7 @@ type alias TransformFunction =
     transform (skew2 (deg 30) (deg 20))
     transform (skewX (deg 30))
     transform (skewY (rad 1.07))
-    transform (rotate (turn 0.5))
+    transform (rotate_ (turn 0.5))
     transform (rotateX (deg 10))
     transform (rotateY (deg 10))
     transform (rotateZ (deg 10))
@@ -10869,7 +10869,7 @@ transform (Value val) =
 {-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/)
 with a series of transform-functions.
 
-    transforms (translate (px 12)) [ scale 2, skew (deg 20) ]
+    transforms (translate (px 12)) [ scale_ 2, skew (deg 20) ]
 
 -}
 transforms :
@@ -11050,8 +11050,8 @@ translateY (Value valY) =
 translateZ :
     Value Length
     -> Value { provides | translateZ : Supported }
-translateZ (Value z) =
-    Value ("translateZ(" ++ z ++ ")")
+translateZ (Value valZ) =
+    Value ("translateZ(" ++ valZ ++ ")")
 
 
 {-| Sets `translate3d` value for usage with [`transform`](#transform).
@@ -11073,31 +11073,96 @@ translate3d :
             )
     -> Value Length
     -> Value { provides | translate3d : Supported }
-translate3d (Value valX) (Value valY) (Value z) =
-    Value ("translate3d(" ++ valX ++ "," ++ valY ++ "," ++ z ++ ")")
+translate3d (Value valX) (Value valY) (Value valZ) =
+    Value ("translate3d(" ++ valX ++ "," ++ valY ++ "," ++ valZ ++ ")")
 
 
 
 -- SCALING (resizing)
 
 
+{-| The [`scale`](https://css-tricks.com/almanac/properties/s/scale) property.
+
+This one-argument version lets you set a global value, `none` or
+a `num` that will scale the element by both X and Y axes
+(equivalent to [`scale_`](#scale_)).
+
+    scale none
+
+    scale (num 3)
+
+    scale2 (num 1) (num 3)
+
+    scale3 (num 1) (num 3) (num 4)
+-}
+scale :
+    BaseValue
+        { num : Supported
+        , none : Supported
+        }
+    -> Style
+scale (Value val) =
+    AppendProperty ("scale:" ++ val)
+
+
+{-| The [`scale`](https://css-tricks.com/almanac/properties/s/scale) property.
+
+This two-argument version lets you specify scaling in X and Y axes
+(equivalent to [`scale2_`](#scale2_)).
+
+    scale2 (num 1) (num 3)
+-}
+scale2 :
+    Value
+        { num : Supported
+        }
+    -> Value
+        { num : Supported
+        }
+    -> Style
+scale2 (Value xVal) (Value yVal) =
+    AppendProperty ("scale:" ++ xVal ++ " " ++ yVal)
+
+
+{-| The [`scale`](https://css-tricks.com/almanac/properties/s/scale) property.
+
+This three-argument version lets you specify scaling in X, Y and Z axes
+(equivalent to [`scale3d`](#scale3d)).
+
+    scale3 (num 1) (num 3) (num 4)
+-}
+scale3 :
+    Value
+        { num : Supported
+        }
+    -> Value
+        { num : Supported
+        }
+    -> Value
+        { num : Supported
+        }
+    -> Style
+scale3 (Value xVal) (Value yVal) (Value zVal) =
+    AppendProperty ("scale:" ++ xVal ++ " " ++ yVal ++ " " ++ zVal)
+
+
 {-| Sets `scale` value for usage with [`transform`](#transform).
 
-    transform (scale 0.7)
+    transform (scale_ 0.7)
 
 -}
-scale : Float -> Value { provides | scale : Supported }
-scale val =
+scale_ : Float -> Value { provides | scale_ : Supported }
+scale_ val =
     Value ("scale(" ++ String.fromFloat val ++ ")")
 
 
 {-| Sets `scale` value for usage with [`transform`](#transform).
 
-    transform (scale 0.7 0.7)
+    transform (scale2_ 0.7 0.7)
 
 -}
-scale2 : Float -> Float -> Value { provides | scale2 : Supported }
-scale2 valX valY =
+scale2_ : Float -> Float -> Value { provides | scale2_ : Supported }
+scale2_ valX valY =
     Value ("scale(" ++ String.fromFloat valX ++ ", " ++ String.fromFloat valY ++ ")")
 
 
@@ -11127,8 +11192,8 @@ scaleY valY =
 
 -}
 scaleZ : Float -> Value { provides | scaleZ : Supported }
-scaleZ z =
-    Value ("scaleZ(" ++ String.fromFloat z ++ ")")
+scaleZ valZ =
+    Value ("scaleZ(" ++ String.fromFloat valZ ++ ")")
 
 
 {-| Sets `scale3d` value for usage with [`transform`](#transform).
@@ -11141,8 +11206,8 @@ scale3d :
     -> Float
     -> Float
     -> Value { provides | scale3d : Supported }
-scale3d valX valY z =
-    Value ("scale3d(" ++ String.fromFloat valX ++ "," ++ String.fromFloat valY ++ "," ++ String.fromFloat z ++ ")")
+scale3d valX valY valZ =
+    Value ("scale3d(" ++ String.fromFloat valX ++ "," ++ String.fromFloat valY ++ "," ++ String.fromFloat valZ ++ ")")
 
 
 
@@ -11201,16 +11266,66 @@ skewY (Value angle) =
 
 -- ROTATION
 
+{-| The [`rotate`](https://css-tricks.com/almanac/properties/r/rotate/) property.
+
+This one-argument version lets you set a global variable, `none`, or angle.
+
+    rotate none
+
+    rotate inherit
+
+    rotate (deg 60)
+
+    rotate2 x (deg 50)
+
+    rotate2 y (deg 100)
+
+    rotate2 (vec3 1 2 10) (deg 100)
+-}
+rotate :
+    BaseValue
+        (AngleSupported
+            { none : Supported
+            }
+        )
+    -> Style
+rotate (Value value) =
+    AppendProperty ("rotate:" ++ value)
+
+
+{-| The [`rotate`](https://css-tricks.com/almanac/properties/r/rotate/) property.
+
+This two-argument version lets you set an axis or a vector, then an angle value.
+
+    rotate2 x (deg 50)
+
+    rotate2 y (deg 100)
+
+    rotate2 (vec3 1 2 10) (deg 100)
+-}
+rotate2 :
+    Value
+        { x : Supported
+        , y : Supported
+        , z : Supported
+        , vec3 : Supported
+        }
+    -> Value Angle
+    -> Style
+rotate2 (Value axisOrVecVal) (Value angleVal)=
+    AppendProperty ("rotate:" ++ axisOrVecVal ++ " " ++ angleVal)
+
 
 {-| Sets `rotate` value for usage with [`transform`](#transform).
 
-    transform (rotate (deg 30))
+    transform (rotate_ (deg 30))
 
+This is called `rotate_` instead of `rotate` because [`rotate` is already a function.](#rotate)
 -}
-rotate :
+rotate_ :
     Value Angle
-    -> Value { provides | rotate : Supported }
-rotate (Value angle) =
+    -> Value { provides | rotate_ : Supported }
+rotate_ (Value angle) =
     Value ("rotate(" ++ angle ++ ")")
 
 
@@ -11261,19 +11376,45 @@ rotate3d :
     -> Float
     -> Value Angle
     -> Value { provides | rotate3d : Supported }
-rotate3d valX valY z (Value angle) =
+rotate3d valX valY valZ (Value angle) =
     Value
         ("rotate3d("
             ++ String.fromFloat valX
             ++ ","
             ++ String.fromFloat valY
             ++ ","
-            ++ String.fromFloat z
+            ++ String.fromFloat valZ
             ++ ","
             ++ angle
             ++ ")"
         )
 
+
+{-| A vector consisting of three values.
+
+Sets the vector values in [`rotate2`](#rotate2).
+
+    rotate2 (vec3 1 2 3) (deg 100)
+
+-}
+vec3 : Float -> Float -> Float -> Value { provides | vec3 : Supported }
+vec3 vec1Val vec2Val vec3Val =
+    Value
+        ( String.fromFloat vec1Val
+        ++ " "
+        ++ String.fromFloat vec2Val
+        ++ " "
+        ++ String.fromFloat vec3Val
+        )
+
+{-| Sets `z` value for usage with [`rotate2`](#rotate2).
+
+    rotate z (deg 100)
+
+-}
+z : Value { provides | z : Supported }
+z =
+    Value "z"
 
 
 -- PERSPECTIVE
@@ -13725,9 +13866,12 @@ scrollSnapType (Value val) =
     AppendProperty ("scroll-snap-type:" ++ val)
 
 
-{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
 
     scrollSnapType2 x mandatory
+
+    rotate x (deg 10)
 
 -}
 x : Value { provides | x : Supported }
@@ -13735,9 +13879,12 @@ x =
     Value "x"
 
 
-{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
 
     scrollSnapType2 y mandatory
+
+    rotate y (deg 50)
 
 -}
 y : Value { provides | y : Supported }
