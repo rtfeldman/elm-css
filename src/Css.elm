@@ -11,7 +11,7 @@ module Css exposing
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
     , Time, TimeSupported, s, ms
     , pseudoClass, active, disabled
-    , pseudoElement, before, after
+    , pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
     , width, minWidth, maxWidth, height, minHeight, maxHeight
     , minContent, maxContent, fitContent
     , backgroundAttachment, backgroundAttachments, scroll, local
@@ -230,7 +230,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 ## Pseudo-Elements
 
-@docs pseudoElement, before, after
+@docs pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
 
 
 ## Sizing
@@ -2249,7 +2249,7 @@ pseudoElement element =
 
     div [ after [ content "hi!" ] ]
 
---TODO : Introduce aw way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
+--TODO : Introduce a way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
 
 -}
 after : List Style -> Style
@@ -2262,12 +2262,80 @@ after =
 
     div [ before [ content "hi!" ] ]
 
---TODO : Introduce aw way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
+--TODO : Introduce a way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
 
 -}
 before : List Style -> Style
 before =
     pseudoElement "before"
+
+
+{-| A [`::backdrop`](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    backdrop
+        [ background (rgba 255 0 0 0.25)
+        ]
+-}
+backdrop : List Style -> Style
+backdrop =
+    pseudoElement "backdrop"
+
+
+{-| A [`::cue`](https://developer.mozilla.org/en-US/docs/Web/CSS/::cue)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    cue
+        [ color (rgba 255 255 0 1)
+        , fontWeight (int 600)
+        ]
+-}
+cue : List Style -> Style
+cue =
+    pseudoElement "cue"
+
+{-| A [`::marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/::marker)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    marker
+        [ color (rgba 255 255 0 1)
+        , fontWeight (int 600)
+        ]
+-}
+marker : List Style -> Style
+marker =
+    pseudoElement "marker"
+
+
+{-| A [`::placeholder`](https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+Be careful when using placeholders as they can compromise accessibility.
+
+    placeholder
+        [ opacity (num 1) <| important
+        , color (rgb 90 90 90)
+        , fontWeight (int 300)
+        ]
+]
+-}
+placeholder : List Style -> Style
+placeholder =
+    pseudoElement "placeholder"
+
+
+{-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/::selection)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    selection
+        [ backgroundColor (rgb 200 140 15)
+        ]
+    
+
+-}
+selection : List Style -> Style
+selection =
+    pseudoElement "selection"
 
 
 
