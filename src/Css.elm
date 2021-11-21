@@ -11150,6 +11150,7 @@ scale3 (Value xVal) (Value yVal) (Value zVal) =
 
     transform (scale_ 0.7)
 
+This is called `scale_` instead of `scale` because [`scale` is already a function](#scale).
 -}
 scale_ : Float -> Value { provides | scale_ : Supported }
 scale_ val =
@@ -11160,6 +11161,7 @@ scale_ val =
 
     transform (scale2_ 0.7 0.7)
 
+This is called `scale2_` instead of `scale2` because [`scale2` is already a function](#scale2).
 -}
 scale2_ : Float -> Float -> Value { provides | scale2_ : Supported }
 scale2_ valX valY =
@@ -11320,7 +11322,7 @@ rotate2 (Value axisOrVecVal) (Value angleVal)=
 
     transform (rotate_ (deg 30))
 
-This is called `rotate_` instead of `rotate` because [`rotate` is already a function.](#rotate)
+This is called `rotate_` instead of `rotate` because [`rotate` is already a function](#rotate).
 -}
 rotate_ :
     Value Angle
