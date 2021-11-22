@@ -10,7 +10,11 @@ module Css exposing
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
     , Time, TimeSupported, s, ms
-    , pseudoClass, active, disabled
+    , pseudoClass, active, checked, disabled, empty, enabled
+    , firstChild, firstOfType, focus, fullscreen, hover, inRange
+    , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
+    , onlyOfType, outOfRange, readOnly, readWrite, required
+    , root, scope, target, valid, visited
     , pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
     , width, minWidth, maxWidth, height, minHeight, maxHeight
     , minContent, maxContent, fitContent
@@ -225,7 +229,11 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 ## Pseudo-Classes
 
-@docs pseudoClass, active, disabled
+@docs pseudoClass, active, checked, disabled, empty, enabled
+@docs firstChild, firstOfType, focus, fullscreen, hover, inRange
+@docs indeterminate, invalid, lastChild, lastOfType, link, onlyChild
+@docs onlyOfType, outOfRange, readOnly, readWrite, required
+@docs root, scope, target, valid, visited
 
 
 ## Pseudo-Elements
@@ -2207,6 +2215,20 @@ active =
     pseudoClass "active"
 
 
+{-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+This pseudo-class is for any checkbox, option or radio input that is checked or toggled on.
+
+    checked
+        [ backgroundColor (rgb 0 0 255)
+        ]
+-}
+checked : List Style -> Style
+checked =
+    pseudoClass "checked"
+
+
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled)
 [pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
 
@@ -2217,6 +2239,298 @@ disabled : List Style -> Style
 disabled =
     pseudoClass "disabled"
 
+
+{-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/:empty)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    empty
+        [ backgroundColor (rgb 20 20 20)
+        ]
+
+-}
+empty : List Style -> Style
+empty =
+    pseudoClass "empty"
+
+
+{-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:enabled)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    enabled
+        [ borderColor (rgba 150 150 0 0.5)
+        ]
+-}
+enabled : List Style -> Style
+enabled =
+    pseudoClass "enabled"
+
+
+{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    firstChild
+        [ fontWeight bold
+        ]
+-}
+firstChild : List Style -> Style
+firstChild =
+    pseudoClass "first-child"
+
+
+{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    firstOfType
+        [ color (rgb 255 0 0)
+        ]
+-}
+firstOfType : List Style -> Style
+firstOfType =
+    pseudoClass "first-of-type"
+
+
+{-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    focus
+        [ border3 (px 2) solid (rgb 0 0 0)
+        ]
+-}
+focus : List Style -> Style
+focus =
+    pseudoClass "focus"
+
+
+{-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/:fullscreen)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    fullscreen
+        [ backgroundColor (rgb 0 0 0)
+        ]
+-}
+fullscreen : List Style -> Style
+fullscreen =
+    pseudoClass "fullscreen"
+
+
+{-| A [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+    
+    hover
+        [ fontWeight bold
+        , color (rgb 255 50 0)
+        ]
+-}
+hover : List Style -> Style
+hover =
+    pseudoClass "hover"
+
+
+{-| An [`:in-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:in-range)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    inRange
+        [ backgroundColor (rgb 0 255 0)
+        ]
+-}
+inRange : List Style -> Style
+inRange =
+    pseudoClass "in-range"
+
+
+{-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/:indeterminate)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    indeterminate
+        [ backgroundColor (rgb 100 100 100)
+        ]
+-}
+indeterminate : List Style -> Style
+indeterminate =
+    pseudoClass "indeterminate"
+
+
+{-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    invalid
+        [ color (rgb 255 0 0)
+        , fontWeight bold
+        ]
+-}
+invalid : List Style -> Style
+invalid =
+    pseudoClass "invalid"
+
+
+{-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    lastChild
+        [ backgroundColor (rgb 0 0 255)
+        ]
+-}
+lastChild : List Style -> Style
+lastChild =
+    pseudoClass "last-child"
+
+
+{-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    lastOfType
+        [ color (rgb 100 100 100)
+        ]
+-}
+lastOfType : List Style -> Style
+lastOfType =
+    pseudoClass "last-of-type"
+
+
+{-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/:link)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    link
+        [ color (rgb 0 0 255)
+        ]
+-}
+link : List Style -> Style
+link =
+    pseudoClass "link"
+
+
+{-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    onlyChild
+        [ backgroundColor (rgb 255 255 255)
+        ]
+-}
+onlyChild : List Style -> Style
+onlyChild =
+    pseudoClass "only-child"
+
+
+{-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    onlyOfType
+        [ color (rgb 255 0 0)
+        , fontStyle italic
+        ]
+-}
+onlyOfType : List Style -> Style
+onlyOfType =
+    pseudoClass "only-of-type"
+
+
+{-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:out-of-range)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    outOfRange
+        [ color (rgb 255 0 0)
+        ]
+-}
+outOfRange : List Style -> Style
+outOfRange =
+    pseudoClass "out-of-range"
+
+
+{-| A [`:read-only`](https://developer.mozilla.org/en-US/docs/Web/CSS/:read-only)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    readOnly
+        [ color (rgb 50 50 50)
+        ]
+-}
+readOnly : List Style -> Style
+readOnly =
+    pseudoClass "read-only"
+
+
+{-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/:read-write)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    readWrite
+        [ backgroundColor (rgb 0 50 150)
+        ]
+-}
+readWrite : List Style -> Style
+readWrite =
+    pseudoClass "read-write"
+
+
+{-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/:required)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    required
+        [ border (px 2) solid (rgb 100 100 100)
+        ]
+-}
+required : List Style -> Style
+required =
+    pseudoClass "required"
+
+
+{-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/:root)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    root
+        [ backgroundColor (rgb 0 200 200)
+        ]
+-}
+root : List Style -> Style
+root =
+    pseudoClass "root"
+
+
+{-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/:scope)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    scope
+        [ backgroundColor (rgb 0 200 200)
+        ]
+-}
+scope : List Style -> Style
+scope =
+    pseudoClass "scope"
+
+
+{-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/:target)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    target
+        [ fontWeight bold
+        , border3 (px 2) dotted (rgb 255 0 0)
+        ]
+-}
+target : List Style -> Style
+target =
+    pseudoClass "target"
+
+
+{-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/:valid)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    valid
+        [ border3 (px 1) solid (rgb 0 255 0)
+        ]
+-}
+valid : List Style -> Style
+valid =
+    pseudoClass "valid"
+
+
+{-| A [`:visited`](https://developer.mozilla.org/en-US/docs/Web/CSS/:visited)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    visited
+        [ color (rgb 150 0 255)
+        ]
+-}
+visited : List Style -> Style
+visited =
+    pseudoClass "visited"
 
 
 -- PSEUDO-ELEMENTS--
