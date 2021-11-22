@@ -2223,6 +2223,7 @@ This pseudo-class is for any checkbox, option or radio input that is checked or 
     checked
         [ backgroundColor (rgb 0 0 255)
         ]
+
 -}
 checked : List Style -> Style
 checked =
@@ -2259,6 +2260,7 @@ empty =
     enabled
         [ borderColor (rgba 150 150 0 0.5)
         ]
+
 -}
 enabled : List Style -> Style
 enabled =
@@ -2271,6 +2273,7 @@ enabled =
     firstChild
         [ fontWeight bold
         ]
+
 -}
 firstChild : List Style -> Style
 firstChild =
@@ -2283,6 +2286,7 @@ firstChild =
     firstOfType
         [ color (rgb 255 0 0)
         ]
+
 -}
 firstOfType : List Style -> Style
 firstOfType =
@@ -2295,6 +2299,7 @@ firstOfType =
     focus
         [ border3 (px 2) solid (rgb 0 0 0)
         ]
+
 -}
 focus : List Style -> Style
 focus =
@@ -2307,6 +2312,7 @@ focus =
     fullscreen
         [ backgroundColor (rgb 0 0 0)
         ]
+
 -}
 fullscreen : List Style -> Style
 fullscreen =
@@ -2315,11 +2321,12 @@ fullscreen =
 
 {-| A [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover)
 [pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-    
+
     hover
         [ fontWeight bold
         , color (rgb 255 50 0)
         ]
+
 -}
 hover : List Style -> Style
 hover =
@@ -2332,6 +2339,7 @@ hover =
     inRange
         [ backgroundColor (rgb 0 255 0)
         ]
+
 -}
 inRange : List Style -> Style
 inRange =
@@ -2344,6 +2352,7 @@ inRange =
     indeterminate
         [ backgroundColor (rgb 100 100 100)
         ]
+
 -}
 indeterminate : List Style -> Style
 indeterminate =
@@ -2357,6 +2366,7 @@ indeterminate =
         [ color (rgb 255 0 0)
         , fontWeight bold
         ]
+
 -}
 invalid : List Style -> Style
 invalid =
@@ -2369,6 +2379,7 @@ invalid =
     lastChild
         [ backgroundColor (rgb 0 0 255)
         ]
+
 -}
 lastChild : List Style -> Style
 lastChild =
@@ -2381,6 +2392,7 @@ lastChild =
     lastOfType
         [ color (rgb 100 100 100)
         ]
+
 -}
 lastOfType : List Style -> Style
 lastOfType =
@@ -2393,6 +2405,7 @@ lastOfType =
     link
         [ color (rgb 0 0 255)
         ]
+
 -}
 link : List Style -> Style
 link =
@@ -2405,6 +2418,7 @@ link =
     onlyChild
         [ backgroundColor (rgb 255 255 255)
         ]
+
 -}
 onlyChild : List Style -> Style
 onlyChild =
@@ -2418,6 +2432,7 @@ onlyChild =
         [ color (rgb 255 0 0)
         , fontStyle italic
         ]
+
 -}
 onlyOfType : List Style -> Style
 onlyOfType =
@@ -2430,6 +2445,7 @@ onlyOfType =
     outOfRange
         [ color (rgb 255 0 0)
         ]
+
 -}
 outOfRange : List Style -> Style
 outOfRange =
@@ -2442,6 +2458,7 @@ outOfRange =
     readOnly
         [ color (rgb 50 50 50)
         ]
+
 -}
 readOnly : List Style -> Style
 readOnly =
@@ -2454,6 +2471,7 @@ readOnly =
     readWrite
         [ backgroundColor (rgb 0 50 150)
         ]
+
 -}
 readWrite : List Style -> Style
 readWrite =
@@ -2466,6 +2484,7 @@ readWrite =
     required
         [ border (px 2) solid (rgb 100 100 100)
         ]
+
 -}
 required : List Style -> Style
 required =
@@ -2478,6 +2497,7 @@ required =
     root
         [ backgroundColor (rgb 0 200 200)
         ]
+
 -}
 root : List Style -> Style
 root =
@@ -2490,6 +2510,7 @@ root =
     scope
         [ backgroundColor (rgb 0 200 200)
         ]
+
 -}
 scope : List Style -> Style
 scope =
@@ -2503,6 +2524,7 @@ scope =
         [ fontWeight bold
         , border3 (px 2) dotted (rgb 255 0 0)
         ]
+
 -}
 target : List Style -> Style
 target =
@@ -2515,6 +2537,7 @@ target =
     valid
         [ border3 (px 1) solid (rgb 0 255 0)
         ]
+
 -}
 valid : List Style -> Style
 valid =
@@ -2527,10 +2550,12 @@ valid =
     visited
         [ color (rgb 150 0 255)
         ]
+
 -}
 visited : List Style -> Style
 visited =
     pseudoClass "visited"
+
 
 
 -- PSEUDO-ELEMENTS--
@@ -2590,6 +2615,7 @@ before =
     backdrop
         [ background (rgba 255 0 0 0.25)
         ]
+
 -}
 backdrop : List Style -> Style
 backdrop =
@@ -2603,10 +2629,12 @@ backdrop =
         [ color (rgba 255 255 0 1)
         , fontWeight (int 600)
         ]
+
 -}
 cue : List Style -> Style
 cue =
     pseudoElement "cue"
+
 
 {-| A [`::marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/::marker)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
@@ -2615,6 +2643,7 @@ cue =
         [ color (rgba 255 255 0 1)
         , fontWeight (int 600)
         ]
+
 -}
 marker : List Style -> Style
 marker =
@@ -2631,7 +2660,9 @@ Be careful when using placeholders as they can compromise accessibility.
         , color (rgb 90 90 90)
         , fontWeight (int 400)
         ]
+
 ]
+
 -}
 placeholder : List Style -> Style
 placeholder =
@@ -2644,7 +2675,7 @@ placeholder =
     selection
         [ backgroundColor (rgb 200 140 15)
         ]
-    
+
 
 -}
 selection : List Style -> Style
@@ -11476,6 +11507,7 @@ a `num` that will scale the element by both X and Y axes
     scale2 (num 1) (num 3)
 
     scale3 (num 1) (num 3) (num 4)
+
 -}
 scale :
     BaseValue
@@ -11493,14 +11525,16 @@ This two-argument version lets you specify scaling in X and Y axes
 (equivalent to [`scale2_`](#scale2_)).
 
     scale2 (num 1) (num 3)
+
 -}
 scale2 :
     Value
         { num : Supported
         }
-    -> Value
-        { num : Supported
-        }
+    ->
+        Value
+            { num : Supported
+            }
     -> Style
 scale2 (Value xVal) (Value yVal) =
     AppendProperty ("scale:" ++ xVal ++ " " ++ yVal)
@@ -11512,17 +11546,20 @@ This three-argument version lets you specify scaling in X, Y and Z axes
 (equivalent to [`scale3d`](#scale3d)).
 
     scale3 (num 1) (num 3) (num 4)
+
 -}
 scale3 :
     Value
         { num : Supported
         }
-    -> Value
-        { num : Supported
-        }
-    -> Value
-        { num : Supported
-        }
+    ->
+        Value
+            { num : Supported
+            }
+    ->
+        Value
+            { num : Supported
+            }
     -> Style
 scale3 (Value xVal) (Value yVal) (Value zVal) =
     AppendProperty ("scale:" ++ xVal ++ " " ++ yVal ++ " " ++ zVal)
@@ -11533,6 +11570,7 @@ scale3 (Value xVal) (Value yVal) (Value zVal) =
     transform (scale_ 0.7)
 
 This is called `scale_` instead of `scale` because [`scale` is already a function](#scale).
+
 -}
 scale_ : Float -> Value { provides | scale_ : Supported }
 scale_ val =
@@ -11544,6 +11582,7 @@ scale_ val =
     transform (scale2_ 0.7 0.7)
 
 This is called `scale2_` instead of `scale2` because [`scale2` is already a function](#scale2).
+
 -}
 scale2_ : Float -> Float -> Value { provides | scale2_ : Supported }
 scale2_ valX valY =
@@ -11650,6 +11689,7 @@ skewY (Value angle) =
 
 -- ROTATION
 
+
 {-| The [`rotate`](https://css-tricks.com/almanac/properties/r/rotate/) property.
 
 This one-argument version lets you set a global variable, `none`, or angle.
@@ -11665,6 +11705,7 @@ This one-argument version lets you set a global variable, `none`, or angle.
     rotate2 y (deg 100)
 
     rotate2 (vec3 1 2 10) (deg 100)
+
 -}
 rotate :
     BaseValue
@@ -11686,6 +11727,7 @@ This two-argument version lets you set an axis or a vector, then an angle value.
     rotate2 y (deg 100)
 
     rotate2 (vec3 1 2 10) (deg 100)
+
 -}
 rotate2 :
     Value
@@ -11696,7 +11738,7 @@ rotate2 :
         }
     -> Value Angle
     -> Style
-rotate2 (Value axisOrVecVal) (Value angleVal)=
+rotate2 (Value axisOrVecVal) (Value angleVal) =
     AppendProperty ("rotate:" ++ axisOrVecVal ++ " " ++ angleVal)
 
 
@@ -11705,6 +11747,7 @@ rotate2 (Value axisOrVecVal) (Value angleVal)=
     transform (rotate_ (deg 30))
 
 This is called `rotate_` instead of `rotate` because [`rotate` is already a function](#rotate).
+
 -}
 rotate_ :
     Value Angle
@@ -11784,12 +11827,13 @@ Sets the vector values in [`rotate2`](#rotate2).
 vec3 : Float -> Float -> Float -> Value { provides | vec3 : Supported }
 vec3 vec1Val vec2Val vec3Val =
     Value
-        ( String.fromFloat vec1Val
-        ++ " "
-        ++ String.fromFloat vec2Val
-        ++ " "
-        ++ String.fromFloat vec3Val
+        (String.fromFloat vec1Val
+            ++ " "
+            ++ String.fromFloat vec2Val
+            ++ " "
+            ++ String.fromFloat vec3Val
         )
+
 
 {-| Sets `z` value for usage with [`rotate2`](#rotate2).
 
@@ -11799,6 +11843,7 @@ vec3 vec1Val vec2Val vec3Val =
 z : Value { provides | z : Supported }
 z =
     Value "z"
+
 
 
 -- PERSPECTIVE
