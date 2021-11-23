@@ -10,8 +10,12 @@ module Css exposing
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
     , Time, TimeSupported, s, ms
-    , pseudoClass, active, disabled
-    , pseudoElement, before, after
+    , pseudoClass, active, checked, disabled, empty, enabled
+    , firstChild, firstOfType, focus, fullscreen, hover, inRange
+    , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
+    , onlyOfType, outOfRange, readOnly, readWrite, required
+    , root, scope, target, valid, visited
+    , pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
     , width, minWidth, maxWidth, height, minHeight, maxHeight
     , blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
     , minContent, maxContent, fitContent
@@ -22,7 +26,7 @@ module Css exposing
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
     , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
-    , cover, contain
+    , cover, contain_
     , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
     , TextShadowConfig, textShadow, defaultTextShadow
     , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
@@ -62,7 +66,7 @@ module Css exposing
     , fontDisplay, fallback, swap, optional
     , writingMode, verticalLr, verticalRl, horizontalTb
     , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, strict, loose
-    , hangingPunctuation, first, last, forceEnd, allowEnd
+    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
     , lineClamp
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontSizeAdjust
@@ -88,7 +92,7 @@ module Css exposing
     , auto, none
     , hidden, visible
     , contentBox, borderBox
-    , overflow, overflowX, overflowY, overflowBlock, overflowInline
+    , overflow, overflowX, overflowY, overflowBlock, overflowInline, clip
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
@@ -129,15 +133,17 @@ module Css exposing
     , strokeOrigin, fillBox, strokeBox
     , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
+    , paintOrder, paintOrder2, paintOrder3, markers
     , columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan, all_
     , transform, transforms, transformOrigin, transformOrigin2
     , TransformFunction, TransformFunctionSupported
     , matrix, matrix3d
-    , perspective
-    , rotate, rotateX, rotateY, rotateZ, rotate3d
-    , scale, scale2, scaleX, scaleY, scaleZ, scale3d
+    , perspective, perspectiveOrigin, perspectiveOrigin2
+    , perspective_
+    , rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3, z
+    , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , animationName, animationNames, animationDuration, animationDurations, animationTimingFunction, animationTimingFunctions, animationIterationCount, animationIterationCounts, animationDirection, animationDirections, animationPlayState, animationPlayStates, animationDelay, animationDelays, animationFillMode, animationFillModes
@@ -170,6 +176,8 @@ module Css exposing
     , caretColor
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted, stroke
+    , resize, horizontal, vertical
+    , contain, contain2, contain3, contain4, strict, size, layout, style, paint
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -231,12 +239,16 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 ## Pseudo-Classes
 
-@docs pseudoClass, active, disabled
+@docs pseudoClass, active, checked, disabled, empty, enabled
+@docs firstChild, firstOfType, focus, fullscreen, hover, inRange
+@docs indeterminate, invalid, lastChild, lastOfType, link, onlyChild
+@docs onlyOfType, outOfRange, readOnly, readWrite, required
+@docs root, scope, target, valid, visited
 
 
 ## Pseudo-Elements
 
-@docs pseudoElement, before, after
+@docs pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
 
 
 ## Sizing
@@ -270,7 +282,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs repeat, noRepeat, repeatX, repeatY, space, round
 
-@docs cover, contain
+@docs cover, contain_
 
 
 ## Box Shadow
@@ -427,7 +439,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 @docs fontDisplay, fallback, swap, optional
 @docs writingMode, verticalLr, verticalRl, horizontalTb
 @docs hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, strict, loose
-@docs hangingPunctuation, first, last, forceEnd, allowEnd
+@docs hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
 @docs lineClamp
 
 
@@ -520,7 +532,7 @@ Multiple CSS properties use these values.
 
 ## Overflow
 
-@docs overflow, overflowX, overflowY, overflowBlock, overflowInline
+@docs overflow, overflowX, overflowY, overflowBlock, overflowInline, clip
 @docs overflowAnchor
 
 @docs overflowWrap
@@ -649,6 +661,11 @@ Multiple CSS properties use these values.
 @docs strokeDashJustify, compress, dashes, gaps
 
 
+## Other
+
+@docs paintOrder, paintOrder2, paintOrder3, markers
+
+
 # Columns
 
 @docs columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
@@ -669,17 +686,18 @@ Multiple CSS properties use these values.
 
 ## Perspective
 
-@docs perspective
+@docs perspective, perspectiveOrigin, perspectiveOrigin2
+@docs perspective_
 
 
 ## Rotation
 
-@docs rotate, rotateX, rotateY, rotateZ, rotate3d
+@docs rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3, z
 
 
 ## Scaling (resizing)
 
-@docs scale, scale2, scaleX, scaleY, scaleZ, scale3d
+@docs scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
 
 
 ## Skewing (distortion)
@@ -752,6 +770,8 @@ Multiple CSS properties use these values.
 @docs caretColor
 @docs pointerEvents
 @docs visiblePainted, visibleFill, visibleStroke, painted, stroke
+@docs resize, horizontal, vertical
+@docs contain, contain2, contain3, contain4, strict, size, layout, style, paint
 
 -}
 
@@ -1298,6 +1318,7 @@ overflow :
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
+        , clip : Supported
         }
     -> Style
 overflow (Value val) =
@@ -1321,6 +1342,7 @@ overflowX :
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
+        , clip : Supported
         }
     -> Style
 overflowX (Value val) =
@@ -1344,12 +1366,27 @@ overflowY :
         , hidden : Supported
         , scroll : Supported
         , auto : Supported
+        , clip : Supported
         }
     -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
 
 
+{-| The `clip` value used by [`overflow`](#overflow).
+
+    overflow clip
+
+    overflowX clip
+
+    overflowY clip
+
+-}
+clip : Value { provides | clip : Supported }
+clip =
+    Value "clip"
+    
+    
 {-| Sets [`overflow-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-block).
 
     overflowBlock visible
@@ -2604,7 +2641,22 @@ pseudoClass pseudoClassName =
 -}
 active : List Style -> Style
 active =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "active")
+    pseudoClass "active"
+
+
+{-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+This pseudo-class is for any checkbox, option or radio input that is checked or toggled on.
+
+    checked
+        [ backgroundColor (rgb 0 0 255)
+        ]
+
+-}
+checked : List Style -> Style
+checked =
+    pseudoClass "checked"
 
 
 {-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled)
@@ -2615,7 +2667,323 @@ active =
 -}
 disabled : List Style -> Style
 disabled =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector "disabled")
+    pseudoClass "disabled"
+
+
+{-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/:empty)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    empty
+        [ backgroundColor (rgb 20 20 20)
+        ]
+
+-}
+empty : List Style -> Style
+empty =
+    pseudoClass "empty"
+
+
+{-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:enabled)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    enabled
+        [ borderColor (rgba 150 150 0 0.5)
+        ]
+
+-}
+enabled : List Style -> Style
+enabled =
+    pseudoClass "enabled"
+
+
+{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    firstChild
+        [ fontWeight bold
+        ]
+
+-}
+firstChild : List Style -> Style
+firstChild =
+    pseudoClass "first-child"
+
+
+{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    firstOfType
+        [ color (rgb 255 0 0)
+        ]
+
+-}
+firstOfType : List Style -> Style
+firstOfType =
+    pseudoClass "first-of-type"
+
+
+{-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    focus
+        [ border3 (px 2) solid (rgb 0 0 0)
+        ]
+
+-}
+focus : List Style -> Style
+focus =
+    pseudoClass "focus"
+
+
+{-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/:fullscreen)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    fullscreen
+        [ backgroundColor (rgb 0 0 0)
+        ]
+
+-}
+fullscreen : List Style -> Style
+fullscreen =
+    pseudoClass "fullscreen"
+
+
+{-| A [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    hover
+        [ fontWeight bold
+        , color (rgb 255 50 0)
+        ]
+
+-}
+hover : List Style -> Style
+hover =
+    pseudoClass "hover"
+
+
+{-| An [`:in-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:in-range)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    inRange
+        [ backgroundColor (rgb 0 255 0)
+        ]
+
+-}
+inRange : List Style -> Style
+inRange =
+    pseudoClass "in-range"
+
+
+{-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/:indeterminate)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    indeterminate
+        [ backgroundColor (rgb 100 100 100)
+        ]
+
+-}
+indeterminate : List Style -> Style
+indeterminate =
+    pseudoClass "indeterminate"
+
+
+{-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    invalid
+        [ color (rgb 255 0 0)
+        , fontWeight bold
+        ]
+
+-}
+invalid : List Style -> Style
+invalid =
+    pseudoClass "invalid"
+
+
+{-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    lastChild
+        [ backgroundColor (rgb 0 0 255)
+        ]
+
+-}
+lastChild : List Style -> Style
+lastChild =
+    pseudoClass "last-child"
+
+
+{-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    lastOfType
+        [ color (rgb 100 100 100)
+        ]
+
+-}
+lastOfType : List Style -> Style
+lastOfType =
+    pseudoClass "last-of-type"
+
+
+{-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/:link)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    link
+        [ color (rgb 0 0 255)
+        ]
+
+-}
+link : List Style -> Style
+link =
+    pseudoClass "link"
+
+
+{-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    onlyChild
+        [ backgroundColor (rgb 255 255 255)
+        ]
+
+-}
+onlyChild : List Style -> Style
+onlyChild =
+    pseudoClass "only-child"
+
+
+{-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    onlyOfType
+        [ color (rgb 255 0 0)
+        , fontStyle italic
+        ]
+
+-}
+onlyOfType : List Style -> Style
+onlyOfType =
+    pseudoClass "only-of-type"
+
+
+{-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:out-of-range)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    outOfRange
+        [ color (rgb 255 0 0)
+        ]
+
+-}
+outOfRange : List Style -> Style
+outOfRange =
+    pseudoClass "out-of-range"
+
+
+{-| A [`:read-only`](https://developer.mozilla.org/en-US/docs/Web/CSS/:read-only)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    readOnly
+        [ color (rgb 50 50 50)
+        ]
+
+-}
+readOnly : List Style -> Style
+readOnly =
+    pseudoClass "read-only"
+
+
+{-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/:read-write)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    readWrite
+        [ backgroundColor (rgb 0 50 150)
+        ]
+
+-}
+readWrite : List Style -> Style
+readWrite =
+    pseudoClass "read-write"
+
+
+{-| A [`:required`](https://developer.mozilla.org/en-US/docs/Web/CSS/:required)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    required
+        [ border (px 2) solid (rgb 100 100 100)
+        ]
+
+-}
+required : List Style -> Style
+required =
+    pseudoClass "required"
+
+
+{-| A [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/:root)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    root
+        [ backgroundColor (rgb 0 200 200)
+        ]
+
+-}
+root : List Style -> Style
+root =
+    pseudoClass "root"
+
+
+{-| A [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/:scope)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    scope
+        [ backgroundColor (rgb 0 200 200)
+        ]
+
+-}
+scope : List Style -> Style
+scope =
+    pseudoClass "scope"
+
+
+{-| A [`:target`](https://developer.mozilla.org/en-US/docs/Web/CSS/:target)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    target
+        [ fontWeight bold
+        , border3 (px 2) dotted (rgb 255 0 0)
+        ]
+
+-}
+target : List Style -> Style
+target =
+    pseudoClass "target"
+
+
+{-| A [`:valid`](https://developer.mozilla.org/en-US/docs/Web/CSS/:valid)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    valid
+        [ border3 (px 1) solid (rgb 0 255 0)
+        ]
+
+-}
+valid : List Style -> Style
+valid =
+    pseudoClass "valid"
+
+
+{-| A [`:visited`](https://developer.mozilla.org/en-US/docs/Web/CSS/:visited)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    visited
+        [ color (rgb 150 0 255)
+        ]
+
+-}
+visited : List Style -> Style
+visited =
+    pseudoClass "visited"
 
 
 
@@ -2649,12 +3017,12 @@ pseudoElement element =
 
     div [ after [ content "hi!" ] ]
 
---TODO : Introduce aw way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
+--TODO : Introduce a way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
 
 -}
 after : List Style -> Style
 after =
-    Preprocess.WithPseudoElement (Structure.PseudoElement "after")
+    pseudoElement "after"
 
 
 {-| A [`::before`](https://css-tricks.com/almanac/selectors/a/after-and-before/)
@@ -2662,12 +3030,86 @@ after =
 
     div [ before [ content "hi!" ] ]
 
---TODO : Introduce aw way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
+--TODO : Introduce a way to do [`content`](https://developer.mozilla.org/en-US/docs/Web/CSS/content) - lots of options there, not just text. Also it's overloaded with `flexBasis content`.
 
 -}
 before : List Style -> Style
 before =
     pseudoElement "before"
+
+
+{-| A [`::backdrop`](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    backdrop
+        [ background (rgba 255 0 0 0.25)
+        ]
+
+-}
+backdrop : List Style -> Style
+backdrop =
+    pseudoElement "backdrop"
+
+
+{-| A [`::cue`](https://developer.mozilla.org/en-US/docs/Web/CSS/::cue)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    cue
+        [ color (rgba 255 255 0 1)
+        , fontWeight (int 600)
+        ]
+
+-}
+cue : List Style -> Style
+cue =
+    pseudoElement "cue"
+
+
+{-| A [`::marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/::marker)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    marker
+        [ color (rgba 255 255 0 1)
+        , fontWeight (int 600)
+        ]
+
+-}
+marker : List Style -> Style
+marker =
+    pseudoElement "marker"
+
+
+{-| A [`::placeholder`](https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+Be careful when using placeholders as they can compromise accessibility.
+
+    placeholder
+        [ opacity (num 1) <| important
+        , color (rgb 90 90 90)
+        , fontWeight (int 400)
+        ]
+
+]
+
+-}
+placeholder : List Style -> Style
+placeholder =
+    pseudoElement "placeholder"
+
+
+{-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/::selection)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+
+    selection
+        [ backgroundColor (rgb 200 140 15)
+        ]
+
+
+-}
+selection : List Style -> Style
+selection =
+    pseudoElement "selection"
 
 
 
@@ -3392,9 +3834,11 @@ displayListItem3 (Value displayOutside) (Value displayFlow) =
     AppendProperty ("display:list-item " ++ displayOutside ++ " " ++ displayFlow)
 
 
-{-| The `block` value used by [`display`](#display)
+{-| The `block` value used by [`display`](#display) and [`resize`].
 
     display block
+
+    resize block
 
 -}
 block : Value { provides | block : Supported }
@@ -3454,9 +3898,11 @@ contents =
     Value "contents"
 
 
-{-| The `inline` value used by [`display`](#display)
+{-| The `inline` value used by [`display`](#display) and [`resize`].
 
     display inline
+
+    resize inline
 
 -}
 inline : Value { provides | inline : Supported }
@@ -4284,9 +4730,16 @@ flexBasis (Value val) =
     AppendProperty ("flex-basis:" ++ val)
 
 
-{-| The `content` [`flex-basis` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values).
+{-| The `content` value used in:
 
-    flexBasis content
+  - [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values) (Indicates automatic sizing based on the item's content)
+  - [`contain`](#contain) (Indicates all containment rules apart from `size` and `style` are applied.)
+
+```
+flexBasis content
+
+contain content
+```
 
 -}
 content : Value { provides | content : Supported }
@@ -6503,12 +6956,12 @@ backgroundSize :
             { pct : Supported
             , auto : Supported
             , cover : Supported
-            , contain : Supported
+            , contain_ : Supported
             }
         )
     -> Style
-backgroundSize (Value size) =
-    AppendProperty ("background-size:" ++ size)
+backgroundSize (Value sizeVal) =
+    AppendProperty ("background-size:" ++ sizeVal)
 
 
 {-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/) for both width and height (in that order.)
@@ -6539,21 +6992,27 @@ backgroundSize2 (Value widthVal) (Value heightVal) =
     AppendProperty ("background-size:" ++ widthVal ++ " " ++ heightVal)
 
 
-{-| Sets `contain` for [`backgroundSize`](#backgroundSize) and [`overscrollBehavior`](#overscrollBehavior).
+{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
+for the following properties:
 
-For `backgroundSize`, this means this always shows the whole background image,
-even if it leaves empty spaces on the sides.
+  - [`backgroundSize`](#backgroundSize) (It always show the whole background
+    image, even if it leaves empty spaces on the sides.)
+  - [`objectFit`](#objectFit) (Replaced content is scaled to maintain proportions within the element's content box.)
+  - [`userSelect`](#userSelect) (Lets selection start within the element but that selection will be contained within that element's bounds.)
+  - [`overscrollBehavior`](#overscrollBehavior) (This means that default scroll overflow behavior
+is observed inside the element, but scroll chaining will not happen to neighbouring elements.)
 
-For `overscrollBehavior`, this means that default scroll overflow behavior
-is observed inside the element, but scroll chaining will not happen to neighbouring elements.
 
-    backgroundSize contain
+	backgroundSize contain_
+	
+	overscrollBehavior contain
 
-    overscrollBehavior contain
+The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a function.
+
 
 -}
-contain : Value { provides | contain : Supported }
-contain =
+contain_ : Value { provides | contain_ : Supported }
+contain_ =
     Value "contain"
 
 
@@ -7640,8 +8099,8 @@ border (Value widthVal) =
 
 -}
 border2 : Value LineWidth -> Value LineStyle -> Style
-border2 (Value widthVal) (Value style) =
-    AppendProperty ("border:" ++ widthVal ++ " " ++ style)
+border2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
@@ -7654,8 +8113,8 @@ border2 (Value widthVal) (Value style) =
 
 -}
 border3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-border3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+border3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -7682,8 +8141,8 @@ borderTop (Value widthVal) =
 
 -}
 borderTop2 : Value LineWidth -> Value LineStyle -> Style
-borderTop2 (Value widthVal) (Value style) =
-    AppendProperty ("border-top:" ++ widthVal ++ " " ++ style)
+borderTop2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
@@ -7696,8 +8155,8 @@ borderTop2 (Value widthVal) (Value style) =
 
 -}
 borderTop3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderTop3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-top:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderTop3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -7724,8 +8183,8 @@ borderRight (Value widthVal) =
 
 -}
 borderRight2 : Value LineWidth -> Value LineStyle -> Style
-borderRight2 (Value widthVal) (Value style) =
-    AppendProperty ("border-right:" ++ widthVal ++ " " ++ style)
+borderRight2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
@@ -7738,8 +8197,8 @@ borderRight2 (Value widthVal) (Value style) =
 
 -}
 borderRight3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderRight3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-right:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderRight3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -7766,8 +8225,8 @@ borderBottom (Value widthVal) =
 
 -}
 borderBottom2 : Value LineWidth -> Value LineStyle -> Style
-borderBottom2 (Value widthVal) (Value style) =
-    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ style)
+borderBottom2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
@@ -7780,8 +8239,8 @@ borderBottom2 (Value widthVal) (Value style) =
 
 -}
 borderBottom3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBottom3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderBottom3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -7808,8 +8267,8 @@ borderLeft (Value widthVal) =
 
 -}
 borderLeft2 : Value LineWidth -> Value LineStyle -> Style
-borderLeft2 (Value widthVal) (Value style) =
-    AppendProperty ("border-left:" ++ widthVal ++ " " ++ style)
+borderLeft2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
@@ -7822,8 +8281,8 @@ borderLeft2 (Value widthVal) (Value style) =
 
 -}
 borderLeft3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderLeft3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-left:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderLeft3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
@@ -7942,8 +8401,8 @@ borderLeftWidth (Value widthVal) =
 
 -}
 borderStyle : BaseValue LineStyle -> Style
-borderStyle (Value style) =
-    AppendProperty ("border-style:" ++ style)
+borderStyle (Value styleVal) =
+    AppendProperty ("border-style:" ++ styleVal)
 
 
 {-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
@@ -7982,8 +8441,8 @@ borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value style
 
 -}
 borderTopStyle : BaseValue LineStyle -> Style
-borderTopStyle (Value style) =
-    AppendProperty ("border-top-style:" ++ style)
+borderTopStyle (Value styleVal) =
+    AppendProperty ("border-top-style:" ++ styleVal)
 
 
 {-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style) property.
@@ -7992,8 +8451,8 @@ borderTopStyle (Value style) =
 
 -}
 borderRightStyle : BaseValue LineStyle -> Style
-borderRightStyle (Value style) =
-    AppendProperty ("border-right-style:" ++ style)
+borderRightStyle (Value styleVal) =
+    AppendProperty ("border-right-style:" ++ styleVal)
 
 
 {-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style) property.
@@ -8002,8 +8461,8 @@ borderRightStyle (Value style) =
 
 -}
 borderBottomStyle : BaseValue LineStyle -> Style
-borderBottomStyle (Value style) =
-    AppendProperty ("border-bottom-style:" ++ style)
+borderBottomStyle (Value styleVal) =
+    AppendProperty ("border-bottom-style:" ++ styleVal)
 
 
 {-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style) property.
@@ -8012,8 +8471,8 @@ borderBottomStyle (Value style) =
 
 -}
 borderLeftStyle : BaseValue LineStyle -> Style
-borderLeftStyle (Value style) =
-    AppendProperty ("border-left-style:" ++ style)
+borderLeftStyle (Value styleVal) =
+    AppendProperty ("border-left-style:" ++ styleVal)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
@@ -8468,8 +8927,8 @@ borderTopLeftRadius2 :
                 }
             )
     -> Style
-borderTopLeftRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-top-left-radius:" ++ horizontal ++ " " ++ vertical)
+borderTopLeftRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-top-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
@@ -8510,8 +8969,8 @@ borderTopRightRadius2 :
                 }
             )
     -> Style
-borderTopRightRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-top-right-radius:" ++ horizontal ++ " " ++ vertical)
+borderTopRightRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-top-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
@@ -8552,8 +9011,8 @@ borderBottomRightRadius2 :
                 }
             )
     -> Style
-borderBottomRightRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-bottom-right-radius:" ++ horizontal ++ " " ++ vertical)
+borderBottomRightRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-bottom-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
@@ -8594,8 +9053,8 @@ borderBottomLeftRadius2 :
                 }
             )
     -> Style
-borderBottomLeftRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-bottom-left-radius:" ++ horizontal ++ " " ++ vertical)
+borderBottomLeftRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-bottom-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 {-| Sets [`border-start-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius) property.
@@ -9386,8 +9845,8 @@ textDecoration2 :
             , wavy : Supported
             }
     -> Style
-textDecoration2 (Value line) (Value style) =
-    AppendProperty ("text-decoration:" ++ line ++ " " ++ style)
+textDecoration2 (Value line) (Value styleVal) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal)
 
 
 {-| Sets [`text-decoration`][text-decoration] property.
@@ -9414,8 +9873,8 @@ textDecoration3 :
             }
     -> Value Color
     -> Style
-textDecoration3 (Value line) (Value style) (Value colorVal) =
-    AppendProperty ("text-decoration:" ++ line ++ " " ++ style ++ " " ++ colorVal)
+textDecoration3 (Value line) (Value styleVal) (Value colorVal) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`text-decoration-line`][text-decoration-line] property.
@@ -9495,8 +9954,8 @@ textDecorationStyle :
         , wavy : Supported
         }
     -> Style
-textDecorationStyle (Value style) =
-    AppendProperty ("text-decoration-style:" ++ style)
+textDecorationStyle (Value styleVal) =
+    AppendProperty ("text-decoration-style:" ++ styleVal)
 
 
 {-| Sets [`text-decoration-color`][text-decoration-color] property.
@@ -9761,8 +10220,8 @@ borderSpacing (Value str) =
 
 -}
 borderSpacing2 : Value Length -> Value Length -> Style
-borderSpacing2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-spacing:" ++ horizontal ++ " " ++ vertical)
+borderSpacing2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-spacing:" ++ valHorizontal ++ " " ++ valVertical)
 
 
 
@@ -10482,8 +10941,8 @@ columnRuleWidth (Value widthVal) =
 
 -}
 columnRuleStyle : BaseValue LineStyle -> Style
-columnRuleStyle (Value style) =
-    AppendProperty ("column-rule-style:" ++ style)
+columnRuleStyle (Value styleVal) =
+    AppendProperty ("column-rule-style:" ++ styleVal)
 
 
 {-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
@@ -11085,8 +11544,8 @@ strokeSize :
             }
         )
     -> Style
-strokeSize (Value size) =
-    AppendProperty ("stroke-size:" ++ size)
+strokeSize (Value sizeVal) =
+    AppendProperty ("stroke-size:" ++ sizeVal)
 
 
 {-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
@@ -11136,8 +11595,8 @@ strokeDashCorner :
             }
         )
     -> Style
-strokeDashCorner (Value size) =
-    AppendProperty ("stroke-dash-corner:" ++ size)
+strokeDashCorner (Value sizeVal) =
+    AppendProperty ("stroke-dash-corner:" ++ sizeVal)
 
 
 {-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
@@ -11281,6 +11740,95 @@ gaps =
     Value "gaps"
 
 
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This one-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other two in their relative default order.
+
+    paintOrder normal -- normal paint order.
+
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
+
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
+
+-}
+paintOrder :
+    BaseValue
+        { normal : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Style
+paintOrder (Value val) =
+    AppendProperty ("paint-order:" ++ val)
+
+
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This two-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other remaining one.
+
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
+
+-}
+paintOrder2 :
+    Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    -> Style
+paintOrder2 (Value val1) (Value val2) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This three-argument version explicitly indicates in which order should all the parts of text
+and shape graphics be painted.
+
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
+
+-}
+paintOrder3 :
+    Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    -> Style
+paintOrder3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Provides the `markers` value for [`paintOrder`](#paintOrder).
+
+    paintOrder markers
+
+-}
+markers : Value { provides | markers : Supported }
+markers =
+    Value "markers"
+
+
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
 This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
 [`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
@@ -11311,8 +11859,8 @@ properties.
 
 -}
 columnRule2 : Value LineWidth -> Value LineStyle -> Style
-columnRule2 (Value widthVal) (Value style) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ style)
+columnRule2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
@@ -11328,8 +11876,8 @@ properties.
 
 -}
 columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-columnRule3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 
@@ -11349,8 +11897,8 @@ type alias TransformFunctionSupported supported =
         , translateY : Supported
         , translateZ : Supported
         , translate3d : Supported
-        , scale : Supported
-        , scale2 : Supported
+        , scale_ : Supported
+        , scale2_ : Supported
         , scaleX : Supported
         , scaleY : Supported
         , scaleZ : Supported
@@ -11359,12 +11907,12 @@ type alias TransformFunctionSupported supported =
         , skew2 : Supported
         , skewX : Supported
         , skewY : Supported
-        , rotate : Supported
+        , rotate_ : Supported
         , rotateX : Supported
         , rotateY : Supported
         , rotateZ : Supported
         , rotate3d : Supported
-        , perspective : Supported
+        , perspective_ : Supported
     }
 
 
@@ -11385,8 +11933,8 @@ type alias TransformFunction =
     transform (translateY (in 3))
     transform (translateZ (px 2))
     transform (translate3d (px 12) (pct 50) (em 3))
-    transform (scale 2)
-    transform (scale2 2, 0.5)
+    transform (scale_ 2)
+    transform (scale2_ 2, 0.5)
     transform (scaleX 2)
     transform (scaleY 0.5)
     transform (scaleZ 0.3)
@@ -11395,12 +11943,12 @@ type alias TransformFunction =
     transform (skew2 (deg 30) (deg 20))
     transform (skewX (deg 30))
     transform (skewY (rad 1.07))
-    transform (rotate (turn 0.5))
+    transform (rotate_ (turn 0.5))
     transform (rotateX (deg 10))
     transform (rotateY (deg 10))
     transform (rotateZ (deg 10))
     transform (rotate3d 1 2.0 3.0 (deg 10))
-    transform (perspective (px 17))
+    transform (perspective_ (px 17))
 
 -}
 transform : BaseValue (TransformFunctionSupported { none : Supported }) -> Style
@@ -11411,7 +11959,7 @@ transform (Value val) =
 {-| Sets [`transform`](https://css-tricks.com/almanac/properties/t/transform/)
 with a series of transform-functions.
 
-    transforms (translate (px 12)) [ scale 2, skew (deg 20) ]
+    transforms (translate (px 12)) [ scale_ 2, skew (deg 20) ]
 
 -}
 transforms :
@@ -11422,7 +11970,7 @@ transforms head rest =
     AppendProperty ("transform:" ++ plusListToString head rest)
 
 
-{-| Named afte the plus symbol in the CSS specification [CSS-VALUES-3].
+{-| Named after the plus symbol in the CSS specification [CSS-VALUES-3].
 -}
 plusListToString : Value a -> List (Value a) -> String
 plusListToString head rest =
@@ -11592,8 +12140,8 @@ translateY (Value valY) =
 translateZ :
     Value Length
     -> Value { provides | translateZ : Supported }
-translateZ (Value z) =
-    Value ("translateZ(" ++ z ++ ")")
+translateZ (Value valZ) =
+    Value ("translateZ(" ++ valZ ++ ")")
 
 
 {-| Sets `translate3d` value for usage with [`transform`](#transform).
@@ -11615,31 +12163,106 @@ translate3d :
             )
     -> Value Length
     -> Value { provides | translate3d : Supported }
-translate3d (Value valX) (Value valY) (Value z) =
-    Value ("translate3d(" ++ valX ++ "," ++ valY ++ "," ++ z ++ ")")
+translate3d (Value valX) (Value valY) (Value valZ) =
+    Value ("translate3d(" ++ valX ++ "," ++ valY ++ "," ++ valZ ++ ")")
 
 
 
 -- SCALING (resizing)
 
 
-{-| Sets `scale` value for usage with [`transform`](#transform).
+{-| The [`scale`](https://css-tricks.com/almanac/properties/s/scale) property.
 
-    transform (scale 0.7)
+This one-argument version lets you set a global value, `none` or
+a `num` that will scale the element by both X and Y axes
+(equivalent to [`scale_`](#scale_)).
+
+    scale none
+
+    scale (num 3)
+
+    scale2 (num 1) (num 3)
+
+    scale3 (num 1) (num 3) (num 4)
 
 -}
-scale : Float -> Value { provides | scale : Supported }
-scale val =
+scale :
+    BaseValue
+        { num : Supported
+        , none : Supported
+        }
+    -> Style
+scale (Value val) =
+    AppendProperty ("scale:" ++ val)
+
+
+{-| The [`scale`](https://css-tricks.com/almanac/properties/s/scale) property.
+
+This two-argument version lets you specify scaling in X and Y axes
+(equivalent to [`scale2_`](#scale2_)).
+
+    scale2 (num 1) (num 3)
+
+-}
+scale2 :
+    Value
+        { num : Supported
+        }
+    ->
+        Value
+            { num : Supported
+            }
+    -> Style
+scale2 (Value xVal) (Value yVal) =
+    AppendProperty ("scale:" ++ xVal ++ " " ++ yVal)
+
+
+{-| The [`scale`](https://css-tricks.com/almanac/properties/s/scale) property.
+
+This three-argument version lets you specify scaling in X, Y and Z axes
+(equivalent to [`scale3d`](#scale3d)).
+
+    scale3 (num 1) (num 3) (num 4)
+
+-}
+scale3 :
+    Value
+        { num : Supported
+        }
+    ->
+        Value
+            { num : Supported
+            }
+    ->
+        Value
+            { num : Supported
+            }
+    -> Style
+scale3 (Value xVal) (Value yVal) (Value zVal) =
+    AppendProperty ("scale:" ++ xVal ++ " " ++ yVal ++ " " ++ zVal)
+
+
+{-| Sets `scale` value for usage with [`transform`](#transform).
+
+    transform (scale_ 0.7)
+
+This is called `scale_` instead of `scale` because [`scale` is already a function](#scale).
+
+-}
+scale_ : Float -> Value { provides | scale_ : Supported }
+scale_ val =
     Value ("scale(" ++ String.fromFloat val ++ ")")
 
 
 {-| Sets `scale` value for usage with [`transform`](#transform).
 
-    transform (scale 0.7 0.7)
+    transform (scale2_ 0.7 0.7)
+
+This is called `scale2_` instead of `scale2` because [`scale2` is already a function](#scale2).
 
 -}
-scale2 : Float -> Float -> Value { provides | scale2 : Supported }
-scale2 valX valY =
+scale2_ : Float -> Float -> Value { provides | scale2_ : Supported }
+scale2_ valX valY =
     Value ("scale(" ++ String.fromFloat valX ++ ", " ++ String.fromFloat valY ++ ")")
 
 
@@ -11669,8 +12292,8 @@ scaleY valY =
 
 -}
 scaleZ : Float -> Value { provides | scaleZ : Supported }
-scaleZ z =
-    Value ("scaleZ(" ++ String.fromFloat z ++ ")")
+scaleZ valZ =
+    Value ("scaleZ(" ++ String.fromFloat valZ ++ ")")
 
 
 {-| Sets `scale3d` value for usage with [`transform`](#transform).
@@ -11683,8 +12306,8 @@ scale3d :
     -> Float
     -> Float
     -> Value { provides | scale3d : Supported }
-scale3d valX valY z =
-    Value ("scale3d(" ++ String.fromFloat valX ++ "," ++ String.fromFloat valY ++ "," ++ String.fromFloat z ++ ")")
+scale3d valX valY valZ =
+    Value ("scale3d(" ++ String.fromFloat valX ++ "," ++ String.fromFloat valY ++ "," ++ String.fromFloat valZ ++ ")")
 
 
 
@@ -11744,15 +12367,69 @@ skewY (Value angle) =
 -- ROTATION
 
 
-{-| Sets `rotate` value for usage with [`transform`](#transform).
+{-| The [`rotate`](https://css-tricks.com/almanac/properties/r/rotate/) property.
 
-    transform (rotate (deg 30))
+This one-argument version lets you set a global variable, `none`, or angle.
+
+    rotate none
+
+    rotate inherit
+
+    rotate (deg 60)
+
+    rotate2 x (deg 50)
+
+    rotate2 y (deg 100)
+
+    rotate2 (vec3 1 2 10) (deg 100)
 
 -}
 rotate :
+    BaseValue
+        (AngleSupported
+            { none : Supported
+            }
+        )
+    -> Style
+rotate (Value value) =
+    AppendProperty ("rotate:" ++ value)
+
+
+{-| The [`rotate`](https://css-tricks.com/almanac/properties/r/rotate/) property.
+
+This two-argument version lets you set an axis or a vector, then an angle value.
+
+    rotate2 x (deg 50)
+
+    rotate2 y (deg 100)
+
+    rotate2 (vec3 1 2 10) (deg 100)
+
+-}
+rotate2 :
+    Value
+        { x : Supported
+        , y : Supported
+        , z : Supported
+        , vec3 : Supported
+        }
+    -> Value Angle
+    -> Style
+rotate2 (Value axisOrVecVal) (Value angleVal) =
+    AppendProperty ("rotate:" ++ axisOrVecVal ++ " " ++ angleVal)
+
+
+{-| Sets `rotate` value for usage with [`transform`](#transform).
+
+    transform (rotate_ (deg 30))
+
+This is called `rotate_` instead of `rotate` because [`rotate` is already a function](#rotate).
+
+-}
+rotate_ :
     Value Angle
-    -> Value { provides | rotate : Supported }
-rotate (Value angle) =
+    -> Value { provides | rotate_ : Supported }
+rotate_ (Value angle) =
     Value ("rotate(" ++ angle ++ ")")
 
 
@@ -11803,33 +12480,147 @@ rotate3d :
     -> Float
     -> Value Angle
     -> Value { provides | rotate3d : Supported }
-rotate3d valX valY z (Value angle) =
+rotate3d valX valY valZ (Value angle) =
     Value
         ("rotate3d("
             ++ String.fromFloat valX
             ++ ","
             ++ String.fromFloat valY
             ++ ","
-            ++ String.fromFloat z
+            ++ String.fromFloat valZ
             ++ ","
             ++ angle
             ++ ")"
         )
 
 
+{-| A vector consisting of three values.
+
+Sets the vector values in [`rotate2`](#rotate2).
+
+    rotate2 (vec3 1 2 3) (deg 100)
+
+-}
+vec3 : Float -> Float -> Float -> Value { provides | vec3 : Supported }
+vec3 vec1Val vec2Val vec3Val =
+    Value
+        (String.fromFloat vec1Val
+            ++ " "
+            ++ String.fromFloat vec2Val
+            ++ " "
+            ++ String.fromFloat vec3Val
+        )
+
+
+{-| Sets `z` value for usage with [`rotate2`](#rotate2).
+
+    rotate z (deg 100)
+
+-}
+z : Value { provides | z : Supported }
+z =
+    Value "z"
+
+
 
 -- PERSPECTIVE
 
 
-{-| Sets `perspective` value for usage with [`transform`](#transform).
+{-| The [`perspective`](https://css-tricks.com/almanac/properties/p/perspective/) property.
 
-    transform (perspective (px 17))
+Negative values are not supported and any value smaller than 1px is clamped to 1px.
+
+    perspective none
+
+    perspective (px 100)
+
+    perspective (rem 50)
 
 -}
 perspective :
+    BaseValue
+        (LengthSupported
+            { none : Supported
+            }
+        )
+    -> Style
+perspective (Value val) =
+    AppendProperty ("perspective:" ++ val)
+
+
+{-| The [`perspective-origin`](https://css-tricks.com/almanac/properties/p/perspective-origin/) property.
+
+This one-argument version either supports a global value or the x-position.
+
+    perspectiveOrigin inherit
+
+    perspectiveOrigin left_
+
+    perspectiveOrigin (pct 50)
+
+    perspectiveOrigin2 left_ center
+
+    perspectiveOrigin2 (rem 50) (pct 20)
+
+-}
+perspectiveOrigin :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , center : Supported
+            , right_ : Supported
+            }
+        )
+    -> Style
+perspectiveOrigin (Value val) =
+    AppendProperty ("perspective-origin:" ++ val)
+
+
+{-| The [`perspective-origin`](https://css-tricks.com/almanac/properties/p/perspective-origin/) property.
+
+This two-argument version takes an X position and then a Y position.
+
+    pperspectiveOrigin2 left_ center
+
+    perspectiveOrigin2 (rem 50) (pct 20)
+
+-}
+perspectiveOrigin2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , center : Supported
+            , right_ : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , top_ : Supported
+                , center : Supported
+                , bottom_ : Supported
+                }
+            )
+    -> Style
+perspectiveOrigin2 (Value xVal) (Value yVal) =
+    AppendProperty ("perspective-origin:" ++ xVal ++ " " ++ yVal)
+
+
+{-| Sets `perspective` value for usage with [`transform`](#transform).
+
+    transform (perspective_ (px 17))
+
+The value is called `perspective_` instead of `perspective` because
+[`perspective`](#perspective) is already a function.
+
+-}
+perspective_ :
     Value Length
-    -> Value { provides | perspective : Supported }
-perspective (Value length) =
+    -> Value { provides | perspective_ : Supported }
+perspective_ (Value length) =
     Value ("perspective(" ++ length ++ ")")
 
 
@@ -12435,9 +13226,11 @@ clear (Value val) =
     AppendProperty ("clear:" ++ val)
 
 
-{-| Sets `both` value for usage with [`clear`](#clear).
+{-| Sets `both` value for usage with [`clear`](#clear) and [`resize`](#resize).
 
       clear both
+
+      resize both
 
 -}
 both : Value { provides | both : Supported }
@@ -12577,8 +13370,8 @@ width :
             }
         )
     -> Style
-width (Value size) =
-    AppendProperty ("width:" ++ size)
+width (Value sizeVal) =
+    AppendProperty ("width:" ++ sizeVal)
 
 
 {-| The [`min-width`](https://css-tricks.com/almanac/properties/m/min-width/) property.
@@ -12601,8 +13394,8 @@ minWidth :
             }
         )
     -> Style
-minWidth (Value size) =
-    AppendProperty ("min-width:" ++ size)
+minWidth (Value sizeVal) =
+    AppendProperty ("min-width:" ++ sizeVal)
 
 
 {-| The [`max-width`](https://css-tricks.com/almanac/properties/m/max-width/) property.
@@ -12625,8 +13418,8 @@ maxWidth :
             }
         )
     -> Style
-maxWidth (Value size) =
-    AppendProperty ("max-width:" ++ size)
+maxWidth (Value sizeVal) =
+    AppendProperty ("max-width:" ++ sizeVal)
 
 
 {-| The [`height`](https://css-tricks.com/almanac/properties/h/height/) property.
@@ -13237,11 +14030,9 @@ allowEnd =
 
     hangingPunctuation first
 
-    hangingPunctuation forceEnd
+    hangingPunctuation2 first forceEnd
 
-    hangingPunctuation allowEnd
-
-    hangingPunctuation last
+    hangingPunctuation3 first allowEnd last
 
 -}
 hangingPunctuation :
@@ -13256,6 +14047,62 @@ hangingPunctuation :
 hangingPunctuation (Value val) =
     AppendProperty ("hanging-punctuation:" ++ val)
 
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation2 first forceEnd
+
+-}
+hangingPunctuation2 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { first : Supported
+            , forceEnd : Supported
+            , allowEnd : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation2 (Value val1) (Value val2) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation3 first allowEnd last
+
+-}
+hangingPunctuation3 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { forceEnd : Supported
+            , allowEnd : Supported
+            }
+    ->
+        Value
+            { first : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
+
+    hyphens manual
+
+-}
+manual : Value { provides | manual : Supported }
+manual =
+    Value "manual"
 
 
 {-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
@@ -13605,12 +14452,14 @@ mixBlendMode (Value val) =
     AppendProperty ("mix-blend-mode:" ++ val)
 
 
-{-| The `fill` value used in properties such as [`objectFit`](#objectFit)
-and [`pointerEvents`](#pointerEvents).
+{-| The `fill` value used in properties such as [`objectFit`](#objectFit),
+[`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder)
 
     objectFit fill_
 
     pointerEvents fill_
+
+    paintOrder2 fill markers
 
 -}
 fill_ : Value { provides | fill_ : Supported }
@@ -13632,7 +14481,7 @@ scaleDown =
 
     objectFit fill_
 
-    objectFit contain
+    objectFit contain_
 
     objectFit cover
 
@@ -13644,7 +14493,7 @@ scaleDown =
 objectFit :
     BaseValue
         { fill_ : Supported
-        , contain : Supported
+        , contain_ : Supported
         , cover : Supported
         , none : Supported
         , scaleDown : Supported
@@ -13945,9 +14794,11 @@ painted =
     Value "painted"
 
 
-{-| The `stroke` value used by [`pointerEvents`](#pointerEvents)
+{-| The `stroke` value used by [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
 
     pointerEvents stroke
+
+    paintOrder2 stroke markers
 
 -}
 stroke : Value { provides | stroke : Supported }
@@ -14853,9 +15704,12 @@ scrollSnapType (Value val) =
     AppendProperty ("scroll-snap-type:" ++ val)
 
 
-{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
 
     scrollSnapType2 x mandatory
+
+    rotate x (deg 10)
 
 -}
 x : Value { provides | x : Supported }
@@ -14863,9 +15717,12 @@ x =
     Value "x"
 
 
-{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
 
     scrollSnapType2 y mandatory
+
+    rotate y (deg 50)
 
 -}
 y : Value { provides | y : Supported }
@@ -15238,7 +16095,7 @@ unicodeBidi (Value val) =
 
     userSelect text
 
-    userSelect contain
+    userSelect contain_
 
     userSelect all_
 
@@ -15248,7 +16105,7 @@ userSelect :
         { none : Supported
         , auto : Supported
         , text : Supported
-        , contain : Supported
+        , contain_ : Supported
         , all_ : Supported
         }
     -> Style
@@ -15340,3 +16197,222 @@ writingMode :
     -> Style
 writingMode (Value str) =
     AppendProperty ("writing-mode:" ++ str)
+
+
+{-| The [`resize`](https://css-tricks.com/almanac/properties/r/resize/) property.
+
+    resize none
+
+    resize both
+
+    resize inline
+
+-}
+resize :
+    BaseValue
+        { none : Supported
+        , both : Supported
+        , horizontal : Supported
+        , vertical : Supported
+        , block : Supported
+        , inline : Supported
+        }
+    -> Style
+resize (Value value) =
+    AppendProperty ("resize:" ++ value)
+
+
+{-| The `horizontal` value used by [`resize`](#resize).
+
+    resize horizontal
+
+-}
+horizontal : Value { provides | horizontal : Supported }
+horizontal =
+    Value "horizontal"
+
+
+{-| The `vertical` value used by [`resize`](#resize).
+
+    resize vertical
+
+-}
+vertical : Value { provides | vertical : Supported }
+vertical =
+    Value "vertical"
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+    contain none
+
+    contain content
+
+    contain2 size layout
+
+    contain3 size layout style
+
+    contain4 -- all multiple choice values in use, no value entry needed
+
+-}
+contain :
+    BaseValue
+        { none : Supported
+        , strict : Supported
+        , content : Supported
+        , size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    -> Style
+contain (Value value) =
+    AppendProperty ("contain:" ++ value)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This two-argument version lets you use 2 of the 4 multiple choice values you
+can use for this property.
+
+    contain2 size layout
+
+-}
+contain2 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain2 (Value value1) (Value value2) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This two-argument version lets you use 3 of the 4 multiple choice values you
+can use for this property.
+
+    contain3 size layout style
+
+-}
+contain3 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain3 (Value value1) (Value value2) (Value value3) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2 ++ " " ++ value3)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This version uses all 4 multiple choice values that can be used with this
+property. Because there is only one possible combination, this does not take values.
+
+Equivalent to `contain: size layout style paint;`.
+
+**Note: The `style` value is considered at-risk from being depreciated.**
+
+    contain4
+
+-}
+contain4 : Style
+contain4 =
+    AppendProperty "contain:size layout style paint"
+
+
+{-| Sets the `strict` value for [`contain`](#contain).
+
+This indicates that all containment rules apart from `style` are applied.
+
+This is equivalent to `contain3 size layout paint`.
+
+    contain strict
+
+-}
+strict : Value { provides | strict : Supported }
+strict =
+    Value "strict"
+
+
+{-| Sets the `size` value for [`contain`](#contain).
+
+This indicates that the element can be sized without
+needing to look at the size of its descendants.
+
+    contain size
+
+-}
+size : Value { provides | size : Supported }
+size =
+    Value "size"
+
+
+{-| Sets the `layout` value for [`contain`](#contain).
+
+This indicates that nothing outside the element
+may affect its internal layout and vice versa.
+
+    contain layout
+
+-}
+layout : Value { provides | layout : Supported }
+layout =
+    Value "layout"
+
+
+{-| Sets the `style` value for [`contain`](#contain).
+
+For properties that can have effects on more than its
+element and descendenants, this indicates that those effects
+are contained by the containing element.
+
+**This value is considered at-risk from being depreciated.**
+
+    contain style
+
+-}
+style : Value { provides | style : Supported }
+style =
+    Value "style"
+
+
+{-| Sets the `paint` value for [`contain`](#contain).
+
+Indicates that descendants of the element will not
+display outside its bounds and will not be painted
+by the browser if the containing box is offscreen.
+
+    contain paint
+
+-}
+paint : Value { provides | paint : Supported }
+paint =
+    Value "paint"
