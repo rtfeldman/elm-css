@@ -14925,9 +14925,11 @@ contain3 (Value value1) (Value value2) (Value value3) =
 {-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
 
 This version uses all 4 multiple choice values that can be used with this
-property, no values required.
+property. Because there is only one possible combination, this does not take values.
 
 Equivalent to `contain: size layout style paint;`.
+
+**Note: The `style` value is considered at-risk from being depreciated.**
 
     contain4
 
@@ -14982,6 +14984,8 @@ layout =
 For properties that can have effects on more than its
 element and descendenants, this indicates that those effects
 are contained by the containing element.
+
+**This value is considered at-risk from being depreciated.**
 
     contain style
 
