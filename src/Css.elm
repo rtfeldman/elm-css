@@ -177,7 +177,7 @@ module Css exposing
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted, stroke
     , resize, horizontal, vertical
-    , contain, contain2, contain3, contain4, strict, size, layout, style, paint
+    , contain, contain2, contain3, contain4, size, layout, style, paint
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -771,7 +771,7 @@ Multiple CSS properties use these values.
 @docs pointerEvents
 @docs visiblePainted, visibleFill, visibleStroke, painted, stroke
 @docs resize, horizontal, vertical
-@docs contain, contain2, contain3, contain4, strict, size, layout, style, paint
+@docs contain, contain2, contain3, contain4, size, layout, style, paint
 
 -}
 
@@ -1385,8 +1385,8 @@ overflowY (Value val) =
 clip : Value { provides | clip : Supported }
 clip =
     Value "clip"
-    
-    
+
+
 {-| Sets [`overflow-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-block).
 
     overflowBlock visible
@@ -3104,7 +3104,6 @@ placeholder =
     selection
         [ backgroundColor (rgb 200 140 15)
         ]
-
 
 -}
 selection : List Style -> Style
@@ -5498,27 +5497,28 @@ fontVariantCaps (Value str) =
 
 {-| The `normal` value, which can be used with such properties as:
 
-- [`fontVariantCaps`](#fontVariantCaps)
-- [`whiteSpace`](#whiteSpace)
-- [`wordBreak`](#wordBreak)
-- [`columnGap`](#columnGap)
-- [`zoom`](#zoom)
-- [`animationDirection`](#animationDirection)
-- [`alignItems`](#alignItems)
-- [`lineBreak`](#lineBreak)
+  - [`fontVariantCaps`](#fontVariantCaps)
+  - [`whiteSpace`](#whiteSpace)
+  - [`wordBreak`](#wordBreak)
+  - [`columnGap`](#columnGap)
+  - [`zoom`](#zoom)
+  - [`animationDirection`](#animationDirection)
+  - [`alignItems`](#alignItems)
+  - [`lineBreak`](#lineBreak)
 
+```
+alignItems normal
 
-    alignItems normal
+columnGap normal
 
-    columnGap normal
+fontVariantCaps normal
 
-    fontVariantCaps normal
+whiteSpace normal
 
-    whiteSpace normal
+wordBreak normal
 
-    wordBreak normal
-
-    zoom normal
+zoom normal
+```
 
 -}
 normal : Value { provides | normal : Supported }
@@ -7000,15 +7000,15 @@ for the following properties:
   - [`objectFit`](#objectFit) (Replaced content is scaled to maintain proportions within the element's content box.)
   - [`userSelect`](#userSelect) (Lets selection start within the element but that selection will be contained within that element's bounds.)
   - [`overscrollBehavior`](#overscrollBehavior) (This means that default scroll overflow behavior
-is observed inside the element, but scroll chaining will not happen to neighbouring elements.)
+    is observed inside the element, but scroll chaining will not happen to neighbouring elements.)
 
+```
+backgroundSize contain_
 
-	backgroundSize contain_
-	
-	overscrollBehavior contain
+overscrollBehavior contain
+```
 
 The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a function.
-
 
 -}
 contain_ : Value { provides | contain_ : Supported }
@@ -9095,8 +9095,8 @@ borderStartStartRadius2 :
                 }
             )
     -> Style
-borderStartStartRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-start-start-radius:" ++ horizontal ++ " " ++ vertical)
+borderStartStartRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-start-start-radius:" ++ horizontalValue ++ " " ++ verticalValue)
 
 
 {-| Sets [`border-start-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius) property.
@@ -9137,8 +9137,8 @@ borderStartEndRadius2 :
                 }
             )
     -> Style
-borderStartEndRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-start-end-radius:" ++ horizontal ++ " " ++ vertical)
+borderStartEndRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-start-end-radius:" ++ horizontalValue ++ " " ++ verticalValue)
 
 
 {-| Sets [`border-end-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius) property.
@@ -9179,8 +9179,8 @@ borderEndStartRadius2 :
                 }
             )
     -> Style
-borderEndStartRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-end-start-radius:" ++ horizontal ++ " " ++ vertical)
+borderEndStartRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-end-start-radius:" ++ horizontalValue ++ " " ++ verticalValue)
 
 
 {-| Sets [`border-end-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius) property.
@@ -9221,8 +9221,8 @@ borderEndEndRadius2 :
                 }
             )
     -> Style
-borderEndEndRadius2 (Value horizontal) (Value vertical) =
-    AppendProperty ("border-end-end-radius:" ++ horizontal ++ " " ++ vertical)
+borderEndEndRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-end-end-radius:" ++ horizontalValue ++ " " ++ verticalValue)
 
 
 {-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
@@ -14095,16 +14095,6 @@ hangingPunctuation3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
 
 
-{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
-
-    hyphens manual
-
--}
-manual : Value { provides | manual : Supported }
-manual =
-    Value "manual"
-
-
 {-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
 
     hyphens none
@@ -14280,6 +14270,7 @@ textOverflow2 (Value startValue) (Value endValue) =
     lineBreak auto
 
     lineBreak strict
+
 -}
 lineBreak :
     BaseValue
@@ -14314,9 +14305,12 @@ ellipsis =
     Value "ellipsis"
 
 
-{-| Sets `strict` value for usage with [`lineBreak`](#lineBreak).
+{-| Sets `strict` value for usage with [`lineBreak`](#lineBreak) and [`contain`](#contain).
+
+    contain strict
 
     lineBreak strict
+
 -}
 strict : Value { provides | strict : Supported }
 strict =
@@ -14326,10 +14320,12 @@ strict =
 {-| Sets `loose` value for usage with [`lineBreak`](#lineBreak).
 
     lineBreak loose
+
 -}
 loose : Value { provides | loose : Supported }
 loose =
     Value "loose"
+
 
 {-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
 
@@ -16346,20 +16342,6 @@ Equivalent to `contain: size layout style paint;`.
 contain4 : Style
 contain4 =
     AppendProperty "contain:size layout style paint"
-
-
-{-| Sets the `strict` value for [`contain`](#contain).
-
-This indicates that all containment rules apart from `style` are applied.
-
-This is equivalent to `contain3 size layout paint`.
-
-    contain strict
-
--}
-strict : Value { provides | strict : Supported }
-strict =
-    Value "strict"
 
 
 {-| Sets the `size` value for [`contain`](#contain).
