@@ -79,6 +79,7 @@ module Css exposing
     , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
+    , fontOpticalSizing
     , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
     , url
     , CursorKeyword
@@ -496,6 +497,11 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 ## Font Variant Numeric
 
 @docs fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
+
+
+## Font Optical Sizing
+
+@docs fontOpticalSizing
 
 
 # Align Items
@@ -6056,6 +6062,25 @@ stackedFractions =
 
 
 
+-- FONT OPTICAL SIZING --
+
+
+{-| The [`font-optical-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing) property.
+
+    fontOpticalSizing none
+
+-}
+fontOpticalSizing :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        }
+    -> Style
+fontOpticalSizing (Value val) =
+    AppendProperty ("font-optical-sizing:" ++ val)
+
+
+
 -- CURSOR --
 
 
@@ -9975,12 +10000,15 @@ lowercase =
 
 {-| A `full-width` value for:
 
+
 ### [`textTransform`](#textTransform)
+
 Forces the writing of characters in a square so they can be aligned in East Asian scripts.
 
-### [`fontVariantEastAsian`](#fontVariantEastAsian)
-Activates the East Asian characters that are roughly be the same width.
 
+### [`fontVariantEastAsian`](#fontVariantEastAsian)
+
+Activates the East Asian characters that are roughly be the same width.
 
     textTransform fullWidth
 
