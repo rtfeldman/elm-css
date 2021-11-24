@@ -76,6 +76,7 @@ module Css exposing
     , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
     , fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
+    , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
@@ -480,6 +481,11 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 ## Font Variant Caps
 
 @docs fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
+
+
+## Font Variant East Asian
+
+@docs fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
 
 
 ## Font Variant Ligatures
@@ -5587,6 +5593,201 @@ titlingCaps =
 
 
 
+-- FONT VARIANT EAST ASIAN --
+
+
+{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
+
+This property controls the use of alternative glyphs for East Asian scripts.
+
+    fontVariantEastAsian normal
+
+    fontVariantEastAsian2 ruby jis83
+
+    fontVariantEastAsian3 ruby jis90 fullWidth
+
+-}
+fontVariantEastAsian :
+    BaseValue
+        { normal : Supported
+        , ruby : Supported
+
+        -- variant values
+        , jis78 : Supported
+        , jis83 : Supported
+        , jis90 : Supported
+        , jis04 : Supported
+        , simplified : Supported
+        , traditional : Supported
+
+        -- width values
+        , fullWidth : Supported
+        , proportionalWidth : Supported
+        }
+    -> Style
+fontVariantEastAsian (Value val) =
+    AppendProperty ("font-variant-east-asian:" ++ val)
+
+
+{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
+
+This property controls the use of alternative glyphs for East Asian scripts.
+
+    fontVariantEastAsian2 ruby jis83
+
+-}
+fontVariantEastAsian2 :
+    Value
+        { ruby : Supported
+        , jis78 : Supported
+        , jis83 : Supported
+        , jis90 : Supported
+        , jis04 : Supported
+        , simplified : Supported
+        , traditional : Supported
+        , fullWidth : Supported
+        , proportionalWidth : Supported
+        }
+    ->
+        Value
+            { ruby : Supported
+            , jis78 : Supported
+            , jis83 : Supported
+            , jis90 : Supported
+            , jis04 : Supported
+            , simplified : Supported
+            , traditional : Supported
+            , fullWidth : Supported
+            , proportionalWidth : Supported
+            }
+    -> Style
+fontVariantEastAsian2 (Value val1) (Value val2) =
+    AppendProperty ("font-variant-east-asian:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
+
+This property controls the use of alternative glyphs for East Asian scripts.
+
+    fontVariantEastAsian3 ruby jis90 fullWidth
+
+-}
+fontVariantEastAsian3 :
+    Value
+        { ruby : Supported
+        }
+    ->
+        Value
+            { jis78 : Supported
+            , jis83 : Supported
+            , jis90 : Supported
+            , jis04 : Supported
+            , simplified : Supported
+            , traditional : Supported
+            }
+    ->
+        Value
+            { fullWidth : Supported
+            , proportionalWidth : Supported
+            }
+    -> Style
+fontVariantEastAsian3 (Value rubyVal) (Value variantVal) (Value widthVal) =
+    AppendProperty ("font-variant-east-asian:" ++ rubyVal ++ " " ++ variantVal ++ " " ++ widthVal)
+
+
+{-| Sets the [`jis78`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:1978 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis78
+
+-}
+jis78 : Value { provides | jis78 : Supported }
+jis78 =
+    Value "jis78"
+
+
+{-| Sets the [`jis83`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:1983 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis83
+
+-}
+jis83 : Value { provides | jis83 : Supported }
+jis83 =
+    Value "jis83"
+
+
+{-| Sets the [`jis90`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:1990 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis90
+
+-}
+jis90 : Value { provides | jis90 : Supported }
+jis90 =
+    Value "jis90"
+
+
+{-| Sets the [`jis04`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:2004 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis04
+
+-}
+jis04 : Value { provides | jis04 : Supported }
+jis04 =
+    Value "jis04"
+
+
+{-| Sets the [`simplified`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that no particular standard should be used for East Asian logographic glyphs
+apart from them being simplified Chinese glyphs.
+
+    fontVariantEastAsian simplified
+
+-}
+simplified : Value { provides | simplified : Supported }
+simplified =
+    Value "simplified"
+
+
+{-| Sets the [`traditional`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that no particular standard should be used for East Asian logographic glyphs
+apart from them being traditional Chinese glyphs.
+
+    fontVariantEastAsian traditional
+
+-}
+traditional : Value { provides | traditional : Supported }
+traditional =
+    Value "traditional"
+
+
+{-| Sets the [`proportional-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This activates the East Asian characters that vary in width.
+
+(As opposed to [`fullWidth`](#fullWidth), which specifies that they should roughly be the same width.)
+
+    fontVariantEastAsian proportionalWidth
+
+-}
+proportionalWidth : Value { provides | proportionalWidth : Supported }
+proportionalWidth =
+    Value "proportional-width"
+
+
+
 -- FONT VARIANT LIGATURES --
 
 
@@ -9772,9 +9973,18 @@ lowercase =
     Value "lowercase"
 
 
-{-| A `full-width` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
+{-| A `full-width` value for:
+
+### [`textTransform`](#textTransform)
+Forces the writing of characters in a square so they can be aligned in East Asian scripts.
+
+### [`fontVariantEastAsian`](#fontVariantEastAsian)
+Activates the East Asian characters that are roughly be the same width.
+
 
     textTransform fullWidth
+
+    fontVariantEastAsian fullWidth
 
 -}
 fullWidth : Value { provides | fullWidth : Supported }
