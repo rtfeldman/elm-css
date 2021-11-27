@@ -79,7 +79,7 @@ module Css exposing
     , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , fontOpticalSizing
+    , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
     , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
     , url
     , CursorKeyword
@@ -501,7 +501,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ## Font Optical Sizing
 
-@docs fontOpticalSizing
+@docs fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
 
 
 # Align Items
@@ -1032,18 +1032,23 @@ type alias Time =
     TimeSupported {}
 
 
-{-| Produces an [`string`](https://developer.mozilla.org/en-US/docs/Web/CSS/string)
+{-| Produces a [`string`](https://developer.mozilla.org/en-US/docs/Web/CSS/string)
 value used by properties such as:
 
-  - [`listStyle`](#listStyle),
+  - [`listStyle`](#listStyle)
 
   - [`listStyleType`](#listStyleType)
 
   - [`quotes2`](#quotes2)
 
+  - [`fontLanguageOverride`](#fontLanguageOverride)
+
+
     listStyleType (string "> ")
 
     quotes2 (string "«") (string "»")
+
+    fontLanguageOverride (string "ENG")
 
 -}
 string : String -> Value { provides | string : Supported }
@@ -5510,6 +5515,8 @@ fontVariantCaps (Value str) =
 {-| The `normal` value, which can be used with such properties as:
 
   - [`fontVariantCaps`](#fontVariantCaps)
+  - [`fontKerning`](#fontKerning)
+  - [`fontLanguageOverride`](#fontLanguageOverride)
   - [`whiteSpace`](#whiteSpace)
   - [`wordBreak`](#wordBreak)
   - [`columnGap`](#columnGap)
@@ -5517,6 +5524,7 @@ fontVariantCaps (Value str) =
   - [`animationDirection`](#animationDirection)
   - [`alignItems`](#alignItems)
   - [`lineBreak`](#lineBreak)
+
 
 ```
 alignItems normal
@@ -5538,10 +5546,13 @@ normal =
     Value "normal"
 
 
-{-| The `small-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+{-| The `small-caps` value used in
+    - [`fontVariantCaps`](#fontVariantCaps)
+    - [`fontSynthesis`](#fontSynthesis)
 
     fontVariantCaps smallCaps
 
+    fontSynthesis2 smallCaps style
 -}
 smallCaps : Value { provides | smallCaps : Supported }
 smallCaps =
@@ -6065,10 +6076,123 @@ stackedFractions =
 -- FONT OPTICAL SIZING --
 
 
+{-| The [`font-kerning`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-kerning) property.
+
+    fontKerning none
+-}
+fontKerning :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        , normal : Supported
+        }
+    -> Style
+fontKerning (Value val) =
+    AppendProperty ("font-kerning:" ++ val)
+
+
+{-| The [`font-language-override`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-language-override) property.
+
+    fontLanguageOverride normal
+
+    fontLanguageOverride (string "ENG")
+-}
+fontLanguageOverride :
+    BaseValue
+        { normal : Supported
+        , string : Supported
+        }
+    -> Style
+fontLanguageOverride (Value val) =
+    AppendProperty ("font-language-override:" ++ val)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+    fontSynthesis none
+
+    fontSynthesis smallCaps
+
+    fontSynthesis2 smallCaps weight
+
+    fontSynthesis3 weight style smallCaps
+-}
+fontSynthesis :
+    BaseValue
+        { none : Supported
+        , weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Style
+fontSynthesis (Value val) =
+    AppendProperty ("font-synthesis:" ++ val)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+This is the two-argument variant, in which you can indicate
+two different font properties to be synthesised by the browser.
+
+    fontSynthesis2 smallCaps weight
+-}
+fontSynthesis2 :
+    Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Style
+fontSynthesis2 (Value val1) (Value val2) =
+    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+This is the three-argument variant, in which you can indicate
+all three different font properties to be synthesised by the browser.
+
+    fontSynthesis3 weight style smallCaps
+-}
+fontSynthesis3 :
+    Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Style
+fontSynthesis3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| The `weight` value for the [`fontSynthesis`](#fontSynthesis) property.
+
+    fontSynthesis weight
+-}
+weight : Value { provides | weight : Supported }
+weight =
+    Value "weight"
+
+
+
 {-| The [`font-optical-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing) property.
 
     fontOpticalSizing none
-
 -}
 fontOpticalSizing :
     BaseValue
@@ -6079,6 +6203,22 @@ fontOpticalSizing :
 fontOpticalSizing (Value val) =
     AppendProperty ("font-optical-sizing:" ++ val)
 
+
+{-| The [`font-variant-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-position) property.
+
+    fontVariantPosition sub
+
+    fontVariantPosition normal
+-}
+fontVariantPosition :
+    BaseValue
+        { normal : Supported
+        , sub : Supported
+        , super : Supported
+        }
+    -> Style
+fontVariantPosition (Value val) =
+    AppendProperty ("font-variant-position:" ++ val)
 
 
 -- CURSOR --
@@ -10000,15 +10140,12 @@ lowercase =
 
 {-| A `full-width` value for:
 
-
 ### [`textTransform`](#textTransform)
-
 Forces the writing of characters in a square so they can be aligned in East Asian scripts.
 
-
 ### [`fontVariantEastAsian`](#fontVariantEastAsian)
-
 Activates the East Asian characters that are roughly be the same width.
+
 
     textTransform fullWidth
 
@@ -10575,7 +10712,13 @@ verticalAlign (Value str) =
     AppendProperty ("vertical-align:" ++ str)
 
 
-{-| A `sub` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+{-| A `sub` value for the following properties:
+
+    - [`fontVariantPosition](#fontVariantPosition)
+    - [`verticalAlign`](#verticalAlign)
+
+
+    fontVariantPosition sub
 
     verticalAlign sub
 
@@ -10585,8 +10728,14 @@ sub =
     Value "sub"
 
 
-{-| A `super` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+{-|  A `super` value for the following properties:
 
+    - [`fontVariantPosition](#fontVariantPosition)
+    - [`verticalAlign`](#verticalAlign)
+
+
+    fontVariantPosition super
+    
     verticalAlign super
 
 -}
@@ -16567,19 +16716,44 @@ contain3 (Value value1) (Value value2) (Value value3) =
 
 {-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
 
-This version uses all 4 multiple choice values that can be used with this
-property. Because there is only one possible combination, this does not take values.
+This two-argument version lets you use all 4 multiple choice values you
+can use for this property.
 
-Equivalent to `contain: size layout style paint;`.
+    contain4 size layout style paint
 
 **Note: The `style` value is considered at-risk from being depreciated.**
-
-    contain4
-
 -}
-contain4 : Style
-contain4 =
-    AppendProperty "contain:size layout style paint"
+contain4 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain4 (Value value1) (Value value2) (Value value3) (Value value4) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2 ++ " " ++ value3 ++ " " ++ value4)
 
 
 {-| Sets the `size` value for [`contain`](#contain).
@@ -16608,16 +16782,14 @@ layout =
     Value "layout"
 
 
-{-| Sets the `style` value for [`contain`](#contain).
+{-| Sets the `style` value for:
 
-For properties that can have effects on more than its
-element and descendenants, this indicates that those effects
-are contained by the containing element.
-
-**This value is considered at-risk from being depreciated.**
+    - [`contain`](#contain). **(This value is considered at-risk from being depreciated for this property.)**
+    - [`fontSynthesis`](#fontSynthesis)
 
     contain style
 
+    fontSynthesis style
 -}
 style : Value { provides | style : Supported }
 style =
