@@ -9,13 +9,14 @@ import VirtualDom.Styled
 css : List Css.Style -> VirtualDom.Styled.Attribute msg
 css styles =
     let
-        classname =
-            VirtualDom.Styled.getClassname styles
+        cssTemplate =
+            VirtualDom.Styled.getCssTemplate styles
 
         classAttribute =
-            VirtualDom.attribute "class" classname
+            -- Will be discarded
+            VirtualDom.attribute "" ""
     in
-    VirtualDom.Styled.Attribute classAttribute styles classname
+    VirtualDom.Styled.Attribute classAttribute True cssTemplate
 
 
 svgNamespace : VirtualDom.Styled.Attribute msg
