@@ -11,6 +11,8 @@ prettyPrint { charset, imports, namespaces, declarations } =
         ++ Css.String.mapJoin importToString "\n" imports
         ++ Css.String.mapJoin namespaceToString "\n" namespaces
         ++ Css.String.mapJoin prettyPrintDeclaration "\n" declarations
+        -- Elm compiler generates better code with the below line
+        ++ ""
 
 
 charsetToString : Maybe String -> String
@@ -22,7 +24,6 @@ charsetToString charset =
 
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
-    -- TODO
     Css.String.mapJoin (importMediaQueryToString name) "\n" mediaQueries
 
 
@@ -82,7 +83,7 @@ prettyPrintDeclaration decl =
             "TODO"
 
         Keyframes { name, declaration } ->
-            "@keyframes " ++ name ++ " {\n" ++ declaration ++ "\n}"
+            "@keyframes " ++ name ++ " { " ++ declaration ++ " }"
 
         Viewport _ ->
             "TODO"
