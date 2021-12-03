@@ -1,11 +1,17 @@
-module Hash exposing (fromString)
+module Hash exposing (fromString, initialSeed)
 
-import FNV1a
 import Hex
+import Murmur3
 
 
 fromString : String -> String
 fromString str =
-    FNV1a.hash str
+    str
+        |> Murmur3.hashString initialSeed
         |> Hex.toString
         |> String.cons '_'
+
+
+initialSeed : Int
+initialSeed =
+    15739
