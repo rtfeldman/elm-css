@@ -914,11 +914,11 @@ calc firstExpr expression secondExpr =
                 l.value
 
         calcs =
-            String.join " "
-                [ withoutCalcStr firstExpr
-                , calcExpressionToString expression
-                , withoutCalcStr secondExpr
-                ]
+            withoutCalcStr firstExpr
+                ++ " "
+                ++ calcExpressionToString expression
+                ++ " "
+                ++ withoutCalcStr secondExpr
 
         value =
             cssFunction "calc" [ calcs ]
@@ -4155,27 +4155,27 @@ prop1 key arg =
 
 prop2 : String -> Value a -> Value b -> Style
 prop2 key argA argB =
-    property key (String.join " " [ argA.value, argB.value ])
+    property key (argA.value ++ " " ++ argB.value)
 
 
 prop3 : String -> Value a -> Value b -> Value c -> Style
 prop3 key argA argB argC =
-    property key (String.join " " [ argA.value, argB.value, argC.value ])
+    property key (argA.value ++ " " ++ argB.value ++ " " ++ argC.value)
 
 
 prop4 : String -> Value a -> Value b -> Value c -> Value d -> Style
 prop4 key argA argB argC argD =
-    property key (String.join " " [ argA.value, argB.value, argC.value, argD.value ])
+    property key (argA.value ++ " " ++ argB.value ++ " " ++ argC.value ++ " " ++ argD.value)
 
 
 prop5 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Style
 prop5 key argA argB argC argD argE =
-    property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value ])
+    property key (argA.value ++ " " ++ argB.value ++ " " ++ argC.value ++ " " ++ argD.value ++ " " ++ argE.value)
 
 
 prop6 : String -> Value a -> Value b -> Value c -> Value d -> Value e -> Value f -> Style
 prop6 key argA argB argC argD argE argF =
-    property key (String.join " " [ argA.value, argB.value, argC.value, argD.value, argE.value, argF.value ])
+    property key (argA.value ++ " " ++ argB.value ++ " " ++ argC.value ++ " " ++ argD.value ++ " " ++ argE.value ++ " " ++ argF.value)
 
 
 {-| Sets ['float'](https://developer.mozilla.org/en-US/docs/Web/CSS/float)
@@ -6316,7 +6316,7 @@ borderColor3 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue co
 borderColor3 c1 c2 c3 =
     let
         value =
-            String.join " " [ c1.value, c2.value, c3.value ]
+            c1.value ++ " " ++ c2.value ++ " " ++ c3.value
     in
     property "border-color" value
 
@@ -6336,7 +6336,7 @@ borderColor4 : ColorValue compatibleA -> ColorValue compatibleB -> ColorValue co
 borderColor4 c1 c2 c3 c4 =
     let
         value =
-            String.join " " [ c1.value, c2.value, c3.value, c4.value ]
+            c1.value ++ " " ++ c2.value ++ " " ++ c3.value ++ " " ++ c4.value
     in
     property "border-color" value
 

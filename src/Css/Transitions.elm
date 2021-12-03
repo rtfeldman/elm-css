@@ -2906,14 +2906,17 @@ transition options =
             List.foldl
                 (\(Transition { animation, duration, delay, timing }) s ->
                     s
-                        ++ String.join " "
-                            [ propToString animation
-                            , timeToString duration
-                            , Maybe.map timeToString delay
+                        ++ propToString animation
+                        ++ " "
+                        ++ timeToString duration
+                        ++ " "
+                        ++ (Maybe.map timeToString delay
                                 |> Maybe.withDefault ""
-                            , Maybe.map timingFunctionToString timing
+                           )
+                        ++ " "
+                        ++ (Maybe.map timingFunctionToString timing
                                 |> Maybe.withDefault ""
-                            ]
+                           )
                         ++ ","
                 )
                 ""
