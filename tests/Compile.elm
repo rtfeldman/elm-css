@@ -1,7 +1,7 @@
 module Compile exposing (compileTest, dreamwriter, unstyledDiv)
 
 import CompileFixtures
-import Css.Preprocess.Resolve exposing (compile)
+import Css.Preprocess.Resolve exposing (compileSheets)
 import Expect
 import Test exposing (..)
 import TestUtil exposing (..)
@@ -77,7 +77,7 @@ compileTest : Test
 compileTest =
     let
         input =
-            compile
+            compileSheets
                 [ CompileFixtures.basicStyle1
                 , CompileFixtures.basicStyle2
                 ]
