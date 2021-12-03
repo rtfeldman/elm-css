@@ -99,37 +99,12 @@ all =
             (\_ ->
                 Query.fromHtml (toUnstyled <| view "BUY TICKETS")
                     |> Query.has
-                        [ Selector.text """._3de4d102 {
-    background-color:#333333;
-    padding:20px;
-}"""
-                        , Selector.text """._e9904f07 {
-    margin:12px;
-    color:rgb(255, 255, 255);
-}"""
-                        , Selector.text """._3ac819d0 {
-    display:inline-block;
-    padding-bottom:12px;
-}"""
-                        , Selector.text """._c9b3bf47 {
-    display:inline-block;
-    margin-left:150px;
-    margin-right:80px;
-    vertical-align:middle;
-}"""
-                        , Selector.text """._b9f3f75d {
-    background-color:#222222;
-}"""
-                        , Selector.text """._33ecd3f8 {
-    padding:16px;
-    padding-left:24px;
-    padding-right:24px;
-    margin-left:50px;
-    margin-right:auto;
-    color:rgb(255, 255, 255);
-    background-color:rgb(27, 217, 130);
-    vertical-align:middle;
-}"""
+                        [ Selector.text "._15981fe0 { background-color:#333333; padding:20px; }"
+                        , Selector.text "._4bfd3bf0 { margin:12px; color:rgb(255, 255, 255); }"
+                        , Selector.text "._79436615 { display:inline-block; padding-bottom:12px; }"
+                        , Selector.text "._64b59389 { display:inline-block; margin-left:150px; margin-right:80px; vertical-align:middle; }"
+                        , Selector.text "._f579adda { background-color:#222222; }"
+                        , Selector.text "._29f322b1 { padding:16px; padding-left:24px; padding-right:24px; margin-left:50px; margin-right:auto; color:rgb(255, 255, 255); background-color:rgb(27, 217, 130); vertical-align:middle; }"
                         ]
             )
         ]

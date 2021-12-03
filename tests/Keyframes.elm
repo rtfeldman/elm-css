@@ -35,32 +35,11 @@ suite =
 
             output =
                 """
-            @keyframes _a56b5063 {
-                0% {background-color:#00FF00;background-size:2px;}
-
-                50% {opacity:0;}
-
-                100% {border:5px;background-color:rgb(11, 22, 33);}
-            }
-
-            body {
-                padding:0;
-            }
-
-            button {
-                margin:auto;
-            }
-
-            p {
-                color:#FF0000;
-                display:inline;
-                animation-name:_a56b5063;
-                background-color:rgb(11, 11, 11);
-            }
-
-            i {
-                animation-name:_a56b5063;
-            }
+            @keyframes _8b900732 { 0% { background-color:#00FF00; background-size:2px; } 50% { opacity:0; } 100% { border:5px; background-color:rgb(11, 22, 33); } }
+            body { padding:0; }
+            button { margin:auto; }
+            p { color:#FF0000; display:inline; animation-name:_8b900732; background-color:rgb(11, 11, 11); }
+            i { animation-name:_8b900732; }
             """
           in
           test "one keyframe" <|
@@ -97,34 +76,11 @@ suite =
 
             output =
                 """
-            @keyframes _23526425 {
-                10% {transform:translate(100px);}
-            }
-
-            @keyframes _a56b5063 {
-                0% {background-color:#00FF00;background-size:2px;}
-
-                50% {opacity:0;}
-
-                100% {border:5px;background-color:rgb(11, 22, 33);}
-            }
-
-            body {
-                padding:0;
-            }
-
-            button {
-                margin:auto;
-                animation-name:_23526425;
-                background-color:#0F0F0F;
-            }
-
-            p {
-                color:#FF0000;
-                display:inline;
-                animation-name:_a56b5063;
-                background-color:rgb(11, 11, 11);
-            }
+            @keyframes _8b900732 { 0% { background-color:#00FF00; background-size:2px; } 50% { opacity:0; } 100% { border:5px; background-color:rgb(11, 22, 33); } }
+            @keyframes _d6fd40fa { 10% { transform:translate(100px); } }
+            body { padding:0; }
+            button { margin:auto; animation-name:_d6fd40fa; background-color:#0F0F0F; }
+            p { color:#FF0000; display:inline; animation-name:_8b900732; background-color:rgb(11, 11, 11); }
             """
           in
           test "multiple keyframes" <|
@@ -159,14 +115,8 @@ assertEmptyKeyframesForProperty property expectedValue =
 
         output =
             """
-            body {
-                padding:0;
-            }
-
-            p {
-                color:#FF0000;
-                animation-name:""" ++ expectedValue ++ """;
-            }
+            body { padding:0; }
+            p { color:#FF0000; animation-name:""" ++ expectedValue ++ """; }
             """
     in
     outdented (prettyPrint input)

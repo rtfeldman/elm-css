@@ -66,7 +66,7 @@ prettyPrintDeclaration decl =
                     Css.String.mapJoin prettyPrintStyleBlock "\n" styleBlocks
 
                 query =
-                    Css.String.mapJoin mediaQueryToString ",\n" mediaQueries
+                    Css.String.mapJoin mediaQueryToString ", " mediaQueries
             in
             "@media " ++ query ++ " { " ++ blocks ++ " }"
 

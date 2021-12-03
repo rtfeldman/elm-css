@@ -13,7 +13,7 @@ import Hash
 
 compileSheets : List Preprocess.Stylesheet -> String
 compileSheets styles =
-    Css.String.mapJoin compile "\n\n" styles
+    Css.String.mapJoin compile "\n" styles
 
 
 compile : Preprocess.Stylesheet -> String

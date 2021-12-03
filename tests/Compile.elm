@@ -32,37 +32,11 @@ dreamwriter =
 
         output =
             """
-            html, body {
-              width:100%;
-              height:100%;
-              box-sizing:border-box;
-              padding:0;
-              margin:0;
-            }
-
-            body {
-              min-width:1280px;
-              overflow-x:auto;
-            }
-
-            body > div {
-              width:100%;
-              height:100%;
-            }
-
-            .Hidden {
-              display:none !important;
-            }
-
-            #Page {
-              width:100%;
-              height:100%;
-              box-sizing:border-box;
-              margin:0;
-              padding:8px;
-              background-color:rgb(100, 90, 128);
-              color:rgb(40, 35, 76);
-            }
+            html, body { width:100%; height:100%; box-sizing:border-box; padding:0; margin:0; }
+            body { min-width:1280px; overflow-x:auto; }
+            body > div { width:100%; height:100%; }
+            .Hidden { display:none !important; }
+            #Page { width:100%; height:100%; box-sizing:border-box; margin:0; padding:8px; background-color:rgb(100, 90, 128); color:rgb(40, 35, 76); }
         """
     in
     describe "Sample stylesheet from Dreamwriter"
@@ -84,13 +58,8 @@ compileTest =
 
         output =
             """
-            .BasicStyle1 {
-                display:none;
-            }
-
-            .BasicStyle2 {
-                display:none;
-            }
+            .BasicStyle1 { display:none; }
+            .BasicStyle2 { display:none; }
             """
     in
     describe "compiles multiple stylesheets"
