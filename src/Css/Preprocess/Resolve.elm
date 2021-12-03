@@ -1,4 +1,4 @@
-module Css.Preprocess.Resolve exposing (compile)
+module Css.Preprocess.Resolve exposing (compile, compileSheets)
 
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures.
@@ -11,13 +11,13 @@ import Css.Structure.Output as Output
 import Hash
 
 
-compile : List Preprocess.Stylesheet -> String
-compile styles =
-    Css.String.mapJoin compileHelp "\n\n" styles
+compileSheets : List Preprocess.Stylesheet -> String
+compileSheets styles =
+    Css.String.mapJoin compile "\n\n" styles
 
 
-compileHelp : Preprocess.Stylesheet -> String
-compileHelp sheet =
+compile : Preprocess.Stylesheet -> String
+compile sheet =
     Output.prettyPrint (Structure.compactStylesheet (toStructure sheet))
 
 

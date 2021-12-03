@@ -274,16 +274,15 @@ getCssTemplate styles =
             ""
 
         otherwise ->
-            let
-                selector =
-                    Structure.UniversalSelectorSequence
-                        [ Structure.ClassSelector classnameStandin ]
-            in
-            makeSnippet styles selector
-                |> List.singleton
+            [ makeSnippet styles templateSelector ]
                 |> Preprocess.stylesheet
-                |> List.singleton
                 |> Resolve.compile
+
+
+templateSelector : Structure.SimpleSelectorSequence
+templateSelector =
+    Structure.UniversalSelectorSequence
+        [ Structure.ClassSelector classnameStandin ]
 
 
 makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Preprocess.Snippet
