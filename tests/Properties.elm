@@ -126,10 +126,10 @@ all =
             , ( textDecoration2 lineThrough inherit, "line-through inherit" )
             ]
         , testProperty { function = "textDecoration3", property = "text-decoration" }
-            [ ( textDecoration3 initial wavy (rgb 11 12 13), "initial wavy rgb(11, 12, 13)" )
-            , ( textDecoration3 unset dotted (rgb 11 12 13), "unset dotted rgb(11, 12, 13)" )
-            , ( textDecoration3 inherit dashed (rgb 11 12 13), "inherit dashed rgb(11, 12, 13)" )
-            , ( textDecoration3 none solid (rgb 11 12 13), "none solid rgb(11, 12, 13)" )
+            [ ( textDecoration3 initial wavy (rgb 11 12 13), "initial wavy rgb(11,12,13)" )
+            , ( textDecoration3 unset dotted (rgb 11 12 13), "unset dotted rgb(11,12,13)" )
+            , ( textDecoration3 inherit dashed (rgb 11 12 13), "inherit dashed rgb(11,12,13)" )
+            , ( textDecoration3 none solid (rgb 11 12 13), "none solid rgb(11,12,13)" )
             , ( textDecoration3 underline double (hex "aabbcc"), "underline double #aabbcc" )
             , ( textDecoration3 overline initial (hex "aabbcc"), "overline initial #aabbcc" )
             , ( textDecoration3 lineThrough unset (hex "#bbccdd"), "line-through unset #bbccdd" )
@@ -154,14 +154,14 @@ all =
             , ( textDecorations2 [ underline, overline, lineThrough ] inherit, "underline overline line-through inherit" )
             ]
         , testProperty { function = "textDecorations3", property = "text-decoration" }
-            [ ( textDecorations3 [] double (rgb 11 12 13), "none double rgb(11, 12, 13)" )
-            , ( textDecorations3 [ initial ] solid (rgb 11 12 13), "initial solid rgb(11, 12, 13)" )
-            , ( textDecorations3 [ unset, inherit ] dashed (rgb 11 12 13), "unset inherit dashed rgb(11, 12, 13)" )
-            , ( textDecorations3 [ none ] dotted (rgb 11 12 13), "none dotted rgb(11, 12, 13)" )
-            , ( textDecorations3 [ underline, overline, lineThrough ] wavy (rgb 11 12 13), "underline overline line-through wavy rgb(11, 12, 13)" )
-            , ( textDecorations3 [ underline, overline, lineThrough ] initial (rgb 11 12 13), "underline overline line-through initial rgb(11, 12, 13)" )
-            , ( textDecorations3 [ underline, overline, lineThrough ] unset (rgb 11 12 13), "underline overline line-through unset rgb(11, 12, 13)" )
-            , ( textDecorations3 [ underline, overline, lineThrough ] inherit (rgb 11 12 13), "underline overline line-through inherit rgb(11, 12, 13)" )
+            [ ( textDecorations3 [] double (rgb 11 12 13), "none double rgb(11,12,13)" )
+            , ( textDecorations3 [ initial ] solid (rgb 11 12 13), "initial solid rgb(11,12,13)" )
+            , ( textDecorations3 [ unset, inherit ] dashed (rgb 11 12 13), "unset inherit dashed rgb(11,12,13)" )
+            , ( textDecorations3 [ none ] dotted (rgb 11 12 13), "none dotted rgb(11,12,13)" )
+            , ( textDecorations3 [ underline, overline, lineThrough ] wavy (rgb 11 12 13), "underline overline line-through wavy rgb(11,12,13)" )
+            , ( textDecorations3 [ underline, overline, lineThrough ] initial (rgb 11 12 13), "underline overline line-through initial rgb(11,12,13)" )
+            , ( textDecorations3 [ underline, overline, lineThrough ] unset (rgb 11 12 13), "underline overline line-through unset rgb(11,12,13)" )
+            , ( textDecorations3 [ underline, overline, lineThrough ] inherit (rgb 11 12 13), "underline overline line-through inherit rgb(11,12,13)" )
             ]
         , testProperty { function = "textDecorationLine", property = "text-decoration-line" }
             [ ( textDecorationLine initial, "initial" )
@@ -427,8 +427,8 @@ all =
             , ( opacity (int 1), "1" )
             ]
         , testProperty { function = "color", property = "color" }
-            [ ( color (hsl 120 0.5 0.5), "hsl(120, 50%, 50%)" )
-            , ( color (hsla 120 0.5 0.5 0.5), "hsla(120, 50%, 50%, 0.5)" )
+            [ ( color (hsl 120 0.5 0.5), "hsl(120,50%,50%)" )
+            , ( color (hsla 120 0.5 0.5 0.5), "hsla(120,50%,50%,0.5)" )
             , ( color inherit, "inherit" )
             , ( color unset, "unset" )
             , ( color initial, "initial" )
@@ -474,8 +474,8 @@ all =
             , ( cursor inherit, "inherit" )
             ]
         , testProperty { function = "outline3", property = "outline" }
-            [ ( outline3 (px 10) dashed (hsl 120 0.5 0.5), "10px dashed hsl(120, 50%, 50%)" )
-            , ( outline3 (em 1.4) solid (hsla 120 0.5 0.5 0.5), "1.4em solid hsla(120, 50%, 50%, 0.5)" )
+            [ ( outline3 (px 10) dashed (hsl 120 0.5 0.5), "10px dashed hsl(120,50%,50%)" )
+            , ( outline3 (em 1.4) solid (hsla 120 0.5 0.5 0.5), "1.4em solid hsla(120,50%,50%,0.5)" )
             , ( outline inherit, "inherit" )
             , ( outline unset, "unset" )
             , ( outline initial, "initial" )
@@ -493,8 +493,8 @@ all =
             , ( outlineWidth none, "none" )
             ]
         , testProperty { function = "outlineColor", property = "outline-color" }
-            [ ( outlineColor (hsl 120 0.5 0.5), "hsl(120, 50%, 50%)" )
-            , ( outlineColor (hsla 120 0.5 0.5 0.5), "hsla(120, 50%, 50%, 0.5)" )
+            [ ( outlineColor (hsl 120 0.5 0.5), "hsl(120,50%,50%)" )
+            , ( outlineColor (hsla 120 0.5 0.5 0.5), "hsla(120,50%,50%,0.5)" )
             , ( outlineColor transparent, "transparent" )
             , ( outlineColor inherit, "inherit" )
             , ( outlineColor unset, "unset" )
@@ -568,7 +568,7 @@ all =
             , ( listStyle circle, "circle" )
             , ( listStyle square, "square" )
             , ( listStyle decimal, "decimal" )
-            , ( listStyle (linearGradient (stop <| hex "111") (stop <| hex "222") []), "linear-gradient(#111, #222)" )
+            , ( listStyle (linearGradient (stop <| hex "111") (stop <| hex "222") []), "linear-gradient(#111,#222)" )
             ]
         , testProperty { function = "listStyle2", property = "list-style" }
             [ ( listStyle2 disc inside, "disc inside" )
@@ -615,7 +615,7 @@ all =
             , ( borderRadius4 (em 4) (px 2) (pct 5) (px 3), "4em 2px 5% 3px" )
             ]
         , testProperty { function = "important", property = "background-color" }
-            [ ( backgroundColor (rgb 129 20 100) |> important, "rgb(129, 20, 100) !important" )
+            [ ( backgroundColor (rgb 129 20 100) |> important, "rgb(129,20,100) !important" )
             ]
         , testProperty { function = "whiteSpace", property = "white-space" }
             [ ( whiteSpace initial, "initial" )
@@ -661,5 +661,5 @@ expectPropertyWorks propertyName ( style, expectedStr ) =
         [ test "emitted as expected" <|
             \() ->
                 prettyPrint (stylesheet [ p [ style ] ])
-                    |> Expect.equal ("p { " ++ propertyName ++ ":" ++ expectedStr ++ "; }")
+                    |> Expect.equal ("p{" ++ propertyName ++ ":" ++ expectedStr ++ ";}")
         ]

@@ -25,10 +25,10 @@ testMediaType str mediaType =
             prettyPrint (stylesheet [ basicMediaQuery (only mediaType []) ])
 
         expectedBody =
-            "p { background-color:#FF0000;"
+            "p{background-color:#FF0000;"
 
         expected =
-            "@media only " ++ str ++ " { " ++ expectedBody ++ " } }"
+            "@media only " ++ str ++ "{" ++ expectedBody ++ "}}"
     in
     describe (str ++ " media type")
         [ test "pretty prints the expected output" <| \() -> Expect.equal expected actual ]
@@ -158,10 +158,10 @@ testUnparameterizedFeature featureName component =
             prettyPrint (stylesheet [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
-            "p { background-color:#FF0000;"
+            "p{background-color:#FF0000;"
 
         expected =
-            "@media (" ++ featureName ++ ") { " ++ expectedBody ++ " } }"
+            "@media (" ++ featureName ++ "){" ++ expectedBody ++ "}}"
     in
     test ("pretty prints the expected boolean output" ++ featureName ++ " media feature") <| \() -> Expect.equal expected actual
 
@@ -173,10 +173,10 @@ expectFeatureWorks featureName n ( component, expectedStr ) =
             prettyPrint (stylesheet [ basicMediaQuery (Media.all [ component ]) ])
 
         expectedBody =
-            "p { background-color:#FF0000;"
+            "p{background-color:#FF0000;"
 
         expected =
-            "@media (" ++ featureName ++ ": " ++ expectedStr ++ ") { " ++ expectedBody ++ " } }"
+            "@media (" ++ featureName ++ ": " ++ expectedStr ++ "){" ++ expectedBody ++ "}}"
     in
     test ("pretty prints the expected feature output for:" ++ featureName ++ String.fromInt n) <| \() -> Expect.equal expected actual
 
@@ -204,12 +204,12 @@ testMedia =
 
         output =
             """
-            body { padding:0; }
-            @media only print { body { margin:2em; } }
-            @media only screen and (max-width: 600px) { body { margin:3em; } }
-            button { margin:auto; }
-            @media only screen and (color) and (pointer: fine) and (scan: interlace) and (grid) { p { color:#FF0000; } }
-            @media not screen and (color) { p { color:#000000; } }
+            body{padding:0;}
+            @media only print{body{margin:2em;}}
+            @media only screen and (max-width: 600px){body{margin:3em;}}
+            button{margin:auto;}
+            @media only screen and (color) and (pointer: fine) and (scan: interlace) and (grid){p{color:#FF0000;}}
+            @media not screen and (color){p{color:#000000;}}
             """
     in
     describe "@media test"
@@ -259,22 +259,22 @@ testWithMedia =
 
         output =
             """
-            button { padding:0; }
-            body { color:#333333; }
-            @media only print, (monochrome) { body { color:#000000; } }
-            p { color:#AA0000; }
-            @media only screen { p { text-decoration:underline; } }
-            a { color:#BB0000; }
-            @media only screen { a { text-decoration:underline; } }
-            @media only print { a { text-decoration:none; } }
-            ul { color:#CC0000; }
-            @media only screen { ul { text-decoration:underline; } }
-            @media only print { ul { text-decoration:none; } }
-            li { color:#DD0000; background-color:#EE0000; }
-            @media only screen { li { text-decoration:underline; } }
-            @media only print { li { text-decoration:none; } }
-            .Container { max-width:800px; }
-            @media only screen and (max-width: 375px), only screen and (max-height: 667px) { .Container { max-width:300px; } }
+            button{padding:0;}
+            body{color:#333333;}
+            @media only print, (monochrome){body{color:#000000;}}
+            p{color:#AA0000;}
+            @media only screen{p{text-decoration:underline;}}
+            a{color:#BB0000;}
+            @media only screen{a{text-decoration:underline;}}
+            @media only print{a{text-decoration:none;}}
+            ul{color:#CC0000;}
+            @media only screen{ul{text-decoration:underline;}}
+            @media only print{ul{text-decoration:none;}}
+            li{color:#DD0000;background-color:#EE0000;}
+            @media only screen{li{text-decoration:underline;}}
+            @media only print{li{text-decoration:none;}}
+            .Container{max-width:800px;}
+            @media only screen and (max-width: 375px), only screen and (max-height: 667px){.Container{max-width:300px;}}
             """
     in
     describe "nested @media test"
@@ -301,8 +301,8 @@ withMediaOutside =
 
         output =
             """
-            body { color:#ff0000; }
-            @media only screen and (min-width: 600px) { body:nth-of-type(2n+1) { margin-right:16px; } }
+            body{color:#ff0000;}
+            @media only screen and (min-width: 600px){body:nth-of-type(2n+1){margin-right:16px;}}
             """
     in
     describe "withMedia on the outside"
@@ -330,8 +330,8 @@ withMediaOutsideAndOtherDeclarations =
 
         output =
             """
-            body { color:#ff0000; background-color:#0000aa; }
-            @media only screen and (min-width: 600px) { body:nth-of-type(2n+1) { margin-right:16px; } }
+            body{color:#ff0000;background-color:#0000aa;}
+            @media only screen and (min-width: 600px){body:nth-of-type(2n+1){margin-right:16px;}}
             """
     in
     describe "withMedia on the outside and other declarations"
@@ -357,7 +357,7 @@ withMediaInside =
 
         output =
             """
-            @media only screen and (min-width: 600px) { body:nth-of-type(2n+1) { margin-right:16px; } }
+            @media only screen and (min-width: 600px){body:nth-of-type(2n+1){margin-right:16px;}}
             """
     in
     describe "withMedia on the inside"
@@ -385,8 +385,8 @@ withMediaInsideAndOtheDeclarations =
 
         output =
             """
-            body { color:#ff0000; background-color:#0000aa; }
-            @media only screen and (min-width: 600px) { body:nth-of-type(2n+1) { margin-right:16px; } }
+            body{color:#ff0000;background-color:#0000aa;}
+            @media only screen and (min-width: 600px){body:nth-of-type(2n+1){margin-right:16px;}}
             """
     in
     describe "withMedia on the inside and other declarations"
@@ -428,14 +428,14 @@ bug352 =
 
         output =
             """
-            button { padding:0; }
-            body { color:#333333; }
-            @media only screen and (min-width: 600px) { body:nth-of-type(2n+1) { margin-right:16px; } }
-            a { color:#FF0000; }
-            @media only screen and (min-width: 600px) { a:nth-of-type(2n+1) { margin-right:16px; } }
-            @media only print { a { text-decoration:none; } }
-            .Container { max-width:800px; max-height:600px; }
-            @media only screen and (max-width: 375px), only screen and (max-height: 667px) { .Container { max-width:300px; } }
+            button{padding:0;}
+            body{color:#333333;}
+            @media only screen and (min-width: 600px){body:nth-of-type(2n+1){margin-right:16px;}}
+            a{color:#FF0000;}
+            @media only screen and (min-width: 600px){a:nth-of-type(2n+1){margin-right:16px;}}
+            @media only print{a{text-decoration:none;}}
+            .Container{max-width:800px;max-height:600px;}
+            @media only screen and (max-width: 375px), only screen and (max-height: 667px){.Container{max-width:300px;}}
             """
     in
     describe "Regression test for #352"
@@ -457,7 +457,7 @@ testMediaQuery =
 
         output =
             """
-            @media tv, screen and (scan: interlace) { body { background-color:#FFFFFF; } }
+            @media tv, screen and (scan: interlace){body{background-color:#FFFFFF;}}
             """
     in
     describe "mediaQuery test"
@@ -482,8 +482,8 @@ testWithMediaQuery =
 
         output =
             """
-            body { font-size:12px; }
-            @media screen and (min-device-width: 600px), screen and (min-width: 600px) { body { font-size:14px; } }
+            body{font-size:12px;}
+            @media screen and (min-device-width: 600px), screen and (min-width: 600px){body{font-size:14px;}}
             """
     in
     describe "withMediaQuery test"

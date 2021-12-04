@@ -501,7 +501,7 @@ cssFunction : String -> List String -> String
 cssFunction funcName args =
     funcName
         ++ "("
-        ++ String.join ", " args
+        ++ String.join "," args
         ++ ")"
 
 

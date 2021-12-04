@@ -35,11 +35,11 @@ suite =
 
             output =
                 """
-            @keyframes _8b900732 { 0% { background-color:#00FF00; background-size:2px; } 50% { opacity:0; } 100% { border:5px; background-color:rgb(11, 22, 33); } }
-            body { padding:0; }
-            button { margin:auto; }
-            p { color:#FF0000; display:inline; animation-name:_8b900732; background-color:rgb(11, 11, 11); }
-            i { animation-name:_8b900732; }
+            @keyframes _d72e57d0{0%{background-color:#00FF00;background-size:2px;}50%{opacity:0;}100%{border:5px;background-color:rgb(11,22,33);}}
+            body{padding:0;}
+            button{margin:auto;}
+            p{color:#FF0000;display:inline;animation-name:_d72e57d0;background-color:rgb(11,11,11);}
+            i{animation-name:_d72e57d0;}
             """
           in
           test "one keyframe" <|
@@ -76,11 +76,11 @@ suite =
 
             output =
                 """
-            @keyframes _8b900732 { 0% { background-color:#00FF00; background-size:2px; } 50% { opacity:0; } 100% { border:5px; background-color:rgb(11, 22, 33); } }
-            @keyframes _d6fd40fa { 10% { transform:translate(100px); } }
-            body { padding:0; }
-            button { margin:auto; animation-name:_d6fd40fa; background-color:#0F0F0F; }
-            p { color:#FF0000; display:inline; animation-name:_8b900732; background-color:rgb(11, 11, 11); }
+            @keyframes _d72e57d0{0%{background-color:#00FF00;background-size:2px;}50%{opacity:0;}100%{border:5px;background-color:rgb(11,22,33);}}
+            @keyframes _d952be4e{10%{transform:translate(100px);}}
+            body{padding:0;}
+            button{margin:auto;animation-name:_d952be4e;background-color:#0F0F0F;}
+            p{color:#FF0000;display:inline;animation-name:_d72e57d0;background-color:rgb(11,11,11);}
             """
           in
           test "multiple keyframes" <|
@@ -115,8 +115,8 @@ assertEmptyKeyframesForProperty property expectedValue =
 
         output =
             """
-            body { padding:0; }
-            p { color:#FF0000; animation-name:""" ++ expectedValue ++ """; }
+            body{padding:0;}
+            p{color:#FF0000;animation-name:""" ++ expectedValue ++ """;}
             """
     in
     outdented (prettyPrint input)

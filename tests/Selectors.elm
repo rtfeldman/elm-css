@@ -89,4 +89,4 @@ testSelector expectedOutput applySelector =
     test (expectedOutput ++ " selector") <|
         \() ->
             prettyPrint (stylesheet [ applySelector [ display none ] ])
-                |> Expect.equal (expectedOutput ++ " { display:none; }")
+                |> Expect.equal (expectedOutput ++ "{display:none;}")
