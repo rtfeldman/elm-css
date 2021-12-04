@@ -65,7 +65,7 @@ type alias Classname =
 
 classnameStandin : String
 classnameStandin =
-    "'''\"\"\""
+    "\u{0007}"
 
 
 node : String -> List (Attribute msg) -> List (Node msg) -> Node msg
