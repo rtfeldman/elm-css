@@ -46,12 +46,12 @@ prettyPrintStyleBlock (StyleBlock firstSelector otherSelectors properties) =
     let
         selectorStr =
             (firstSelector :: otherSelectors)
-                |> Css.String.mapJoin selectorToString ", "
+                |> Css.String.mapJoin selectorToString ","
     in
     selectorStr
-        ++ " { "
+        ++ "{"
         ++ emitProperties properties
-        ++ " }"
+        ++ "}"
 
 
 prettyPrintDeclaration : Declaration -> String
@@ -68,7 +68,7 @@ prettyPrintDeclaration decl =
                 query =
                     Css.String.mapJoin mediaQueryToString ", " mediaQueries
             in
-            "@media " ++ query ++ " { " ++ blocks ++ " }"
+            "@media " ++ query ++ "{" ++ blocks ++ "}"
 
         SupportsRule _ _ ->
             "TODO"
@@ -83,7 +83,7 @@ prettyPrintDeclaration decl =
             "TODO"
 
         Keyframes { name, declaration } ->
-            "@keyframes " ++ name ++ " { " ++ declaration ++ " }"
+            "@keyframes " ++ name ++ "{" ++ declaration ++ "}"
 
         Viewport _ ->
             "TODO"
@@ -223,4 +223,4 @@ combinatorToString combinator =
 
 emitProperties : List Property -> String
 emitProperties properties =
-    Css.String.mapJoin (\prop -> prop ++ ";") " " properties
+    Css.String.mapJoin (\prop -> prop ++ ";") "" properties

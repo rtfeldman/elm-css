@@ -76,9 +76,9 @@ printKeyframeSelector ( percentage, properties ) =
             String.fromInt percentage ++ "%"
 
         propertiesStr =
-            Css.String.mapJoin (\(Property prop) -> prop ++ ";") " " properties
+            Css.String.mapJoin (\(Property prop) -> prop ++ ";") "" properties
     in
-    percentageStr ++ " { " ++ propertiesStr ++ " }"
+    percentageStr ++ "{" ++ propertiesStr ++ "}"
 
 
 {-| Caution: trickery ahead!
