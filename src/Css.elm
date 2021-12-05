@@ -46,7 +46,7 @@ module Css exposing
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
     , outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
     , display, display2, displayListItem2, displayListItem3
-    , block, flex_, flow, flowRoot, grid, contents, listItem, inline, inlineBlock, inlineFlex, inlineTable, inlineGrid, ruby, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+    , flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     , position, zIndex
     , absolute, fixed, relative, static, sticky
     , inset, inset2, inset3, inset4, top, right, bottom, left
@@ -80,7 +80,7 @@ module Css exposing
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
-    , stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
+    , stretch, center, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
     , url
     , CursorKeyword
     , cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
@@ -94,7 +94,9 @@ module Css exposing
     , auto, none
     , hidden, visible
     , contentBox, borderBox
-    , overflow, overflowX, overflowY, overflowBlock, overflowInline, clip
+    , left_, right_, top_, bottom_, block, inline, start, end
+    , baseline, clip, ruby
+    , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
@@ -354,7 +356,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 @docs display, display2, displayListItem2, displayListItem3
 
-@docs block, flex_, flow, flowRoot, grid, contents, listItem, inline, inlineBlock, inlineFlex, inlineTable, inlineGrid, ruby, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+@docs flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
 
 
 ## Positions
@@ -506,7 +508,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 # Align Items
 
-@docs stretch, center, start, end, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, left_, right_, top_, bottom_, baseline, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
+@docs stretch, center, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
 
 
 # Url
@@ -540,11 +542,13 @@ Multiple CSS properties use these values.
 @docs auto, none
 @docs hidden, visible
 @docs contentBox, borderBox
+@docs left_, right_, top_, bottom_, block, inline, start, end
+@docs baseline, clip, ruby
 
 
 ## Overflow
 
-@docs overflow, overflowX, overflowY, overflowBlock, overflowInline, clip
+@docs overflow, overflowX, overflowY, overflowBlock, overflowInline
 @docs overflowAnchor
 
 @docs overflowWrap
@@ -1200,7 +1204,7 @@ url str =
     Value ("url(" ++ str ++ ")")
 
 
-{-| The `auto` value used for properties such as [`width`](#width),
+{-| The `auto` value used in many properties such as [`width`](#width),
 [`zoom`](#zoom),
 [`outlineStyle`](#outlineStyle),
 and [`flexBasis`](#flexBasis).
@@ -1217,7 +1221,7 @@ auto =
     Value "auto"
 
 
-{-| The `none` value used for properties such as [`display`](#display),
+{-| The `none` value used in many properties such as [`display`](#display),
 [`borderStyle`](#borderStyle),
 [`maxWidth`](#maxWidth),
 [`clear`](#clear),
@@ -1278,9 +1282,13 @@ scroll =
     Value "scroll"
 
 
-{-| The `content-box` value, used with [`boxSizing`](#boxSizing),
-[`backgroundClip`](#backgroundClip), [`backgroundOrigin`](#backgroundOrigin),
-and [`strokeOrigin`](#strokeOrigin).
+{-| The `content-box` value, used in the following properties: 
+
+- [`boxSizing`](#boxSizing)
+- [`backgroundClip`](#backgroundClip)
+- [`backgroundOrigin`](#backgroundOrigin)
+- [`strokeOrigin`](#strokeOrigin)
+
 
     boxSizing contentBox
 
@@ -1296,9 +1304,13 @@ contentBox =
     Value "content-box"
 
 
-{-| The `border-box` value, used with [`boxSizing`](#boxSizing),
-[`backgroundClip`](#backgroundClip), [`backgroundOrigin`](backgroundOrigin),
-and [`strokeOrigin`](#strokeOrigin).
+{-| The `border-box` value, used in the following properties:
+
+- [`boxSizing`](#boxSizing)
+- [`backgroundClip`](#backgroundClip)
+- [`backgroundOrigin`](backgroundOrigin)
+- [`strokeOrigin`](#strokeOrigin)
+
 
     boxSizing borderBox
 
@@ -1313,6 +1325,256 @@ borderBox : Value { provides | borderBox : Supported }
 borderBox =
     Value "border-box"
 
+
+{-| The `left` value, used in many properties such as:
+
+- [`backgroundPosition`](#backgroundPosition)
+- [`clear`](#clear)
+- [`float`](#float)
+- [`justifyContent`](#justifyContent)
+- [`justifyItems`](#justifyItems)
+- [`justifySelf`](#justifySelf)
+- [`pageBreakAfter`](#pageBreakAfter)
+- [`textAlign`](#textAlign)
+
+
+    backgroundPosition left_
+    
+    clear left_
+
+    float left_
+
+    justifyContent left_
+
+    justifyItems left_
+
+    justifySelf left_
+
+    pageBreakAfter left_
+
+    textAlign left_
+
+
+
+The value is called `left_` instead of `left` because [`left` is already a function](#left).
+
+-}
+left_ : Value { provides | left_ : Supported }
+left_ =
+    Value "left"
+
+
+{-| The `right` value, used in many properties such as:
+
+- [`backgroundPosition`](#backgroundPosition)
+- [`clear`](#clear)
+- [`float`](#float)
+- [`justifyContent`](#justifyContent)
+- [`justifyItems`](#justifyItems)
+- [`justifySelf`](#justifySelf)
+- [`pageBreakAfter`](#pageBreakAfter)
+- [`textAlign`](#textAlign)
+
+
+    backgroundPosition right_
+    
+    clear right_
+
+    float right_
+
+    justifyContent right_
+
+    justifyItems right_
+
+    justifySelf right_
+
+    pageBreakAfter right_
+
+    textAlign right_
+
+
+
+The value is called `right_` instead of `right` because [`right` is already a function](#right).
+
+-}
+right_ : Value { provides | right_ : Supported }
+right_ =
+    Value "right"
+
+
+{-| The `top` value, used in the following properties:
+
+- [`backgroundPosition`](#backgroundPosition)
+- [`captionSide`](#captionSide)
+- [`objectPosition2`](#objectPosition2)
+- [`perspectiveOrigin2`](#perspectiveOrigin2)
+- [`strokePosition2`](#strokePosition2)
+- [`transformOrigin`](#transformOrigin)
+- [`verticalAlign`](#verticalAlign)
+
+
+    backgroundPosition top_
+
+    captionSide top_
+
+    objectPosition2 right_ top_
+
+    perspectiveOrigin2 left_ top_
+
+    transformOrigin top_
+
+    verticalAlign top_
+
+The value is called `top_` instead of `top` because [`top` is already a function](#top).
+
+-}
+top_ : Value { provides | top_ : Supported }
+top_ =
+    Value "top"
+
+
+{-| The `bottom` value, used in the following properties:
+
+- [`backgroundPosition`](#backgroundPosition)
+- [`captionSide`](#captionSide)
+- [`objectPosition2`](#objectPosition2)
+- [`perspectiveOrigin2`](#perspectiveOrigin2)
+- [`strokePosition2`](#strokePosition2)
+- [`transformOrigin`](#transformOrigin)
+- [`verticalAlign`](#verticalAlign)
+
+
+    backgroundPosition bottom_
+
+    captionSide bottom_
+
+    objectPosition2 right_ bottom_
+
+    perspectiveOrigin2 left_ bottom_
+
+    transformOrigin bottom_
+
+    verticalAlign bottom_
+
+The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
+
+-}
+bottom_ : Value { provides | bottom_ : Supported }
+bottom_ =
+    Value "bottom"
+
+
+{-| The `block` value used by [`display`](#display) and [`resize`](#resize).
+
+    display block
+
+    resize block
+
+-}
+block : Value { provides | block : Supported }
+block =
+    Value "block"
+
+
+{-| The `inline` value used by [`display`](#display) and [`resize`](#resize).
+
+    display inline
+
+    resize inline
+
+-}
+inline : Value { provides | inline : Supported }
+inline =
+    Value "inline"
+
+
+{-| The `start` value, used in the following properties:
+
+- [`alignItems`](#alignItems)
+- [`alignContent`](#alignContent)
+- [`alignSelf`](#alignSelf)
+- [`justifyContent`](#justifyContent)
+- [`justifyItems`](#justifyItems)
+- [`justifySelf`](#justifySelf)
+- [`steps2`](#steps2)
+
+
+    alignContent start
+
+    steps2 3 start
+
+-}
+start : Value { provides | start : Supported }
+start =
+    Value "start"
+
+
+{-| The `end` value, used in the following properties:
+
+- [`alignItems`](#alignItems)
+- [`alignContent`](#alignContent)
+- [`alignSelf`](#alignSelf)
+- [`justifyContent`](#justifyContent)
+- [`justifyItems`](#justifyItems)
+- [`justifySelf`](#justifySelf)
+- [`steps2`](#steps2)
+
+
+    alignContent end
+
+    steps2 3 end
+
+-}
+end : Value { provides | end : Supported }
+end =
+    Value "end"
+{-| The `baseline` value, used in the following properties:
+
+- [`alignContent`](#alignContent)
+- [`alignItems`](#alignItems)
+- [`alignSelf`](#alignSelf)
+- [`verticalAlign`](#verticalAlign)
+
+
+    alignItems baseline
+
+    verticalAlign baseline
+
+-}
+
+
+baseline : Value { provides | baseline : Supported }
+baseline =
+    Value "baseline"
+
+
+{-| The `clip` value used by [`overflow`](#overflow) and [`textOverflow`](#textOverflow).
+
+    overflow clip
+
+    overflowX clip
+
+    overflowY clip
+
+    textOverflow clip
+
+-}
+clip : Value { provides | clip : Supported }
+clip =
+    Value "clip"
+
+
+
+{-| The `ruby` value used by [`display`](#display) and [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+    display ruby
+
+    fontVariantEastAsian2 ruby jis83 
+
+-}
+ruby : Value { provides | ruby : Supported }
+ruby =
+    Value "ruby"
 
 
 -- OVERFLOW --
@@ -1389,19 +1651,6 @@ overflowY :
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
 
-
-{-| The `clip` value used by [`overflow`](#overflow).
-
-    overflow clip
-
-    overflowX clip
-
-    overflowY clip
-
--}
-clip : Value { provides | clip : Supported }
-clip =
-    Value "clip"
 
 
 {-| Sets [`overflow-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-block).
@@ -3850,19 +4099,7 @@ displayListItem3 (Value displayOutside) (Value displayFlow) =
     AppendProperty ("display:list-item " ++ displayOutside ++ " " ++ displayFlow)
 
 
-{-| The `block` value used by [`display`](#display) and [`resize`].
-
-    display block
-
-    resize block
-
--}
-block : Value { provides | block : Supported }
-block =
-    Value "block"
-
-
-{-| `flex` value use by [`display`](#display)
+{-| The `flex` value used by [`display`](#display).
 
     display flex_
 
@@ -3874,7 +4111,7 @@ flex_ =
     Value "flex"
 
 
-{-| The `flow` value used by [`display`](#display)
+{-| The `flow` value used by [`display`](#display).
 
     display flow
 
@@ -3884,7 +4121,7 @@ flow =
     Value "flow"
 
 
-{-| The `flow-root` value used by [`display`](#display)
+{-| The `flow-root` value used by [`display`](#display).
 
     display flowRoot
 
@@ -3894,7 +4131,7 @@ flowRoot =
     Value "flow-root"
 
 
-{-| The `grid` value used by [`display`](#display)
+{-| The `grid` value used by [`display`](#display).
 
     display grid
 
@@ -3904,7 +4141,7 @@ grid =
     Value "grid"
 
 
-{-| The `contents` value used by [`display`](#display)
+{-| The `contents` value used by [`display`](#display).
 
     display contents
 
@@ -3914,19 +4151,7 @@ contents =
     Value "contents"
 
 
-{-| The `inline` value used by [`display`](#display) and [`resize`].
-
-    display inline
-
-    resize inline
-
--}
-inline : Value { provides | inline : Supported }
-inline =
-    Value "inline"
-
-
-{-| The `inline-block` value used by [`display`](#display)
+{-| The `inline-block` value used by [`display`](#display).
 
     display inlineBlock
 
@@ -3936,7 +4161,7 @@ inlineBlock =
     Value "inline-block"
 
 
-{-| The `inline-flex` value used by [`display`](#display)
+{-| The `inline-flex` value used by [`display`](#display).
 
     display inlineFlex
 
@@ -3946,7 +4171,7 @@ inlineFlex =
     Value "inline-flex"
 
 
-{-| The `list-item` value used by [`display`](#display)
+{-| The `list-item` value used by [`display`](#display).
 
     display listItem
 
@@ -3956,7 +4181,7 @@ listItem =
     Value "list-item"
 
 
-{-| The `inline-table` value used by [`display`](#display)
+{-| The `inline-table` value used by [`display`](#display).
 
     display inlineTable
 
@@ -3966,7 +4191,7 @@ inlineTable =
     Value "inline-table"
 
 
-{-| The `inline-grid` value used by [`display`](#display)
+{-| The `inline-grid` value used by [`display`](#display).
 
     display inlineGrid
 
@@ -3976,17 +4201,7 @@ inlineGrid =
     Value "inline-grid"
 
 
-{-| The `ruby` value used by [`display`](#display)
-
-    display ruby
-
--}
-ruby : Value { provides | ruby : Supported }
-ruby =
-    Value "ruby"
-
-
-{-| The `ruby-base` value used by [`display`](#display)
+{-| The `ruby-base` value used by [`display`](#display).
 
     display rubyBase
 
@@ -3996,7 +4211,7 @@ rubyBase =
     Value "ruby-base"
 
 
-{-| The `ruby-base-container` value used by [`display`](#display)
+{-| The `ruby-base-container` value used by [`display`](#display).
 
     display rubyBaseContainer
 
@@ -4006,7 +4221,7 @@ rubyBaseContainer =
     Value "ruby-base-container"
 
 
-{-| The `ruby-text` value used by [`display`](#display)
+{-| The `ruby-text` value used by [`display`](#display).
 
     display rubyText
 
@@ -4016,7 +4231,7 @@ rubyText =
     Value "ruby-text"
 
 
-{-| The `ruby-text-container` value used by [`display`](#display)
+{-| The `ruby-text-container` value used by [`display`](#display).
 
     display rubyTextContainer
 
@@ -4026,7 +4241,7 @@ rubyTextContainer =
     Value "ruby-text-container"
 
 
-{-| The `run-in` value used by [`display`](#display)
+{-| The `run-in` value used by [`display`](#display).
 
     display runIn
 
@@ -4036,7 +4251,7 @@ runIn =
     Value "run-in"
 
 
-{-| The `table` value used by [`display`](#display)
+{-| The `table` value used by [`display`](#display).
 
     display table
 
@@ -4046,7 +4261,7 @@ table =
     Value "table"
 
 
-{-| The `table-caption` value used by [`display`](#display)
+{-| The `table-caption` value used by [`display`](#display).
 
     display tableCaption
 
@@ -4056,7 +4271,7 @@ tableCaption =
     Value "table-caption"
 
 
-{-| The `table-cell` value used by [`display`](#display)
+{-| The `table-cell` value used by [`display`](#display).
 
     display tableCell
 
@@ -4066,7 +4281,7 @@ tableCell =
     Value "table-cell"
 
 
-{-| The `table-column` value used by [`display`](#display)
+{-| The `table-column` value used by [`display`](#display).
 
     display tableColumn
 
@@ -4076,7 +4291,7 @@ tableColumn =
     Value "table-column"
 
 
-{-| The `table-column-group` value used by [`display`](#display)
+{-| The `table-column-group` value used by [`display`](#display).
 
     display tableColumnGroup
 
@@ -4086,7 +4301,7 @@ tableColumnGroup =
     Value "table-column-group"
 
 
-{-| The `table-footer-group` value used by [`display`](#display)
+{-| The `table-footer-group` value used by [`display`](#display).
 
     display tableFooterGroup
 
@@ -4096,7 +4311,7 @@ tableFooterGroup =
     Value "table-footer-group"
 
 
-{-| The `table-header-group` value used by [`display`](#display)
+{-| The `table-header-group` value used by [`display`](#display).
 
     display tableHeaderGroup
 
@@ -4106,7 +4321,7 @@ tableHeaderGroup =
     Value "table-header-group"
 
 
-{-| The `table-row` value used by [`display`](#display)
+{-| The `table-row` value used by [`display`](#display).
 
     display tableRow
 
@@ -4116,7 +4331,7 @@ tableRow =
     Value "table-row"
 
 
-{-| The `table-row-group` value used by [`display`](#display)
+{-| The `table-row-group` value used by [`display`](#display).
 
     display tableRowGroup
 
@@ -4141,41 +4356,6 @@ center : Value { provides | center : Supported }
 center =
     Value "center"
 
-
-{-| The `start` value used for properties such as [`alignItems`](#alignItems),
-[`alignContent`](#alignContent),
-[`alignSelf`](#alignSelf),
-[`justifyContent`](#justifyContent),
-[`justifyItems`](#justifyItems),
-[`justifySelf`](#justifySelf),
-and [`steps2`](#steps2).
-
-    alignContent start
-
-    steps2 3 start
-
--}
-start : Value { provides | start : Supported }
-start =
-    Value "start"
-
-
-{-| The `end` value used for properties such as [`alignItems`](#alignItems),
-[`alignContent`](#alignContent),
-[`alignSelf`](#alignSelf),
-[`justifyContent`](#justifyContent),
-[`justifyItems`](#justifyItems),
-[`justifySelf`](#justifySelf),
-and [`steps2`](#steps2).
-
-    alignContent end
-
-    steps2 3 end
-
--}
-end : Value { provides | end : Supported }
-end =
-    Value "end"
 
 
 {-| The `flex-start` value used by [`alignItems`](#alignItems),
@@ -4257,67 +4437,6 @@ the start and end.
 spaceEvenly : Value { provides | spaceEvenly : Supported }
 spaceEvenly =
     Value "space-evenly"
-
-
-{-| The `left` value used for alignment.
-
-    float left_
-
-The value is called `left_` instead of `left` because [`left` is already a function](#left).
-
--}
-left_ : Value { provides | left_ : Supported }
-left_ =
-    Value "left"
-
-
-{-| The `right` value used for alignment.
-
-    float right_
-
-The value is called `right_` instead of `right` because [`right` is already a function](#right).
-
--}
-right_ : Value { provides | right_ : Supported }
-right_ =
-    Value "right"
-
-
-{-| The `top` value used by [`verticalAlign`](#verticalAlign).
-
-    verticalAlign top_
-
-The value is called `top_` instead of `top` because [`top` is already a function](#top).
-
--}
-top_ : Value { provides | top_ : Supported }
-top_ =
-    Value "top"
-
-
-{-| The `bottom` value used by [`verticalAlign`](#verticalAlign).
-
-    verticalAlign bottom_
-
-The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
-
--}
-bottom_ : Value { provides | bottom_ : Supported }
-bottom_ =
-    Value "bottom"
-
-
-{-| The `baseline` value used for properties such as [`alignContent`](#alignContent),
-[`alignItems`](#alignItems),
-[`alignSelf`](#alignSelf),
-and [`verticalAlign`](#verticalAlign).
-
-    alignItems baseline
-
--}
-baseline : Value { provides | baseline : Supported }
-baseline =
-    Value "baseline"
 
 
 {-| The `first baseline` value used for properties such as [`alignContent`](#alignContent),
