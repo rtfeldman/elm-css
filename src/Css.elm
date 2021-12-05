@@ -21,12 +21,11 @@ module Css exposing
     , minContent, maxContent, fitContent
     , backgroundAttachment, backgroundAttachments, scroll, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
-    , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox
+    , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
     , ImageSupported, Image
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
     , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
     , repeat, noRepeat, repeatX, repeatY, space, round
-    , cover, contain_
     , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
     , TextShadowConfig, textShadow, defaultTextShadow
     , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
@@ -58,7 +57,7 @@ module Css exposing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
     , flexDirection, row, rowReverse, column, columnReverse
     , order
-    , flexGrow, flexShrink, flexBasis, content
+    , flexGrow, flexShrink, flexBasis
     , flexWrap, nowrap, wrap, wrapReverse
     , flex, flex2, flex3, flexFlow, flexFlow2
     , wordSpacing
@@ -73,29 +72,31 @@ module Css exposing
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
-    , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
+    , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
     , fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
-    , stretch, center, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
+    , flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
     , url
     , CursorKeyword
     , cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
-    , crosshair, text, verticalText, alias, copy, move, noDrop
+    , crosshair, verticalText, alias, copy, move, noDrop
     , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
     , ListStyleType, ListStyleTypeSupported
     , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
     , arabicIndic, armenian, bengali, cambodian, circle, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
-    , auto, none
+    , auto, none, normal
     , hidden, visible
-    , contentBox, borderBox
+    , contentBox, borderBox, paddingBox
     , left_, right_, top_, bottom_, block, inline, start, end
     , baseline, clip, ruby
+    , stretch, center, content, text
+    , cover, contain_
     , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
     , overflowWrap
@@ -274,7 +275,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 
 ## Background Clip and Origin
 
-@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins, paddingBox
+@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
 
 
 ## Background Image
@@ -285,8 +286,6 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 @docs repeat, noRepeat, repeatX, repeatY, space, round
-
-@docs cover, contain_
 
 
 ## Box Shadow
@@ -416,7 +415,9 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ### Flexbox Sizing
 
-@docs flexGrow, flexShrink, flexBasis, content
+[`content`](#content) is also a supported value.
+
+@docs flexGrow, flexShrink, flexBasis
 
 
 ### Flexbox Wrapping
@@ -471,7 +472,7 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 [`normal`](#normal) is also a supported font weight.
 
-@docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, normal, semiExpanded, expanded, extraExpanded, ultraExpanded
+@docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
 
 
 ## Font Feature Settings
@@ -508,7 +509,19 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 # Align Items
 
-@docs stretch, center, flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
+Other values you can use for alignment than the ones listed in this section:
+
+  - [`left_`](#left_)
+  - [`right_`](#right_)
+  - [`top_`](#top_)
+  - [`bottom_`](#bottom_)
+  - [`start`](#start)
+  - [`end`](#end)
+  - [`center`](#center)
+  - [`stretch`](#stretch)
+  - [`baseline`](#baseline)
+
+@docs flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
 
 
 # Url
@@ -518,9 +531,11 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 ## Cursors
 
+[`text`](#text) is also a supported value.
+
 @docs CursorKeyword
 @docs cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
-@docs crosshair, text, verticalText, alias, copy, move, noDrop
+@docs crosshair, verticalText, alias, copy, move, noDrop
 @docs notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
 @docs wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
 @docs neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
@@ -539,12 +554,13 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 
 Multiple CSS properties use these values.
 
-@docs auto, none
+@docs auto, none, normal
 @docs hidden, visible
-@docs contentBox, borderBox
+@docs contentBox, borderBox, paddingBox
 @docs left_, right_, top_, bottom_, block, inline, start, end
 @docs baseline, clip, ruby
-
+@docs stretch, center, content, text
+@docs cover, contain_
 
 ## Overflow
 
@@ -1047,12 +1063,13 @@ value used by properties such as:
 
   - [`fontLanguageOverride`](#fontLanguageOverride)
 
+```
+listStyleType (string "> ")
 
-    listStyleType (string "> ")
+quotes2 (string "«") (string "»")
 
-    quotes2 (string "«") (string "»")
-
-    fontLanguageOverride (string "ENG")
+fontLanguageOverride (string "ENG")
+```
 
 -}
 string : String -> Value { provides | string : Supported }
@@ -1242,6 +1259,39 @@ none =
     Value "none"
 
 
+{-| The `normal` value, which can be used with such properties as:
+
+  - [`fontVariantCaps`](#fontVariantCaps)
+  - [`fontKerning`](#fontKerning)
+  - [`fontLanguageOverride`](#fontLanguageOverride)
+  - [`whiteSpace`](#whiteSpace)
+  - [`wordBreak`](#wordBreak)
+  - [`columnGap`](#columnGap)
+  - [`zoom`](#zoom)
+  - [`animationDirection`](#animationDirection)
+  - [`alignItems`](#alignItems)
+  - [`lineBreak`](#lineBreak)
+
+```
+alignItems normal
+
+columnGap normal
+
+fontVariantCaps normal
+
+whiteSpace normal
+
+wordBreak normal
+
+zoom normal
+```
+
+-}
+normal : Value { provides | normal : Supported }
+normal =
+    Value "normal"
+
+
 {-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`border style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
 
     visibility hidden
@@ -1282,21 +1332,22 @@ scroll =
     Value "scroll"
 
 
-{-| The `content-box` value, used in the following properties: 
+{-| The `content-box` value, used in the following properties:
 
-- [`boxSizing`](#boxSizing)
-- [`backgroundClip`](#backgroundClip)
-- [`backgroundOrigin`](#backgroundOrigin)
-- [`strokeOrigin`](#strokeOrigin)
+  - [`boxSizing`](#boxSizing)
+  - [`backgroundClip`](#backgroundClip)
+  - [`backgroundOrigin`](#backgroundOrigin)
+  - [`strokeOrigin`](#strokeOrigin)
 
+```
+boxSizing contentBox
 
-    boxSizing contentBox
+backgroundClip contentBox
 
-    backgroundClip contentBox
+backgroundOrigin contentBox
 
-    backgroundOrigin contentBox
-
-    strokeOrigin contentBox
+strokeOrigin contentBox
+```
 
 -}
 contentBox : Value { provides | contentBox : Supported }
@@ -1306,19 +1357,20 @@ contentBox =
 
 {-| The `border-box` value, used in the following properties:
 
-- [`boxSizing`](#boxSizing)
-- [`backgroundClip`](#backgroundClip)
-- [`backgroundOrigin`](backgroundOrigin)
-- [`strokeOrigin`](#strokeOrigin)
+  - [`boxSizing`](#boxSizing)
+  - [`backgroundClip`](#backgroundClip)
+  - [`backgroundOrigin`](backgroundOrigin)
+  - [`strokeOrigin`](#strokeOrigin)
 
+```
+boxSizing borderBox
 
-    boxSizing borderBox
+backgroundClip borderBox
 
-    backgroundClip borderBox
+backgroundOrigin borderBox
 
-    backgroundOrigin borderBox
-
-    strokeOrigin borderBox
+strokeOrigin borderBox
+```
 
 -}
 borderBox : Value { provides | borderBox : Supported }
@@ -1326,35 +1378,50 @@ borderBox =
     Value "border-box"
 
 
+{-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](#backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
+
+    backgroundClip paddingBox
+
+    backgroundOrigin paddingBox
+
+    strokeOrigin paddingBox
+
+-}
+paddingBox : Value { provides | paddingBox : Supported }
+paddingBox =
+    Value "padding-box"
+
+
 {-| The `left` value, used in many properties such as:
 
-- [`backgroundPosition`](#backgroundPosition)
-- [`clear`](#clear)
-- [`float`](#float)
-- [`justifyContent`](#justifyContent)
-- [`justifyItems`](#justifyItems)
-- [`justifySelf`](#justifySelf)
-- [`pageBreakAfter`](#pageBreakAfter)
-- [`textAlign`](#textAlign)
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`clear`](#clear)
+  - [`float`](#float)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`pageBreakAfter`](#pageBreakAfter)
+  - [`textAlign`](#textAlign)
 
+```
+backgroundPosition left_
 
-    backgroundPosition left_
-    
-    clear left_
+clear left_
 
-    float left_
+float left_
 
-    justifyContent left_
+justifyContent left_
 
-    justifyItems left_
+justifyItems left_
 
-    justifySelf left_
+justifySelf left_
 
-    pageBreakAfter left_
+pageBreakAfter left_
 
-    textAlign left_
-
-
+textAlign left_
+```
 
 The value is called `left_` instead of `left` because [`left` is already a function](#left).
 
@@ -1366,33 +1433,32 @@ left_ =
 
 {-| The `right` value, used in many properties such as:
 
-- [`backgroundPosition`](#backgroundPosition)
-- [`clear`](#clear)
-- [`float`](#float)
-- [`justifyContent`](#justifyContent)
-- [`justifyItems`](#justifyItems)
-- [`justifySelf`](#justifySelf)
-- [`pageBreakAfter`](#pageBreakAfter)
-- [`textAlign`](#textAlign)
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`clear`](#clear)
+  - [`float`](#float)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`pageBreakAfter`](#pageBreakAfter)
+  - [`textAlign`](#textAlign)
 
+```
+backgroundPosition right_
 
-    backgroundPosition right_
-    
-    clear right_
+clear right_
 
-    float right_
+float right_
 
-    justifyContent right_
+justifyContent right_
 
-    justifyItems right_
+justifyItems right_
 
-    justifySelf right_
+justifySelf right_
 
-    pageBreakAfter right_
+pageBreakAfter right_
 
-    textAlign right_
-
-
+textAlign right_
+```
 
 The value is called `right_` instead of `right` because [`right` is already a function](#right).
 
@@ -1404,26 +1470,27 @@ right_ =
 
 {-| The `top` value, used in the following properties:
 
-- [`backgroundPosition`](#backgroundPosition)
-- [`captionSide`](#captionSide)
-- [`objectPosition2`](#objectPosition2)
-- [`perspectiveOrigin2`](#perspectiveOrigin2)
-- [`strokePosition2`](#strokePosition2)
-- [`transformOrigin`](#transformOrigin)
-- [`verticalAlign`](#verticalAlign)
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`captionSide`](#captionSide)
+  - [`objectPosition2`](#objectPosition2)
+  - [`perspectiveOrigin2`](#perspectiveOrigin2)
+  - [`strokePosition2`](#strokePosition2)
+  - [`transformOrigin`](#transformOrigin)
+  - [`verticalAlign`](#verticalAlign)
 
+```
+backgroundPosition top_
 
-    backgroundPosition top_
+captionSide top_
 
-    captionSide top_
+objectPosition2 right_ top_
 
-    objectPosition2 right_ top_
+perspectiveOrigin2 left_ top_
 
-    perspectiveOrigin2 left_ top_
+transformOrigin top_
 
-    transformOrigin top_
-
-    verticalAlign top_
+verticalAlign top_
+```
 
 The value is called `top_` instead of `top` because [`top` is already a function](#top).
 
@@ -1435,26 +1502,27 @@ top_ =
 
 {-| The `bottom` value, used in the following properties:
 
-- [`backgroundPosition`](#backgroundPosition)
-- [`captionSide`](#captionSide)
-- [`objectPosition2`](#objectPosition2)
-- [`perspectiveOrigin2`](#perspectiveOrigin2)
-- [`strokePosition2`](#strokePosition2)
-- [`transformOrigin`](#transformOrigin)
-- [`verticalAlign`](#verticalAlign)
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`captionSide`](#captionSide)
+  - [`objectPosition2`](#objectPosition2)
+  - [`perspectiveOrigin2`](#perspectiveOrigin2)
+  - [`strokePosition2`](#strokePosition2)
+  - [`transformOrigin`](#transformOrigin)
+  - [`verticalAlign`](#verticalAlign)
 
+```
+backgroundPosition bottom_
 
-    backgroundPosition bottom_
+captionSide bottom_
 
-    captionSide bottom_
+objectPosition2 right_ bottom_
 
-    objectPosition2 right_ bottom_
+perspectiveOrigin2 left_ bottom_
 
-    perspectiveOrigin2 left_ bottom_
+transformOrigin bottom_
 
-    transformOrigin bottom_
-
-    verticalAlign bottom_
+verticalAlign bottom_
+```
 
 The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
 
@@ -1490,18 +1558,19 @@ inline =
 
 {-| The `start` value, used in the following properties:
 
-- [`alignItems`](#alignItems)
-- [`alignContent`](#alignContent)
-- [`alignSelf`](#alignSelf)
-- [`justifyContent`](#justifyContent)
-- [`justifyItems`](#justifyItems)
-- [`justifySelf`](#justifySelf)
-- [`steps2`](#steps2)
+  - [`alignItems`](#alignItems)
+  - [`alignContent`](#alignContent)
+  - [`alignSelf`](#alignSelf)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`steps2`](#steps2)
 
+```
+alignContent start
 
-    alignContent start
-
-    steps2 3 start
+steps2 3 start
+```
 
 -}
 start : Value { provides | start : Supported }
@@ -1511,38 +1580,40 @@ start =
 
 {-| The `end` value, used in the following properties:
 
-- [`alignItems`](#alignItems)
-- [`alignContent`](#alignContent)
-- [`alignSelf`](#alignSelf)
-- [`justifyContent`](#justifyContent)
-- [`justifyItems`](#justifyItems)
-- [`justifySelf`](#justifySelf)
-- [`steps2`](#steps2)
+  - [`alignItems`](#alignItems)
+  - [`alignContent`](#alignContent)
+  - [`alignSelf`](#alignSelf)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`steps2`](#steps2)
 
+```
+alignContent end
 
-    alignContent end
-
-    steps2 3 end
+steps2 3 end
+```
 
 -}
 end : Value { provides | end : Supported }
 end =
     Value "end"
+
+
 {-| The `baseline` value, used in the following properties:
 
-- [`alignContent`](#alignContent)
-- [`alignItems`](#alignItems)
-- [`alignSelf`](#alignSelf)
-- [`verticalAlign`](#verticalAlign)
+  - [`alignContent`](#alignContent)
+  - [`alignItems`](#alignItems)
+  - [`alignSelf`](#alignSelf)
+  - [`verticalAlign`](#verticalAlign)
 
+```
+alignItems baseline
 
-    alignItems baseline
-
-    verticalAlign baseline
+verticalAlign baseline
+```
 
 -}
-
-
 baseline : Value { provides | baseline : Supported }
 baseline =
     Value "baseline"
@@ -1564,17 +1635,136 @@ clip =
     Value "clip"
 
 
-
 {-| The `ruby` value used by [`display`](#display) and [`fontVariantEastAsian`](#fontVariantEastAsian).
 
     display ruby
 
-    fontVariantEastAsian2 ruby jis83 
+    fontVariantEastAsian2 ruby jis83
 
 -}
 ruby : Value { provides | ruby : Supported }
 ruby =
     Value "ruby"
+
+
+{-| The `stretch` value used in the following properties:
+
+  - [`alignContent`](#alignContent)
+  - [`alignItems`](#alignItems)
+  - [`alignSelf`](#alignSelf)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [\`strokeDashJustify](#strokeDashJustify)
+
+```
+alignContent stretch
+
+strokeDashJustify stretch
+```
+
+-}
+stretch : Value { provides | stretch : Supported }
+stretch =
+    Value "stretch"
+
+
+{-| The `center` value, used in many properties such as:
+
+  - [`alignContent`](#alignContent)
+  - [`alignItems`](#alignItems)
+  - [`alignSelf`](#alignSelf)
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`scrollSnapAlign`](#scrollSnapAlign)
+
+```
+backgroundPosition enter
+
+justifyContent center
+```
+
+-}
+center : Value { provides | center : Supported }
+center =
+    Value "center"
+
+
+{-| The `content` value used in the following properties:
+
+  - [`flex`](#flex)
+  - [`flex-basis`](#flexBasis)
+  - [`contain`](#contain)
+
+```
+flexBasis content
+
+contain content
+```
+
+-}
+content : Value { provides | content : Supported }
+content =
+    Value "content"
+
+
+{-| The `text` value for the [`cursor`](#cursor),
+[`backgroundClip`](#backgroundClip),
+and [`user-select`](#userSelect) properties.
+
+    backgroundClip text
+
+    cursor text
+
+    userSelect text
+
+-}
+text : Value { provides | text : Supported }
+text =
+    Value "text"
+
+
+{-| Sets `contain` for the following properties:
+
+  - [`backgroundSize`](#backgroundSize) (It always show the whole background
+    image, even if it leaves empty spaces on the sides.)
+  - [`objectFit`](#objectFit) (Replaced content is scaled to maintain proportions within the element's content box.)
+  - [`userSelect`](#userSelect) (Lets selection start within the element but that selection will be contained within that element's bounds.)
+  - [`overscrollBehavior`](#overscrollBehavior) (This means that default scroll overflow behavior
+    is observed inside the element, but scroll chaining will not happen to neighbouring elements.)
+
+```
+backgroundSize contain_
+
+overscrollBehavior contain
+```
+
+The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a function.
+
+-}
+contain_ : Value { provides | contain_ : Supported }
+contain_ =
+    Value "contain"
+
+
+{-| Sets `cover` for the following properties:
+
+- [`backgroundSize`](#backgroundSize)
+- [`objectFit`](#objectFit)
+- [`strokeDashCorner`](#strokeDashCorner)
+- [`strokeSize`](#strokeSize)
+
+
+    backgroundSize cover
+
+    strokeSize cover
+
+-}
+cover : Value { provides | cover : Supported }
+cover =
+    Value "cover"
 
 
 -- OVERFLOW --
@@ -1650,7 +1840,6 @@ overflowY :
     -> Style
 overflowY (Value val) =
     AppendProperty ("overflow-y:" ++ val)
-
 
 
 {-| Sets [`overflow-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-block).
@@ -3348,7 +3537,7 @@ marker =
 {-| A [`::placeholder`](https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder)
 [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
 
-Be careful when using placeholders as they can compromise accessibility.
+Be careful when using placeholders as they can negatively impact accessibility.
 
     placeholder
         [ opacity (num 1) <| important
@@ -4345,19 +4534,6 @@ tableRowGroup =
 -- ALIGN-ITEMS VALUES --
 
 
-{-| -}
-stretch : Value { provides | stretch : Supported }
-stretch =
-    Value "stretch"
-
-
-{-| -}
-center : Value { provides | center : Supported }
-center =
-    Value "center"
-
-
-
 {-| The `flex-start` value used by [`alignItems`](#alignItems),
 [`justifyContent`](#justifyContent),
 and [`alignContent`](#alignContent).
@@ -4863,23 +5039,6 @@ justifySelf2 (Value overflowPosition) (Value contentPosition) =
 flexBasis : BaseValue (WidthSupported { content : Supported }) -> Style
 flexBasis (Value val) =
     AppendProperty ("flex-basis:" ++ val)
-
-
-{-| The `content` value used in:
-
-  - [`flex-basis`](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis#Values) (Indicates automatic sizing based on the item's content)
-  - [`contain`](#contain) (Indicates all containment rules apart from `size` and `style` are applied.)
-
-```
-flexBasis content
-
-contain content
-```
-
--}
-content : Value { provides | content : Supported }
-content =
-    Value "content"
 
 
 {-| Sets [`flex-grow`](https://css-tricks.com/almanac/properties/f/flex-grow/).
@@ -5631,47 +5790,14 @@ fontVariantCaps (Value str) =
     AppendProperty ("font-variant-caps:" ++ str)
 
 
-{-| The `normal` value, which can be used with such properties as:
-
-  - [`fontVariantCaps`](#fontVariantCaps)
-  - [`fontKerning`](#fontKerning)
-  - [`fontLanguageOverride`](#fontLanguageOverride)
-  - [`whiteSpace`](#whiteSpace)
-  - [`wordBreak`](#wordBreak)
-  - [`columnGap`](#columnGap)
-  - [`zoom`](#zoom)
-  - [`animationDirection`](#animationDirection)
-  - [`alignItems`](#alignItems)
-  - [`lineBreak`](#lineBreak)
-
-
-```
-alignItems normal
-
-columnGap normal
-
-fontVariantCaps normal
-
-whiteSpace normal
-
-wordBreak normal
-
-zoom normal
-```
-
--}
-normal : Value { provides | normal : Supported }
-normal =
-    Value "normal"
-
-
 {-| The `small-caps` value used in
-    - [`fontVariantCaps`](#fontVariantCaps)
-    - [`fontSynthesis`](#fontSynthesis)
+- [`fontVariantCaps`](#fontVariantCaps)
+- [`fontSynthesis`](#fontSynthesis)
 
     fontVariantCaps smallCaps
 
     fontSynthesis2 smallCaps style
+
 -}
 smallCaps : Value { provides | smallCaps : Supported }
 smallCaps =
@@ -6198,6 +6324,7 @@ stackedFractions =
 {-| The [`font-kerning`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-kerning) property.
 
     fontKerning none
+
 -}
 fontKerning :
     BaseValue
@@ -6215,6 +6342,7 @@ fontKerning (Value val) =
     fontLanguageOverride normal
 
     fontLanguageOverride (string "ENG")
+
 -}
 fontLanguageOverride :
     BaseValue
@@ -6235,6 +6363,7 @@ fontLanguageOverride (Value val) =
     fontSynthesis2 smallCaps weight
 
     fontSynthesis3 weight style smallCaps
+
 -}
 fontSynthesis :
     BaseValue
@@ -6254,6 +6383,7 @@ This is the two-argument variant, in which you can indicate
 two different font properties to be synthesised by the browser.
 
     fontSynthesis2 smallCaps weight
+
 -}
 fontSynthesis2 :
     Value
@@ -6261,11 +6391,12 @@ fontSynthesis2 :
         , style : Supported
         , smallCaps : Supported
         }
-    -> Value
-        { weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
     -> Style
 fontSynthesis2 (Value val1) (Value val2) =
     AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2)
@@ -6277,6 +6408,7 @@ This is the three-argument variant, in which you can indicate
 all three different font properties to be synthesised by the browser.
 
     fontSynthesis3 weight style smallCaps
+
 -}
 fontSynthesis3 :
     Value
@@ -6284,16 +6416,18 @@ fontSynthesis3 :
         , style : Supported
         , smallCaps : Supported
         }
-    -> Value
-        { weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
-    -> Value
-        { weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
     -> Style
 fontSynthesis3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
@@ -6302,16 +6436,17 @@ fontSynthesis3 (Value val1) (Value val2) (Value val3) =
 {-| The `weight` value for the [`fontSynthesis`](#fontSynthesis) property.
 
     fontSynthesis weight
+
 -}
 weight : Value { provides | weight : Supported }
 weight =
     Value "weight"
 
 
-
 {-| The [`font-optical-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing) property.
 
     fontOpticalSizing none
+
 -}
 fontOpticalSizing :
     BaseValue
@@ -6328,6 +6463,7 @@ fontOpticalSizing (Value val) =
     fontVariantPosition sub
 
     fontVariantPosition normal
+
 -}
 fontVariantPosition :
     BaseValue
@@ -6338,6 +6474,7 @@ fontVariantPosition :
     -> Style
 fontVariantPosition (Value val) =
     AppendProperty ("font-variant-position:" ++ val)
+
 
 
 -- CURSOR --
@@ -6494,18 +6631,6 @@ cell =
 crosshair : Value { provides | crosshair : Supported }
 crosshair =
     Value "crosshair"
-
-
-{-| The `text` value for the [`cursor`](#cursor),
-[`backgroundClip`](#backgroundClip),
-and [`user-select`](#userSelect) properties.
-
-    backgroundClip text
-
--}
-text : Value { provides | text : Supported }
-text =
-    Value "text"
 
 
 {-| The `vertical-text` value for the [`cursor`](#cursor) property.
@@ -7036,22 +7161,6 @@ backgroundClips firstValue values =
     AppendProperty ("background-clip:" ++ hashListToString firstValue values)
 
 
-{-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
-[`backgroundOrigin`](#backgroundOrigin),
-and [`strokeOrigin`](#strokeOrigin).
-
-    backgroundClip paddingBox
-
-    backgroundOrigin paddingBox
-
-    strokeOrigin paddingBox
-
--}
-paddingBox : Value { provides | paddingBox : Supported }
-paddingBox =
-    Value "padding-box"
-
-
 
 -- BACKGROUND ORIGIN --
 
@@ -7335,7 +7444,7 @@ backgroundRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
 
 
-{-| Compiles to [`repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
+{-| The `repeat` value for [background properties](#backgroundRepeat)
 and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat repeat
@@ -7348,7 +7457,7 @@ repeat =
     Value "repeat"
 
 
-{-| Compiles to [`no-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [backgrounds](#backgroundRepeat),
+{-| The `no-repeat` value for [background properties](#backgroundRepeat)
 and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat noRepeat
@@ -7361,8 +7470,8 @@ noRepeat =
     Value "no-repeat"
 
 
-{-| Compiles to [`repeat-x`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
-and [`strokeRepeat`](#strokeRepeat) horizontally.
+{-| The `repeat-x` value for [repeating backgrounds](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat repeatX
 
@@ -7374,8 +7483,8 @@ repeatX =
     Value "repeat-x"
 
 
-{-| Compiles to [`repeat-y`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
-and [`strokeRepeat`](#strokeRepeat) vertically.
+{-| The `repeat-y` value for [repeating backgrounds](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat repeatY
 
@@ -7387,8 +7496,8 @@ repeatY =
     Value "repeat-y"
 
 
-{-| Compiles to [`space`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat#Values) for [repeating backgrounds](#backgroundRepeat),
-and [`strokeRepeat`](#strokeRepeat) without cutting off edges by adding space.
+{-| The `space` value for [repeating backgrounds](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
 
     backgroundRepeat space
 
@@ -7400,11 +7509,14 @@ space =
     Value "space"
 
 
-{-| The `round` value used for properties such as [repeating background](#backgroundRepeat) without cutting off edges by stretching or shrinking the image,
-and [`strokeLinecap`](#strokeLinecap),
-and [`strokeRepeat`](#strokeRepeat),
-and [`strokeLinejoin`](#strokeLinejoin2).
+{-| The `round` value used for properties such as:
 
+  - [repeating backgrounds](#backgroundRepeat)
+  - [`strokeLinecap`](#strokeLinecap)
+  - [`strokeRepeat`](#strokeRepeat)
+  - [`strokeLinejoin`](#strokeLinejoin2)
+
+```
     backgroundRepeat round
 
     strokeLineCap round
@@ -7412,6 +7524,7 @@ and [`strokeLinejoin`](#strokeLinejoin2).
     strokeLinejoin2 miter round
 
     strokeRepeat round
+```
 
 -}
 round : Value { provides | round : Supported }
@@ -7475,45 +7588,6 @@ backgroundSize2 :
     -> Style
 backgroundSize2 (Value widthVal) (Value heightVal) =
     AppendProperty ("background-size:" ++ widthVal ++ " " ++ heightVal)
-
-
-{-| Sets [`contain`](https://css-tricks.com/almanac/properties/b/background-size/)
-for the following properties:
-
-  - [`backgroundSize`](#backgroundSize) (It always show the whole background
-    image, even if it leaves empty spaces on the sides.)
-  - [`objectFit`](#objectFit) (Replaced content is scaled to maintain proportions within the element's content box.)
-  - [`userSelect`](#userSelect) (Lets selection start within the element but that selection will be contained within that element's bounds.)
-  - [`overscrollBehavior`](#overscrollBehavior) (This means that default scroll overflow behavior
-    is observed inside the element, but scroll chaining will not happen to neighbouring elements.)
-
-```
-backgroundSize contain_
-
-overscrollBehavior contain
-```
-
-The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a function.
-
--}
-contain_ : Value { provides | contain_ : Supported }
-contain_ =
-    Value "contain"
-
-
-{-| Sets [`cover`](https://css-tricks.com/almanac/properties/b/background-size/)
-for [`backgroundSize`](#backgroundSize), and [`strokeSize`](#strokeSize). It fills the whole space available with
-the background image by scaling, even if it cuts off some of the image.
-
-    backgroundSize cover
-
-    strokeSize cover
-
--}
-cover : Value { provides | cover : Supported }
-cover =
-    Value "cover"
-
 
 
 {- GRADIENTS -}
@@ -10259,12 +10333,15 @@ lowercase =
 
 {-| A `full-width` value for:
 
+
 ### [`textTransform`](#textTransform)
+
 Forces the writing of characters in a square so they can be aligned in East Asian scripts.
 
-### [`fontVariantEastAsian`](#fontVariantEastAsian)
-Activates the East Asian characters that are roughly be the same width.
 
+### [`fontVariantEastAsian`](#fontVariantEastAsian)
+
+Activates the East Asian characters that are roughly be the same width.
 
     textTransform fullWidth
 
@@ -10847,14 +10924,14 @@ sub =
     Value "sub"
 
 
-{-|  A `super` value for the following properties:
+{-| A `super` value for the following properties:
 
     - [`fontVariantPosition](#fontVariantPosition)
     - [`verticalAlign`](#verticalAlign)
 
 
     fontVariantPosition super
-    
+
     verticalAlign super
 
 -}
@@ -14116,7 +14193,9 @@ maxInlineSize (Value val) =
 
   - [`flexBasis`](#flexBasis)
 
-    width minContent
+```
+width minContent
+```
 
 -}
 minContent : Value { provides | minContent : Supported }
@@ -14132,7 +14211,9 @@ minContent =
 
   - [`flexBasis`](#flexBasis)
 
-    width maxContent
+```
+width maxContent
+```
 
 -}
 maxContent : Value { provides | maxContent : Supported }
@@ -14148,7 +14229,9 @@ maxContent =
 
   - [`flexBasis`](#flexBasis)
 
-    width fitContent
+```
+width fitContent
+```
 
 -}
 fitContent : Value { provides | fitContent : Supported }
@@ -16841,6 +16924,7 @@ can use for this property.
     contain4 size layout style paint
 
 **Note: The `style` value is considered at-risk from being depreciated.**
+
 -}
 contain4 :
     Value
@@ -16909,6 +16993,7 @@ layout =
     contain style
 
     fontSynthesis style
+
 -}
 style : Value { provides | style : Supported }
 style =
