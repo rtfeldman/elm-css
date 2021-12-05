@@ -3,13 +3,13 @@ module Css.Structure.Hash exposing (hashDeclarations)
 import Css.String
 import Css.Structure exposing (..)
 import Css.Structure.Output as Output
-import FNV1a
-import String
+import Hash exposing (initialSeed)
+import Murmur3
 
 
 hashDeclarations : List Declaration -> Int
 hashDeclarations declarations =
-    List.foldl hashDeclaration FNV1a.initialSeed declarations
+    List.foldl hashDeclaration initialSeed declarations
 
 
 hashDeclaration : Declaration -> Int -> Int
@@ -22,12 +22,12 @@ hashDeclaration decl hash =
             let
                 queryHash =
                     List.map Output.mediaQueryToString mediaQueries
-                        |> List.foldl FNV1a.hashWithSeed hash
+                        |> List.foldl foldHash hash
 
                 blockHash =
                     List.foldl hashStyleBlock queryHash styleBlocks
             in
-            FNV1a.hashWithSeed "@media" blockHash
+            foldHash "@media" blockHash
 
         SupportsRule _ _ ->
             hash
@@ -42,7 +42,7 @@ hashDeclaration decl hash =
             hash
 
         Keyframes { name, declaration } ->
-            List.foldl FNV1a.hashWithSeed hash [ "@keyframes", name, declaration ]
+            List.foldl foldHash hash [ "@keyframes", name, declaration ]
 
         Viewport _ ->
             hash
@@ -61,4 +61,9 @@ hashStyleBlock (StyleBlock firstSelector otherSelectors properties) hash =
             (firstSelector :: otherSelectors)
                 |> Css.String.mapJoin Output.selectorToString ", "
     in
-    List.foldl FNV1a.hashWithSeed hash (selectorStr :: properties)
+    List.foldl foldHash hash (selectorStr :: properties)
+
+
+foldHash : String -> Int -> Int
+foldHash str hash =
+    Murmur3.hashString hash str
