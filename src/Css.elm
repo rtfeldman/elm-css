@@ -12,12 +12,13 @@ module Css exposing
     , Time, TimeSupported, s, ms
     , deg, grad, rad, turn
     , url
-    , auto, none, normal
+    , auto, none, normal, strict, all_, both, always
     , hidden, visible
     , contentBox, borderBox, paddingBox
     , left_, right_, top_, bottom_, block, inline, start, end
+    , x, y
     , baseline, clip, ruby
-    , stretch, center, content, text
+    , stretch, center, content, fill_, stroke, text, style
     , cover, contain_, fullWidth
     , sub, super
     , pseudoClass, active, checked, disabled, empty, enabled
@@ -76,7 +77,7 @@ module Css exposing
     , tabSize
     , fontDisplay, fallback, swap, optional
     , writingMode, verticalLr, verticalRl, horizontalTb
-    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, strict, loose
+    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
     , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
     , lineClamp
     , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
@@ -132,7 +133,7 @@ module Css exposing
     , wordBreak
     , breakAll, keepAll
     , float
-    , clear, both, inlineStart, inlineEnd
+    , clear, inlineStart, inlineEnd
     , visibility
     , fill
     , strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
@@ -144,7 +145,7 @@ module Css exposing
     , paintOrder, paintOrder2, paintOrder3, markers
     , columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
-    , columnSpan, all_
+    , columnSpan
     , transform, transforms, transformOrigin, transformOrigin2
     , TransformFunction, TransformFunctionSupported
     , matrix, matrix3d
@@ -158,8 +159,8 @@ module Css exposing
     , EasingFunction, EasingFunctionSupported, linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
     , opacity
     , zoom
-    , scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
-    , scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
+    , scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
+    , scrollSnapType, scrollSnapType2, mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
     , scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
     , scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
@@ -177,15 +178,15 @@ module Css exposing
     , mixBlendMode
     , imageRendering, crispEdges, pixelated
     , backfaceVisibility
-    , objectFit, fill_, scaleDown
+    , objectFit, scaleDown
     , objectPosition, objectPosition2, objectPosition4
     , boxDecorationBreak
     , isolation, isolate
     , caretColor
     , pointerEvents
-    , visiblePainted, visibleFill, visibleStroke, painted, stroke
+    , visiblePainted, visibleFill, visibleStroke, painted
     , resize, horizontal, vertical
-    , contain, contain2, contain3, contain4, size, layout, style, paint
+    , contain, contain2, contain3, contain4, size, layout, paint
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -259,14 +260,16 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 Many different kinds of CSS properties use these values.
 
-@docs auto, none, normal
+@docs auto, none, normal, strict, all_, both, always
 @docs hidden, visible
 @docs contentBox, borderBox, paddingBox
 @docs left_, right_, top_, bottom_, block, inline, start, end
+@docs x, y
 @docs baseline, clip, ruby
-@docs stretch, center, content, text
+@docs stretch, center, content, fill_, stroke, text, style
 @docs cover, contain_, fullWidth
 @docs sub, super
+
 
 # Pseudo-Classes
 
@@ -498,7 +501,7 @@ Other values you can use for flex item alignment:
 
 @docs fontDisplay, fallback, swap, optional
 @docs writingMode, verticalLr, verticalRl, horizontalTb
-@docs hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, strict, loose
+@docs hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
 @docs hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
 @docs lineClamp
 
@@ -688,7 +691,7 @@ Other values you can use for flex item alignment:
 ## Float
 
 @docs float
-@docs clear, both, inlineStart, inlineEnd
+@docs clear, inlineStart, inlineEnd
 
 
 # Visibility
@@ -723,7 +726,7 @@ Other values you can use for flex item alignment:
 
 @docs columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
 @docs columnFill, balance, balanceAll
-@docs columnSpan, all_
+@docs columnSpan
 
 
 # Transformation
@@ -781,8 +784,8 @@ Other values you can use for flex item alignment:
 
 # Scroll
 
-@docs scrollBehavior, smooth, scrollSnapAlign, always, scrollSnapStop
-@docs scrollSnapType, scrollSnapType2, x, y, mandatory, proximity
+@docs scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
+@docs scrollSnapType, scrollSnapType2, mandatory, proximity
 @docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
 @docs scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
 @docs scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
@@ -812,7 +815,7 @@ Other values you can use for flex item alignment:
 @docs mixBlendMode
 @docs imageRendering, crispEdges, pixelated
 @docs backfaceVisibility
-@docs objectFit, fill_, scaleDown
+@docs objectFit, scaleDown
 @docs objectPosition, objectPosition2, objectPosition4
 @docs boxDecorationBreak
 @docs isolation, isolate
@@ -822,9 +825,9 @@ Other values you can use for flex item alignment:
 
 @docs caretColor
 @docs pointerEvents
-@docs visiblePainted, visibleFill, visibleStroke, painted, stroke
+@docs visiblePainted, visibleFill, visibleStroke, painted
 @docs resize, horizontal, vertical
-@docs contain, contain2, contain3, contain4, size, layout, style, paint
+@docs contain, contain2, contain3, contain4, size, layout, paint
 
 -}
 
@@ -1317,6 +1320,57 @@ normal =
     Value "normal"
 
 
+{-| Sets `strict` value for usage with [`lineBreak`](#lineBreak) and [`contain`](#contain).
+
+    contain strict
+
+    lineBreak strict
+
+-}
+strict : Value { provides | strict : Supported }
+strict =
+    Value "strict"
+
+
+{-| The `all` value used in properties such as [`columnSpan`](#columnSpan)
+and [`pointerEvents`](#pointerEvents).
+
+    columnSpan all_
+
+    pointerEvents all_
+
+-}
+all_ : Value { provides | all_ : Supported }
+all_ =
+    Value "all"
+
+
+{-| Sets `both` value for usage with [`clear`](#clear) and [`resize`](#resize).
+
+      clear both
+
+      resize both
+
+-}
+both : Value { provides | both : Supported }
+both =
+    Value "both"
+
+
+{-| Sets `always` value for usage with [`scrollSnapStop`](#scrollSnapStop), [`pageBreakBefore`](#pageBreakBefore), and [`pageBreakAfter`](#pageBreakAfter).
+
+    scrollSnapStop always
+
+    pageBreakBefore always
+
+    pageBreakAfter always
+
+-}
+always : Value { provides | always : Supported }
+always =
+    Value "always"
+
+
 {-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`border style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
 
     visibility hidden
@@ -1625,6 +1679,32 @@ end =
     Value "end"
 
 
+{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
+
+    scrollSnapType2 x mandatory
+
+    rotate x (deg 10)
+
+-}
+x : Value { provides | x : Supported }
+x =
+    Value "x"
+
+
+{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
+
+    scrollSnapType2 y mandatory
+
+    rotate y (deg 50)
+
+-}
+y : Value { provides | y : Supported }
+y =
+    Value "y"
+
+
 {-| The `baseline` value, used in the following properties:
 
   - [`alignContent`](#alignContent)
@@ -1735,6 +1815,33 @@ content =
     Value "content"
 
 
+{-| The `fill` value used in properties such as [`objectFit`](#objectFit),
+[`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
+
+    objectFit fill_
+
+    pointerEvents fill_
+
+    paintOrder2 fill markers
+
+-}
+fill_ : Value { provides | fill_ : Supported }
+fill_ =
+    Value "fill"
+
+
+{-| The `stroke` value used by [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
+
+    pointerEvents stroke
+
+    paintOrder2 stroke markers
+
+-}
+stroke : Value { provides | stroke : Supported }
+stroke =
+    Value "stroke"
+
+
 {-| The `text` value for the [`cursor`](#cursor),
 [`backgroundClip`](#backgroundClip),
 and [`user-select`](#userSelect) properties.
@@ -1749,6 +1856,23 @@ and [`user-select`](#userSelect) properties.
 text : Value { provides | text : Supported }
 text =
     Value "text"
+
+
+{-| Sets the `style` value for:
+
+  - [`contain`](#contain). **(This value is considered at-risk from being depreciated for this property.)**
+  - [`fontSynthesis`](#fontSynthesis)
+
+```
+    contain style
+
+    fontSynthesis style
+```
+
+-}
+style : Value { provides | style : Supported }
+style =
+    Value "style"
 
 
 {-| Sets `contain` for the following properties:
@@ -1817,13 +1941,14 @@ fullWidth =
 
 {-| A `sub` value for the following properties:
 
-    - [`fontVariantPosition](#fontVariantPosition)
-    - [`verticalAlign`](#verticalAlign)
+  - [`fontVariantPosition`](#fontVariantPosition)
+  - [`verticalAlign`](#verticalAlign)
 
-
+```
     fontVariantPosition sub
 
     verticalAlign sub
+```
 
 -}
 sub : Value { provides | sub : Supported }
@@ -1833,18 +1958,20 @@ sub =
 
 {-| A `super` value for the following properties:
 
-    - [`fontVariantPosition](#fontVariantPosition)
-    - [`verticalAlign`](#verticalAlign)
+  - [`fontVariantPosition`](#fontVariantPosition)
+  - [`verticalAlign`](#verticalAlign)
 
-
+```
     fontVariantPosition super
 
     verticalAlign super
+```
 
 -}
 super : Value { provides | super : Supported }
 super =
     Value "super"
+
 
 
 -- OVERFLOW --
@@ -11177,6 +11304,7 @@ under =
     Value "under"
 
 
+
 -- WHITE-SPACE --
 
 
@@ -11518,19 +11646,6 @@ columnSpan (Value span) =
     AppendProperty ("column-span:" ++ span)
 
 
-{-| The `all` value used in properties such as [`columnSpan`](#columnSpan)
-and [`pointerEvents`](#pointerEvents).
-
-    columnSpan all_
-
-    pointerEvents all_
-
--}
-all_ : Value { provides | all_ : Supported }
-all_ =
-    Value "all"
-
-
 {-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
 
     columnRuleWidth thin
@@ -11835,9 +11950,11 @@ boundingBox =
     Value "bounding-box"
 
 
-{-| A `slice` value for the [`strokeBreak`](#strokeBreak) property.
+{-| A `slice` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
 
       strokeBreak slice
+
+      boxDecorationbreak clone
 
 -}
 slice : Value { provides | slice : Supported }
@@ -11845,9 +11962,11 @@ slice =
     Value "slice"
 
 
-{-| A `clone` value for the [`strokeBreak`](#strokeBreak) property.
+{-| A `clone` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
 
       strokeBreak clone
+
+      boxDecorationBreak clone
 
 -}
 clone : Value { provides | clone : Supported }
@@ -13838,18 +13957,6 @@ clear (Value val) =
     AppendProperty ("clear:" ++ val)
 
 
-{-| Sets `both` value for usage with [`clear`](#clear) and [`resize`](#resize).
-
-      clear both
-
-      resize both
-
--}
-both : Value { provides | both : Supported }
-both =
-    Value "both"
-
-
 {-| Sets `inline-start` value for usage with [`clear`](#clear).
 
       clear inlineStart
@@ -14923,18 +15030,6 @@ ellipsis =
     Value "ellipsis"
 
 
-{-| Sets `strict` value for usage with [`lineBreak`](#lineBreak) and [`contain`](#contain).
-
-    contain strict
-
-    lineBreak strict
-
--}
-strict : Value { provides | strict : Supported }
-strict =
-    Value "strict"
-
-
 {-| Sets `loose` value for usage with [`lineBreak`](#lineBreak).
 
     lineBreak loose
@@ -15064,21 +15159,6 @@ mixBlendMode :
     -> Style
 mixBlendMode (Value val) =
     AppendProperty ("mix-blend-mode:" ++ val)
-
-
-{-| The `fill` value used in properties such as [`objectFit`](#objectFit),
-[`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder)
-
-    objectFit fill_
-
-    pointerEvents fill_
-
-    paintOrder2 fill markers
-
--}
-fill_ : Value { provides | fill_ : Supported }
-fill_ =
-    Value "fill"
 
 
 {-| Sets `scale-down` value for usage with [`objectFit`](#objectFit).
@@ -15406,18 +15486,6 @@ visibleStroke =
 painted : Value { provides | painted : Supported }
 painted =
     Value "painted"
-
-
-{-| The `stroke` value used by [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
-
-    pointerEvents stroke
-
-    paintOrder2 stroke markers
-
--}
-stroke : Value { provides | stroke : Supported }
-stroke =
-    Value "stroke"
 
 
 
@@ -16268,20 +16336,6 @@ scrollSnapAlign (Value val) =
     AppendProperty ("scroll-snap-align:" ++ val)
 
 
-{-| Sets `always` value for usage with [`scrollSnapStop`](#scrollSnapStop), [`pageBreakBefore`](#pageBreakBefore), and [`pageBreakAfter`](#pageBreakAfter).
-
-    scrollSnapStop always
-
-    pageBreakBefore always
-
-    pageBreakAfter always
-
--}
-always : Value { provides | always : Supported }
-always =
-    Value "always"
-
-
 {-| Sets [`scroll-snap-stop`](https://css-tricks.com/almanac/properties/s/scroll-snap-stop/)
 
     scrollSnapStop normal
@@ -16316,32 +16370,6 @@ scrollSnapType :
     -> Style
 scrollSnapType (Value val) =
     AppendProperty ("scroll-snap-type:" ++ val)
-
-
-{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
-and [`rotate2`](#rotate2).
-
-    scrollSnapType2 x mandatory
-
-    rotate x (deg 10)
-
--}
-x : Value { provides | x : Supported }
-x =
-    Value "x"
-
-
-{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2)
-and [`rotate2`](#rotate2).
-
-    scrollSnapType2 y mandatory
-
-    rotate y (deg 50)
-
--}
-y : Value { provides | y : Supported }
-y =
-    Value "y"
 
 
 {-| Sets `mandatory` value for usage with [`scrollSnapType2`](#scrollSnapType2).
@@ -17012,21 +17040,6 @@ may affect its internal layout and vice versa.
 layout : Value { provides | layout : Supported }
 layout =
     Value "layout"
-
-
-{-| Sets the `style` value for:
-
-    - [`contain`](#contain). **(This value is considered at-risk from being depreciated for this property.)**
-    - [`fontSynthesis`](#fontSynthesis)
-
-    contain style
-
-    fontSynthesis style
-
--}
-style : Value { provides | style : Supported }
-style =
-    Value "style"
 
 
 {-| Sets the `paint` value for [`contain`](#contain).
