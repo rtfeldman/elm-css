@@ -17,10 +17,10 @@ module Css exposing
     , contentBox, borderBox, paddingBox
     , left_, right_, top_, bottom_, block, inline, start, end
     , x, y
-    , baseline, clip, ruby
+    , clip
     , stretch, center, content, fill_, stroke, text, style
-    , cover, contain_, fullWidth
-    , sub, super
+    , cover, contain_
+    , baseline, sub, super, ruby, fullWidth
     , pseudoClass, active, checked, disabled, empty, enabled
     , firstChild, firstOfType, focus, fullscreen, hover, inRange
     , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
@@ -265,10 +265,10 @@ Many different kinds of CSS properties use these values.
 @docs contentBox, borderBox, paddingBox
 @docs left_, right_, top_, bottom_, block, inline, start, end
 @docs x, y
-@docs baseline, clip, ruby
+@docs clip
 @docs stretch, center, content, fill_, stroke, text, style
-@docs cover, contain_, fullWidth
-@docs sub, super
+@docs cover, contain_
+@docs baseline, sub, super, ruby, fullWidth
 
 
 # Pseudo-Classes
@@ -1371,7 +1371,7 @@ always =
     Value "always"
 
 
-{-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`border style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
+{-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`borderStyle`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
 
     visibility hidden
 
@@ -1705,53 +1705,6 @@ y =
     Value "y"
 
 
-{-| The `baseline` value, used in the following properties:
-
-  - [`alignContent`](#alignContent)
-  - [`alignItems`](#alignItems)
-  - [`alignSelf`](#alignSelf)
-  - [`verticalAlign`](#verticalAlign)
-
-```
-alignItems baseline
-
-verticalAlign baseline
-```
-
--}
-baseline : Value { provides | baseline : Supported }
-baseline =
-    Value "baseline"
-
-
-{-| The `clip` value used by [`overflow`](#overflow) and [`textOverflow`](#textOverflow).
-
-    overflow clip
-
-    overflowX clip
-
-    overflowY clip
-
-    textOverflow clip
-
--}
-clip : Value { provides | clip : Supported }
-clip =
-    Value "clip"
-
-
-{-| The `ruby` value used by [`display`](#display) and [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-    display ruby
-
-    fontVariantEastAsian2 ruby jis83
-
--}
-ruby : Value { provides | ruby : Supported }
-ruby =
-    Value "ruby"
-
-
 {-| The `stretch` value used in the following properties:
 
   - [`alignContent`](#alignContent)
@@ -1760,7 +1713,7 @@ ruby =
   - [`justifyContent`](#justifyContent)
   - [`justifyItems`](#justifyItems)
   - [`justifySelf`](#justifySelf)
-  - [\`strokeDashJustify](#strokeDashJustify)
+  - [`strokeDashJustify`](#strokeDashJustify)
 
 ```
 alignContent stretch
@@ -1875,6 +1828,22 @@ style =
     Value "style"
 
 
+{-| The `clip` value used by [`overflow`](#overflow) and [`textOverflow`](#textOverflow).
+
+    overflow clip
+
+    overflowX clip
+
+    overflowY clip
+
+    textOverflow clip
+
+-}
+clip : Value { provides | clip : Supported }
+clip =
+    Value "clip"
+
+
 {-| Sets `contain` for the following properties:
 
   - [`backgroundSize`](#backgroundSize) (It always show the whole background
@@ -1917,26 +1886,23 @@ cover =
     Value "cover"
 
 
-{-| A `full-width` value for:
+{-| The `baseline` value, used in the following properties:
 
+  - [`alignContent`](#alignContent)
+  - [`alignItems`](#alignItems)
+  - [`alignSelf`](#alignSelf)
+  - [`verticalAlign`](#verticalAlign)
 
-### [`textTransform`](#textTransform)
+```
+alignItems baseline
 
-Forces the writing of characters in a square so they can be aligned in East Asian scripts.
-
-
-### [`fontVariantEastAsian`](#fontVariantEastAsian)
-
-Activates the East Asian characters that are roughly be the same width.
-
-    textTransform fullWidth
-
-    fontVariantEastAsian fullWidth
+verticalAlign baseline
+```
 
 -}
-fullWidth : Value { provides | fullWidth : Supported }
-fullWidth =
-    Value "full-width"
+baseline : Value { provides | baseline : Supported }
+baseline =
+    Value "baseline"
 
 
 {-| A `sub` value for the following properties:
@@ -1971,6 +1937,40 @@ sub =
 super : Value { provides | super : Supported }
 super =
     Value "super"
+
+
+{-| The `ruby` value used by [`display`](#display) and [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+    display ruby
+
+    fontVariantEastAsian2 ruby jis83
+
+-}
+ruby : Value { provides | ruby : Supported }
+ruby =
+    Value "ruby"
+
+
+{-| A `full-width` value for:
+
+
+### [`textTransform`](#textTransform)
+
+Forces the writing of characters in a square so they can be aligned in East Asian scripts.
+
+
+### [`fontVariantEastAsian`](#fontVariantEastAsian)
+
+Activates the East Asian characters that are roughly be the same width.
+
+    textTransform fullWidth
+
+    fontVariantEastAsian fullWidth
+
+-}
+fullWidth : Value { provides | fullWidth : Supported }
+fullWidth =
+    Value "full-width"
 
 
 
