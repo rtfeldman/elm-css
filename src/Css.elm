@@ -10,6 +10,15 @@ module Css exposing
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
     , Time, TimeSupported, s, ms
+    , deg, grad, rad, turn
+    , url
+    , auto, none, normal
+    , hidden, visible
+    , contentBox, borderBox, paddingBox
+    , left_, right_, top_, bottom_, block, inline, start, end
+    , baseline, clip, ruby
+    , stretch, center, content, text
+    , cover, contain_
     , pseudoClass, active, checked, disabled, empty, enabled
     , firstChild, firstOfType, focus, fullscreen, hover, inRange
     , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
@@ -55,6 +64,8 @@ module Css exposing
     , gap, gap2, rowGap, columnGap
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
+    , flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly
+    , firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
     , flexDirection, row, rowReverse, column, columnReverse
     , order
     , flexGrow, flexShrink, flexBasis
@@ -79,10 +90,9 @@ module Css exposing
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
-    , flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
-    , url
     , CursorKeyword
-    , cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
+    , cursor, cursor2, cursor4
+    , pointer, default, contextMenu, help, progress, wait, cell
     , crosshair, verticalText, alias, copy, move, noDrop
     , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
@@ -90,18 +100,10 @@ module Css exposing
     , ListStyleType, ListStyleTypeSupported
     , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
     , arabicIndic, armenian, bengali, cambodian, circle, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
-    , auto, none, normal
-    , hidden, visible
-    , contentBox, borderBox, paddingBox
-    , left_, right_, top_, bottom_, block, inline, start, end
-    , baseline, clip, ruby
-    , stretch, center, content, text
-    , cover, contain_
     , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
-    , deg, grad, rad, turn
     , direction, ltr, rtl
     , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2, under
     , textOrientation
@@ -213,7 +215,7 @@ functions let you define custom properties and selectors, respectively.
 
 # General Values
 
-All CSS properties can have the values `unset`, `initial`, and `inherit`
+All CSS properties can have the values `unset`, `initial`, and `inherit`.
 
 @docs unset, initial, inherit
 
@@ -242,7 +244,30 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs Time, TimeSupported, s, ms
 
 
-## Pseudo-Classes
+## Angles
+
+@docs deg, grad, rad, turn
+
+
+## URLs
+
+@docs url
+
+
+# Shared Values
+
+Many different kinds of CSS properties use these values.
+
+@docs auto, none, normal
+@docs hidden, visible
+@docs contentBox, borderBox, paddingBox
+@docs left_, right_, top_, bottom_, block, inline, start, end
+@docs baseline, clip, ruby
+@docs stretch, center, content, text
+@docs cover, contain_
+
+
+# Pseudo-Classes
 
 @docs pseudoClass, active, checked, disabled, empty, enabled
 @docs firstChild, firstOfType, focus, fullscreen, hover, inRange
@@ -251,16 +276,19 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs root, scope, target, valid, visited
 
 
-## Pseudo-Elements
+# Pseudo-Elements
 
 @docs pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
 
 
-## Sizing
+# Sizing
 
 @docs width, minWidth, maxWidth, height, minHeight, maxHeight
 @docs blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
 @docs minContent, maxContent, fitContent
+
+
+# Backgrounds
 
 
 ## Background Attachment
@@ -288,6 +316,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs repeat, noRepeat, repeatX, repeatY, space, round
 
 
+# Shadows
+
+
 ## Box Shadow
 
 @docs BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
@@ -298,7 +329,7 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs TextShadowConfig, textShadow, defaultTextShadow
 
 
-## Border
+# Borders
 
 @docs LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
 
@@ -346,61 +377,84 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`
 @docs borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
 
 
-## Outline
+# Outline
 
 @docs outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
 
 
-## Display
+# Display
 
 @docs display, display2, displayListItem2, displayListItem3
+
+
+## Display values
+
+You can also use [`block`](#block), [`inline`](#inline) and [`ruby`](#ruby) as values.
 
 @docs flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
 
 
-## Positions
+# Positions
 
 @docs position, zIndex
 
 @docs absolute, fixed, relative, static, sticky
 
 
-## Inset
+# Inset
 
 @docs inset, inset2, inset3, inset4, top, right, bottom, left
 
 @docs insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
 
 
-## Paddings
+# Paddings
 
 @docs padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
 
 
-## Margins
+# Margins
 
 @docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
 
 
-## Gap
+# Gaps
 
 @docs gap, gap2, rowGap, columnGap
 
 
-## Box Sizing
+# Box Sizing
 
 @docs boxSizing
 
 
-## Flexbox
+# Flexbox
 
 The CSS Flexible Box Layout Module.
 See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
 
 
-### Flexbox Alignment
+## Flexbox Alignment
 
 @docs alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
+
+
+### Align Items
+
+Other values you can use for flex item alignment:
+
+  - [`left_`](#left_)
+  - [`right_`](#right_)
+  - [`top_`](#top_)
+  - [`bottom_`](#bottom_)
+  - [`start`](#start)
+  - [`end`](#end)
+  - [`center`](#center)
+  - [`stretch`](#stretch)
+  - [`baseline`](#baseline)
+
+@docs flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly
+@docs firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
 
 
 ### Flexbox Direction
@@ -507,41 +561,24 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 @docs fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
 
 
-# Align Items
-
-Other values you can use for alignment than the ones listed in this section:
-
-  - [`left_`](#left_)
-  - [`right_`](#right_)
-  - [`top_`](#top_)
-  - [`bottom_`](#bottom_)
-  - [`start`](#start)
-  - [`end`](#end)
-  - [`center`](#center)
-  - [`stretch`](#stretch)
-  - [`baseline`](#baseline)
-
-@docs flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly, firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
-
-
-# Url
-
-@docs url
-
-
-## Cursors
-
-[`text`](#text) is also a supported value.
+# Cursors
 
 @docs CursorKeyword
-@docs cursor, cursor2, cursor4, pointer, default, contextMenu, help, progress, wait, cell
+@docs cursor, cursor2, cursor4
+
+
+## Cursor values
+
+[`text`](#text) is also a supported value for `cursor`.
+
+@docs pointer, default, contextMenu, help, progress, wait, cell
 @docs crosshair, verticalText, alias, copy, move, noDrop
 @docs notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
 @docs wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
 @docs neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
 
 
-## List Style
+# List Style
 
 @docs ListStyleType, ListStyleTypeSupported
 @docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
@@ -550,19 +587,7 @@ Other values you can use for alignment than the ones listed in this section:
 [`square`](#square) is also a supported value for [`listStyle`](#listStyle) and [`listStyleType`](#listStyleType).
 
 
-## Shared Values
-
-Multiple CSS properties use these values.
-
-@docs auto, none, normal
-@docs hidden, visible
-@docs contentBox, borderBox, paddingBox
-@docs left_, right_, top_, bottom_, block, inline, start, end
-@docs baseline, clip, ruby
-@docs stretch, center, content, text
-@docs cover, contain_
-
-## Overflow
+# Overflow
 
 @docs overflow, overflowX, overflowY, overflowBlock, overflowInline
 @docs overflowAnchor
@@ -571,40 +596,35 @@ Multiple CSS properties use these values.
 @docs breakWord, anywhere
 
 
-## Angles
-
-@docs deg, grad, rad, turn
-
-
-## Direction
+# Direction
 
 @docs direction, ltr, rtl
 
 
-## Text Align
+# Text Align
 
 @docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2, under
 
 
-## Text Orientation
+# Text Orientation
 
 @docs textOrientation
 @docs mixed, sideways, upright
 
 
-## Text Rendering
+# Text Rendering
 
 @docs textRendering
 @docs geometricPrecision, optimizeLegibility, optimizeSpeed
 
 
-## Text Transform
+# Text Transform
 
 @docs textTransform
 @docs capitalize, uppercase, lowercase, fullWidth, fullSizeKana
 
 
-## Text Decoration
+# Text Decoration
 
 @docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
 @docs textDecorationSkip, objects, spaces, ink, edges, boxDecoration
@@ -1221,6 +1241,10 @@ url str =
     Value ("url(" ++ str ++ ")")
 
 
+
+-- SHARED VALUES --
+
+
 {-| The `auto` value used in many properties such as [`width`](#width),
 [`zoom`](#zoom),
 [`outlineStyle`](#outlineStyle),
@@ -1738,7 +1762,7 @@ text =
 ```
 backgroundSize contain_
 
-overscrollBehavior contain
+overscrollBehavior contain_
 ```
 
 The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a function.
@@ -1751,20 +1775,22 @@ contain_ =
 
 {-| Sets `cover` for the following properties:
 
-- [`backgroundSize`](#backgroundSize)
-- [`objectFit`](#objectFit)
-- [`strokeDashCorner`](#strokeDashCorner)
-- [`strokeSize`](#strokeSize)
+  - [`backgroundSize`](#backgroundSize)
+  - [`objectFit`](#objectFit)
+  - [`strokeDashCorner`](#strokeDashCorner)
+  - [`strokeSize`](#strokeSize)
 
+```
+backgroundSize cover
 
-    backgroundSize cover
-
-    strokeSize cover
+strokeSize cover
+```
 
 -}
 cover : Value { provides | cover : Supported }
 cover =
     Value "cover"
+
 
 
 -- OVERFLOW --
@@ -5791,12 +5817,15 @@ fontVariantCaps (Value str) =
 
 
 {-| The `small-caps` value used in
-- [`fontVariantCaps`](#fontVariantCaps)
-- [`fontSynthesis`](#fontSynthesis)
 
-    fontVariantCaps smallCaps
+  - [`fontVariantCaps`](#fontVariantCaps)
+  - [`fontSynthesis`](#fontSynthesis)
 
-    fontSynthesis2 smallCaps style
+```
+fontVariantCaps smallCaps
+
+fontSynthesis2 smallCaps style
+```
 
 -}
 smallCaps : Value { provides | smallCaps : Supported }
@@ -7588,6 +7617,7 @@ backgroundSize2 :
     -> Style
 backgroundSize2 (Value widthVal) (Value heightVal) =
     AppendProperty ("background-size:" ++ widthVal ++ " " ++ heightVal)
+
 
 
 {- GRADIENTS -}
@@ -14833,8 +14863,8 @@ textOverflow (Value value) =
 
 `text-overflow` describes how text that gets cut off is signalled to users.
 
-This version specifies how the text cut-off is displayed in start
-(left in LTR) and the end (right in LTR) of the text..
+This version specifies how the text cut-off is displayed at the start
+(left in LTR) and at the end (right in LTR) of the text.
 
     textOverflow2 ellipsis ellipsis
 
