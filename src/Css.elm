@@ -18,7 +18,8 @@ module Css exposing
     , left_, right_, top_, bottom_, block, inline, start, end
     , baseline, clip, ruby
     , stretch, center, content, text
-    , cover, contain_
+    , cover, contain_, fullWidth
+    , sub, super
     , pseudoClass, active, checked, disabled, empty, enabled
     , firstChild, firstOfType, focus, fullscreen, hover, inRange
     , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
@@ -111,7 +112,7 @@ module Css exposing
     , textRendering
     , geometricPrecision, optimizeLegibility, optimizeSpeed
     , textTransform
-    , capitalize, uppercase, lowercase, fullWidth, fullSizeKana
+    , capitalize, uppercase, lowercase, fullSizeKana
     , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
     , textDecorationSkip, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
@@ -125,7 +126,7 @@ module Css exposing
     , show, hide
     , tableLayout
     , verticalAlign
-    , sub, super, textTop, textBottom, middle
+    , textTop, textBottom, middle
     , whiteSpace
     , pre, preWrap, preLine
     , wordBreak
@@ -264,8 +265,8 @@ Many different kinds of CSS properties use these values.
 @docs left_, right_, top_, bottom_, block, inline, start, end
 @docs baseline, clip, ruby
 @docs stretch, center, content, text
-@docs cover, contain_
-
+@docs cover, contain_, fullWidth
+@docs sub, super
 
 # Pseudo-Classes
 
@@ -621,7 +622,7 @@ Other values you can use for flex item alignment:
 # Text Transform
 
 @docs textTransform
-@docs capitalize, uppercase, lowercase, fullWidth, fullSizeKana
+@docs capitalize, uppercase, lowercase, fullSizeKana
 
 
 # Text Decoration
@@ -669,7 +670,7 @@ Other values you can use for flex item alignment:
 ## Vertical Align
 
 @docs verticalAlign
-@docs sub, super, textTop, textBottom, middle
+@docs textTop, textBottom, middle
 
 
 ## White space
@@ -1791,6 +1792,59 @@ cover : Value { provides | cover : Supported }
 cover =
     Value "cover"
 
+
+{-| A `full-width` value for:
+
+
+### [`textTransform`](#textTransform)
+
+Forces the writing of characters in a square so they can be aligned in East Asian scripts.
+
+
+### [`fontVariantEastAsian`](#fontVariantEastAsian)
+
+Activates the East Asian characters that are roughly be the same width.
+
+    textTransform fullWidth
+
+    fontVariantEastAsian fullWidth
+
+-}
+fullWidth : Value { provides | fullWidth : Supported }
+fullWidth =
+    Value "full-width"
+
+
+{-| A `sub` value for the following properties:
+
+    - [`fontVariantPosition](#fontVariantPosition)
+    - [`verticalAlign`](#verticalAlign)
+
+
+    fontVariantPosition sub
+
+    verticalAlign sub
+
+-}
+sub : Value { provides | sub : Supported }
+sub =
+    Value "sub"
+
+
+{-| A `super` value for the following properties:
+
+    - [`fontVariantPosition](#fontVariantPosition)
+    - [`verticalAlign`](#verticalAlign)
+
+
+    fontVariantPosition super
+
+    verticalAlign super
+
+-}
+super : Value { provides | super : Supported }
+super =
+    Value "super"
 
 
 -- OVERFLOW --
@@ -10361,28 +10415,6 @@ lowercase =
     Value "lowercase"
 
 
-{-| A `full-width` value for:
-
-
-### [`textTransform`](#textTransform)
-
-Forces the writing of characters in a square so they can be aligned in East Asian scripts.
-
-
-### [`fontVariantEastAsian`](#fontVariantEastAsian)
-
-Activates the East Asian characters that are roughly be the same width.
-
-    textTransform fullWidth
-
-    fontVariantEastAsian fullWidth
-
--}
-fullWidth : Value { provides | fullWidth : Supported }
-fullWidth =
-    Value "full-width"
-
-
 {-| The `full-size-kana` value used by [`textTransform`](#textTransform)
 
 textTransform fullSizeKana
@@ -10938,38 +10970,6 @@ verticalAlign (Value str) =
     AppendProperty ("vertical-align:" ++ str)
 
 
-{-| A `sub` value for the following properties:
-
-    - [`fontVariantPosition](#fontVariantPosition)
-    - [`verticalAlign`](#verticalAlign)
-
-
-    fontVariantPosition sub
-
-    verticalAlign sub
-
--}
-sub : Value { provides | sub : Supported }
-sub =
-    Value "sub"
-
-
-{-| A `super` value for the following properties:
-
-    - [`fontVariantPosition](#fontVariantPosition)
-    - [`verticalAlign`](#verticalAlign)
-
-
-    fontVariantPosition super
-
-    verticalAlign super
-
--}
-super : Value { provides | super : Supported }
-super =
-    Value "super"
-
-
 {-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
 
     verticalAlign textTop
@@ -11015,6 +11015,26 @@ direction :
     -> Style
 direction (Value str) =
     AppendProperty ("direction:" ++ str)
+
+
+{-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction ltr
+
+-}
+ltr : Value { provides | ltr : Supported }
+ltr =
+    Value "ltr"
+
+
+{-| A `rtl` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction rtl
+
+-}
+rtl : Value { provides | rtl : Supported }
+rtl =
+    Value "rtl"
 
 
 {-| Sets [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
@@ -11155,27 +11175,6 @@ textUnderlinePosition2 (Value underVal) (Value val) =
 under : Value { provides | under : Supported }
 under =
     Value "under"
-
-
-{-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
-
-    direction ltr
-
--}
-ltr : Value { provides | ltr : Supported }
-ltr =
-    Value "ltr"
-
-
-{-| A `rtl` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
-
-    direction rtl
-
--}
-rtl : Value { provides | rtl : Supported }
-rtl =
-    Value "rtl"
-
 
 
 -- WHITE-SPACE --
