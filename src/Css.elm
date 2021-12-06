@@ -17,9 +17,8 @@ module Css exposing
     , contentBox, borderBox, paddingBox
     , left_, right_, top_, bottom_, block, inline, start, end
     , x, y
-    , clip
     , stretch, center, content, fill_, stroke, text, style
-    , cover, contain_
+    , clip, cover, contain_
     , baseline, sub, super, ruby, fullWidth
     , pseudoClass, active, checked, disabled, empty, enabled
     , firstChild, firstOfType, focus, fullscreen, hover, inRange
@@ -265,9 +264,8 @@ Many different kinds of CSS properties use these values.
 @docs contentBox, borderBox, paddingBox
 @docs left_, right_, top_, bottom_, block, inline, start, end
 @docs x, y
-@docs clip
 @docs stretch, center, content, fill_, stroke, text, style
-@docs cover, contain_
+@docs clip, cover, contain_
 @docs baseline, sub, super, ruby, fullWidth
 
 
