@@ -99,12 +99,12 @@ all =
             (\_ ->
                 Query.fromHtml (toUnstyled <| view "BUY TICKETS")
                     |> Query.has
-                        [ Selector.text "._4a5d8e6a{background-color:#333333;padding:20px;}"
-                        , Selector.text "._c0aac056{margin:12px;color:rgb(255,255,255);}"
-                        , Selector.text "._f324e2c5{display:inline-block;padding-bottom:12px;}"
-                        , Selector.text "._77949145{display:inline-block;margin-left:150px;margin-right:80px;vertical-align:middle;}"
-                        , Selector.text "._b023a682{background-color:#222222;}"
-                        , Selector.text "._fce7f843{padding:16px;padding-left:24px;padding-right:24px;margin-left:50px;margin-right:auto;color:rgb(255,255,255);background-color:rgb(27,217,130);vertical-align:middle;}"
+                        [ Selector.text "._aa0d343{background-color:#333333;padding:20px;}"
+                        , Selector.text "._a66df6e{margin:12px;color:rgb(255,255,255);}"
+                        , Selector.text "._6976989a{display:inline-block;padding-bottom:12px;}"
+                        , Selector.text "._96c89573{display:inline-block;margin-left:150px;margin-right:80px;vertical-align:middle;}"
+                        , Selector.text "._e9cf1689{background-color:#222222;}"
+                        , Selector.text "._20d887e{padding:16px;padding-left:24px;padding-right:24px;margin-left:50px;margin-right:auto;color:rgb(255,255,255);background-color:rgb(27,217,130);vertical-align:middle;}"
                         ]
             )
         ]
