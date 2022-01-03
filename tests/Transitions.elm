@@ -350,7 +350,7 @@ expectTransitionWorks ( trans, property ) =
         \() ->
             prettyPrint (stylesheet [ p [ transition [ trans ] ] ])
                 |> Expect.equal
-                    ("p {\n    transition:"
+                    ("p{transition:"
                         ++ property
-                        ++ ";\n}"
+                        ++ ";}"
                     )

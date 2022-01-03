@@ -35,33 +35,12 @@ suite =
 
             output =
                 """
-            @keyframes _a56b5063 {
-                0% {background-color:#00FF00;background-size:2px;}
-
-                50% {opacity:0;}
-
-                100% {border:5px;background-color:rgb(11, 22, 33);}
-            }
-
-            body {
-                padding:0;
-            }
-
-            button {
-                margin:auto;
-            }
-
-            p {
-                color:#FF0000;
-                display:inline;
-                animation-name:_a56b5063;
-                background-color:rgb(11, 11, 11);
-            }
-
-            i {
-                animation-name:_a56b5063;
-            }
-            """
+                @keyframes _35c863e5{0%{background-color:#00FF00;background-size:2px;}50%{opacity:0;}100%{border:5px;background-color:rgb(11,22,33);}}
+                body{padding:0;}
+                button{margin:auto;}
+                p{color:#FF0000;display:inline;animation-name:_35c863e5;background-color:rgb(11,11,11);}
+                i{animation-name:_35c863e5;}
+                """
           in
           test "one keyframe" <|
             \_ ->
@@ -97,35 +76,12 @@ suite =
 
             output =
                 """
-            @keyframes _23526425 {
-                10% {transform:translate(100px);}
-            }
-
-            @keyframes _a56b5063 {
-                0% {background-color:#00FF00;background-size:2px;}
-
-                50% {opacity:0;}
-
-                100% {border:5px;background-color:rgb(11, 22, 33);}
-            }
-
-            body {
-                padding:0;
-            }
-
-            button {
-                margin:auto;
-                animation-name:_23526425;
-                background-color:#0F0F0F;
-            }
-
-            p {
-                color:#FF0000;
-                display:inline;
-                animation-name:_a56b5063;
-                background-color:rgb(11, 11, 11);
-            }
-            """
+                @keyframes _16b19ea0{10%{transform:translate(100px);}}
+                @keyframes _35c863e5{0%{background-color:#00FF00;background-size:2px;}50%{opacity:0;}100%{border:5px;background-color:rgb(11,22,33);}}
+                body{padding:0;}
+                button{margin:auto;animation-name:_16b19ea0;background-color:#0F0F0F;}
+                p{color:#FF0000;display:inline;animation-name:_35c863e5;background-color:rgb(11,11,11);}
+                """
           in
           test "multiple keyframes" <|
             \_ ->
@@ -159,14 +115,8 @@ assertEmptyKeyframesForProperty property expectedValue =
 
         output =
             """
-            body {
-                padding:0;
-            }
-
-            p {
-                color:#FF0000;
-                animation-name:""" ++ expectedValue ++ """;
-            }
+            body{padding:0;}
+            p{color:#FF0000;animation-name:""" ++ expectedValue ++ """;}
             """
     in
     outdented (prettyPrint input)

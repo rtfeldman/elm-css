@@ -1,10 +1,11 @@
 module VirtualDom.Styled exposing
     ( Attribute(..)
     , Classname
+    , CssTemplate
     , Node
     , attribute
     , attributeNS
-    , getClassname
+    , getCssTemplate
     , keyedNode
     , keyedNodeNS
     , lazy
@@ -32,8 +33,8 @@ import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Dict exposing (Dict)
+import Hash
 import Hex
-import Json.Decode
 import Json.Encode
 import VirtualDom
 
@@ -49,15 +50,22 @@ type Node msg
 type Attribute msg
     = Attribute
         (VirtualDom.Attribute msg)
-        (List Preprocess.Style)
-        -- classname is "" when it's not a `css` attribute.
-        -- It would be nicer to model this with separate constructors, but the
-        -- browser will JIT this better. We will instantiate a *lot* of these.
-        Classname
+        -- Only true when this is a style node
+        Bool
+        CssTemplate
+
+
+type alias CssTemplate =
+    String
 
 
 type alias Classname =
     String
+
+
+classnameStandin : String
+classnameStandin =
+    "\u{0007}"
 
 
 node : String -> List (Attribute msg) -> List (Node msg) -> Node msg
@@ -128,32 +136,32 @@ map transform vdomNode =
 
 property : String -> Json.Encode.Value -> Attribute msg
 property key value =
-    Attribute (VirtualDom.property key value) [] ""
+    Attribute (VirtualDom.property key value) False ""
 
 
 attribute : String -> String -> Attribute msg
 attribute key value =
-    Attribute (VirtualDom.attribute key value) [] ""
+    Attribute (VirtualDom.attribute key value) False ""
 
 
 attributeNS : String -> String -> String -> Attribute msg
 attributeNS namespace key value =
-    Attribute (VirtualDom.attributeNS namespace key value) [] ""
+    Attribute (VirtualDom.attributeNS namespace key value) False ""
 
 
 unstyledAttribute : VirtualDom.Attribute msg -> Attribute msg
 unstyledAttribute prop =
-    Attribute prop [] ""
+    Attribute prop False ""
 
 
 on : String -> VirtualDom.Handler msg -> Attribute msg
 on eventName handler =
-    Attribute (VirtualDom.on eventName handler) [] ""
+    Attribute (VirtualDom.on eventName handler) False ""
 
 
 mapAttribute : (a -> b) -> Attribute a -> Attribute b
-mapAttribute transform (Attribute prop styles classname) =
-    Attribute (VirtualDom.mapAttribute transform prop) styles classname
+mapAttribute transform (Attribute prop isCssStyle cssTemplate) =
+    Attribute (VirtualDom.mapAttribute transform prop) isCssStyle cssTemplate
 
 
 lazy : (a -> Node msg) -> a -> Node msg
@@ -259,26 +267,22 @@ toUnstyled vdom =
             unstyleKeyedNS ns elemType properties children
 
 
-getClassname : List Style -> Classname
-getClassname styles =
-    if List.isEmpty styles then
-        -- NOTE: Styles should always result in a classname, because they
-        -- can be detected later.
-        -- This way img [ css [ foo bar ], css [] ] wipes out the styles
-        -- as expected. (The latter will generate a classname of "_unstyled")
-        "unstyled"
+getCssTemplate : List Style -> CssTemplate
+getCssTemplate styles =
+    case styles of
+        [] ->
+            ""
 
-    else
-        let
-            selector =
-                Structure.Selector (Structure.UniversalSelectorSequence []) [] Nothing
+        otherwise ->
+            [ makeSnippet styles templateSelector ]
+                |> Preprocess.stylesheet
+                |> Resolve.compile
 
-            snippetDeclaration =
-                Preprocess.StyleBlockDeclaration (Preprocess.StyleBlock selector [] styles)
-        in
-        Resolve.hashSnippetDeclaration snippetDeclaration
-            |> Hex.toString
-            |> String.cons '_'
+
+templateSelector : Structure.SimpleSelectorSequence
+templateSelector =
+    Structure.UniversalSelectorSequence
+        [ Structure.ClassSelector classnameStandin ]
 
 
 makeSnippet : List Style -> Structure.SimpleSelectorSequence -> Preprocess.Snippet
@@ -311,7 +315,7 @@ unstyleNS ns elemType properties children =
             toStyleNode styles
 
         unstyledProperties =
-            List.map extractUnstyledAttribute properties
+            List.map (extractUnstyledAttribute styles) properties
     in
     VirtualDom.nodeNS ns
         elemType
@@ -338,7 +342,7 @@ unstyle elemType properties children =
             toStyleNode styles
 
         unstyledProperties =
-            List.map extractUnstyledAttribute properties
+            List.map (extractUnstyledAttribute styles) properties
     in
     VirtualDom.node
         elemType
@@ -366,7 +370,7 @@ unstyleKeyedNS ns elemType properties keyedChildren =
             toKeyedStyleNode styles keyedChildNodes
 
         unstyledProperties =
-            List.map extractUnstyledAttribute properties
+            List.map (extractUnstyledAttribute styles) properties
     in
     VirtualDom.keyedNodeNS
         ns
@@ -394,7 +398,7 @@ unstyleKeyed elemType properties keyedChildren =
             toKeyedStyleNode styles keyedChildNodes
 
         unstyledProperties =
-            List.map extractUnstyledAttribute properties
+            List.map (extractUnstyledAttribute styles) properties
     in
     VirtualDom.keyedNode
         elemType
@@ -408,18 +412,23 @@ unstyleKeyed elemType properties keyedChildren =
 
 accumulateStyles :
     Attribute msg
-    -> Dict Classname (List Style)
-    -> Dict Classname (List Style)
-accumulateStyles (Attribute _ newStyles classname) styles =
-    if List.isEmpty newStyles then
-        styles
+    -> Dict CssTemplate Classname
+    -> Dict CssTemplate Classname
+accumulateStyles (Attribute _ isCssStyles cssTemplate) styles =
+    if isCssStyles then
+        case Dict.get cssTemplate styles of
+            Just _ ->
+                styles
+
+            Nothing ->
+                Dict.insert cssTemplate (Hash.fromString cssTemplate) styles
 
     else
-        Dict.insert classname newStyles styles
+        styles
 
 
 toKeyedStyleNode :
-    Dict Classname (List Style)
+    Dict CssTemplate Classname
     -> List ( String, a )
     -> ( String, VirtualDom.Node msg )
 toKeyedStyleNode allStyles keyedChildNodes =
@@ -433,7 +442,7 @@ toKeyedStyleNode allStyles keyedChildNodes =
     ( styleNodeKey, finalNode )
 
 
-toStyleNode : Dict Classname (List Style) -> VirtualDom.Node msg
+toStyleNode : Dict CssTemplate Classname -> VirtualDom.Node msg
 toStyleNode styles =
     -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
     VirtualDom.node "span"
@@ -450,48 +459,50 @@ toStyleNode styles =
 -- INTERNAL --
 
 
-stylesFromProperties : List (Attribute msg) -> Dict Classname (List Style)
+stylesFromProperties : List (Attribute msg) -> Dict CssTemplate Classname
 stylesFromProperties properties =
     case stylesFromPropertiesHelp Nothing properties of
         Nothing ->
             Dict.empty
 
-        Just ( classname, styles ) ->
-            Dict.singleton classname styles
+        Just cssTemplate ->
+            Dict.singleton cssTemplate (Hash.fromString cssTemplate)
 
 
 stylesFromPropertiesHelp :
-    Maybe ( Classname, List Style )
+    Maybe CssTemplate
     -> List (Attribute msg)
-    -> Maybe ( Classname, List Style )
+    -> Maybe CssTemplate
 stylesFromPropertiesHelp candidate properties =
     case properties of
         [] ->
             candidate
 
-        (Attribute _ styles classname) :: rest ->
-            if String.isEmpty classname then
-                -- This was not a `css` property
-                -- (for example maybe it was `src` for an <img> instead)
-                -- so it's not a new candidate.
-                -- NOTE: Do String.isEmpty classname and not List.isEmpty styles
-                -- so that img [ css [ foo bar ], css [] ] wipes out the styles
-                -- as expected. (The latter will generate a classname of "_unstyled")
-                stylesFromPropertiesHelp candidate rest
+        (Attribute _ False classname) :: rest ->
+            stylesFromPropertiesHelp candidate rest
 
-            else
-                stylesFromPropertiesHelp (Just ( classname, styles )) rest
+        (Attribute _ True cssTemplate) :: rest ->
+            stylesFromPropertiesHelp (Just cssTemplate) rest
 
 
-extractUnstyledAttribute : Attribute msg -> VirtualDom.Attribute msg
-extractUnstyledAttribute (Attribute val _ _) =
-    val
+extractUnstyledAttribute : Dict CssTemplate Classname -> Attribute msg -> VirtualDom.Attribute msg
+extractUnstyledAttribute styles (Attribute val isCssStyles cssTemplate) =
+    if isCssStyles then
+        case Dict.get cssTemplate styles of
+            Just classname ->
+                VirtualDom.property "className" (Json.Encode.string classname)
+
+            Nothing ->
+                VirtualDom.property "className" (Json.Encode.string "_unstyled")
+
+    else
+        val
 
 
 accumulateStyledHtml :
     Node msg
-    -> ( List (VirtualDom.Node msg), Dict Classname (List Style) )
-    -> ( List (VirtualDom.Node msg), Dict Classname (List Style) )
+    -> ( List (VirtualDom.Node msg), Dict CssTemplate Classname )
+    -> ( List (VirtualDom.Node msg), Dict CssTemplate Classname )
 accumulateStyledHtml html ( nodes, styles ) =
     case html of
         Unstyled vdomNode ->
@@ -507,7 +518,7 @@ accumulateStyledHtml html ( nodes, styles ) =
 
                 vdomNode =
                     VirtualDom.node elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( vdomNode :: nodes, finalStyles )
@@ -523,7 +534,7 @@ accumulateStyledHtml html ( nodes, styles ) =
                 vdomNode =
                     VirtualDom.nodeNS ns
                         elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( vdomNode :: nodes, finalStyles )
@@ -538,7 +549,7 @@ accumulateStyledHtml html ( nodes, styles ) =
 
                 vdomNode =
                     VirtualDom.keyedNode elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( vdomNode :: nodes, finalStyles )
@@ -554,7 +565,7 @@ accumulateStyledHtml html ( nodes, styles ) =
                 vdomNode =
                     VirtualDom.keyedNodeNS ns
                         elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( vdomNode :: nodes, finalStyles )
@@ -562,13 +573,13 @@ accumulateStyledHtml html ( nodes, styles ) =
 
 style : String -> String -> Attribute msg
 style key val =
-    Attribute (VirtualDom.style key val) [] ""
+    Attribute (VirtualDom.style key val) False ""
 
 
 accumulateKeyedStyledHtml :
     ( String, Node msg )
-    -> ( List ( String, VirtualDom.Node msg ), Dict Classname (List Style) )
-    -> ( List ( String, VirtualDom.Node msg ), Dict Classname (List Style) )
+    -> ( List ( String, VirtualDom.Node msg ), Dict CssTemplate Classname )
+    -> ( List ( String, VirtualDom.Node msg ), Dict CssTemplate Classname )
 accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
     case html of
         Unstyled vdom ->
@@ -584,7 +595,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
 
                 vdom =
                     VirtualDom.node elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
@@ -600,7 +611,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
                 vdom =
                     VirtualDom.nodeNS ns
                         elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
@@ -615,7 +626,7 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
 
                 vdom =
                     VirtualDom.keyedNode elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
@@ -631,26 +642,22 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
                 vdom =
                     VirtualDom.keyedNodeNS ns
                         elemType
-                        (List.map extractUnstyledAttribute properties)
+                        (List.map (extractUnstyledAttribute finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( ( key, vdom ) :: pairs, finalStyles )
 
 
-toDeclaration : Dict Classname (List Style) -> String
+toDeclaration : Dict CssTemplate Classname -> String
 toDeclaration dict =
-    Dict.toList dict
-        |> List.map snippetFromPair
-        |> Preprocess.stylesheet
-        |> List.singleton
-        |> Resolve.compile
+    Dict.foldl styleToDeclaration "" dict
 
 
-snippetFromPair : ( Classname, List Style ) -> Preprocess.Snippet
-snippetFromPair ( classname, styles ) =
-    [ Structure.ClassSelector classname ]
-        |> Structure.UniversalSelectorSequence
-        |> makeSnippet styles
+styleToDeclaration : CssTemplate -> Classname -> String -> String
+styleToDeclaration template classname declaration =
+    declaration
+        ++ "\n"
+        ++ String.replace classnameStandin classname template
 
 
 {-| returns a String key that is not already one of the keys in the list of

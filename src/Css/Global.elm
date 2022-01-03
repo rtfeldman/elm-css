@@ -99,7 +99,6 @@ global : List Snippet -> Html.Styled.Html msg
 global snippets =
     snippets
         |> Preprocess.stylesheet
-        |> List.singleton
         |> Resolve.compile
         |> VirtualDom.text
         |> List.singleton

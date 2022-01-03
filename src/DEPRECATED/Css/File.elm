@@ -45,7 +45,7 @@ message if it could not be compiled.
 -}
 compile : List Stylesheet -> { css : String }
 compile stylesheets =
-    { css = Resolve.compile stylesheets }
+    { css = Resolve.compileSheets stylesheets }
 
 
 {-| Create a program that compiles an elm-css stylesheet to a CSS file.

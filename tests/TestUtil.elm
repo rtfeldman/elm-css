@@ -17,7 +17,7 @@ outdented str =
 
 prettyPrint : Stylesheet -> String
 prettyPrint sheet =
-    compile [ sheet ]
+    compile sheet
 
 
 validRgbValue : Fuzzer Int

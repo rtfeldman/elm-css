@@ -7,12 +7,12 @@ import String
 
 prettyPrint : Stylesheet -> String
 prettyPrint { charset, imports, namespaces, declarations } =
-    [ charsetToString charset
-    , Css.String.mapJoin importToString "\n" imports
-    , Css.String.mapJoin namespaceToString "\n" namespaces
-    , Css.String.mapJoin prettyPrintDeclaration "\n\n" declarations
-    ]
-        |> String.concat
+    charsetToString charset
+        ++ Css.String.mapJoin importToString "\n" imports
+        ++ Css.String.mapJoin namespaceToString "\n" namespaces
+        ++ Css.String.mapJoin prettyPrintDeclaration "\n" declarations
+        -- Elm compiler generates better code with the below line
+        ++ ""
 
 
 charsetToString : Maybe String -> String
@@ -24,7 +24,6 @@ charsetToString charset =
 
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
-    -- TODO
     Css.String.mapJoin (importMediaQueryToString name) "\n" mediaQueries
 
 
@@ -42,19 +41,16 @@ namespaceToString ( prefix, str ) =
         ++ "\""
 
 
-prettyPrintStyleBlock : String -> StyleBlock -> String
-prettyPrintStyleBlock indentLevel (StyleBlock firstSelector otherSelectors properties) =
+prettyPrintStyleBlock : StyleBlock -> String
+prettyPrintStyleBlock (StyleBlock firstSelector otherSelectors properties) =
     let
         selectorStr =
             (firstSelector :: otherSelectors)
-                |> Css.String.mapJoin selectorToString ", "
+                |> Css.String.mapJoin selectorToString ","
     in
     selectorStr
-        ++ " {\n"
-        ++ indentLevel
+        ++ "{"
         ++ emitProperties properties
-        ++ "\n"
-        ++ indentLevel
         ++ "}"
 
 
@@ -62,17 +58,17 @@ prettyPrintDeclaration : Declaration -> String
 prettyPrintDeclaration decl =
     case decl of
         StyleBlockDeclaration styleBlock ->
-            prettyPrintStyleBlock noIndent styleBlock
+            prettyPrintStyleBlock styleBlock
 
         MediaRule mediaQueries styleBlocks ->
             let
                 blocks =
-                    Css.String.mapJoin (indent << prettyPrintStyleBlock spaceIndent) "\n\n" styleBlocks
+                    Css.String.mapJoin prettyPrintStyleBlock "\n" styleBlocks
 
                 query =
-                    Css.String.mapJoin mediaQueryToString ",\n" mediaQueries
+                    Css.String.mapJoin mediaQueryToString ", " mediaQueries
             in
-            "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
+            "@media " ++ query ++ "{" ++ blocks ++ "}"
 
         SupportsRule _ _ ->
             "TODO"
@@ -87,7 +83,7 @@ prettyPrintDeclaration decl =
             "TODO"
 
         Keyframes { name, declaration } ->
-            "@keyframes " ++ name ++ " {\n" ++ declaration ++ "\n}"
+            "@keyframes " ++ name ++ "{" ++ declaration ++ "}"
 
         Viewport _ ->
             "TODO"
@@ -225,23 +221,6 @@ combinatorToString combinator =
             ""
 
 
-{-| Indent the given string with 4 spaces
--}
-indent : String -> String
-indent str =
-    spaceIndent ++ str
-
-
-spaceIndent : String
-spaceIndent =
-    "    "
-
-
-noIndent : String
-noIndent =
-    ""
-
-
 emitProperties : List Property -> String
 emitProperties properties =
-    Css.String.mapJoin (\prop -> spaceIndent ++ prop ++ ";") "\n" properties
+    Css.String.mapJoin (\prop -> prop ++ ";") "" properties

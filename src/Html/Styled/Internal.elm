@@ -1,7 +1,6 @@
 module Html.Styled.Internal exposing (css)
 
 import Css
-import Json.Encode as Json
 import VirtualDom
 import VirtualDom.Styled
 
@@ -9,10 +8,11 @@ import VirtualDom.Styled
 css : List Css.Style -> VirtualDom.Styled.Attribute msg
 css styles =
     let
-        classname =
-            VirtualDom.Styled.getClassname styles
+        cssTemplate =
+            VirtualDom.Styled.getCssTemplate styles
 
         classProperty =
-            VirtualDom.property "className" (Json.string classname)
+            -- Will never be used
+            VirtualDom.attribute "" ""
     in
-    VirtualDom.Styled.Attribute classProperty styles classname
+    VirtualDom.Styled.Attribute classProperty True cssTemplate

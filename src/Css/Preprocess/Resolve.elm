@@ -1,4 +1,4 @@
-module Css.Preprocess.Resolve exposing (compile, hashSnippetDeclaration)
+module Css.Preprocess.Resolve exposing (compile, compileSheets)
 
 {-| Functions responsible for resolving Preprocess data structures into
 Structure data structures.
@@ -7,24 +7,18 @@ Structure data structures.
 import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
 import Css.String
 import Css.Structure as Structure exposing (Property, mapLast, styleBlockToMediaRule)
-import Css.Structure.Hash as HashDec
 import Css.Structure.Output as Output
 import Hash
 
 
-compile : List Preprocess.Stylesheet -> String
-compile styles =
-    Css.String.mapJoin compileHelp "\n\n" styles
+compileSheets : List Preprocess.Stylesheet -> String
+compileSheets styles =
+    Css.String.mapJoin compile "\n" styles
 
 
-compileHelp : Preprocess.Stylesheet -> String
-compileHelp sheet =
+compile : Preprocess.Stylesheet -> String
+compile sheet =
     Output.prettyPrint (Structure.compactStylesheet (toStructure sheet))
-
-
-hashSnippetDeclaration : Preprocess.SnippetDeclaration -> Int
-hashSnippetDeclaration decl =
-    HashDec.hashDeclarations (Structure.compactDeclarations (toDeclarations decl))
 
 
 resolveMediaRule : List Structure.MediaQuery -> List Preprocess.StyleBlock -> List Structure.Declaration

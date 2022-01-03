@@ -66,7 +66,7 @@ in keyframe declarations.
 -}
 compileKeyframes : List ( Int, List AnimationProperty ) -> String
 compileKeyframes tuples =
-    Css.String.mapJoin printKeyframeSelector "\n\n" tuples
+    Css.String.mapJoin printKeyframeSelector "" tuples
 
 
 printKeyframeSelector : ( Int, List AnimationProperty ) -> String
@@ -78,7 +78,7 @@ printKeyframeSelector ( percentage, properties ) =
         propertiesStr =
             Css.String.mapJoin (\(Property prop) -> prop ++ ";") "" properties
     in
-    percentageStr ++ " {" ++ propertiesStr ++ "}"
+    percentageStr ++ "{" ++ propertiesStr ++ "}"
 
 
 {-| Caution: trickery ahead!
