@@ -446,7 +446,9 @@ toStyleNode : Dict CssTemplate Classname -> VirtualDom.Node msg
 toStyleNode styles =
     -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
     VirtualDom.node "span"
-        []
+        [ VirtualDom.attribute "style" "display: none;"
+        , VirtualDom.attribute "class" "elm-css-style-wrapper"
+        ]
         [ -- this <style> node will be the first child of the requested one
           toDeclaration styles
             |> VirtualDom.text
