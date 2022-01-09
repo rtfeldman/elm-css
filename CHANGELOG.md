@@ -1,6 +1,7 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [17.0.4](https://github.com/rtfeldman/elm-css/tree/17.0.3) | Fix `className` bug ([#562](https://github.com/rtfeldman/elm-css/pull/562))
 | [17.0.3](https://github.com/rtfeldman/elm-css/tree/17.0.3) | Fix styled SVG element bug ([#543](https://github.com/rtfeldman/elm-css/issues/543))
 | [17.0.2](https://github.com/rtfeldman/elm-css/tree/17.0.2) | Fix span style wrapping causing problems in grid container ([#557](https://github.com/rtfeldman/elm-css/issues/557)), improve hashing performance ([#555](https://github.com/rtfeldman/elm-css/pull/555), [#556](https://github.com/rtfeldman/elm-css/pull/556))
 | [17.0.1](https://github.com/rtfeldman/elm-css/tree/17.0.1) | Fix interaction with Dark Reader extension ([#542](https://github.com/rtfeldman/elm-css/pull/542))
