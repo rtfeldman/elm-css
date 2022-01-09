@@ -6,6 +6,8 @@ import Html
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (css, href, src)
 import Html.Styled.Events exposing (onClick)
+import Svg.Styled as StyledSvg
+import Svg.Styled.Attributes as SvgAttribs
 
 
 {-| A logo image, with inline styles that change on hover.
@@ -82,6 +84,7 @@ view model =
     nav []
         [ img [ src "assets/backdrop.jpg", css [ width (pct 100) ] ] []
         , btn [ onClick DoSomething ] [ text "Click me!" ]
+        , StyledSvg.svg [ SvgAttribs.css [], SvgAttribs.width "100", SvgAttribs.height "100" ] [ StyledSvg.circle [ SvgAttribs.cx "50", SvgAttribs.cy "50", SvgAttribs.r "40" ] [] ]
         ]
 
 
