@@ -492,10 +492,10 @@ extractUnstyledAttribute styles (Attribute val isCssStyles cssTemplate) =
     if isCssStyles then
         case Dict.get cssTemplate styles of
             Just classname ->
-                VirtualDom.attribute "className" classname
+                VirtualDom.attribute "class" classname
 
             Nothing ->
-                VirtualDom.attribute "className" "_unstyled"
+                VirtualDom.attribute "class" "_unstyled"
 
     else
         val
