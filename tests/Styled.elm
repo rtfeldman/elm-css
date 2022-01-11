@@ -4,7 +4,7 @@ module Styled exposing (all)
 
 import Css exposing (..)
 import Html.Styled exposing (Html, a, button, div, header, img, nav, text, toUnstyled)
-import Html.Styled.Attributes exposing (css, src)
+import Html.Styled.Attributes exposing (class, css, src)
 import Test exposing (Test, describe)
 import Test.Html.Query as Query
 import Test.Html.Selector as Selector
@@ -107,4 +107,37 @@ all =
                         , Selector.text "._20d887e{padding:16px;padding-left:24px;padding-right:24px;margin-left:50px;margin-right:auto;color:rgb(255,255,255);background-color:rgb(27,217,130);vertical-align:middle;}"
                         ]
             )
+        , bug564
+        ]
+
+
+bug564 : Test
+bug564 =
+    describe "Github Issue #564: https://github.com/rtfeldman/elm-css/issues/564"
+        [ Test.test "generated class is included when there's no custom class" <|
+            \_ ->
+                div
+                    [ css [ color (rgb 0 0 0) ]
+                    ]
+                    []
+                    |> toUnstyled
+                    |> Query.fromHtml
+                    |> Query.has [ Selector.class "_5dc67897" ]
+        , Test.test "custom class is included when there's no generated class" <|
+            \_ ->
+                div [ class "some-custom-class" ]
+                    []
+                    |> toUnstyled
+                    |> Query.fromHtml
+                    |> Query.has [ Selector.class "some-custom-class" ]
+        , Test.test "custom class is included as well as generated class" <|
+            \_ ->
+                div
+                    [ css [ color (rgb 0 0 0) ]
+                    , class "some-custom-class"
+                    ]
+                    []
+                    |> toUnstyled
+                    |> Query.fromHtml
+                    |> Query.has [ Selector.classes [ "_5dc67897", "some-custom-class" ] ]
         ]
