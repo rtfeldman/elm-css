@@ -315,7 +315,7 @@ unstyleNS ns elemType properties children =
             toStyleNode styles
 
         unstyledProperties =
-            List.map (extractUnstyledAttribute styles) properties
+            List.map (extractUnstyledAttributeNS styles) properties
     in
     VirtualDom.nodeNS ns
         elemType
@@ -370,7 +370,7 @@ unstyleKeyedNS ns elemType properties keyedChildren =
             toKeyedStyleNode styles keyedChildNodes
 
         unstyledProperties =
-            List.map (extractUnstyledAttribute styles) properties
+            List.map (extractUnstyledAttributeNS styles) properties
     in
     VirtualDom.keyedNodeNS
         ns
@@ -492,6 +492,20 @@ extractUnstyledAttribute styles (Attribute val isCssStyles cssTemplate) =
     if isCssStyles then
         case Dict.get cssTemplate styles of
             Just classname ->
+                VirtualDom.property "className" (Json.Encode.string classname)
+
+            Nothing ->
+                VirtualDom.property "className" (Json.Encode.string "_unstyled")
+
+    else
+        val
+
+
+extractUnstyledAttributeNS : Dict CssTemplate Classname -> Attribute msg -> VirtualDom.Attribute msg
+extractUnstyledAttributeNS styles (Attribute val isCssStyles cssTemplate) =
+    if isCssStyles then
+        case Dict.get cssTemplate styles of
+            Just classname ->
                 VirtualDom.attribute "class" classname
 
             Nothing ->
@@ -536,7 +550,7 @@ accumulateStyledHtml html ( nodes, styles ) =
                 vdomNode =
                     VirtualDom.nodeNS ns
                         elemType
-                        (List.map (extractUnstyledAttribute finalStyles) properties)
+                        (List.map (extractUnstyledAttributeNS finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( vdomNode :: nodes, finalStyles )
@@ -567,7 +581,7 @@ accumulateStyledHtml html ( nodes, styles ) =
                 vdomNode =
                     VirtualDom.keyedNodeNS ns
                         elemType
-                        (List.map (extractUnstyledAttribute finalStyles) properties)
+                        (List.map (extractUnstyledAttributeNS finalStyles) properties)
                         (List.reverse childNodes)
             in
             ( vdomNode :: nodes, finalStyles )
