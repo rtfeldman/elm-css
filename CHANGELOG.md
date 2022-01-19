@@ -1,7 +1,6 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
-
 | [17.0.5](https://github.com/rtfeldman/elm-css/tree/17.0.5) | Fix SVG styling bug ([#565](https://github.com/rtfeldman/elm-css/pull/565))
 | [17.0.4](https://github.com/rtfeldman/elm-css/tree/17.0.4) | Fix `className` bug ([#562](https://github.com/rtfeldman/elm-css/pull/562))
 | [17.0.3](https://github.com/rtfeldman/elm-css/tree/17.0.3) | Fix styled SVG element bug ([#543](https://github.com/rtfeldman/elm-css/issues/543))
