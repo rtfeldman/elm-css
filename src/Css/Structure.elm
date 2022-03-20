@@ -1,4 +1,4 @@
-module Css.Structure exposing (Compatible(..), Declaration(..), KeyframeProperty, MediaExpression, MediaQuery(..), MediaType(..), Number, Property, PseudoElement(..), RepeatableSimpleSelector(..), Selector(..), SelectorCombinator(..), SimpleSelectorSequence(..), StyleBlock(..), Stylesheet, TypeSelector(..), appendProperty, appendPseudoElementToLastSelector, appendRepeatable, appendRepeatableSelector, appendRepeatableToLastSelector, appendRepeatableWithCombinator, appendToLastSelector, applyPseudoElement, compactDeclarations, compactHelp, compactStylesheet, concatMapLast, concatMapLastStyleBlock, extendLastSelector, mapLast, styleBlockToMediaRule, withKeyframeDeclarations, withPropertyAppended)
+module Css.Structure exposing (Compatible(..), Declaration(..), KeyframeProperty, MediaExpression, MediaQuery(..), MediaType(..), Number, Property(..), PseudoElement(..), RepeatableSimpleSelector(..), Selector(..), SelectorCombinator(..), SimpleSelectorSequence(..), StyleBlock(..), Stylesheet, TypeSelector(..), appendProperty, appendPseudoElementToLastSelector, appendRepeatable, appendRepeatableSelector, appendRepeatableToLastSelector, appendRepeatableWithCombinator, appendToLastSelector, applyPseudoElement, compactDeclarations, compactHelp, compactStylesheet, concatMapLast, concatMapLastStyleBlock, extendLastSelector, mapLast, styleBlockToMediaRule, withKeyframeDeclarations, withPropertyAppended)
 
 {-| A representation of the structure of a stylesheet. This module is concerned
 solely with representing valid stylesheets; it is not concerned with the
@@ -19,14 +19,9 @@ type alias Number compatible =
 
 
 {-| A property consisting of a key:value string.
-
-Ideally, this would be `type Property = Property String` - but in order to
-reduce allocations, we're doing it as a `type alias` until union types with
-one constructor get unboxed automatically.
-
 -}
-type alias Property =
-    String
+type Property
+    = Property String
 
 
 {-| A stylesheet. Since they follow such specific rules, the following at-rules

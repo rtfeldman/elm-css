@@ -223,4 +223,4 @@ combinatorToString combinator =
 
 emitProperties : List Property -> String
 emitProperties properties =
-    Css.String.mapJoin (\prop -> prop ++ ";") "" properties
+    Css.String.mapJoin (\(Property prop) -> prop ++ ";") "" properties

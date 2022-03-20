@@ -1162,12 +1162,12 @@ important =
 
 
 makeImportant : Property -> Property
-makeImportant str =
+makeImportant (Property str) =
     if String.endsWith " !important" (String.toLower str) then
-        str
+        Property str
 
     else
-        str ++ " !important"
+        Property (str ++ " !important")
 
 
 {-| A [`ColorValue`](#ColorValue) that does not have `red`, `green`, or `blue`
@@ -7239,6 +7239,7 @@ batch =
 property : String -> String -> Style
 property key value =
     (key ++ ":" ++ value)
+        |> Property
         |> Preprocess.AppendProperty
 
 

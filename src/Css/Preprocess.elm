@@ -176,7 +176,7 @@ toPropertyStrings styles =
         [] ->
             []
 
-        (AppendProperty str) :: rest ->
+        (AppendProperty (Structure.Property str)) :: rest ->
             str :: toPropertyStrings rest
 
         (ApplyStyles otherStyles) :: rest ->

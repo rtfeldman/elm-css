@@ -2,7 +2,7 @@ module Css.Internal exposing (AnimationProperty(..), ColorValue, ExplicitLength,
 
 import Css.Preprocess as Preprocess exposing (Style)
 import Css.String
-import Css.Structure exposing (Compatible(..))
+import Css.Structure as Structure exposing (Compatible(..))
 
 
 type IncompatibleUnits
@@ -106,7 +106,7 @@ Other notes:
 getOverloadedProperty : String -> String -> Style -> Style
 getOverloadedProperty functionName desiredKey style =
     case style of
-        Preprocess.AppendProperty str ->
+        Preprocess.AppendProperty (Structure.Property str) ->
             let
                 key =
                     String.split ":" str
@@ -153,6 +153,7 @@ getOverloadedProperty functionName desiredKey style =
 property : String -> String -> Style
 property key value =
     (key ++ ":" ++ value)
+        |> Structure.Property
         |> Preprocess.AppendProperty
 
 
