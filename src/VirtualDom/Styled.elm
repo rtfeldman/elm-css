@@ -3,6 +3,7 @@ module VirtualDom.Styled exposing
     , Classname
     , CssTemplate
     , Node
+    , Nonce
     , attribute
     , attributeNS
     , getCssTemplate
@@ -24,6 +25,7 @@ module VirtualDom.Styled exposing
     , property
     , style
     , text
+    , toNonceUnstyled
     , toUnstyled
     , unstyledAttribute
     , unstyledNode
@@ -255,16 +257,44 @@ toUnstyled vdom =
             plainNode
 
         Node elemType properties children ->
-            unstyle elemType properties children
+            unstyle Nothing elemType properties children
 
         NodeNS ns elemType properties children ->
-            unstyleNS ns elemType properties children
+            unstyleNS Nothing ns elemType properties children
 
         KeyedNode elemType properties children ->
-            unstyleKeyed elemType properties children
+            unstyleKeyed Nothing elemType properties children
 
         KeyedNodeNS ns elemType properties children ->
-            unstyleKeyedNS ns elemType properties children
+            unstyleKeyedNS Nothing ns elemType properties children
+
+
+type Nonce
+    = Nonce String
+
+
+toNonceUnstyled : String -> Node msg -> VirtualDom.Node msg
+toNonceUnstyled unwrappedNonce vdom =
+    let
+        nonce : Maybe Nonce
+        nonce =
+            Just (Nonce unwrappedNonce)
+    in
+    case vdom of
+        Unstyled plainNode ->
+            plainNode
+
+        Node elemType properties children ->
+            unstyle nonce elemType properties children
+
+        NodeNS ns elemType properties children ->
+            unstyleNS nonce ns elemType properties children
+
+        KeyedNode elemType properties children ->
+            unstyleKeyed nonce elemType properties children
+
+        KeyedNodeNS ns elemType properties children ->
+            unstyleKeyedNS nonce ns elemType properties children
 
 
 getCssTemplate : List Style -> CssTemplate
@@ -296,12 +326,13 @@ makeSnippet styles sequence =
 
 
 unstyleNS :
-    String
+    Maybe Nonce
+    -> String
     -> String
     -> List (Attribute msg)
     -> List (Node msg)
     -> VirtualDom.Node msg
-unstyleNS ns elemType properties children =
+unstyleNS maybeNonce ns elemType properties children =
     let
         initialStyles =
             stylesFromProperties properties
@@ -312,7 +343,7 @@ unstyleNS ns elemType properties children =
                 children
 
         styleNode =
-            toStyleNode styles
+            toStyleNode maybeNonce styles
 
         unstyledProperties =
             List.map (extractUnstyledAttributeNS styles) properties
@@ -324,11 +355,12 @@ unstyleNS ns elemType properties children =
 
 
 unstyle :
-    String
+    Maybe Nonce
+    -> String
     -> List (Attribute msg)
     -> List (Node msg)
     -> VirtualDom.Node msg
-unstyle elemType properties children =
+unstyle maybeNonce elemType properties children =
     let
         initialStyles =
             stylesFromProperties properties
@@ -339,7 +371,7 @@ unstyle elemType properties children =
                 children
 
         styleNode =
-            toStyleNode styles
+            toStyleNode maybeNonce styles
 
         unstyledProperties =
             List.map (extractUnstyledAttribute styles) properties
@@ -351,12 +383,13 @@ unstyle elemType properties children =
 
 
 unstyleKeyedNS :
-    String
+    Maybe Nonce
+    -> String
     -> String
     -> List (Attribute msg)
     -> List ( String, Node msg )
     -> VirtualDom.Node msg
-unstyleKeyedNS ns elemType properties keyedChildren =
+unstyleKeyedNS maybeNonce ns elemType properties keyedChildren =
     let
         initialStyles =
             stylesFromProperties properties
@@ -367,7 +400,7 @@ unstyleKeyedNS ns elemType properties keyedChildren =
                 keyedChildren
 
         keyedStyleNode =
-            toKeyedStyleNode styles keyedChildNodes
+            toKeyedStyleNode maybeNonce styles keyedChildNodes
 
         unstyledProperties =
             List.map (extractUnstyledAttributeNS styles) properties
@@ -380,11 +413,12 @@ unstyleKeyedNS ns elemType properties keyedChildren =
 
 
 unstyleKeyed :
-    String
+    Maybe Nonce
+    -> String
     -> List (Attribute msg)
     -> List ( String, Node msg )
     -> VirtualDom.Node msg
-unstyleKeyed elemType properties keyedChildren =
+unstyleKeyed maybeNonce elemType properties keyedChildren =
     let
         initialStyles =
             stylesFromProperties properties
@@ -395,7 +429,7 @@ unstyleKeyed elemType properties keyedChildren =
                 keyedChildren
 
         keyedStyleNode =
-            toKeyedStyleNode styles keyedChildNodes
+            toKeyedStyleNode maybeNonce styles keyedChildNodes
 
         unstyledProperties =
             List.map (extractUnstyledAttribute styles) properties
@@ -428,22 +462,23 @@ accumulateStyles (Attribute _ isCssStyles cssTemplate) styles =
 
 
 toKeyedStyleNode :
-    Dict CssTemplate Classname
+    Maybe Nonce
+    -> Dict CssTemplate Classname
     -> List ( String, a )
     -> ( String, VirtualDom.Node msg )
-toKeyedStyleNode allStyles keyedChildNodes =
+toKeyedStyleNode maybeNonce allStyles keyedChildNodes =
     let
         styleNodeKey =
             getUnusedKey "_" keyedChildNodes
 
         finalNode =
-            toStyleNode allStyles
+            toStyleNode maybeNonce allStyles
     in
     ( styleNodeKey, finalNode )
 
 
-toStyleNode : Dict CssTemplate Classname -> VirtualDom.Node msg
-toStyleNode styles =
+toStyleNode : Maybe Nonce -> Dict CssTemplate Classname -> VirtualDom.Node msg
+toStyleNode maybeNonce styles =
     -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
     VirtualDom.node "span"
         [ VirtualDom.attribute "style" "display: none;"
@@ -453,7 +488,14 @@ toStyleNode styles =
           toDeclaration styles
             |> VirtualDom.text
             |> List.singleton
-            |> VirtualDom.node "style" []
+            |> VirtualDom.node "style"
+                (case maybeNonce of
+                    Just (Nonce nonce) ->
+                        [ VirtualDom.attribute "nonce" nonce ]
+
+                    Nothing ->
+                        []
+                )
         ]
 
 

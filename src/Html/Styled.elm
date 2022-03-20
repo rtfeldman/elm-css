@@ -1,5 +1,5 @@
 module Html.Styled exposing
-    ( styled, fromUnstyled, toUnstyled
+    ( styled, fromUnstyled, toUnstyled, toNonceUnstyled
     , Html, Attribute, text, node, map
     , h1, h2, h3, h4, h5, h6
     , div, p, hr, pre, blockquote
@@ -20,9 +20,9 @@ module Html.Styled exposing
     )
 
 {-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.
-The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
+The only functions added are `styled`, `toUnstyled`, `toNonceUnstyled` and `fromUnstyled`:
 
-@docs styled, fromUnstyled, toUnstyled
+@docs styled, fromUnstyled, toUnstyled, toNonceUnstyled
 
 This file is organized roughly in order of popularity. The tags which you'd
 expect to use frequently will be closer to the top.
@@ -159,7 +159,7 @@ type alias Attribute msg =
             [ padding (px 30)
             , fontWeight bold
             ]
-    
+
     view : Model -> Html msg
     view model =
         [ text "These two buttons are identical:"
@@ -172,6 +172,7 @@ identical to the normal `button` function, except that it has pre-applied
 the attribute of `css [ padding (px 30), fontWeight bold ]`.
 You can pass more attributes to `bigButton` as usual (including other `css`
 attributes). They will be applied after the pre-applied styles.
+
 -}
 styled :
     (List (Attribute a) -> List (Html b) -> Html msg)
@@ -187,6 +188,17 @@ styled fn styles attrs children =
 toUnstyled : Html msg -> VirtualDom.Node msg
 toUnstyled =
     VirtualDom.Styled.toUnstyled
+
+
+{-| Similar to [`toUnstyled`](#toUnstyled), but adds a [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
+to the style tag so that it is compliant with the Content Security Policy of your website.
+
+If you don't need a nonce, you should use [`toUnstyled`](#toUnstyled).
+
+-}
+toNonceUnstyled : String -> Html msg -> VirtualDom.Node msg
+toNonceUnstyled =
+    VirtualDom.Styled.toNonceUnstyled
 
 
 {-| -}
