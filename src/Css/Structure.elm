@@ -66,7 +66,7 @@ type Declaration
     | MediaRule (List MediaQuery) (List StyleBlock)
     | SupportsRule String (List Declaration)
     | DocumentRule String String String String StyleBlock
-    | PageRule String (List Property)
+    | PageRule (List Property)
     | FontFace (List Property)
     | Keyframes { name : String, declaration : String }
     | Viewport (List Property)
@@ -341,7 +341,7 @@ concatMapLastStyleBlock update declarations =
             update styleBlock
                 |> List.map (DocumentRule str1 str2 str3 str4)
 
-        (PageRule _ _) :: [] ->
+        (PageRule _) :: [] ->
             declarations
 
         (FontFace _) :: [] ->
@@ -480,7 +480,7 @@ compactHelp declaration ( keyframesByName, declarations ) =
         DocumentRule _ _ _ _ _ ->
             ( keyframesByName, declaration :: declarations )
 
-        PageRule _ properties ->
+        PageRule properties ->
             if List.isEmpty properties then
                 ( keyframesByName, declarations )
 
