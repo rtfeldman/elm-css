@@ -223,8 +223,9 @@ applyStyles styles declarations =
                 name =
                     Hash.fromString str
 
+                newProperty : Property
                 newProperty =
-                    "animation-name:" ++ name
+                    Structure.Property ("animation-name:" ++ name)
 
                 newDeclarations =
                     declarations
