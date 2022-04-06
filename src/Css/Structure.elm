@@ -249,7 +249,7 @@ extendLastSelector selector declarations =
             in
             [ DocumentRule str1 str2 str3 str4 newStyleBlock ]
 
-        (PageRule _ _) :: [] ->
+        (PageRule _) :: [] ->
             declarations
 
         (FontFace _) :: [] ->

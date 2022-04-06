@@ -43,7 +43,7 @@ type SnippetDeclaration
     | MediaRule (List MediaQuery) (List StyleBlock)
     | SupportsRule String (List Snippet)
     | DocumentRule String String String String StyleBlock
-    | PageRule String (List Property)
+    | PageRule (List Property)
     | FontFace (List Property)
     | Viewport (List Property)
     | CounterStyle (List Property)
@@ -70,7 +70,7 @@ toMediaRule mediaQueries declaration =
         Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock ->
             Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock
 
-        Structure.PageRule _ _ ->
+        Structure.PageRule _ ->
             declaration
 
         Structure.FontFace _ ->

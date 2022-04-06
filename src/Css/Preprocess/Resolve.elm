@@ -56,7 +56,7 @@ toMediaRule mediaQueries declaration =
         Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock ->
             Structure.DocumentRule str1 str2 str3 str4 structureStyleBlock
 
-        Structure.PageRule _ _ ->
+        Structure.PageRule _ ->
             declaration
 
         Structure.FontFace _ ->
@@ -108,8 +108,8 @@ toDeclarations snippetDeclaration =
         Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
             List.map (toDocumentRule str1 str2 str3 str4) (expandStyleBlock styleBlock)
 
-        Preprocess.PageRule str properties ->
-            [ Structure.PageRule str properties ]
+        Preprocess.PageRule properties ->
+            [ Structure.PageRule properties ]
 
         Preprocess.FontFace properties ->
             [ Structure.FontFace properties ]
@@ -190,8 +190,8 @@ applyStyles styles declarations =
                         Preprocess.DocumentRule str1 str2 str3 str4 styleBlock ->
                             List.map (toDocumentRule str1 str2 str3 str4) (expandStyleBlock styleBlock)
 
-                        Preprocess.PageRule str properties ->
-                            [ Structure.PageRule str properties ]
+                        Preprocess.PageRule properties ->
+                            [ Structure.PageRule properties ]
 
                         Preprocess.FontFace properties ->
                             [ Structure.FontFace properties ]

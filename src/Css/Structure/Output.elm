@@ -76,7 +76,7 @@ prettyPrintDeclaration decl =
         DocumentRule _ _ _ _ _ ->
             "TODO"
 
-        PageRule _ _ ->
+        PageRule _ ->
             "TODO"
 
         FontFace _ ->
