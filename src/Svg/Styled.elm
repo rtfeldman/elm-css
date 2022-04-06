@@ -1,5 +1,5 @@
 module Svg.Styled exposing
-    ( styled, fromUnstyled, toUnstyled
+    ( styled, fromUnstyled, toUnstyled, toNonceUnstyled
     , Svg, Attribute, text, node, map
     , svg, foreignObject
     , circle, ellipse, image, line, path, polygon, polyline, rect, use
@@ -20,9 +20,9 @@ module Svg.Styled exposing
 
 {-| Drop-in replacement for the `Svg` module from the `elm-lang/svg` package.
 
-The only functions added are `styled`, `toUnstyled` and `fromUnstyled`:
+The only functions added are `styled`, `toUnstyled`, `toNonceUnstyled` and `fromUnstyled`:
 
-@docs styled, fromUnstyled, toUnstyled
+@docs styled, fromUnstyled, toUnstyled, toNonceUnstyled
 
 
 # SVG Nodes
@@ -172,6 +172,17 @@ styled fn styles =
 toUnstyled : Svg msg -> VirtualDom.Node msg
 toUnstyled =
     VirtualDom.Styled.toUnstyled
+
+
+{-| Similar to [`toUnstyled`](#toUnstyled), but adds a [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
+to the style tag so that it is compliant with the Content Security Policy of your website.
+
+If you don't need a nonce, you should use [`toUnstyled`](#toUnstyled).
+
+-}
+toNonceUnstyled : String -> Svg msg -> VirtualDom.Node msg
+toNonceUnstyled =
+    VirtualDom.Styled.toNonceUnstyled
 
 
 {-| -}
