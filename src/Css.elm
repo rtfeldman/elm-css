@@ -114,7 +114,7 @@ module Css exposing
     , textTransform
     , capitalize, uppercase, lowercase, fullSizeKana
     , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
-    , textDecorationSkip, objects, spaces, ink, edges, boxDecoration
+    , textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
     , textStroke, textStroke2, textStrokeColor, textStrokeWidth
     , textIndent, textIndent2, textIndent3, hanging, eachLine
@@ -629,7 +629,7 @@ Other values you can use for flex item alignment:
 # Text Decoration
 
 @docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
-@docs textDecorationSkip, objects, spaces, ink, edges, boxDecoration
+@docs textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
 
 @docs wavy, underline, overline, lineThrough
 
@@ -10728,7 +10728,7 @@ textDecorationColor (Value colorVal) =
     AppendProperty ("text-decoration-color:" ++ colorVal)
 
 
-{-| Sets [`text-decoration-skip`][https://css-tricks.com/almanac/properties/t/text-decoration-skip/] property.
+{-| Sets [`text-decoration-skip`](https://css-tricks.com/almanac/properties/t/text-decoration-skip/) property.
 
     textDecorationSkip objects
 
@@ -10741,6 +10741,9 @@ textDecorationColor (Value colorVal) =
     textDecorationSkip edges
 
     textDecorationSkip boxDecoration
+
+Note: Using [`textDecorationSkipInk`](#textDecorationSkipInk) is considerered better practice
+instead of `textDecorationSkip ink`.
 
 -}
 textDecorationSkip :
@@ -10755,6 +10758,26 @@ textDecorationSkip :
     -> Style
 textDecorationSkip (Value val) =
     AppendProperty ("text-decoration-skip:" ++ val)
+
+
+{-| Sets [`text-decoration-skip-ink`](https://css-tricks.com/almanac/properties/t/text-decoration-skip-ink/) property.
+
+    textDecorationSkipInk auto
+
+    textDecorationSkipInk all
+
+    textDecorationSkipInk none
+
+-}
+textDecorationSkipInk :
+    Value
+        { auto : Supported
+        , all : Supported
+        , none : Supported
+        }
+    -> Style
+textDecorationSkipInk (Value val) =
+    AppendProperty ("text-decoration-skip-ink:" ++ val)
 
 
 {-| Sets `objects` value for usage with [`textDecorationSkip`](#textDecorationSkip).
