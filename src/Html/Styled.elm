@@ -164,7 +164,7 @@ type alias Attribute msg =
     view model =
         [ text "These two buttons are identical:"
         , bigButton [] [ text "Hi!" ]
-        , button [ css [ padding (px 30), fontWeight bold ] ] [] [ text "Hi!" ]
+        , button [ css [ padding (px 30), fontWeight bold ] ] [ text "Hi!" ]
         ]
 
 Here, the `bigButton` function we've defined using `styled button` is
