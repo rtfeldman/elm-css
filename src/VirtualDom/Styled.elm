@@ -335,7 +335,7 @@ unstyleNS :
 unstyleNS maybeNonce ns elemType properties children =
     let
         initialStyles =
-            stylesFromProperties properties
+            List.foldl accumulateStyles Dict.empty properties
 
         ( childNodes, styles ) =
             List.foldl accumulateStyledHtml
@@ -363,7 +363,7 @@ unstyle :
 unstyle maybeNonce elemType properties children =
     let
         initialStyles =
-            stylesFromProperties properties
+            List.foldl accumulateStyles Dict.empty properties
 
         ( childNodes, styles ) =
             List.foldl accumulateStyledHtml
@@ -392,7 +392,7 @@ unstyleKeyedNS :
 unstyleKeyedNS maybeNonce ns elemType properties keyedChildren =
     let
         initialStyles =
-            stylesFromProperties properties
+            List.foldl accumulateStyles Dict.empty properties
 
         ( keyedChildNodes, styles ) =
             List.foldl accumulateKeyedStyledHtml
@@ -421,7 +421,7 @@ unstyleKeyed :
 unstyleKeyed maybeNonce elemType properties keyedChildren =
     let
         initialStyles =
-            stylesFromProperties properties
+            List.foldl accumulateStyles Dict.empty properties
 
         ( keyedChildNodes, styles ) =
             List.foldl accumulateKeyedStyledHtml
@@ -501,32 +501,6 @@ toStyleNode maybeNonce styles =
 
 
 -- INTERNAL --
-
-
-stylesFromProperties : List (Attribute msg) -> Dict CssTemplate Classname
-stylesFromProperties properties =
-    case stylesFromPropertiesHelp Nothing properties of
-        Nothing ->
-            Dict.empty
-
-        Just cssTemplate ->
-            Dict.singleton cssTemplate (Hash.fromString cssTemplate)
-
-
-stylesFromPropertiesHelp :
-    Maybe CssTemplate
-    -> List (Attribute msg)
-    -> Maybe CssTemplate
-stylesFromPropertiesHelp candidate properties =
-    case properties of
-        [] ->
-            candidate
-
-        (Attribute _ False classname) :: rest ->
-            stylesFromPropertiesHelp candidate rest
-
-        (Attribute _ True cssTemplate) :: rest ->
-            stylesFromPropertiesHelp (Just cssTemplate) rest
 
 
 extractUnstyledAttribute : Dict CssTemplate Classname -> Attribute msg -> VirtualDom.Attribute msg
