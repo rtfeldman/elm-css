@@ -1565,7 +1565,7 @@ initial =
     }
 
 
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb)
 in functional notation.
 -}
 rgb : Int -> Int -> Int -> Color
@@ -1579,7 +1579,7 @@ rgb r g b =
     }
 
 
-{-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba()).
+{-| [RGBA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgba).
 -}
 rgba : Int -> Int -> Int -> Float -> Color
 rgba r g b alpha =
@@ -1592,7 +1592,7 @@ rgba r g b alpha =
     }
 
 
-{-| [HSL color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl())
+{-| [HSL color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl)
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
@@ -1611,7 +1611,7 @@ hsl hueVal saturationVal lightnessVal =
     hslaToRgba value hueVal saturationVal lightnessVal 1
 
 
-{-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla())
+{-| [HSLA color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsla)
 `s` and `l` values are expressed as a number between 0 and 1 and are converted
 to the appropriate percentage at compile-time
 -}
@@ -1631,7 +1631,7 @@ hsla hueVal saturationVal lightnessVal alpha =
     hslaToRgba value hueVal saturationVal lightnessVal alpha
 
 
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb)
 in hexadecimal notation. You can optionally include `#` as the first character,
 for benefits like syntax highlighting in editors, ease of copy/pasting from
 tools which express these as e.g. `#abcdef0`, etc.
