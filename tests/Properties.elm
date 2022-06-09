@@ -210,6 +210,7 @@ all =
             , ( lineHeight inherit, "inherit" )
             , ( lineHeight initial, "initial" )
             , ( lineHeight unset, "unset" )
+            , ( lineHeight normal, "normal" )
             ]
         , testProperty { function = "overflowX", property = "overflow-x" }
             [ ( overflowX initial, "initial" )

@@ -624,6 +624,11 @@ type alias FontVariantNumeric compatible =
     }
 
 
+{-| -}
+type alias LineHeight compatible =
+    { compatible | value : String, lineHeight : Compatible }
+
+
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/visibility#Values>
 -}
 type alias Visibility compatible =
@@ -848,6 +853,7 @@ type alias CalculatedLength =
     , lengthOrNone : Compatible
     , lengthOrMinMaxDimension : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
+    , lineHeight : Compatible
     , textIndent : Compatible
     , flexBasis : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
@@ -935,6 +941,7 @@ calc firstExpr expression secondExpr =
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
     , fontSize = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
+    , lineHeight = Compatible
     , calc = Compatible
     }
 
@@ -1462,6 +1469,7 @@ type alias BasicProperty =
     , lengthOrMinMaxDimension : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
     , lengthOrNumberOrAutoOrNoneOrContent : Compatible
+    , lineHeight : Compatible
     , listStyleType : Compatible
     , listStylePosition : Compatible
     , listStyleTypeOrPositionOrImage : Compatible
@@ -1534,6 +1542,7 @@ initial =
     , lengthOrMinMaxDimension = Compatible
     , lengthOrNoneOrMinMaxDimension = Compatible
     , listStyleType = Compatible
+    , lineHeight = Compatible
     , listStylePosition = Compatible
     , listStyleTypeOrPositionOrImage = Compatible
     , flexBasis = Compatible
@@ -2467,13 +2476,14 @@ infinite =
 {-| A unitless number. Useful with properties like [`flexGrow`](#flexGrow)
 which accept unitless numbers.
 -}
-num : Float -> LengthOrNumberOrAutoOrNoneOrContent (Number (LengthOrNumber (NumberOrInfinite { numericValue : Float, unitLabel : String, units : UnitlessFloat })))
+num : Float -> LengthOrNumberOrAutoOrNoneOrContent (Number (LengthOrNumber (NumberOrInfinite (LineHeight { numericValue : Float, unitLabel : String, units : UnitlessFloat }))))
 num val =
     { value = String.fromFloat val
     , lengthOrNumber = Compatible
     , number = Compatible
     , numberOrInfinite = Compatible
     , lengthOrNumberOrAutoOrNoneOrContent = Compatible
+    , lineHeight = Compatible
     , numericValue = val
     , unitLabel = ""
     , units = UnitlessFloat
@@ -5202,23 +5212,26 @@ larger =
 -- Styles --
 
 
-type alias Normal =
-    { value : String
-    , fontStyle : Compatible
-    , fontWeight : Compatible
-    , featureTagValue : Compatible
-    , overflowWrap : Compatible
-    , whiteSpace : Compatible
+type alias Normal compatible =
+    { compatible
+        | value : String
+        , fontStyle : Compatible
+        , fontWeight : Compatible
+        , featureTagValue : Compatible
+        , lineHeight : Compatible
+        , overflowWrap : Compatible
+        , whiteSpace : Compatible
     }
 
 
 {-| -}
-normal : Normal
+normal : Normal {}
 normal =
     { value = "normal"
     , fontStyle = Compatible
     , fontWeight = Compatible
     , featureTagValue = Compatible
+    , lineHeight = Compatible
     , overflowWrap = Compatible
     , whiteSpace = Compatible
     }
@@ -6608,7 +6621,7 @@ color c =
     lineHeight (px 10)
 
 -}
-lineHeight : LengthOrNumber compatible -> Style
+lineHeight : LineHeight compatible -> Style
 lineHeight =
     prop1 "line-height"
 
