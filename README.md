@@ -8,6 +8,7 @@ Here's an example of how to define some `elm-css` styles:
 ```elm
 module MyCss exposing (main)
 
+import Browser
 import Css exposing (..)
 import Html
 import Html.Styled exposing (..)
@@ -91,12 +92,12 @@ view model =
         ]
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.beginnerProgram
-        { view = view >> toUnstyled
+    Browser.sandbox
+        { init = initialModel
+        , view = view >> toUnstyled
         , update = update
-        , model = initialModel
         }
 ```
 
