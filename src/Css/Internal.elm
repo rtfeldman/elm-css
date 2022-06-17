@@ -38,6 +38,7 @@ type alias ExplicitLength units =
     , lengthOrNone : Compatible
     , lengthOrMinMaxDimension : Compatible
     , lengthOrNoneOrMinMaxDimension : Compatible
+    , lineHeight : Compatible
     , textIndent : Compatible
     , flexBasis : Compatible
     , absoluteLength : Compatible
@@ -180,5 +181,6 @@ lengthConverter units unitLabel numericValue =
     , fontSize = Compatible
     , absoluteLength = Compatible
     , lengthOrAutoOrCoverOrContain = Compatible
+    , lineHeight = Compatible
     , calc = Compatible
     }
