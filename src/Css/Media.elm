@@ -944,20 +944,30 @@ scripting value =
 
 
 {-| -}
-type alias ReducedMotionPreference =
+type alias ReducedMotionPreference a =
+    { a | value : String, reducedMotionPreference : Compatible }
+
+
+{-| -}
+type alias Reduce =
+    { value : String, reducedMotionPreference : Compatible }
+
+
+{-| -}
+type alias NoPreference =
     { value : String, reducedMotionPreference : Compatible }
 
 
 {-| The value [`reduce`](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion).
 -}
-reduce : ReducedMotionPreference
+reduce : Reduce
 reduce =
     { value = "reduce", reducedMotionPreference = Compatible }
 
 
 {-| The value [`no-preference`](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion).
 -}
-noPreference : ReducedMotionPreference
+noPreference : NoPreference
 noPreference =
     { value = "no-preference", reducedMotionPreference = Compatible }
 
@@ -969,7 +979,7 @@ Accepts `reduce` or `noPreference`.
     media (Media.hover canHover) [ a [ Css.hover [ textDecoration underline ] ] ]
 
 -}
-prefersReducedMotion : ReducedMotionPreference -> Expression
+prefersReducedMotion : ReducedMotionPreference a -> Expression
 prefersReducedMotion value =
     feature "prefers-reduced-motion" value
 
