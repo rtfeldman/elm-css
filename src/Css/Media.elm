@@ -976,7 +976,7 @@ noPreference =
 Queries the if the user agent's has a preference for less motion on the page.
 Accepts `reduce` or `noPreference`.
 
-    media (Media.hover canHover) [ a [ Css.hover [ textDecoration underline ] ] ]
+    media (prefersReducedMotion reduce) [ a [ hover [ transform none ] ] ]
 
 -}
 prefersReducedMotion : ReducedMotionPreference a -> Expression
