@@ -479,23 +479,27 @@ toKeyedStyleNode maybeNonce allStyles keyedChildNodes =
 
 toStyleNode : Maybe Nonce -> Dict CssTemplate Classname -> VirtualDom.Node msg
 toStyleNode maybeNonce styles =
+    let
+        nonceAttribute =
+            case maybeNonce of
+                Just (Nonce nonce) ->
+                    [ VirtualDom.attribute "nonce" nonce ]
+
+                Nothing ->
+                    []
+    in
     -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
     VirtualDom.node "span"
-        [ VirtualDom.attribute "style" "display: none;"
-        , VirtualDom.attribute "class" "elm-css-style-wrapper"
-        ]
+        ([ VirtualDom.attribute "style" "display: none;"
+         , VirtualDom.attribute "class" "elm-css-style-wrapper"
+         ]
+            ++ nonceAttribute
+        )
         [ -- this <style> node will be the first child of the requested one
           toDeclaration styles
             |> VirtualDom.text
             |> List.singleton
-            |> VirtualDom.node "style"
-                (case maybeNonce of
-                    Just (Nonce nonce) ->
-                        [ VirtualDom.attribute "nonce" nonce ]
-
-                    Nothing ->
-                        []
-                )
+            |> VirtualDom.node "style" nonceAttribute
         ]
 
 
