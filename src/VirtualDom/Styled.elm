@@ -480,13 +480,18 @@ toKeyedStyleNode maybeNonce allStyles keyedChildNodes =
 
 toStyleNode : Maybe Nonce -> Dict CssTemplate Classname -> VirtualDom.Node msg
 toStyleNode maybeNonce styles =
-    -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
+    let
+        styleWrapperClass =
+            "elm-css-style-wrapper"
+    in
+    -- wrap the style node in a span to prevent `Dark Reader` from blowin up the dom.
     VirtualDom.node "span"
-        [ VirtualDom.attribute "class" "elm-css-style-wrapper" ]
+        [ VirtualDom.attribute "class" styleWrapperClass ]
         [ -- this <style> node will be the first child of the requested one
           styles
-            |> Dict.insert (getCssTemplate [ Css.display Css.none ]) "elm-css-style-wrapper"
             |> toDeclaration
+            -- add css to hide the wrapper span
+            |> styleToDeclaration (getCssTemplate [ Css.display Css.none ]) styleWrapperClass
             |> VirtualDom.text
             |> List.singleton
             |> VirtualDom.node "style"
