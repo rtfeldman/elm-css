@@ -31,6 +31,7 @@ module VirtualDom.Styled exposing
     , unstyledNode
     )
 
+import Css
 import Css.Preprocess as Preprocess exposing (Style)
 import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
@@ -479,27 +480,23 @@ toKeyedStyleNode maybeNonce allStyles keyedChildNodes =
 
 toStyleNode : Maybe Nonce -> Dict CssTemplate Classname -> VirtualDom.Node msg
 toStyleNode maybeNonce styles =
-    let
-        nonceAttribute =
-            case maybeNonce of
-                Just (Nonce nonce) ->
-                    [ VirtualDom.attribute "nonce" nonce ]
-
-                Nothing ->
-                    []
-    in
     -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
     VirtualDom.node "span"
-        ([ VirtualDom.attribute "style" "display: none;"
-         , VirtualDom.attribute "class" "elm-css-style-wrapper"
-         ]
-            ++ nonceAttribute
-        )
+        [ VirtualDom.attribute "class" "elm-css-style-wrapper" ]
         [ -- this <style> node will be the first child of the requested one
-          toDeclaration styles
+          styles
+            |> Dict.insert (getCssTemplate [ Css.display Css.none ]) "elm-css-style-wrapper"
+            |> toDeclaration
             |> VirtualDom.text
             |> List.singleton
-            |> VirtualDom.node "style" nonceAttribute
+            |> VirtualDom.node "style"
+                (case maybeNonce of
+                    Just (Nonce nonce) ->
+                        [ VirtualDom.attribute "nonce" nonce ]
+
+                    Nothing ->
+                        []
+                )
         ]
 
 
