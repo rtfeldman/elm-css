@@ -1,6 +1,6 @@
 module Tests exposing (atRule, attributeCombinator, backgrounds, borders, bug140, bug280, bug335, bug99, divWidthHeight, fonts, greenOnHoverStyle, importantOnBatch, keyValue, leftRightTopBottom, multiDescendent, multiSelector, nestedAtRule, nestedEach, pseudoClasses, pseudoElements, simpleEach, transformsStyle, underlineOnHoverManual, underlineOnHoverStyle, universal, unstyledDiv)
 
-import Expect exposing (Expectation)
+import Expect
 import Fixtures
 import Test exposing (..)
 import TestUtil exposing (outdented, prettyPrint)

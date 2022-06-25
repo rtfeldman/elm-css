@@ -92,7 +92,6 @@ The only functions added are `styled`, `toUnstyled`, `toNonceUnstyled` and `from
 
 import Css exposing (Style)
 import Html.Styled as Html
-import Json.Encode as Json
 import Svg.Styled.Internal as Internal
 import VirtualDom
 import VirtualDom.Styled

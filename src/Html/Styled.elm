@@ -17,6 +17,7 @@ module Html.Styled exposing
     , small, cite, dfn, abbr, time, var, samp, kbd, s, q
     , mark, ruby, rt, rp, bdi, bdo, wbr
     , details, summary, menuitem, menu
+    , keygen
     )
 
 {-| Drop-in replacement for the `Html` module from the `elm-lang/html` package.

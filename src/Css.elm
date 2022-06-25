@@ -68,6 +68,7 @@ module Css exposing
     , animationIterationCount
     , FontSize, ColorValue, ColorStop, IntOrAuto
     , thin, thick, blink
+    , borderInlineEndColor, borderInlineStartColor, borderTopWidth2, mixed, sideways, textDecorationColor, upperGreek, upright
     )
 
 {-| Define CSS styles in Elm.
@@ -481,7 +482,7 @@ deprecated or discouraged.
 
 import Css.Animations exposing (Keyframes)
 import Css.Internal exposing (getOverloadedProperty, lengthConverter, lengthForOverloadedProperty)
-import Css.Preprocess as Preprocess exposing (Style, unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Style)
 import Css.String
 import Css.Structure as Structure exposing (..)
 import Hex
@@ -896,6 +897,7 @@ type alias TableLayout compatible =
     almostPct100 =
         calc (pct 100) minus (px 2)
 
+
     -- calc(100vh - (2px + 2rem))
     screenMinusBorderAndFooter =
         calc (vh 100) minus (calc (px 2) plus (rem 2))
@@ -966,22 +968,6 @@ plus =
 minus : CalcExpression
 minus =
     Subtraction
-
-
-combineLengths :
-    (Float -> Float -> Float)
-    -> { r | numericValue : Float, unitLabel : String, value : String }
-    -> { r | numericValue : Float, unitLabel : String, value : String }
-    -> { r | numericValue : Float, unitLabel : String, value : String }
-combineLengths operation firstLength secondLength =
-    let
-        numericValue =
-            operation firstLength.numericValue secondLength.numericValue
-
-        value =
-            String.fromFloat numericValue ++ firstLength.unitLabel
-    in
-    { firstLength | value = value, numericValue = numericValue }
 
 
 {-| <https://developer.mozilla.org/en-US/docs/Web/CSS/length>
@@ -7663,11 +7649,6 @@ from elm-css.
 blink : IntentionallyUnsupportedPleaseSeeDocs
 blink =
     IntentionallyUnsupportedPleaseSeeDocs
-
-
-stringToInt : String -> Int
-stringToInt str =
-    Maybe.withDefault 0 <| String.toInt str
 
 
 numericalPercentageToString : Float -> String

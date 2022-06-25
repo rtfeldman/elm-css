@@ -2,10 +2,10 @@ module Keyframes exposing (assertEmptyKeyframesForProperty, suite, testEmptyKeyf
 
 import Css exposing (..)
 import Css.Animations as Anim exposing (Keyframes, keyframes)
-import Css.Global exposing (Snippet, a, body, button, class, i, li, media, mediaQuery, p, ul)
+import Css.Global exposing (body, button, i, p)
 import Css.Preprocess exposing (stylesheet)
 import Expect
-import Test exposing (Test, describe, test, todo)
+import Test exposing (Test, describe, test)
 import TestUtil exposing (outdented, prettyPrint)
 
 
