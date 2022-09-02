@@ -84,7 +84,17 @@ lazy7 =
     VirtualDom.Styled.lazy7
 
 
-{-| -}
+{-| Much like `lazy`, but allows specifying a key for the created `Html` node. This can increase performance in cases when you want to lazily generate a list of nodes.
+
+This key becomes the id of the root node and all css that is generated will be scoped to that id. This allows the browser to spend less time calculating styles as there won't be lots styles with the same class name.
+
+Some notes about using this function:
+
+  - The key must be a valid HTML id
+  - The key should be unique among other ids on the page and unique among the keys for other siblings
+  - No other id attribute should be specified on the root node - it will be ignored
+
+-}
 keyedLazy : (a -> ( String, Html msg )) -> a -> Html msg
 keyedLazy =
     VirtualDom.Styled.keyedLazy
