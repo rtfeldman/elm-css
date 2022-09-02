@@ -981,10 +981,6 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
             ( ( key, vdom ) :: pairs, finalStyles )
 
 
-
--- We want this to be slightly different for the root node?
-
-
 toDeclaration : Dict CssTemplate Classname -> String
 toDeclaration dict =
     Dict.foldl styleToDeclaration "" dict
