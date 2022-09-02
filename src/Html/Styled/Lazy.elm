@@ -1,4 +1,7 @@
-module Html.Styled.Lazy exposing (lazy, lazy2, lazy3, lazy4, lazy5, lazy6, lazy7)
+module Html.Styled.Lazy exposing
+    ( lazy, lazy2, lazy3, lazy4, lazy5, lazy6, lazy7
+    , keyedLazy, keyedLazy2, keyedLazy3, keyedLazy4, keyedLazy5, keyedLazy6, keyedLazy7
+    )
 
 {-| **NOTE:** `Html.Lazy` goes up to `lazy8`, but `Html.Styled.Lazy` can only go
 up to `lazy7` because it uses one of the arguments to track styling info.
@@ -17,6 +20,7 @@ This is a really cheap test and often makes things a lot faster, but definitely
 benchmark to be sure!
 
 @docs lazy, lazy2, lazy3, lazy4, lazy5, lazy6, lazy7
+@docs keyedLazy, keyedLazy2, keyedLazy3, keyedLazy4, keyedLazy5, keyedLazy6, keyedLazy7
 
 -}
 
@@ -78,3 +82,51 @@ lazy6 =
 lazy7 : (a -> b -> c -> d -> e -> f -> g -> Html msg) -> a -> b -> c -> d -> e -> f -> g -> Html msg
 lazy7 =
     VirtualDom.Styled.lazy7
+
+
+{-| -}
+keyedLazy : (a -> ( String, Html msg )) -> a -> Html msg
+keyedLazy =
+    VirtualDom.Styled.keyedLazy
+
+
+{-| Same as `keyedLazy` but checks on two arguments.
+-}
+keyedLazy2 : (a -> b -> ( String, Html msg )) -> a -> b -> Html msg
+keyedLazy2 =
+    VirtualDom.Styled.keyedLazy2
+
+
+{-| Same as `keyedLazy` but checks on three arguments.
+-}
+keyedLazy3 : (a -> b -> c -> ( String, Html msg )) -> a -> b -> c -> Html msg
+keyedLazy3 =
+    VirtualDom.Styled.keyedLazy3
+
+
+{-| Same as `keyedLazy` but checks on four arguments.
+-}
+keyedLazy4 : (a -> b -> c -> d -> ( String, Html msg )) -> a -> b -> c -> d -> Html msg
+keyedLazy4 =
+    VirtualDom.Styled.keyedLazy4
+
+
+{-| Same as `keyedLazy` but checks on five arguments.
+-}
+keyedLazy5 : (a -> b -> c -> d -> e -> ( String, Html msg )) -> a -> b -> c -> d -> e -> Html msg
+keyedLazy5 =
+    VirtualDom.Styled.keyedLazy5
+
+
+{-| Same as `keyedLazy` but checks on six arguments.
+-}
+keyedLazy6 : (a -> b -> c -> d -> e -> f -> ( String, Html msg )) -> a -> b -> c -> d -> e -> f -> Html msg
+keyedLazy6 =
+    VirtualDom.Styled.keyedLazy6
+
+
+{-| Same as `keyedLazy` but checks on seven arguments.
+-}
+keyedLazy7 : (a -> b -> c -> d -> e -> f -> g -> ( String, Html msg )) -> a -> b -> c -> d -> e -> f -> g -> Html msg
+keyedLazy7 =
+    VirtualDom.Styled.keyedLazy7

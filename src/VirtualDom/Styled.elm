@@ -7,6 +7,13 @@ module VirtualDom.Styled exposing
     , attribute
     , attributeNS
     , getCssTemplate
+    , keyedLazy
+    , keyedLazy2
+    , keyedLazy3
+    , keyedLazy4
+    , keyedLazy5
+    , keyedLazy6
+    , keyedLazy7
     , keyedNode
     , keyedNodeNS
     , lazy
@@ -250,6 +257,132 @@ lazyHelp7 fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 =
         |> toUnstyled
 
 
+type Scope
+    = Scope String
+
+
+encodeScope : Scope -> Json.Encode.Value
+encodeScope (Scope scope) =
+    Json.Encode.string scope
+
+
+uncurry : (a -> b -> c) -> ( a, b ) -> c
+uncurry f ( a, b ) =
+    f a b
+
+
+keyedLazy : (a -> ( String, Node msg )) -> a -> Node msg
+keyedLazy fn arg =
+    keyedLazyHelp fn arg
+        |> Unstyled
+
+
+keyedLazyHelp : (a -> ( String, Node msg )) -> a -> VirtualDom.Node msg
+keyedLazyHelp =
+    VirtualDom.lazy2
+        (\fn arg ->
+            fn arg
+                |> Tuple.mapFirst Scope
+                |> uncurry toScopedUnstyled
+        )
+
+
+keyedLazy2 : (a -> b -> ( String, Node msg )) -> a -> b -> Node msg
+keyedLazy2 fn arg1 arg2 =
+    keyedLazy2Help fn arg1 arg2
+        |> Unstyled
+
+
+keyedLazy2Help : (a -> b -> ( String, Node msg )) -> a -> b -> VirtualDom.Node msg
+keyedLazy2Help =
+    VirtualDom.lazy3
+        (\fn arg1 arg2 ->
+            fn arg1 arg2
+                |> Tuple.mapFirst Scope
+                |> uncurry toScopedUnstyled
+        )
+
+
+keyedLazy3 : (a -> b -> c -> ( String, Node msg )) -> a -> b -> c -> Node msg
+keyedLazy3 fn arg1 arg2 arg3 =
+    keyedLazy3Help fn arg1 arg2 arg3
+        |> Unstyled
+
+
+keyedLazy3Help : (a -> b -> c -> ( String, Node msg )) -> a -> b -> c -> VirtualDom.Node msg
+keyedLazy3Help =
+    VirtualDom.lazy4
+        (\fn arg1 arg2 arg3 ->
+            fn arg1 arg2 arg3
+                |> Tuple.mapFirst Scope
+                |> uncurry toScopedUnstyled
+        )
+
+
+keyedLazy4 : (a -> b -> c -> d -> ( String, Node msg )) -> a -> b -> c -> d -> Node msg
+keyedLazy4 fn arg1 arg2 arg3 arg4 =
+    keyedLazy4Help fn arg1 arg2 arg3 arg4
+        |> Unstyled
+
+
+keyedLazy4Help : (a -> b -> c -> d -> ( String, Node msg )) -> a -> b -> c -> d -> VirtualDom.Node msg
+keyedLazy4Help =
+    VirtualDom.lazy5
+        (\fn arg1 arg2 arg3 arg4 ->
+            fn arg1 arg2 arg3 arg4
+                |> Tuple.mapFirst Scope
+                |> uncurry toScopedUnstyled
+        )
+
+
+keyedLazy5 : (a -> b -> c -> d -> e -> ( String, Node msg )) -> a -> b -> c -> d -> e -> Node msg
+keyedLazy5 fn arg1 arg2 arg3 arg4 arg5 =
+    keyedLazy5Help fn arg1 arg2 arg3 arg4 arg5
+        |> Unstyled
+
+
+keyedLazy5Help : (a -> b -> c -> d -> e -> ( String, Node msg )) -> a -> b -> c -> d -> e -> VirtualDom.Node msg
+keyedLazy5Help =
+    VirtualDom.lazy6
+        (\fn arg1 arg2 arg3 arg4 arg5 ->
+            fn arg1 arg2 arg3 arg4 arg5
+                |> Tuple.mapFirst Scope
+                |> uncurry toScopedUnstyled
+        )
+
+
+keyedLazy6 : (a -> b -> c -> d -> e -> f -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> Node msg
+keyedLazy6 fn arg1 arg2 arg3 arg4 arg5 arg6 =
+    keyedLazy6Help fn arg1 arg2 arg3 arg4 arg5 arg6
+        |> Unstyled
+
+
+keyedLazy6Help : (a -> b -> c -> d -> e -> f -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> VirtualDom.Node msg
+keyedLazy6Help =
+    VirtualDom.lazy7
+        (\fn arg1 arg2 arg3 arg4 arg5 arg6 ->
+            fn arg1 arg2 arg3 arg4 arg5 arg6
+                |> Tuple.mapFirst Scope
+                |> uncurry toScopedUnstyled
+        )
+
+
+keyedLazy7 : (a -> b -> c -> d -> e -> f -> g -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> g -> Node msg
+keyedLazy7 fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 =
+    keyedLazy7Help fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
+        |> Unstyled
+
+
+keyedLazy7Help : (a -> b -> c -> d -> e -> f -> g -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> g -> VirtualDom.Node msg
+keyedLazy7Help =
+    VirtualDom.lazy8
+        (\fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 ->
+            fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
+                |> Tuple.mapFirst Scope
+                |> uncurry toScopedUnstyled
+        )
+
+
 toUnstyled : Node msg -> VirtualDom.Node msg
 toUnstyled vdom =
     case vdom of
@@ -267,6 +400,25 @@ toUnstyled vdom =
 
         KeyedNodeNS ns elemType properties children ->
             unstyleKeyedNS Nothing ns elemType properties children
+
+
+toScopedUnstyled : Scope -> Node msg -> VirtualDom.Node msg
+toScopedUnstyled scope vdom =
+    case vdom of
+        Unstyled plainNode ->
+            plainNode
+
+        Node elemType properties children ->
+            unstyleScoped Nothing scope elemType properties children
+
+        NodeNS ns elemType properties children ->
+            unstyleScopedNS Nothing scope ns elemType properties children
+
+        KeyedNode elemType properties children ->
+            unstyleScopedKeyed Nothing scope elemType properties children
+
+        KeyedNodeNS ns elemType properties children ->
+            unstyleScopedKeyedNS Nothing scope ns elemType properties children
 
 
 type Nonce
@@ -343,7 +495,7 @@ unstyleNS maybeNonce ns elemType properties children =
                 children
 
         styleNode =
-            toStyleNode maybeNonce styles
+            toStyleNode maybeNonce (UnscopedStyles styles)
 
         unstyledProperties =
             List.map (extractUnstyledAttributeNS styles) properties
@@ -351,6 +503,36 @@ unstyleNS maybeNonce ns elemType properties children =
     VirtualDom.nodeNS ns
         elemType
         unstyledProperties
+        (styleNode :: List.reverse childNodes)
+
+
+unstyleScopedNS :
+    Maybe Nonce
+    -> Scope
+    -> String
+    -> String
+    -> List (Attribute msg)
+    -> List (Node msg)
+    -> VirtualDom.Node msg
+unstyleScopedNS maybeNonce scope ns elemType properties children =
+    let
+        rootStyles =
+            List.foldl accumulateStyles Dict.empty properties
+
+        ( childNodes, descendantStyles ) =
+            List.foldl accumulateStyledHtml
+                ( [], Dict.empty )
+                children
+
+        styleNode =
+            toStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles)
+
+        unstyledProperties =
+            List.map (extractUnstyledAttributeNS rootStyles) properties
+    in
+    VirtualDom.nodeNS ns
+        elemType
+        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
         (styleNode :: List.reverse childNodes)
 
 
@@ -371,7 +553,7 @@ unstyle maybeNonce elemType properties children =
                 children
 
         styleNode =
-            toStyleNode maybeNonce styles
+            toStyleNode maybeNonce (UnscopedStyles styles)
 
         unstyledProperties =
             List.map (extractUnstyledAttribute styles) properties
@@ -379,6 +561,35 @@ unstyle maybeNonce elemType properties children =
     VirtualDom.node
         elemType
         unstyledProperties
+        (styleNode :: List.reverse childNodes)
+
+
+unstyleScoped :
+    Maybe Nonce
+    -> Scope
+    -> String
+    -> List (Attribute msg)
+    -> List (Node msg)
+    -> VirtualDom.Node msg
+unstyleScoped maybeNonce scope elemType properties children =
+    let
+        rootStyles =
+            List.foldl accumulateStyles Dict.empty properties
+
+        ( childNodes, descendantStyles ) =
+            List.foldl accumulateStyledHtml
+                ( [], Dict.empty )
+                children
+
+        styleNode =
+            toStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles)
+
+        unstyledProperties =
+            List.map (extractUnstyledAttribute rootStyles) properties
+    in
+    VirtualDom.node
+        elemType
+        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
         (styleNode :: List.reverse childNodes)
 
 
@@ -400,7 +611,7 @@ unstyleKeyedNS maybeNonce ns elemType properties keyedChildren =
                 keyedChildren
 
         keyedStyleNode =
-            toKeyedStyleNode maybeNonce styles keyedChildNodes
+            toKeyedStyleNode maybeNonce (UnscopedStyles styles) keyedChildNodes
 
         unstyledProperties =
             List.map (extractUnstyledAttributeNS styles) properties
@@ -409,6 +620,37 @@ unstyleKeyedNS maybeNonce ns elemType properties keyedChildren =
         ns
         elemType
         unstyledProperties
+        (keyedStyleNode :: List.reverse keyedChildNodes)
+
+
+unstyleScopedKeyedNS :
+    Maybe Nonce
+    -> Scope
+    -> String
+    -> String
+    -> List (Attribute msg)
+    -> List ( String, Node msg )
+    -> VirtualDom.Node msg
+unstyleScopedKeyedNS maybeNonce scope ns elemType properties keyedChildren =
+    let
+        rootStyles =
+            List.foldl accumulateStyles Dict.empty properties
+
+        ( keyedChildNodes, descendantStyles ) =
+            List.foldl accumulateKeyedStyledHtml
+                ( [], Dict.empty )
+                keyedChildren
+
+        keyedStyleNode =
+            toKeyedStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles) keyedChildNodes
+
+        unstyledProperties =
+            List.map (extractUnstyledAttributeNS rootStyles) properties
+    in
+    VirtualDom.keyedNodeNS
+        ns
+        elemType
+        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
         (keyedStyleNode :: List.reverse keyedChildNodes)
 
 
@@ -429,7 +671,7 @@ unstyleKeyed maybeNonce elemType properties keyedChildren =
                 keyedChildren
 
         keyedStyleNode =
-            toKeyedStyleNode maybeNonce styles keyedChildNodes
+            toKeyedStyleNode maybeNonce (UnscopedStyles styles) keyedChildNodes
 
         unstyledProperties =
             List.map (extractUnstyledAttribute styles) properties
@@ -437,6 +679,35 @@ unstyleKeyed maybeNonce elemType properties keyedChildren =
     VirtualDom.keyedNode
         elemType
         unstyledProperties
+        (keyedStyleNode :: List.reverse keyedChildNodes)
+
+
+unstyleScopedKeyed :
+    Maybe Nonce
+    -> Scope
+    -> String
+    -> List (Attribute msg)
+    -> List ( String, Node msg )
+    -> VirtualDom.Node msg
+unstyleScopedKeyed maybeNonce scope elemType properties keyedChildren =
+    let
+        rootStyles =
+            List.foldl accumulateStyles Dict.empty properties
+
+        ( keyedChildNodes, descendantStyles ) =
+            List.foldl accumulateKeyedStyledHtml
+                ( [], Dict.empty )
+                keyedChildren
+
+        keyedStyleNode =
+            toKeyedStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles) keyedChildNodes
+
+        unstyledProperties =
+            List.map (extractUnstyledAttribute rootStyles) properties
+    in
+    VirtualDom.keyedNode
+        elemType
+        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
         (keyedStyleNode :: List.reverse keyedChildNodes)
 
 
@@ -461,31 +732,41 @@ accumulateStyles (Attribute _ isCssStyles cssTemplate) styles =
         styles
 
 
-toKeyedStyleNode :
-    Maybe Nonce
-    -> Dict CssTemplate Classname
-    -> List ( String, a )
-    -> ( String, VirtualDom.Node msg )
-toKeyedStyleNode maybeNonce allStyles keyedChildNodes =
+type AccumulatedStyles
+    = UnscopedStyles (Dict CssTemplate Classname)
+    | ScopedStyles Scope (Dict CssTemplate Classname) (Dict CssTemplate Classname)
+
+
+toKeyedStyleNode : Maybe Nonce -> AccumulatedStyles -> List ( String, a ) -> ( String, VirtualDom.Node msg )
+toKeyedStyleNode maybeNonce accumulatedStyles keyedChildNodes =
     let
         styleNodeKey =
             getUnusedKey "_" keyedChildNodes
 
         finalNode =
-            toStyleNode maybeNonce allStyles
+            toStyleNode maybeNonce accumulatedStyles
     in
     ( styleNodeKey, finalNode )
 
 
-toStyleNode : Maybe Nonce -> Dict CssTemplate Classname -> VirtualDom.Node msg
-toStyleNode maybeNonce styles =
+toStyleNode : Maybe Nonce -> AccumulatedStyles -> VirtualDom.Node msg
+toStyleNode maybeNonce accumulatedStyles =
+    let
+        cssText =
+            case accumulatedStyles of
+                UnscopedStyles allStyles ->
+                    toDeclaration allStyles
+
+                ScopedStyles (Scope scope) rootStyles descendantStyles ->
+                    toScopedDeclaration scope rootStyles ++ "\n" ++ toScopedDeclaration (scope ++ " ") descendantStyles
+    in
     -- wrap the style node in a div to prevent `Dark Reader` from blowin up the dom.
     VirtualDom.node "span"
         [ VirtualDom.attribute "style" "display: none;"
         , VirtualDom.attribute "class" "elm-css-style-wrapper"
         ]
         [ -- this <style> node will be the first child of the requested one
-          toDeclaration styles
+          cssText
             |> VirtualDom.text
             |> List.singleton
             |> VirtualDom.node "style"
@@ -680,6 +961,10 @@ accumulateKeyedStyledHtml ( key, html ) ( pairs, styles ) =
             ( ( key, vdom ) :: pairs, finalStyles )
 
 
+
+-- We want this to be slightly different for the root node?
+
+
 toDeclaration : Dict CssTemplate Classname -> String
 toDeclaration dict =
     Dict.foldl styleToDeclaration "" dict
@@ -690,6 +975,18 @@ styleToDeclaration template classname declaration =
     declaration
         ++ "\n"
         ++ String.replace classnameStandin classname template
+
+
+toScopedDeclaration : String -> Dict CssTemplate Classname -> String
+toScopedDeclaration scopingPrefix dict =
+    Dict.foldl
+        (\template classname declaration ->
+            declaration
+                ++ "\n"
+                ++ String.replace ("." ++ classnameStandin) ("#" ++ scopingPrefix ++ "." ++ classname) template
+        )
+        ""
+        dict
 
 
 {-| returns a String key that is not already one of the keys in the list of
