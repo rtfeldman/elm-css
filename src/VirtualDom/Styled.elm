@@ -271,6 +271,13 @@ uncurry f ( a, b ) =
     f a b
 
 
+{-| Like map, but allows specifying an initial list to build on top of.
+-}
+mapOnto : (a -> b) -> List a -> List b -> List b
+mapOnto f xs init =
+    List.foldr (\x acc -> f x :: acc) init xs
+
+
 keyedLazy : (a -> ( String, Node msg )) -> a -> Node msg
 keyedLazy fn arg =
     keyedLazyHelp fn arg
@@ -527,12 +534,13 @@ unstyleScopedNS maybeNonce scope ns elemType properties children =
         styleNode =
             toStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles)
 
+        -- Ensure that our embedded id is the last property on the root node.  This should be less confusing if the user accidentally specifies their own id.
         unstyledProperties =
-            List.map (extractUnstyledAttributeNS rootStyles) properties
+            mapOnto (extractUnstyledAttributeNS rootStyles) properties [ VirtualDom.property "id" (encodeScope scope) ]
     in
     VirtualDom.nodeNS ns
         elemType
-        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
+        unstyledProperties
         (styleNode :: List.reverse childNodes)
 
 
@@ -584,12 +592,13 @@ unstyleScoped maybeNonce scope elemType properties children =
         styleNode =
             toStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles)
 
+        -- Ensure that our embedded id is the last property on the root node.  This should be less confusing if the user accidentally specifies their own id.
         unstyledProperties =
-            List.map (extractUnstyledAttribute rootStyles) properties
+            mapOnto (extractUnstyledAttribute rootStyles) properties [ VirtualDom.property "id" (encodeScope scope) ]
     in
     VirtualDom.node
         elemType
-        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
+        unstyledProperties
         (styleNode :: List.reverse childNodes)
 
 
@@ -644,13 +653,14 @@ unstyleScopedKeyedNS maybeNonce scope ns elemType properties keyedChildren =
         keyedStyleNode =
             toKeyedStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles) keyedChildNodes
 
+        -- Ensure that our embedded id is the last property on the root node.  This should be less confusing if the user accidentally specifies their own id.
         unstyledProperties =
-            List.map (extractUnstyledAttributeNS rootStyles) properties
+            mapOnto (extractUnstyledAttributeNS rootStyles) properties [ VirtualDom.property "id" (encodeScope scope) ]
     in
     VirtualDom.keyedNodeNS
         ns
         elemType
-        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
+        unstyledProperties
         (keyedStyleNode :: List.reverse keyedChildNodes)
 
 
@@ -702,12 +712,13 @@ unstyleScopedKeyed maybeNonce scope elemType properties keyedChildren =
         keyedStyleNode =
             toKeyedStyleNode maybeNonce (ScopedStyles scope rootStyles descendantStyles) keyedChildNodes
 
+        -- Ensure that our embedded id is the last property on the root node.  This should be less confusing if the user accidentally specifies their own id.
         unstyledProperties =
-            List.map (extractUnstyledAttribute rootStyles) properties
+            mapOnto (extractUnstyledAttribute rootStyles) properties [ VirtualDom.property "id" (encodeScope scope) ]
     in
     VirtualDom.keyedNode
         elemType
-        (VirtualDom.property "id" (encodeScope scope) :: unstyledProperties)
+        unstyledProperties
         (keyedStyleNode :: List.reverse keyedChildNodes)
 
 
