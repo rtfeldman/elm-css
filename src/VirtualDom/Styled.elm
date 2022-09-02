@@ -266,11 +266,6 @@ encodeScope (Scope scope) =
     Json.Encode.string scope
 
 
-uncurry : (a -> b -> c) -> ( a, b ) -> c
-uncurry f ( a, b ) =
-    f a b
-
-
 {-| Like map, but allows specifying an initial list to build on top of.
 -}
 mapOnto : (a -> b) -> List a -> List b -> List b
@@ -288,9 +283,11 @@ keyedLazyHelp : (a -> ( String, Node msg )) -> a -> VirtualDom.Node msg
 keyedLazyHelp =
     VirtualDom.lazy2
         (\fn arg ->
-            fn arg
-                |> Tuple.mapFirst Scope
-                |> uncurry toScopedUnstyled
+            let
+                ( key, node_ ) =
+                    fn arg
+            in
+            toScopedUnstyled (Scope key) node_
         )
 
 
@@ -304,9 +301,11 @@ keyedLazy2Help : (a -> b -> ( String, Node msg )) -> a -> b -> VirtualDom.Node m
 keyedLazy2Help =
     VirtualDom.lazy3
         (\fn arg1 arg2 ->
-            fn arg1 arg2
-                |> Tuple.mapFirst Scope
-                |> uncurry toScopedUnstyled
+            let
+                ( key, node_ ) =
+                    fn arg1 arg2
+            in
+            toScopedUnstyled (Scope key) node_
         )
 
 
@@ -320,9 +319,11 @@ keyedLazy3Help : (a -> b -> c -> ( String, Node msg )) -> a -> b -> c -> Virtual
 keyedLazy3Help =
     VirtualDom.lazy4
         (\fn arg1 arg2 arg3 ->
-            fn arg1 arg2 arg3
-                |> Tuple.mapFirst Scope
-                |> uncurry toScopedUnstyled
+            let
+                ( key, node_ ) =
+                    fn arg1 arg2 arg3
+            in
+            toScopedUnstyled (Scope key) node_
         )
 
 
@@ -336,9 +337,11 @@ keyedLazy4Help : (a -> b -> c -> d -> ( String, Node msg )) -> a -> b -> c -> d 
 keyedLazy4Help =
     VirtualDom.lazy5
         (\fn arg1 arg2 arg3 arg4 ->
-            fn arg1 arg2 arg3 arg4
-                |> Tuple.mapFirst Scope
-                |> uncurry toScopedUnstyled
+            let
+                ( key, node_ ) =
+                    fn arg1 arg2 arg3 arg4
+            in
+            toScopedUnstyled (Scope key) node_
         )
 
 
@@ -352,9 +355,11 @@ keyedLazy5Help : (a -> b -> c -> d -> e -> ( String, Node msg )) -> a -> b -> c 
 keyedLazy5Help =
     VirtualDom.lazy6
         (\fn arg1 arg2 arg3 arg4 arg5 ->
-            fn arg1 arg2 arg3 arg4 arg5
-                |> Tuple.mapFirst Scope
-                |> uncurry toScopedUnstyled
+            let
+                ( key, node_ ) =
+                    fn arg1 arg2 arg3 arg4 arg5
+            in
+            toScopedUnstyled (Scope key) node_
         )
 
 
@@ -368,9 +373,11 @@ keyedLazy6Help : (a -> b -> c -> d -> e -> f -> ( String, Node msg )) -> a -> b 
 keyedLazy6Help =
     VirtualDom.lazy7
         (\fn arg1 arg2 arg3 arg4 arg5 arg6 ->
-            fn arg1 arg2 arg3 arg4 arg5 arg6
-                |> Tuple.mapFirst Scope
-                |> uncurry toScopedUnstyled
+            let
+                ( key, node_ ) =
+                    fn arg1 arg2 arg3 arg4 arg5 arg6
+            in
+            toScopedUnstyled (Scope key) node_
         )
 
 
@@ -384,9 +391,11 @@ keyedLazy7Help : (a -> b -> c -> d -> e -> f -> g -> ( String, Node msg )) -> a 
 keyedLazy7Help =
     VirtualDom.lazy8
         (\fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 ->
-            fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
-                |> Tuple.mapFirst Scope
-                |> uncurry toScopedUnstyled
+            let
+                ( key, node_ ) =
+                    fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
+            in
+            toScopedUnstyled (Scope key) node_
         )
 
 
