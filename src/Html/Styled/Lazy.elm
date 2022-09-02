@@ -86,7 +86,7 @@ lazy7 =
 
 {-| Much like `lazy`, but allows specifying a key for the created `Html` node. This can increase performance in cases when you want to lazily generate a list of nodes.
 
-This key becomes the id of the root node and all css that is generated will be scoped to that id. This allows the browser to spend less time calculating styles as there won't be lots styles with the same class name.
+This key becomes the id of the root node and all css that is generated will be scoped to that id. This allows the browser to spend less time calculating styles as there won't be lots of styles with the same class name.
 
 Some notes about using this function:
 
