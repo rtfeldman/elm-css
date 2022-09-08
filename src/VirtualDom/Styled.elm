@@ -7,13 +7,12 @@ module VirtualDom.Styled exposing
     , attribute
     , attributeNS
     , getCssTemplate
-    , keyedLazy
-    , keyedLazy2
-    , keyedLazy3
-    , keyedLazy4
-    , keyedLazy5
-    , keyedLazy6
-    , keyedLazy7
+    , keyedLazyNode
+    , keyedLazyNode2
+    , keyedLazyNode3
+    , keyedLazyNode4
+    , keyedLazyNode5
+    , keyedLazyNode6
     , keyedNode
     , keyedNodeNS
     , lazy
@@ -273,130 +272,136 @@ mapOnto f xs init =
     List.foldr (\x acc -> f x :: acc) init xs
 
 
-keyedLazy : (a -> ( String, Node msg )) -> a -> Node msg
-keyedLazy fn arg =
-    keyedLazyHelp fn arg
-        |> Unstyled
-
-
-keyedLazyHelp : (a -> ( String, Node msg )) -> a -> VirtualDom.Node msg
-keyedLazyHelp =
-    VirtualDom.lazy2
-        (\fn arg ->
-            let
-                ( key, node_ ) =
-                    fn arg
-            in
-            toScopedUnstyled (Scope key) node_
+keyedLazyNode :
+    (List ( String, Node msg ) -> Node msg)
+    -> (a -> Node msg)
+    -> List ( String, a )
+    -> Node msg
+keyedLazyNode makeRoot makeChild children =
+    List.map
+        (\( key, arg ) ->
+            ( key, keyedLazyNodeHelp makeChild key arg |> Unstyled )
         )
+        children
+        |> makeRoot
 
 
-keyedLazy2 : (a -> b -> ( String, Node msg )) -> a -> b -> Node msg
-keyedLazy2 fn arg1 arg2 =
-    keyedLazy2Help fn arg1 arg2
-        |> Unstyled
+keyedLazyNodeHelp : (a -> Node msg) -> String -> a -> VirtualDom.Node msg
+keyedLazyNodeHelp =
+    VirtualDom.lazy3 <|
+        \fn key arg ->
+            fn arg
+                |> toScopedUnstyled (Scope key)
 
 
-keyedLazy2Help : (a -> b -> ( String, Node msg )) -> a -> b -> VirtualDom.Node msg
-keyedLazy2Help =
-    VirtualDom.lazy3
-        (\fn arg1 arg2 ->
-            let
-                ( key, node_ ) =
-                    fn arg1 arg2
-            in
-            toScopedUnstyled (Scope key) node_
+keyedLazyNode2 :
+    (List ( String, Node msg ) -> Node msg)
+    -> (a -> b -> Node msg)
+    -> List ( String, ( a, b ) )
+    -> Node msg
+keyedLazyNode2 makeRoot makeChild children =
+    List.map
+        (\( key, ( arg1, arg2 ) ) ->
+            ( key, keyedLazyNode2Help makeChild key arg1 arg2 |> Unstyled )
         )
+        children
+        |> makeRoot
 
 
-keyedLazy3 : (a -> b -> c -> ( String, Node msg )) -> a -> b -> c -> Node msg
-keyedLazy3 fn arg1 arg2 arg3 =
-    keyedLazy3Help fn arg1 arg2 arg3
-        |> Unstyled
+keyedLazyNode2Help : (a -> b -> Node msg) -> String -> a -> b -> VirtualDom.Node msg
+keyedLazyNode2Help =
+    VirtualDom.lazy4 <|
+        \fn key arg1 arg2 ->
+            fn arg1 arg2
+                |> toScopedUnstyled (Scope key)
 
 
-keyedLazy3Help : (a -> b -> c -> ( String, Node msg )) -> a -> b -> c -> VirtualDom.Node msg
-keyedLazy3Help =
-    VirtualDom.lazy4
-        (\fn arg1 arg2 arg3 ->
-            let
-                ( key, node_ ) =
-                    fn arg1 arg2 arg3
-            in
-            toScopedUnstyled (Scope key) node_
+keyedLazyNode3 :
+    (List ( String, Node msg ) -> Node msg)
+    -> (a -> b -> c -> Node msg)
+    -> List ( String, ( a, b, c ) )
+    -> Node msg
+keyedLazyNode3 makeRoot makeChild children =
+    List.map
+        (\( key, ( arg1, arg2, arg3 ) ) ->
+            ( key, keyedLazyNode3Help makeChild key arg1 arg2 arg3 |> Unstyled )
         )
+        children
+        |> makeRoot
 
 
-keyedLazy4 : (a -> b -> c -> d -> ( String, Node msg )) -> a -> b -> c -> d -> Node msg
-keyedLazy4 fn arg1 arg2 arg3 arg4 =
-    keyedLazy4Help fn arg1 arg2 arg3 arg4
-        |> Unstyled
+keyedLazyNode3Help : (a -> b -> c -> Node msg) -> String -> a -> b -> c -> VirtualDom.Node msg
+keyedLazyNode3Help =
+    VirtualDom.lazy5 <|
+        \fn key arg1 arg2 arg3 ->
+            fn arg1 arg2 arg3
+                |> toScopedUnstyled (Scope key)
 
 
-keyedLazy4Help : (a -> b -> c -> d -> ( String, Node msg )) -> a -> b -> c -> d -> VirtualDom.Node msg
-keyedLazy4Help =
-    VirtualDom.lazy5
-        (\fn arg1 arg2 arg3 arg4 ->
-            let
-                ( key, node_ ) =
-                    fn arg1 arg2 arg3 arg4
-            in
-            toScopedUnstyled (Scope key) node_
+keyedLazyNode4 :
+    (List ( String, Node msg ) -> Node msg)
+    -> (a -> b -> c -> d -> Node msg)
+    -> List ( String, { arg1 : a, arg2 : b, arg3 : c, arg4 : d } )
+    -> Node msg
+keyedLazyNode4 makeRoot makeChild children =
+    List.map
+        (\( key, { arg1, arg2, arg3, arg4 } ) ->
+            ( key, keyedLazyNode4Help makeChild key arg1 arg2 arg3 arg4 |> Unstyled )
         )
+        children
+        |> makeRoot
 
 
-keyedLazy5 : (a -> b -> c -> d -> e -> ( String, Node msg )) -> a -> b -> c -> d -> e -> Node msg
-keyedLazy5 fn arg1 arg2 arg3 arg4 arg5 =
-    keyedLazy5Help fn arg1 arg2 arg3 arg4 arg5
-        |> Unstyled
+keyedLazyNode4Help : (a -> b -> c -> d -> Node msg) -> String -> a -> b -> c -> d -> VirtualDom.Node msg
+keyedLazyNode4Help =
+    VirtualDom.lazy6 <|
+        \fn key arg1 arg2 arg3 arg4 ->
+            fn arg1 arg2 arg3 arg4
+                |> toScopedUnstyled (Scope key)
 
 
-keyedLazy5Help : (a -> b -> c -> d -> e -> ( String, Node msg )) -> a -> b -> c -> d -> e -> VirtualDom.Node msg
-keyedLazy5Help =
-    VirtualDom.lazy6
-        (\fn arg1 arg2 arg3 arg4 arg5 ->
-            let
-                ( key, node_ ) =
-                    fn arg1 arg2 arg3 arg4 arg5
-            in
-            toScopedUnstyled (Scope key) node_
+keyedLazyNode5 :
+    (List ( String, Node msg ) -> Node msg)
+    -> (a -> b -> c -> d -> e -> Node msg)
+    -> List ( String, { arg1 : a, arg2 : b, arg3 : c, arg4 : d, arg5 : e } )
+    -> Node msg
+keyedLazyNode5 makeRoot makeChild children =
+    List.map
+        (\( key, { arg1, arg2, arg3, arg4, arg5 } ) ->
+            ( key, keyedLazyNode5Help makeChild key arg1 arg2 arg3 arg4 arg5 |> Unstyled )
         )
+        children
+        |> makeRoot
 
 
-keyedLazy6 : (a -> b -> c -> d -> e -> f -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> Node msg
-keyedLazy6 fn arg1 arg2 arg3 arg4 arg5 arg6 =
-    keyedLazy6Help fn arg1 arg2 arg3 arg4 arg5 arg6
-        |> Unstyled
+keyedLazyNode5Help : (a -> b -> c -> d -> e -> Node msg) -> String -> a -> b -> c -> d -> e -> VirtualDom.Node msg
+keyedLazyNode5Help =
+    VirtualDom.lazy7 <|
+        \fn key arg1 arg2 arg3 arg4 arg5 ->
+            fn arg1 arg2 arg3 arg4 arg5
+                |> toScopedUnstyled (Scope key)
 
 
-keyedLazy6Help : (a -> b -> c -> d -> e -> f -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> VirtualDom.Node msg
-keyedLazy6Help =
-    VirtualDom.lazy7
-        (\fn arg1 arg2 arg3 arg4 arg5 arg6 ->
-            let
-                ( key, node_ ) =
-                    fn arg1 arg2 arg3 arg4 arg5 arg6
-            in
-            toScopedUnstyled (Scope key) node_
+keyedLazyNode6 :
+    (List ( String, Node msg ) -> Node msg)
+    -> (a -> b -> c -> d -> e -> f -> Node msg)
+    -> List ( String, { arg1 : a, arg2 : b, arg3 : c, arg4 : d, arg5 : e, arg6 : f } )
+    -> Node msg
+keyedLazyNode6 makeRoot makeChild children =
+    List.map
+        (\( key, { arg1, arg2, arg3, arg4, arg5, arg6 } ) ->
+            ( key, keyedLazyNode6Help makeChild key arg1 arg2 arg3 arg4 arg5 arg6 |> Unstyled )
         )
+        children
+        |> makeRoot
 
 
-keyedLazy7 : (a -> b -> c -> d -> e -> f -> g -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> g -> Node msg
-keyedLazy7 fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 =
-    keyedLazy7Help fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
-        |> Unstyled
-
-
-keyedLazy7Help : (a -> b -> c -> d -> e -> f -> g -> ( String, Node msg )) -> a -> b -> c -> d -> e -> f -> g -> VirtualDom.Node msg
-keyedLazy7Help =
-    VirtualDom.lazy8
-        (\fn arg1 arg2 arg3 arg4 arg5 arg6 arg7 ->
-            let
-                ( key, node_ ) =
-                    fn arg1 arg2 arg3 arg4 arg5 arg6 arg7
-            in
-            toScopedUnstyled (Scope key) node_
-        )
+keyedLazyNode6Help : (a -> b -> c -> d -> e -> f -> Node msg) -> String -> a -> b -> c -> d -> e -> f -> VirtualDom.Node msg
+keyedLazyNode6Help =
+    VirtualDom.lazy8 <|
+        \fn key arg1 arg2 arg3 arg4 arg5 arg6 ->
+            fn arg1 arg2 arg3 arg4 arg5 arg6
+                |> toScopedUnstyled (Scope key)
 
 
 toUnstyled : Node msg -> VirtualDom.Node msg
