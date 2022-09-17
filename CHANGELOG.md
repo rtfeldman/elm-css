@@ -1,6 +1,7 @@
 ## Releases
 | Version | Notes |
 | ------- | ----- |
+| [18.0.0](https://github.com/rtfeldman/elm-css/tree/18.0.0) | Add `line-height: normal` ([#578](https://github.com/rtfeldman/elm-css/pull/578)) and `keyedLazy` ([#584](https://github.com/rtfeldman/elm-css/pull/584))
 | [17.1.1](https://github.com/rtfeldman/elm-css/tree/17.1.1) | Allow multiple `css` attributes on node ([#566](https://github.com/rtfeldman/elm-css/pull/566))
 | [17.1.0](https://github.com/rtfeldman/elm-css/tree/17.1.0) | Support nonces ([#569](https://github.com/rtfeldman/elm-css/pull/569))
 | [17.0.5](https://github.com/rtfeldman/elm-css/tree/17.0.5) | Fix SVG styling bug ([#565](https://github.com/rtfeldman/elm-css/pull/565))
