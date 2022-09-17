@@ -3,8 +3,10 @@ module Styled exposing (all)
 -- import ReadmeExample
 
 import Css exposing (..)
-import Html.Styled exposing (Html, a, button, div, header, img, nav, text, toUnstyled)
+import Css.Media as Media
+import Html.Styled exposing (Html, a, button, div, header, img, li, nav, text, toUnstyled)
 import Html.Styled.Attributes exposing (class, css, src)
+import Html.Styled.Keyed exposing (lazyNode)
 import Test exposing (Test, describe)
 import Test.Html.Query as Query
 import Test.Html.Selector as Selector
@@ -108,6 +110,7 @@ all =
                         ]
             )
         , bug564
+        , keyedLazyTests
         ]
 
 
@@ -140,4 +143,45 @@ bug564 =
                     |> toUnstyled
                     |> Query.fromHtml
                     |> Query.has [ Selector.classes [ "_5dc67897", "some-custom-class" ] ]
+        ]
+
+
+keyedLazyTests : Test
+keyedLazyTests =
+    describe "keyedLazy"
+        [ Test.test "generates an appropriate selector for the root node" <|
+            \_ ->
+                lazyNode "ul"
+                    []
+                    (\_ ->
+                        div [ css [ color (rgb 0 0 0) ] ] []
+                    )
+                    [ ( "item-1", 1 ) ]
+                    |> toUnstyled
+                    |> Query.fromHtml
+                    |> Query.has [ Selector.text "#item-1._5dc67897" ]
+        , Test.test "generates an appropriate selector for a descendant node" <|
+            \_ ->
+                lazyNode
+                    "ul"
+                    []
+                    (\_ ->
+                        li [] [ div [ css [ color (rgb 0 0 0) ] ] [] ]
+                    )
+                    [ ( "item-1", 1 ) ]
+                    |> toUnstyled
+                    |> Query.fromHtml
+                    |> Query.has [ Selector.text "#item-1 ._5dc67897" ]
+        , Test.test "generates an appropriate selector with media" <|
+            \_ ->
+                lazyNode
+                    "ul"
+                    []
+                    (\_ ->
+                        li [] [ div [ css [ Media.withMedia [ Media.only Media.screen [] ] [ color (rgb 0 0 0) ] ] ] [] ]
+                    )
+                    [ ( "item-1", 1 ) ]
+                    |> toUnstyled
+                    |> Query.fromHtml
+                    |> Query.has [ Selector.text "#item-1 ._22afe2eb" ]
         ]
