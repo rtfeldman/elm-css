@@ -117,13 +117,13 @@ getOverloadedProperty functionName desiredKey style =
             -- Use the given style's Key as the resulting property's value.
             property desiredKey key
 
-        Preprocess.ExtendSelector selector _ ->
+        Preprocess.ExtendSelector _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-selector")
 
-        Preprocess.NestSnippet combinator _ ->
+        Preprocess.NestSnippet _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-combinator")
 
-        Preprocess.WithPseudoElement pseudoElement _ ->
+        Preprocess.WithPseudoElement _ _ ->
             property desiredKey ("elm-css-error-cannot-apply-" ++ functionName ++ "-with-inapplicable-Style-for-pseudo-element setter")
 
         Preprocess.WithMedia _ _ ->
@@ -138,7 +138,7 @@ getOverloadedProperty functionName desiredKey style =
         Preprocess.ApplyStyles (only :: []) ->
             getOverloadedProperty functionName desiredKey only
 
-        Preprocess.ApplyStyles (first :: rest) ->
+        Preprocess.ApplyStyles (_ :: rest) ->
             getOverloadedProperty functionName desiredKey (Preprocess.ApplyStyles rest)
 
 

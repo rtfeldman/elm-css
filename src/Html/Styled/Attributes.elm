@@ -18,6 +18,7 @@ module Html.Styled.Attributes exposing
     , accesskey, contenteditable, contextmenu, dir, draggable, dropzone
     , itemprop, lang, spellcheck, tabindex
     , cite, datetime, pubdate, manifest
+    , downloadAs
     )
 
 {-| Drop-in replacement for the `Html.Attributes` module from the `elm-lang/html` package.

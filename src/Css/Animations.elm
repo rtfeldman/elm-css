@@ -23,8 +23,7 @@ Some of the animatable properties (except for experimental properties, or proper
 
 -}
 
-import Css.Internal exposing (AnimationProperty(..), ColorValue, ExplicitLength, Length, LengthOrAutoOrCoverOrContain, lengthConverter, lengthForOverloadedProperty)
-import Css.Preprocess as Preprocess
+import Css.Internal exposing (AnimationProperty(..), Length, LengthOrAutoOrCoverOrContain)
 import Css.String
 import Css.Structure exposing (Compatible(..))
 
@@ -38,10 +37,6 @@ If you need to use an experimental or vendor-prefixed animatable property, see [
 -}
 type alias Property =
     AnimationProperty
-
-
-type alias Style =
-    Preprocess.Style
 
 
 {-| -}

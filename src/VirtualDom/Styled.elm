@@ -42,7 +42,6 @@ import Css.Preprocess.Resolve as Resolve
 import Css.Structure as Structure
 import Dict exposing (Dict)
 import Hash
-import Hex
 import Json.Encode
 import VirtualDom
 
@@ -476,7 +475,7 @@ getCssTemplate styles =
         [] ->
             ""
 
-        otherwise ->
+        _ ->
             [ makeSnippet styles templateSelector ]
                 |> Preprocess.stylesheet
                 |> Resolve.compile
