@@ -1,5 +1,6 @@
 module MyCss exposing (main)
 
+import Browser
 import Css exposing (..)
 import Html
 import Html.Styled exposing (..)
@@ -83,12 +84,12 @@ view model =
         ]
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.beginnerProgram
+    Browser.sandbox
         { view = view >> toUnstyled
         , update = update
-        , model = initialModel
+        , init = initialModel
         }
 
 
