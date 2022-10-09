@@ -142,6 +142,10 @@ mediaFeatures =
             , ( scripting initialOnly, "initial-only" )
             , ( scripting Media.enabled, "enabled" )
             ]
+        , testFeature "prefers-reduced-motion"
+            [ ( prefersReducedMotion reduce, "reduce" )
+            , ( prefersReducedMotion noPreference, "no-preference" )
+            ]
         ]
 
 

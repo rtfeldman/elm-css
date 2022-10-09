@@ -16,6 +16,7 @@ module Css.Media exposing
     , Fine, Coarse, fine, coarse, pointer, anyPointer, CanHover, canHover
     , hover, anyHover
     , InitialOnly, Enabled, initialOnly, enabled, scripting
+    , noPreference, prefersReducedMotion, reduce
     )
 
 {-| Functions for building [`@media` queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries).
@@ -940,6 +941,47 @@ Accepts `none`, `initialOnly`, and `enabled`.
 scripting : ScriptingSupport a -> Expression
 scripting value =
     feature "scripting" value
+
+
+{-| -}
+type alias ReducedMotionPreference a =
+    { a | value : String, reducedMotionPreference : Compatible }
+
+
+{-| -}
+type alias Reduce =
+    { value : String, reducedMotionPreference : Compatible }
+
+
+{-| -}
+type alias NoPreference =
+    { value : String, reducedMotionPreference : Compatible }
+
+
+{-| The value [`reduce`](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion).
+-}
+reduce : Reduce
+reduce =
+    { value = "reduce", reducedMotionPreference = Compatible }
+
+
+{-| The value [`no-preference`](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion).
+-}
+noPreference : NoPreference
+noPreference =
+    { value = "no-preference", reducedMotionPreference = Compatible }
+
+
+{-| Media feature [`prefers-reduced-motion`](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion).
+Queries the if the user agent's has a preference for less motion on the page.
+Accepts `reduce` or `noPreference`.
+
+    media (prefersReducedMotion reduce) [ a [ hover [ transform none ] ] ]
+
+-}
+prefersReducedMotion : ReducedMotionPreference a -> Expression
+prefersReducedMotion value =
+    feature "prefers-reduced-motion" value
 
 
 
