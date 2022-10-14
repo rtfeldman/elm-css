@@ -9,7 +9,7 @@ module Css exposing
     , deg, rad, grad, turn
     , Duration, sec, ms
     , pseudoClass, active, any, checked, disabled, empty, enabled, first, firstChild, firstOfType, fullscreen, focus, hover, visited, indeterminate, invalid, lang, lastChild, lastOfType, link, nthChild, nthLastChild, nthLastOfType, nthOfType, onlyChild, onlyOfType, optional, outOfRange, readWrite, required, root, scope, target, valid
-    , pseudoElement, after, before, firstLetter, firstLine, selection
+    , pseudoElement, after, before, firstLetter, firstLine, placeholder, selection
     , src_
     , qt
     , listStyleType, disc, circle, square, decimal, decimalLeadingZero, lowerRoman, upperRoman, lowerGreek, lowerAlpha, lowerLatin, upperAlpha, upperLatin, arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
@@ -7606,6 +7606,13 @@ firstLetter =
 firstLine : List Style -> Style
 firstLine =
     pseudoElement "first-line"
+
+{-| A [`::placeholder`](https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder)
+[pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements).
+-}
+placeholder : List Style -> Style
+placeholder =
+    pseudoElement "placeholder"
 
 
 {-| A [`::selection`](https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aselection)
