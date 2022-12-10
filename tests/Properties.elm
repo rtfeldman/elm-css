@@ -422,6 +422,7 @@ all =
             , ( justifyContent center, "center" )
             , ( justifyContent spaceAround, "space-around" )
             , ( justifyContent spaceBetween, "space-between" )
+            , ( justifyContent spaceEvenly, "space-evenly" )
             ]
         , testProperty { function = "opacity", property = "opacity" }
             [ ( opacity inherit, "inherit" )
