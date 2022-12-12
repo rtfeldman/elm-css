@@ -113,7 +113,7 @@ module Css exposing
     , geometricPrecision, optimizeLegibility, optimizeSpeed
     , textTransform
     , capitalize, uppercase, lowercase, fullSizeKana
-    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationThickness, fromFont
     , textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
     , textStroke, textStroke2, textStrokeColor, textStrokeWidth
@@ -628,7 +628,7 @@ Other values you can use for flex item alignment:
 
 # Text Decoration
 
-@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor
+@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationThickness, fromFont
 @docs textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
 
 @docs wavy, underline, overline, lineThrough
@@ -10739,16 +10739,42 @@ textDecorationStyle (Value styleVal) =
     AppendProperty ("text-decoration-style:" ++ styleVal)
 
 
-{-| Sets [`text-decoration-color`][text-decoration-color] property.
+{-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color) property.
 
     textDecorationColor (hex "#0cf")
-
-[text-decoration-color]: https://css-tricks.com/almanac/properties/t/text-decoration-color/
 
 -}
 textDecorationColor : BaseValue Color -> Style
 textDecorationColor (Value colorVal) =
     AppendProperty ("text-decoration-color:" ++ colorVal)
+
+
+{-| Sets the [`text-decoration-thickness`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness) property.
+
+    textDecorationThickness (pct 10)
+
+-}
+textDecorationThickness :
+    BaseValue
+        ( LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , fromFont : Supported
+            }
+        )
+    -> Style
+textDecorationThickness (Value value) =
+    AppendProperty ("text-decoration-thickness:" ++ value)
+
+
+{-| Sets the `from-font` value for usage with [`textDecorationThickness`](#textDecorationThickness).
+
+    textDecorationThickness fromFont
+
+-}
+fromFont : Value { provides | fromFont : Supported }
+fromFont =
+    Value "from-font"
 
 
 {-| Sets [`text-decoration-skip`](https://css-tricks.com/almanac/properties/t/text-decoration-skip/) property.
