@@ -55,7 +55,7 @@ module Css exposing
     , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
     , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
-    , dotted, dashed, solid, double, groove, ridge, inset, outset
+    , dotted, dashed, solid, double, groove, ridge, inset_, outset
     , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
     , borderBlockColor, borderBlockStartColor, borderBlockEndColor, borderInlineColor, borderInlineStartColor, borderInlineEndColor
     , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
@@ -388,7 +388,7 @@ Many different kinds of CSS properties use these keyword values.
 
 @docs borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
 
-@docs dotted, dashed, solid, double, groove, ridge, inset, outset
+@docs dotted, dashed, solid, double, groove, ridge, inset_, outset
 
 
 ## Border Color
@@ -9710,8 +9710,8 @@ borderBlock (Value widthVal) =
 
 -}
 borderBlock2 : Value LineWidth -> Value LineStyle -> Style
-borderBlock2 (Value widthVal) (Value style) =
-    AppendProperty ("border-block:" ++ widthVal ++ " " ++ style)
+borderBlock2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-block:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-block`](https://css-tricks.com/almanac/properties/b/border-block/) property.
@@ -9724,8 +9724,8 @@ borderBlock2 (Value widthVal) (Value style) =
 
 -}
 borderBlock3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBlock3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-block:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderBlock3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-block:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
@@ -9752,8 +9752,8 @@ borderBlockStart (Value widthVal) =
 
 -}
 borderBlockStart2 : Value LineWidth -> Value LineStyle -> Style
-borderBlockStart2 (Value widthVal) (Value style) =
-    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ style)
+borderBlockStart2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
@@ -9766,8 +9766,8 @@ borderBlockStart2 (Value widthVal) (Value style) =
 
 -}
 borderBlockStart3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBlockStart3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderBlockStart3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
@@ -9794,8 +9794,8 @@ borderBlockEnd (Value widthVal) =
 
 -}
 borderBlockEnd2 : Value LineWidth -> Value LineStyle -> Style
-borderBlockEnd2 (Value widthVal) (Value style) =
-    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ style)
+borderBlockEnd2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
@@ -9808,8 +9808,8 @@ borderBlockEnd2 (Value widthVal) (Value style) =
 
 -}
 borderBlockEnd3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBlockEnd3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderBlockEnd3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
@@ -9836,8 +9836,8 @@ borderInline (Value widthVal) =
 
 -}
 borderInline2 : Value LineWidth -> Value LineStyle -> Style
-borderInline2 (Value widthVal) (Value style) =
-    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ style)
+borderInline2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
@@ -9850,8 +9850,8 @@ borderInline2 (Value widthVal) (Value style) =
 
 -}
 borderInline3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderInline3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderInline3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
@@ -9878,8 +9878,8 @@ borderInlineStart (Value widthVal) =
 
 -}
 borderInlineStart2 : Value LineWidth -> Value LineStyle -> Style
-borderInlineStart2 (Value widthVal) (Value style) =
-    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ style)
+borderInlineStart2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
@@ -9892,8 +9892,8 @@ borderInlineStart2 (Value widthVal) (Value style) =
 
 -}
 borderInlineStart3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderInlineStart3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderInlineStart3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
@@ -9920,8 +9920,8 @@ borderInlineEnd (Value widthVal) =
 
 -}
 borderInlineEnd2 : Value LineWidth -> Value LineStyle -> Style
-borderInlineEnd2 (Value widthVal) (Value style) =
-    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ style)
+borderInlineEnd2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ styleVal)
 
 
 {-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
@@ -9934,8 +9934,8 @@ borderInlineEnd2 (Value widthVal) (Value style) =
 
 -}
 borderInlineEnd3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderInlineEnd3 (Value widthVal) (Value style) (Value colorVal) =
-    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ style ++ " " ++ colorVal)
+borderInlineEnd3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
 
 
 {-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
@@ -10194,8 +10194,8 @@ borderLeftStyle (Value styleVal) =
 
 -}
 borderBlockStyle : BaseValue LineStyle -> Style
-borderBlockStyle (Value style) =
-    AppendProperty ("border-block-style:" ++ style)
+borderBlockStyle (Value styleVal) =
+    AppendProperty ("border-block-style:" ++ styleVal)
 
 
 {-| Sets [`border-block-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style) property.
@@ -10204,8 +10204,8 @@ borderBlockStyle (Value style) =
 
 -}
 borderBlockStartStyle : BaseValue LineStyle -> Style
-borderBlockStartStyle (Value style) =
-    AppendProperty ("border-block-start-style:" ++ style)
+borderBlockStartStyle (Value styleVal) =
+    AppendProperty ("border-block-start-style:" ++ styleVal)
 
 
 {-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style) property.
@@ -10214,8 +10214,8 @@ borderBlockStartStyle (Value style) =
 
 -}
 borderBlockEndStyle : BaseValue LineStyle -> Style
-borderBlockEndStyle (Value style) =
-    AppendProperty ("border-block-end-style:" ++ style)
+borderBlockEndStyle (Value styleVal) =
+    AppendProperty ("border-block-end-style:" ++ styleVal)
 
 
 {-| Sets [`border-inline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-style) property.
@@ -10224,8 +10224,8 @@ borderBlockEndStyle (Value style) =
 
 -}
 borderInlineStyle : BaseValue LineStyle -> Style
-borderInlineStyle (Value style) =
-    AppendProperty ("border-inline-style:" ++ style)
+borderInlineStyle (Value styleVal) =
+    AppendProperty ("border-inline-style:" ++ styleVal)
 
 
 {-| Sets [`border-inline-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style) property.
@@ -10234,8 +10234,8 @@ borderInlineStyle (Value style) =
 
 -}
 borderInlineStartStyle : BaseValue LineStyle -> Style
-borderInlineStartStyle (Value style) =
-    AppendProperty ("border-inline-start-style:" ++ style)
+borderInlineStartStyle (Value styleVal) =
+    AppendProperty ("border-inline-start-style:" ++ styleVal)
 
 
 {-| Sets [`border-inline-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style) property.
@@ -10244,8 +10244,8 @@ borderInlineStartStyle (Value style) =
 
 -}
 borderInlineEndStyle : BaseValue LineStyle -> Style
-borderInlineEndStyle (Value style) =
-    AppendProperty ("border-inline-end-style:" ++ style)
+borderInlineEndStyle (Value styleVal) =
+    AppendProperty ("border-inline-end-style:" ++ styleVal)
 
 
 {-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
