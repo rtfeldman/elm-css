@@ -19,7 +19,7 @@ module Css exposing
     , x, y
     , stretch, center, content, fill_, stroke, text, style
     , clip, cover, contain_
-    , baseline, sub, super, ruby, fullWidth
+    , baseline, sub, super, ruby, fullWidth, under, circle
     , pseudoClass, active, checked, disabled, empty, enabled
     , firstChild, firstOfType, focus, fullscreen, hover, inRange
     , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
@@ -90,7 +90,7 @@ module Css exposing
     , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
+    , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition, weight
     , CursorKeyword
     , cursor, cursor2, cursor4
     , pointer, default, contextMenu, help, progress, wait, cell
@@ -100,13 +100,13 @@ module Css exposing
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
     , ListStyleType, ListStyleTypeSupported
     , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
-    , arabicIndic, armenian, bengali, cambodian, circle, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
+    , arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
     , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
     , direction, ltr, rtl
-    , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2, under
+    , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
     , textOrientation
     , mixed, sideways, upright
     , textRendering
@@ -118,6 +118,7 @@ module Css exposing
     , wavy, underline, overline, lineThrough
     , textStroke, textStroke2, textStrokeColor, textStrokeWidth
     , textIndent, textIndent2, textIndent3, hanging, eachLine
+    , textEmphasis, textEmphasis2, textEmphasisStyle, textEmphasisStyle2, textEmphasisColor, textEmphasisPosition, textEmphasisPosition2, filled, open, dot, doubleCircle, triangle, sesame, over
     , borderCollapse
     , collapse, separate
     , borderSpacing, borderSpacing2
@@ -255,9 +256,9 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs url
 
 
-# Shared Values
+# Shared Keywords
 
-Many different kinds of CSS properties use these values.
+Many different kinds of CSS properties use these keyword values.
 
 @docs auto, none, normal, strict, all_, both, always
 @docs hidden, visible
@@ -266,8 +267,7 @@ Many different kinds of CSS properties use these values.
 @docs x, y
 @docs stretch, center, content, fill_, stroke, text, style
 @docs clip, cover, contain_
-@docs baseline, sub, super, ruby, fullWidth
-
+@docs baseline, sub, super, ruby, fullWidth, under, circle
 
 # Pseudo-Classes
 
@@ -560,7 +560,7 @@ Other values you can use for flex item alignment:
 
 ## Font Optical Sizing
 
-@docs fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
+@docs fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition, weight
 
 
 # Cursors
@@ -584,7 +584,7 @@ Other values you can use for flex item alignment:
 
 @docs ListStyleType, ListStyleTypeSupported
 @docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
-@docs arabicIndic, armenian, bengali, cambodian, circle, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
+@docs arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
 
 [`square`](#square) is also a supported value for [`listStyle`](#listStyle) and [`listStyleType`](#listStyleType).
 
@@ -605,7 +605,7 @@ Other values you can use for flex item alignment:
 
 # Text Align
 
-@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2, under
+@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
 
 
 # Text Orientation
@@ -636,6 +636,8 @@ Other values you can use for flex item alignment:
 @docs textStroke, textStroke2, textStrokeColor, textStrokeWidth
 
 @docs textIndent, textIndent2, textIndent3, hanging, eachLine
+
+@docs textEmphasis, textEmphasis2, textEmphasisStyle, textEmphasisStyle2, textEmphasisColor, textEmphasisPosition, textEmphasisPosition2, filled, open, dot, doubleCircle, triangle, sesame, over
 
 
 # Tables
@@ -897,6 +899,7 @@ type alias BaseValue supported =
             | initial : Supported
             , inherit : Supported
             , unset : Supported
+            , revert : Supported
         }
 
 
@@ -1192,9 +1195,12 @@ unset =
     Value "unset"
 
 
-{-| The `revert` value for the [`all`](#all) property.
+{-| The [`revert`](https://css-tricks.com/what-does-revert-do-in-css/) value.
+Any CSS property can be set to this value.
 
     all revert
+
+    color revert
 
 -}
 revert : Value { provides | revert : Supported }
@@ -1207,7 +1213,7 @@ revert =
     all inherit
 
 -}
-all : BaseValue { revert : Supported } -> Style
+all : BaseValue a -> Style
 all (Value val) =
     AppendProperty ("all:" ++ val)
 
@@ -1773,7 +1779,7 @@ content =
 
     pointerEvents fill_
 
-    paintOrder2 fill markers
+    paintOrder2 fill_ markers
 
 -}
 fill_ : Value { provides | fill_ : Supported }
@@ -1970,6 +1976,34 @@ fullWidth : Value { provides | fullWidth : Supported }
 fullWidth =
     Value "full-width"
 
+
+
+{-| A `under` value for the [`textUnderlinePosition`](#textUnderlinePosition) property and the [`textEmphasisPosition2`](#textEmphasisPosition2) property.
+
+    textUnderlinePosition under
+
+    textEmphasisPosition2 under left_
+
+-}
+under : Value { provides | under : Supported }
+under =
+    Value "under"
+
+
+
+{-| The `circle` value used by properties such as [`listStyle`](#listStyle),
+[`listStyleType`](#listStyleType), [`textEmphasis`](#textEmphasis) and [`textEmphasisStyle`](#textEmphasisStyle).
+
+    listStyleType circle
+
+    textEmphasis2 circle (hex "ff0000")
+
+    textEmphasisStyle circle
+
+-}
+circle : Value { provides | circle : Supported }
+circle =
+    Value "circle"
 
 
 -- OVERFLOW --
@@ -8289,17 +8323,6 @@ cambodian =
     Value "cambodian"
 
 
-{-| The `circle` value used by properties such as [`listStyle`](#listStyle),
-and [`listStyleType`](#listStyleType)
-
-    listStyleType circle
-
--}
-circle : Value { provides | circle : Supported }
-circle =
-    Value "circle"
-
-
 {-| The `cjk-decimal` value used by properties such as [`listStyle`](#listStyle),
 and [`listStyleType`](#listStyleType)
 
@@ -11313,16 +11336,6 @@ textUnderlinePosition2 :
     -> Style
 textUnderlinePosition2 (Value underVal) (Value val) =
     AppendProperty ("text-underline-position:" ++ underVal ++ " " ++ val)
-
-
-{-| A `under` value for the [`textUnderlinePosition`](#textUnderlinePosition) property.
-
-    textUnderlinePosition under
-
--}
-under : Value { provides | under : Supported }
-under =
-    Value "under"
 
 
 
@@ -15028,7 +15041,7 @@ lineBreak :
         }
     -> Style
 lineBreak (Value value) =
-    AppendProperty ("line-break:" ++ "value")
+    AppendProperty ("line-break:" ++ value)
 
 
 {-| Sets `manual` value for usage with [`hyphens`](#hyphens).
@@ -16619,6 +16632,261 @@ hanging =
 eachLine : Value { provides | eachLine : Supported }
 eachLine =
     Value "each-line"
+
+
+{-| Sets the [`text-emphasis`](https://css-tricks.com/almanac/properties/t/text-emphasis/) property.
+
+This is for drawing attention towards textual elements in a way that is commonly
+used in East Asian languages.
+
+    textEmphasis (hex "ff0000")
+
+    textEmphasis sesame
+
+    textEmphasis2 triangle (hex "00ff00")
+
+-}
+textEmphasis :
+    BaseValue
+        (ColorSupported
+            { none : Supported
+            , filled : Supported
+            , open : Supported
+            , dot : Supported
+            , circle : Supported
+            , doubleCircle : Supported
+            , triangle : Supported
+            , sesame : Supported
+            , string : Supported
+            }
+        )
+    -> Style
+textEmphasis (Value value) =
+    AppendProperty ("text-emphasis:" ++ value)
+
+
+{-| Sets the [`text-emphasis`](https://css-tricks.com/almanac/properties/t/text-emphasis/) property.
+
+This 2-argument form sets [`text-emphasis-style`](#textEmphasisStyle) and [`textEmphasisColor`](#textEmphasisColor) in a single declaration.
+
+    textEmphasis2 filled (hex "ff0000")
+-}
+textEmphasis2 :
+    BaseValue
+        { none : Supported
+        , filled : Supported
+        , open : Supported
+        , dot : Supported
+        , circle : Supported
+        , doubleCircle : Supported
+        , triangle : Supported
+        , sesame : Supported
+        , string : Supported
+        }
+    ->
+        BaseValue
+            (ColorSupported a)
+    -> Style
+textEmphasis2 (Value value1) (Value value2) =
+    AppendProperty
+        ("text-emphasis:"
+            ++ value1
+            ++ " "
+            ++ value2
+        )
+
+
+{-| Sets the [`text-emphasis-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-style) property.
+
+    textEmphasisStyle none
+
+    textEmphasisStyle open
+
+    textEmphasisStyle (string "🐯")
+-}
+textEmphasisStyle :
+    BaseValue
+        { none : Supported
+        , filled : Supported
+        , open : Supported
+        , dot : Supported
+        , circle : Supported
+        , doubleCircle : Supported
+        , triangle : Supported
+        , sesame : Supported
+        , string : Supported
+        }
+    -> Style
+textEmphasisStyle (Value value) =
+    AppendProperty ("text-emphasis-style:" ++ value)
+
+
+{-| Sets the [`text-emphasis-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color) property.
+
+    textEmphasisColor currentcolor
+
+    textemphasisColor (hex "0000ff")
+-}
+textEmphasisColor :
+    BaseValue
+        (ColorSupported a)
+    -> Style
+textEmphasisColor (Value value) =
+    AppendProperty ("text-emphasis-color:" ++ value)
+
+
+{-| Sets the [`text-emphasis-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-style) property when you want to use two arguments - one for `filled` or `open`, and one for the shape style.
+
+    textEmphasisStyle filled sesame
+
+    textEmphasisStyle open dot
+-}
+textEmphasisStyle2 :
+    BaseValue
+        { filled : Supported
+        , open : Supported
+        }
+    -> BaseValue
+        { dot : Supported
+        , circle : Supported
+        , doubleCircle : Supported
+        , triangle : Supported
+        , sesame : Supported
+        }
+    -> Style
+textEmphasisStyle2 (Value val1) (Value val2) =
+    AppendProperty
+        ("text-emphasis-style:"
+        ++ val1
+        ++ " "
+        ++ val2
+        )
+
+
+{-| Sets the [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position) property.
+
+This is the one argument version, which is limited to setting global values.
+
+If you want to specify the positions of the text-emphasis, you must use the [2-argument form](#textEmphasisPosition2).
+
+    textEmphasisPosition inherit
+
+    textEmphasisPosition revert
+
+    textEmphasisPosition2 over left_
+
+    textEmphasisPosition2 under right_
+
+-}
+textEmphasisPosition :
+    BaseValue a
+    -> Style
+textEmphasisPosition (Value value) =
+    AppendProperty ("text-emphasis-position:" ++ value)
+
+
+{-| Sets the the [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position) property.
+
+This is the 2-argument form that lets you specify the positions of the emphasis.
+
+if you want to apply global values, you must use the [1-argument form](#textEmphasisPosition).
+
+    textEmphasisPosition inherit
+
+    textEmphasisPosition revert
+
+    textEmphasisPosition2 over left_
+
+    textEmphasisPosition2 under right_
+
+-}
+textEmphasisPosition2 :
+    BaseValue
+        { over : Supported
+        , under : Supported
+        }
+    -> BaseValue
+        { left_ : Supported
+        , right_ : Supported
+        }
+    -> Style
+textEmphasisPosition2 (Value val1) (Value val2) =
+    AppendProperty
+        ("text-emphasis-position:"
+        ++ val1
+        ++ " "
+        ++ val2
+        )
+
+
+{-| The `filled` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis filled
+
+-}
+filled : Value { provides | filled : Supported }
+filled =
+    Value "filled"
+
+
+{-| The `open` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis open
+
+-}
+open : Value { provides | open : Supported }
+open =
+    Value "open"
+
+
+{-| The `dot` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis dot
+
+-}
+dot : Value { provides | dot : Supported }
+dot =
+    Value "dot"
+
+
+{-| The `doubleCircle` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis doubleCircle
+
+-}
+doubleCircle : Value { provides | doubleCircle : Supported }
+doubleCircle =
+    Value "double-circle"
+
+
+{-| The `triangle` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis triangle
+
+-}
+triangle : Value { provides | triangle : Supported }
+triangle =
+    Value "triangle"
+
+
+{-| The `sesame` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis sesame
+
+-}
+sesame : Value { provides | sesame : Supported }
+sesame =
+    Value "sesame"
+
+
+{-| The `over` value used in [`textEmphasisPosition2`](#textEmphasisPosition2).
+
+    textEmphasisPosition2 over left_
+
+-}
+over : Value { provides | over : Supported }
+over =
+    Value "over"
 
 
 {-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
