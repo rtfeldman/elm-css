@@ -118,6 +118,7 @@ module Css exposing
     , wavy, underline, overline, lineThrough
     , textStroke, textStroke2, textStrokeColor, textStrokeWidth
     , textIndent, textIndent2, textIndent3, hanging, eachLine
+    , textUnderlineOffset
     , textEmphasis, textEmphasis2, textEmphasisStyle, textEmphasisStyle2, textEmphasisColor, textEmphasisPosition, textEmphasisPosition2, filled, open, dot, doubleCircle, triangle, sesame, over
     , borderCollapse
     , collapse, separate
@@ -636,6 +637,8 @@ Other values you can use for flex item alignment:
 @docs textStroke, textStroke2, textStrokeColor, textStrokeWidth
 
 @docs textIndent, textIndent2, textIndent3, hanging, eachLine
+
+@docs textUnderlineOffset
 
 @docs textEmphasis, textEmphasis2, textEmphasisStyle, textEmphasisStyle2, textEmphasisColor, textEmphasisPosition, textEmphasisPosition2, filled, open, dot, doubleCircle, triangle, sesame, over
 
@@ -16660,6 +16663,22 @@ eachLine =
     Value "each-line"
 
 
+{-| Sets the [text-underline-offset](https://css-tricks.com/almanac/properties/t/text-underline-offset/) property.
+
+    textUnderlineOffset (pct 5)
+-}
+textUnderlineOffset :
+    BaseValue
+        ( LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+textUnderlineOffset (Value value) =
+    AppendProperty ("text-underline-offset:" ++ value)
+
+
 {-| Sets the [`text-emphasis`](https://css-tricks.com/almanac/properties/t/text-emphasis/) property.
 
 This is for drawing attention towards textual elements in a way that is commonly
@@ -16747,20 +16766,6 @@ textEmphasisStyle (Value value) =
     AppendProperty ("text-emphasis-style:" ++ value)
 
 
-{-| Sets the [`text-emphasis-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color) property.
-
-    textEmphasisColor currentcolor
-
-    textemphasisColor (hex "0000ff")
--}
-textEmphasisColor :
-    BaseValue
-        (ColorSupported a)
-    -> Style
-textEmphasisColor (Value value) =
-    AppendProperty ("text-emphasis-color:" ++ value)
-
-
 {-| Sets the [`text-emphasis-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-style) property when you want to use two arguments - one for `filled` or `open`, and one for the shape style.
 
     textEmphasisStyle filled sesame
@@ -16787,6 +16792,20 @@ textEmphasisStyle2 (Value val1) (Value val2) =
         ++ " "
         ++ val2
         )
+
+
+{-| Sets the [`text-emphasis-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color) property.
+
+    textEmphasisColor currentcolor
+
+    textemphasisColor (hex "0000ff")
+-}
+textEmphasisColor :
+    BaseValue
+        (ColorSupported a)
+    -> Style
+textEmphasisColor (Value value) =
+    AppendProperty ("text-emphasis-color:" ++ value)
 
 
 {-| Sets the [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position) property.
