@@ -127,7 +127,7 @@ module Css exposing
     , direction, ltr, rtl
     , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
     , textOrientation
-    , mixed, sideways, upright
+    , mixed, sideways, sidewaysRight, upright, useGlyphOrientation
     , textRendering
     , geometricPrecision, optimizeLegibility, optimizeSpeed
     , textTransform
@@ -710,7 +710,7 @@ Other values you can use for flex item alignment:
 # Text Orientation
 
 @docs textOrientation
-@docs mixed, sideways, upright
+@docs mixed, sideways, sidewaysRight, upright, useGlyphOrientation
 
 
 # Text Rendering
@@ -11646,14 +11646,17 @@ textOrientation :
     BaseValue
         { mixed : Supported
         , sideways : Supported
+        , sidewaysRight : Supported
         , upright : Supported
+        , useGlyphOrientation : Supported
         }
     -> Style
 textOrientation (Value str) =
     AppendProperty ("text-orientation:" ++ str)
 
 
-{-| A `mixed` value for the [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation) property.
+{-| A `mixed` value for the
+[`textOrientation`](#textOrientation) property.
 
     textOrientation mixed
 
@@ -11663,7 +11666,8 @@ mixed =
     Value "mixed"
 
 
-{-| A `sideways` value for the [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation) property.
+{-| A `sideways` value for the
+[`textOrientation`](#textOrientation) property.
 
     textOrientation sideways
 
@@ -11673,7 +11677,19 @@ sideways =
     Value "sideways"
 
 
-{-| A `upright` value for the [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation) property.
+{-| A `sideways-right` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation sidewaysRight
+
+-}
+sidewaysRight : Value { provides | sidewaysRight : Supported }
+sidewaysRight =
+    Value "sideways-right"
+
+
+{-| A `upright` value for the
+[`textOrientation`](#textOrientation) property.
 
     textOrientation upright
 
@@ -11682,6 +11698,16 @@ upright : Value { provides | upright : Supported }
 upright =
     Value "upright"
 
+
+{-| A `use-glyph-orientation` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation useGlyphOrientation
+
+-}
+useGlyphOrientation : Value { provides | useGlyphOrientation : Supported }
+useGlyphOrientation =
+    Value "use-glyph-orientation"
 
 
 -- TEXT RENDERING --
