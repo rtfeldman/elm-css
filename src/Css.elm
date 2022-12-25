@@ -17,7 +17,7 @@ module Css exposing
     , block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
     , x, y, z
     , stretch, center
-    , contentBox, borderBox, paddingBox
+    , contentBox, borderBox, paddingBox, fillBox, strokeBox, viewBox
     , baseline, sub, super, ruby, fullWidth, under, circle
     , hidden, visible
     , normal, strict, all_, both, always, scroll, column
@@ -159,14 +159,14 @@ module Css exposing
     , strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
     , strokeLinecap, butt, square
     , strokeBreak, boundingBox, slice, clone
-    , strokeOrigin, fillBox, strokeBox
+    , strokeOrigin
     , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
     , paintOrder, paintOrder2, paintOrder3, markers
     , columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan
-    , transform, transforms, transformOrigin, transformOrigin2
+    , transform, transforms, transformOrigin, transformOrigin2, transformBox
     , TransformFunction, TransformFunctionSupported
     , matrix, matrix3d
     , perspective, perspectiveOrigin, perspectiveOrigin2
@@ -313,7 +313,7 @@ Sometimes these keywords mean other things too.
 
 ## Sizing, clip and origin values
 
-@docs contentBox, borderBox, paddingBox
+@docs contentBox, borderBox, paddingBox,  fillBox, strokeBox, viewBox
 
 ## Typographic values
 
@@ -813,7 +813,7 @@ Other values you can use for flex item alignment:
 @docs strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
 @docs strokeLinecap, butt, square
 @docs strokeBreak, boundingBox, slice, clone
-@docs strokeOrigin, fillBox, strokeBox
+@docs strokeOrigin
 @docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
 @docs strokeDashJustify, compress, dashes, gaps
 
@@ -832,7 +832,7 @@ Other values you can use for flex item alignment:
 
 # Transformation
 
-@docs transform, transforms, transformOrigin, transformOrigin2
+@docs transform, transforms, transformOrigin, transformOrigin2, transformBox
 @docs TransformFunction, TransformFunctionSupported
 
 
@@ -1825,6 +1825,38 @@ paddingBox =
     Value "padding-box"
 
 
+{-| The `fill-box` value used by [`strokeOrigin`](#strokeOrigin)
+and [`transformBox`](#transformBox).
+
+    strokeOrigin fillBox
+
+    transformBox fillBox
+
+-}
+fillBox : Value { provides | fillBox : Supported }
+fillBox =
+    Value "fill-box"
+
+
+{-| The `stroke-box` value used by [`strokeOrigin`](#strokeOrigin)
+and [`transformBox`](#transformBox).
+
+    strokeOrigin strokeBoxx
+
+    transformBox strokeBox
+-}
+strokeBox : Value { provides | strokeBox : Supported }
+strokeBox =
+    Value "stroke-box"
+
+
+{-| The `view-box` value used by [`transformBox`](#transformBox).
+
+    transformBox viewBox
+-}
+viewBox : Value { provides | viewBox : Supported }
+viewBox =
+    Value "view-box"
 
 
 {-| The `baseline` value, used in the following properties:
@@ -13328,25 +13360,6 @@ strokeOrigin (Value val) =
     AppendProperty ("stroke-origin:" ++ val)
 
 
-{-| A `fillBox` value for the [`strokeOrigin`](#strokeOrigin) property.
-
-      strokeOrigin fillBox
-
--}
-fillBox : Value { provides | fillBox : Supported }
-fillBox =
-    Value "fill-box"
-
-
-{-| A `strokeBox` value for the [`strokeOrigin`](#strokeOrigin) property.
-
-      strokeOrigin strokeBox
-
--}
-strokeBox : Value { provides | strokeBox : Supported }
-strokeBox =
-    Value "stroke-box"
-
 
 {-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
 
@@ -18234,6 +18247,26 @@ transformOrigin2 :
     -> Style
 transformOrigin2 (Value vert) (Value horiz) =
     AppendProperty ("transform-origin:" ++ vert ++ " " ++ horiz)
+
+
+{-| Sets the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
+
+    transformBox contentBox
+
+    transformBox fillBox
+-}
+transformBox :
+    BaseValue
+        { contentBox : Supported
+        , borderBox : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , viewBox : Supported
+        }
+    -> Style
+transformBox (Value val) =
+    AppendProperty ("transform-box:" ++ val)
+
 
 
 
