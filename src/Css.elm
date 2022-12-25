@@ -12,24 +12,29 @@ module Css exposing
     , Time, TimeSupported, s, ms
     , deg, grad, rad, turn
     , url
-    , auto, none, normal, strict, all_, both, always
-    , hidden, visible
+    , auto, none
+    , left_, right_, top_, bottom_
+    , block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
+    , x, y, z
+    , stretch, center
     , contentBox, borderBox, paddingBox
-    , left_, right_, top_, bottom_, block, inline, start, end, column
-    , x, y
-    , stretch, center, content, fill_, stroke, text, style
-    , clip, cover, contain_
     , baseline, sub, super, ruby, fullWidth, under, circle
-    , pseudoClass, active, checked, disabled, empty, enabled
+    , hidden, visible
+    , normal, strict, all_, both, always, scroll, column
+    , content, fill_, stroke, text, style
+    , clip, cover, contain_
+    , pseudoClass
+    , active, checked, disabled, empty, enabled
     , firstChild, firstOfType, focus, fullscreen, hover, inRange
     , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
     , onlyOfType, outOfRange, readOnly, readWrite, required
     , root, scope, target, valid, visited
-    , pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
+    , pseudoElement
+    , before, after, backdrop, cue, marker, placeholder, selection
     , width, minWidth, maxWidth, height, minHeight, maxHeight
     , blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
     , minContent, maxContent, fitContent
-    , backgroundAttachment, backgroundAttachments, scroll, local
+    , backgroundAttachment, backgroundAttachments, local
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
     , ImageSupported, Image
@@ -148,7 +153,7 @@ module Css exposing
     , wordBreak
     , breakAll, keepAll
     , float
-    , clear, inlineStart, inlineEnd
+    , clear
     , visibility
     , fill
     , strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
@@ -166,7 +171,7 @@ module Css exposing
     , matrix, matrix3d
     , perspective, perspectiveOrigin, perspectiveOrigin2
     , perspective_
-    , rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3, z
+    , rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3
     , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
     , translate, translate2, translateX, translateY, translateZ, translate3d
@@ -232,7 +237,7 @@ functions let you define custom properties and selectors, respectively.
 
 # General Values
 
-All CSS properties can have the values `unset`, `initial`, and `inherit`.
+All CSS properties can have the values `unset`, `initial`, `inherit` and `revert`.
 
 @docs unset, initial, inherit
 
@@ -271,22 +276,65 @@ All CSS properties can have the values `unset`, `initial`, and `inherit`.
 @docs url
 
 
-# Shared Keywords
 
-Many different kinds of CSS properties use these keyword values.
 
-@docs auto, none, normal, strict, all_, both, always
-@docs hidden, visible
+# Shared/Grouped keyword values
+
+Many different kinds of CSS properties use the same keyword values,
+so they're put in this place for easier understanding.
+
+Some of these keywords are used only in one property but they fit
+into a group of functionality (like Logical Values), so they're also grouped here.
+
+
+## Very common keywords
+
+@docs auto, none
+
+## (usually) Absolute positional values
+
+@docs left_, right_, top_, bottom_
+
+## (usually) Logical Values
+
+Logical values are those that set properties by their relation to the user's reading direction.
+
+Sometimes these keywords mean other things too.
+
+@docs block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
+
+## Axis values
+
+@docs x, y, z
+
+## Alignment values
+
+@docs stretch, center
+
+## Sizing, clip and origin values
+
 @docs contentBox, borderBox, paddingBox
-@docs left_, right_, top_, bottom_, block, inline, start, end, column
-@docs x, y
-@docs stretch, center, content, fill_, stroke, text, style
-@docs clip, cover, contain_
+
+## Typographic values
+
 @docs baseline, sub, super, ruby, fullWidth, under, circle
+
+## Visibility
+
+@docs hidden, visible
+
+## Miscellaneous shared
+
+@docs normal, strict, all_, both, always, scroll, column
+@docs content, fill_, stroke, text, style
+@docs clip, cover, contain_
+
+
 
 # Pseudo-Classes
 
-@docs pseudoClass, active, checked, disabled, empty, enabled
+@docs pseudoClass
+@docs active, checked, disabled, empty, enabled
 @docs firstChild, firstOfType, focus, fullscreen, hover, inRange
 @docs indeterminate, invalid, lastChild, lastOfType, link, onlyChild
 @docs onlyOfType, outOfRange, readOnly, readWrite, required
@@ -295,7 +343,8 @@ Many different kinds of CSS properties use these keyword values.
 
 # Pseudo-Elements
 
-@docs pseudoElement, before, after, backdrop, cue, marker, placeholder, selection
+@docs pseudoElement
+@docs before, after, backdrop, cue, marker, placeholder, selection
 
 
 # Sizing
@@ -310,7 +359,7 @@ Many different kinds of CSS properties use these keyword values.
 
 ## Background Attachment
 
-@docs backgroundAttachment, backgroundAttachments, scroll, local
+@docs backgroundAttachment, backgroundAttachments, local
 
 
 ## Background Blend Mode
@@ -743,7 +792,7 @@ Other values you can use for flex item alignment:
 ## Float
 
 @docs float
-@docs clear, inlineStart, inlineEnd
+@docs clear
 
 
 # Visibility
@@ -800,7 +849,7 @@ Other values you can use for flex item alignment:
 
 ## Rotation
 
-@docs rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3, z
+@docs rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3
 
 
 ## Scaling (resizing)
@@ -1305,7 +1354,7 @@ url str =
 -- SHARED VALUES --
 
 
-{-| The `auto` value used in many properties such as [`width`](#width),
+{-| The `auto` value used in many properties such as (but not limited to) [`width`](#width),
 [`zoom`](#zoom),
 [`outlineStyle`](#outlineStyle),
 and [`flexBasis`](#flexBasis).
@@ -1322,7 +1371,7 @@ auto =
     Value "auto"
 
 
-{-| The `none` value used in many properties such as [`display`](#display),
+{-| The `none` value used in many properties such as (but not limited to) [`display`](#display),
 [`borderStyle`](#borderStyle),
 [`maxWidth`](#maxWidth),
 [`clear`](#clear),
@@ -1343,128 +1392,375 @@ none =
     Value "none"
 
 
-{-| The `normal` value, which can be used with such properties as:
 
-  - [`fontVariantCaps`](#fontVariantCaps)
-  - [`fontKerning`](#fontKerning)
-  - [`fontLanguageOverride`](#fontLanguageOverride)
-  - [`whiteSpace`](#whiteSpace)
-  - [`wordBreak`](#wordBreak)
-  - [`columnGap`](#columnGap)
-  - [`zoom`](#zoom)
-  - [`animationDirection`](#animationDirection)
+{-| The `left` value, used in many properties such as:
+
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`clear`](#clear)
+  - [`float`](#float)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`pageBreakAfter`](#pageBreakAfter)
+  - [`textAlign`](#textAlign)
+
+```
+backgroundPosition left_
+
+clear left_
+
+float left_
+
+justifyContent left_
+
+justifyItems left_
+
+justifySelf left_
+
+pageBreakAfter left_
+
+textAlign left_
+```
+
+The value is called `left_` instead of `left` because [`left` is already a property function](#left).
+
+-}
+left_ : Value { provides | left_ : Supported }
+left_ =
+    Value "left"
+
+
+{-| The `right` value, used in many properties such as:
+
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`clear`](#clear)
+  - [`float`](#float)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`pageBreakAfter`](#pageBreakAfter)
+  - [`textAlign`](#textAlign)
+
+```
+backgroundPosition right_
+
+clear right_
+
+float right_
+
+justifyContent right_
+
+justifyItems right_
+
+justifySelf right_
+
+pageBreakAfter right_
+
+textAlign right_
+```
+
+The value is called `right_` instead of `right` because [`right` is already a property function](#right).
+
+-}
+right_ : Value { provides | right_ : Supported }
+right_ =
+    Value "right"
+
+
+{-| The `top` value, used in the following properties:
+
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`captionSide`](#captionSide)
+  - [`objectPosition2`](#objectPosition2)
+  - [`perspectiveOrigin2`](#perspectiveOrigin2)
+  - [`strokePosition2`](#strokePosition2)
+  - [`transformOrigin`](#transformOrigin)
+  - [`verticalAlign`](#verticalAlign)
+
+```
+backgroundPosition top_
+
+captionSide top_
+
+objectPosition2 right_ top_
+
+perspectiveOrigin2 left_ top_
+
+transformOrigin top_
+
+verticalAlign top_
+```
+
+The value is called `top_` instead of `top` because [`top` is already a property function](#top).
+
+-}
+top_ : Value { provides | top_ : Supported }
+top_ =
+    Value "top"
+
+
+{-| The `bottom` value, used in the following properties:
+
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`captionSide`](#captionSide)
+  - [`objectPosition2`](#objectPosition2)
+  - [`perspectiveOrigin2`](#perspectiveOrigin2)
+  - [`strokePosition2`](#strokePosition2)
+  - [`transformOrigin`](#transformOrigin)
+  - [`verticalAlign`](#verticalAlign)
+
+```
+backgroundPosition bottom_
+
+captionSide bottom_
+
+objectPosition2 right_ bottom_
+
+perspectiveOrigin2 left_ bottom_
+
+transformOrigin bottom_
+
+verticalAlign bottom_
+```
+
+The value is called `bottom_` instead of `bottom` because [`bottom` is already a property function](#bottom).
+
+-}
+bottom_ : Value { provides | bottom_ : Supported }
+bottom_ =
+    Value "bottom"
+
+
+{-| The `block` value.
+
+This is a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/) used by [`display`](#display) and [`resize`](#resize).
+
+
+    display block
+
+    resize block
+
+-}
+block : Value { provides | block : Supported }
+block =
+    Value "block"
+
+
+{-| The `inline` value.
+
+This is a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/) used by [`display`](#display) and [`resize`](#resize).
+
+    display inline
+
+    resize inline
+
+-}
+inline : Value { provides | inline : Supported }
+inline =
+    Value "inline"
+
+
+{-| The `start` value.
+
+It's used in the following properties as a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/):
+
   - [`alignItems`](#alignItems)
-  - [`lineBreak`](#lineBreak)
+  - [`alignContent`](#alignContent)
+  - [`alignSelf`](#alignSelf)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+
 
 ```
-alignItems normal
+alignContent start
 
-columnGap normal
+justifyItems estartnd
 
-fontVariantCaps normal
+```
 
-whiteSpace normal
+It's also used as an animation keyword used in [`steps2`](#steps2).
 
-wordBreak normal
-
-zoom normal
+```
+steps2 3 start
 ```
 
 -}
-normal : Value { provides | normal : Supported }
-normal =
-    Value "normal"
+start : Value { provides | start : Supported }
+start =
+    Value "start"
 
 
-{-| Sets `strict` value for usage with [`lineBreak`](#lineBreak) and [`contain`](#contain).
+{-| The `end` value.
 
-    contain strict
+It's used in the following properties as a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/):
 
-    lineBreak strict
-
--}
-strict : Value { provides | strict : Supported }
-strict =
-    Value "strict"
-
-
-{-| The `all` value used in properties such as [`columnSpan`](#columnSpan)
-and [`pointerEvents`](#pointerEvents).
-
-    columnSpan all_
-
-    pointerEvents all_
-
--}
-all_ : Value { provides | all_ : Supported }
-all_ =
-    Value "all"
+  - [`alignItems`](#alignItems)
+  - [`alignContent`](#alignContent)
+  - [`alignSelf`](#alignSelf)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
 
 
-{-| Sets `both` value for usage with [`clear`](#clear) and [`resize`](#resize).
+```
+alignContent end
 
-      clear both
+justifyItems end
 
-      resize both
+```
+
+It's also used as an animation keyword used in [`steps2`](#steps2).
+
+```
+steps2 3 end
+```
 
 -}
-both : Value { provides | both : Supported }
-both =
-    Value "both"
+end : Value { provides | end : Supported }
+end =
+    Value "end"
 
 
-{-| Sets `always` value for usage with [`scrollSnapStop`](#scrollSnapStop), [`pageBreakBefore`](#pageBreakBefore), and [`pageBreakAfter`](#pageBreakAfter).
+{-| The `block-start` value, which is a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/).
+It can be used with [`captionSide`](#captionSide).
 
-    scrollSnapStop always
+    captionSide blockStart
+-}
+blockStart : Value { provides | blockEnd : Supported }
+blockStart =
+    Value "block-start"
 
-    pageBreakBefore always
 
-    pageBreakAfter always
+{-| The `block-end` value, which is a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/).
+It can be used with [`captionSide`](#captionSide).
+
+    captionSide blockEnd
+-}
+blockEnd : Value { provides | blockEnd : Supported }
+blockEnd =
+    Value "block-end"
+
+
+{-| Sets `inline-start`, which is a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/).
+It can be used with the following properties:
+
+- [`captionSide`](#captionSide)
+- [`clear`](#clear)
+- [`float`](#float)
+
+```
+    clear inlineStart
+
+    captionSide inlineStart
+
+    float inlineStart
+```
+-}
+inlineStart : Value { provides | inlineStart : Supported }
+inlineStart =
+    Value "inline-start"
+
+
+{-| Sets `inline-end`, which is a [CSS Logical value](https://css-tricks.com/css-logical-properties-and-values/).
+It can be used with the following properties:
+
+- [`captionSide`](#captionSide)
+- [`clear`](#clear)
+- [`float`](#float)
+
+```
+    clear inlineEnd
+
+    captionSide inlineEnd
+
+    float inlineEnd
+```
+-}
+inlineEnd : Value { provides | inlineEnd : Supported }
+inlineEnd =
+    Value "inline-end"
+
+
+{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
+
+    scrollSnapType2 x mandatory
+
+    rotate x (deg 10)
 
 -}
-always : Value { provides | always : Supported }
-always =
-    Value "always"
+x : Value { provides | x : Supported }
+x =
+    Value "x"
 
 
-{-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`borderStyle`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
+{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2)
+and [`rotate2`](#rotate2).
 
-    visibility hidden
+    scrollSnapType2 y mandatory
 
-    overflow hidden
-
-    borderStyle hidden
-
--}
-hidden : Value { provides | hidden : Supported }
-hidden =
-    Value "hidden"
-
-
-{-| The `visible` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events).
-
-    visibility visible
-
-    overflow visible
-
-    pointerEvents visible
+    rotate y (deg 50)
 
 -}
-visible : Value { provides | visible : Supported }
-visible =
-    Value "visible"
+y : Value { provides | y : Supported }
+y =
+    Value "y"
 
 
-{-| The `scroll` value used for properties such as [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) and [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment).
+{-| Sets `z` value for usage with [`rotate2`](#rotate2).
 
-    overflow scroll
-
-    backgroundAttachment scroll
+    rotate z (deg 100)
 
 -}
-scroll : Value { provides | scroll : Supported }
-scroll =
-    Value "scroll"
+z : Value { provides | z : Supported }
+z =
+    Value "z"
+
+
+{-| The `stretch` value used in the following properties:
+
+  - [`alignContent`](#alignContent)
+  - [`alignItems`](#alignItems)
+  - [`alignSelf`](#alignSelf)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`strokeDashJustify`](#strokeDashJustify)
+
+```
+alignContent stretch
+
+strokeDashJustify stretch
+```
+
+-}
+stretch : Value { provides | stretch : Supported }
+stretch =
+    Value "stretch"
+
+
+{-| The `center` value, used in many properties such as:
+
+  - [`alignContent`](#alignContent)
+  - [`alignItems`](#alignItems)
+  - [`alignSelf`](#alignSelf)
+  - [`backgroundPosition`](#backgroundPosition)
+  - [`justifyContent`](#justifyContent)
+  - [`justifyItems`](#justifyItems)
+  - [`justifySelf`](#justifySelf)
+  - [`scrollSnapAlign`](#scrollSnapAlign)
+
+```
+backgroundPosition enter
+
+justifyContent center
+```
+
+-}
+center : Value { provides | center : Supported }
+center =
+    Value "center"
 
 
 {-| The `content-box` value, used in the following properties:
@@ -1529,432 +1825,6 @@ paddingBox =
     Value "padding-box"
 
 
-{-| The `left` value, used in many properties such as:
-
-  - [`backgroundPosition`](#backgroundPosition)
-  - [`clear`](#clear)
-  - [`float`](#float)
-  - [`justifyContent`](#justifyContent)
-  - [`justifyItems`](#justifyItems)
-  - [`justifySelf`](#justifySelf)
-  - [`pageBreakAfter`](#pageBreakAfter)
-  - [`textAlign`](#textAlign)
-
-```
-backgroundPosition left_
-
-clear left_
-
-float left_
-
-justifyContent left_
-
-justifyItems left_
-
-justifySelf left_
-
-pageBreakAfter left_
-
-textAlign left_
-```
-
-The value is called `left_` instead of `left` because [`left` is already a function](#left).
-
--}
-left_ : Value { provides | left_ : Supported }
-left_ =
-    Value "left"
-
-
-{-| The `right` value, used in many properties such as:
-
-  - [`backgroundPosition`](#backgroundPosition)
-  - [`clear`](#clear)
-  - [`float`](#float)
-  - [`justifyContent`](#justifyContent)
-  - [`justifyItems`](#justifyItems)
-  - [`justifySelf`](#justifySelf)
-  - [`pageBreakAfter`](#pageBreakAfter)
-  - [`textAlign`](#textAlign)
-
-```
-backgroundPosition right_
-
-clear right_
-
-float right_
-
-justifyContent right_
-
-justifyItems right_
-
-justifySelf right_
-
-pageBreakAfter right_
-
-textAlign right_
-```
-
-The value is called `right_` instead of `right` because [`right` is already a function](#right).
-
--}
-right_ : Value { provides | right_ : Supported }
-right_ =
-    Value "right"
-
-
-{-| The `top` value, used in the following properties:
-
-  - [`backgroundPosition`](#backgroundPosition)
-  - [`captionSide`](#captionSide)
-  - [`objectPosition2`](#objectPosition2)
-  - [`perspectiveOrigin2`](#perspectiveOrigin2)
-  - [`strokePosition2`](#strokePosition2)
-  - [`transformOrigin`](#transformOrigin)
-  - [`verticalAlign`](#verticalAlign)
-
-```
-backgroundPosition top_
-
-captionSide top_
-
-objectPosition2 right_ top_
-
-perspectiveOrigin2 left_ top_
-
-transformOrigin top_
-
-verticalAlign top_
-```
-
-The value is called `top_` instead of `top` because [`top` is already a function](#top).
-
--}
-top_ : Value { provides | top_ : Supported }
-top_ =
-    Value "top"
-
-
-{-| The `bottom` value, used in the following properties:
-
-  - [`backgroundPosition`](#backgroundPosition)
-  - [`captionSide`](#captionSide)
-  - [`objectPosition2`](#objectPosition2)
-  - [`perspectiveOrigin2`](#perspectiveOrigin2)
-  - [`strokePosition2`](#strokePosition2)
-  - [`transformOrigin`](#transformOrigin)
-  - [`verticalAlign`](#verticalAlign)
-
-```
-backgroundPosition bottom_
-
-captionSide bottom_
-
-objectPosition2 right_ bottom_
-
-perspectiveOrigin2 left_ bottom_
-
-transformOrigin bottom_
-
-verticalAlign bottom_
-```
-
-The value is called `bottom_` instead of `bottom` because [`bottom` is already a function](#bottom).
-
--}
-bottom_ : Value { provides | bottom_ : Supported }
-bottom_ =
-    Value "bottom"
-
-
-{-| The `block` value used by [`display`](#display) and [`resize`](#resize).
-
-    display block
-
-    resize block
-
--}
-block : Value { provides | block : Supported }
-block =
-    Value "block"
-
-
-{-| The `inline` value used by [`display`](#display) and [`resize`](#resize).
-
-    display inline
-
-    resize inline
-
--}
-inline : Value { provides | inline : Supported }
-inline =
-    Value "inline"
-
-
-{-| The `start` value, used in the following properties:
-
-  - [`alignItems`](#alignItems)
-  - [`alignContent`](#alignContent)
-  - [`alignSelf`](#alignSelf)
-  - [`justifyContent`](#justifyContent)
-  - [`justifyItems`](#justifyItems)
-  - [`justifySelf`](#justifySelf)
-  - [`steps2`](#steps2)
-
-```
-alignContent start
-
-steps2 3 start
-```
-
--}
-start : Value { provides | start : Supported }
-start =
-    Value "start"
-
-
-{-| The `end` value, used in the following properties:
-
-  - [`alignItems`](#alignItems)
-  - [`alignContent`](#alignContent)
-  - [`alignSelf`](#alignSelf)
-  - [`justifyContent`](#justifyContent)
-  - [`justifyItems`](#justifyItems)
-  - [`justifySelf`](#justifySelf)
-  - [`steps2`](#steps2)
-
-```
-alignContent end
-
-steps2 3 end
-```
-
--}
-end : Value { provides | end : Supported }
-end =
-    Value "end"
-
-
-{-| The `column` value, used in [`flex-direction`](#flexDirection),
-[`break-before`](#breakBefore) and [`break-after`](#breakAfter) properties.
-
-    flexDirection column
-
-    breakBefore column
-
-    breakAfter column
-
--}
-column : Value { provides | column : Supported }
-column =
-    Value "column"
-
-
-{-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
-and [`rotate2`](#rotate2).
-
-    scrollSnapType2 x mandatory
-
-    rotate x (deg 10)
-
--}
-x : Value { provides | x : Supported }
-x =
-    Value "x"
-
-
-{-| Sets `y` value for usage with [`scrollSnapType2`](#scrollSnapType2)
-and [`rotate2`](#rotate2).
-
-    scrollSnapType2 y mandatory
-
-    rotate y (deg 50)
-
--}
-y : Value { provides | y : Supported }
-y =
-    Value "y"
-
-
-{-| The `stretch` value used in the following properties:
-
-  - [`alignContent`](#alignContent)
-  - [`alignItems`](#alignItems)
-  - [`alignSelf`](#alignSelf)
-  - [`justifyContent`](#justifyContent)
-  - [`justifyItems`](#justifyItems)
-  - [`justifySelf`](#justifySelf)
-  - [`strokeDashJustify`](#strokeDashJustify)
-
-```
-alignContent stretch
-
-strokeDashJustify stretch
-```
-
--}
-stretch : Value { provides | stretch : Supported }
-stretch =
-    Value "stretch"
-
-
-{-| The `center` value, used in many properties such as:
-
-  - [`alignContent`](#alignContent)
-  - [`alignItems`](#alignItems)
-  - [`alignSelf`](#alignSelf)
-  - [`backgroundPosition`](#backgroundPosition)
-  - [`justifyContent`](#justifyContent)
-  - [`justifyItems`](#justifyItems)
-  - [`justifySelf`](#justifySelf)
-  - [`scrollSnapAlign`](#scrollSnapAlign)
-
-```
-backgroundPosition enter
-
-justifyContent center
-```
-
--}
-center : Value { provides | center : Supported }
-center =
-    Value "center"
-
-
-{-| The `content` value used in the following properties:
-
-  - [`flex`](#flex)
-  - [`flex-basis`](#flexBasis)
-  - [`contain`](#contain)
-
-```
-flexBasis content
-
-contain content
-```
-
--}
-content : Value { provides | content : Supported }
-content =
-    Value "content"
-
-
-{-| The `fill` value used in properties such as [`objectFit`](#objectFit),
-[`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
-
-    objectFit fill_
-
-    pointerEvents fill_
-
-    paintOrder2 fill_ markers
-
--}
-fill_ : Value { provides | fill_ : Supported }
-fill_ =
-    Value "fill"
-
-
-{-| The `stroke` value used by [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
-
-    pointerEvents stroke
-
-    paintOrder2 stroke markers
-
--}
-stroke : Value { provides | stroke : Supported }
-stroke =
-    Value "stroke"
-
-
-{-| The `text` value for the [`cursor`](#cursor),
-[`backgroundClip`](#backgroundClip),
-and [`user-select`](#userSelect) properties.
-
-    backgroundClip text
-
-    cursor text
-
-    userSelect text
-
--}
-text : Value { provides | text : Supported }
-text =
-    Value "text"
-
-
-{-| Sets the `style` value for:
-
-  - [`contain`](#contain). **(This value is considered at-risk from being depreciated for this property.)**
-  - [`fontSynthesis`](#fontSynthesis)
-
-```
-    contain style
-
-    fontSynthesis style
-```
-
--}
-style : Value { provides | style : Supported }
-style =
-    Value "style"
-
-
-{-| The `clip` value used by [`overflow`](#overflow) and [`textOverflow`](#textOverflow).
-
-    overflow clip
-
-    overflowX clip
-
-    overflowY clip
-
-    textOverflow clip
-
--}
-clip : Value { provides | clip : Supported }
-clip =
-    Value "clip"
-
-
-{-| Sets `contain` for the following properties:
-
-  - [`backgroundSize`](#backgroundSize) (It always show the whole background
-    image, even if it leaves empty spaces on the sides.)
-  - [`objectFit`](#objectFit) (Replaced content is scaled to maintain proportions within the element's content box.)
-  - [`userSelect`](#userSelect) (Lets selection start within the element but that selection will be contained within that element's bounds.)
-  - [`overscrollBehavior`](#overscrollBehavior) (This means that default scroll overflow behavior
-    is observed inside the element, but scroll chaining will not happen to neighbouring elements.)
-
-```
-backgroundSize contain_
-
-overscrollBehavior contain_
-```
-
-The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a function.
-
--}
-contain_ : Value { provides | contain_ : Supported }
-contain_ =
-    Value "contain"
-
-
-{-| Sets `cover` for the following properties:
-
-  - [`backgroundSize`](#backgroundSize)
-  - [`objectFit`](#objectFit)
-  - [`strokeDashCorner`](#strokeDashCorner)
-  - [`strokeSize`](#strokeSize)
-
-```
-backgroundSize cover
-
-strokeSize cover
-```
-
--}
-cover : Value { provides | cover : Supported }
-cover =
-    Value "cover"
 
 
 {-| The `baseline` value, used in the following properties:
@@ -2071,6 +1941,285 @@ under =
 circle : Value { provides | circle : Supported }
 circle =
     Value "circle"
+
+
+{-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`borderStyle`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
+
+    visibility hidden
+
+    overflow hidden
+
+    borderStyle hidden
+
+-}
+hidden : Value { provides | hidden : Supported }
+hidden =
+    Value "hidden"
+
+
+{-| The `visible` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events).
+
+    visibility visible
+
+    overflow visible
+
+    pointerEvents visible
+
+-}
+visible : Value { provides | visible : Supported }
+visible =
+    Value "visible"
+
+
+{-| The `normal` value, which can be used with such properties as:
+
+  - [`fontVariantCaps`](#fontVariantCaps)
+  - [`fontKerning`](#fontKerning)
+  - [`fontLanguageOverride`](#fontLanguageOverride)
+  - [`whiteSpace`](#whiteSpace)
+  - [`wordBreak`](#wordBreak)
+  - [`columnGap`](#columnGap)
+  - [`zoom`](#zoom)
+  - [`animationDirection`](#animationDirection)
+  - [`alignItems`](#alignItems)
+  - [`lineBreak`](#lineBreak)
+
+```
+alignItems normal
+
+columnGap normal
+
+fontVariantCaps normal
+
+whiteSpace normal
+
+wordBreak normal
+
+zoom normal
+```
+
+-}
+normal : Value { provides | normal : Supported }
+normal =
+    Value "normal"
+
+
+{-| Sets `strict` value for usage with [`lineBreak`](#lineBreak) and [`contain`](#contain).
+
+    contain strict
+
+    lineBreak strict
+
+-}
+strict : Value { provides | strict : Supported }
+strict =
+    Value "strict"
+
+
+{-| The `all` value used in properties such as [`columnSpan`](#columnSpan)
+and [`pointerEvents`](#pointerEvents).
+
+    columnSpan all_
+
+    pointerEvents all_
+
+This value function has an underscore because [`all` is already a property function](#all).
+
+-}
+all_ : Value { provides | all_ : Supported }
+all_ =
+    Value "all"
+
+
+{-| Sets `both` value for usage with [`clear`](#clear) and [`resize`](#resize).
+
+      clear both
+
+      resize both
+
+-}
+both : Value { provides | both : Supported }
+both =
+    Value "both"
+
+
+{-| Sets `always` value for usage with [`scrollSnapStop`](#scrollSnapStop), [`pageBreakBefore`](#pageBreakBefore), and [`pageBreakAfter`](#pageBreakAfter).
+
+    scrollSnapStop always
+
+    pageBreakBefore always
+
+    pageBreakAfter always
+
+-}
+always : Value { provides | always : Supported }
+always =
+    Value "always"
+
+
+{-| The `scroll` value used for properties such as [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow#Values) and [`background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment).
+
+    overflow scroll
+
+    backgroundAttachment scroll
+
+-}
+scroll : Value { provides | scroll : Supported }
+scroll =
+    Value "scroll"
+
+
+{-| The `column` value, used in [`flex-direction`](#flexDirection),
+[`break-before`](#breakBefore) and [`break-after`](#breakAfter) properties.
+
+    flexDirection column
+
+    breakBefore column
+
+    breakAfter column
+
+-}
+column : Value { provides | column : Supported }
+column =
+    Value "column"
+
+
+{-| The `content` value used in the following properties:
+
+  - [`flex`](#flex)
+  - [`flex-basis`](#flexBasis)
+  - [`contain`](#contain)
+
+```
+flexBasis content
+
+contain content
+```
+
+-}
+content : Value { provides | content : Supported }
+content =
+    Value "content"
+
+
+{-| The `fill` value used in properties such as [`objectFit`](#objectFit),
+[`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
+
+    objectFit fill_
+
+    pointerEvents fill_
+
+    paintOrder2 fill_ markers
+
+-}
+fill_ : Value { provides | fill_ : Supported }
+fill_ =
+    Value "fill"
+
+
+{-| The `stroke` value used by [`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
+
+    pointerEvents stroke
+
+    paintOrder2 stroke markers
+
+-}
+stroke : Value { provides | stroke : Supported }
+stroke =
+    Value "stroke"
+
+
+{-| The `text` value for the [`cursor`](#cursor),
+[`backgroundClip`](#backgroundClip),
+and [`user-select`](#userSelect) properties.
+
+    backgroundClip text
+
+    cursor text
+
+    userSelect text
+
+-}
+text : Value { provides | text : Supported }
+text =
+    Value "text"
+
+
+{-| Sets the `style` value for:
+
+  - [`contain`](#contain). **(This value is considered at-risk from being depreciated for this property.)**
+  - [`fontSynthesis`](#fontSynthesis)
+
+```
+    contain style
+
+    fontSynthesis style
+```
+
+-}
+style : Value { provides | style : Supported }
+style =
+    Value "style"
+
+
+{-| The `clip` value used by [`overflow`](#overflow) and [`textOverflow`](#textOverflow).
+
+    overflow clip
+
+    overflowX clip
+
+    overflowY clip
+
+    textOverflow clip
+
+-}
+clip : Value { provides | clip : Supported }
+clip =
+    Value "clip"
+
+
+{-| Sets `cover` for the following properties:
+
+  - [`backgroundSize`](#backgroundSize)
+  - [`objectFit`](#objectFit)
+  - [`strokeDashCorner`](#strokeDashCorner)
+  - [`strokeSize`](#strokeSize)
+
+```
+backgroundSize cover
+
+strokeSize cover
+```
+
+-}
+cover : Value { provides | cover : Supported }
+cover =
+    Value "cover"
+
+
+{-| Sets `contain` for the following properties:
+
+  - [`backgroundSize`](#backgroundSize) (It always show the whole background
+    image, even if it leaves empty spaces on the sides.)
+  - [`objectFit`](#objectFit) (Replaced content is scaled to maintain proportions within the element's content box.)
+  - [`userSelect`](#userSelect) (Lets selection start within the element but that selection will be contained within that element's bounds.)
+  - [`overscrollBehavior`](#overscrollBehavior) (This means that default scroll overflow behavior
+    is observed inside the element, but scroll chaining will not happen to neighbouring elements.)
+
+```
+backgroundSize contain_
+
+overscrollBehavior contain_
+```
+
+The value is called `contain_` instead of `contain` because [`contain`](#contain) is already a property function.
+
+-}
+contain_ : Value { provides | contain_ : Supported }
+contain_ =
+    Value "contain"
+
+
 
 
 -- OVERFLOW --
@@ -4832,7 +4981,7 @@ dividedBy (Value second) =
 
     display block
 
-**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a function](#flex).
+**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a property function](#flex).
 
 -}
 display :
@@ -4875,7 +5024,7 @@ display (Value val) =
 
     display2 block flex_
 
-**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a function](#flex).
+**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a property function](#flex).
 For `display: inline list-item` and similar property values that include `list-item`
 look at [`displayListItem2`](#displayListItem2) and [`displayListItem3`](#displayListItem3).
 
@@ -4947,7 +5096,7 @@ displayListItem3 (Value displayOutside) (Value displayFlow) =
 
     display flex_
 
-The value is called `flex_` instead of `flex` because [`flex` is already a function](#flex).
+The value is called `flex_` instead of `flex` because [`flex` is already a property function](#flex).
 
 -}
 flex_ : Value { provides | flex_ : Supported }
@@ -10560,7 +10709,7 @@ ridge =
 {-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
 [`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
 
-This is called `inset_` rather than `inset` because [`inset` is already a function](#inset).
+This is called `inset_` rather than `inset` because [`inset` is already a property function](#inset).
 
     borderStyle inset_
 
@@ -12111,11 +12260,19 @@ borderSpacing2 (Value valHorizontal) (Value valVertical) =
 
     captionSide bottom_
 
+    captionSide blockStart
+
+    captionSide inlineEnd
+
 -}
 captionSide :
     BaseValue
         { top_ : Supported
         , bottom_ : Supported
+        , blockStart : Supported
+        , blockEnd : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
         }
     -> Style
 captionSide (Value str) =
@@ -12538,12 +12695,16 @@ keepAll =
 
     float right_
 
+    float inlineStart
+
 -}
 float :
     BaseValue
         { none : Supported
         , left_ : Supported
         , right_ : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
         }
     -> Style
 float (Value str) =
@@ -13011,7 +13172,7 @@ strokeWidth (Value val) =
 {-| Sets [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align)
 
 **Note:** This function accepts `inset_` rather than `inset` because
-[`inset` is already a function](#inset).
+[`inset` is already a property function](#inset).
 
       strokeAlign center
       strokeAlign inset_
@@ -14084,7 +14245,7 @@ scale3 (Value xVal) (Value yVal) (Value zVal) =
 
     transform (scale_ 0.7)
 
-This is called `scale_` instead of `scale` because [`scale` is already a function](#scale).
+This is called `scale_` instead of `scale` because [`scale` is already a property function](#scale).
 
 -}
 scale_ : Float -> Value { provides | scale_ : Supported }
@@ -14096,7 +14257,7 @@ scale_ val =
 
     transform (scale2_ 0.7 0.7)
 
-This is called `scale2_` instead of `scale2` because [`scale2` is already a function](#scale2).
+This is called `scale2_` instead of `scale2` because [`scale2` is already a property function](#scale2).
 
 -}
 scale2_ : Float -> Float -> Value { provides | scale2_ : Supported }
@@ -14261,7 +14422,7 @@ rotate2 (Value axisOrVecVal) (Value angleVal) =
 
     transform (rotate_ (deg 30))
 
-This is called `rotate_` instead of `rotate` because [`rotate` is already a function](#rotate).
+This is called `rotate_` instead of `rotate` because [`rotate` is already a property function](#rotate).
 
 -}
 rotate_ :
@@ -14348,17 +14509,6 @@ vec3 vec1Val vec2Val vec3Val =
             ++ " "
             ++ String.fromFloat vec3Val
         )
-
-
-{-| Sets `z` value for usage with [`rotate2`](#rotate2).
-
-    rotate z (deg 100)
-
--}
-z : Value { provides | z : Supported }
-z =
-    Value "z"
-
 
 
 -- PERSPECTIVE
@@ -14452,7 +14602,7 @@ perspectiveOrigin2 (Value xVal) (Value yVal) =
     transform (perspective_ (px 17))
 
 The value is called `perspective_` instead of `perspective` because
-[`perspective`](#perspective) is already a function.
+[`perspective`](#perspective) is already a property function.
 
 -}
 perspective_ :
@@ -15062,26 +15212,6 @@ clear :
     -> Style
 clear (Value val) =
     AppendProperty ("clear:" ++ val)
-
-
-{-| Sets `inline-start` value for usage with [`clear`](#clear).
-
-      clear inlineStart
-
--}
-inlineStart : Value { provides | inlineStart : Supported }
-inlineStart =
-    Value "inline-start"
-
-
-{-| Sets `inline-end` value for usage with [`clear`](#clear).
-
-      clear inlineEnd
-
--}
-inlineEnd : Value { provides | inlineEnd : Supported }
-inlineEnd =
-    Value "inline-end"
 
 
 {-| Sets [`opacity`](https://css-tricks.com/almanac/properties/o/opacity/)
