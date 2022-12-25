@@ -20,6 +20,7 @@ module Css exposing
     , contentBox, borderBox, paddingBox, fillBox, strokeBox, viewBox
     , baseline, sub, super, ruby, fullWidth, under, circle
     , hidden, visible
+    , thin, thick
     , normal, strict, all_, both, always, scroll, column
     , content, fill_, stroke, text, style
     , clip, cover, contain_
@@ -57,7 +58,6 @@ module Css exposing
     , borderInlineEnd, borderInlineEnd2, borderInlineEnd3
     , borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
     , borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth, borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
-    , thin, thick
     , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
     , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
     , dotted, dashed, solid, double, groove, ridge, inset_, outset
@@ -179,6 +179,7 @@ module Css exposing
     , EasingFunction, EasingFunctionSupported, linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
     , opacity
     , zoom
+    , scrollbarColor, scrollbarWidth
     , scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
     , scrollSnapType, scrollSnapType2, mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
@@ -323,6 +324,10 @@ Sometimes these keywords mean other things too.
 
 @docs hidden, visible
 
+## Thickness
+
+@docs thin, thick
+
 ## Miscellaneous shared
 
 @docs normal, strict, all_, both, always, scroll, column
@@ -427,8 +432,6 @@ Sometimes these keywords mean other things too.
 @docs borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
 
 @docs borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth, borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
-
-@docs thin, thick
 
 
 ## Border Style
@@ -885,6 +888,7 @@ Other values you can use for flex item alignment:
 
 # Scroll
 
+@docs scrollbarColor, scrollbarWidth
 @docs scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
 @docs scrollSnapType, scrollSnapType2, mandatory, proximity
 @docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
@@ -2001,6 +2005,42 @@ hidden =
 visible : Value { provides | visible : Supported }
 visible =
     Value "visible"
+
+
+
+{-| The `thin` value used by various properties.
+
+In [`borderWidth`](#borderWidth) and
+[`columnRuleWidth`](#columnRuleWidth), the value is
+equivalent to 1px.
+
+    borderWidth thin
+
+    columnRuleWidth thin
+
+It's also used in [`scrollbarWidth`](#scrollbarWidth).
+
+    scrollbarWidth thin
+
+-}
+thin : Value { provides | thin : Supported }
+thin =
+    Value "thin"
+
+
+{-| The `thick` value used by properties such as [`borderWidth`](#borderWidth),
+and [`columnRuleWidth`](#columnRuleWidth).
+
+    borderWidth thick
+
+    columnRuleWidth thick
+
+The value is equivalent of 5px.
+
+-}
+thick : Value { provides | thick : Supported }
+thick =
+    Value "thick"
 
 
 {-| The `normal` value, which can be used with such properties as:
@@ -10599,39 +10639,6 @@ borderInlineEndColor (Value colorVal) =
 
 
 
--- BORDER WIDTH --
-
-
-{-| The `thin` value used by properties such as [`borderWidth`](#borderWidth),
-and [`columnRuleWidth`](#columnRuleWidth).
-
-    borderWidth thin
-
-    columnRuleWidth thin
-
-The value is equivalent of 1px.
-
--}
-thin : Value { provides | thin : Supported }
-thin =
-    Value "thin"
-
-
-{-| The `thick` value used by properties such as [`borderWidth`](#borderWidth),
-and [`columnRuleWidth`](#columnRuleWidth).
-
-    borderWidth thick
-
-    columnRuleWidth thick
-
-The value is equivalent of 5px.
-
--}
-thick : Value { provides | thick : Supported }
-thick =
-    Value "thick"
-
-
 
 -- BORDER STYLE --
 
@@ -16848,6 +16855,41 @@ painted =
 smooth : Value { provides | smooth : Supported }
 smooth =
     Value "smooth"
+
+
+{-| Sets the
+[`scrollbar-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color) property.
+
+    scrollbarColor auto
+
+    scrollbarColor (hex "f35d93")
+-}
+scrollbarColor :
+    BaseValue
+        ( ColorSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+scrollbarColor (Value val) =
+    AppendProperty ("scrollbar-color:" ++ val)
+
+
+{-| Sets the [`scrollbar-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width) property.
+
+    scrollbarWidth auto
+
+    scrollbarWidth thin
+-}
+scrollbarWidth :
+    BaseValue
+        { auto : Supported
+        , thin : Supported
+        , none : Supported
+        }
+    -> Style
+scrollbarWidth (Value val) =
+    AppendProperty ("scrollbar-width:" ++ val)
 
 
 {-| Sets [`scroll-behavior`](https://css-tricks.com/almanac/properties/s/scroll-behavior/)
