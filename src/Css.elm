@@ -15,7 +15,7 @@ module Css exposing
     , auto, none, normal, strict, all_, both, always
     , hidden, visible
     , contentBox, borderBox, paddingBox
-    , left_, right_, top_, bottom_, block, inline, start, end
+    , left_, right_, top_, bottom_, block, inline, start, end, column
     , x, y
     , stretch, center, content, fill_, stroke, text, style
     , clip, cover, contain_
@@ -81,7 +81,7 @@ module Css exposing
     , placeContent, placeContent2, placeItems, placeItems2, placeSelf, placeSelf2
     , flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly
     , firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
-    , flexDirection, row, rowReverse, column, columnReverse
+    , flexDirection, row, rowReverse, columnReverse
     , order
     , flexGrow, flexShrink, flexBasis
     , flexWrap, nowrap, wrap, wrapReverse
@@ -188,8 +188,8 @@ module Css exposing
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
     , bleed
     , orphans, widows
-    , breakInside, avoid, avoidPage, avoidColumn, avoidRegion
-    , pageBreakBefore, pageBreakInside, pageBreakAfter
+    , breakBefore, breakAfter, breakInside, avoid, avoidPage, avoidColumn, page
+    , pageBreakBefore, pageBreakAfter, pageBreakInside
     , mixBlendMode
     , imageRendering, crispEdges, pixelated
     , backfaceVisibility
@@ -278,7 +278,7 @@ Many different kinds of CSS properties use these keyword values.
 @docs auto, none, normal, strict, all_, both, always
 @docs hidden, visible
 @docs contentBox, borderBox, paddingBox
-@docs left_, right_, top_, bottom_, block, inline, start, end
+@docs left_, right_, top_, bottom_, block, inline, start, end, column
 @docs x, y
 @docs stretch, center, content, fill_, stroke, text, style
 @docs clip, cover, contain_
@@ -511,7 +511,7 @@ Other values you can use for flex item alignment:
 
 ### Flexbox Direction
 
-@docs flexDirection, row, rowReverse, column, columnReverse
+@docs flexDirection, row, rowReverse, columnReverse
 
 
 ### Flexbox Order
@@ -858,8 +858,8 @@ Other values you can use for flex item alignment:
 
 @docs bleed
 @docs orphans, widows
-@docs breakInside, avoid, avoidPage, avoidColumn, avoidRegion
-@docs pageBreakBefore, pageBreakInside, pageBreakAfter
+@docs breakBefore, breakAfter, breakInside, avoid, avoidPage, avoidColumn, page
+@docs pageBreakBefore, pageBreakAfter, pageBreakInside
 
 
 # Rendering
@@ -1733,6 +1733,21 @@ steps2 3 end
 end : Value { provides | end : Supported }
 end =
     Value "end"
+
+
+{-| The `column` value, used in [`flex-direction`](#flexDirection),
+[`break-before`](#breakBefore) and [`break-after`](#breakAfter) properties.
+
+    flexDirection column
+
+    breakBefore column
+
+    breakAfter column
+
+-}
+column : Value { provides | column : Supported }
+column =
+    Value "column"
 
 
 {-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
@@ -6029,16 +6044,6 @@ row =
 rowReverse : Value { provides | rowReverse : Supported }
 rowReverse =
     Value "row-reverse"
-
-
-{-| The `column` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
-
-    flexDirection column
-
--}
-column : Value { provides | column : Supported }
-column =
-    Value "column"
 
 
 {-| The `column-reverse` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
@@ -15532,70 +15537,6 @@ caretColor (Value val) =
     AppendProperty ("caret-color:" ++ val)
 
 
-{-| Sets `avoid` value for usage with [`breakInside`](#breakInside).
-
-      breakInside avoid
-
--}
-avoid : Value { provides | avoid : Supported }
-avoid =
-    Value "avoid"
-
-
-{-| Sets `avoid-page` value for usage with [`breakInside`](#breakInside).
-
-      breakInside avoidPage
-
--}
-avoidPage : Value { provides | avoidPage : Supported }
-avoidPage =
-    Value "avoid-page"
-
-
-{-| Sets `avoid-column` value for usage with [`breakInside`](#breakInside).
-
-      breakInside avoidColumn
-
--}
-avoidColumn : Value { provides | avoidColumn : Supported }
-avoidColumn =
-    Value "avoid-column"
-
-
-{-| Sets `avoid-region` value for usage with [`breakInside`](#breakInside).
-
-      breakInside avoidRegion
-
--}
-avoidRegion : Value { provides | avoidRegion : Supported }
-avoidRegion =
-    Value "avoid-region"
-
-
-{-| Sets [`break-inside`](https://css-tricks.com/almanac/properties/b/break-inside/)
-
-    breakInside auto
-
-    breakInside avoid
-
-    breakInside avoidPage
-
-    breakInside avoidColumn
-
-    breakInside avoidRegion
-
--}
-breakInside :
-    BaseValue
-        { auto : Supported
-        , avoid : Supported
-        , avoidPage : Supported
-        , avoidColumn : Supported
-        , avoidRegion : Supported
-        }
-    -> Style
-breakInside (Value val) =
-    AppendProperty ("break-inside:" ++ val)
 
 
 {-| Sets [`box-decoration-break`](https://css-tricks.com/almanac/properties/b/box-decoration-break/)
@@ -16456,7 +16397,137 @@ overflowAnchor (Value val) =
 -- Page break
 
 
+{-| Sets [`break-before`](https://css-tricks.com/almanac/properties/b/break-before/).
+
+    breakBefore auto
+-}
+breakBefore :
+    BaseValue
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , all : Supported
+        , avoidPage : Supported
+        , page : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , avoidColumn : Supported
+        , column : Supported
+        }
+    -> Style
+breakBefore (Value val) =
+    AppendProperty ("break-before:" ++ val)
+
+
+{-| Sets [`break-after`](https://css-tricks.com/almanac/properties/b/break-after/).
+
+    breakAfter auto
+-}
+breakAfter :
+    BaseValue
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , all : Supported
+        , avoidPage : Supported
+        , page : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , avoidColumn : Supported
+        , column : Supported
+        }
+    -> Style
+breakAfter (Value val) =
+    AppendProperty ("break-after:" ++ val)
+
+
+{-| Sets [`break-inside`](https://css-tricks.com/almanac/properties/b/break-inside/)
+
+    breakInside auto
+
+    breakInside avoid
+
+    breakInside avoidPage
+
+    breakInside avoidColumn
+
+-}
+breakInside :
+    BaseValue
+        { auto : Supported
+        , avoid : Supported
+        , avoidPage : Supported
+        , avoidColumn : Supported
+        }
+    -> Style
+breakInside (Value val) =
+    AppendProperty ("break-inside:" ++ val)
+
+
+
+{-| Sets `avoid` value for usage with [`breakAfter`](#breakAfter),
+[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
+
+    breakBefore avoid
+
+    breakAfter avoid
+
+    breakInside avoid
+
+-}
+avoid : Value { provides | avoid : Supported }
+avoid =
+    Value "avoid"
+
+
+{-| Sets `avoid-page` value for usage with [`breakAfter`](#breakAfter),
+[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
+
+    breakBefore avoidPage
+
+    breakAfter avoidPage
+
+    breakInside avoidPage
+
+-}
+avoidPage : Value { provides | avoidPage : Supported }
+avoidPage =
+    Value "avoid-page"
+
+
+{-| Sets `avoid-column` value for usage with [`breakAfter`](#breakAfter),
+[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
+
+    breakBefore avoidColumn
+
+    breakAfter avoidColumn
+
+    breakInside avoidColumn
+
+-}
+avoidColumn : Value { provides | avoidColumn : Supported }
+avoidColumn =
+    Value "avoid-column"
+
+
+
+{-| Sets `page` value for usage with [`breakAfter`](#breakAfter) and
+[`breakBefore`](#breakBefore).
+
+    breakBefore page
+
+    breakAfter page
+
+-}
+page : Value { provides | page : Supported }
+page =
+    Value "page"
+
 {-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+**This property has been depreciated and replaced with
+[`breakBefore`](#breakBefore), but is still included for backwards
+compatibility.**
 
     pageBreakBefore auto
 
@@ -16482,24 +16553,11 @@ pageBreakBefore (Value val) =
     AppendProperty ("page-break-before:" ++ val)
 
 
-{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/p/page-break/)
-
-    pageBreakInside auto
-
-    pageBreakInside avoid
-
--}
-pageBreakInside :
-    BaseValue
-        { auto : Supported
-        , avoid : Supported
-        }
-    -> Style
-pageBreakInside (Value val) =
-    AppendProperty ("page-break-inside:" ++ val)
-
-
 {-| Sets [`page-break-after`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+**This property has been depreciated and replaced with
+[`breakAfter`](#breakAfter), but is still included for backwards
+compatibility.**
 
     pageBreakAfter auto
 
@@ -16523,6 +16581,25 @@ pageBreakAfter :
     -> Style
 pageBreakAfter (Value val) =
     AppendProperty ("page-break-after:" ++ val)
+
+
+{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+    pageBreakInside auto
+
+    pageBreakInside avoid
+
+-}
+pageBreakInside :
+    BaseValue
+        { auto : Supported
+        , avoid : Supported
+        }
+    -> Style
+pageBreakInside (Value val) =
+    AppendProperty ("page-break-inside:" ++ val)
+
+
 
 
 {-| Sets [`pointer-events`](https://css-tricks.com/almanac/properties/b/pointer-events/)
