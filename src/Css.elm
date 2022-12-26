@@ -6,7 +6,7 @@ module Css exposing
     , unset, initial, inherit
     , all, revert
     , Angle, AngleSupported, Width, WidthSupported
-    , BasicShapeSupported, circle, circleAt, circleAt2, closestSide, farthestSide
+    , BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide
     , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
@@ -275,7 +275,7 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 
 ## Shapes
 
-@docs BasicShapeSupported, circle, circleAt, circleAt2, closestSide, farthestSide
+@docs BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide
 
 ## URLs
 
@@ -1173,6 +1173,8 @@ type alias BasicShapeSupported supported =
         , circleAt : Supported
         , circleAt2 : Supported
         , ellipse : Supported
+        , ellipseAt : Supported
+        , ellipseAt2 : Supported
         , polygon : Supported
         , path : Supported
     }
@@ -1308,7 +1310,7 @@ circle (Value val) =
     Value <| "circle(" ++ val ++ ")"
 
 
-{-| Provides a 2-argument `circle(<X> at <Y>)` value.
+{-| Provides a 2-argument `circle(<rad> at <pos>)` value.
 
     clipPath (circleAt (pct 10) left)
 
@@ -1344,7 +1346,7 @@ circleAt (Value val1) (Value val2) =
         ++ ")"
 
 
-{-| Provides a 2-argument `circle(<X> at <Y> <Z>)` value.
+{-| Provides a 3-argument `circle(<rad> at <posX> <posY>)` value.
 
     clipPath (circleAt2 closestSide (rem 5) (rem 1))
 
@@ -1375,33 +1377,172 @@ circleAt2 :
             }
     )
     -> Value { provides | circleAt2 : Supported }
-circleAt2 (Value val1) (Value val2) (Value val3)=
+circleAt2 (Value radius) (Value posX) (Value posY)=
     Value <|
         "circle("
-        ++ val1
+        ++ radius
         ++ " at "
-        ++ val2
+        ++ posX
         ++ " "
-        ++ val3
+        ++ posY
         ++ ")"
 
-{-| The `closest-side` value for use in [circle shapes](#circle).
+
+{-| Provides a one-argument `ellipse()` value.
+
+    clipPath (ellipse (px 20) (px 10))
+
+    clipPath (ellipse closestSide farthestSide)
+
+    clipPath (ellipseAt closestSide (pct 10) left)
+
+    clipPath (ellipseAt (pct 20) (pct 10) (rem 5))
+
+    clipPath (ellipseAt2 (rem 5) closestSide (rem 5) (rem 1))
+
+-}
+ellipse :
+    Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value { provides | ellipse : Supported }
+ellipse (Value radx) (Value rady) =
+    Value <|
+        "ellipse("
+        ++ radx
+        ++ " "
+        ++ rady
+        ++ ")"
+
+
+{-| Provides a 3-argument `ellipse(<radiusX> <radiusY> at <pos>)` value.
+
+    clipPath (ellipseAt (pct 50) (pct 10) left)
+
+    clipPath (ellipseAt (rem 5) closestSide (rem 5))
+-}
+ellipseAt :
+    Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , top : Supported
+            , bottom : Supported
+            , left : Supported
+            , right : Supported
+            , center : Supported
+            }
+    )
+    -> Value { provides | ellipseAt : Supported }
+ellipseAt (Value radx) (Value rady) (Value pos) =
+    Value <|
+        "ellipse("
+        ++ radx
+        ++ " "
+        ++ rady
+        ++ " at "
+        ++ pos
+        ++ ")"
+
+
+{-| Provides a 4-argument `ellipse(<radiusX> <radiusY> at <posX> <posY>)` value.
+
+    clipPath (ellipseAt2 (rem 6) closestSide (rem 5) (rem 1))
+
+    clipPath (ellipseAt2 farthestSide (pct 10) top left)
+-}
+ellipseAt2 :
+    Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , left : Supported
+            , right : Supported
+            , center : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , top : Supported
+            , bottom : Supported
+            , center : Supported
+            }
+    )
+    -> Value { provides | ellipseAt2 : Supported }
+ellipseAt2 (Value radx) (Value rady) (Value posx) (Value posy) =
+    Value <|
+        "ellipse("
+        ++ radx
+        ++ " "
+        ++ rady
+        ++ " at "
+        ++ posx
+        ++ " "
+        ++ posy
+        ++ ")"
+
+
+{-| The `closest-side` value for use in [circle](#circle) and [ellipse](#ellipse) shapes.
 
     clipPath (circle closestSide)
+
+    clipPath (ellipse farthestSide (px 20))
 
 -}
 closestSide : Value { provides | closestSide : Supported }
 closestSide =
     Value "closest-side"
 
-{-| The `farthest-side` value for use in [circle shapes](#circle).
+
+{-| The `farthest-side` value for use in [circle](#circle) and [ellipse](#ellipse) shapes.
 
     clipPath (circleAt farthestSide (pct 20))
+
+    clipPath (ellipseAt farthestSide (px 2) (pct 20))
 
 -}
 farthestSide : Value { provides | farthestSide : Supported }
 farthestSide =
     Value "farthest-side"
+
 
 -- GLOBAL VALUES --
 
