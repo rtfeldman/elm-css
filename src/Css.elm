@@ -6,6 +6,7 @@ module Css exposing
     , unset, initial, inherit
     , all, revert
     , Angle, AngleSupported, Width, WidthSupported
+    , BasicShapeSupported, circle, circleAt, circleAt2, closestSide, farthestSide
     , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
@@ -17,8 +18,8 @@ module Css exposing
     , block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
     , x, y, z
     , stretch, center
-    , contentBox, borderBox, paddingBox, fillBox, strokeBox, viewBox
-    , baseline, sub, super, ruby, fullWidth, under, circle
+    , marginBox, borderBox, paddingBox, contentBox, fillBox, strokeBox, viewBox
+    , baseline, sub, super, ruby, fullWidth, under, circle_
     , hidden, visible
     , thin, thick
     , normal, strict, all_, both, always, scroll, column
@@ -203,6 +204,7 @@ module Css exposing
     , objectPosition, objectPosition2, objectPosition4
     , boxDecorationBreak
     , isolation, isolate
+    , clipPath, clipPath2
     , caretColor
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted
@@ -271,6 +273,9 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 
 @docs deg, grad, rad, turn
 
+## Shapes
+
+@docs BasicShapeSupported, circle, circleAt, circleAt2, closestSide, farthestSide
 
 ## URLs
 
@@ -312,13 +317,13 @@ Sometimes these keywords mean other things too.
 
 @docs stretch, center
 
-## Sizing, clip and origin values
+## Geometry box values
 
-@docs contentBox, borderBox, paddingBox,  fillBox, strokeBox, viewBox
+@docs marginBox, borderBox, paddingBox, contentBox, fillBox, strokeBox, viewBox
 
 ## Typographic values
 
-@docs baseline, sub, super, ruby, fullWidth, under, circle
+@docs baseline, sub, super, ruby, fullWidth, under, circle_
 
 ## Visibility
 
@@ -924,7 +929,7 @@ Other values you can use for flex item alignment:
 @docs objectPosition, objectPosition2, objectPosition4
 @docs boxDecorationBreak
 @docs isolation, isolate
-
+@docs clipPath, clipPath2
 
 # Other
 
@@ -1159,6 +1164,18 @@ type alias ImageSupported supported =
         , repeatingRadialGradient : Supported
     }
 
+{-| A type alias used to accept a [basic shape](https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape).
+-}
+type alias BasicShapeSupported supported =
+    { supported
+        | inset_ : Supported
+        , circle : Supported
+        , circleAt : Supported
+        , circleAt2 : Supported
+        , ellipse : Supported
+        , polygon : Supported
+        , path : Supported
+    }
 
 {-| A type alias used to accept an [image](https://developer.mozilla.org/en-US/docs/Web/CSS/image).
 -}
@@ -1259,6 +1276,132 @@ batch =
     Preprocess.ApplyStyles
 
 
+
+-- SHAPES --
+
+{-| Provides a one-argument `circle()` value.
+
+    clipPath (circle (pct 10))
+
+    clipPath (circle closestSide)
+
+    clipPath (circleAt (pct 10) left)
+
+    clipPath (circleAt closestSide (rem 5))
+
+    clipPath (circleAt2 closestSide (rem 5) (rem 1))
+
+Note: This is not to be confused with [`circle_`](#circle_),
+which is a keyword value for properties such as `listStyleType`.
+
+-}
+circle :
+    Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value { provides | circle : Supported }
+circle (Value val) =
+    Value <| "circle(" ++ val ++ ")"
+
+
+{-| Provides a 2-argument `circle(<X> at <Y>)` value.
+
+    clipPath (circleAt (pct 10) left)
+
+    clipPath (circleAt closestSide (rem 5))
+
+    clipPath (circleAt2 closestSide (rem 5) (rem 1))
+-}
+circleAt :
+    Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , top : Supported
+            , bottom : Supported
+            , left : Supported
+            , right : Supported
+            , center : Supported
+            }
+    )
+    -> Value { provides | circleAt : Supported }
+circleAt (Value val1) (Value val2) =
+    Value <|
+        "circle("
+        ++ val1
+        ++ " at "
+        ++ val2
+        ++ ")"
+
+
+{-| Provides a 2-argument `circle(<X> at <Y> <Z>)` value.
+
+    clipPath (circleAt2 closestSide (rem 5) (rem 1))
+
+    clipPath (circleAt2 (pct 10) top left)
+-}
+circleAt2 :
+    Value (
+        LengthSupported
+            { pct : Supported
+            , closestSide : Supported
+            , farthestSide : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , left : Supported
+            , right : Supported
+            , center : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , top : Supported
+            , bottom : Supported
+            , center : Supported
+            }
+    )
+    -> Value { provides | circleAt2 : Supported }
+circleAt2 (Value val1) (Value val2) (Value val3)=
+    Value <|
+        "circle("
+        ++ val1
+        ++ " at "
+        ++ val2
+        ++ " "
+        ++ val3
+        ++ ")"
+
+{-| The `closest-side` value for use in [circle shapes](#circle).
+
+    clipPath (circle closestSide)
+
+-}
+closestSide : Value { provides | closestSide : Supported }
+closestSide =
+    Value "closest-side"
+
+{-| The `farthest-side` value for use in [circle shapes](#circle).
+
+    clipPath (circleAt farthestSide (pct 20))
+
+-}
+farthestSide : Value { provides | farthestSide : Supported }
+farthestSide =
+    Value "farthest-side"
 
 -- GLOBAL VALUES --
 
@@ -1767,6 +1910,54 @@ center =
     Value "center"
 
 
+{-| The `margin-box` value, used in [`clipPath`](#clipPath).
+
+```
+clipPath marginBox
+```
+-}
+marginBox : Value { provides | marginBox : Supported }
+marginBox =
+    Value "margin-box"
+
+{-| The `border-box` value, used in the following properties:
+
+  - [`boxSizing`](#boxSizing)
+  - [`backgroundClip`](#backgroundClip)
+  - [`backgroundOrigin`](backgroundOrigin)
+  - [`strokeOrigin`](#strokeOrigin)
+
+```
+boxSizing borderBox
+
+backgroundClip borderBox
+
+backgroundOrigin borderBox
+
+strokeOrigin borderBox
+```
+-}
+borderBox : Value { provides | borderBox : Supported }
+borderBox =
+    Value "border-box"
+
+
+{-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
+[`backgroundOrigin`](#backgroundOrigin),
+and [`strokeOrigin`](#strokeOrigin).
+
+    backgroundClip paddingBox
+
+    backgroundOrigin paddingBox
+
+    strokeOrigin paddingBox
+
+-}
+paddingBox : Value { provides | paddingBox : Supported }
+paddingBox =
+    Value "padding-box"
+
+
 {-| The `content-box` value, used in the following properties:
 
   - [`boxSizing`](#boxSizing)
@@ -1788,45 +1979,6 @@ strokeOrigin contentBox
 contentBox : Value { provides | contentBox : Supported }
 contentBox =
     Value "content-box"
-
-
-{-| The `border-box` value, used in the following properties:
-
-  - [`boxSizing`](#boxSizing)
-  - [`backgroundClip`](#backgroundClip)
-  - [`backgroundOrigin`](backgroundOrigin)
-  - [`strokeOrigin`](#strokeOrigin)
-
-```
-boxSizing borderBox
-
-backgroundClip borderBox
-
-backgroundOrigin borderBox
-
-strokeOrigin borderBox
-```
-
--}
-borderBox : Value { provides | borderBox : Supported }
-borderBox =
-    Value "border-box"
-
-
-{-| The `padding-box` value, used with [`backgroundClip`](#backgroundClip),
-[`backgroundOrigin`](#backgroundOrigin),
-and [`strokeOrigin`](#strokeOrigin).
-
-    backgroundClip paddingBox
-
-    backgroundOrigin paddingBox
-
-    strokeOrigin paddingBox
-
--}
-paddingBox : Value { provides | paddingBox : Supported }
-paddingBox =
-    Value "padding-box"
 
 
 {-| The `fill-box` value used by [`strokeOrigin`](#strokeOrigin)
@@ -1964,19 +2116,25 @@ under =
 
 
 
+
 {-| The `circle` value used by properties such as [`listStyle`](#listStyle),
 [`listStyleType`](#listStyleType), [`textEmphasis`](#textEmphasis) and [`textEmphasisStyle`](#textEmphasisStyle).
 
-    listStyleType circle
+    listStyleType circle_
 
-    textEmphasis2 circle (hex "ff0000")
+    textEmphasis2 circle_ (hex "ff0000")
 
-    textEmphasisStyle circle
+    textEmphasisStyle circle_
+
+Note: This is not to be confused with [`circle`](#circle),
+[`circleAt`](#circleAt) or [`circleAt2`](#circleAt2), which are
+`<basic-shape>` data types.
 
 -}
-circle : Value { provides | circle : Supported }
-circle =
+circle_ : Value { provides | circle_ : Supported }
+circle_ =
     Value "circle"
+
 
 
 {-| The `hidden` value used for properties such as [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/), [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/) and [`borderStyle`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style).
@@ -8923,7 +9081,7 @@ type alias ListStyleTypeSupported supported =
         , armenian : Supported
         , bengali : Supported
         , cambodian : Supported
-        , circle : Supported
+        , circle_ : Supported
         , cjkDecimal : Supported
         , cjkEarthlyBranch : Supported
         , cjkHeavenlyStem : Supported
@@ -16349,6 +16507,55 @@ lineClamp (Value val) =
     AppendProperty ("line-clamp:" ++ val)
 
 
+{-| The 1-argument variant of the
+[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
+
+    clipPath marginBox
+
+    clipPath inherit
+
+    clipPath (circle (pct 2))
+
+    clipPath2 marginBox (circleAt2 farthestSide left top)
+-}
+clipPath :
+    BaseValue
+        (BasicShapeSupported
+            { marginBox : Supported
+            , borderBox : Supported
+            , paddingBox : Supported
+            , contentBox : Supported
+            , fillBox : Supported
+            , strokeBox : Supported
+            , viewBox : Supported
+            }
+        )
+    -> Style
+clipPath (Value val) =
+    AppendProperty ("clip-path:" ++ val)
+
+
+{-| The 2-argument variant of the
+[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
+
+    clipPath2 marginBox (circleAt2 farthestSide left top)
+-}
+clipPath2 :
+    Value
+        { marginBox : Supported
+        , borderBox : Supported
+        , paddingBox : Supported
+        , contentBox : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , viewBox : Supported
+        }
+    -> Value (BasicShapeSupported a)
+    -> Style
+clipPath2 (Value val1) (Value val2) =
+    AppendProperty ("clip-path:" ++ val1 ++ " " ++ val2)
+
+
 {-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
 
     mixBlendMode multiply
@@ -18025,7 +18232,7 @@ textEmphasis :
             , filled : Supported
             , open : Supported
             , dot : Supported
-            , circle : Supported
+            , circle_ : Supported
             , doubleCircle : Supported
             , triangle : Supported
             , sesame : Supported
@@ -18049,7 +18256,7 @@ textEmphasis2 :
         , filled : Supported
         , open : Supported
         , dot : Supported
-        , circle : Supported
+        , circle_ : Supported
         , doubleCircle : Supported
         , triangle : Supported
         , sesame : Supported
@@ -18082,7 +18289,7 @@ textEmphasisStyle :
         , filled : Supported
         , open : Supported
         , dot : Supported
-        , circle : Supported
+        , circle_ : Supported
         , doubleCircle : Supported
         , triangle : Supported
         , sesame : Supported
@@ -18106,7 +18313,7 @@ textEmphasisStyle2 :
         }
     -> BaseValue
         { dot : Supported
-        , circle : Supported
+        , circle_ : Supported
         , doubleCircle : Supported
         , triangle : Supported
         , sesame : Supported
