@@ -6,7 +6,7 @@ module Css exposing
     , unset, initial, inherit
     , all, revert
     , Angle, AngleSupported, Width, WidthSupported
-    , BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide
+    , BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
     , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
@@ -275,7 +275,7 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 
 ## Shapes
 
-@docs BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide
+@docs BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
 
 ## URLs
 
@@ -1179,6 +1179,7 @@ type alias BasicShapeSupported supported =
         , path : Supported
     }
 
+
 {-| A type alias used to accept an [image](https://developer.mozilla.org/en-US/docs/Web/CSS/image).
 -}
 type alias Image =
@@ -1542,6 +1543,43 @@ closestSide =
 farthestSide : Value { provides | farthestSide : Supported }
 farthestSide =
     Value "farthest-side"
+
+
+{-| Creates a `polygon()` value for CSS
+properties that accept a `<basic-shape>` value.
+
+Each numerical argument is a Float that represents a
+percentage.
+
+    clipPath <| polygon [ (20, 30), (40, 80.3), (14, 50) ]
+-}
+polygon : List (Float, Float) -> Value { provides | polygon : Supported }
+polygon list = 
+
+    let
+        stringed = List.map (\l ->
+                ( (String.fromFloat <| Tuple.first l )++ "% " )
+                ++ ( (String.fromFloat <| Tuple.second l) ++ "%")
+            ) list
+
+        split = String.join ", " stringed
+
+    in
+    Value <| "polygon("
+        ++ split
+        ++ ")"
+
+
+{-| Creates a `path()` value for CSS properties that accept a
+`<basic-shape>` value.
+
+The input string needs to be a valid SVG path string.
+
+    clipPath <| path "M161.693,39.249C94.047,39.249 39.127,94.169 39.127,161.816C39.127,229.462 94.047,284.382 161.693,284.382C229.34,284.382 284.26,229.462 284.26,161.816C284.26,94.169 229.34,39.249 161.693,39.249ZM161.693,71.382C211.605,71.382 211.605,252.249 161.693,252.249C111.782,252.249 71.26,211.727 71.26,161.816C71.26,111.904 111.782,71.382 161.693,71.382Z"
+-}
+path : String -> Value { provides | path : Supported }
+path svgPathDef =
+    Value <| "path('" ++ svgPathDef ++ "')"
 
 
 -- GLOBAL VALUES --
