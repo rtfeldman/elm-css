@@ -94,7 +94,7 @@ module Css exposing
     , flexGrow, flexShrink, flexBasis
     , flexWrap, nowrap, wrap, wrapReverse
     , flex, flex2, flex3, flexFlow, flexFlow2
-    , gridAutoRows, gridAutoColumns
+    , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
     , wordSpacing
     , tabSize
     , fontDisplay, fallback, swap, optional
@@ -606,7 +606,7 @@ Other values you can use for flex item alignment:
 
 # Grid
 
-@docs gridAutoRows, gridAutoColumns
+@docs gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
 
 
 # Typography
@@ -6895,6 +6895,63 @@ gridAutoRows :
     -> Style
 gridAutoRows (Value val) =
     AppendProperty ("grid-auto-rows:" ++ val)
+
+
+{-| The 1-argument version of the [`grid-auto-flow`](https://css-tricks.com/almanac/properties/g/grid-auto-flow/)
+property.
+
+    gridAutoFlow dense
+    
+    gridAutoFlow column
+
+    gridAutoFlow2 row dense
+-}
+gridAutoFlow :
+    BaseValue (
+        { row : Supported
+        , column : Supported
+        , dense : Supported
+        }
+    )
+    -> Style
+gridAutoFlow (Value val) =
+    AppendProperty ("grid-auto-flow:" ++ val)
+
+
+{-| The 1-argument version of the [`grid-auto-flow`](https://css-tricks.com/almanac/properties/g/grid-auto-flow/)
+property.
+
+    gridAutoFlow2 row dense
+
+(The last argument can only be `dense` but I thought this
+would be the most natural way to make it fit into Elm,
+even if it's a bit redundant.)
+-}
+gridAutoFlow2 :
+    Value
+        { row : Supported
+        , column : Supported
+        }
+    -> Value { dense : Supported }
+    -> Style
+gridAutoFlow2 (Value val1) (Value val2) =
+    AppendProperty <|
+        "grid-auto-flow:"
+        ++ val1
+        ++ " "
+        ++ val2
+
+
+{-| The `dense` value for the [`grid-auto-flow`](#gridAutoFlow) property.
+
+    gridAutoFlow dense
+
+    gridAutoFlow2 row dense
+
+-}
+dense : Value { provides | dense : Supported }
+dense =
+    Value "dense"
 
 
 -- FONT SIZE --
