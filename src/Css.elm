@@ -6,10 +6,11 @@ module Css exposing
     , unset, initial, inherit
     , all, revert
     , Angle, AngleSupported, Width, WidthSupported
-    , BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+    , BasicShape, BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
     , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
+    , Resolution, ResolutionSupported, dpi, dpcm, dppx
     , Time, TimeSupported, s, ms
     , deg, grad, rad, turn
     , url
@@ -275,7 +276,11 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 
 ## Shapes
 
-@docs BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+@docs BasicShape, BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+
+## Resolution
+
+@docs Resolution, ResolutionSupported, dpi, dpcm, dppx
 
 ## URLs
 
@@ -1152,6 +1157,8 @@ type alias Angle =
     AngleSupported {}
 
 
+
+
 {-| A type alias used to accept an [image](https://developer.mozilla.org/en-US/docs/Web/CSS/image)
 among other values.
 -}
@@ -1164,7 +1171,15 @@ type alias ImageSupported supported =
         , repeatingRadialGradient : Supported
     }
 
-{-| A type alias used to accept a [basic shape](https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape).
+
+{-| A type alias used to accept an [image](https://developer.mozilla.org/en-US/docs/Web/CSS/image).
+-}
+type alias Image =
+    ImageSupported {}
+
+
+{-| A type alias used to accept a [basic shape](https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape)
+among other values.
 -}
 type alias BasicShapeSupported supported =
     { supported
@@ -1180,10 +1195,27 @@ type alias BasicShapeSupported supported =
     }
 
 
-{-| A type alias used to accept an [image](https://developer.mozilla.org/en-US/docs/Web/CSS/image).
+{-| A type alias used to accept a [basic shape](https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape).
 -}
-type alias Image =
-    ImageSupported {}
+type alias BasicShape =
+    BasicShapeSupported {}
+
+
+{-| A type alias used to accept a [resolution](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution)
+among other values.
+-}
+type alias ResolutionSupported supported =
+    { supported
+        | dpi : Supported
+        , dpcm : Supported
+        , dppx : Supported
+    }
+
+
+{-| A type alias used to accept a [resolution](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution).
+-}
+type alias Resolution =
+    ResolutionSupported {}
 
 
 {-| A type alias used to accept an [time](https://developer.mozilla.org/en-US/docs/Web/CSS/time)
@@ -1674,6 +1706,31 @@ and [`backgroundImage`](#backgroundImage) properties.
 url : String -> Value { provides | url : Supported }
 url str =
     Value ("url(" ++ str ++ ")")
+
+
+
+
+-- RESOLUTION --
+
+{-| [`dpi`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
+-}
+dpi : Float -> Value { provides | dpi : Supported }
+dpi val =
+    Value <| String.fromFloat val ++ "dpi"
+
+
+{-| [`dpcm`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
+-}
+dpcm : Float -> Value { provides | dpcm : Supported }
+dpcm val =
+    Value <| String.fromFloat val ++ "dpcm"
+
+
+{-| [`dppx`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
+-}
+dppx : Float -> Value { provides | dppx : Supported }
+dppx val =
+    Value <| String.fromFloat val ++ "dppx"
 
 
 
@@ -18443,7 +18500,7 @@ textEmphasis2 :
         }
     ->
         BaseValue
-            (ColorSupported a)
+            (Color)
     -> Style
 textEmphasis2 (Value value1) (Value value2) =
     AppendProperty
@@ -18514,8 +18571,7 @@ textEmphasisStyle2 (Value val1) (Value val2) =
     textemphasisColor (hex "0000ff")
 -}
 textEmphasisColor :
-    BaseValue
-        (ColorSupported a)
+    BaseValue (Color)
     -> Style
 textEmphasisColor (Value value) =
     AppendProperty ("text-emphasis-color:" ++ value)
