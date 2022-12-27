@@ -13,6 +13,7 @@ module Css exposing
     , Resolution, ResolutionSupported, dpi, dpcm, dppx
     , Time, TimeSupported, s, ms
     , deg, grad, rad, turn
+    , fr, minmax, fitContentTo
     , url
     , auto, none
     , left_, right_, top_, bottom_
@@ -93,6 +94,7 @@ module Css exposing
     , flexGrow, flexShrink, flexBasis
     , flexWrap, nowrap, wrap, wrapReverse
     , flex, flex2, flex3, flexFlow, flexFlow2
+    , gridAutoRows, gridAutoColumns
     , wordSpacing
     , tabSize
     , fontDisplay, fallback, swap, optional
@@ -281,6 +283,10 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 ## Resolution
 
 @docs Resolution, ResolutionSupported, dpi, dpcm, dppx
+
+## Flex
+
+@docs fr, minmax, fitContentTo
 
 ## URLs
 
@@ -596,6 +602,11 @@ Other values you can use for flex item alignment:
 ### Flexbox Shorthands
 
 @docs flex, flex2, flex3, flexFlow, flexFlow2
+
+
+# Grid
+
+@docs gridAutoRows, gridAutoColumns
 
 
 # Typography
@@ -1732,6 +1743,65 @@ dppx : Float -> Value { provides | dppx : Supported }
 dppx val =
     Value <| String.fromFloat val ++ "dppx"
 
+
+-- FLEX VALUES --
+
+{-| [`fr`](https://css-tricks.com/introduction-fr-css-unit/) flex units.
+
+    gridAutoColumns (fr 1)
+-}
+fr : Float -> Value { provides | fr : Supported }
+fr val =
+    Value <| String.fromFloat val ++ "fr"
+
+
+{-| The [`minmax()`](https://css-tricks.com/minmax-function-works/)
+value for grid properties.
+
+    gridAutoRows (minmax (px 2) (pct 100))
+-}
+minmax : 
+    Value (
+        LengthSupported
+            { pct : Supported
+            , fr : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , auto : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , fr : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , auto : Supported
+            }
+    )
+    -> Value { provides | minmax : Supported }
+minmax (Value minBreadth) (Value maxBreadth) =
+    Value <| "minmax(" ++ minBreadth ++ ", " ++ maxBreadth ++ ")"
+
+
+{-| The [`fit-content()`](https://developer.mozilla.org/en-US/docs/Web/CSS/fit-content_function)
+value that can have a length or percentage value that you want the property to be clamped to.
+
+Not to be confused with the [`fitContent`](#fitContent) value for flex properties.
+
+    gridAutoColumns (fitContentTo (pct 100))
+
+    height (fitContentTo (rem 20))
+-}
+fitContentTo :
+    Value (
+        LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Value { provides | fitContentTo : Supported }
+fitContentTo (Value val) =
+    Value <| "fit-content(" ++ val ++ ")"
 
 
 -- SHARED VALUES --
@@ -6765,6 +6835,66 @@ flexFlow2 :
 flexFlow2 (Value direction_) (Value wrapping) =
     AppendProperty ("flex-flow:" ++ direction_ ++ " " ++ wrapping)
 
+
+
+
+
+-- GRID --
+
+{-| The 1-argument version of the [`grid-auto-columns`](https://css-tricks.com/almanac/properties/g/grid-auto-columns/)
+property.
+
+    gridAutoColumns (px 100)
+
+    gridAutoColumns (vmax 30)
+
+    gridAutoColumns (fr 1)
+
+    gridAutoColumns (minmax (fr 2) (pct 20))
+-}
+gridAutoColumns :
+    BaseValue (
+        LengthSupported
+            { auto : Supported
+            , minContent : Supported
+            , maxContent : Supported
+            , pct : Supported
+            , fr : Supported
+            , minmax : Supported
+            , fitContentTo : Supported
+            }
+    )
+    -> Style
+gridAutoColumns (Value val) =
+    AppendProperty ("grid-auto-columns:" ++ val)
+
+
+{-| The 1-argument version of the [`grid-auto-rows`](https://css-tricks.com/almanac/properties/g/grid-auto-rows/)
+ property.
+
+    gridAutoRows (px 100)
+
+    gridAutoRows (vmax 30)
+
+    gridAutoRows (fr 1)
+
+    gridAutoRows (minmax (fr 2) (pct 20))
+-}
+gridAutoRows :
+    BaseValue (
+        LengthSupported
+            { auto : Supported
+            , minContent : Supported
+            , maxContent : Supported
+            , pct : Supported
+            , fr : Supported
+            , minmax : Supported
+            , fitContentTo : Supported
+            }
+    )
+    -> Style
+gridAutoRows (Value val) =
+    AppendProperty ("grid-auto-rows:" ++ val)
 
 
 -- FONT SIZE --
