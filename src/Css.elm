@@ -1958,7 +1958,7 @@ It's used in the following properties as a [CSS Logical value](https://css-trick
 ```
 alignContent start
 
-justifyItems estartnd
+justifyItems start
 
 ```
 
