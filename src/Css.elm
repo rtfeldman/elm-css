@@ -14,6 +14,7 @@ module Css exposing
     , Time, TimeSupported, s, ms
     , deg, grad, rad, turn
     , fr, minmax, fitContentTo
+    , customIdent
     , url
     , auto, none
     , left_, right_, top_, bottom_
@@ -95,6 +96,7 @@ module Css exposing
     , flexWrap, nowrap, wrap, wrapReverse
     , flex, flex2, flex3, flexFlow, flexFlow2
     , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
+    , gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3, gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3, span
     , wordSpacing
     , tabSize
     , fontDisplay, fallback, swap, optional
@@ -122,7 +124,7 @@ module Css exposing
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
     , ListStyleType, ListStyleTypeSupported
-    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
+    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, listStyleImage
     , arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
     , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
@@ -287,6 +289,11 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 ## Flex
 
 @docs fr, minmax, fitContentTo
+
+
+## Ident
+
+@docs customIdent
 
 ## URLs
 
@@ -607,6 +614,7 @@ Other values you can use for flex item alignment:
 # Grid
 
 @docs gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
+@docs gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3, gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3, span
 
 
 # Typography
@@ -706,7 +714,7 @@ Other values you can use for flex item alignment:
 # List Style
 
 @docs ListStyleType, ListStyleTypeSupported
-@docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
+@docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, listStyleImage
 @docs arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
 
 [`square`](#square) is also a supported value for [`listStyle`](#listStyle) and [`listStyleType`](#listStyleType).
@@ -1804,6 +1812,24 @@ fitContentTo (Value val) =
     Value <| "fit-content(" ++ val ++ ")"
 
 
+-- IDENT --
+
+{-| Produces an [`custom-ident`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident)
+value used by properties including (but not limited to) [`listStyle`](#listStyle),
+[`listStyleType`](#listStyleType) and [`gridColumnEnd2`](#gridColumnEnd2).
+
+    listStyleType (customIdent "hello-world")
+
+    gridColumnEnd2 span (customIdent "hello-world")
+
+**Note:** This method does not do any checking if the identifierer supplied is valid.
+
+-}
+customIdent : String -> Value { provides | customIdent : Supported }
+customIdent =
+    Value
+
+    
 -- SHARED VALUES --
 
 
@@ -6942,6 +6968,7 @@ gridAutoFlow2 (Value val1) (Value val2) =
         ++ val2
 
 
+
 {-| The `dense` value for the [`grid-auto-flow`](#gridAutoFlow) property.
 
     gridAutoFlow dense
@@ -6952,6 +6979,309 @@ gridAutoFlow2 (Value val1) (Value val2) =
 dense : Value { provides | dense : Supported }
 dense =
     Value "dense"
+
+
+{-| The 1-argument version of the [`grid-row-start`](https://css-tricks.com/almanac/properties/g/grid-row-start/)
+property.
+
+    gridRowStart (customIdent "big-grid")
+
+    gridRowStart auto
+
+    gridRowStart2 span (int 3)
+
+    gridRowStart2 (customIdent "big-grid") (int 2)
+
+    gridRowStart3 span (customIdent "big-grid") (int 2)
+-}
+gridRowStart :
+    BaseValue (
+        { auto : Supported
+        , customIdent : Supported
+        , int : Supported
+        }
+    )
+    -> Style
+gridRowStart (Value val) =
+    AppendProperty ("grid-row-start:" ++ val)
+
+
+{-| The 2-argument version of [`gridRowStart`](#gridRowStart).
+
+    gridRowStart2 span (customIdent "big-grid")
+
+    gridRowStart2 span (int 3)
+
+    gridRowStart2 (customIdent "big-grid") (int 2)
+-}
+gridRowStart2 :
+    Value
+        { customIdent : Supported
+        , span : Supported
+        }
+    -> Value
+        { int : Supported
+        , customIdent : Supported
+        }
+    -> Style
+gridRowStart2 (Value val1) (Value val2) =
+    AppendProperty ("grid-row-start:" ++ val1 ++ " " ++ val2)
+
+
+{-| The 3-argument version of [`gridRowStart`](#gridRowStart).
+
+    gridRowStart3 span (customIdent "big-grid") (int 2)
+-}
+gridRowStart3 :
+    Value
+        { span : Supported
+        }
+    -> Value
+        { customIdent : Supported
+        }
+    -> Value
+        { int : Supported }
+    -> Style
+gridRowStart3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty <|
+        "grid-row-start:"
+        ++ val1
+        ++ " "
+        ++ val2
+        ++ " "
+        ++ val3
+
+
+{-| The 1-argument version of the [`grid-row-end`](https://css-tricks.com/almanac/properties/g/grid-row-end/)
+property.
+
+    gridRowEnd (customIdent "big-grid")
+
+    gridRowEnd auto
+
+    gridRowEnd2 span (int 3)
+
+    gridRowEnd2 (customIdent "big-grid") (int 2)
+
+    gridRowEnd3 span (customIdent "big-grid") (int 2)
+-}
+gridRowEnd :
+    BaseValue (
+        { auto : Supported
+        , customIdent : Supported
+        , int : Supported
+        }
+    )
+    -> Style
+gridRowEnd (Value val) =
+    AppendProperty ("grid-row-end:" ++ val)
+
+
+{-| The 2-argument version of [`gridRowEnd`](#gridRowEnd).
+
+    gridRowEnd2 span (customIdent "big-grid")
+
+    gridRowEnd2 span (int 3)
+
+    gridRowEnd2 (customIdent "big-grid") (int 2)
+-}
+gridRowEnd2 :
+    Value
+        { customIdent : Supported
+        , span : Supported
+        }
+    -> Value
+        { int : Supported
+        , customIdent : Supported
+        }
+    -> Style
+gridRowEnd2 (Value val1) (Value val2) =
+    AppendProperty ("grid-row-end:" ++ val1 ++ " " ++ val2)
+
+
+{-| The 3-argument version of [`gridRowEnd`](#gridRowEnd).
+
+    gridRowEnd3 span (customIdent "big-grid") (int 2)
+-}
+gridRowEnd3 :
+    Value
+        { span : Supported
+        }
+    -> Value
+        { customIdent : Supported
+        }
+    -> Value
+        { int : Supported }
+    -> Style
+gridRowEnd3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty <|
+        "grid-row-end:"
+        ++ val1
+        ++ " "
+        ++ val2
+        ++ " "
+        ++ val3
+
+
+{-| The 1-argument version of the [`grid-column-start`](https://css-tricks.com/almanac/properties/g/grid-column-start/)
+property.
+
+    gridColumnStart (customIdent "big-grid")
+
+    gridColumnStart auto
+
+    gridColumnStart2 span (int 3)
+
+    gridColumnStart2 (customIdent "big-grid") (int 2)
+
+    gridColumnStart3 span (customIdent "big-grid") (int 2)
+-}
+gridColumnStart :
+    BaseValue (
+        { auto : Supported
+        , customIdent : Supported
+        , int : Supported
+        }
+    )
+    -> Style
+gridColumnStart (Value val) =
+    AppendProperty ("grid-column-start:" ++ val)
+
+
+{-| The 2-argument version of [`gridColumnStart`](#gridColumnStart).
+
+    gridColumnStart2 span (customIdent "big-grid")
+
+    gridColumnStart2 span (int 3)
+
+    gridColumnStart2 (customIdent "big-grid") (int 2)
+-}
+gridColumnStart2 :
+    Value
+        { customIdent : Supported
+        , span : Supported
+        }
+    -> Value
+        { int : Supported
+        , customIdent : Supported
+        }
+    -> Style
+gridColumnStart2 (Value val1) (Value val2) =
+    AppendProperty ("grid-column-start:" ++ val1 ++ " " ++ val2)
+
+
+{-| The 3-argument version of [`gridColumnStart`](#gridColumnStart).
+
+    gridColumnStart3 span (customIdent "big-grid") (int 2)
+-}
+gridColumnStart3 :
+    Value
+        { span : Supported
+        }
+    -> Value
+        { customIdent : Supported
+        }
+    -> Value
+        { int : Supported }
+    -> Style
+gridColumnStart3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty <|
+        "grid-column-start:"
+        ++ val1
+        ++ " "
+        ++ val2
+        ++ " "
+        ++ val3
+
+
+{-| The 1-argument version of the [`grid-column-end`](https://css-tricks.com/almanac/properties/g/grid-column-end/)
+property.
+
+    gridColumnEnd (customIdent "big-grid")
+
+    gridColumnEnd auto
+
+    gridColumnEnd2 span (int 3)
+
+    gridColumnEnd2 (customIdent "big-grid") (int 2)
+
+    gridColumnEnd3 span (customIdent "big-grid") (int 2)
+-}
+gridColumnEnd :
+    BaseValue (
+        { auto : Supported
+        , customIdent : Supported
+        , int : Supported
+        }
+    )
+    -> Style
+gridColumnEnd (Value val) =
+    AppendProperty ("grid-column-end:" ++ val)
+
+
+{-| The 2-argument version of [`gridColumnEnd`](#gridColumnEnd).
+
+    gridColumnEnd2 span (customIdent "big-grid")
+
+    gridColumnEnd2 span (int 3)
+
+    gridColumnEnd2 (customIdent "big-grid") (int 2)
+-}
+gridColumnEnd2 :
+    Value
+        { customIdent : Supported
+        , span : Supported
+        }
+    -> Value
+        { int : Supported
+        , customIdent : Supported
+        }
+    -> Style
+gridColumnEnd2 (Value val1) (Value val2) =
+    AppendProperty ("grid-column-end:" ++ val1 ++ " " ++ val2)
+
+
+{-| The 3-argument version of [`gridColumnEnd`](#gridColumnEnd).
+
+    gridColumnEnd3 span (customIdent "big-grid") (int 2)
+-}
+gridColumnEnd3 :
+    Value
+        { span : Supported
+        }
+    -> Value
+        { customIdent : Supported
+        }
+    -> Value
+        { int : Supported }
+    -> Style
+gridColumnEnd3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty <|
+        "grid-column-end:"
+        ++ val1
+        ++ " "
+        ++ val2
+        ++ " "
+        ++ val3
+
+
+{-| The `span` value for the following properties:
+
+-   [`gridRowStart2`](#gridRowStart2)
+-   [`gridRowStart3`](#gridRowStart3)
+-   [`gridRowEnd2`](#gridRowEnd2)
+-   [`gridRowEnd3`](#gridRowEnd3)
+-   [`gridColumnStart2`](#gridColumnStart2)
+-   [`gridColumnStart3`](#gridColumnStart3)
+-   [`gridColumnEnd2`](#gridColumnEnd2)
+-   [`gridColumnEnd3`](#gridColumnEnd3)
+```
+    gridColumnEnd3 span (customIdent "big-grid") (int 2)
+```
+-}
+span : Value { provides | span : Supported }
+span =
+    Value "span"
 
 
 -- FONT SIZE --
@@ -9668,18 +9998,6 @@ listStyleType (Value val) =
     AppendProperty ("list-style-type:" ++ val)
 
 
-{-| Produces an [`custom-ident`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident)
-value used by properties such as [`listStyle`](#listStyle),
-and [`listStyleType`](#listStyleType)
-
-    listStyleType (customIdent "hello-world")
-
-**Note:** This method does not do any checking if the identifierer supplied is valid.
-
--}
-customIdent : String -> Value { provides | customIdent : Supported }
-customIdent =
-    Value
 
 
 {-| The [`list-style-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-image) property.
@@ -13556,8 +13874,8 @@ columnSpan :
         , all_ : Supported
         }
     -> Style
-columnSpan (Value span) =
-    AppendProperty ("column-span:" ++ span)
+columnSpan (Value spanVal) =
+    AppendProperty ("column-span:" ++ spanVal)
 
 
 {-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
