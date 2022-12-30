@@ -97,6 +97,7 @@ module Css exposing
     , flex, flex2, flex3, flexFlow, flexFlow2
     , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
     , gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3, gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3, span
+    , gridTemplateAreas, gridTemplateAreasList
     , wordSpacing
     , tabSize
     , fontDisplay, fallback, swap, optional
@@ -615,7 +616,7 @@ Other values you can use for flex item alignment:
 
 @docs gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
 @docs gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3, gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3, span
-
+@docs gridTemplateAreas, gridTemplateAreasList
 
 # Typography
 
@@ -7283,6 +7284,47 @@ span : Value { provides | span : Supported }
 span =
     Value "span"
 
+{-| The [`grid-template-areas`](https://css-tricks.com/almanac/properties/g/grid-template-areas/)
+property. Use the [`gridTemplateAreasList`](#gridTemplateAreasList) function if you want
+to use a list of strings as a value.
+
+    gridTemplateAreas none
+
+    gridTemplateAreas inherit
+
+    gridTemplateAreasList
+        [ "c a b"
+        , "c d e"
+        ]
+
+-}
+gridTemplateAreas :
+    BaseValue
+        { none : Supported
+        }
+    -> Style
+gridTemplateAreas (Value val) =
+    AppendProperty ("grid-template-areas:" ++ val)
+
+
+{-| A version of [`gridTemplateAreas`](#gridTemplateAreas) that lets you input a list of strings a value.
+
+    gridTemplateAreasList
+        [ "c a b"
+        , "c d e"
+        ]
+-}
+gridTemplateAreasList :
+    List String
+    -> Style
+gridTemplateAreasList listStr =
+    AppendProperty <|
+        "grid-template-areas:"
+        ++
+        ( listStr
+        |> List.map enquoteString
+        |> String.join " "
+        )
 
 -- FONT SIZE --
 
@@ -7662,6 +7704,7 @@ fontFeatureSettings (Value val) =
 
 
 {-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
+in a way that lets you add a list of [`featureTag`](#featureTag)s.
 
     fontFeatureSettingsList featureTag "liga" [ featureTag2 "swsh" 2 ]
 
