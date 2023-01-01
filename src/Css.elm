@@ -211,6 +211,8 @@ module Css exposing
     , boxDecorationBreak
     , isolation, isolate
     , clipPath, clipPath2
+    , maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
+    , noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
     , caretColor
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted
@@ -955,6 +957,11 @@ Other values you can use for flex item alignment:
 @docs boxDecorationBreak
 @docs isolation, isolate
 @docs clipPath, clipPath2
+
+# Masks
+
+@docs maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
+@docs noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
 
 # Other
 
@@ -3006,7 +3013,7 @@ rgb red green blue =
 
 -}
 rgba : Int -> Int -> Int -> Float -> Value { provides | rgba : Supported }
-rgba red green blue alpha =
+rgba red green blue alphaVal =
     Value <|
         "rgba("
             ++ String.fromInt red
@@ -3015,7 +3022,7 @@ rgba red green blue alpha =
             ++ ","
             ++ String.fromInt blue
             ++ ","
-            ++ String.fromFloat alpha
+            ++ String.fromFloat alphaVal
             ++ ")"
 
 
@@ -3047,7 +3054,7 @@ The `s` and `l` values are expressed as a number between 0 and 1 and are convert
 
 -}
 hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
-hsla hueVal sat lightness alpha =
+hsla hueVal sat lightness alphaVal =
     Value <|
         "hsla("
             ++ String.fromFloat hueVal
@@ -3056,7 +3063,7 @@ hsla hueVal sat lightness alpha =
             ++ "%,"
             ++ String.fromFloat (lightness * 100)
             ++ "%,"
-            ++ String.fromFloat alpha
+            ++ String.fromFloat alphaVal
             ++ ")"
 
 
@@ -16633,6 +16640,449 @@ bleed :
     -> Style
 bleed (Value val) =
     AppendProperty ("bleed:" ++ val)
+
+
+-- MASKS --
+
+
+{-| The 1-argument variant of the [`mask-clip`](https://css-tricks.com/almanac/properties/m/mask-clip/)
+property.
+
+This does not support non-standard keyword values such as `border`.
+
+    maskClip contentBox
+
+    maskClip revert
+
+    maskClipList [contentBox, marginBox, noClip]
+
+-}
+maskClip :
+    BaseValue
+        { contentBox : Supported
+        , paddingBox : Supported
+        , borderBox : Supported
+        , marginBox : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , viewBox : Supported
+        , noClip : Supported
+        }
+    -> Style
+maskClip (Value val) =
+    AppendProperty <| "mask-clip:" ++ val
+
+
+{-| The multi-argument variant of the [`mask-clip`](https://css-tricks.com/almanac/properties/m/mask-clip/)
+property.
+
+This does not support non-standard keyword values such as `border`.
+
+    maskClipList [contentBox, marginBox, noClip]
+    
+-}
+maskClipList :
+    List
+        ( Value
+            { contentBox : Supported
+            , paddingBox : Supported
+            , borderBox : Supported
+            , marginBox : Supported
+            , fillBox : Supported
+            , strokeBox : Supported
+            , viewBox : Supported
+            , noClip : Supported
+            }
+        )
+    -> Style
+maskClipList list =
+    AppendProperty <|
+        "mask-clip:"
+        ++
+        ( list
+        |> List.map (\(Value val) -> val)
+        |> String.join ", "
+        )
+
+
+{-| The [`mask-composite`](https://css-tricks.com/almanac/properties/m/mask-composite/)
+property.
+
+    maskComposite add
+
+    maskComposite revert
+-}
+maskComposite :
+    BaseValue
+        { add : Supported
+        , subtract : Supported
+        , intersect : Supported
+        , exclude : Supported
+        }
+    -> Style
+maskComposite (Value val) =
+    AppendProperty ("mask-composite:" ++ val)
+
+
+{-| The 1-argument variant of the [`mask-mode`](https://css-tricks.com/almanac/properties/m/mask-mode/)
+property.
+
+    maskMode inherit
+
+    maskMode alpha
+
+    maskModeList [alpha, luminance, alpha, matchSource]
+-}
+maskMode :
+    BaseValue
+        { alpha : Supported
+        , luminance : Supported
+        , matchSource : Supported
+        }
+    -> Style
+maskMode (Value val) =
+    AppendProperty ("mask-mode:" ++ val)
+
+
+{-| The multi-argument variant of the [`mask-mode`](https://css-tricks.com/almanac/properties/m/mask-mode/)
+property.
+
+    maskModeList [alpha, luminance, alpha, matchSource]
+-}
+maskModeList :
+    List
+        ( Value
+            { alpha : Supported
+            , luminance : Supported
+            , matchSource : Supported
+            }
+        )
+    -> Style
+maskModeList list =
+    AppendProperty <|
+        "mask-mode:"
+        ++
+        ( list
+        |> List.map (\(Value val) -> val)
+        |> String.join ", "
+        )
+
+
+{-| The 1-argument variant of the [`mask-origin`](https://css-tricks.com/almanac/properties/m/mask-origin/)
+property.
+
+    maskOrigin inherit
+
+    maskOrigin contentBox
+
+    maskOriginList [paddingBox, borderBox]
+-}
+maskOrigin :
+    BaseValue
+        { contentBox : Supported
+        , paddingBox : Supported
+        , borderBox : Supported
+        , marginBox : Supported
+        }
+    -> Style
+maskOrigin (Value val) =
+    AppendProperty ("mask-origin:" ++ val)
+
+
+{-| The multi-argument variant of the [`mask-origin`](https://css-tricks.com/almanac/properties/m/mask-origin/)
+property.
+
+    maskOriginList [paddingBox, borderBox]
+-}
+maskOriginList :
+    List
+        ( Value
+            { contentBox : Supported
+            , paddingBox : Supported
+            , borderBox : Supported
+            , marginBox : Supported
+            }
+        )
+    -> Style
+maskOriginList list =
+    AppendProperty <|
+        "mask-origin:"
+        ++
+        ( list
+        |> List.map (\(Value val) -> val)
+        |> String.join ", "
+        )
+
+
+{-| The 1-argument variant of the [`mask-position`](https://css-tricks.com/almanac/properties/m/mask-position/)
+property.
+
+    maskPosition top_
+
+    maskPosition inherit
+-}
+maskPosition :
+    BaseValue
+        { top_ : Supported
+        , bottom_ : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        }
+    -> Style
+maskPosition (Value val) =
+    AppendProperty <| "mask-position:" ++ val
+
+
+{-| The 1-argument variant of the [`mask-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-repeat)
+property.
+
+    maskRepeat revert
+
+    maskRepeat repeatX
+
+    maskRepeat Css.round
+
+    maskRepeat2 repeat space
+
+-}
+maskRepeat :
+    BaseValue
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
+    -> Style
+maskRepeat (Value val) =
+    AppendProperty <| "mask-repeat:" ++ val
+
+
+{-| The 2-argument variant of the [`mask-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-repeat)
+property.
+
+    maskRepeat2 repeat space
+-}
+maskRepeat2 :
+    Value
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
+    -> Value
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
+    -> Style
+maskRepeat2 (Value valX) (Value valY) =
+    AppendProperty <| "mask-repeat:" ++ valX ++ " " ++ valY
+
+
+-- {-| The multi-argument variant of the [`mask-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-repeat)
+-- property.
+
+--     maskRepeatList [repeat, Css.round, space]
+-- -}
+-- maskRepeatList :
+--     List
+--         ( Value
+--             { repeat : Supported
+--             , space : Supported
+--             , round : Supported
+--             , noRepeat : Supported
+--             }
+--         )
+--     -> Style
+-- maskRepeatList list =
+--     AppendProperty <|
+--         "mask-repeat:"
+--         ++
+--         ( list
+--         |> List.map (\(Value val) -> val)
+--         |> String.join ", "
+--         )
+
+
+{-| The 1-argument variant of the [`mask-size`](https://css-tricks.com/almanac/properties/m/mask-size/)
+property.
+
+    maskSize auto
+
+    maskSize (pct 20)
+
+    maskSize (rem 200)
+
+    maskSize2 auto (pct 10)
+
+-}
+maskSize :
+    BaseValue
+        ( LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , cover : Supported
+            , contain : Supported
+            }
+        )
+    -> Style
+maskSize (Value val) =
+    AppendProperty <| "mask-size:" ++ val
+
+
+{-| The 2-argument variant of the [`mask-size`](https://css-tricks.com/almanac/properties/m/mask-size/)
+property.
+
+    maskSize auto
+
+    maskSize (pct 20)
+
+    maskSize (rem 200)
+
+    maskSize2 auto (pct 10)
+
+-}
+maskSize2 :
+    Value
+        ( LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Value
+        ( LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+maskSize2 (Value valX) (Value valY) =
+    AppendProperty <| "mask-size:" ++ valX ++ " " ++ valY
+
+
+-- {-|
+-- -}
+-- maskSizeList :
+--     List
+--         ( Value
+--             ( LengthSupported
+--                 { pct : Supported
+--                 , auto : Supported
+--                 }
+--             )
+--         )
+--     -> Style
+-- maskSizeList list =
+--     AppendProperty <|
+--         "mask-size:"
+--         ++
+--         ( list
+--         |> List.map (\(Value val) -> val)
+--         |> String.join ", "
+--         )
+
+{-| Sets the [`mask-type`](https://css-tricks.com/almanac/properties/m/mask-type/)
+property.
+
+    maskType inherit
+
+    maskType luminance
+-}
+maskType :
+    BaseValue
+        { luminance : Supported
+        , alpha : Supported
+        }
+    -> Style
+maskType (Value val) =
+    AppendProperty <| "mask-type:" ++ val
+
+
+{-| Sets `no-clip` value for usage with [`maskClip`](#maskClip).
+
+    maskClip noClip
+
+-}
+noClip : Value { provides | noClip : Supported }
+noClip =
+    Value "no-clip"
+
+
+{-| Sets `add` value for usage with [`maskComposite`](#maskComposite).
+
+    maskComposite add
+
+-}
+add : Value { provides | add : Supported }
+add =
+    Value "add"
+
+
+{-| Sets `subtract` value for usage with [`maskComposite`](#maskComposite).
+
+    maskComposite subtract
+
+-}
+subtract : Value { provides | subtract : Supported }
+subtract =
+    Value "subtract"
+
+
+{-| Sets `intersect` value for usage with [`maskComposite`](#maskComposite).
+
+    maskComposite intersect
+
+-}
+intersect : Value { provides | intersect : Supported }
+intersect =
+    Value "intersect"
+
+
+{-| Sets `exclude` value for usage with [`maskComposite`](#maskComposite).
+
+    maskComposite exclude
+
+-}
+exclude : Value { provides | exclude : Supported }
+exclude =
+    Value "exclude"
+
+
+
+{-| Sets `alpha` value for usage with [`maskMode`](#maskMode) and [`maskType`](#maskType).
+
+    maskMode alpha
+
+    maskType alpha
+
+-}
+alpha : Value { provides | alpha : Supported }
+alpha =
+    Value "alpha"
+
+
+{-| Sets `luminance` value for usage with [`maskMode`](#maskMode) and [`maskType`](#maskType).
+
+    maskMode luminance
+
+    maskType luminance
+
+-}
+luminance : Value { provides | luminance : Supported }
+luminance =
+    Value "luminance"
+
+
+{-| Sets `match-source` value for usage with [`maskMode`](#maskMode).
+
+    maskMode matchSource
+
+-}
+matchSource : Value { provides | matchSource : Supported }
+matchSource =
+    Value "match-source"
 
 
 {-| Sets [`caret-color`](https://css-tricks.com/almanac/properties/c/caret-color/)
