@@ -211,6 +211,7 @@ module Css exposing
     , boxDecorationBreak
     , isolation, isolate
     , clipPath, clipPath2
+    , maskBorderMode, maskBorderRepeat, maskBorderRepeat2, maskBorderOutset, maskBorderOutset2, maskBorderOutset3, maskBorderOutset4, maskBorderSlice, maskBorderSlice2, maskBorderSlice3, maskBorderSlice4, maskBorderWidth, maskBorderWidth2, maskBorderWidth3, maskBorderWidth4
     , maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
     , noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
     , caretColor
@@ -960,6 +961,7 @@ Other values you can use for flex item alignment:
 
 # Masks
 
+@docs maskBorderMode, maskBorderRepeat, maskBorderRepeat2, maskBorderOutset, maskBorderOutset2, maskBorderOutset3, maskBorderOutset4, maskBorderSlice, maskBorderSlice2, maskBorderSlice3, maskBorderSlice4, maskBorderWidth, maskBorderWidth2, maskBorderWidth3, maskBorderWidth4
 @docs maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
 @docs noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
 
@@ -2673,7 +2675,7 @@ content =
 
 
 {-| The `fill` value used in properties such as [`objectFit`](#objectFit),
-[`pointerEvents`](#pointerEvents) and [`paintOrder`](#paintOrder).
+[`pointerEvents`](#pointerEvents), [`paintOrder`](#paintOrder) and [`maskBorderSlice`](#maskBorderSlice).
 
     objectFit fill_
 
@@ -2681,6 +2683,10 @@ content =
 
     paintOrder2 fill_ markers
 
+    maskBorderSlice4 fill_ (num 20) (pct 10) (num 45)
+
+
+The value is called `fill_` instead of `fill` because [`fill`](#fill) is already a property function.
 -}
 fill_ : Value { provides | fill_ : Supported }
 fill_ =
@@ -16644,6 +16650,465 @@ bleed (Value val) =
 
 -- MASKS --
 
+{-| Sets the [`mask-border-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-mode)
+property.
+
+    maskBorderMode inherit
+
+    maskBorderMode luminance
+-}
+maskBorderMode :
+    BaseValue
+        { luminance : Supported
+        , alpha : Supported
+        }
+    -> Style
+maskBorderMode (Value val) =
+    AppendProperty <| "mask-border-mode:" ++ val
+
+
+
+{-| Sets the 1-argument variant of the [`mask-border-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-repeat)
+property.
+
+    maskBorderRepeat stretch
+
+    maskBorderRepeat revert
+
+    maskBorderRepeat2 stretch repeat
+-}
+maskBorderRepeat :
+    BaseValue
+        { stretch : Supported
+        , repeat : Supported
+        , round : Supported
+        , space : Supported
+        }
+    -> Style
+maskBorderRepeat (Value val) =
+    AppendProperty <| "mask-border-repeat:" ++ val
+
+
+{-| Sets the 2-argument variant of the [`mask-border-repeat`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-repeat)
+property.
+
+    maskBorderRepeat2 stretch repeat
+-}
+maskBorderRepeat2 :
+    Value
+        { stretch : Supported
+        , repeat : Supported
+        , round : Supported
+        , space : Supported
+        }
+    -> Value
+        { stretch : Supported
+        , repeat : Supported
+        , round : Supported
+        , space : Supported
+        }
+    -> Style
+maskBorderRepeat2 (Value val1) (Value val2) =
+    AppendProperty <|
+        "mask-border-repeat:"
+        ++ val1
+        ++ " "
+        ++ val2
+
+
+{-| Sets the 1-argument variant of the [`mask-border-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-outset)
+property.
+
+    maskBorderOutset revert
+
+    maskBorderOutset (num 2.5)
+
+    maskBorderOutset (px 30)
+
+    --             top+bottom | left+right
+    maskBorderOutset2 (px 30) (px 10)
+
+    --               top | left+right | bottom
+    maskBorderOutset3 (px 12) (px 16) (px 4)
+    
+    --                  top | right | bottom | left
+    maskBorderOutset4 (rem 2) (rem 1) (rem 3) (rem 4)
+-}
+maskBorderOutset :
+    BaseValue
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Style
+maskBorderOutset (Value val) =
+    AppendProperty <| "mask-border-outset:" ++ val
+
+
+{-| Sets the 2-argument variant of the [`mask-border-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-outset)
+property.
+    
+    --             top+bottom | left+right
+    maskBorderOutset2 (px 30) (px 10)
+-}
+maskBorderOutset2 :
+    Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Style
+maskBorderOutset2 (Value valTB) (Value valLR) =
+    AppendProperty <|
+        "mask-border-outset:"
+        ++ valTB
+        ++ " "
+        ++ valLR
+
+
+{-| Sets the 3-argument variant of the [`mask-border-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-outset)
+property.
+
+    --               top | left+right | bottom
+    maskBorderOutset3 (px 12) (px 16) (px 4)
+-}
+maskBorderOutset3 :
+    Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Style
+maskBorderOutset3 (Value valTop) (Value valLR) (Value valBottom) =
+    AppendProperty <|
+        "mask-border-outset:"
+        ++ valTop
+        ++ " "
+        ++ valLR
+        ++ " "
+        ++ valBottom
+
+
+{-| Sets the 4-argument variant of the [`mask-border-outset`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-outset)
+property.
+
+    --                  top | right | bottom | left
+    maskBorderOutset4 (rem 2) (rem 1) (rem 3) (rem 4)
+-}
+maskBorderOutset4 :
+    Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Value
+        ( LengthSupported
+            { num : Supported }
+        )
+    -> Style
+maskBorderOutset4 (Value valTop) (Value valRight) (Value valBottom) (Value valLeft) =
+    AppendProperty <|
+        "mask-border-outset:"
+        ++ valTop
+        ++ " "
+        ++ valRight
+        ++ " "
+        ++ valBottom
+        ++ " "
+        ++ valLeft
+
+
+{-| Sets the 1-argument variant of the [`mask-border-slice`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-slice)
+property.
+
+    maskBorderSlice initial
+
+    maskBorderSlice (num 2.5)
+
+    maskBorderSlice (rem 3)
+
+    --           top+bottom | left+right
+    maskBorderSlice2 (num 30) (pct 10)
+
+    --              top | left+right | bottom
+    maskBorderSlice3 (px 12) (num 2) fill_
+    
+    --                 top | right | bottom | left
+    maskBorderSlice4 (rem 2) (rem 1) fill_ (rem 4)
+-}
+maskBorderSlice :
+    BaseValue
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Style
+maskBorderSlice (Value val) =
+    AppendProperty <| "mask-border-slice:" ++ val
+
+
+{-| Sets the 2-argument variant of the [`mask-border-slice`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-slice)
+property.
+
+    --           top+bottom | left+right
+    maskBorderSlice2 (num 30) (pct 10)
+-}
+maskBorderSlice2 :
+    Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Style
+maskBorderSlice2 (Value valTB) (Value valLR) =
+    AppendProperty <|
+        "mask-border-slice:"
+        ++ valTB
+        ++ " "
+        ++ valLR
+
+
+{-| Sets the 3-argument variant of the [`mask-border-slice`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-slice)
+property.
+
+    --              top | left+right | bottom
+    maskBorderSlice3 (px 12) (num 2) fill_
+-}
+maskBorderSlice3 :
+    Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Style
+maskBorderSlice3 (Value valTop) (Value valLR) (Value valBottom) =
+    AppendProperty <|
+        "mask-border-slice:"
+        ++ valTop
+        ++ " "
+        ++ valLR
+        ++ " "
+        ++ valBottom
+
+
+{-| Sets the 4-argument variant of the [`mask-border-slice`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-slice)
+property.
+
+    --                 top | right | bottom | left
+    maskBorderSlice4 (rem 2) (rem 1) fill_ (rem 4)
+-}
+maskBorderSlice4 :
+    Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Value
+        { num : Supported
+        , pct : Supported
+        , fill_ : Supported
+        }
+    -> Style
+maskBorderSlice4 (Value valTop) (Value valRight) (Value valBottom) (Value valLeft) =
+    AppendProperty <|
+        "mask-border-slice:"
+        ++ valTop
+        ++ " "
+        ++ valRight
+        ++ " "
+        ++ valBottom
+        ++ " "
+        ++ valLeft
+
+
+{-| Sets the 1-argument variant of the [`mask-border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-width)
+property.
+
+    maskBorderWidth initial
+
+    maskBorderWidth auto
+
+    maskBorderWidth (rem 3)
+
+    --           top+bottom | left+right
+    maskBorderWidth2 (num 30) (pct 10)
+
+    --              top | left+right | bottom
+    maskBorderWidth3 (px 12) auto (px 20)
+    
+    --                 top | right | bottom | left
+    maskBorderWidth4 (rem 2) (rem 1) auto (rem 4)
+-}
+maskBorderWidth :
+    BaseValue
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Style
+maskBorderWidth (Value val) =
+    AppendProperty <| "mask-border-width:" ++ val
+
+
+{-| Sets the 2-argument variant of the [`mask-border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-width)
+property.
+
+    --           top+bottom | left+right
+    maskBorderWidth2 (num 30) (pct 10)
+-}
+maskBorderWidth2 :
+    Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Style
+maskBorderWidth2 (Value valTB) (Value valLR) =
+    AppendProperty <|
+        "mask-border-width:"
+        ++ valTB
+        ++ " "
+        ++ valLR
+
+
+{-| Sets the 3-argument variant of the [`mask-border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-width)
+property.
+
+    --              top | left+right | bottom
+    maskBorderWidth3 (px 12) auto (px 20)
+-}
+maskBorderWidth3 :
+    Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Style
+maskBorderWidth3 (Value valTop) (Value valLR) (Value valBottom) =
+    AppendProperty <|
+        "mask-border-width:"
+        ++ valTop
+        ++ " "
+        ++ valLR
+        ++ " "
+        ++ valBottom
+
+
+{-| Sets the 4-argument variant of the [`mask-border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-width)
+property.
+
+    --                 top | right | bottom | left
+    maskBorderWidth4 (rem 2) (rem 1) auto (rem 4)
+-}
+maskBorderWidth4 :
+    Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Value
+        ( LengthSupported
+            { auto : Supported
+            , pct : Supported
+            , num : Supported
+            }
+        )
+    -> Style
+maskBorderWidth4 (Value valTop) (Value valRight) (Value valBottom) (Value valLeft) =
+    AppendProperty <|
+        "mask-border-width:"
+        ++ valTop
+        ++ " "
+        ++ valRight
+        ++ " "
+        ++ valBottom
+        ++ " "
+        ++ valLeft
+
 
 {-| The 1-argument variant of the [`mask-clip`](https://css-tricks.com/almanac/properties/m/mask-clip/)
 property.
@@ -17050,12 +17515,13 @@ exclude =
     Value "exclude"
 
 
-
-{-| Sets `alpha` value for usage with [`maskMode`](#maskMode) and [`maskType`](#maskType).
+{-| Sets `alpha` value for usage with [`maskMode`](#maskMode), [`maskType`](#maskType) and [`maskBorderMode`](#maskBorderMode).
 
     maskMode alpha
 
     maskType alpha
+
+    maskBorderMode alpha
 
 -}
 alpha : Value { provides | alpha : Supported }
@@ -17063,11 +17529,13 @@ alpha =
     Value "alpha"
 
 
-{-| Sets `luminance` value for usage with [`maskMode`](#maskMode) and [`maskType`](#maskType).
+{-| Sets `luminance` value for usage with [`maskMode`](#maskMode), [`maskType`](#maskType) and [`maskBorderMode`](#maskBorderMode).
 
     maskMode luminance
 
     maskType luminance
+
+    maskBorderMode luminance
 
 -}
 luminance : Value { provides | luminance : Supported }
