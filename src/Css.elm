@@ -4,6 +4,16 @@ module Css exposing
     , property
     , important
 
+    -- pseudo-classes
+    , pseudoClass
+    , active, checked, disabled, empty, enabled
+    , firstChild, firstOfType, focus, fullscreen, hover, inRange
+    , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
+    , onlyOfType, outOfRange, readOnly, readWrite, required
+    , root, scope, target, valid, visited
+    , pseudoElement
+    , before, after, backdrop, cue, marker, placeholder, selection
+
     -- common value groups
     , BaseValue
     , ImageSupported, Image
@@ -19,9 +29,9 @@ module Css exposing
     -- common value types
     , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct
     , fr, minmax, fitContentTo
-    , num, int 
     , deg, grad, rad, turn
     , s, ms
+    , num, int 
     , rgb, rgba, hsl, hsla, hex, currentcolor
     , string, customIdent, url
     , circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
@@ -43,32 +53,25 @@ module Css exposing
     , content, fill_, stroke, text, style
     , clip, cover, contain_
 
-    -- pseudo-classes
-    , pseudoClass
-    , active, checked, disabled, empty, enabled
-    , firstChild, firstOfType, focus, fullscreen, hover, inRange
-    , indeterminate, invalid, lastChild, lastOfType, link, onlyChild
-    , onlyOfType, outOfRange, readOnly, readWrite, required
-    , root, scope, target, valid, visited
-    , pseudoElement
-    , before, after, backdrop, cue, marker, placeholder, selection
-
     -- all
     , all
 
     -- sizing
     , width, minWidth, maxWidth, height, minHeight, maxHeight
-    , blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
-
-    -- paddings
-    , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
-    , paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
-    , paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
+    , blockSize, minBlockSize, maxBlockSize
+    , inlineSize, minInlineSize, maxInlineSize
 
     -- margins
-    , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+    , margin, margin2, margin3, margin4
+    , marginTop, marginRight, marginBottom, marginLeft
     , marginBlock, marginBlock2, marginBlockStart, marginBlockEnd
     , marginInline, marginInline2, marginInlineStart, marginInlineEnd
+
+    -- paddings
+    , padding, padding2, padding3, padding4
+    , paddingTop, paddingRight, paddingBottom, paddingLeft
+    , paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
+    , paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
 
     -- borders
     , border, border2, border3
@@ -82,20 +85,39 @@ module Css exposing
     , borderInline, borderInline2, borderInline3
     , borderInlineStart, borderInlineStart2, borderInlineStart3
     , borderInlineEnd, borderInlineEnd2, borderInlineEnd3
-    , borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
+    , borderWidth, borderWidth2, borderWidth3, borderWidth4
+    , borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
     , borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth, borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
-    , borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
+    , borderStyle, borderStyle2, borderStyle3, borderStyle4
+    , borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
     , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
     , dotted, dashed, solid, double, groove, ridge, inset_, outset
-    , borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
+    , borderColor, borderColor2, borderColor3, borderColor4
+    , borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
     , borderBlockColor, borderBlockStartColor, borderBlockEndColor, borderInlineColor, borderInlineStartColor, borderInlineEndColor
-    , borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+    , borderRadius, borderRadius2, borderRadius3, borderRadius4
+    , borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
     , borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2, borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
 
     -- outlines
-    , outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
+    , outline, outline3, outlineWidth, outlineColor
+    , invert, outlineStyle, outlineOffset
+
+    -- ??
+    , display, display2, displayListItem2, displayListItem3
+    , flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+    , position
+    , absolute, fixed, relative, static, sticky
+    , zIndex
+
+    -- insets
+    , inset, inset2, inset3, inset4, top, right, bottom, left
+    , insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
+
+    -- gaps
+    , gap, gap2, rowGap, columnGap
 
     -- color
     , color, backgroundColor
@@ -111,19 +133,7 @@ module Css exposing
     , TextShadowConfig, textShadow, defaultTextShadow
     , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
 
-    -- ??
-    , display, display2, displayListItem2, displayListItem3
-    , flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
-    , position, zIndex
-    , absolute, fixed, relative, static, sticky
-
-    -- insets
-    , inset, inset2, inset3, inset4, top, right, bottom, left
-    , insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
-
-    -- gaps
-    , gap, gap2, rowGap, columnGap
-
+    
     -- ??
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
@@ -251,13 +261,16 @@ module Css exposing
     , scrollbarColor, scrollbarWidth
     , scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
     , scrollSnapType, scrollSnapType2, mandatory, proximity
-    , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
+    , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4
+    , scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
     , scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
     , scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
-    , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+    , scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4
+    , scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
     , scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
     , scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
-    , overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
+    , overscrollBehavior, overscrollBehavior2
+    , overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
     
     -- ??
     , speak, spellOut
@@ -1196,6 +1209,310 @@ makeImportant str =
         str ++ " !important"
 
 
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------------- PSEUDO-CLASSES ----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Define a custom pseudo-class.
+
+This can be useful for deprecated [pseudo-classes](https://css-tricks.com/pseudo-class-selectors/) such as `-moz-any-link`, which
+[has been deprecated and removed](https://www.fxsitecompat.com/en-CA/docs/2016/any-link-css-pseudo-class-has-been-unprefixed/)
+in modern browsers.
+
+    button
+        [ css [ pseudoClass "-moz-any-link" [ color (hex "f00") ] ] ]
+        [ text "Whee!" ]
+
+...outputs
+
+    <button class="f9fcb2">Whee!</button>
+
+    <style>
+        .f9fcb2:-moz-any-link {
+            color: #f00;
+        }
+    </style>
+
+-}
+pseudoClass : String -> List Style -> Style
+pseudoClass pseudoClassName =
+    Preprocess.ExtendSelector (Structure.PseudoClassSelector pseudoClassName)
+
+
+{-| An [`:active`](https://css-tricks.com/almanac/selectors/a/active/)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    button [ active [ color (rgb 12 160 190) ] ]
+
+-}
+active : List Style -> Style
+active =
+    pseudoClass "active"
+
+
+{-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+This pseudo-class is for any checkbox, option or radio input that is checked or toggled on.
+
+    checked
+        [ backgroundColor (rgb 0 0 255)
+        ]
+
+-}
+checked : List Style -> Style
+checked =
+    pseudoClass "checked"
+
+
+{-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    button [ disabled [ color (rgb 194 194 194) ] ]
+
+-}
+disabled : List Style -> Style
+disabled =
+    pseudoClass "disabled"
+
+
+{-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/:empty)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    empty
+        [ backgroundColor (rgb 20 20 20)
+        ]
+
+-}
+empty : List Style -> Style
+empty =
+    pseudoClass "empty"
+
+
+{-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:enabled)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    enabled
+        [ borderColor (rgba 150 150 0 0.5)
+        ]
+
+-}
+enabled : List Style -> Style
+enabled =
+    pseudoClass "enabled"
+
+
+{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    firstChild
+        [ fontWeight bold
+        ]
+
+-}
+firstChild : List Style -> Style
+firstChild =
+    pseudoClass "first-child"
+
+
+{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    firstOfType
+        [ color (rgb 255 0 0)
+        ]
+
+-}
+firstOfType : List Style -> Style
+firstOfType =
+    pseudoClass "first-of-type"
+
+
+{-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    focus
+        [ border3 (px 2) solid (rgb 0 0 0)
+        ]
+
+-}
+focus : List Style -> Style
+focus =
+    pseudoClass "focus"
+
+
+{-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/:fullscreen)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    fullscreen
+        [ backgroundColor (rgb 0 0 0)
+        ]
+
+-}
+fullscreen : List Style -> Style
+fullscreen =
+    pseudoClass "fullscreen"
+
+
+{-| A [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    hover
+        [ fontWeight bold
+        , color (rgb 255 50 0)
+        ]
+
+-}
+hover : List Style -> Style
+hover =
+    pseudoClass "hover"
+
+
+{-| An [`:in-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:in-range)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    inRange
+        [ backgroundColor (rgb 0 255 0)
+        ]
+
+-}
+inRange : List Style -> Style
+inRange =
+    pseudoClass "in-range"
+
+
+{-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/:indeterminate)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    indeterminate
+        [ backgroundColor (rgb 100 100 100)
+        ]
+
+-}
+indeterminate : List Style -> Style
+indeterminate =
+    pseudoClass "indeterminate"
+
+
+{-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    invalid
+        [ color (rgb 255 0 0)
+        , fontWeight bold
+        ]
+
+-}
+invalid : List Style -> Style
+invalid =
+    pseudoClass "invalid"
+
+
+{-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    lastChild
+        [ backgroundColor (rgb 0 0 255)
+        ]
+
+-}
+lastChild : List Style -> Style
+lastChild =
+    pseudoClass "last-child"
+
+
+{-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    lastOfType
+        [ color (rgb 100 100 100)
+        ]
+
+-}
+lastOfType : List Style -> Style
+lastOfType =
+    pseudoClass "last-of-type"
+
+
+{-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/:link)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    link
+        [ color (rgb 0 0 255)
+        ]
+
+-}
+link : List Style -> Style
+link =
+    pseudoClass "link"
+
+
+{-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-child)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    onlyChild
+        [ backgroundColor (rgb 255 255 255)
+        ]
+
+-}
+onlyChild : List Style -> Style
+onlyChild =
+    pseudoClass "only-child"
+
+
+{-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-of-type)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    onlyOfType
+        [ color (rgb 255 0 0)
+        , fontStyle italic
+        ]
+
+-}
+onlyOfType : List Style -> Style
+onlyOfType =
+    pseudoClass "only-of-type"
+
+
+{-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:out-of-range)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    outOfRange
+        [ color (rgb 255 0 0)
+        ]
+
+-}
+outOfRange : List Style -> Style
+outOfRange =
+    pseudoClass "out-of-range"
+
+
+{-| A [`:read-only`](https://developer.mozilla.org/en-US/docs/Web/CSS/:read-only)
+[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
+
+    readOnly
+        [ color (rgb 50 50 50)
+        ]
+
+-}
+readOnly : List Style -> Style
+readOnly =
+    pseudoClass "read-only"
+
+
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -1710,46 +2027,6 @@ fitContentTo (Value val) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
-------------------------------- NUMBERS --------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| A unitless number. Useful with properties like
-[`flexGrow`](#flexGrow),
-and [`order`](#order)
-which accept unitless numbers.
-
-    flexGrow (num 2)
-
-    order (num -2)
-
--}
-num : Float -> Value { provides | num : Supported }
-num value =
-    Value (String.fromFloat value)
-
-
-{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
-
-    zIndex (int 3)
-
--}
-int : Int -> Value { provides | int : Supported }
-int value =
-    Value (String.fromInt value)
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
 ------------------------------ ANGLES ----------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -1840,6 +2117,46 @@ s value =
 ms : Float -> Value { provides | ms : Supported }
 ms value =
     Value (String.fromFloat value ++ "ms")
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- NUMBERS --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| A unitless number. Useful with properties like
+[`flexGrow`](#flexGrow),
+and [`order`](#order)
+which accept unitless numbers.
+
+    flexGrow (num 2)
+
+    order (num -2)
+
+-}
+num : Float -> Value { provides | num : Supported }
+num value =
+    Value (String.fromFloat value)
+
+
+{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
+
+    zIndex (int 3)
+
+-}
+int : Int -> Value { provides | int : Supported }
+int value =
+    Value (String.fromInt value)
 
 
 ------------------------------------------------------------------------
@@ -2395,6 +2712,7 @@ dppx val =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
+
 
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
 Any CSS property can be set to this value.
@@ -3468,6 +3786,3055 @@ contain_ =
     Value "contain"
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+--------------------------------- ALL ----------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets an [`all`](https://css-tricks.com/almanac/properties/a/all/) property.
+
+    all inherit
+
+-}
+all : BaseValue a -> Style
+all (Value val) =
+    AppendProperty ("all:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- SIZING --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| The [`width`](https://css-tricks.com/almanac/properties/w/width/) property.
+
+    width (px 150)
+
+    width (em 1.5)
+
+    width auto
+
+    width minContent
+
+-}
+width :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+width (Value sizeVal) =
+    AppendProperty ("width:" ++ sizeVal)
+
+
+{-| The [`min-width`](https://css-tricks.com/almanac/properties/m/min-width/) property.
+
+    minWidth (px 150)
+
+    minWidth (em 1.5)
+
+    minWidth auto
+
+-}
+minWidth :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+minWidth (Value sizeVal) =
+    AppendProperty ("min-width:" ++ sizeVal)
+
+
+{-| The [`max-width`](https://css-tricks.com/almanac/properties/m/max-width/) property.
+
+    maxWidth (px 150)
+
+    maxWidth (em 1.5)
+
+    maxWidth auto
+
+-}
+maxWidth :
+    BaseValue
+        (LengthSupported
+            { maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            , none : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+maxWidth (Value sizeVal) =
+    AppendProperty ("max-width:" ++ sizeVal)
+
+
+{-| The [`height`](https://css-tricks.com/almanac/properties/h/height/) property.
+
+    height (px 34)
+
+-}
+height :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+height (Value val) =
+    AppendProperty ("height:" ++ val)
+
+
+{-| The [`min-height`](https://css-tricks.com/almanac/properties/m/min-height/) property.
+
+    minHeight (px 20)
+
+-}
+minHeight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+minHeight (Value val) =
+    AppendProperty ("min-height:" ++ val)
+
+
+{-| The [`max-height`](https://css-tricks.com/almanac/properties/m/min-height/) property.
+
+    maxHeight (px 20)
+
+-}
+maxHeight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+maxHeight (Value val) =
+    AppendProperty ("max-height:" ++ val)
+
+
+{-| The [`block-size`](https://css-tricks.com/almanac/properties/b/block-size/) property.
+
+    blockSize (px 20)
+
+-}
+blockSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+blockSize (Value val) =
+    AppendProperty ("block-size:" ++ val)
+
+
+{-| The [`min-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-block-size) property.
+
+    minBlockSize (px 20)
+
+-}
+minBlockSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+minBlockSize (Value val) =
+    AppendProperty ("min-block-size:" ++ val)
+
+
+{-| The [`max-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-block-size) property.
+
+    maxBlockSize (px 20)
+
+-}
+maxBlockSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+maxBlockSize (Value val) =
+    AppendProperty ("max-block-size:" ++ val)
+
+
+{-| The [`inline-size`](https://css-tricks.com/almanac/properties/i/inline-size/) property.
+
+    inlineSize (px 20)
+
+-}
+inlineSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+inlineSize (Value val) =
+    AppendProperty ("inline-size:" ++ val)
+
+
+{-| The [`min-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-inline-size) property.
+
+    minInlineSize (px 20)
+
+-}
+minInlineSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+minInlineSize (Value val) =
+    AppendProperty ("min-inline-size:" ++ val)
+
+
+{-| The [`max-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-inline-size) property.
+
+    maxInlineSize (px 20)
+
+-}
+maxInlineSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , none : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , fitContent : Supported
+            }
+        )
+    -> Style
+maxInlineSize (Value val) =
+    AppendProperty ("max-inline-size:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- MARGINS --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
+
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom margins are set to the first value and the right and
+left margins are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
+
+    margin (em 4) -- set all margins to 4em
+
+    margin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+    margin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    margin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+margin (Value value) =
+    AppendProperty ("margin:" ++ value)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin2` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
+
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
+
+    margin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+margin2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin3` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
+
+The top margin is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
+
+    margin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin3 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
+The `margin4` property is a shorthand property for setting `margin-top`,
+`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
+
+The four values apply to the top, right, bottom, and left margins.
+
+    margin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+margin4 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top) property.
+
+    marginTop (px 4)
+
+This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
+
+-}
+marginTop :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginTop (Value value) =
+    AppendProperty ("margin-top:" ++ value)
+
+
+{-| Sets [`margin-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right) property.
+
+    marginRight (px 4)
+
+-}
+marginRight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginRight (Value value) =
+    AppendProperty ("margin-right:" ++ value)
+
+
+{-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom) property.
+
+    marginBottom (px 4)
+
+This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
+
+-}
+marginBottom :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginBottom (Value value) =
+    AppendProperty ("margin-bottom:" ++ value)
+
+
+{-| Sets [`margin-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left) property.
+
+    marginLeft (px 4)
+
+-}
+marginLeft :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginLeft (Value value) =
+    AppendProperty ("margin-left:" ++ value)
+
+
+
+{-| Sets [`margin-block`](https://css-tricks.com/almanac/properties/m/margin-block/) property.
+The `margin-block` property is a shorthand property for setting `margin-block-start` and
+`margin-block-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start margin is set to the first value and the block end margin
+is set to the second.
+
+    marginBlock (em 4) -- set both block margins to 4em
+
+    marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+marginBlock :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginBlock (Value value) =
+    AppendProperty ("margin-block:" ++ value)
+
+
+{-| Sets [`margin-block`](https://css-tricks.com/almanac/properties/m/margin-block/) property.
+The `margin-block` property is a shorthand property for setting `margin-block-start` and
+`margin-block-end` in a single declaration.
+
+The block start margin is set to the first value and the block end margin
+is set to the second.
+
+    marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+marginBlock2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+marginBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("margin-block:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-start) property.
+
+    marginBlockStart (px 4)
+
+-}
+marginBlockStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginBlockStart (Value value) =
+    AppendProperty ("margin-block-start:" ++ value)
+
+
+{-| Sets [`margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-end) property.
+
+    marginBlockEnd (px 4)
+
+-}
+marginBlockEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginBlockEnd (Value value) =
+    AppendProperty ("margin-block-end:" ++ value)
+
+
+{-| Sets [`margin-inline`](https://css-tricks.com/almanac/properties/m/margin-inline/) property.
+The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
+`margin-inline-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start margin is set to the first value and the inline end margin
+is set to the second.
+
+    marginInline (em 4) -- set both inline margins to 4em
+
+    marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+marginInline :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginInline (Value value) =
+    AppendProperty ("margin-inline:" ++ value)
+
+
+{-| Sets [`margin-inline`](https://css-tricks.com/almanac/properties/m/margin-inline/) property.
+The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
+`margin-inline-end` in a single declaration.
+
+The inline start margin is set to the first value and the inline end margin
+is set to the second.
+
+    marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
+
+-}
+marginInline2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+marginInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("margin-inline:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start) property.
+
+    marginInlineStart (px 4)
+
+-}
+marginInlineStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginInlineStart (Value value) =
+    AppendProperty ("margin-inline-start:" ++ value)
+
+
+{-| Sets [`margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end) property.
+
+    marginInlineEnd (px 4)
+
+-}
+marginInlineEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+marginInlineEnd (Value value) =
+    AppendProperty ("margin-inline-end:" ++ value)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- PADDING --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
+
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom paddings are set to the first value and the right and
+left paddings are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
+
+    padding (em 4) -- set all margins to 4em
+
+    padding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+    padding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    padding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+-}
+padding :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+padding (Value value) =
+    AppendProperty ("padding:" ++ value)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding2` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
+
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
+
+    padding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+-}
+padding2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+padding2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding3` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
+
+The top padding is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
+
+    padding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+-}
+padding3 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
+The `padding4` property is a shorthand property for setting `padding-top`,
+`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
+
+The four values apply to the top, right, bottom, and left paddings.
+
+    padding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+-}
+padding4 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`padding-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top) property.
+
+    paddingTop (px 4)
+
+-}
+paddingTop :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingTop (Value value) =
+    AppendProperty ("padding-top:" ++ value)
+
+
+{-| Sets [`padding-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right) property.
+
+    paddingRight (px 4)
+
+-}
+paddingRight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingRight (Value value) =
+    AppendProperty ("padding-right:" ++ value)
+
+
+{-| Sets [`padding-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom) property.
+
+    paddingBottom (px 4)
+
+-}
+paddingBottom :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingBottom (Value value) =
+    AppendProperty ("padding-bottom:" ++ value)
+
+
+{-| Sets [`padding-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left) property.
+
+    paddingLeft (px 4)
+
+-}
+paddingLeft :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingLeft (Value value) =
+    AppendProperty ("padding-left:" ++ value)
+
+
+{-| Sets [`padding-block`](https://css-tricks.com/almanac/properties/p/padding-block/) property.
+The `padding-block` property is a shorthand property for setting `padding-block-start` and
+`padding-block-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start is set to the first value and the block end is set to the second.
+
+    paddingBlock (em 4) -- set both block start and block end to 4em
+
+    paddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+paddingBlock :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingBlock (Value value) =
+    AppendProperty ("padding-block:" ++ value)
+
+
+{-| Sets [`padding-block`](https://css-tricks.com/almanac/properties/p/padding-block/) property.
+
+The `padding-block` property is a shorthand property for setting `padding-block-start` and
+`padding-block-end` in a single declaration.
+
+The block start value is set to the first value and the block end value is set to the second.
+
+    paddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+paddingBlock2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+paddingBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("padding-block:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-start) property.
+
+    paddingBlockStart (px 4)
+
+-}
+paddingBlockStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingBlockStart (Value value) =
+    AppendProperty ("padding-block-start:" ++ value)
+
+
+{-| Sets [`padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end) property.
+
+    paddingBlockEnd (px 4)
+
+-}
+paddingBlockEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingBlockEnd (Value value) =
+    AppendProperty ("padding-block-end:" ++ value)
+
+
+{-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
+
+The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
+`padding-inline-end` and in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start is set to the first value and the inline end is set to the second.
+
+    paddingInline (em 4) -- set both inline start and inline end to 4em
+
+    paddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+paddingInline :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingInline (Value value) =
+    AppendProperty ("padding-inline:" ++ value)
+
+
+{-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
+
+The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
+`padding-inline-end` in a single declaration.
+
+The inline start value is set to the first value and the inline end value is set to the second.
+
+    paddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+paddingInline2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+paddingInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("padding-inline:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start) property.
+
+    paddingInlineStart (px 4)
+
+-}
+paddingInlineStart :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingInlineStart (Value value) =
+    AppendProperty ("padding-inline-start:" ++ value)
+
+
+{-| Sets [`padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end) property.
+
+    paddingInlineEnd (px 4)
+
+-}
+paddingInlineEnd :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+paddingInlineEnd (Value value) =
+    AppendProperty ("padding-inline-end:" ++ value)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------- BORDER --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
+
+    border (px 1)
+
+    border2 (px 1) solid
+
+    border3 (px 1) solid (hex "#f00")
+
+-}
+border : BaseValue LineWidth -> Style
+border (Value widthVal) =
+    AppendProperty ("border:" ++ widthVal)
+
+
+{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
+
+    border (px 1)
+
+    border2 (px 1) solid
+
+    border3 (px 1) solid (hex "#f00")
+
+-}
+border2 : Value LineWidth -> Value LineStyle -> Style
+border2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
+
+    border (px 1)
+
+    border2 (px 1) solid
+
+    border3 (px 1) solid (hex "#f00")
+
+-}
+border3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+border3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
+
+    borderTop (px 1)
+
+    borderTop2 (px 1) solid
+
+    borderTop3 (px 1) solid (hex "#f00")
+
+-}
+borderTop : BaseValue LineWidth -> Style
+borderTop (Value widthVal) =
+    AppendProperty ("border-top:" ++ widthVal)
+
+
+{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
+
+    borderTop (px 1)
+
+    borderTop2 (px 1) solid
+
+    borderTop3 (px 1) solid (hex "#f00")
+
+-}
+borderTop2 : Value LineWidth -> Value LineStyle -> Style
+borderTop2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
+
+    borderTop (px 1)
+
+    borderTop2 (px 1) solid
+
+    borderTop3 (px 1) solid (hex "#f00")
+
+-}
+borderTop3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderTop3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
+
+    borderRight (px 1)
+
+    borderRight2 (px 1) solid
+
+    borderRight3 (px 1) solid (hex "#f00")
+
+-}
+borderRight : BaseValue LineWidth -> Style
+borderRight (Value widthVal) =
+    AppendProperty ("border-right:" ++ widthVal)
+
+
+{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
+
+    borderRight (px 1)
+
+    borderRight2 (px 1) solid
+
+    borderRight3 (px 1) solid (hex "#f00")
+
+-}
+borderRight2 : Value LineWidth -> Value LineStyle -> Style
+borderRight2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
+
+    borderRight (px 1)
+
+    borderRight2 (px 1) solid
+
+    borderRight3 (px 1) solid (hex "#f00")
+
+-}
+borderRight3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderRight3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
+
+    borderBottom (px 1)
+
+    borderBottom2 (px 1) solid
+
+    borderBottom3 (px 1) solid (hex "#f00")
+
+-}
+borderBottom : BaseValue LineWidth -> Style
+borderBottom (Value widthVal) =
+    AppendProperty ("border-bottom:" ++ widthVal)
+
+
+{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
+
+    borderBottom (px 1)
+
+    borderBottom2 (px 1) solid
+
+    borderBottom3 (px 1) solid (hex "#f00")
+
+-}
+borderBottom2 : Value LineWidth -> Value LineStyle -> Style
+borderBottom2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
+
+    borderBottom (px 1)
+
+    borderBottom2 (px 1) solid
+
+    borderBottom3 (px 1) solid (hex "#f00")
+
+-}
+borderBottom3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderBottom3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
+
+    borderLeft (px 1)
+
+    borderLeft2 (px 1) solid
+
+    borderLeft3 (px 1) solid (hex "#f00")
+
+-}
+borderLeft : BaseValue LineWidth -> Style
+borderLeft (Value widthVal) =
+    AppendProperty ("border-left:" ++ widthVal)
+
+
+{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
+
+    borderLeft (px 1)
+
+    borderLeft2 (px 1) solid
+
+    borderLeft3 (px 1) solid (hex "#f00")
+
+-}
+borderLeft2 : Value LineWidth -> Value LineStyle -> Style
+borderLeft2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
+
+    borderLeft (px 1)
+
+    borderLeft2 (px 1) solid
+
+    borderLeft3 (px 1) solid (hex "#f00")
+
+-}
+borderLeft3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderLeft3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-block`](https://css-tricks.com/almanac/properties/b/border-block/) property.
+
+    borderBlock (px 1)
+
+    borderBlock2 (px 1) solid
+
+    borderBlock3 (px 1) solid (hex "#f00")
+
+-}
+borderBlock : BaseValue LineWidth -> Style
+borderBlock (Value widthVal) =
+    AppendProperty ("border-block:" ++ widthVal)
+
+
+{-| Sets [`border-block`](https://css-tricks.com/almanac/properties/b/border-block/) property.
+
+    borderBlock (px 1)
+
+    borderBlock2 (px 1) solid
+
+    borderBlock3 (px 1) solid (hex "#f00")
+
+-}
+borderBlock2 : Value LineWidth -> Value LineStyle -> Style
+borderBlock2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-block:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-block`](https://css-tricks.com/almanac/properties/b/border-block/) property.
+
+    borderBlock (px 1)
+
+    borderBlock2 (px 1) solid
+
+    borderBlock3 (px 1) solid (hex "#f00")
+
+-}
+borderBlock3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderBlock3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-block:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
+
+    borderBlockStart (px 1)
+
+    borderBlockStart2 (px 1) solid
+
+    borderBlockStart3 (px 1) solid (hex "#f00")
+
+-}
+borderBlockStart : BaseValue LineWidth -> Style
+borderBlockStart (Value widthVal) =
+    AppendProperty ("border-block-start:" ++ widthVal)
+
+
+{-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
+
+    borderBlockStart (px 1)
+
+    borderBlockStart2 (px 1) solid
+
+    borderBlockStart3 (px 1) solid (hex "#f00")
+
+-}
+borderBlockStart2 : Value LineWidth -> Value LineStyle -> Style
+borderBlockStart2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
+
+    borderBlockStart (px 1)
+
+    borderBlockStart2 (px 1) solid
+
+    borderBlockStart3 (px 1) solid (hex "#f00")
+
+-}
+borderBlockStart3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderBlockStart3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
+
+    borderBlockEnd (px 1)
+
+    borderBlockEnd2 (px 1) solid
+
+    borderBlockEnd3 (px 1) solid (hex "#f00")
+
+-}
+borderBlockEnd : BaseValue LineWidth -> Style
+borderBlockEnd (Value widthVal) =
+    AppendProperty ("border-block-end:" ++ widthVal)
+
+
+{-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
+
+    borderBlockEnd (px 1)
+
+    borderBlockEnd2 (px 1) solid
+
+    borderBlockEnd3 (px 1) solid (hex "#f00")
+
+-}
+borderBlockEnd2 : Value LineWidth -> Value LineStyle -> Style
+borderBlockEnd2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
+
+    borderBlockEnd (px 1)
+
+    borderBlockEnd2 (px 1) solid
+
+    borderBlockEnd3 (px 1) solid (hex "#f00")
+
+-}
+borderBlockEnd3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderBlockEnd3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
+
+    borderInline (px 1)
+
+    borderInline2 (px 1) solid
+
+    borderInline3 (px 1) solid (hex "#f00")
+
+-}
+borderInline : BaseValue LineWidth -> Style
+borderInline (Value widthVal) =
+    AppendProperty ("border-inline:" ++ widthVal)
+
+
+{-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
+
+    borderInline (px 1)
+
+    borderInline2 (px 1) solid
+
+    borderInline3 (px 1) solid (hex "#f00")
+
+-}
+borderInline2 : Value LineWidth -> Value LineStyle -> Style
+borderInline2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
+
+    borderInline (px 1)
+
+    borderInline2 (px 1) solid
+
+    borderInline3 (px 1) solid (hex "#f00")
+
+-}
+borderInline3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderInline3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
+
+    borderInlineStart (px 1)
+
+    borderInlineStart2 (px 1) solid
+
+    borderInlineStart3 (px 1) solid (hex "#f00")
+
+-}
+borderInlineStart : BaseValue LineWidth -> Style
+borderInlineStart (Value widthVal) =
+    AppendProperty ("border-inline-start:" ++ widthVal)
+
+
+{-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
+
+    borderInlineStart (px 1)
+
+    borderInlineStart2 (px 1) solid
+
+    borderInlineStart3 (px 1) solid (hex "#f00")
+
+-}
+borderInlineStart2 : Value LineWidth -> Value LineStyle -> Style
+borderInlineStart2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
+
+    borderInlineStart (px 1)
+
+    borderInlineStart2 (px 1) solid
+
+    borderInlineStart3 (px 1) solid (hex "#f00")
+
+-}
+borderInlineStart3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderInlineStart3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
+
+    borderInlineEnd (px 1)
+
+    borderInlineEnd2 (px 1) solid
+
+    borderInlineEnd3 (px 1) solid (hex "#f00")
+
+-}
+borderInlineEnd : BaseValue LineWidth -> Style
+borderInlineEnd (Value widthVal) =
+    AppendProperty ("border-inline-end:" ++ widthVal)
+
+
+{-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
+
+    borderInlineEnd (px 1)
+
+    borderInlineEnd2 (px 1) solid
+
+    borderInlineEnd3 (px 1) solid (hex "#f00")
+
+-}
+borderInlineEnd2 : Value LineWidth -> Value LineStyle -> Style
+borderInlineEnd2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
+
+    borderInlineEnd (px 1)
+
+    borderInlineEnd2 (px 1) solid
+
+    borderInlineEnd3 (px 1) solid (hex "#f00")
+
+-}
+borderInlineEnd3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+borderInlineEnd3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+
+    borderWidth2 (px 1) thin
+
+    borderWidth3 (px 1) thin zero
+
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth : BaseValue LineWidth -> Style
+borderWidth (Value widthVal) =
+    AppendProperty ("border-width:" ++ widthVal)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+
+    borderWidth2 (px 1) thin
+
+    borderWidth3 (px 1) thin zero
+
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth2 : Value LineWidth -> Value LineWidth -> Style
+borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
+    AppendProperty ("border-width:" ++ widthTopBottom ++ " " ++ widthRightLeft)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+
+    borderWidth2 (px 1) thin
+
+    borderWidth3 (px 1) thin zero
+
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth3 : Value LineWidth -> Value LineWidth -> Value LineWidth -> Style
+borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
+    AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRightLeft ++ " " ++ widthBottom)
+
+
+{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
+
+    borderWidth (px 1)
+
+    borderWidth2 (px 1) thin
+
+    borderWidth3 (px 1) thin zero
+
+    borderWidth4 (px 1) thin zero (em 1)
+
+-}
+borderWidth4 : Value LineWidth -> Value LineWidth -> Value LineWidth -> Value LineWidth -> Style
+borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
+    AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRight ++ " " ++ widthBottom ++ " " ++ widthLeft)
+
+
+{-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width) property.
+
+    borderTopWidth (px 1)
+
+-}
+borderTopWidth : BaseValue LineWidth -> Style
+borderTopWidth (Value widthVal) =
+    AppendProperty ("border-top-width:" ++ widthVal)
+
+
+{-| Sets [`border-right-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width) property.
+
+    borderRightWidth (px 1)
+
+-}
+borderRightWidth : BaseValue LineWidth -> Style
+borderRightWidth (Value widthVal) =
+    AppendProperty ("border-right-width:" ++ widthVal)
+
+
+{-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width) property.
+
+    borderBottomWidth (px 1)
+
+-}
+borderBottomWidth : BaseValue LineWidth -> Style
+borderBottomWidth (Value widthVal) =
+    AppendProperty ("border-bottom-width:" ++ widthVal)
+
+
+{-| Sets [`border-left-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width) property.
+
+    borderLeftWidth (px 1)
+
+-}
+borderLeftWidth : BaseValue LineWidth -> Style
+borderLeftWidth (Value widthVal) =
+    AppendProperty ("border-left-width:" ++ widthVal)
+
+
+{-| Sets [`border-block-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-width) property.
+
+    borderBlockWidth (px 1)
+
+-}
+borderBlockWidth : BaseValue LineWidth -> Style
+borderBlockWidth (Value widthVal) =
+    AppendProperty ("border-block-width:" ++ widthVal)
+
+
+{-| Sets [`border-block-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-width) property.
+
+    borderBlockStartWidth (px 1)
+
+-}
+borderBlockStartWidth : BaseValue LineWidth -> Style
+borderBlockStartWidth (Value widthVal) =
+    AppendProperty ("border-block-start-width:" ++ widthVal)
+
+
+{-| Sets [`border-block-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-width) property.
+
+    borderBlockEndWidth (px 1)
+
+-}
+borderBlockEndWidth : BaseValue LineWidth -> Style
+borderBlockEndWidth (Value widthVal) =
+    AppendProperty ("border-block-end-width:" ++ widthVal)
+
+
+{-| Sets [`border-inline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-width) property.
+
+    borderTopWidth (px 1)
+
+-}
+borderInlineWidth : BaseValue LineWidth -> Style
+borderInlineWidth (Value widthVal) =
+    AppendProperty ("border-inline-width:" ++ widthVal)
+
+
+{-| Sets [`border-inline-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-width) property.
+
+    borderInlineStartWidth (px 1)
+
+-}
+borderInlineStartWidth : BaseValue LineWidth -> Style
+borderInlineStartWidth (Value widthVal) =
+    AppendProperty ("border-inline-start-width:" ++ widthVal)
+
+
+{-| Sets [`border-inline-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width) property.
+
+    borderInlineEndWidth (px 1)
+
+-}
+borderInlineEndWidth : BaseValue LineWidth -> Style
+borderInlineEndWidth (Value widthVal) =
+    AppendProperty ("border-inline-end-width:" ++ widthVal)
+
+
+{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
+
+    borderStyle solid
+
+    borderStyle2 solid none
+
+    borderStyle3 solid none dotted
+
+    borderStyle4 solid none dotted groove
+
+-}
+borderStyle : BaseValue LineStyle -> Style
+borderStyle (Value styleVal) =
+    AppendProperty ("border-style:" ++ styleVal)
+
+
+{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
+
+    borderStyle solid
+
+-}
+borderStyle2 : Value LineStyle -> Value LineStyle -> Style
+borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
+    AppendProperty ("border-style:" ++ styleTopBottom ++ " " ++ styleRigthLeft)
+
+
+{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
+
+    borderStyle2 solid none
+
+-}
+borderStyle3 : Value LineStyle -> Value LineStyle -> Value LineStyle -> Style
+borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
+    AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigthLeft ++ " " ++ styleBottom)
+
+
+{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
+
+    borderStyle4 solid none dotted groove
+
+-}
+borderStyle4 : Value LineStyle -> Value LineStyle -> Value LineStyle -> Value LineStyle -> Style
+borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value styleLeft) =
+    AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigt ++ " " ++ styleBottom ++ " " ++ styleLeft)
+
+
+{-| Sets [`border-top-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style) property.
+
+    borderTopStyle solid
+
+-}
+borderTopStyle : BaseValue LineStyle -> Style
+borderTopStyle (Value styleVal) =
+    AppendProperty ("border-top-style:" ++ styleVal)
+
+
+{-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style) property.
+
+    borderRightStyle solid
+
+-}
+borderRightStyle : BaseValue LineStyle -> Style
+borderRightStyle (Value styleVal) =
+    AppendProperty ("border-right-style:" ++ styleVal)
+
+
+{-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style) property.
+
+    borderBottomStyle solid
+
+-}
+borderBottomStyle : BaseValue LineStyle -> Style
+borderBottomStyle (Value styleVal) =
+    AppendProperty ("border-bottom-style:" ++ styleVal)
+
+
+{-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style) property.
+
+    borderLeftStyle solid
+
+-}
+borderLeftStyle : BaseValue LineStyle -> Style
+borderLeftStyle (Value styleVal) =
+    AppendProperty ("border-left-style:" ++ styleVal)
+
+
+{-| Sets [`border-block-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-style) property.
+
+    borderBlockStyle solid
+
+-}
+borderBlockStyle : BaseValue LineStyle -> Style
+borderBlockStyle (Value styleVal) =
+    AppendProperty ("border-block-style:" ++ styleVal)
+
+
+{-| Sets [`border-block-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style) property.
+
+    borderBlockStartStyle solid
+
+-}
+borderBlockStartStyle : BaseValue LineStyle -> Style
+borderBlockStartStyle (Value styleVal) =
+    AppendProperty ("border-block-start-style:" ++ styleVal)
+
+
+{-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style) property.
+
+    borderBlockEndStyle solid
+
+-}
+borderBlockEndStyle : BaseValue LineStyle -> Style
+borderBlockEndStyle (Value styleVal) =
+    AppendProperty ("border-block-end-style:" ++ styleVal)
+
+
+{-| Sets [`border-inline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-style) property.
+
+    borderInlineStyle solid
+
+-}
+borderInlineStyle : BaseValue LineStyle -> Style
+borderInlineStyle (Value styleVal) =
+    AppendProperty ("border-inline-style:" ++ styleVal)
+
+
+{-| Sets [`border-inline-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style) property.
+
+    borderInlineStartStyle solid
+
+-}
+borderInlineStartStyle : BaseValue LineStyle -> Style
+borderInlineStartStyle (Value styleVal) =
+    AppendProperty ("border-inline-start-style:" ++ styleVal)
+
+
+{-| Sets [`border-inline-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style) property.
+
+    borderInlineEndStyle solid
+
+-}
+borderInlineEndStyle : BaseValue LineStyle -> Style
+borderInlineEndStyle (Value styleVal) =
+    AppendProperty ("border-inline-end-style:" ++ styleVal)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor : BaseValue Color -> Style
+borderColor (Value colorVal) =
+    AppendProperty ("border-color:" ++ colorVal)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor2 : Value Color -> Value Color -> Style
+borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
+    AppendProperty ("border-color:" ++ colorTopBottom ++ " " ++ colorRightLeft)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor3 : Value Color -> Value Color -> Value Color -> Style
+borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
+    AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRightLeft ++ " " ++ colorBottom)
+
+
+{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
+
+    borderColor (rgb 0 0 0)
+
+    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
+
+    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
+
+    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
+
+-}
+borderColor4 : Value Color -> Value Color -> Value Color -> Value Color -> Style
+borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
+    AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRight ++ " " ++ colorBottom ++ " " ++ colorLeft)
+
+
+{-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color) property.
+
+    borderTopColor (rgb 0 0 0)
+
+-}
+borderTopColor : BaseValue Color -> Style
+borderTopColor (Value colorVal) =
+    AppendProperty ("border-top-color:" ++ colorVal)
+
+
+{-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color) property.
+
+    borderRightColor (rgb 0 0 0)
+
+-}
+borderRightColor : BaseValue Color -> Style
+borderRightColor (Value colorVal) =
+    AppendProperty ("border-right-color:" ++ colorVal)
+
+
+{-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color) property.
+
+    borderBottomColor (rgb 0 0 0)
+
+-}
+borderBottomColor : BaseValue Color -> Style
+borderBottomColor (Value colorVal) =
+    AppendProperty ("border-bottom-color:" ++ colorVal)
+
+
+{-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color) property.
+
+    borderLeftColor (rgb 0 0 0)
+
+-}
+borderLeftColor : BaseValue Color -> Style
+borderLeftColor (Value colorVal) =
+    AppendProperty ("border-left-color:" ++ colorVal)
+
+
+{-| Sets [`border-block-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-color) property.
+
+    borderBlockColor (rgb 0 0 0)
+
+-}
+borderBlockColor : BaseValue Color -> Style
+borderBlockColor (Value colorVal) =
+    AppendProperty ("border-block-color:" ++ colorVal)
+
+
+{-| Sets [`border-block-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-color) property.
+
+    borderBlockStartColor (rgb 0 0 0)
+
+-}
+borderBlockStartColor : BaseValue Color -> Style
+borderBlockStartColor (Value colorVal) =
+    AppendProperty ("border-block-start-color:" ++ colorVal)
+
+
+{-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color) property.
+
+    borderBlockEndColor (rgb 0 0 0)
+
+-}
+borderBlockEndColor : BaseValue Color -> Style
+borderBlockEndColor (Value colorVal) =
+    AppendProperty ("border-block-end-color:" ++ colorVal)
+
+
+{-| Sets [`border-inline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-color) property.
+
+    borderInlineColor (rgb 0 0 0)
+
+-}
+borderInlineColor : BaseValue Color -> Style
+borderInlineColor (Value colorVal) =
+    AppendProperty ("border-inline-color:" ++ colorVal)
+
+
+{-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color) property.
+
+    borderInlineStartColor (rgb 0 0 0)
+
+-}
+borderInlineStartColor : BaseValue Color -> Style
+borderInlineStartColor (Value colorVal) =
+    AppendProperty ("border-inline-start-color:" ++ colorVal)
+
+
+{-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color) property.
+
+    borderInlineEndColor (rgb 0 0 0)
+
+-}
+borderInlineEndColor : BaseValue Color -> Style
+borderInlineEndColor (Value colorVal) =
+    AppendProperty ("border-inline-end-color:" ++ colorVal)
+
+
+
+
+-- BORDER STYLE --
+
+
+{-| The `dotted` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+It represents a line that consists of dots.
+
+    borderStyle dotted
+
+    columnRuleStyle dotted
+
+    textDecorationStyle dotted
+
+-}
+dotted : Value { provides | dotted : Supported }
+dotted =
+    Value "dotted"
+
+
+{-| The `dashed` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+    borderStyle dashed
+
+    columnRuleStyle dashed
+
+    textDecorationStyle dashed
+
+It represents a line that consists of dashes.
+
+-}
+dashed : Value { provides | dashed : Supported }
+dashed =
+    Value "dashed"
+
+
+{-| The `solid` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+    borderStyle solid
+
+    columnRuleStyle solid
+
+    textDecorationStyle solid
+
+It represents a solid, continuous line.
+
+-}
+solid : Value { provides | solid : Supported }
+solid =
+    Value "solid"
+
+
+{-| The `double` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+    borderStyle double
+
+    columnRuleStyle double
+
+    textDecorationStyle double
+
+It represents a double line: two lines side by side.
+
+-}
+double : Value { provides | double : Supported }
+double =
+    Value "double"
+
+
+{-| The `groove` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+    borderStyle groove
+
+    columnRuleStyle groove
+
+    textDecorationStyle groove
+
+Adds a bevel based on the color value, which makes things appear pressed into the document.
+
+-}
+groove : Value { provides | groove : Supported }
+groove =
+    Value "groove"
+
+
+{-| The `ridge` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+    borderStyle ridge
+
+    columnRuleStyle ridge
+
+    textDecorationStyle ridge
+
+Similar to [`groove`](#groove), but reverses the color values in a way that makes things appear raised.
+
+-}
+ridge : Value { provides | ridge : Supported }
+ridge =
+    Value "ridge"
+
+
+{-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
+
+This is called `inset_` rather than `inset` because [`inset` is already a property function](#inset).
+
+    borderStyle inset_
+
+    columnRuleStyle inset_
+
+    textDecorationStyle inset_
+
+Adds a split tone to the line that makes it appear slightly depressed.
+
+Contrast with [`outset`](#outset)
+
+-}
+inset_ : Value { provides | inset_ : Supported }
+inset_ =
+    Value "inset"
+
+
+{-| The `outset` value used by properties such as [`borderStyle`](#borderStyle),
+[`columnRuleStyle`](#columnRuleStyle),
+and [`textDecorationStyle`](#textDecorationStyle),
+and [`strokeAlign`](#strokeAlign).
+
+    borderStyle outset
+
+    columnRuleStyle outset
+
+    strokeAlign outset
+
+    textDecorationStyle outset
+
+Similar to [`inset_`](#inset_), but reverses the colors in a way that makes it appear slightly raised.
+
+-}
+outset : Value { provides | outset : Supported }
+outset =
+    Value "outset"
+
+
+
+{- BORDER RADIUS -}
+
+
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius (em 4)
+
+    borderRadius2 (em 4) (px 2)
+
+    borderRadius3 (em 4) (px 2) (pct 5)
+
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+borderRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderRadius (Value radius) =
+    AppendProperty ("border-radius:" ++ radius)
+
+
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius (em 4)
+
+    borderRadius2 (em 4) (px 2)
+
+    borderRadius3 (em 4) (px 2) (pct 5)
+
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+borderRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
+    AppendProperty ("border-radius:" ++ radiusTopLeftAndBottomRight ++ " " ++ radiusTopRightAndBottomLeft)
+
+
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius (em 4)
+
+    borderRadius2 (em 4) (px 2)
+
+    borderRadius3 (em 4) (px 2) (pct 5)
+
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+borderRadius3 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
+    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRightAndBottomLeft ++ " " ++ radiusBottomRight)
+
+
+{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
+
+    borderRadius (em 4)
+
+    borderRadius2 (em 4) (px 2)
+
+    borderRadius3 (em 4) (px 2) (pct 5)
+
+    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
+
+-}
+borderRadius4 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
+    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
+
+
+{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
+
+    borderTopLeftRadius (em 4)
+
+    borderTopLeftRadius2 (em 4) (px 2)
+
+-}
+borderTopLeftRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderTopLeftRadius (Value radius) =
+    AppendProperty ("border-top-left-radius:" ++ radius)
+
+
+{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
+
+    borderTopLeftRadius (em 4)
+
+    borderTopLeftRadius2 (em 4) (px 2)
+
+-}
+borderTopLeftRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderTopLeftRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-top-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
+
+
+{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
+
+    borderTopRightRadius (em 4)
+
+    borderTopRightRadius2 (em 4) (px 2)
+
+-}
+borderTopRightRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderTopRightRadius (Value radius) =
+    AppendProperty ("border-top-right-radius:" ++ radius)
+
+
+{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
+
+    borderTopRightRadius (em 4)
+
+    borderTopRightRadius2 (em 4) (px 2)
+
+-}
+borderTopRightRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderTopRightRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-top-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
+
+
+{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
+
+    borderBottomRightRadius (em 4)
+
+    borderBottomRightRadius2 (em 4) (px 2)
+
+-}
+borderBottomRightRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderBottomRightRadius (Value radius) =
+    AppendProperty ("border-bottom-right-radius:" ++ radius)
+
+
+{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
+
+    borderBottomRightRadius (em 4)
+
+    borderBottomRightRadius2 (em 4) (px 2)
+
+-}
+borderBottomRightRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderBottomRightRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-bottom-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
+
+
+{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
+
+    borderBottomLeftRadius (em 4)
+
+    borderBottomLeftRadius2 (em 4) (px 2)
+
+-}
+borderBottomLeftRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderBottomLeftRadius (Value radius) =
+    AppendProperty ("border-bottom-left-radius:" ++ radius)
+
+
+{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
+
+    borderBottomLeftRadius (em 4)
+
+    borderBottomLeftRadius2 (em 4) (px 2)
+
+-}
+borderBottomLeftRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderBottomLeftRadius2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-bottom-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
+
+
+{-| Sets [`border-start-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius) property.
+
+    borderStartStartRadius (em 4)
+
+    borderStartStartRadius2 (em 4) (px 2)
+
+-}
+borderStartStartRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderStartStartRadius (Value radius) =
+    AppendProperty ("border-start-start-radius:" ++ radius)
+
+
+{-| Sets [`border-start-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius) property.
+
+    borderStartStartRadius (em 4)
+
+    borderStartStartRadius2 (em 4) (px 2)
+
+-}
+borderStartStartRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderStartStartRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-start-start-radius:" ++ horizontalValue ++ " " ++ verticalValue)
+
+
+{-| Sets [`border-start-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius) property.
+
+    borderStartEndRadius (em 4)
+
+    borderStartEndRadius2 (em 4) (px 2)
+
+-}
+borderStartEndRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderStartEndRadius (Value radius) =
+    AppendProperty ("border-start-end-radius:" ++ radius)
+
+
+{-| Sets [`border-start-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius) property.
+
+    borderStartEndRadius (em 4)
+
+    borderStartEndRadius2 (em 4) (px 2)
+
+-}
+borderStartEndRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderStartEndRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-start-end-radius:" ++ horizontalValue ++ " " ++ verticalValue)
+
+
+{-| Sets [`border-end-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius) property.
+
+    borderEndStartRadius (em 4)
+
+    borderEndStartRadius2 (em 4) (px 2)
+
+-}
+borderEndStartRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderEndStartRadius (Value radius) =
+    AppendProperty ("border-end-start-radius:" ++ radius)
+
+
+{-| Sets [`border-end-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius) property.
+
+    borderEndStartRadius (em 4)
+
+    borderEndStartRadius2 (em 4) (px 2)
+
+-}
+borderEndStartRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderEndStartRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-end-start-radius:" ++ horizontalValue ++ " " ++ verticalValue)
+
+
+{-| Sets [`border-end-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius) property.
+
+    borderEndEndRadius (em 4)
+
+    borderEndEndRadius2 (em 4) (px 2)
+
+-}
+borderEndEndRadius :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Style
+borderEndEndRadius (Value radius) =
+    AppendProperty ("border-end-end-radius:" ++ radius)
+
+
+{-| Sets [`border-end-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius) property.
+
+    borderEndEndRadius (em 4)
+
+    borderEndEndRadius2 (em 4) (px 2)
+
+-}
+borderEndEndRadius2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+borderEndEndRadius2 (Value horizontalValue) (Value verticalValue) =
+    AppendProperty ("border-end-end-radius:" ++ horizontalValue ++ " " ++ verticalValue)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+
+    borderImageOutset2 (num 1) (num 1.2)
+
+    borderImageOutset3 (px 30) (num 2) (px 45)
+
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset :
+    BaseValue
+        (LengthSupported
+            { num : Supported
+            }
+        )
+    -> Style
+borderImageOutset (Value widthVal) =
+    AppendProperty ("border-image-outset:" ++ widthVal)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+
+    borderImageOutset2 (num 1) (num 1.2)
+
+    borderImageOutset3 (px 30) (num 2) (px 45)
+
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset2 :
+    Value
+        (LengthSupported
+            { num : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { num : Supported
+                }
+            )
+    -> Style
+borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+
+    borderImageOutset2 (num 1) (num 1.2)
+
+    borderImageOutset3 (px 30) (num 2) (px 45)
+
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset3 :
+    Value
+        (LengthSupported
+            { num : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { num : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { num : Supported
+                }
+            )
+    -> Style
+borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageOutset (rem 1)
+
+    borderImageOutset2 (num 1) (num 1.2)
+
+    borderImageOutset3 (px 30) (num 2) (px 45)
+
+    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
+
+-}
+borderImageOutset4 :
+    Value
+        (LengthSupported
+            { num : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { num : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { num : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { num : Supported
+                }
+            )
+    -> Style
+borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+
+    borderImageWidth2 (num 1) (num 1.2)
+
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+borderImageWidth (Value widthVal) =
+    AppendProperty ("border-image-width:" ++ widthVal)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+
+    borderImageWidth2 (num 1) (num 1.2)
+
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+borderImageWidth2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("border-image-width:" ++ valueTopBottom ++ " " ++ valueRightLeft)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+
+    borderImageWidth2 (num 1) (num 1.2)
+
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth3 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+borderImageWidth3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
+
+
+{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
+
+    borderImageWidth (rem 1)
+
+    borderImageWidth2 (num 1) (num 1.2)
+
+    borderImageWidth3 (pct 5) (pct 15) (pct 10)
+
+    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
+
+Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
+
+-}
+borderImageWidth4 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , num : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , num : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------- OUTLINE -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`outline`](https://css-tricks.com/almanac/properties/o/outline/).
+
+    outline zero
+
+    outline none
+
+-}
+outline :
+    BaseValue
+        (LineWidthSupported
+            (LineStyleSupported
+                (ColorSupported
+                    { auto : Supported
+                    , invert : Supported
+                    }
+                )
+            )
+        )
+    -> Style
+outline (Value val) =
+    AppendProperty ("outline:" ++ val)
+
+
+{-| Sets [`outline`](https://css-tricks.com/almanac/properties/o/outline/).
+
+    outline3 (em 0.25) auto (rgb 120 250 32)
+
+-}
+outline3 :
+    Value LineWidth
+    -> Value (LineStyleSupported { auto : Supported })
+    -> Value (ColorSupported { invert : Supported })
+    -> Style
+outline3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty
+        ("outline:"
+            ++ widthVal
+            ++ " "
+            ++ styleVal
+            ++ " "
+            ++ colorVal
+        )
+
+
+{-| Sets [`outline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width).
+
+    outlineWidth (px 2)
+
+    outlineWidth thin
+
+-}
+outlineWidth : BaseValue LineWidth -> Style
+outlineWidth (Value val) =
+    AppendProperty ("outline-width:" ++ val)
+
+
+{-| Sets [`outline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color).
+
+    outlineColor (hex "eee")
+
+    outlineColor invert
+
+-}
+outlineColor : BaseValue (ColorSupported { invert : Supported }) -> Style
+outlineColor (Value val) =
+    AppendProperty ("outline-color:" ++ val)
+
+
+{-| The `invert` value used by properties such as [`outlineColor`](#outlineColor)
+
+    outlineColor invert
+
+-}
+invert : Value { provides | invert : Supported }
+invert =
+    Value "invert"
+
+
+{-| Sets [`outline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-style).
+
+    outlineStyle auto
+
+    outlineStyle dashed
+
+-}
+outlineStyle : BaseValue (LineStyleSupported { auto : Supported }) -> Style
+outlineStyle (Value val) =
+    AppendProperty ("outline-style:" ++ val)
+
+
+{-| Sets [`outline-offset`](https://css-tricks.com/almanac/properties/o/outline-offset/).
+
+    outlineOffset (px 2)
+
+-}
+outlineOffset : BaseValue Length -> Style
+outlineOffset (Value val) =
+    AppendProperty ("outline-offset:" ++ val)
+
+
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -3647,9 +7014,391 @@ anywhere =
     Value "anywhere"
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- DISPLAY --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
--- POSITIONS --
+{-| Sets [`display`](https://css-tricks.com/almanac/properties/d/display/).
+
+    display block
+
+**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a property function](#flex).
+
+-}
+display :
+    BaseValue
+        { block : Supported
+        , flex_ : Supported
+        , flow : Supported
+        , flowRoot : Supported
+        , grid : Supported
+        , listItem : Supported
+        , inline : Supported
+        , inlineBlock : Supported
+        , inlineFlex : Supported
+        , inlineGrid : Supported
+        , inlineTable : Supported
+        , none : Supported
+        , contents : Supported
+        , ruby : Supported
+        , rubyBase : Supported
+        , rubyBaseContainer : Supported
+        , rubyText : Supported
+        , rubyTextContainer : Supported
+        , runIn : Supported
+        , table : Supported
+        , tableCaption : Supported
+        , tableCell : Supported
+        , tableColumn : Supported
+        , tableColumnGroup : Supported
+        , tableFooterGroup : Supported
+        , tableHeaderGroup : Supported
+        , tableRow : Supported
+        , tableRowGroup : Supported
+        }
+    -> Style
+display (Value val) =
+    AppendProperty ("display:" ++ val)
+
+
+{-| Sets [`display`](https://css-tricks.com/almanac/properties/d/display/).
+
+    display2 block flex_
+
+**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a property function](#flex).
+For `display: inline list-item` and similar property values that include `list-item`
+look at [`displayListItem2`](#displayListItem2) and [`displayListItem3`](#displayListItem3).
+
+-}
+display2 :
+    Value
+        { block : Supported
+        , inline : Supported
+        , runIn : Supported
+        }
+    ->
+        Value
+            { flow : Supported
+            , flowRoot : Supported
+            , table : Supported
+            , flex_ : Supported
+            , grid : Supported
+            , ruby : Supported
+            }
+    -> Style
+display2 (Value displayOutside) (Value displayInside) =
+    AppendProperty ("display:" ++ displayOutside ++ " " ++ displayInside)
+
+
+{-| The [`display`](https://css-tricks.com/almanac/properties/d/display/) property.
+This function is used to generate complex `display: list-item` properties
+such as `display: block list-item`.
+
+    displayListItem2 block
+
+-}
+displayListItem2 :
+    Value
+        { block : Supported
+        , inline : Supported
+        , runIn : Supported
+        , flow : Supported
+        , flowRoot : Supported
+        }
+    -> Style
+displayListItem2 (Value val) =
+    AppendProperty ("display:list-item " ++ val)
+
+
+{-| The [`display`](https://css-tricks.com/almanac/properties/d/display/) property.
+This function is used to generate complex `display: list-item` properties
+such as `display: block flow-root list-item`.
+
+    displayListItem3 block flowRoot
+
+-}
+displayListItem3 :
+    Value
+        { block : Supported
+        , inline : Supported
+        , runIn : Supported
+        }
+    ->
+        Value
+            { flow : Supported
+            , flowRoot : Supported
+            }
+    -> Style
+displayListItem3 (Value displayOutside) (Value displayFlow) =
+    AppendProperty ("display:list-item " ++ displayOutside ++ " " ++ displayFlow)
+
+
+{-| The `flex` value used by [`display`](#display).
+
+    display flex_
+
+The value is called `flex_` instead of `flex` because [`flex` is already a property function](#flex).
+
+-}
+flex_ : Value { provides | flex_ : Supported }
+flex_ =
+    Value "flex"
+
+
+{-| The `flow` value used by [`display`](#display).
+
+    display flow
+
+-}
+flow : Value { provides | flow : Supported }
+flow =
+    Value "flow"
+
+
+{-| The `flow-root` value used by [`display`](#display).
+
+    display flowRoot
+
+-}
+flowRoot : Value { provides | flowRoot : Supported }
+flowRoot =
+    Value "flow-root"
+
+
+{-| The `grid` value used by [`display`](#display).
+
+    display grid
+
+-}
+grid : Value { provides | grid : Supported }
+grid =
+    Value "grid"
+
+
+{-| The `contents` value used by [`display`](#display).
+
+    display contents
+
+-}
+contents : Value { provides | contents : Supported }
+contents =
+    Value "contents"
+
+
+{-| The `inline-block` value used by [`display`](#display).
+
+    display inlineBlock
+
+-}
+inlineBlock : Value { provides | inlineBlock : Supported }
+inlineBlock =
+    Value "inline-block"
+
+
+{-| The `inline-flex` value used by [`display`](#display).
+
+    display inlineFlex
+
+-}
+inlineFlex : Value { provides | inlineFlex : Supported }
+inlineFlex =
+    Value "inline-flex"
+
+
+{-| The `list-item` value used by [`display`](#display).
+
+    display listItem
+
+-}
+listItem : Value { provides | listItem : Supported }
+listItem =
+    Value "list-item"
+
+
+{-| The `inline-table` value used by [`display`](#display).
+
+    display inlineTable
+
+-}
+inlineTable : Value { provides | inlineTable : Supported }
+inlineTable =
+    Value "inline-table"
+
+
+{-| The `inline-grid` value used by [`display`](#display).
+
+    display inlineGrid
+
+-}
+inlineGrid : Value { provides | inlineGrid : Supported }
+inlineGrid =
+    Value "inline-grid"
+
+
+{-| The `ruby-base` value used by [`display`](#display).
+
+    display rubyBase
+
+-}
+rubyBase : Value { provides | rubyBase : Supported }
+rubyBase =
+    Value "ruby-base"
+
+
+{-| The `ruby-base-container` value used by [`display`](#display).
+
+    display rubyBaseContainer
+
+-}
+rubyBaseContainer : Value { provides | rubyBaseContainer : Supported }
+rubyBaseContainer =
+    Value "ruby-base-container"
+
+
+{-| The `ruby-text` value used by [`display`](#display).
+
+    display rubyText
+
+-}
+rubyText : Value { provides | rubyText : Supported }
+rubyText =
+    Value "ruby-text"
+
+
+{-| The `ruby-text-container` value used by [`display`](#display).
+
+    display rubyTextContainer
+
+-}
+rubyTextContainer : Value { provides | rubyTextContainer : Supported }
+rubyTextContainer =
+    Value "ruby-text-container"
+
+
+{-| The `run-in` value used by [`display`](#display).
+
+    display runIn
+
+-}
+runIn : Value { provides | runIn : Supported }
+runIn =
+    Value "run-in"
+
+
+{-| The `table` value used by [`display`](#display).
+
+    display table
+
+-}
+table : Value { provides | table : Supported }
+table =
+    Value "table"
+
+
+{-| The `table-caption` value used by [`display`](#display).
+
+    display tableCaption
+
+-}
+tableCaption : Value { provides | tableCaption : Supported }
+tableCaption =
+    Value "table-caption"
+
+
+{-| The `table-cell` value used by [`display`](#display).
+
+    display tableCell
+
+-}
+tableCell : Value { provides | tableCell : Supported }
+tableCell =
+    Value "table-cell"
+
+
+{-| The `table-column` value used by [`display`](#display).
+
+    display tableColumn
+
+-}
+tableColumn : Value { provides | tableColumn : Supported }
+tableColumn =
+    Value "table-column"
+
+
+{-| The `table-column-group` value used by [`display`](#display).
+
+    display tableColumnGroup
+
+-}
+tableColumnGroup : Value { provides | tableColumnGroup : Supported }
+tableColumnGroup =
+    Value "table-column-group"
+
+
+{-| The `table-footer-group` value used by [`display`](#display).
+
+    display tableFooterGroup
+
+-}
+tableFooterGroup : Value { provides | tableFooterGroup : Supported }
+tableFooterGroup =
+    Value "table-footer-group"
+
+
+{-| The `table-header-group` value used by [`display`](#display).
+
+    display tableHeaderGroup
+
+-}
+tableHeaderGroup : Value { provides | tableHeaderGroup : Supported }
+tableHeaderGroup =
+    Value "table-header-group"
+
+
+{-| The `table-row` value used by [`display`](#display).
+
+    display tableRow
+
+-}
+tableRow : Value { provides | tableRow : Supported }
+tableRow =
+    Value "table-row"
+
+
+{-| The `table-row-group` value used by [`display`](#display).
+
+    display tableRowGroup
+
+-}
+tableRowGroup : Value { provides | tableRowGroup : Supported }
+tableRowGroup =
+    Value "table-row-group"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- POSITION -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| Sets the [`position`](https://css-tricks.com/almanac/properties/p/position/) of an element.
@@ -3670,6 +7419,87 @@ position :
     -> Style
 position (Value val) =
     AppendProperty ("position:" ++ val)
+
+
+{-| An [`absolute` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative).
+
+    position absolute
+
+The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](<https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/>
+
+-}
+absolute : Value { provides | absolute : Supported }
+absolute =
+    Value "absolute"
+
+
+{-| A [`fixed` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values)
+or [`fixed` `background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
+or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
+
+    position fixed
+
+    backgroundAttachment fixed
+
+    tableLayout fixed
+
+The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/)
+
+-}
+fixed : Value { provides | fixed : Supported }
+fixed =
+    Value "fixed"
+
+
+{-| A [`relative` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values).
+
+    position relative
+
+The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
+
+-}
+relative : Value { provides | relative : Supported }
+relative =
+    Value "relative"
+
+
+{-| A [`static` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values).
+
+    position static
+
+This is the default `position` value. See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
+
+-}
+static : Value { provides | static : Supported }
+static =
+    Value "static"
+
+
+{-| A [`sticky` `position`](https://css-tricks.com/position-sticky-2/)
+
+    position sticky
+
+The default `position` value is [`static`](#static). See also [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
+
+-}
+sticky : Value { provides | sticky : Supported }
+sticky =
+    Value "sticky"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- INSETS --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| Sets the [`inset`](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) property.
@@ -4108,72 +7938,6 @@ insetInlineEnd (Value val) =
     AppendProperty ("inset-inline-end:" ++ val)
 
 
-{-| An [`absolute` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#relative).
-
-    position absolute
-
-The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](<https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/>
-
--}
-absolute : Value { provides | absolute : Supported }
-absolute =
-    Value "absolute"
-
-
-{-| A [`fixed` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values)
-or [`fixed` `background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
-or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
-
-    position fixed
-
-    backgroundAttachment fixed
-
-    tableLayout fixed
-
-The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/)
-
--}
-fixed : Value { provides | fixed : Supported }
-fixed =
-    Value "fixed"
-
-
-{-| A [`relative` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values).
-
-    position relative
-
-The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
-
--}
-relative : Value { provides | relative : Supported }
-relative =
-    Value "relative"
-
-
-{-| A [`static` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values).
-
-    position static
-
-This is the default `position` value. See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
-
--}
-static : Value { provides | static : Supported }
-static =
-    Value "static"
-
-
-{-| A [`sticky` `position`](https://css-tricks.com/position-sticky-2/)
-
-    position sticky
-
-The default `position` value is [`static`](#static). See also [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/).
-
--}
-sticky : Value { provides | sticky : Supported }
-sticky =
-    Value "sticky"
-
-
 {-| Sets [`z-index`](https://css-tricks.com/almanac/properties/z/z-index/)
 
     zIndex (int 10)
@@ -4191,591 +7955,6 @@ zIndex :
     -> Style
 zIndex (Value val) =
     AppendProperty ("z-index:" ++ val)
-
-
-
--- PADDINGS --
-
-
-{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
-The `padding` property is a shorthand property for setting `padding-top`,
-`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
-
-If there is only one argument value, it applies to all sides. If there are two
-values, the top and bottom paddings are set to the first value and the right and
-left paddings are set to the second. If there are three values, the top is set
-to the first value, the left and right are set to the second, and the bottom is
-set to the third. If there are four values they apply to the top, right,
-bottom, and left, respectively.
-
-    padding (em 4) -- set all margins to 4em
-
-    padding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
-    padding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
-
-    padding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
-
--}
-padding :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-padding (Value value) =
-    AppendProperty ("padding:" ++ value)
-
-
-{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
-The `padding2` property is a shorthand property for setting `padding-top`,
-`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
-
-The top and bottom margins are set to the first value and the right and left
-margins are set to the second.
-
-    padding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
--}
-padding2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-padding2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
-
-
-{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
-The `padding3` property is a shorthand property for setting `padding-top`,
-`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
-
-The top padding is set to the first value, the left and right are set to the
-second, and the bottom is set to the third.
-
-    padding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
-
--}
-padding3 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-padding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
-    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
-
-
-{-| Sets [`padding`](https://css-tricks.com/almanac/properties/p/padding/) property.
-The `padding4` property is a shorthand property for setting `padding-top`,
-`padding-right`, `padding-bottom`, and `padding-left` in a single declaration.
-
-The four values apply to the top, right, bottom, and left paddings.
-
-    padding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
-
--}
-padding4 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-padding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
-    AppendProperty ("padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
-
-
-{-| Sets [`padding-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top) property.
-
-    paddingTop (px 4)
-
--}
-paddingTop :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingTop (Value value) =
-    AppendProperty ("padding-top:" ++ value)
-
-
-{-| Sets [`padding-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right) property.
-
-    paddingRight (px 4)
-
--}
-paddingRight :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingRight (Value value) =
-    AppendProperty ("padding-right:" ++ value)
-
-
-{-| Sets [`padding-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom) property.
-
-    paddingBottom (px 4)
-
--}
-paddingBottom :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingBottom (Value value) =
-    AppendProperty ("padding-bottom:" ++ value)
-
-
-{-| Sets [`padding-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left) property.
-
-    paddingLeft (px 4)
-
--}
-paddingLeft :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingLeft (Value value) =
-    AppendProperty ("padding-left:" ++ value)
-
-
-{-| Sets [`padding-block`](https://css-tricks.com/almanac/properties/p/padding-block/) property.
-The `padding-block` property is a shorthand property for setting `padding-block-start` and
-`padding-block-end` in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the block start is set to the first value and the block end is set to the second.
-
-    paddingBlock (em 4) -- set both block start and block end to 4em
-
-    paddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
--}
-paddingBlock :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingBlock (Value value) =
-    AppendProperty ("padding-block:" ++ value)
-
-
-{-| Sets [`padding-block`](https://css-tricks.com/almanac/properties/p/padding-block/) property.
-
-The `padding-block` property is a shorthand property for setting `padding-block-start` and
-`padding-block-end` in a single declaration.
-
-The block start value is set to the first value and the block end value is set to the second.
-
-    paddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
--}
-paddingBlock2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-paddingBlock2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("padding-block:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-start) property.
-
-    paddingBlockStart (px 4)
-
--}
-paddingBlockStart :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingBlockStart (Value value) =
-    AppendProperty ("padding-block-start:" ++ value)
-
-
-{-| Sets [`padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block-end) property.
-
-    paddingBlockEnd (px 4)
-
--}
-paddingBlockEnd :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingBlockEnd (Value value) =
-    AppendProperty ("padding-block-end:" ++ value)
-
-
-{-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
-
-The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
-`padding-inline-end` and in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the inline start is set to the first value and the inline end is set to the second.
-
-    paddingInline (em 4) -- set both inline start and inline end to 4em
-
-    paddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
--}
-paddingInline :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingInline (Value value) =
-    AppendProperty ("padding-inline:" ++ value)
-
-
-{-| Sets [`padding-inline`](https://css-tricks.com/almanac/properties/p/padding-inline/) property.
-
-The `padding-inline` property is a shorthand property for setting `padding-inline-start` and
-`padding-inline-end` in a single declaration.
-
-The inline start value is set to the first value and the inline end value is set to the second.
-
-    paddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
--}
-paddingInline2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-paddingInline2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("padding-inline:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start) property.
-
-    paddingInlineStart (px 4)
-
--}
-paddingInlineStart :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingInlineStart (Value value) =
-    AppendProperty ("padding-inline-start:" ++ value)
-
-
-{-| Sets [`padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end) property.
-
-    paddingInlineEnd (px 4)
-
--}
-paddingInlineEnd :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-paddingInlineEnd (Value value) =
-    AppendProperty ("padding-inline-end:" ++ value)
-
-
-
--- MARGINS --
-
-
-{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
-The `margin` property is a shorthand property for setting `margin-top`,
-`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
-
-If there is only one argument value, it applies to all sides. If there are two
-values, the top and bottom margins are set to the first value and the right and
-left margins are set to the second. If there are three values, the top is set
-to the first value, the left and right are set to the second, and the bottom is
-set to the third. If there are four values they apply to the top, right,
-bottom, and left, respectively.
-
-    margin (em 4) -- set all margins to 4em
-
-    margin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
-    margin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
-
-    margin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-margin :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-margin (Value value) =
-    AppendProperty ("margin:" ++ value)
-
-
-{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
-The `margin2` property is a shorthand property for setting `margin-top`,
-`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
-
-The top and bottom margins are set to the first value and the right and left
-margins are set to the second.
-
-    margin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-margin2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-margin2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
-
-
-{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
-The `margin3` property is a shorthand property for setting `margin-top`,
-`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
-
-The top margin is set to the first value, the left and right are set to the
-second, and the bottom is set to the third.
-
-    margin3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-margin3 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-margin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
-    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
-
-
-{-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
-The `margin4` property is a shorthand property for setting `margin-top`,
-`margin-right`, `margin-bottom`, and `margin-left` in a single declaration.
-
-The four values apply to the top, right, bottom, and left margins.
-
-    margin4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-margin4 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-margin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
-    AppendProperty ("margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
-
-
-{-| Sets [`margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top) property.
-
-    marginTop (px 4)
-
-This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
-
--}
-marginTop :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginTop (Value value) =
-    AppendProperty ("margin-top:" ++ value)
-
-
-{-| Sets [`margin-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right) property.
-
-    marginRight (px 4)
-
--}
-marginRight :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginRight (Value value) =
-    AppendProperty ("margin-right:" ++ value)
-
-
-{-| Sets [`margin-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom) property.
-
-    marginBottom (px 4)
-
-This article on [`margin-top` versus `margin-bottom`](https://css-tricks.com/margin-bottom-margin-top/) may be useful.
-
--}
-marginBottom :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginBottom (Value value) =
-    AppendProperty ("margin-bottom:" ++ value)
-
-
-{-| Sets [`margin-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left) property.
-
-    marginLeft (px 4)
-
--}
-marginLeft :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginLeft (Value value) =
-    AppendProperty ("margin-left:" ++ value)
 
 
 
@@ -4798,480 +7977,6 @@ boxSizing :
 boxSizing (Value value) =
     AppendProperty ("box-sizing:" ++ value)
 
-
-
--- PSEUDO-CLASSES --
-
-
-{-| Define a custom pseudo-class.
-
-This can be useful for deprecated [pseudo-classes](https://css-tricks.com/pseudo-class-selectors/) such as `-moz-any-link`, which
-[has been deprecated and removed](https://www.fxsitecompat.com/en-CA/docs/2016/any-link-css-pseudo-class-has-been-unprefixed/)
-in modern browsers.
-
-    button
-        [ css [ pseudoClass "-moz-any-link" [ color (hex "f00") ] ] ]
-        [ text "Whee!" ]
-
-...outputs
-
-    <button class="f9fcb2">Whee!</button>
-
-    <style>
-        .f9fcb2:-moz-any-link {
-            color: #f00;
-        }
-    </style>
-
--}
-pseudoClass : String -> List Style -> Style
-pseudoClass pseudoClassName =
-    Preprocess.ExtendSelector (Structure.PseudoClassSelector pseudoClassName)
-
-
-{-| An [`:active`](https://css-tricks.com/almanac/selectors/a/active/)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    button [ active [ color (rgb 12 160 190) ] ]
-
--}
-active : List Style -> Style
-active =
-    pseudoClass "active"
-
-
-{-| A [`:checked`](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-This pseudo-class is for any checkbox, option or radio input that is checked or toggled on.
-
-    checked
-        [ backgroundColor (rgb 0 0 255)
-        ]
-
--}
-checked : List Style -> Style
-checked =
-    pseudoClass "checked"
-
-
-{-| A [`:disabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    button [ disabled [ color (rgb 194 194 194) ] ]
-
--}
-disabled : List Style -> Style
-disabled =
-    pseudoClass "disabled"
-
-
-{-| An [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/:empty)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    empty
-        [ backgroundColor (rgb 20 20 20)
-        ]
-
--}
-empty : List Style -> Style
-empty =
-    pseudoClass "empty"
-
-
-{-| An [`:enabled`](https://developer.mozilla.org/en-US/docs/Web/CSS/:enabled)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    enabled
-        [ borderColor (rgba 150 150 0 0.5)
-        ]
-
--}
-enabled : List Style -> Style
-enabled =
-    pseudoClass "enabled"
-
-
-{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-child)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    firstChild
-        [ fontWeight bold
-        ]
-
--}
-firstChild : List Style -> Style
-firstChild =
-    pseudoClass "first-child"
-
-
-{-| A [`:first-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-of-type)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    firstOfType
-        [ color (rgb 255 0 0)
-        ]
-
--}
-firstOfType : List Style -> Style
-firstOfType =
-    pseudoClass "first-of-type"
-
-
-{-| A [`:focus`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    focus
-        [ border3 (px 2) solid (rgb 0 0 0)
-        ]
-
--}
-focus : List Style -> Style
-focus =
-    pseudoClass "focus"
-
-
-{-| A [`:fullscreen`](https://developer.mozilla.org/en-US/docs/Web/CSS/:fullscreen)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    fullscreen
-        [ backgroundColor (rgb 0 0 0)
-        ]
-
--}
-fullscreen : List Style -> Style
-fullscreen =
-    pseudoClass "fullscreen"
-
-
-{-| A [`:hover`](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    hover
-        [ fontWeight bold
-        , color (rgb 255 50 0)
-        ]
-
--}
-hover : List Style -> Style
-hover =
-    pseudoClass "hover"
-
-
-{-| An [`:in-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:in-range)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    inRange
-        [ backgroundColor (rgb 0 255 0)
-        ]
-
--}
-inRange : List Style -> Style
-inRange =
-    pseudoClass "in-range"
-
-
-{-| An [`:indeterminate`](https://developer.mozilla.org/en-US/docs/Web/CSS/:indeterminate)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    indeterminate
-        [ backgroundColor (rgb 100 100 100)
-        ]
-
--}
-indeterminate : List Style -> Style
-indeterminate =
-    pseudoClass "indeterminate"
-
-
-{-| An [`:invalid`](https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    invalid
-        [ color (rgb 255 0 0)
-        , fontWeight bold
-        ]
-
--}
-invalid : List Style -> Style
-invalid =
-    pseudoClass "invalid"
-
-
-{-| A [`:last-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-child)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    lastChild
-        [ backgroundColor (rgb 0 0 255)
-        ]
-
--}
-lastChild : List Style -> Style
-lastChild =
-    pseudoClass "last-child"
-
-
-{-| A [`:last-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-of-type)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    lastOfType
-        [ color (rgb 100 100 100)
-        ]
-
--}
-lastOfType : List Style -> Style
-lastOfType =
-    pseudoClass "last-of-type"
-
-
-{-| A [`:link`](https://developer.mozilla.org/en-US/docs/Web/CSS/:link)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    link
-        [ color (rgb 0 0 255)
-        ]
-
--}
-link : List Style -> Style
-link =
-    pseudoClass "link"
-
-
-{-| An [`:only-child`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-child)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    onlyChild
-        [ backgroundColor (rgb 255 255 255)
-        ]
-
--}
-onlyChild : List Style -> Style
-onlyChild =
-    pseudoClass "only-child"
-
-
-{-| An [`:only-of-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/:only-of-type)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    onlyOfType
-        [ color (rgb 255 0 0)
-        , fontStyle italic
-        ]
-
--}
-onlyOfType : List Style -> Style
-onlyOfType =
-    pseudoClass "only-of-type"
-
-
-{-| An [`:out-of-range`](https://developer.mozilla.org/en-US/docs/Web/CSS/:out-of-range)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    outOfRange
-        [ color (rgb 255 0 0)
-        ]
-
--}
-outOfRange : List Style -> Style
-outOfRange =
-    pseudoClass "out-of-range"
-
-
-{-| A [`:read-only`](https://developer.mozilla.org/en-US/docs/Web/CSS/:read-only)
-[pseudo-class](https://css-tricks.com/pseudo-class-selectors/).
-
-    readOnly
-        [ color (rgb 50 50 50)
-        ]
-
--}
-readOnly : List Style -> Style
-readOnly =
-    pseudoClass "read-only"
-
-
-{-| Sets [`margin-block`](https://css-tricks.com/almanac/properties/m/margin-block/) property.
-The `margin-block` property is a shorthand property for setting `margin-block-start` and
-`margin-block-end` in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the block start margin is set to the first value and the block end margin
-is set to the second.
-
-    marginBlock (em 4) -- set both block margins to 4em
-
-    marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-marginBlock :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginBlock (Value value) =
-    AppendProperty ("margin-block:" ++ value)
-
-
-{-| Sets [`margin-block`](https://css-tricks.com/almanac/properties/m/margin-block/) property.
-The `margin-block` property is a shorthand property for setting `margin-block-start` and
-`margin-block-end` in a single declaration.
-
-The block start margin is set to the first value and the block end margin
-is set to the second.
-
-    marginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-marginBlock2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-marginBlock2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("margin-block:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-start) property.
-
-    marginBlockStart (px 4)
-
--}
-marginBlockStart :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginBlockStart (Value value) =
-    AppendProperty ("margin-block-start:" ++ value)
-
-
-{-| Sets [`margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block-end) property.
-
-    marginBlockEnd (px 4)
-
--}
-marginBlockEnd :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginBlockEnd (Value value) =
-    AppendProperty ("margin-block-end:" ++ value)
-
-
-{-| Sets [`margin-inline`](https://css-tricks.com/almanac/properties/m/margin-inline/) property.
-The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
-`margin-inline-end` in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the inline start margin is set to the first value and the inline end margin
-is set to the second.
-
-    marginInline (em 4) -- set both inline margins to 4em
-
-    marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-marginInline :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginInline (Value value) =
-    AppendProperty ("margin-inline:" ++ value)
-
-
-{-| Sets [`margin-inline`](https://css-tricks.com/almanac/properties/m/margin-inline/) property.
-The `margin-inline` property is a shorthand property for setting `margin-inline-start` and
-`margin-inline-end` in a single declaration.
-
-The inline start margin is set to the first value and the inline end margin
-is set to the second.
-
-    marginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
-You may want to check out [this article on collapsing margins](https://css-tricks.com/good-ol-margin-collapsing/)!
-
--}
-marginInline2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-marginInline2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("margin-inline:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start) property.
-
-    marginInlineStart (px 4)
-
--}
-marginInlineStart :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginInlineStart (Value value) =
-    AppendProperty ("margin-inline-start:" ++ value)
-
-
-{-| Sets [`margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end) property.
-
-    marginInlineEnd (px 4)
-
--}
-marginInlineEnd :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-marginInlineEnd (Value value) =
-    AppendProperty ("margin-inline-end:" ++ value)
 
 
 {-| A [`:read-write`](https://developer.mozilla.org/en-US/docs/Web/CSS/:read-write)
@@ -5889,364 +8594,6 @@ dividedBy (Value second) =
 
 
 -- DISPLAY --
-
-
-{-| Sets [`display`](https://css-tricks.com/almanac/properties/d/display/).
-
-    display block
-
-**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a property function](#flex).
-
--}
-display :
-    BaseValue
-        { block : Supported
-        , flex_ : Supported
-        , flow : Supported
-        , flowRoot : Supported
-        , grid : Supported
-        , listItem : Supported
-        , inline : Supported
-        , inlineBlock : Supported
-        , inlineFlex : Supported
-        , inlineGrid : Supported
-        , inlineTable : Supported
-        , none : Supported
-        , contents : Supported
-        , ruby : Supported
-        , rubyBase : Supported
-        , rubyBaseContainer : Supported
-        , rubyText : Supported
-        , rubyTextContainer : Supported
-        , runIn : Supported
-        , table : Supported
-        , tableCaption : Supported
-        , tableCell : Supported
-        , tableColumn : Supported
-        , tableColumnGroup : Supported
-        , tableFooterGroup : Supported
-        , tableHeaderGroup : Supported
-        , tableRow : Supported
-        , tableRowGroup : Supported
-        }
-    -> Style
-display (Value val) =
-    AppendProperty ("display:" ++ val)
-
-
-{-| Sets [`display`](https://css-tricks.com/almanac/properties/d/display/).
-
-    display2 block flex_
-
-**Note:** This function accepts `flex_` rather than `flex` because [`flex` is already a property function](#flex).
-For `display: inline list-item` and similar property values that include `list-item`
-look at [`displayListItem2`](#displayListItem2) and [`displayListItem3`](#displayListItem3).
-
--}
-display2 :
-    Value
-        { block : Supported
-        , inline : Supported
-        , runIn : Supported
-        }
-    ->
-        Value
-            { flow : Supported
-            , flowRoot : Supported
-            , table : Supported
-            , flex_ : Supported
-            , grid : Supported
-            , ruby : Supported
-            }
-    -> Style
-display2 (Value displayOutside) (Value displayInside) =
-    AppendProperty ("display:" ++ displayOutside ++ " " ++ displayInside)
-
-
-{-| The [`display`](https://css-tricks.com/almanac/properties/d/display/) property.
-This function is used to generate complex `display: list-item` properties
-such as `display: block list-item`.
-
-    displayListItem2 block
-
--}
-displayListItem2 :
-    Value
-        { block : Supported
-        , inline : Supported
-        , runIn : Supported
-        , flow : Supported
-        , flowRoot : Supported
-        }
-    -> Style
-displayListItem2 (Value val) =
-    AppendProperty ("display:list-item " ++ val)
-
-
-{-| The [`display`](https://css-tricks.com/almanac/properties/d/display/) property.
-This function is used to generate complex `display: list-item` properties
-such as `display: block flow-root list-item`.
-
-    displayListItem3 block flowRoot
-
--}
-displayListItem3 :
-    Value
-        { block : Supported
-        , inline : Supported
-        , runIn : Supported
-        }
-    ->
-        Value
-            { flow : Supported
-            , flowRoot : Supported
-            }
-    -> Style
-displayListItem3 (Value displayOutside) (Value displayFlow) =
-    AppendProperty ("display:list-item " ++ displayOutside ++ " " ++ displayFlow)
-
-
-{-| The `flex` value used by [`display`](#display).
-
-    display flex_
-
-The value is called `flex_` instead of `flex` because [`flex` is already a property function](#flex).
-
--}
-flex_ : Value { provides | flex_ : Supported }
-flex_ =
-    Value "flex"
-
-
-{-| The `flow` value used by [`display`](#display).
-
-    display flow
-
--}
-flow : Value { provides | flow : Supported }
-flow =
-    Value "flow"
-
-
-{-| The `flow-root` value used by [`display`](#display).
-
-    display flowRoot
-
--}
-flowRoot : Value { provides | flowRoot : Supported }
-flowRoot =
-    Value "flow-root"
-
-
-{-| The `grid` value used by [`display`](#display).
-
-    display grid
-
--}
-grid : Value { provides | grid : Supported }
-grid =
-    Value "grid"
-
-
-{-| The `contents` value used by [`display`](#display).
-
-    display contents
-
--}
-contents : Value { provides | contents : Supported }
-contents =
-    Value "contents"
-
-
-{-| The `inline-block` value used by [`display`](#display).
-
-    display inlineBlock
-
--}
-inlineBlock : Value { provides | inlineBlock : Supported }
-inlineBlock =
-    Value "inline-block"
-
-
-{-| The `inline-flex` value used by [`display`](#display).
-
-    display inlineFlex
-
--}
-inlineFlex : Value { provides | inlineFlex : Supported }
-inlineFlex =
-    Value "inline-flex"
-
-
-{-| The `list-item` value used by [`display`](#display).
-
-    display listItem
-
--}
-listItem : Value { provides | listItem : Supported }
-listItem =
-    Value "list-item"
-
-
-{-| The `inline-table` value used by [`display`](#display).
-
-    display inlineTable
-
--}
-inlineTable : Value { provides | inlineTable : Supported }
-inlineTable =
-    Value "inline-table"
-
-
-{-| The `inline-grid` value used by [`display`](#display).
-
-    display inlineGrid
-
--}
-inlineGrid : Value { provides | inlineGrid : Supported }
-inlineGrid =
-    Value "inline-grid"
-
-
-{-| The `ruby-base` value used by [`display`](#display).
-
-    display rubyBase
-
--}
-rubyBase : Value { provides | rubyBase : Supported }
-rubyBase =
-    Value "ruby-base"
-
-
-{-| The `ruby-base-container` value used by [`display`](#display).
-
-    display rubyBaseContainer
-
--}
-rubyBaseContainer : Value { provides | rubyBaseContainer : Supported }
-rubyBaseContainer =
-    Value "ruby-base-container"
-
-
-{-| The `ruby-text` value used by [`display`](#display).
-
-    display rubyText
-
--}
-rubyText : Value { provides | rubyText : Supported }
-rubyText =
-    Value "ruby-text"
-
-
-{-| The `ruby-text-container` value used by [`display`](#display).
-
-    display rubyTextContainer
-
--}
-rubyTextContainer : Value { provides | rubyTextContainer : Supported }
-rubyTextContainer =
-    Value "ruby-text-container"
-
-
-{-| The `run-in` value used by [`display`](#display).
-
-    display runIn
-
--}
-runIn : Value { provides | runIn : Supported }
-runIn =
-    Value "run-in"
-
-
-{-| The `table` value used by [`display`](#display).
-
-    display table
-
--}
-table : Value { provides | table : Supported }
-table =
-    Value "table"
-
-
-{-| The `table-caption` value used by [`display`](#display).
-
-    display tableCaption
-
--}
-tableCaption : Value { provides | tableCaption : Supported }
-tableCaption =
-    Value "table-caption"
-
-
-{-| The `table-cell` value used by [`display`](#display).
-
-    display tableCell
-
--}
-tableCell : Value { provides | tableCell : Supported }
-tableCell =
-    Value "table-cell"
-
-
-{-| The `table-column` value used by [`display`](#display).
-
-    display tableColumn
-
--}
-tableColumn : Value { provides | tableColumn : Supported }
-tableColumn =
-    Value "table-column"
-
-
-{-| The `table-column-group` value used by [`display`](#display).
-
-    display tableColumnGroup
-
--}
-tableColumnGroup : Value { provides | tableColumnGroup : Supported }
-tableColumnGroup =
-    Value "table-column-group"
-
-
-{-| The `table-footer-group` value used by [`display`](#display).
-
-    display tableFooterGroup
-
--}
-tableFooterGroup : Value { provides | tableFooterGroup : Supported }
-tableFooterGroup =
-    Value "table-footer-group"
-
-
-{-| The `table-header-group` value used by [`display`](#display).
-
-    display tableHeaderGroup
-
--}
-tableHeaderGroup : Value { provides | tableHeaderGroup : Supported }
-tableHeaderGroup =
-    Value "table-header-group"
-
-
-{-| The `table-row` value used by [`display`](#display).
-
-    display tableRow
-
--}
-tableRow : Value { provides | tableRow : Supported }
-tableRow =
-    Value "table-row"
-
-
-{-| The `table-row-group` value used by [`display`](#display).
-
-    display tableRowGroup
-
--}
-tableRowGroup : Value { provides | tableRowGroup : Supported }
-tableRowGroup =
-    Value "table-row-group"
-
 
 
 -- ALIGN-ITEMS VALUES --
@@ -11070,1946 +13417,6 @@ upperRoman =
 
 
 
--- BORDERS --
-
-
-{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
-
-    border (px 1)
-
-    border2 (px 1) solid
-
-    border3 (px 1) solid (hex "#f00")
-
--}
-border : BaseValue LineWidth -> Style
-border (Value widthVal) =
-    AppendProperty ("border:" ++ widthVal)
-
-
-{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
-
-    border (px 1)
-
-    border2 (px 1) solid
-
-    border3 (px 1) solid (hex "#f00")
-
--}
-border2 : Value LineWidth -> Value LineStyle -> Style
-border2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border`](https://css-tricks.com/almanac/properties/b/border/) property.
-
-    border (px 1)
-
-    border2 (px 1) solid
-
-    border3 (px 1) solid (hex "#f00")
-
--}
-border3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-border3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
-
-    borderTop (px 1)
-
-    borderTop2 (px 1) solid
-
-    borderTop3 (px 1) solid (hex "#f00")
-
--}
-borderTop : BaseValue LineWidth -> Style
-borderTop (Value widthVal) =
-    AppendProperty ("border-top:" ++ widthVal)
-
-
-{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
-
-    borderTop (px 1)
-
-    borderTop2 (px 1) solid
-
-    borderTop3 (px 1) solid (hex "#f00")
-
--}
-borderTop2 : Value LineWidth -> Value LineStyle -> Style
-borderTop2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) property.
-
-    borderTop (px 1)
-
-    borderTop2 (px 1) solid
-
-    borderTop3 (px 1) solid (hex "#f00")
-
--}
-borderTop3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderTop3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-top:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
-
-    borderRight (px 1)
-
-    borderRight2 (px 1) solid
-
-    borderRight3 (px 1) solid (hex "#f00")
-
--}
-borderRight : BaseValue LineWidth -> Style
-borderRight (Value widthVal) =
-    AppendProperty ("border-right:" ++ widthVal)
-
-
-{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
-
-    borderRight (px 1)
-
-    borderRight2 (px 1) solid
-
-    borderRight3 (px 1) solid (hex "#f00")
-
--}
-borderRight2 : Value LineWidth -> Value LineStyle -> Style
-borderRight2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-right`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right) property.
-
-    borderRight (px 1)
-
-    borderRight2 (px 1) solid
-
-    borderRight3 (px 1) solid (hex "#f00")
-
--}
-borderRight3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderRight3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-right:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
-
-    borderBottom (px 1)
-
-    borderBottom2 (px 1) solid
-
-    borderBottom3 (px 1) solid (hex "#f00")
-
--}
-borderBottom : BaseValue LineWidth -> Style
-borderBottom (Value widthVal) =
-    AppendProperty ("border-bottom:" ++ widthVal)
-
-
-{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
-
-    borderBottom (px 1)
-
-    borderBottom2 (px 1) solid
-
-    borderBottom3 (px 1) solid (hex "#f00")
-
--}
-borderBottom2 : Value LineWidth -> Value LineStyle -> Style
-borderBottom2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-bottom`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom) property.
-
-    borderBottom (px 1)
-
-    borderBottom2 (px 1) solid
-
-    borderBottom3 (px 1) solid (hex "#f00")
-
--}
-borderBottom3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBottom3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-bottom:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
-
-    borderLeft (px 1)
-
-    borderLeft2 (px 1) solid
-
-    borderLeft3 (px 1) solid (hex "#f00")
-
--}
-borderLeft : BaseValue LineWidth -> Style
-borderLeft (Value widthVal) =
-    AppendProperty ("border-left:" ++ widthVal)
-
-
-{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
-
-    borderLeft (px 1)
-
-    borderLeft2 (px 1) solid
-
-    borderLeft3 (px 1) solid (hex "#f00")
-
--}
-borderLeft2 : Value LineWidth -> Value LineStyle -> Style
-borderLeft2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-left`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) property.
-
-    borderLeft (px 1)
-
-    borderLeft2 (px 1) solid
-
-    borderLeft3 (px 1) solid (hex "#f00")
-
--}
-borderLeft3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderLeft3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-left:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-block`](https://css-tricks.com/almanac/properties/b/border-block/) property.
-
-    borderBlock (px 1)
-
-    borderBlock2 (px 1) solid
-
-    borderBlock3 (px 1) solid (hex "#f00")
-
--}
-borderBlock : BaseValue LineWidth -> Style
-borderBlock (Value widthVal) =
-    AppendProperty ("border-block:" ++ widthVal)
-
-
-{-| Sets [`border-block`](https://css-tricks.com/almanac/properties/b/border-block/) property.
-
-    borderBlock (px 1)
-
-    borderBlock2 (px 1) solid
-
-    borderBlock3 (px 1) solid (hex "#f00")
-
--}
-borderBlock2 : Value LineWidth -> Value LineStyle -> Style
-borderBlock2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-block:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-block`](https://css-tricks.com/almanac/properties/b/border-block/) property.
-
-    borderBlock (px 1)
-
-    borderBlock2 (px 1) solid
-
-    borderBlock3 (px 1) solid (hex "#f00")
-
--}
-borderBlock3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBlock3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-block:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
-
-    borderBlockStart (px 1)
-
-    borderBlockStart2 (px 1) solid
-
-    borderBlockStart3 (px 1) solid (hex "#f00")
-
--}
-borderBlockStart : BaseValue LineWidth -> Style
-borderBlockStart (Value widthVal) =
-    AppendProperty ("border-block-start:" ++ widthVal)
-
-
-{-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
-
-    borderBlockStart (px 1)
-
-    borderBlockStart2 (px 1) solid
-
-    borderBlockStart3 (px 1) solid (hex "#f00")
-
--}
-borderBlockStart2 : Value LineWidth -> Value LineStyle -> Style
-borderBlockStart2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-block-start`](https://css-tricks.com/almanac/properties/b/border-block-start/) property.
-
-    borderBlockStart (px 1)
-
-    borderBlockStart2 (px 1) solid
-
-    borderBlockStart3 (px 1) solid (hex "#f00")
-
--}
-borderBlockStart3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBlockStart3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-block-start:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
-
-    borderBlockEnd (px 1)
-
-    borderBlockEnd2 (px 1) solid
-
-    borderBlockEnd3 (px 1) solid (hex "#f00")
-
--}
-borderBlockEnd : BaseValue LineWidth -> Style
-borderBlockEnd (Value widthVal) =
-    AppendProperty ("border-block-end:" ++ widthVal)
-
-
-{-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
-
-    borderBlockEnd (px 1)
-
-    borderBlockEnd2 (px 1) solid
-
-    borderBlockEnd3 (px 1) solid (hex "#f00")
-
--}
-borderBlockEnd2 : Value LineWidth -> Value LineStyle -> Style
-borderBlockEnd2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-block-end`](https://css-tricks.com/almanac/properties/b/border-block-end/) property.
-
-    borderBlockEnd (px 1)
-
-    borderBlockEnd2 (px 1) solid
-
-    borderBlockEnd3 (px 1) solid (hex "#f00")
-
--}
-borderBlockEnd3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderBlockEnd3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-block-end:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
-
-    borderInline (px 1)
-
-    borderInline2 (px 1) solid
-
-    borderInline3 (px 1) solid (hex "#f00")
-
--}
-borderInline : BaseValue LineWidth -> Style
-borderInline (Value widthVal) =
-    AppendProperty ("border-inline:" ++ widthVal)
-
-
-{-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
-
-    borderInline (px 1)
-
-    borderInline2 (px 1) solid
-
-    borderInline3 (px 1) solid (hex "#f00")
-
--}
-borderInline2 : Value LineWidth -> Value LineStyle -> Style
-borderInline2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-inline`](https://css-tricks.com/almanac/properties/b/border-inline/) property.
-
-    borderInline (px 1)
-
-    borderInline2 (px 1) solid
-
-    borderInline3 (px 1) solid (hex "#f00")
-
--}
-borderInline3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderInline3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-inline:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
-
-    borderInlineStart (px 1)
-
-    borderInlineStart2 (px 1) solid
-
-    borderInlineStart3 (px 1) solid (hex "#f00")
-
--}
-borderInlineStart : BaseValue LineWidth -> Style
-borderInlineStart (Value widthVal) =
-    AppendProperty ("border-inline-start:" ++ widthVal)
-
-
-{-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
-
-    borderInlineStart (px 1)
-
-    borderInlineStart2 (px 1) solid
-
-    borderInlineStart3 (px 1) solid (hex "#f00")
-
--}
-borderInlineStart2 : Value LineWidth -> Value LineStyle -> Style
-borderInlineStart2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-inline-start`](https://css-tricks.com/almanac/properties/b/border-inline-start/) property.
-
-    borderInlineStart (px 1)
-
-    borderInlineStart2 (px 1) solid
-
-    borderInlineStart3 (px 1) solid (hex "#f00")
-
--}
-borderInlineStart3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderInlineStart3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-inline-start:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
-
-    borderInlineEnd (px 1)
-
-    borderInlineEnd2 (px 1) solid
-
-    borderInlineEnd3 (px 1) solid (hex "#f00")
-
--}
-borderInlineEnd : BaseValue LineWidth -> Style
-borderInlineEnd (Value widthVal) =
-    AppendProperty ("border-inline-end:" ++ widthVal)
-
-
-{-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
-
-    borderInlineEnd (px 1)
-
-    borderInlineEnd2 (px 1) solid
-
-    borderInlineEnd3 (px 1) solid (hex "#f00")
-
--}
-borderInlineEnd2 : Value LineWidth -> Value LineStyle -> Style
-borderInlineEnd2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`border-inline-end`](https://css-tricks.com/almanac/properties/b/border-inline-end/) property.
-
-    borderInlineEnd (px 1)
-
-    borderInlineEnd2 (px 1) solid
-
-    borderInlineEnd3 (px 1) solid (hex "#f00")
-
--}
-borderInlineEnd3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-borderInlineEnd3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("border-inline-end:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
-
-    borderWidth (px 1)
-
-    borderWidth2 (px 1) thin
-
-    borderWidth3 (px 1) thin zero
-
-    borderWidth4 (px 1) thin zero (em 1)
-
--}
-borderWidth : BaseValue LineWidth -> Style
-borderWidth (Value widthVal) =
-    AppendProperty ("border-width:" ++ widthVal)
-
-
-{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
-
-    borderWidth (px 1)
-
-    borderWidth2 (px 1) thin
-
-    borderWidth3 (px 1) thin zero
-
-    borderWidth4 (px 1) thin zero (em 1)
-
--}
-borderWidth2 : Value LineWidth -> Value LineWidth -> Style
-borderWidth2 (Value widthTopBottom) (Value widthRightLeft) =
-    AppendProperty ("border-width:" ++ widthTopBottom ++ " " ++ widthRightLeft)
-
-
-{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
-
-    borderWidth (px 1)
-
-    borderWidth2 (px 1) thin
-
-    borderWidth3 (px 1) thin zero
-
-    borderWidth4 (px 1) thin zero (em 1)
-
--}
-borderWidth3 : Value LineWidth -> Value LineWidth -> Value LineWidth -> Style
-borderWidth3 (Value widthTop) (Value widthRightLeft) (Value widthBottom) =
-    AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRightLeft ++ " " ++ widthBottom)
-
-
-{-| Sets [`border-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-width) property.
-
-    borderWidth (px 1)
-
-    borderWidth2 (px 1) thin
-
-    borderWidth3 (px 1) thin zero
-
-    borderWidth4 (px 1) thin zero (em 1)
-
--}
-borderWidth4 : Value LineWidth -> Value LineWidth -> Value LineWidth -> Value LineWidth -> Style
-borderWidth4 (Value widthTop) (Value widthRight) (Value widthBottom) (Value widthLeft) =
-    AppendProperty ("border-width:" ++ widthTop ++ " " ++ widthRight ++ " " ++ widthBottom ++ " " ++ widthLeft)
-
-
-{-| Sets [`border-top-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-width) property.
-
-    borderTopWidth (px 1)
-
--}
-borderTopWidth : BaseValue LineWidth -> Style
-borderTopWidth (Value widthVal) =
-    AppendProperty ("border-top-width:" ++ widthVal)
-
-
-{-| Sets [`border-right-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width) property.
-
-    borderRightWidth (px 1)
-
--}
-borderRightWidth : BaseValue LineWidth -> Style
-borderRightWidth (Value widthVal) =
-    AppendProperty ("border-right-width:" ++ widthVal)
-
-
-{-| Sets [`border-bottom-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-width) property.
-
-    borderBottomWidth (px 1)
-
--}
-borderBottomWidth : BaseValue LineWidth -> Style
-borderBottomWidth (Value widthVal) =
-    AppendProperty ("border-bottom-width:" ++ widthVal)
-
-
-{-| Sets [`border-left-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width) property.
-
-    borderLeftWidth (px 1)
-
--}
-borderLeftWidth : BaseValue LineWidth -> Style
-borderLeftWidth (Value widthVal) =
-    AppendProperty ("border-left-width:" ++ widthVal)
-
-
-{-| Sets [`border-block-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-width) property.
-
-    borderBlockWidth (px 1)
-
--}
-borderBlockWidth : BaseValue LineWidth -> Style
-borderBlockWidth (Value widthVal) =
-    AppendProperty ("border-block-width:" ++ widthVal)
-
-
-{-| Sets [`border-block-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-width) property.
-
-    borderBlockStartWidth (px 1)
-
--}
-borderBlockStartWidth : BaseValue LineWidth -> Style
-borderBlockStartWidth (Value widthVal) =
-    AppendProperty ("border-block-start-width:" ++ widthVal)
-
-
-{-| Sets [`border-block-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-width) property.
-
-    borderBlockEndWidth (px 1)
-
--}
-borderBlockEndWidth : BaseValue LineWidth -> Style
-borderBlockEndWidth (Value widthVal) =
-    AppendProperty ("border-block-end-width:" ++ widthVal)
-
-
-{-| Sets [`border-inline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-width) property.
-
-    borderTopWidth (px 1)
-
--}
-borderInlineWidth : BaseValue LineWidth -> Style
-borderInlineWidth (Value widthVal) =
-    AppendProperty ("border-inline-width:" ++ widthVal)
-
-
-{-| Sets [`border-inline-start-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-width) property.
-
-    borderInlineStartWidth (px 1)
-
--}
-borderInlineStartWidth : BaseValue LineWidth -> Style
-borderInlineStartWidth (Value widthVal) =
-    AppendProperty ("border-inline-start-width:" ++ widthVal)
-
-
-{-| Sets [`border-inline-end-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width) property.
-
-    borderInlineEndWidth (px 1)
-
--}
-borderInlineEndWidth : BaseValue LineWidth -> Style
-borderInlineEndWidth (Value widthVal) =
-    AppendProperty ("border-inline-end-width:" ++ widthVal)
-
-
-{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
-
-    borderStyle solid
-
-    borderStyle2 solid none
-
-    borderStyle3 solid none dotted
-
-    borderStyle4 solid none dotted groove
-
--}
-borderStyle : BaseValue LineStyle -> Style
-borderStyle (Value styleVal) =
-    AppendProperty ("border-style:" ++ styleVal)
-
-
-{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
-
-    borderStyle solid
-
--}
-borderStyle2 : Value LineStyle -> Value LineStyle -> Style
-borderStyle2 (Value styleTopBottom) (Value styleRigthLeft) =
-    AppendProperty ("border-style:" ++ styleTopBottom ++ " " ++ styleRigthLeft)
-
-
-{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
-
-    borderStyle2 solid none
-
--}
-borderStyle3 : Value LineStyle -> Value LineStyle -> Value LineStyle -> Style
-borderStyle3 (Value styleTop) (Value styleRigthLeft) (Value styleBottom) =
-    AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigthLeft ++ " " ++ styleBottom)
-
-
-{-| Sets [`border-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) property.
-
-    borderStyle4 solid none dotted groove
-
--}
-borderStyle4 : Value LineStyle -> Value LineStyle -> Value LineStyle -> Value LineStyle -> Style
-borderStyle4 (Value styleTop) (Value styleRigt) (Value styleBottom) (Value styleLeft) =
-    AppendProperty ("border-style:" ++ styleTop ++ " " ++ styleRigt ++ " " ++ styleBottom ++ " " ++ styleLeft)
-
-
-{-| Sets [`border-top-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style) property.
-
-    borderTopStyle solid
-
--}
-borderTopStyle : BaseValue LineStyle -> Style
-borderTopStyle (Value styleVal) =
-    AppendProperty ("border-top-style:" ++ styleVal)
-
-
-{-| Sets [`border-right-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-style) property.
-
-    borderRightStyle solid
-
--}
-borderRightStyle : BaseValue LineStyle -> Style
-borderRightStyle (Value styleVal) =
-    AppendProperty ("border-right-style:" ++ styleVal)
-
-
-{-| Sets [`border-bottom-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-style) property.
-
-    borderBottomStyle solid
-
--}
-borderBottomStyle : BaseValue LineStyle -> Style
-borderBottomStyle (Value styleVal) =
-    AppendProperty ("border-bottom-style:" ++ styleVal)
-
-
-{-| Sets [`border-left-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-style) property.
-
-    borderLeftStyle solid
-
--}
-borderLeftStyle : BaseValue LineStyle -> Style
-borderLeftStyle (Value styleVal) =
-    AppendProperty ("border-left-style:" ++ styleVal)
-
-
-{-| Sets [`border-block-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-style) property.
-
-    borderBlockStyle solid
-
--}
-borderBlockStyle : BaseValue LineStyle -> Style
-borderBlockStyle (Value styleVal) =
-    AppendProperty ("border-block-style:" ++ styleVal)
-
-
-{-| Sets [`border-block-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-style) property.
-
-    borderBlockStartStyle solid
-
--}
-borderBlockStartStyle : BaseValue LineStyle -> Style
-borderBlockStartStyle (Value styleVal) =
-    AppendProperty ("border-block-start-style:" ++ styleVal)
-
-
-{-| Sets [`border-block-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style) property.
-
-    borderBlockEndStyle solid
-
--}
-borderBlockEndStyle : BaseValue LineStyle -> Style
-borderBlockEndStyle (Value styleVal) =
-    AppendProperty ("border-block-end-style:" ++ styleVal)
-
-
-{-| Sets [`border-inline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-style) property.
-
-    borderInlineStyle solid
-
--}
-borderInlineStyle : BaseValue LineStyle -> Style
-borderInlineStyle (Value styleVal) =
-    AppendProperty ("border-inline-style:" ++ styleVal)
-
-
-{-| Sets [`border-inline-start-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style) property.
-
-    borderInlineStartStyle solid
-
--}
-borderInlineStartStyle : BaseValue LineStyle -> Style
-borderInlineStartStyle (Value styleVal) =
-    AppendProperty ("border-inline-start-style:" ++ styleVal)
-
-
-{-| Sets [`border-inline-end-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style) property.
-
-    borderInlineEndStyle solid
-
--}
-borderInlineEndStyle : BaseValue LineStyle -> Style
-borderInlineEndStyle (Value styleVal) =
-    AppendProperty ("border-inline-end-style:" ++ styleVal)
-
-
-{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
-
-    borderColor (rgb 0 0 0)
-
-    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
-
-    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
-
-    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
-
--}
-borderColor : BaseValue Color -> Style
-borderColor (Value colorVal) =
-    AppendProperty ("border-color:" ++ colorVal)
-
-
-{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
-
-    borderColor (rgb 0 0 0)
-
-    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
-
-    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
-
-    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
-
--}
-borderColor2 : Value Color -> Value Color -> Style
-borderColor2 (Value colorTopBottom) (Value colorRightLeft) =
-    AppendProperty ("border-color:" ++ colorTopBottom ++ " " ++ colorRightLeft)
-
-
-{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
-
-    borderColor (rgb 0 0 0)
-
-    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
-
-    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
-
-    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
-
--}
-borderColor3 : Value Color -> Value Color -> Value Color -> Style
-borderColor3 (Value colorTop) (Value colorRightLeft) (Value colorBottom) =
-    AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRightLeft ++ " " ++ colorBottom)
-
-
-{-| Sets [`border-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-color) property.
-
-    borderColor (rgb 0 0 0)
-
-    borderColor2 (rgb 0 0 0) (hsl 10 10 10)
-
-    borderColor3 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff")
-
-    borderColor4 (rgb 0 0 0) (hsl 10 10 10) (hex "#fff") transparent
-
--}
-borderColor4 : Value Color -> Value Color -> Value Color -> Value Color -> Style
-borderColor4 (Value colorTop) (Value colorRight) (Value colorBottom) (Value colorLeft) =
-    AppendProperty ("border-color:" ++ colorTop ++ " " ++ colorRight ++ " " ++ colorBottom ++ " " ++ colorLeft)
-
-
-{-| Sets [`border-top-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color) property.
-
-    borderTopColor (rgb 0 0 0)
-
--}
-borderTopColor : BaseValue Color -> Style
-borderTopColor (Value colorVal) =
-    AppendProperty ("border-top-color:" ++ colorVal)
-
-
-{-| Sets [`border-right-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-color) property.
-
-    borderRightColor (rgb 0 0 0)
-
--}
-borderRightColor : BaseValue Color -> Style
-borderRightColor (Value colorVal) =
-    AppendProperty ("border-right-color:" ++ colorVal)
-
-
-{-| Sets [`border-bottom-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-color) property.
-
-    borderBottomColor (rgb 0 0 0)
-
--}
-borderBottomColor : BaseValue Color -> Style
-borderBottomColor (Value colorVal) =
-    AppendProperty ("border-bottom-color:" ++ colorVal)
-
-
-{-| Sets [`border-left-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-color) property.
-
-    borderLeftColor (rgb 0 0 0)
-
--}
-borderLeftColor : BaseValue Color -> Style
-borderLeftColor (Value colorVal) =
-    AppendProperty ("border-left-color:" ++ colorVal)
-
-
-{-| Sets [`border-block-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-color) property.
-
-    borderBlockColor (rgb 0 0 0)
-
--}
-borderBlockColor : BaseValue Color -> Style
-borderBlockColor (Value colorVal) =
-    AppendProperty ("border-block-color:" ++ colorVal)
-
-
-{-| Sets [`border-block-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-start-color) property.
-
-    borderBlockStartColor (rgb 0 0 0)
-
--}
-borderBlockStartColor : BaseValue Color -> Style
-borderBlockStartColor (Value colorVal) =
-    AppendProperty ("border-block-start-color:" ++ colorVal)
-
-
-{-| Sets [`border-block-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-color) property.
-
-    borderBlockEndColor (rgb 0 0 0)
-
--}
-borderBlockEndColor : BaseValue Color -> Style
-borderBlockEndColor (Value colorVal) =
-    AppendProperty ("border-block-end-color:" ++ colorVal)
-
-
-{-| Sets [`border-inline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-color) property.
-
-    borderInlineColor (rgb 0 0 0)
-
--}
-borderInlineColor : BaseValue Color -> Style
-borderInlineColor (Value colorVal) =
-    AppendProperty ("border-inline-color:" ++ colorVal)
-
-
-{-| Sets [`border-inline-start-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color) property.
-
-    borderInlineStartColor (rgb 0 0 0)
-
--}
-borderInlineStartColor : BaseValue Color -> Style
-borderInlineStartColor (Value colorVal) =
-    AppendProperty ("border-inline-start-color:" ++ colorVal)
-
-
-{-| Sets [`border-inline-end-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color) property.
-
-    borderInlineEndColor (rgb 0 0 0)
-
--}
-borderInlineEndColor : BaseValue Color -> Style
-borderInlineEndColor (Value colorVal) =
-    AppendProperty ("border-inline-end-color:" ++ colorVal)
-
-
-
-
--- BORDER STYLE --
-
-
-{-| The `dotted` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
-
-It represents a line that consists of dots.
-
-    borderStyle dotted
-
-    columnRuleStyle dotted
-
-    textDecorationStyle dotted
-
--}
-dotted : Value { provides | dotted : Supported }
-dotted =
-    Value "dotted"
-
-
-{-| The `dashed` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
-
-    borderStyle dashed
-
-    columnRuleStyle dashed
-
-    textDecorationStyle dashed
-
-It represents a line that consists of dashes.
-
--}
-dashed : Value { provides | dashed : Supported }
-dashed =
-    Value "dashed"
-
-
-{-| The `solid` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
-
-    borderStyle solid
-
-    columnRuleStyle solid
-
-    textDecorationStyle solid
-
-It represents a solid, continuous line.
-
--}
-solid : Value { provides | solid : Supported }
-solid =
-    Value "solid"
-
-
-{-| The `double` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
-
-    borderStyle double
-
-    columnRuleStyle double
-
-    textDecorationStyle double
-
-It represents a double line: two lines side by side.
-
--}
-double : Value { provides | double : Supported }
-double =
-    Value "double"
-
-
-{-| The `groove` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
-
-    borderStyle groove
-
-    columnRuleStyle groove
-
-    textDecorationStyle groove
-
-Adds a bevel based on the color value, which makes things appear pressed into the document.
-
--}
-groove : Value { provides | groove : Supported }
-groove =
-    Value "groove"
-
-
-{-| The `ridge` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
-
-    borderStyle ridge
-
-    columnRuleStyle ridge
-
-    textDecorationStyle ridge
-
-Similar to [`groove`](#groove), but reverses the color values in a way that makes things appear raised.
-
--}
-ridge : Value { provides | ridge : Supported }
-ridge =
-    Value "ridge"
-
-
-{-| The `inset` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle), and [`textDecorationStyle`](#textDecorationStyle).
-
-This is called `inset_` rather than `inset` because [`inset` is already a property function](#inset).
-
-    borderStyle inset_
-
-    columnRuleStyle inset_
-
-    textDecorationStyle inset_
-
-Adds a split tone to the line that makes it appear slightly depressed.
-
-Contrast with [`outset`](#outset)
-
--}
-inset_ : Value { provides | inset_ : Supported }
-inset_ =
-    Value "inset"
-
-
-{-| The `outset` value used by properties such as [`borderStyle`](#borderStyle),
-[`columnRuleStyle`](#columnRuleStyle),
-and [`textDecorationStyle`](#textDecorationStyle),
-and [`strokeAlign`](#strokeAlign).
-
-    borderStyle outset
-
-    columnRuleStyle outset
-
-    strokeAlign outset
-
-    textDecorationStyle outset
-
-Similar to [`inset_`](#inset_), but reverses the colors in a way that makes it appear slightly raised.
-
--}
-outset : Value { provides | outset : Supported }
-outset =
-    Value "outset"
-
-
-
-{- BORDER RADIUS -}
-
-
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius (em 4)
-
-    borderRadius2 (em 4) (px 2)
-
-    borderRadius3 (em 4) (px 2) (pct 5)
-
-    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
-
--}
-borderRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderRadius (Value radius) =
-    AppendProperty ("border-radius:" ++ radius)
-
-
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius (em 4)
-
-    borderRadius2 (em 4) (px 2)
-
-    borderRadius3 (em 4) (px 2) (pct 5)
-
-    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
-
--}
-borderRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderRadius2 (Value radiusTopLeftAndBottomRight) (Value radiusTopRightAndBottomLeft) =
-    AppendProperty ("border-radius:" ++ radiusTopLeftAndBottomRight ++ " " ++ radiusTopRightAndBottomLeft)
-
-
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius (em 4)
-
-    borderRadius2 (em 4) (px 2)
-
-    borderRadius3 (em 4) (px 2) (pct 5)
-
-    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
-
--}
-borderRadius3 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderRadius3 (Value radiusTopLeft) (Value radiusTopRightAndBottomLeft) (Value radiusBottomRight) =
-    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRightAndBottomLeft ++ " " ++ radiusBottomRight)
-
-
-{-| Sets [`border-radius`](https://css-tricks.com/almanac/properties/b/border-radius/) property.
-
-    borderRadius (em 4)
-
-    borderRadius2 (em 4) (px 2)
-
-    borderRadius3 (em 4) (px 2) (pct 5)
-
-    borderRadius4 (em 4) (px 2) (pct 5) (px 3)
-
--}
-borderRadius4 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderRadius4 (Value radiusTopLeft) (Value radiusTopRight) (Value radiusBottomRight) (Value radiusBottomLeft) =
-    AppendProperty ("border-radius:" ++ radiusTopLeft ++ " " ++ radiusTopRight ++ " " ++ radiusBottomRight ++ " " ++ radiusBottomLeft)
-
-
-{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
-
-    borderTopLeftRadius (em 4)
-
-    borderTopLeftRadius2 (em 4) (px 2)
-
--}
-borderTopLeftRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderTopLeftRadius (Value radius) =
-    AppendProperty ("border-top-left-radius:" ++ radius)
-
-
-{-| Sets [`border-top-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius) property.
-
-    borderTopLeftRadius (em 4)
-
-    borderTopLeftRadius2 (em 4) (px 2)
-
--}
-borderTopLeftRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderTopLeftRadius2 (Value valHorizontal) (Value valVertical) =
-    AppendProperty ("border-top-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
-
-
-{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
-
-    borderTopRightRadius (em 4)
-
-    borderTopRightRadius2 (em 4) (px 2)
-
--}
-borderTopRightRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderTopRightRadius (Value radius) =
-    AppendProperty ("border-top-right-radius:" ++ radius)
-
-
-{-| Sets [`border-top-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-right-radius) property.
-
-    borderTopRightRadius (em 4)
-
-    borderTopRightRadius2 (em 4) (px 2)
-
--}
-borderTopRightRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderTopRightRadius2 (Value valHorizontal) (Value valVertical) =
-    AppendProperty ("border-top-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
-
-
-{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
-
-    borderBottomRightRadius (em 4)
-
-    borderBottomRightRadius2 (em 4) (px 2)
-
--}
-borderBottomRightRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderBottomRightRadius (Value radius) =
-    AppendProperty ("border-bottom-right-radius:" ++ radius)
-
-
-{-| Sets [`border-bottom-right-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-right-radius) property.
-
-    borderBottomRightRadius (em 4)
-
-    borderBottomRightRadius2 (em 4) (px 2)
-
--}
-borderBottomRightRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderBottomRightRadius2 (Value valHorizontal) (Value valVertical) =
-    AppendProperty ("border-bottom-right-radius:" ++ valHorizontal ++ " " ++ valVertical)
-
-
-{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
-
-    borderBottomLeftRadius (em 4)
-
-    borderBottomLeftRadius2 (em 4) (px 2)
-
--}
-borderBottomLeftRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderBottomLeftRadius (Value radius) =
-    AppendProperty ("border-bottom-left-radius:" ++ radius)
-
-
-{-| Sets [`border-bottom-left-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom-left-radius) property.
-
-    borderBottomLeftRadius (em 4)
-
-    borderBottomLeftRadius2 (em 4) (px 2)
-
--}
-borderBottomLeftRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderBottomLeftRadius2 (Value valHorizontal) (Value valVertical) =
-    AppendProperty ("border-bottom-left-radius:" ++ valHorizontal ++ " " ++ valVertical)
-
-
-{-| Sets [`border-start-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius) property.
-
-    borderStartStartRadius (em 4)
-
-    borderStartStartRadius2 (em 4) (px 2)
-
--}
-borderStartStartRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderStartStartRadius (Value radius) =
-    AppendProperty ("border-start-start-radius:" ++ radius)
-
-
-{-| Sets [`border-start-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius) property.
-
-    borderStartStartRadius (em 4)
-
-    borderStartStartRadius2 (em 4) (px 2)
-
--}
-borderStartStartRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderStartStartRadius2 (Value horizontalValue) (Value verticalValue) =
-    AppendProperty ("border-start-start-radius:" ++ horizontalValue ++ " " ++ verticalValue)
-
-
-{-| Sets [`border-start-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius) property.
-
-    borderStartEndRadius (em 4)
-
-    borderStartEndRadius2 (em 4) (px 2)
-
--}
-borderStartEndRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderStartEndRadius (Value radius) =
-    AppendProperty ("border-start-end-radius:" ++ radius)
-
-
-{-| Sets [`border-start-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius) property.
-
-    borderStartEndRadius (em 4)
-
-    borderStartEndRadius2 (em 4) (px 2)
-
--}
-borderStartEndRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderStartEndRadius2 (Value horizontalValue) (Value verticalValue) =
-    AppendProperty ("border-start-end-radius:" ++ horizontalValue ++ " " ++ verticalValue)
-
-
-{-| Sets [`border-end-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius) property.
-
-    borderEndStartRadius (em 4)
-
-    borderEndStartRadius2 (em 4) (px 2)
-
--}
-borderEndStartRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderEndStartRadius (Value radius) =
-    AppendProperty ("border-end-start-radius:" ++ radius)
-
-
-{-| Sets [`border-end-start-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius) property.
-
-    borderEndStartRadius (em 4)
-
-    borderEndStartRadius2 (em 4) (px 2)
-
--}
-borderEndStartRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderEndStartRadius2 (Value horizontalValue) (Value verticalValue) =
-    AppendProperty ("border-end-start-radius:" ++ horizontalValue ++ " " ++ verticalValue)
-
-
-{-| Sets [`border-end-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius) property.
-
-    borderEndEndRadius (em 4)
-
-    borderEndEndRadius2 (em 4) (px 2)
-
--}
-borderEndEndRadius :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Style
-borderEndEndRadius (Value radius) =
-    AppendProperty ("border-end-end-radius:" ++ radius)
-
-
-{-| Sets [`border-end-end-radius`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius) property.
-
-    borderEndEndRadius (em 4)
-
-    borderEndEndRadius2 (em 4) (px 2)
-
--}
-borderEndEndRadius2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-borderEndEndRadius2 (Value horizontalValue) (Value verticalValue) =
-    AppendProperty ("border-end-end-radius:" ++ horizontalValue ++ " " ++ verticalValue)
-
-
-{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageOutset (rem 1)
-
-    borderImageOutset2 (num 1) (num 1.2)
-
-    borderImageOutset3 (px 30) (num 2) (px 45)
-
-    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
-
--}
-borderImageOutset :
-    BaseValue
-        (LengthSupported
-            { num : Supported
-            }
-        )
-    -> Style
-borderImageOutset (Value widthVal) =
-    AppendProperty ("border-image-outset:" ++ widthVal)
-
-
-{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageOutset (rem 1)
-
-    borderImageOutset2 (num 1) (num 1.2)
-
-    borderImageOutset3 (px 30) (num 2) (px 45)
-
-    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
-
--}
-borderImageOutset2 :
-    Value
-        (LengthSupported
-            { num : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    -> Style
-borderImageOutset2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("border-image-outset:" ++ valueTopBottom ++ " " ++ valueRightLeft)
-
-
-{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageOutset (rem 1)
-
-    borderImageOutset2 (num 1) (num 1.2)
-
-    borderImageOutset3 (px 30) (num 2) (px 45)
-
-    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
-
--}
-borderImageOutset3 :
-    Value
-        (LengthSupported
-            { num : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    -> Style
-borderImageOutset3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
-    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
-
-
-{-| Sets [`border-image-outset`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageOutset (rem 1)
-
-    borderImageOutset2 (num 1) (num 1.2)
-
-    borderImageOutset3 (px 30) (num 2) (px 45)
-
-    borderImageOutset4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the distance by which an element's border image is set out from its border box. Supports values specified as length units or unitless numbers. Negative values are invalid.
-
--}
-borderImageOutset4 :
-    Value
-        (LengthSupported
-            { num : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { num : Supported
-                }
-            )
-    -> Style
-borderImageOutset4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
-    AppendProperty ("border-image-outset:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
-
-
-{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageWidth (rem 1)
-
-    borderImageWidth2 (num 1) (num 1.2)
-
-    borderImageWidth3 (pct 5) (pct 15) (pct 10)
-
-    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
-
--}
-borderImageWidth :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , num : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-borderImageWidth (Value widthVal) =
-    AppendProperty ("border-image-width:" ++ widthVal)
-
-
-{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageWidth (rem 1)
-
-    borderImageWidth2 (num 1) (num 1.2)
-
-    borderImageWidth3 (pct 5) (pct 15) (pct 10)
-
-    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
-
--}
-borderImageWidth2 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , num : Supported
-            , auto : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-borderImageWidth2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("border-image-width:" ++ valueTopBottom ++ " " ++ valueRightLeft)
-
-
-{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageWidth (rem 1)
-
-    borderImageWidth2 (num 1) (num 1.2)
-
-    borderImageWidth3 (pct 5) (pct 15) (pct 10)
-
-    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
-
--}
-borderImageWidth3 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , num : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-borderImageWidth3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
-    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
-
-
-{-| Sets [`border-image-width`](https://css-tricks.com/almanac/properties/b/border-image/) property.
-
-    borderImageWidth (rem 1)
-
-    borderImageWidth2 (num 1) (num 1.2)
-
-    borderImageWidth3 (pct 5) (pct 15) (pct 10)
-
-    borderImageWidth4 (px 7) (px 12) (px 14) (px 5)
-
-Specifies the width of an element's border image. Supports values specified as length units, percentages, unitless numbers or auto. Negative values are invalid.
-
--}
-borderImageWidth4 :
-    Value
-        (LengthSupported
-            { pct : Supported
-            , num : Supported
-            , auto : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                , num : Supported
-                , auto : Supported
-                }
-            )
-    -> Style
-borderImageWidth4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
-    AppendProperty ("border-image-width:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
-
-
-
--- OUTLINE --
-
-
-{-| Sets [`outline`](https://css-tricks.com/almanac/properties/o/outline/).
-
-    outline zero
-
-    outline none
-
--}
-outline :
-    BaseValue
-        (LineWidthSupported
-            (LineStyleSupported
-                (ColorSupported
-                    { auto : Supported
-                    , invert : Supported
-                    }
-                )
-            )
-        )
-    -> Style
-outline (Value val) =
-    AppendProperty ("outline:" ++ val)
-
-
-{-| Sets [`outline`](https://css-tricks.com/almanac/properties/o/outline/).
-
-    outline3 (em 0.25) auto (rgb 120 250 32)
-
--}
-outline3 :
-    Value LineWidth
-    -> Value (LineStyleSupported { auto : Supported })
-    -> Value (ColorSupported { invert : Supported })
-    -> Style
-outline3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty
-        ("outline:"
-            ++ widthVal
-            ++ " "
-            ++ styleVal
-            ++ " "
-            ++ colorVal
-        )
-
-
-{-| Sets [`outline-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width).
-
-    outlineWidth (px 2)
-
-    outlineWidth thin
-
--}
-outlineWidth : BaseValue LineWidth -> Style
-outlineWidth (Value val) =
-    AppendProperty ("outline-width:" ++ val)
-
-
-{-| Sets [`outline-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color).
-
-    outlineColor (hex "eee")
-
-    outlineColor invert
-
--}
-outlineColor : BaseValue (ColorSupported { invert : Supported }) -> Style
-outlineColor (Value val) =
-    AppendProperty ("outline-color:" ++ val)
-
-
-{-| The `invert` value used by properties such as [`outlineColor`](#outlineColor)
-
-    outlineColor invert
-
--}
-invert : Value { provides | invert : Supported }
-invert =
-    Value "invert"
-
-
-{-| Sets [`outline-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/outline-style).
-
-    outlineStyle auto
-
-    outlineStyle dashed
-
--}
-outlineStyle : BaseValue (LineStyleSupported { auto : Supported }) -> Style
-outlineStyle (Value val) =
-    AppendProperty ("outline-style:" ++ val)
-
-
-{-| Sets [`outline-offset`](https://css-tricks.com/almanac/properties/o/outline-offset/).
-
-    outlineOffset (px 2)
-
--}
-outlineOffset : BaseValue Length -> Style
-outlineOffset (Value val) =
-    AppendProperty ("outline-offset:" ++ val)
-
-
-
 -- TEXT ORIENTATION --
 
 
@@ -16644,299 +17051,6 @@ letterSpacing :
 letterSpacing (Value val) =
     AppendProperty ("letter-spacing:" ++ val)
 
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------- LENGTHS --------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets an [`all`](https://css-tricks.com/almanac/properties/a/all/) property.
-
-    all inherit
-
--}
-all : BaseValue a -> Style
-all (Value val) =
-    AppendProperty ("all:" ++ val)
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------- SIZING --------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| The [`width`](https://css-tricks.com/almanac/properties/w/width/) property.
-
-    width (px 150)
-
-    width (em 1.5)
-
-    width auto
-
-    width minContent
-
--}
-width :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-width (Value sizeVal) =
-    AppendProperty ("width:" ++ sizeVal)
-
-
-{-| The [`min-width`](https://css-tricks.com/almanac/properties/m/min-width/) property.
-
-    minWidth (px 150)
-
-    minWidth (em 1.5)
-
-    minWidth auto
-
--}
-minWidth :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-minWidth (Value sizeVal) =
-    AppendProperty ("min-width:" ++ sizeVal)
-
-
-{-| The [`max-width`](https://css-tricks.com/almanac/properties/m/max-width/) property.
-
-    maxWidth (px 150)
-
-    maxWidth (em 1.5)
-
-    maxWidth auto
-
--}
-maxWidth :
-    BaseValue
-        (LengthSupported
-            { maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            , none : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-maxWidth (Value sizeVal) =
-    AppendProperty ("max-width:" ++ sizeVal)
-
-
-{-| The [`height`](https://css-tricks.com/almanac/properties/h/height/) property.
-
-    height (px 34)
-
--}
-height :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-height (Value val) =
-    AppendProperty ("height:" ++ val)
-
-
-{-| The [`min-height`](https://css-tricks.com/almanac/properties/m/min-height/) property.
-
-    minHeight (px 20)
-
--}
-minHeight :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-minHeight (Value val) =
-    AppendProperty ("min-height:" ++ val)
-
-
-{-| The [`max-height`](https://css-tricks.com/almanac/properties/m/min-height/) property.
-
-    maxHeight (px 20)
-
--}
-maxHeight :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , none : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-maxHeight (Value val) =
-    AppendProperty ("max-height:" ++ val)
-
-
-{-| The [`block-size`](https://css-tricks.com/almanac/properties/b/block-size/) property.
-
-    blockSize (px 20)
-
--}
-blockSize :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , none : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-blockSize (Value val) =
-    AppendProperty ("block-size:" ++ val)
-
-
-{-| The [`min-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-block-size) property.
-
-    minBlockSize (px 20)
-
--}
-minBlockSize :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , none : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-minBlockSize (Value val) =
-    AppendProperty ("min-block-size:" ++ val)
-
-
-{-| The [`max-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-block-size) property.
-
-    maxBlockSize (px 20)
-
--}
-maxBlockSize :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , none : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-maxBlockSize (Value val) =
-    AppendProperty ("max-block-size:" ++ val)
-
-
-{-| The [`inline-size`](https://css-tricks.com/almanac/properties/i/inline-size/) property.
-
-    inlineSize (px 20)
-
--}
-inlineSize :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , none : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-inlineSize (Value val) =
-    AppendProperty ("inline-size:" ++ val)
-
-
-{-| The [`min-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/min-inline-size) property.
-
-    minInlineSize (px 20)
-
--}
-minInlineSize :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , none : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-minInlineSize (Value val) =
-    AppendProperty ("min-inline-size:" ++ val)
-
-
-{-| The [`max-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/max-inline-size) property.
-
-    maxInlineSize (px 20)
-
--}
-maxInlineSize :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , none : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , fitContent : Supported
-            }
-        )
-    -> Style
-maxInlineSize (Value val) =
-    AppendProperty ("max-inline-size:" ++ val)
 
 
 {-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
