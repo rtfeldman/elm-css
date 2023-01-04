@@ -6,7 +6,8 @@ module Css exposing
     , unset, initial, inherit
     , all, revert
     , Angle, AngleSupported, Width, WidthSupported
-    , BasicShape, BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+    , BasicShape, BasicShapeSupported
+    , circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
     , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
     , calc, CalcOperation, minus, plus, times, dividedBy
     , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
@@ -112,6 +113,7 @@ module Css exposing
     , fontWeight, bold, lighter, bolder
     , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
     , fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
+    , fontVariationSettings, fontVariationSettingsList
     , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
@@ -284,7 +286,8 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 
 ## Shapes
 
-@docs BasicShape, BasicShapeSupported, circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+@docs BasicShape, BasicShapeSupported
+@docs circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
 
 ## Resolution
 
@@ -672,6 +675,10 @@ Other values you can use for flex item alignment:
 
 [`normal`](#normal) is also a supported font feature settings.
 
+
+## Font Variation Settings
+
+@docs fontVariationSettings, fontVariationSettingsList
 
 ## Font Variant Caps
 
@@ -7796,6 +7803,51 @@ bolder : Value { provides | bolder : Supported }
 bolder =
     Value "bolder"
 
+
+{-| The 1-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
+property.
+
+For controlling aspects of variable fonts.
+Use [`fontVariationSettingsList`](#fontVariationSettingsList) to work with variable font tags.
+
+    fontVariationSettings normal
+
+    fontVariationSettings inherit
+
+    fontVariationSettingsList [ ("XHGT", 0.7) ]
+-}
+fontVariationSettings :
+    BaseValue
+        { normal : Supported
+        }
+    -> Style
+fontVariationSettings (Value val) =
+    AppendProperty ("font-variation-settings:" ++ val)
+
+
+{-| The multi-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
+property.
+
+For using single keywords with this property, use [`fontVariationSettings`](#fontVariationSettings).
+
+    fontVariationSettingsList [ ("XHGT", 0.7) ]
+-}
+fontVariationSettingsList :
+    List
+        ( String
+        , Float
+        )
+    -> Style
+fontVariationSettingsList list =
+    AppendProperty <|
+        "font-variation-settings:"
+        ++
+        ( list
+        |> List.map
+            (\(tagVal, numberVal) -> (enquoteString tagVal) ++ " " ++ (String.fromFloat numberVal)
+            )
+        |> String.join ", "
+        )
 
 
 -- FONT VARIANT CAPS --
