@@ -1,25 +1,38 @@
 module Css exposing
-    ( Value, BaseValue, Supported
-    , Style, batch
+    ( Style, batch
+    , Value, Supported
     , property
     , important
-    , unset, initial, inherit
-    , all, revert
+
+    -- common value groups
+    , BaseValue
+    , ImageSupported, Image
     , Angle, AngleSupported, Width, WidthSupported
     , BasicShape, BasicShapeSupported
-    , circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
-    , Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
-    , calc, CalcOperation, minus, plus, times, dividedBy
-    , Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
-    , Resolution, ResolutionSupported, dpi, dpcm, dppx
-    , Time, TimeSupported, s, ms
-    , deg, grad, rad, turn
+    , Length, LengthSupported
+    , calc, CalcOperation
+    , minus, plus, times, dividedBy
+    , Color, ColorSupported
+    , Resolution, ResolutionSupported
+    , Time, TimeSupported
+
+    -- common value types
+    , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct
     , fr, minmax, fitContentTo
-    , customIdent
-    , url
+    , num, int 
+    , deg, grad, rad, turn
+    , s, ms
+    , rgb, rgba, hsl, hsla, hex, currentcolor
+    , string, customIdent, url
+    , circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+    , dpi, dpcm, dppx
+
+    -- common keyword values
+    , unset, initial, inherit, revert
     , auto, none
     , left_, right_, top_, bottom_
     , block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
+    , minContent, maxContent, fitContent
     , x, y, z
     , stretch, center
     , marginBox, borderBox, paddingBox, contentBox, fillBox, strokeBox, viewBox
@@ -29,6 +42,8 @@ module Css exposing
     , normal, strict, all_, both, always, scroll, column
     , content, fill_, stroke, text, style
     , clip, cover, contain_
+
+    -- pseudo-classes
     , pseudoClass
     , active, checked, disabled, empty, enabled
     , firstChild, firstOfType, focus, fullscreen, hover, inRange
@@ -37,19 +52,25 @@ module Css exposing
     , root, scope, target, valid, visited
     , pseudoElement
     , before, after, backdrop, cue, marker, placeholder, selection
+
+    -- all
+    , all
+
+    -- sizing
     , width, minWidth, maxWidth, height, minHeight, maxHeight
     , blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
-    , minContent, maxContent, fitContent
-    , backgroundAttachment, backgroundAttachments, local
-    , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
-    , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
-    , ImageSupported, Image
-    , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
-    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-    , repeat, noRepeat, repeatX, repeatY, space, round
-    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
-    , TextShadowConfig, textShadow, defaultTextShadow
-    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
+
+    -- paddings
+    , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
+    , paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
+    , paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
+
+    -- margins
+    , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+    , marginBlock, marginBlock2, marginBlockStart, marginBlockEnd
+    , marginInline, marginInline2, marginInlineStart, marginInlineEnd
+
+    -- borders
     , border, border2, border3
     , borderTop, borderTop2, borderTop3
     , borderRight, borderRight2, borderRight3
@@ -72,20 +93,38 @@ module Css exposing
     , borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2, borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
+
+    -- outlines
     , outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
+
+    -- color
+    , color, backgroundColor
+
+    -- ??
+    , backgroundAttachment, backgroundAttachments, local
+    , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
+    , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
+    , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
+    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+    , repeat, noRepeat, repeatX, repeatY, space, round
+    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
+    , TextShadowConfig, textShadow, defaultTextShadow
+    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
+
+    -- ??
     , display, display2, displayListItem2, displayListItem3
     , flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     , position, zIndex
     , absolute, fixed, relative, static, sticky
+
+    -- insets
     , inset, inset2, inset3, inset4, top, right, bottom, left
     , insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
-    , padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
-    , paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
-    , paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
-    , margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+
+    -- gaps
     , gap, gap2, rowGap, columnGap
-    , marginBlock, marginBlock2, marginBlockStart, marginBlockEnd
-    , marginInline, marginInline2, marginInlineStart, marginInlineEnd
+
+    -- ??
     , boxSizing
     , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
     , placeContent, placeContent2, placeItems, placeItems2, placeSelf, placeSelf2
@@ -96,9 +135,13 @@ module Css exposing
     , flexGrow, flexShrink, flexBasis
     , flexWrap, nowrap, wrap, wrapReverse
     , flex, flex2, flex3, flexFlow, flexFlow2
+
+    -- grid
     , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
     , gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3, gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3, span
     , gridTemplateAreas, gridTemplateAreasList
+
+    -- ??
     , wordSpacing
     , tabSize
     , fontDisplay, fallback, swap, optional
@@ -106,7 +149,10 @@ module Css exposing
     , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
     , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
     , lineClamp
-    , fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+
+    -- fonts
+    , fontSize
+    , xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontSizeAdjust
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
     , fontStyle, italic, oblique
@@ -119,6 +165,8 @@ module Css exposing
     , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition, weight
+    
+    -- cursors
     , CursorKeyword
     , cursor, cursor2, cursor4
     , pointer, default, contextMenu, help, progress, wait, cell
@@ -126,13 +174,19 @@ module Css exposing
     , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
+
+    -- list styles
     , ListStyleType, ListStyleTypeSupported
-    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, listStyleImage
+    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, listStyleImage
     , arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
+    
+    -- overflow
     , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowAnchor
     , overflowWrap
     , breakWord, anywhere
+
+    -- ??
     , direction, ltr, rtl
     , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
     , textOrientation
@@ -175,6 +229,8 @@ module Css exposing
     , columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
     , columnFill, balance, balanceAll
     , columnSpan
+
+    -- transformations and perspective
     , transform, transforms, transformOrigin, transformOrigin2, transformBox
     , TransformFunction, TransformFunctionSupported
     , matrix, matrix3d
@@ -184,10 +240,14 @@ module Css exposing
     , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
     , translate, translate2, translateX, translateY, translateZ, translate3d
+    
+    -- ??
     , animationName, animationNames, animationDuration, animationDurations, animationTimingFunction, animationTimingFunctions, animationIterationCount, animationIterationCounts, animationDirection, animationDirections, animationPlayState, animationPlayStates, animationDelay, animationDelays, animationFillMode, animationFillModes
     , EasingFunction, EasingFunctionSupported, linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
     , opacity
     , zoom
+
+    -- scrolling
     , scrollbarColor, scrollbarWidth
     , scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
     , scrollSnapType, scrollSnapType2, mandatory, proximity
@@ -198,6 +258,8 @@ module Css exposing
     , scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
     , scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
     , overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
+    
+    -- ??
     , speak, spellOut
     , userSelect
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
@@ -334,6 +396,10 @@ Sometimes these keywords mean other things too.
 
 @docs block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
 
+## Content sizing values
+
+@docs minContent, maxContent, fitContent
+
 ## Axis values
 
 @docs x, y, z
@@ -382,12 +448,14 @@ Sometimes these keywords mean other things too.
 @docs before, after, backdrop, cue, marker, placeholder, selection
 
 
+# All
+
+@docs all
+
 # Sizing
 
 @docs width, minWidth, maxWidth, height, minHeight, maxHeight
 @docs blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
-@docs minContent, maxContent, fitContent
-
 
 # Backgrounds
 
@@ -987,7 +1055,19 @@ import Css.Structure as Structure
 
 
 
--- TYPES --
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- BASIC STUFF ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| A CSS property (such as `color`), or multiple properties grouped into one.
@@ -1041,6 +1121,96 @@ unpackValue (Value value) =
     value
 
 
+
+{-| A type used to specify which properties and which values work together.
+-}
+type Supported
+    = Supported
+
+
+-- CUSTOM PROPERTIES --
+
+
+{-| Define a custom property.
+
+    css [ property "-webkit-font-smoothing" "none" ]
+
+...outputs
+
+    -webkit-font-smoothing: none;
+
+-}
+property : String -> String -> Style
+property key value =
+    Preprocess.AppendProperty (key ++ ":" ++ value)
+
+
+
+-- STYLES --
+
+
+{-| Create a style from multiple other styles.
+
+    underlineOnHover =
+        batch
+            [ textDecoration none
+
+            , hover
+                [ textDecoration underline ]
+            ]
+
+    css
+        [ color (rgb 128 64 32)
+        , underlineOnHover
+        ]
+
+...has the same result as:
+
+    css
+        [ color (rgb 128 64 32)
+        , textDecoration none
+        , hover
+            [ textDecoration underline ]
+        ]
+
+-}
+batch : List Style -> Style
+batch =
+    Preprocess.ApplyStyles
+
+
+{-| Transforms the given property by adding !important to the end of its
+declaration.
+-}
+important : Style -> Style
+important =
+    Preprocess.mapProperties makeImportant
+
+
+makeImportant : Structure.Property -> Structure.Property
+makeImportant str =
+    if String.endsWith " !important" (String.toLower str) then
+        str
+
+    else
+        str ++ " !important"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------- VALUE TYPE GROUPS ---------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
 {-| A type that is used in properties for CSS wide values.
 See [CSS-wide values](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units#css-wide_values).
 -}
@@ -1053,11 +1223,6 @@ type alias BaseValue supported =
             , revert : Supported
         }
 
-
-{-| A type used to specify which properties and which values work together.
--}
-type Supported
-    = Supported
 
 
 {-| A type alias used to accept a [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
@@ -1270,6 +1435,551 @@ type alias Time =
     TimeSupported {}
 
 
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- LENGTHS --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+
+{-| Compiles to a `0` value with no units.
+
+    css [ padding zero ]
+
+...compiles to:
+
+    padding: 0;
+
+This conveniently lets you avoid doing things like `padding (px 0)`
+
+-}
+zero : Value { provides | zero : Supported }
+zero =
+    Value "0"
+
+
+{-| [`px`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (px 5)
+
+-}
+px : Float -> Value { provides | px : Supported }
+px value =
+    Value (String.fromFloat value ++ "px")
+
+
+{-| [`em`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (em 5)
+
+-}
+em : Float -> Value { provides | em : Supported }
+em value =
+    Value (String.fromFloat value ++ "em")
+
+
+{-| [`ex`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (ex 5)
+
+-}
+ex : Float -> Value { provides | ex : Supported }
+ex value =
+    Value (String.fromFloat value ++ "ex")
+
+
+{-| [`ch`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (ch 5)
+
+-}
+ch : Float -> Value { provides | ch : Supported }
+ch value =
+    Value (String.fromFloat value ++ "ch")
+
+
+{-| [`rem`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (rem 5)
+
+-}
+rem : Float -> Value { provides | rem : Supported }
+rem value =
+    Value (String.fromFloat value ++ "rem")
+
+
+{-| [`vh`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vh 5)
+
+-}
+vh : Float -> Value { provides | vh : Supported }
+vh value =
+    Value (String.fromFloat value ++ "vh")
+
+
+{-| [`vw`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vw 5)
+
+-}
+vw : Float -> Value { provides | vw : Supported }
+vw value =
+    Value (String.fromFloat value ++ "vw")
+
+
+{-| [`vmin`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vmin 5)
+
+-}
+vmin : Float -> Value { provides | vmin : Supported }
+vmin value =
+    Value (String.fromFloat value ++ "vmin")
+
+
+{-| [`vmax`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (vmax 5)
+
+-}
+vmax : Float -> Value { provides | vmax : Supported }
+vmax value =
+    Value (String.fromFloat value ++ "vmax")
+
+
+{-| [`mm`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (mm 5)
+
+-}
+mm : Float -> Value { provides | mm : Supported }
+mm value =
+    Value (String.fromFloat value ++ "mm")
+
+
+{-| [`cm`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (cm 5)
+
+-}
+cm : Float -> Value { provides | cm : Supported }
+cm value =
+    Value (String.fromFloat value ++ "cm")
+
+
+{-| [`Q`](https://developer.mozilla.org/en-US/docs/Web/CSS/length) length units.
+
+    borderWidth (q 2.5)
+
+-}
+q : Float -> Value { provides | q : Supported }
+q value =
+    Value (String.fromFloat value ++ "Q")
+
+
+{-| [`in`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (inches 5)
+
+(This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
+
+-}
+inches : Float -> Value { provides | inches : Supported }
+inches value =
+    Value (String.fromFloat value ++ "in")
+
+
+{-| [`pt`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (pt 5)
+
+-}
+pt : Float -> Value { provides | pt : Supported }
+pt value =
+    Value (String.fromFloat value ++ "pt")
+
+
+{-| [`pc`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (pc 5)
+
+-}
+pc : Float -> Value { provides | pc : Supported }
+pc value =
+    Value (String.fromFloat value ++ "pc")
+
+
+{-| [`pct`](https://css-tricks.com/the-lengths-of-css/) length units.
+
+    borderWidth (pct 5)
+
+-}
+pct : Float -> Value { provides | pct : Supported }
+pct value =
+    Value (String.fromFloat value ++ "%")
+
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- FLEX VALUES ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| [`fr`](https://css-tricks.com/introduction-fr-css-unit/) flex units.
+
+    gridAutoColumns (fr 1)
+-}
+fr : Float -> Value { provides | fr : Supported }
+fr val =
+    Value <| String.fromFloat val ++ "fr"
+
+
+{-| The [`minmax()`](https://css-tricks.com/minmax-function-works/)
+value for grid properties.
+
+    gridAutoRows (minmax (px 2) (pct 100))
+-}
+minmax : 
+    Value (
+        LengthSupported
+            { pct : Supported
+            , fr : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , auto : Supported
+            }
+    )
+    -> Value (
+        LengthSupported
+            { pct : Supported
+            , fr : Supported
+            , maxContent : Supported
+            , minContent : Supported
+            , auto : Supported
+            }
+    )
+    -> Value { provides | minmax : Supported }
+minmax (Value minBreadth) (Value maxBreadth) =
+    Value <| "minmax(" ++ minBreadth ++ ", " ++ maxBreadth ++ ")"
+
+
+{-| The [`fit-content()`](https://developer.mozilla.org/en-US/docs/Web/CSS/fit-content_function)
+value that can have a length or percentage value that you want the property to be clamped to.
+
+Not to be confused with the [`fitContent`](#fitContent) value for flex properties.
+
+    gridAutoColumns (fitContentTo (pct 100))
+
+    height (fitContentTo (rem 20))
+-}
+fitContentTo :
+    Value (
+        LengthSupported
+            { pct : Supported
+            }
+        )
+    -> Value { provides | fitContentTo : Supported }
+fitContentTo (Value val) =
+    Value <| "fit-content(" ++ val ++ ")"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- NUMBERS --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| A unitless number. Useful with properties like
+[`flexGrow`](#flexGrow),
+and [`order`](#order)
+which accept unitless numbers.
+
+    flexGrow (num 2)
+
+    order (num -2)
+
+-}
+num : Float -> Value { provides | num : Supported }
+num value =
+    Value (String.fromFloat value)
+
+
+{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
+
+    zIndex (int 3)
+
+-}
+int : Int -> Value { provides | int : Supported }
+int value =
+    Value (String.fromInt value)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ ANGLES ----------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| A [`deg` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    deg 360 -- one full circle
+
+    deg 14.23
+
+-}
+deg : Float -> Value { provides | deg : Supported }
+deg degrees =
+    Value (String.fromFloat degrees ++ "deg")
+
+
+{-| A [`grad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    grad 400 -- one full circle
+
+    grad 38.8
+
+-}
+grad : Float -> Value { provides | grad : Supported }
+grad gradians =
+    Value (String.fromFloat gradians ++ "grad")
+
+
+{-| A [`rad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    rad 6.2832 -- approximately one full circle
+
+    rad 1
+
+-}
+rad : Float -> Value { provides | rad : Supported }
+rad radians =
+    Value (String.fromFloat radians ++ "rad")
+
+
+{-| A [`turn` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
+
+    turn 1 -- one full circle
+
+    turn 0.25
+
+-}
+turn : Float -> Value { provides | turn : Supported }
+turn turns =
+    Value (String.fromFloat turns ++ "turn")
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------- TIME ----------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| The [`s`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) time unit.
+
+    animationDuration (s 1)
+
+-}
+s : Float -> Value { provides | s : Supported }
+s value =
+    Value (String.fromFloat value ++ "s")
+
+
+{-| The [`ms`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) time unit.
+
+    animationDuration (ms 120)
+
+-}
+ms : Float -> Value { provides | ms : Supported }
+ms value =
+    Value (String.fromFloat value ++ "ms")
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- COLOR ----------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
+in functional notation.
+
+    color (rgb 96 181 204)
+
+-}
+rgb : Int -> Int -> Int -> Value { provides | rgb : Supported }
+rgb red green blue =
+    Value <|
+        "rgb("
+            ++ String.fromInt red
+            ++ ","
+            ++ String.fromInt green
+            ++ ","
+            ++ String.fromInt blue
+            ++ ")"
+
+
+{-| [RGBA color value](https://css-tricks.com/the-power-of-rgba/).
+
+    color (rgba 96 181 204 0.25)
+
+-}
+rgba : Int -> Int -> Int -> Float -> Value { provides | rgba : Supported }
+rgba red green blue alphaVal =
+    Value <|
+        "rgba("
+            ++ String.fromInt red
+            ++ ","
+            ++ String.fromInt green
+            ++ ","
+            ++ String.fromInt blue
+            ++ ","
+            ++ String.fromFloat alphaVal
+            ++ ")"
+
+
+{-| [HSL color value](https://css-tricks.com/mother-effing-hsl/).
+
+The `s` and `l` values are expressed as a number between 0 and 1 and are converted to the appropriate percentage.
+
+    color (hsl 193 0.51 0.59) -- hsl(193, 51%, 59%)
+
+-}
+hsl : Float -> Float -> Float -> Value { provides | hsl : Supported }
+hsl hueVal sat lightness =
+    Value <|
+        "hsl("
+            ++ String.fromFloat hueVal
+            ++ ","
+            ++ String.fromFloat (sat * 100)
+            ++ "%,"
+            ++ String.fromFloat (lightness * 100)
+            ++ "%"
+            ++ ")"
+
+
+{-| [HSLA color value](https://css-tricks.com/yay-for-hsla/)
+
+The `s` and `l` values are expressed as a number between 0 and 1 and are converted to the appropriate percentage.
+
+    color (hsla 193 0.51 0.59 0.25) -- hsl(193, 51%, 59%, 0.25)
+
+-}
+hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
+hsla hueVal sat lightness alphaVal =
+    Value <|
+        "hsla("
+            ++ String.fromFloat hueVal
+            ++ ","
+            ++ String.fromFloat (sat * 100)
+            ++ "%,"
+            ++ String.fromFloat (lightness * 100)
+            ++ "%,"
+            ++ String.fromFloat alphaVal
+            ++ ")"
+
+
+{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()) in hexadecimal notation.
+
+You can optionally include `#` as the first character, for benefits like syntax highlighting in editors, ease of copy/pasting from tools which express these as e.g. `#abcdef0`, etc.
+
+    color (hex "#60b5cc")
+
+    color (hex "60b5cc")
+
+-}
+hex : String -> Value { provides | hex : Supported }
+hex str =
+    Value <|
+        if String.startsWith "#" str then
+            str
+
+        else
+            "#" ++ str
+
+
+{-| The [`currentcolor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentcolor_keyword)
+value used by properties such as [`color`](#color), [`backgroundColor`](#backgroundColor)
+
+    color currentcolor
+
+-}
+currentcolor : Value { provides | currentcolor : Supported }
+currentcolor =
+    Value "currentcolor"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------- STRINGS, IDENTS AND URLs ------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
 {-| Produces a [`string`](https://developer.mozilla.org/en-US/docs/Web/CSS/string)
 value used by properties such as:
 
@@ -1295,60 +2005,46 @@ string =
     Value << enquoteString
 
 
+{-| Produces an [`custom-ident`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident)
+value used by properties including (but not limited to) [`listStyle`](#listStyle),
+[`listStyleType`](#listStyleType) and [`gridColumnEnd2`](#gridColumnEnd2).
 
--- CUSTOM PROPERTIES --
+    listStyleType (customIdent "hello-world")
 
+    gridColumnEnd2 span (customIdent "hello-world")
 
-{-| Define a custom property.
-
-    css [ property "-webkit-font-smoothing" "none" ]
-
-...outputs
-
-    -webkit-font-smoothing: none;
+**Note:** This method does not do any checking if the identifierer supplied is valid.
 
 -}
-property : String -> String -> Style
-property key value =
-    Preprocess.AppendProperty (key ++ ":" ++ value)
+customIdent : String -> Value { provides | customIdent : Supported }
+customIdent =
+    Value
 
 
-
--- STYLES --
-
-
-{-| Create a style from multiple other styles.
-
-    underlineOnHover =
-        batch
-            [ textDecoration none
-
-            , hover
-                [ textDecoration underline ]
-            ]
-
-    css
-        [ color (rgb 128 64 32)
-        , underlineOnHover
-        ]
-
-...has the same result as:
-
-    css
-        [ color (rgb 128 64 32)
-        , textDecoration none
-        , hover
-            [ textDecoration underline ]
-        ]
-
+{-| The `url` value for the [`cursor`](#cursor),
+[`fill`](#fill),
+[`strokeImage`](#strokeImage),
+and [`backgroundImage`](#backgroundImage) properties.
 -}
-batch : List Style -> Style
-batch =
-    Preprocess.ApplyStyles
+url : String -> Value { provides | url : Supported }
+url str =
+    Value ("url(" ++ str ++ ")")
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- SHAPES --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
--- SHAPES --
 
 {-| Provides a one-argument `circle()` value.
 
@@ -1650,8 +2346,55 @@ path svgPathDef =
     Value <| "path('" ++ svgPathDef ++ "')"
 
 
--- GLOBAL VALUES --
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- RESOLUTION -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
+
+{-| [`dpi`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
+-}
+dpi : Float -> Value { provides | dpi : Supported }
+dpi val =
+    Value <| String.fromFloat val ++ "dpi"
+
+
+{-| [`dpcm`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
+-}
+dpcm : Float -> Value { provides | dpcm : Supported }
+dpcm val =
+    Value <| String.fromFloat val ++ "dpcm"
+
+
+{-| [`dppx`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
+-}
+dppx : Float -> Value { provides | dppx : Supported }
+dppx val =
+    Value <| String.fromFloat val ++ "dppx"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------------- GLOBAL VALUES -----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 {-| The [`inherit`](https://developer.mozilla.org/en-US/docs/Web/CSS/inherit) value.
 Any CSS property can be set to this value.
@@ -1703,151 +2446,19 @@ revert =
     Value "revert"
 
 
-{-| Sets an [`all`](https://css-tricks.com/almanac/properties/a/all/) property.
-
-    all inherit
-
--}
-all : BaseValue a -> Style
-all (Value val) =
-    AppendProperty ("all:" ++ val)
-
-
-{-| Transforms the given property by adding !important to the end of its
-declaration.
--}
-important : Style -> Style
-important =
-    Preprocess.mapProperties makeImportant
-
-
-makeImportant : Structure.Property -> Structure.Property
-makeImportant str =
-    if String.endsWith " !important" (String.toLower str) then
-        str
-
-    else
-        str ++ " !important"
-
-
-
--- SHARED VALUES --
-
-
-{-| The `url` value for the [`cursor`](#cursor),
-[`fill`](#fill),
-[`strokeImage`](#strokeImage),
-and [`backgroundImage`](#backgroundImage) properties.
--}
-url : String -> Value { provides | url : Supported }
-url str =
-    Value ("url(" ++ str ++ ")")
-
-
-
-
--- RESOLUTION --
-
-{-| [`dpi`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
--}
-dpi : Float -> Value { provides | dpi : Supported }
-dpi val =
-    Value <| String.fromFloat val ++ "dpi"
-
-
-{-| [`dpcm`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
--}
-dpcm : Float -> Value { provides | dpcm : Supported }
-dpcm val =
-    Value <| String.fromFloat val ++ "dpcm"
-
-
-{-| [`dppx`](https://developer.mozilla.org/en-US/docs/Web/CSS/resolution) resolution units.
--}
-dppx : Float -> Value { provides | dppx : Supported }
-dppx val =
-    Value <| String.fromFloat val ++ "dppx"
-
-
--- FLEX VALUES --
-
-{-| [`fr`](https://css-tricks.com/introduction-fr-css-unit/) flex units.
-
-    gridAutoColumns (fr 1)
--}
-fr : Float -> Value { provides | fr : Supported }
-fr val =
-    Value <| String.fromFloat val ++ "fr"
-
-
-{-| The [`minmax()`](https://css-tricks.com/minmax-function-works/)
-value for grid properties.
-
-    gridAutoRows (minmax (px 2) (pct 100))
--}
-minmax : 
-    Value (
-        LengthSupported
-            { pct : Supported
-            , fr : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , auto : Supported
-            }
-    )
-    -> Value (
-        LengthSupported
-            { pct : Supported
-            , fr : Supported
-            , maxContent : Supported
-            , minContent : Supported
-            , auto : Supported
-            }
-    )
-    -> Value { provides | minmax : Supported }
-minmax (Value minBreadth) (Value maxBreadth) =
-    Value <| "minmax(" ++ minBreadth ++ ", " ++ maxBreadth ++ ")"
-
-
-{-| The [`fit-content()`](https://developer.mozilla.org/en-US/docs/Web/CSS/fit-content_function)
-value that can have a length or percentage value that you want the property to be clamped to.
-
-Not to be confused with the [`fitContent`](#fitContent) value for flex properties.
-
-    gridAutoColumns (fitContentTo (pct 100))
-
-    height (fitContentTo (rem 20))
--}
-fitContentTo :
-    Value (
-        LengthSupported
-            { pct : Supported
-            }
-        )
-    -> Value { provides | fitContentTo : Supported }
-fitContentTo (Value val) =
-    Value <| "fit-content(" ++ val ++ ")"
-
-
--- IDENT --
-
-{-| Produces an [`custom-ident`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident)
-value used by properties including (but not limited to) [`listStyle`](#listStyle),
-[`listStyleType`](#listStyleType) and [`gridColumnEnd2`](#gridColumnEnd2).
-
-    listStyleType (customIdent "hello-world")
-
-    gridColumnEnd2 span (customIdent "hello-world")
-
-**Note:** This method does not do any checking if the identifierer supplied is valid.
-
--}
-customIdent : String -> Value { provides | customIdent : Supported }
-customIdent =
-    Value
-
-    
--- SHARED VALUES --
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------ COMMON KEYWORD VALUES -------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| The `auto` value used in many properties such as (but not limited to) [`width`](#width),
@@ -2176,6 +2787,60 @@ It can be used with the following properties:
 inlineEnd : Value { provides | inlineEnd : Supported }
 inlineEnd =
     Value "inline-end"
+
+
+{-| The `min-content` value used for properties such as:
+
+  - sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
+
+  - min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
+
+  - [`flexBasis`](#flexBasis)
+
+```
+width minContent
+```
+
+-}
+minContent : Value { provides | minContent : Supported }
+minContent =
+    Value "min-content"
+
+
+{-| The `max-content` value used for properties such as:
+
+  - sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
+
+  - min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
+
+  - [`flexBasis`](#flexBasis)
+
+```
+width maxContent
+```
+
+-}
+maxContent : Value { provides | maxContent : Supported }
+maxContent =
+    Value "max-content"
+
+
+{-| The `fit-content` value used for properties such as:
+
+  - sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
+
+  - min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
+
+  - [`flexBasis`](#flexBasis)
+
+```
+width fitContent
+```
+
+-}
+fitContent : Value { provides | fitContent : Supported }
+fitContent =
+    Value "fit-content"
 
 
 {-| Sets `x` value for usage with [`scrollSnapType2`](#scrollSnapType2)
@@ -2804,8 +3469,20 @@ contain_ =
 
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- OVERFLOW -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
--- OVERFLOW --
 
 
 {-| Sets [`overflow`](https://css-tricks.com/almanac/properties/o/overflow/).
@@ -2969,145 +3646,6 @@ anywhere : Value { provides | anywhere : Supported }
 anywhere =
     Value "anywhere"
 
-
-
--- COLORS --
-
-
-{-| Sets [`color`](https://css-tricks.com/almanac/properties/c/color/).
-
-    color (hex "#60b5cc")
-
-    color (rgb 96 181 204)
-
-    color (rgba 96 181 204 0.5)
-
--}
-color : BaseValue Color -> Style
-color (Value val) =
-    AppendProperty ("color:" ++ val)
-
-
-{-| Sets [`background-color`](https://css-tricks.com/almanac/properties/b/background-color/).
-
-    backgroundColor (hex "#60b5cc")
-
-    backgroundColor (rgb 96 181 204)
-
-    backgroundColor (rgba 96 181 204 0.5)
-
--}
-backgroundColor : BaseValue Color -> Style
-backgroundColor (Value val) =
-    AppendProperty ("background-color:" ++ val)
-
-
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb())
-in functional notation.
-
-    color (rgb 96 181 204)
-
--}
-rgb : Int -> Int -> Int -> Value { provides | rgb : Supported }
-rgb red green blue =
-    Value <|
-        "rgb("
-            ++ String.fromInt red
-            ++ ","
-            ++ String.fromInt green
-            ++ ","
-            ++ String.fromInt blue
-            ++ ")"
-
-
-{-| [RGBA color value](https://css-tricks.com/the-power-of-rgba/).
-
-    color (rgba 96 181 204 0.25)
-
--}
-rgba : Int -> Int -> Int -> Float -> Value { provides | rgba : Supported }
-rgba red green blue alphaVal =
-    Value <|
-        "rgba("
-            ++ String.fromInt red
-            ++ ","
-            ++ String.fromInt green
-            ++ ","
-            ++ String.fromInt blue
-            ++ ","
-            ++ String.fromFloat alphaVal
-            ++ ")"
-
-
-{-| [HSL color value](https://css-tricks.com/mother-effing-hsl/).
-
-The `s` and `l` values are expressed as a number between 0 and 1 and are converted to the appropriate percentage.
-
-    color (hsl 193 0.51 0.59) -- hsl(193, 51%, 59%)
-
--}
-hsl : Float -> Float -> Float -> Value { provides | hsl : Supported }
-hsl hueVal sat lightness =
-    Value <|
-        "hsl("
-            ++ String.fromFloat hueVal
-            ++ ","
-            ++ String.fromFloat (sat * 100)
-            ++ "%,"
-            ++ String.fromFloat (lightness * 100)
-            ++ "%"
-            ++ ")"
-
-
-{-| [HSLA color value](https://css-tricks.com/yay-for-hsla/)
-
-The `s` and `l` values are expressed as a number between 0 and 1 and are converted to the appropriate percentage.
-
-    color (hsla 193 0.51 0.59 0.25) -- hsl(193, 51%, 59%, 0.25)
-
--}
-hsla : Float -> Float -> Float -> Float -> Value { provides | hsla : Supported }
-hsla hueVal sat lightness alphaVal =
-    Value <|
-        "hsla("
-            ++ String.fromFloat hueVal
-            ++ ","
-            ++ String.fromFloat (sat * 100)
-            ++ "%,"
-            ++ String.fromFloat (lightness * 100)
-            ++ "%,"
-            ++ String.fromFloat alphaVal
-            ++ ")"
-
-
-{-| [RGB color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()) in hexadecimal notation.
-
-You can optionally include `#` as the first character, for benefits like syntax highlighting in editors, ease of copy/pasting from tools which express these as e.g. `#abcdef0`, etc.
-
-    color (hex "#60b5cc")
-
-    color (hex "60b5cc")
-
--}
-hex : String -> Value { provides | hex : Supported }
-hex str =
-    Value <|
-        if String.startsWith "#" str then
-            str
-
-        else
-            "#" ++ str
-
-
-{-| The [`currentcolor`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentcolor_keyword)
-value used by properties such as [`color`](#color), [`backgroundColor`](#backgroundColor)
-
-    color currentcolor
-
--}
-currentcolor : Value { provides | currentcolor : Supported }
-currentcolor =
-    Value "currentcolor"
 
 
 
@@ -4951,213 +5489,6 @@ placeholder =
 selection : List Style -> Style
 selection =
     pseudoElement "selection"
-
-
-
--- NUMBERS --
-
-
-{-| Compiles to a 0 with no units.
-
-    css [ padding zero ]
-
-...compiles to:
-
-    padding: 0;
-
-This conveniently lets you avoid doing things like `padding (px 0)`
-
--}
-zero : Value { provides | zero : Supported }
-zero =
-    Value "0"
-
-
-{-| [`px`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (px 5)
-
--}
-px : Float -> Value { provides | px : Supported }
-px value =
-    Value (String.fromFloat value ++ "px")
-
-
-{-| [`em`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (em 5)
-
--}
-em : Float -> Value { provides | em : Supported }
-em value =
-    Value (String.fromFloat value ++ "em")
-
-
-{-| [`ex`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (ex 5)
-
--}
-ex : Float -> Value { provides | ex : Supported }
-ex value =
-    Value (String.fromFloat value ++ "ex")
-
-
-{-| [`ch`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (ch 5)
-
--}
-ch : Float -> Value { provides | ch : Supported }
-ch value =
-    Value (String.fromFloat value ++ "ch")
-
-
-{-| [`rem`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (rem 5)
-
--}
-rem : Float -> Value { provides | rem : Supported }
-rem value =
-    Value (String.fromFloat value ++ "rem")
-
-
-{-| [`vh`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (vh 5)
-
--}
-vh : Float -> Value { provides | vh : Supported }
-vh value =
-    Value (String.fromFloat value ++ "vh")
-
-
-{-| [`vw`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (vw 5)
-
--}
-vw : Float -> Value { provides | vw : Supported }
-vw value =
-    Value (String.fromFloat value ++ "vw")
-
-
-{-| [`vmin`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (vmin 5)
-
--}
-vmin : Float -> Value { provides | vmin : Supported }
-vmin value =
-    Value (String.fromFloat value ++ "vmin")
-
-
-{-| [`vmax`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (vmax 5)
-
--}
-vmax : Float -> Value { provides | vmax : Supported }
-vmax value =
-    Value (String.fromFloat value ++ "vmax")
-
-
-{-| [`mm`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (mm 5)
-
--}
-mm : Float -> Value { provides | mm : Supported }
-mm value =
-    Value (String.fromFloat value ++ "mm")
-
-
-{-| [`cm`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (cm 5)
-
--}
-cm : Float -> Value { provides | cm : Supported }
-cm value =
-    Value (String.fromFloat value ++ "cm")
-
-
-{-| [`Q`](https://developer.mozilla.org/en-US/docs/Web/CSS/length) length units.
-
-    borderWidth (q 2.5)
-
--}
-q : Float -> Value { provides | q : Supported }
-q value =
-    Value (String.fromFloat value ++ "Q")
-
-
-{-| [`in`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (inches 5)
-
-(This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
-
--}
-inches : Float -> Value { provides | inches : Supported }
-inches value =
-    Value (String.fromFloat value ++ "in")
-
-
-{-| [`pt`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (pt 5)
-
--}
-pt : Float -> Value { provides | pt : Supported }
-pt value =
-    Value (String.fromFloat value ++ "pt")
-
-
-{-| [`pc`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (pc 5)
-
--}
-pc : Float -> Value { provides | pc : Supported }
-pc value =
-    Value (String.fromFloat value ++ "pc")
-
-
-{-| [`pct`](https://css-tricks.com/the-lengths-of-css/) length units.
-
-    borderWidth (pct 5)
-
--}
-pct : Float -> Value { provides | pct : Supported }
-pct value =
-    Value (String.fromFloat value ++ "%")
-
-
-{-| A unitless number. Useful with properties like
-[`flexGrow`](#flexGrow),
-and [`order`](#order)
-which accept unitless numbers.
-
-    flexGrow (num 2)
-
-    order (num -2)
-
--}
-num : Float -> Value { provides | num : Supported }
-num value =
-    Value (String.fromFloat value)
-
-
-{-| A unitless integer. Useful with properties like [`zIndex`](#zIndex) which accept unitless integers.
-
-    zIndex (int 3)
-
--}
-int : Int -> Value { provides | int : Supported }
-int value =
-    Value (String.fromInt value)
 
 
 
@@ -8903,6 +9234,39 @@ grab =
 grabbing : Value { provides | grabbing : Supported }
 grabbing =
     Value "grabbing"
+
+
+
+
+
+
+{-| Sets [`color`](https://css-tricks.com/almanac/properties/c/color/).
+
+    color (hex "#60b5cc")
+
+    color (rgb 96 181 204)
+
+    color (rgba 96 181 204 0.5)
+
+-}
+color : BaseValue Color -> Style
+color (Value val) =
+    AppendProperty ("color:" ++ val)
+
+
+{-| Sets [`background-color`](https://css-tricks.com/almanac/properties/b/background-color/).
+
+    backgroundColor (hex "#60b5cc")
+
+    backgroundColor (rgb 96 181 204)
+
+    backgroundColor (rgba 96 181 204 0.5)
+
+-}
+backgroundColor : BaseValue Color -> Style
+backgroundColor (Value val) =
+    AppendProperty ("background-color:" ++ val)
+
 
 
 {-| Sets [`background-attachment`](https://css-tricks.com/almanac/properties/b/background-attachment/).
@@ -13148,58 +13512,6 @@ boxDecoration =
 
 
 
--- ANGLES --
-
-
-{-| A [`deg` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
-
-    deg 360 -- one full circle
-
-    deg 14.23
-
--}
-deg : Float -> Value { provides | deg : Supported }
-deg degrees =
-    Value (String.fromFloat degrees ++ "deg")
-
-
-{-| A [`grad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
-
-    grad 400 -- one full circle
-
-    grad 38.8
-
--}
-grad : Float -> Value { provides | grad : Supported }
-grad gradians =
-    Value (String.fromFloat gradians ++ "grad")
-
-
-{-| A [`rad` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
-
-    rad 6.2832 -- approximately one full circle
-
-    rad 1
-
--}
-rad : Float -> Value { provides | rad : Supported }
-rad radians =
-    Value (String.fromFloat radians ++ "rad")
-
-
-{-| A [`turn` angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle)
-
-    turn 1 -- one full circle
-
-    turn 0.25
-
--}
-turn : Float -> Value { provides | turn : Supported }
-turn turns =
-    Value (String.fromFloat turns ++ "turn")
-
-
-
 -- TEXT DECORATION --
 
 
@@ -15666,30 +15978,6 @@ perspective_ (Value length) =
 
 
 
--- TIME UNITS --
-
-
-{-| The [`s`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) time unit.
-
-    animationDuration (s 1)
-
--}
-s : Float -> Value { provides | s : Supported }
-s value =
-    Value (String.fromFloat value ++ "s")
-
-
-{-| The [`ms`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) time unit.
-
-    animationDuration (ms 120)
-
--}
-ms : Float -> Value { provides | ms : Supported }
-ms value =
-    Value (String.fromFloat value ++ "ms")
-
-
-
 -- ANIMATION --
 
 
@@ -16357,6 +16645,46 @@ letterSpacing (Value val) =
     AppendProperty ("letter-spacing:" ++ val)
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- LENGTHS --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets an [`all`](https://css-tricks.com/almanac/properties/a/all/) property.
+
+    all inherit
+
+-}
+all : BaseValue a -> Style
+all (Value val) =
+    AppendProperty ("all:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- SIZING --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
 {-| The [`width`](https://css-tricks.com/almanac/properties/w/width/) property.
 
     width (px 150)
@@ -16609,60 +16937,6 @@ maxInlineSize :
     -> Style
 maxInlineSize (Value val) =
     AppendProperty ("max-inline-size:" ++ val)
-
-
-{-| The `min-content` value used for properties such as:
-
-  - sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
-
-  - min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
-
-  - [`flexBasis`](#flexBasis)
-
-```
-width minContent
-```
-
--}
-minContent : Value { provides | minContent : Supported }
-minContent =
-    Value "min-content"
-
-
-{-| The `max-content` value used for properties such as:
-
-  - sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
-
-  - min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
-
-  - [`flexBasis`](#flexBasis)
-
-```
-width maxContent
-```
-
--}
-maxContent : Value { provides | maxContent : Supported }
-maxContent =
-    Value "max-content"
-
-
-{-| The `fit-content` value used for properties such as:
-
-  - sizing (eg. [`width`](#width), [`height`](#height), [`inlineSize`](#inlineSize))
-
-  - min/max sizing (eg. [`minWidth`](#minWidth), [`maxBlockWidth`](#maxBlockWidth))
-
-  - [`flexBasis`](#flexBasis)
-
-```
-width fitContent
-```
-
--}
-fitContent : Value { provides | fitContent : Supported }
-fitContent =
-    Value "fit-content"
 
 
 {-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
