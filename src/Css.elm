@@ -62,7 +62,11 @@ module Css exposing
 
     -- display
     , display, display2, displayListItem2, displayListItem3
-    , flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+    , flex_, flow, flowRoot, grid, contents, listItem
+    , inlineBlock, inlineFlex, inlineTable, inlineGrid
+    , rubyBase, rubyBaseContainer, rubyText, rubyTextContainer
+    , runIn, table
+    , tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
     
     -- position
     , position
@@ -78,7 +82,8 @@ module Css exposing
 
     -- insets
     , inset, inset2, inset3, inset4, top, right, bottom, left
-    , insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
+    , insetBlock, insetBlock2, insetInline, insetInline2
+    , insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
 
     -- margins
     , margin, margin2, margin3, margin4
@@ -106,17 +111,22 @@ module Css exposing
     , borderInlineEnd, borderInlineEnd2, borderInlineEnd3
     , borderWidth, borderWidth2, borderWidth3, borderWidth4
     , borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
-    , borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth, borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
+    , borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth
+    , borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
     , borderStyle, borderStyle2, borderStyle3, borderStyle4
     , borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
-    , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
+    , borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle
+    , borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
     , dotted, dashed, solid, double, groove, ridge, inset_, outset
     , borderColor, borderColor2, borderColor3, borderColor4
     , borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
-    , borderBlockColor, borderBlockStartColor, borderBlockEndColor, borderInlineColor, borderInlineStartColor, borderInlineEndColor
+    , borderBlockColor, borderBlockStartColor, borderBlockEndColor
+    , borderInlineColor, borderInlineStartColor, borderInlineEndColor
     , borderRadius, borderRadius2, borderRadius3, borderRadius4
-    , borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
-    , borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2, borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
+    , borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2
+    , borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+    , borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2
+    , borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
     , borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
     , borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
 
@@ -126,8 +136,7 @@ module Css exposing
 
     -- overflow
     , overflow, overflowX, overflowY, overflowBlock, overflowInline
-    , overflowAnchor
-    , overflowWrap
+    , overflowWrap, overflowAnchor
     , breakWord, anywhere
 
     -- flex
@@ -145,7 +154,9 @@ module Css exposing
     
     -- grid
     , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
-    , gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3, gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3, span
+    , gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3
+    , gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3
+    , span
     , gridTemplateAreas, gridTemplateAreasList
 
     -- gaps
@@ -166,30 +177,33 @@ module Css exposing
     , TextShadowConfig, textShadow, defaultTextShadow
     , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
 
-    -- fonts
+    -- font size
     , fontSize
     , xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontSizeAdjust
+
+    -- font family
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
+
+    -- font style, weight + stretch
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
     , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
-    , fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
-    , fontVariationSettings, fontVariationSettingsList
-    , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
-    , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
-    , fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
-    , fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition, weight
     
-    -- ??
-    , wordSpacing
-    , tabSize
-    , fontDisplay, fallback, swap, optional
-    , writingMode, verticalLr, verticalRl, horizontalTb
-    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
-    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
-    , lineClamp
+    -- font features and variants
+    , fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
+    , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
+    , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3
+    , jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
+    , fontVariantLigatures
+    , commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
+    , fontVariantNumeric, fontVariantNumeric4
+    , ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
+    , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
+    , weight
+
+    -- variable fonts (not to be confused with variants)
+    , fontVariationSettings, fontVariationSettingsList
 
     -- cursors
     , CursorKeyword
@@ -205,7 +219,19 @@ module Css exposing
     , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, listStyleImage
     , arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
 
+    -- text transform + decoration
+    , textTransform
+    , capitalize, uppercase, lowercase, fullSizeKana
+    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationThickness, fromFont
+    , textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
+    , wavy, underline, overline, lineThrough
 
+    -- ??
+    , textStroke, textStroke2, textStrokeColor, textStrokeWidth
+    , textIndent, textIndent2, textIndent3, hanging, eachLine
+    , textUnderlineOffset
+    , textEmphasis, textEmphasis2, textEmphasisStyle, textEmphasisStyle2, textEmphasisColor, textEmphasisPosition, textEmphasisPosition2, filled, open, dot, doubleCircle, triangle, sesame, over
+    
     -- ??
     , direction, ltr, rtl
     , justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
@@ -213,15 +239,17 @@ module Css exposing
     , mixed, sideways, sidewaysRight, upright, useGlyphOrientation
     , textRendering
     , geometricPrecision, optimizeLegibility, optimizeSpeed
-    , textTransform
-    , capitalize, uppercase, lowercase, fullSizeKana
-    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationThickness, fromFont
-    , textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
-    , wavy, underline, overline, lineThrough
-    , textStroke, textStroke2, textStrokeColor, textStrokeWidth
-    , textIndent, textIndent2, textIndent3, hanging, eachLine
-    , textUnderlineOffset
-    , textEmphasis, textEmphasis2, textEmphasisStyle, textEmphasisStyle2, textEmphasisColor, textEmphasisPosition, textEmphasisPosition2, filled, open, dot, doubleCircle, triangle, sesame, over
+
+    -- ??
+    , wordSpacing
+    , tabSize
+    , fontDisplay, fallback, swap, optional
+    , writingMode, verticalLr, verticalRl, horizontalTb
+    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
+    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
+    , lineClamp
+
+    -- ??
     , borderCollapse
     , collapse, separate
     , borderSpacing, borderSpacing2
@@ -269,6 +297,14 @@ module Css exposing
     , opacity
     , zoom
 
+    -- break (page break)
+    , breakBefore, breakAfter, breakInside, avoid, avoidPage, avoidColumn, page
+    , pageBreakBefore, pageBreakAfter, pageBreakInside
+
+    -- pointer-events
+    , pointerEvents
+    , visiblePainted, visibleFill, visibleStroke, painted
+
     -- scrolling
     , scrollbarColor, scrollbarWidth
     , scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
@@ -291,8 +327,6 @@ module Css exposing
     , unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
     , bleed
     , orphans, widows
-    , breakBefore, breakAfter, breakInside, avoid, avoidPage, avoidColumn, page
-    , pageBreakBefore, pageBreakAfter, pageBreakInside
     , mixBlendMode
     , imageRendering, crispEdges, pixelated
     , backfaceVisibility
@@ -305,8 +339,6 @@ module Css exposing
     , maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
     , noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
     , caretColor
-    , pointerEvents
-    , visiblePainted, visibleFill, visibleStroke, painted
     , resize, horizontal, vertical
     , contain, contain2, contain3, contain4, size, layout, paint
     )
@@ -8406,6 +8438,23 @@ overflowWrap (Value val) =
     AppendProperty ("overflow-wrap:" ++ val)
 
 
+{-| Sets [`overflow-anchor`](https://css-tricks.com/almanac/properties/o/overflow-anchor/)
+
+    overflowAnchor auto
+
+    overflowAnchor none
+
+-}
+overflowAnchor :
+    BaseValue
+        { auto : Supported
+        , none : Supported
+        }
+    -> Style
+overflowAnchor (Value val) =
+    AppendProperty ("overflow-anchor:" ++ val)
+
+
 {-| The `break-word` value, which can be used with such properties as
 [`overflow-wrap`](https://css-tricks.com/almanac/properties/o/overflow-wrap/)
 and [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/).
@@ -9998,1245 +10047,6 @@ columnGap (Value widthVal) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
-------------------------------- FONT SIZE ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`font-size`](https://css-tricks.com/almanac/properties/f/font-size/)
-
-    fontSize xxSmall
-
-    fontSize (px 12)
-
-Check out [fluid typography](https://css-tricks.com/snippets/css/fluid-typography/) for some cool stuff you can do with this.
-
--}
-fontSize :
-    BaseValue
-        (LengthSupported
-            { xxSmall : Supported
-            , xSmall : Supported
-            , small : Supported
-            , medium : Supported
-            , large : Supported
-            , xLarge : Supported
-            , xxLarge : Supported
-            , smaller : Supported
-            , larger : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-fontSize (Value val) =
-    AppendProperty ("font-size:" ++ val)
-
-
-{-| The `xx-small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize xxSmall
-
--}
-xxSmall : Value { provides | xxSmall : Supported }
-xxSmall =
-    Value "xx-small"
-
-
-{-| The `x-small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize xSmall
-
--}
-xSmall : Value { provides | xSmall : Supported }
-xSmall =
-    Value "x-small"
-
-
-{-| The `small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize small
-
--}
-small : Value { provides | small : Supported }
-small =
-    Value "small"
-
-
-{-| The `medium` value used by properties such as [`fontSize`](#fontSize),
-[`borderWidth`](#borderWidth),
-[`columnRuleWidth`](#columnRuleWidth).
-
-    fontSize medium
-
-    borderWidth medium
-
-    columnRuleWidth medium
-
-The value is equivalent of 3px when using for `border-width`.
-
--}
-medium : Value { provides | medium : Supported }
-medium =
-    Value "medium"
-
-
-{-| The `large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize large
-
--}
-large : Value { provides | large : Supported }
-large =
-    Value "large"
-
-
-{-| The `x-large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize xLarge
-
--}
-xLarge : Value { provides | xLarge : Supported }
-xLarge =
-    Value "x-large"
-
-
-{-| The `xx-large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize xxLarge
-
--}
-xxLarge : Value { provides | xxLarge : Supported }
-xxLarge =
-    Value "xx-large"
-
-
-{-| The `smaller` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize smaller
-
--}
-smaller : Value { provides | smaller : Supported }
-smaller =
-    Value "smaller"
-
-
-{-| The `larger` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
-
-    fontSize larger
-
--}
-larger : Value { provides | larger : Supported }
-larger =
-    Value "larger"
-
-
-
--- FONT FAMILY --
-
-
-{-| For when your font is one of the six [generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E) - [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive), [`fantasy`](#fantasy), or [`systemUi`](#systemUi).
-
-If you want to refer to a font by its name (like Helvetica or Arial), use [`fontFamilies`](#fontFamilies) instead.
-
--}
-fontFamily :
-    BaseValue
-        { serif : Supported
-        , sansSerif : Supported
-        , monospace : Supported
-        , cursive : Supported
-        , fantasy : Supported
-        , systemUi : Supported
-        }
-    -> Style
-fontFamily (Value genericFont) =
-    AppendProperty ("font-family:" ++ genericFont)
-
-
-{-| The `serif` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E).
-
-    fontFamily serif
-
-    fontFamilies [ "Gill Sans", "Helvetica" ] serif
-
-This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
-
--}
-serif : Value { provides | serif : Supported }
-serif =
-    Value "serif"
-
-
-{-| The `sans-serif` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E).
-
-    fontFamily sansSerif
-
-    fontFamilies [ "Georgia", "Times" ] sansSerif
-
-This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
-
--}
-sansSerif : Value { provides | sansSerif : Supported }
-sansSerif =
-    Value "sans-serif"
-
-
-{-| The `monospace` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
-
-    fontFamily monospace
-
-    fontFamilies [ "Source Code Pro", "Lucida Console" ] monospace
-
-This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
-
--}
-monospace : Value { provides | monospace : Supported }
-monospace =
-    Value "monospace"
-
-
-{-| The `cursive` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
-
-    fontFamily cursive
-
-    fontFamilies [ "Brush Sript Std", "Lucida Calligraphy" ] cursive
-
-This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
-
--}
-cursive : Value { provides | cursive : Supported }
-cursive =
-    Value "cursive"
-
-
-{-| The `fantasy` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
-
-    fontFamily fantasy
-    fontFamilies [ "Herculanum", Harrington" ] fantasy
-
-This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
-
--}
-fantasy : Value { provides | fantasy : Supported }
-fantasy =
-    Value "fantasy"
-
-
-{-| The `system-ui` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
-
-You may want to [read more about the system font stack](https://css-tricks.com/snippets/css/system-font-stack/) before using this one.
-
-    fontFamily systemUi
-
-    fontFamilies [ "", "Segoe UI" ] systemUi
-
-    fontFamilies [ "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" ] sansSerif
-
-This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
-
--}
-systemUi : Value { provides | systemUi : Supported }
-systemUi =
-    Value "system-ui"
-
-
-{-| Define multiple [font families](https://css-tricks.com/almanac/properties/f/font-family/).
-
-Per the CSS spec, a [generic name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E) must always be at the end of this list. (The generic names are [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).)
-
-    fontFamilies [ "Gill Sans Extrabold", "Helvetica", "Arial" ] sansSerif
-
-This function will automatically wrap each font family in quotation marks unless it is one of the six [generic names]((https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E)) (like `sans-serif`), which must never be quoted.
-
--}
-fontFamilies :
-    List String
-    ->
-        Value
-            { serif : Supported
-            , sansSerif : Supported
-            , monospace : Supported
-            , cursive : Supported
-            , fantasy : Supported
-            , systemUi : Supported
-            }
-    -> Style
-fontFamilies list (Value genericFont) =
-    case list of
-        [] ->
-            AppendProperty ("font-family:" ++ genericFont)
-
-        fonts ->
-            AppendProperty
-                ("font-family:"
-                    ++ String.join "," (List.map enquoteIfNotGeneric fonts)
-                    ++ ("," ++ genericFont)
-                )
-
-
-enquoteIfNotGeneric : String -> String
-enquoteIfNotGeneric fontName =
-    case fontName of
-        "serif" ->
-            fontName
-
-        "sans-serif" ->
-            fontName
-
-        "monospace" ->
-            fontName
-
-        "cursive" ->
-            fontName
-
-        "fantasy" ->
-            fontName
-
-        "system-ui" ->
-            fontName
-
-        _ ->
-            enquoteString fontName
-
-
-enquoteString : String -> String
-enquoteString str =
-    let
-        escapeChars char rest =
-            rest ++ escapeChar char
-
-        escapeChar char =
-            case char of
-                '\n' ->
-                    "\\A "
-
-                '"' ->
-                    "\\\""
-
-                '\\' ->
-                    "\\\\"
-
-                _ ->
-                    String.fromChar char
-    in
-    "\"" ++ String.foldl escapeChars "" str ++ "\""
-
-
-
--- FONT STYLES --
-
-
-{-| Sets [`font-style`](https://css-tricks.com/almanac/properties/f/font-style/)
-
-    fontStyle italic
-
--}
-fontStyle :
-    BaseValue
-        { normal : Supported
-        , italic : Supported
-        , oblique : Supported
-        }
-    -> Style
-fontStyle (Value val) =
-    AppendProperty ("font-style:" ++ val)
-
-
-{-| -}
-italic : Value { provides | italic : Supported }
-italic =
-    Value "italic"
-
-
-{-| -}
-oblique : Value { provides | oblique : Supported }
-oblique =
-    Value "oblique"
-
-
-
--- FONT FEATURE SETTINGS --
-
-
-{-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
-
-    fontFeatureSettings normal
-
-    fontFeatureSettings (featureTag "liga")
-
-    fontFeatureSettings (featureTag2 "swsh" 2)
-
--}
-fontFeatureSettings :
-    BaseValue
-        { featureTag : Supported
-        , normal : Supported
-        }
-    -> Style
-fontFeatureSettings (Value val) =
-    AppendProperty ("font-feature-settings:" ++ val)
-
-
-{-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
-in a way that lets you add a list of [`featureTag`](#featureTag)s.
-
-    fontFeatureSettingsList featureTag "liga" [ featureTag2 "swsh" 2 ]
-
--}
-fontFeatureSettingsList :
-    Value { featureTag : Supported }
-    -> List (Value { featureTag : Supported })
-    -> Style
-fontFeatureSettingsList head rest =
-    AppendProperty ("font-feature-settings:" ++ hashListToString head rest)
-
-
-{-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
-for use with [`fontFeatureSettings`](#fontFeatureSettings)
-and [`fontFeatureSettingsList`](#fontFeatureSettingsList)
-
-    featureTag "smcp"
-
--}
-featureTag : String -> Value { provides | featureTag : Supported }
-featureTag =
-    Value << enquoteString
-
-
-{-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
-with an specific value
-for use with [`fontFeatureSettings`](#fontFeatureSettings)
-and [`fontFeatureSettingsList`](#fontFeatureSettingsList)
-
-    featureTag2 "swsh" 2
-
--}
-featureTag2 : String -> Int -> Value { provides | featureTag : Supported }
-featureTag2 tag value =
-    Value (enquoteString tag ++ " " ++ String.fromInt value)
-
-
-
--- FONT WEIGHTS --
-
-
-{-| Sets [`font-weight`](https://css-tricks.com/almanac/properties/f/font-weight/)
-
-    fontWeight bold
-
-    fontWeight (int 300)
-
--}
-fontWeight :
-    BaseValue
-        { normal : Supported
-        , bold : Supported
-        , bolder : Supported
-        , lighter : Supported
-        , int : Supported
-        }
-    -> Style
-fontWeight (Value val) =
-    AppendProperty ("font-weight:" ++ val)
-
-
-{-| -}
-bold : Value { provides | bold : Supported }
-bold =
-    Value "bold"
-
-
-{-| -}
-lighter : Value { provides | lighter : Supported }
-lighter =
-    Value "lighter"
-
-
-{-| -}
-bolder : Value { provides | bolder : Supported }
-bolder =
-    Value "bolder"
-
-
-{-| The 1-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
-property.
-
-For controlling aspects of variable fonts.
-Use [`fontVariationSettingsList`](#fontVariationSettingsList) to work with variable font tags.
-
-    fontVariationSettings normal
-
-    fontVariationSettings inherit
-
-    fontVariationSettingsList [ ("XHGT", 0.7) ]
--}
-fontVariationSettings :
-    BaseValue
-        { normal : Supported
-        }
-    -> Style
-fontVariationSettings (Value val) =
-    AppendProperty ("font-variation-settings:" ++ val)
-
-
-{-| The multi-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
-property.
-
-For using single keywords with this property, use [`fontVariationSettings`](#fontVariationSettings).
-
-    fontVariationSettingsList [ ("XHGT", 0.7) ]
--}
-fontVariationSettingsList :
-    List
-        ( String
-        , Float
-        )
-    -> Style
-fontVariationSettingsList list =
-    AppendProperty <|
-        "font-variation-settings:"
-        ++
-        ( list
-        |> List.map
-            (\(tagVal, numberVal) -> (enquoteString tagVal) ++ " " ++ (String.fromFloat numberVal)
-            )
-        |> String.join ", "
-        )
-
-
--- FONT VARIANT CAPS --
-
-
-{-| Sets [`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps).
-
-    fontVariantCaps normal
-
-    fontVariantCaps smallCaps
-
-    fontVariantCaps allSmallCaps
-
-    fontVariantCaps petiteCaps
-
-    fontVariantCaps allPetiteCaps
-
-    fontVariantCaps unicase
-
-    fontVariantCaps titlingCaps
-
--}
-fontVariantCaps :
-    BaseValue
-        { normal : Supported
-        , smallCaps : Supported
-        , petiteCaps : Supported
-        , allPetiteCaps : Supported
-        , unicase : Supported
-        , titlingCaps : Supported
-        }
-    -> Style
-fontVariantCaps (Value str) =
-    AppendProperty ("font-variant-caps:" ++ str)
-
-
-{-| The `small-caps` value used in
-
-  - [`fontVariantCaps`](#fontVariantCaps)
-  - [`fontSynthesis`](#fontSynthesis)
-
-```
-fontVariantCaps smallCaps
-
-fontSynthesis2 smallCaps style
-```
-
--}
-smallCaps : Value { provides | smallCaps : Supported }
-smallCaps =
-    Value "small-caps"
-
-
-{-| The `all-small-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
-
-    fontVariantCaps allSmallCaps
-
--}
-allSmallCaps : Value { provides | allSmallCaps : Supported }
-allSmallCaps =
-    Value "all-small-caps"
-
-
-{-| The `petite-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
-
-    fontVariantCaps petiteCaps
-
--}
-petiteCaps : Value { provides | petiteCaps : Supported }
-petiteCaps =
-    Value "petite-caps"
-
-
-{-| The `all-petite-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
-
-    fontVariantCaps allPetiteCaps
-
--}
-allPetiteCaps : Value { provides | allPetiteCaps : Supported }
-allPetiteCaps =
-    Value "all-petite-caps"
-
-
-{-| The `unicase` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
-
-    fontVariantCaps unicase
-
--}
-unicase : Value { provides | unicase : Supported }
-unicase =
-    Value "unicase"
-
-
-{-| The `titling-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
-
-    fontVariantCaps titlingCaps
-
--}
-titlingCaps : Value { provides | titlingCaps : Supported }
-titlingCaps =
-    Value "titling-caps"
-
-
-
--- FONT VARIANT EAST ASIAN --
-
-
-{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
-
-This property controls the use of alternative glyphs for East Asian scripts.
-
-    fontVariantEastAsian normal
-
-    fontVariantEastAsian2 ruby jis83
-
-    fontVariantEastAsian3 ruby jis90 fullWidth
-
--}
-fontVariantEastAsian :
-    BaseValue
-        { normal : Supported
-        , ruby : Supported
-
-        -- variant values
-        , jis78 : Supported
-        , jis83 : Supported
-        , jis90 : Supported
-        , jis04 : Supported
-        , simplified : Supported
-        , traditional : Supported
-
-        -- width values
-        , fullWidth : Supported
-        , proportionalWidth : Supported
-        }
-    -> Style
-fontVariantEastAsian (Value val) =
-    AppendProperty ("font-variant-east-asian:" ++ val)
-
-
-{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
-
-This property controls the use of alternative glyphs for East Asian scripts.
-
-    fontVariantEastAsian2 ruby jis83
-
--}
-fontVariantEastAsian2 :
-    Value
-        { ruby : Supported
-        , jis78 : Supported
-        , jis83 : Supported
-        , jis90 : Supported
-        , jis04 : Supported
-        , simplified : Supported
-        , traditional : Supported
-        , fullWidth : Supported
-        , proportionalWidth : Supported
-        }
-    ->
-        Value
-            { ruby : Supported
-            , jis78 : Supported
-            , jis83 : Supported
-            , jis90 : Supported
-            , jis04 : Supported
-            , simplified : Supported
-            , traditional : Supported
-            , fullWidth : Supported
-            , proportionalWidth : Supported
-            }
-    -> Style
-fontVariantEastAsian2 (Value val1) (Value val2) =
-    AppendProperty ("font-variant-east-asian:" ++ val1 ++ " " ++ val2)
-
-
-{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
-
-This property controls the use of alternative glyphs for East Asian scripts.
-
-    fontVariantEastAsian3 ruby jis90 fullWidth
-
--}
-fontVariantEastAsian3 :
-    Value
-        { ruby : Supported
-        }
-    ->
-        Value
-            { jis78 : Supported
-            , jis83 : Supported
-            , jis90 : Supported
-            , jis04 : Supported
-            , simplified : Supported
-            , traditional : Supported
-            }
-    ->
-        Value
-            { fullWidth : Supported
-            , proportionalWidth : Supported
-            }
-    -> Style
-fontVariantEastAsian3 (Value rubyVal) (Value variantVal) (Value widthVal) =
-    AppendProperty ("font-variant-east-asian:" ++ rubyVal ++ " " ++ variantVal ++ " " ++ widthVal)
-
-
-{-| Sets the [`jis78`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-This specifies that the JIS X 0208:1978 standard for East Asian logographic glyphs
-should be used.
-
-    fontVariantEastAsian jis78
-
--}
-jis78 : Value { provides | jis78 : Supported }
-jis78 =
-    Value "jis78"
-
-
-{-| Sets the [`jis83`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-This specifies that the JIS X 0208:1983 standard for East Asian logographic glyphs
-should be used.
-
-    fontVariantEastAsian jis83
-
--}
-jis83 : Value { provides | jis83 : Supported }
-jis83 =
-    Value "jis83"
-
-
-{-| Sets the [`jis90`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-This specifies that the JIS X 0208:1990 standard for East Asian logographic glyphs
-should be used.
-
-    fontVariantEastAsian jis90
-
--}
-jis90 : Value { provides | jis90 : Supported }
-jis90 =
-    Value "jis90"
-
-
-{-| Sets the [`jis04`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-This specifies that the JIS X 0208:2004 standard for East Asian logographic glyphs
-should be used.
-
-    fontVariantEastAsian jis04
-
--}
-jis04 : Value { provides | jis04 : Supported }
-jis04 =
-    Value "jis04"
-
-
-{-| Sets the [`simplified`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-This specifies that no particular standard should be used for East Asian logographic glyphs
-apart from them being simplified Chinese glyphs.
-
-    fontVariantEastAsian simplified
-
--}
-simplified : Value { provides | simplified : Supported }
-simplified =
-    Value "simplified"
-
-
-{-| Sets the [`traditional`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-This specifies that no particular standard should be used for East Asian logographic glyphs
-apart from them being traditional Chinese glyphs.
-
-    fontVariantEastAsian traditional
-
--}
-traditional : Value { provides | traditional : Supported }
-traditional =
-    Value "traditional"
-
-
-{-| Sets the [`proportional-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
-
-This activates the East Asian characters that vary in width.
-
-(As opposed to [`fullWidth`](#fullWidth), which specifies that they should roughly be the same width.)
-
-    fontVariantEastAsian proportionalWidth
-
--}
-proportionalWidth : Value { provides | proportionalWidth : Supported }
-proportionalWidth =
-    Value "proportional-width"
-
-
-
--- FONT VARIANT LIGATURES --
-
-
-{-| Sets [`font-variant-ligatures`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures).
-
-    fontVariantLigatures discretionaryLigatures
-
-    fontVariantLigatures none
-
--}
-fontVariantLigatures :
-    BaseValue
-        { normal : Supported
-        , none : Supported
-        , commonLigatures : Supported
-        , noCommonLigatures : Supported
-        , discretionaryLigatures : Supported
-        , noDiscretionaryLigatures : Supported
-        , historicalLigatures : Supported
-        , noHistoricalLigatures : Supported
-        , contextual : Supported
-        , noContextual : Supported
-        }
-    -> Style
-fontVariantLigatures (Value str) =
-    AppendProperty ("font-variant-ligatures:" ++ str)
-
-
-{-| The `common-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures commonLigatures
-
--}
-commonLigatures : Value { provides | commonLigatures : Supported }
-commonLigatures =
-    Value "common-ligatures"
-
-
-{-| The `no-common-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures noCommonLigatures
-
--}
-noCommonLigatures : Value { provides | noCommonLigatures : Supported }
-noCommonLigatures =
-    Value "no-common-ligatures"
-
-
-{-| The `discretionary-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures discretionaryLigatures
-
--}
-discretionaryLigatures : Value { provides | discretionaryLigatures : Supported }
-discretionaryLigatures =
-    Value "discretionary-ligatures"
-
-
-{-| The `no-discretionary-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures noDiscretionaryLigatures
-
--}
-noDiscretionaryLigatures : Value { provides | noDiscretionaryLigatures : Supported }
-noDiscretionaryLigatures =
-    Value "no-discretionary-ligatures"
-
-
-{-| The `historical-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures historicalLigatures
-
--}
-historicalLigatures : Value { provides | historicalLigatures : Supported }
-historicalLigatures =
-    Value "historical-ligatures"
-
-
-{-| The `no-historical-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures noHistoricalLigatures
-
--}
-noHistoricalLigatures : Value { provides | noHistoricalLigatures : Supported }
-noHistoricalLigatures =
-    Value "no-historical-ligatures"
-
-
-{-| The `contextual` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures contextual
-
--}
-contextual : Value { provides | contextual : Supported }
-contextual =
-    Value "contextual"
-
-
-{-| The `no-contextual` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
-
-    fontVariantLigatures noContextual
-
--}
-noContextual : Value { provides | noContextual : Supported }
-noContextual =
-    Value "no-contextual"
-
-
-
--- FONT VARIANT NUMERIC --
-
-
-{-| Sets [`font-variant-numeric`](https://css-tricks.com/almanac/properties/f/font-variant-numeric/).
-
-    fontVariantNumeric ordinal
-
-See [`fontVariantNumeric4`](#fontVariantNumeric4) for a more advanced version.
-
--}
-fontVariantNumeric :
-    BaseValue
-        { normal : Supported
-        , ordinal : Supported
-        , slashedZero : Supported
-        , liningNums : Supported
-        , oldstyleNums : Supported
-        , proportionalNums : Supported
-        , tabularNums : Supported
-        , diagonalFractions : Supported
-        , stackedFractions : Supported
-        }
-    -> Style
-fontVariantNumeric (Value str) =
-    AppendProperty ("font-variant-numeric:" ++ str)
-
-
-{-| Sets [`font-variant-numeric`](https://css-tricks.com/almanac/properties/f/font-variant-numeric/).
-
-This one can be tricky to use because many of the options are mutually exclusive.
-For example, `normal` cannot be used with any of the others, so the only way
-to get it from this function is to pass `Nothing` for everything. The other
-arguments are chosen such that you can choose between the mutually exclusive
-values, or leave that value off.
-
-    fontVariantNumeric4 Nothing Nothing Nothing Nothing -- "normal"
-
-    fontVariantNumeric4
-        (Just ordinal)
-        Nothing
-        (Just tabularNums)
-        Nothing
-        -- "ordinal tabular-nums"
-
-See [`fontVariantNumeric`](#fontVariantNumeric) for a more concise version.
-
--}
-fontVariantNumeric4 :
-    Maybe (Value { ordinal : Supported, slashedZero : Supported })
-    -> Maybe (Value { liningNums : Supported, oldstyleNums : Supported })
-    -> Maybe (Value { proportionalNums : Supported, tabularNums : Supported })
-    -> Maybe (Value { diagonalFractions : Supported, stackedFractions : Supported })
-    -> Style
-fontVariantNumeric4 val1 val2 val3 val4 =
-    let
-        valueStr =
-            case
-                [ maybeValToString val1
-                , maybeValToString val2
-                , maybeValToString val3
-                , maybeValToString val4
-                ]
-                    |> List.filterMap identity
-            of
-                [] ->
-                    "normal"
-
-                strings ->
-                    String.join "," strings
-    in
-    AppendProperty ("font-variant-numeric:" ++ valueStr)
-
-
-maybeValToString : Maybe (Value a) -> Maybe String
-maybeValToString =
-    Maybe.map unpackValue
-
-
-{-| The `ordinal` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric ordinal
-
--}
-ordinal : Value { provides | ordinal : Supported }
-ordinal =
-    Value "ordinal"
-
-
-{-| The `slashed-zero` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric slashedZero
-
--}
-slashedZero : Value { provides | slashedZero : Supported }
-slashedZero =
-    Value "slashed-zero"
-
-
-{-| The `lining-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric liningNums
-
--}
-liningNums : Value { provides | liningNums : Supported }
-liningNums =
-    Value "lining-nums"
-
-
-{-| The `oldstyle-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric oldstyleNums
-
--}
-oldstyleNums : Value { provides | oldstyleNums : Supported }
-oldstyleNums =
-    Value "oldstyle-nums"
-
-
-{-| The `proportional-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric proportionalNums
-
--}
-proportionalNums : Value { provides | proportionalNums : Supported }
-proportionalNums =
-    Value "proportional-nums"
-
-
-{-| The `tabular-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric tabularNums
-
--}
-tabularNums : Value { provides | tabularNums : Supported }
-tabularNums =
-    Value "tabular-nums"
-
-
-{-| The `diagonal-fractions` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric diagonalFractions
-
--}
-diagonalFractions : Value { provides | diagonalFractions : Supported }
-diagonalFractions =
-    Value "diagonal-fractions"
-
-
-{-| The `stacked-fractions` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
-
-    fontVariantNumeric stackedFractions
-
--}
-stackedFractions : Value { provides | stackedFractions : Supported }
-stackedFractions =
-    Value "stacked-fractions"
-
-
-
--- FONT OPTICAL SIZING --
-
-
-{-| The [`font-kerning`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-kerning) property.
-
-    fontKerning none
-
--}
-fontKerning :
-    BaseValue
-        { none : Supported
-        , auto : Supported
-        , normal : Supported
-        }
-    -> Style
-fontKerning (Value val) =
-    AppendProperty ("font-kerning:" ++ val)
-
-
-{-| The [`font-language-override`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-language-override) property.
-
-    fontLanguageOverride normal
-
-    fontLanguageOverride (string "ENG")
-
--}
-fontLanguageOverride :
-    BaseValue
-        { normal : Supported
-        , string : Supported
-        }
-    -> Style
-fontLanguageOverride (Value val) =
-    AppendProperty ("font-language-override:" ++ val)
-
-
-{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
-
-    fontSynthesis none
-
-    fontSynthesis smallCaps
-
-    fontSynthesis2 smallCaps weight
-
-    fontSynthesis3 weight style smallCaps
-
--}
-fontSynthesis :
-    BaseValue
-        { none : Supported
-        , weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
-    -> Style
-fontSynthesis (Value val) =
-    AppendProperty ("font-synthesis:" ++ val)
-
-
-{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
-
-This is the two-argument variant, in which you can indicate
-two different font properties to be synthesised by the browser.
-
-    fontSynthesis2 smallCaps weight
-
--}
-fontSynthesis2 :
-    Value
-        { weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
-    ->
-        Value
-            { weight : Supported
-            , style : Supported
-            , smallCaps : Supported
-            }
-    -> Style
-fontSynthesis2 (Value val1) (Value val2) =
-    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2)
-
-
-{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
-
-This is the three-argument variant, in which you can indicate
-all three different font properties to be synthesised by the browser.
-
-    fontSynthesis3 weight style smallCaps
-
--}
-fontSynthesis3 :
-    Value
-        { weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
-    ->
-        Value
-            { weight : Supported
-            , style : Supported
-            , smallCaps : Supported
-            }
-    ->
-        Value
-            { weight : Supported
-            , style : Supported
-            , smallCaps : Supported
-            }
-    -> Style
-fontSynthesis3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
-
-
-{-| The `weight` value for the [`fontSynthesis`](#fontSynthesis) property.
-
-    fontSynthesis weight
-
--}
-weight : Value { provides | weight : Supported }
-weight =
-    Value "weight"
-
-
-{-| The [`font-optical-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing) property.
-
-    fontOpticalSizing none
-
--}
-fontOpticalSizing :
-    BaseValue
-        { none : Supported
-        , auto : Supported
-        }
-    -> Style
-fontOpticalSizing (Value val) =
-    AppendProperty ("font-optical-sizing:" ++ val)
-
-
-{-| The [`font-variant-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-position) property.
-
-    fontVariantPosition sub
-
-    fontVariantPosition normal
-
--}
-fontVariantPosition :
-    BaseValue
-        { normal : Supported
-        , sub : Supported
-        , super : Supported
-        }
-    -> Style
-fontVariantPosition (Value val) =
-    AppendProperty ("font-variant-position:" ++ val)
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
 --------------------------------- COLOR --------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -12063,6 +10873,1430 @@ backgroundSize2 :
     -> Style
 backgroundSize2 (Value widthVal) (Value heightVal) =
     AppendProperty ("background-size:" ++ widthVal ++ " " ++ heightVal)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- FONT SIZE ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`font-size`](https://css-tricks.com/almanac/properties/f/font-size/)
+
+    fontSize xxSmall
+
+    fontSize (px 12)
+
+Check out [fluid typography](https://css-tricks.com/snippets/css/fluid-typography/) for some cool stuff you can do with this.
+
+-}
+fontSize :
+    BaseValue
+        (LengthSupported
+            { xxSmall : Supported
+            , xSmall : Supported
+            , small : Supported
+            , medium : Supported
+            , large : Supported
+            , xLarge : Supported
+            , xxLarge : Supported
+            , smaller : Supported
+            , larger : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+fontSize (Value val) =
+    AppendProperty ("font-size:" ++ val)
+
+
+{-| The `xx-small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize xxSmall
+
+-}
+xxSmall : Value { provides | xxSmall : Supported }
+xxSmall =
+    Value "xx-small"
+
+
+{-| The `x-small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize xSmall
+
+-}
+xSmall : Value { provides | xSmall : Supported }
+xSmall =
+    Value "x-small"
+
+
+{-| The `small` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize small
+
+-}
+small : Value { provides | small : Supported }
+small =
+    Value "small"
+
+
+{-| The `medium` value used by properties such as [`fontSize`](#fontSize),
+[`borderWidth`](#borderWidth),
+[`columnRuleWidth`](#columnRuleWidth).
+
+    fontSize medium
+
+    borderWidth medium
+
+    columnRuleWidth medium
+
+The value is equivalent of 3px when using for `border-width`.
+
+-}
+medium : Value { provides | medium : Supported }
+medium =
+    Value "medium"
+
+
+{-| The `large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize large
+
+-}
+large : Value { provides | large : Supported }
+large =
+    Value "large"
+
+
+{-| The `x-large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize xLarge
+
+-}
+xLarge : Value { provides | xLarge : Supported }
+xLarge =
+    Value "x-large"
+
+
+{-| The `xx-large` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize xxLarge
+
+-}
+xxLarge : Value { provides | xxLarge : Supported }
+xxLarge =
+    Value "xx-large"
+
+
+{-| The `smaller` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize smaller
+
+-}
+smaller : Value { provides | smaller : Supported }
+smaller =
+    Value "smaller"
+
+
+{-| The `larger` [`font-size` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Values).
+
+    fontSize larger
+
+-}
+larger : Value { provides | larger : Supported }
+larger =
+    Value "larger"
+
+
+{-| Sets [`font-size-adjust`](https://css-tricks.com/almanac/properties/f/font-size-adjust/)
+
+    fontSizeAdjust zero
+
+    fontSizeAdjust none
+
+    fontSizeAdjust (num 0.5)
+
+-}
+fontSizeAdjust :
+    BaseValue
+        { none : Supported
+        , zero : Supported
+        , num : Supported
+        }
+    -> Style
+fontSizeAdjust (Value val) =
+    AppendProperty ("font-size-adjust:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ FONT FAMILY -----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| For when your font is one of the six [generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E) - [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive), [`fantasy`](#fantasy), or [`systemUi`](#systemUi).
+
+If you want to refer to a font by its name (like Helvetica or Arial), use [`fontFamilies`](#fontFamilies) instead.
+
+-}
+fontFamily :
+    BaseValue
+        { serif : Supported
+        , sansSerif : Supported
+        , monospace : Supported
+        , cursive : Supported
+        , fantasy : Supported
+        , systemUi : Supported
+        }
+    -> Style
+fontFamily (Value genericFont) =
+    AppendProperty ("font-family:" ++ genericFont)
+
+
+{-| The `serif` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E).
+
+    fontFamily serif
+
+    fontFamilies [ "Gill Sans", "Helvetica" ] serif
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+serif : Value { provides | serif : Supported }
+serif =
+    Value "serif"
+
+
+{-| The `sans-serif` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E).
+
+    fontFamily sansSerif
+
+    fontFamilies [ "Georgia", "Times" ] sansSerif
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+sansSerif : Value { provides | sansSerif : Supported }
+sansSerif =
+    Value "sans-serif"
+
+
+{-| The `monospace` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+    fontFamily monospace
+
+    fontFamilies [ "Source Code Pro", "Lucida Console" ] monospace
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+monospace : Value { provides | monospace : Supported }
+monospace =
+    Value "monospace"
+
+
+{-| The `cursive` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+    fontFamily cursive
+
+    fontFamilies [ "Brush Sript Std", "Lucida Calligraphy" ] cursive
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+cursive : Value { provides | cursive : Supported }
+cursive =
+    Value "cursive"
+
+
+{-| The `fantasy` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+    fontFamily fantasy
+    fontFamilies [ "Herculanum", Harrington" ] fantasy
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+fantasy : Value { provides | fantasy : Supported }
+fantasy =
+    Value "fantasy"
+
+
+{-| The `system-ui` [generic font family name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#3Cgeneric-name%3E).
+
+You may want to [read more about the system font stack](https://css-tricks.com/snippets/css/system-font-stack/) before using this one.
+
+    fontFamily systemUi
+
+    fontFamilies [ "", "Segoe UI" ] systemUi
+
+    fontFamilies [ "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" ] sansSerif
+
+This can be used with [`fontFamily`](#fontFamily) and [`fontFamilies`](#fontFamilies).
+
+-}
+systemUi : Value { provides | systemUi : Supported }
+systemUi =
+    Value "system-ui"
+
+
+{-| Define multiple [font families](https://css-tricks.com/almanac/properties/f/font-family/).
+
+Per the CSS spec, a [generic name](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E) must always be at the end of this list. (The generic names are [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).)
+
+    fontFamilies [ "Gill Sans Extrabold", "Helvetica", "Arial" ] sansSerif
+
+This function will automatically wrap each font family in quotation marks unless it is one of the six [generic names]((https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#%3Cgeneric-name%3E)) (like `sans-serif`), which must never be quoted.
+
+-}
+fontFamilies :
+    List String
+    ->
+        Value
+            { serif : Supported
+            , sansSerif : Supported
+            , monospace : Supported
+            , cursive : Supported
+            , fantasy : Supported
+            , systemUi : Supported
+            }
+    -> Style
+fontFamilies list (Value genericFont) =
+    case list of
+        [] ->
+            AppendProperty ("font-family:" ++ genericFont)
+
+        fonts ->
+            AppendProperty
+                ("font-family:"
+                    ++ String.join "," (List.map enquoteIfNotGeneric fonts)
+                    ++ ("," ++ genericFont)
+                )
+
+
+enquoteIfNotGeneric : String -> String
+enquoteIfNotGeneric fontName =
+    case fontName of
+        "serif" ->
+            fontName
+
+        "sans-serif" ->
+            fontName
+
+        "monospace" ->
+            fontName
+
+        "cursive" ->
+            fontName
+
+        "fantasy" ->
+            fontName
+
+        "system-ui" ->
+            fontName
+
+        _ ->
+            enquoteString fontName
+
+
+enquoteString : String -> String
+enquoteString str =
+    let
+        escapeChars char rest =
+            rest ++ escapeChar char
+
+        escapeChar char =
+            case char of
+                '\n' ->
+                    "\\A "
+
+                '"' ->
+                    "\\\""
+
+                '\\' ->
+                    "\\\\"
+
+                _ ->
+                    String.fromChar char
+    in
+    "\"" ++ String.foldl escapeChars "" str ++ "\""
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------- FONT STYLE + WEIGHT -------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`font-style`](https://css-tricks.com/almanac/properties/f/font-style/)
+
+    fontStyle italic
+
+-}
+fontStyle :
+    BaseValue
+        { normal : Supported
+        , italic : Supported
+        , oblique : Supported
+        }
+    -> Style
+fontStyle (Value val) =
+    AppendProperty ("font-style:" ++ val)
+
+
+{-| -}
+italic : Value { provides | italic : Supported }
+italic =
+    Value "italic"
+
+
+{-| -}
+oblique : Value { provides | oblique : Supported }
+oblique =
+    Value "oblique"
+
+
+{-| Sets [`font-weight`](https://css-tricks.com/almanac/properties/f/font-weight/)
+
+    fontWeight bold
+
+    fontWeight (int 300)
+
+-}
+fontWeight :
+    BaseValue
+        { normal : Supported
+        , bold : Supported
+        , bolder : Supported
+        , lighter : Supported
+        , int : Supported
+        }
+    -> Style
+fontWeight (Value val) =
+    AppendProperty ("font-weight:" ++ val)
+
+
+{-| -}
+bold : Value { provides | bold : Supported }
+bold =
+    Value "bold"
+
+
+{-| -}
+lighter : Value { provides | lighter : Supported }
+lighter =
+    Value "lighter"
+
+
+{-| -}
+bolder : Value { provides | bolder : Supported }
+bolder =
+    Value "bolder"
+
+
+{-| Sets [`font-stretch`](https://css-tricks.com/almanac/properties/f/font-stretch/)
+
+    fontStretch ultraCondensed
+
+    fontStretch extraCondensed
+
+    fontStretch condensed
+
+    fontStretch semiCondensed
+
+    fontStretch normal
+
+    fontStretch semiExpanded
+
+    fontStretch expanded
+
+    fontStretch extraExpanded
+
+    fontStretch ultraExpanded
+
+-}
+fontStretch :
+    BaseValue
+        { ultraCondensed : Supported
+        , extraCondensed : Supported
+        , condensed : Supported
+        , semiCondensed : Supported
+        , normal : Supported
+        , semiExpanded : Supported
+        , expanded : Supported
+        , extraExpanded : Supported
+        , ultraExpanded : Supported
+        }
+    -> Style
+fontStretch (Value val) =
+    AppendProperty ("font-stretch:" ++ val)
+
+
+{-| Sets `ultra-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay ultraCondensed
+
+-}
+ultraCondensed : Value { provides | ultraCondensed : Supported }
+ultraCondensed =
+    Value "ultra-condensed"
+
+
+{-| Sets `extra-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay extraCondensed
+
+-}
+extraCondensed : Value { provides | extraCondensed : Supported }
+extraCondensed =
+    Value "extra-condensed"
+
+
+{-| Sets `condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay Condensed
+
+-}
+condensed : Value { provides | condensed : Supported }
+condensed =
+    Value "condensed"
+
+
+{-| Sets `semi-condensed` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay semiCondensed
+
+-}
+semiCondensed : Value { provides | semiCondensed : Supported }
+semiCondensed =
+    Value "semi-condensed"
+
+
+{-| Sets `ultra-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay ultraExpanded
+
+-}
+ultraExpanded : Value { provides | ultraExpanded : Supported }
+ultraExpanded =
+    Value "ultra-expanded"
+
+
+{-| Sets `extra-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay extraExpanded
+
+-}
+extraExpanded : Value { provides | extraExpanded : Supported }
+extraExpanded =
+    Value "extra-expanded"
+
+
+{-| Sets `expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay Expanded
+
+-}
+expanded : Value { provides | expanded : Supported }
+expanded =
+    Value "expanded"
+
+
+{-| Sets `semi-expanded` value for usage with [`fontStretch`](#fontStretch).
+
+      fontDisplay semiExpanded
+
+-}
+semiExpanded : Value { provides | semiExpanded : Supported }
+semiExpanded =
+    Value "semi-expanded"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------- FONT FEATURES AND VARIANTS ---------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
+
+    fontFeatureSettings normal
+
+    fontFeatureSettings (featureTag "liga")
+
+    fontFeatureSettings (featureTag2 "swsh" 2)
+
+-}
+fontFeatureSettings :
+    BaseValue
+        { featureTag : Supported
+        , normal : Supported
+        }
+    -> Style
+fontFeatureSettings (Value val) =
+    AppendProperty ("font-feature-settings:" ++ val)
+
+
+{-| Sets [`font-feature-settings`](https://css-tricks.com/almanac/properties/f/font-feature-settings/)
+in a way that lets you add a list of [`featureTag`](#featureTag)s.
+
+    fontFeatureSettingsList featureTag "liga" [ featureTag2 "swsh" 2 ]
+
+-}
+fontFeatureSettingsList :
+    Value { featureTag : Supported }
+    -> List (Value { featureTag : Supported })
+    -> Style
+fontFeatureSettingsList head rest =
+    AppendProperty ("font-feature-settings:" ++ hashListToString head rest)
+
+
+{-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
+for use with [`fontFeatureSettings`](#fontFeatureSettings)
+and [`fontFeatureSettingsList`](#fontFeatureSettingsList)
+
+    featureTag "smcp"
+
+-}
+featureTag : String -> Value { provides | featureTag : Supported }
+featureTag =
+    Value << enquoteString
+
+
+{-| Creates a [feature-tag-value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings#feature-tag-value)
+with an specific value
+for use with [`fontFeatureSettings`](#fontFeatureSettings)
+and [`fontFeatureSettingsList`](#fontFeatureSettingsList)
+
+    featureTag2 "swsh" 2
+
+-}
+featureTag2 : String -> Int -> Value { provides | featureTag : Supported }
+featureTag2 tag value =
+    Value (enquoteString tag ++ " " ++ String.fromInt value)
+
+
+-- FONT VARIANT CAPS --
+
+
+{-| Sets [`font-variant-caps`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps).
+
+    fontVariantCaps normal
+
+    fontVariantCaps smallCaps
+
+    fontVariantCaps allSmallCaps
+
+    fontVariantCaps petiteCaps
+
+    fontVariantCaps allPetiteCaps
+
+    fontVariantCaps unicase
+
+    fontVariantCaps titlingCaps
+
+-}
+fontVariantCaps :
+    BaseValue
+        { normal : Supported
+        , smallCaps : Supported
+        , petiteCaps : Supported
+        , allPetiteCaps : Supported
+        , unicase : Supported
+        , titlingCaps : Supported
+        }
+    -> Style
+fontVariantCaps (Value str) =
+    AppendProperty ("font-variant-caps:" ++ str)
+
+
+{-| The `small-caps` value used in
+
+  - [`fontVariantCaps`](#fontVariantCaps)
+  - [`fontSynthesis`](#fontSynthesis)
+
+```
+fontVariantCaps smallCaps
+
+fontSynthesis2 smallCaps style
+```
+
+-}
+smallCaps : Value { provides | smallCaps : Supported }
+smallCaps =
+    Value "small-caps"
+
+
+{-| The `all-small-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps allSmallCaps
+
+-}
+allSmallCaps : Value { provides | allSmallCaps : Supported }
+allSmallCaps =
+    Value "all-small-caps"
+
+
+{-| The `petite-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps petiteCaps
+
+-}
+petiteCaps : Value { provides | petiteCaps : Supported }
+petiteCaps =
+    Value "petite-caps"
+
+
+{-| The `all-petite-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps allPetiteCaps
+
+-}
+allPetiteCaps : Value { provides | allPetiteCaps : Supported }
+allPetiteCaps =
+    Value "all-petite-caps"
+
+
+{-| The `unicase` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps unicase
+
+-}
+unicase : Value { provides | unicase : Supported }
+unicase =
+    Value "unicase"
+
+
+{-| The `titling-caps` [`font-variant-caps` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps#Values).
+
+    fontVariantCaps titlingCaps
+
+-}
+titlingCaps : Value { provides | titlingCaps : Supported }
+titlingCaps =
+    Value "titling-caps"
+
+
+
+-- FONT VARIANT EAST ASIAN --
+
+
+{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
+
+This property controls the use of alternative glyphs for East Asian scripts.
+
+    fontVariantEastAsian normal
+
+    fontVariantEastAsian2 ruby jis83
+
+    fontVariantEastAsian3 ruby jis90 fullWidth
+
+-}
+fontVariantEastAsian :
+    BaseValue
+        { normal : Supported
+        , ruby : Supported
+
+        -- variant values
+        , jis78 : Supported
+        , jis83 : Supported
+        , jis90 : Supported
+        , jis04 : Supported
+        , simplified : Supported
+        , traditional : Supported
+
+        -- width values
+        , fullWidth : Supported
+        , proportionalWidth : Supported
+        }
+    -> Style
+fontVariantEastAsian (Value val) =
+    AppendProperty ("font-variant-east-asian:" ++ val)
+
+
+{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
+
+This property controls the use of alternative glyphs for East Asian scripts.
+
+    fontVariantEastAsian2 ruby jis83
+
+-}
+fontVariantEastAsian2 :
+    Value
+        { ruby : Supported
+        , jis78 : Supported
+        , jis83 : Supported
+        , jis90 : Supported
+        , jis04 : Supported
+        , simplified : Supported
+        , traditional : Supported
+        , fullWidth : Supported
+        , proportionalWidth : Supported
+        }
+    ->
+        Value
+            { ruby : Supported
+            , jis78 : Supported
+            , jis83 : Supported
+            , jis90 : Supported
+            , jis04 : Supported
+            , simplified : Supported
+            , traditional : Supported
+            , fullWidth : Supported
+            , proportionalWidth : Supported
+            }
+    -> Style
+fontVariantEastAsian2 (Value val1) (Value val2) =
+    AppendProperty ("font-variant-east-asian:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`font-variant-east-asian`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) property.
+
+This property controls the use of alternative glyphs for East Asian scripts.
+
+    fontVariantEastAsian3 ruby jis90 fullWidth
+
+-}
+fontVariantEastAsian3 :
+    Value
+        { ruby : Supported
+        }
+    ->
+        Value
+            { jis78 : Supported
+            , jis83 : Supported
+            , jis90 : Supported
+            , jis04 : Supported
+            , simplified : Supported
+            , traditional : Supported
+            }
+    ->
+        Value
+            { fullWidth : Supported
+            , proportionalWidth : Supported
+            }
+    -> Style
+fontVariantEastAsian3 (Value rubyVal) (Value variantVal) (Value widthVal) =
+    AppendProperty ("font-variant-east-asian:" ++ rubyVal ++ " " ++ variantVal ++ " " ++ widthVal)
+
+
+{-| Sets the [`jis78`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:1978 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis78
+
+-}
+jis78 : Value { provides | jis78 : Supported }
+jis78 =
+    Value "jis78"
+
+
+{-| Sets the [`jis83`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:1983 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis83
+
+-}
+jis83 : Value { provides | jis83 : Supported }
+jis83 =
+    Value "jis83"
+
+
+{-| Sets the [`jis90`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:1990 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis90
+
+-}
+jis90 : Value { provides | jis90 : Supported }
+jis90 =
+    Value "jis90"
+
+
+{-| Sets the [`jis04`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that the JIS X 0208:2004 standard for East Asian logographic glyphs
+should be used.
+
+    fontVariantEastAsian jis04
+
+-}
+jis04 : Value { provides | jis04 : Supported }
+jis04 =
+    Value "jis04"
+
+
+{-| Sets the [`simplified`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that no particular standard should be used for East Asian logographic glyphs
+apart from them being simplified Chinese glyphs.
+
+    fontVariantEastAsian simplified
+
+-}
+simplified : Value { provides | simplified : Supported }
+simplified =
+    Value "simplified"
+
+
+{-| Sets the [`traditional`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This specifies that no particular standard should be used for East Asian logographic glyphs
+apart from them being traditional Chinese glyphs.
+
+    fontVariantEastAsian traditional
+
+-}
+traditional : Value { provides | traditional : Supported }
+traditional =
+    Value "traditional"
+
+
+{-| Sets the [`proportional-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian#syntax) value for [`fontVariantEastAsian`](#fontVariantEastAsian).
+
+This activates the East Asian characters that vary in width.
+
+(As opposed to [`fullWidth`](#fullWidth), which specifies that they should roughly be the same width.)
+
+    fontVariantEastAsian proportionalWidth
+
+-}
+proportionalWidth : Value { provides | proportionalWidth : Supported }
+proportionalWidth =
+    Value "proportional-width"
+
+
+
+-- FONT VARIANT LIGATURES --
+
+
+{-| Sets [`font-variant-ligatures`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures).
+
+    fontVariantLigatures discretionaryLigatures
+
+    fontVariantLigatures none
+
+-}
+fontVariantLigatures :
+    BaseValue
+        { normal : Supported
+        , none : Supported
+        , commonLigatures : Supported
+        , noCommonLigatures : Supported
+        , discretionaryLigatures : Supported
+        , noDiscretionaryLigatures : Supported
+        , historicalLigatures : Supported
+        , noHistoricalLigatures : Supported
+        , contextual : Supported
+        , noContextual : Supported
+        }
+    -> Style
+fontVariantLigatures (Value str) =
+    AppendProperty ("font-variant-ligatures:" ++ str)
+
+
+{-| The `common-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures commonLigatures
+
+-}
+commonLigatures : Value { provides | commonLigatures : Supported }
+commonLigatures =
+    Value "common-ligatures"
+
+
+{-| The `no-common-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noCommonLigatures
+
+-}
+noCommonLigatures : Value { provides | noCommonLigatures : Supported }
+noCommonLigatures =
+    Value "no-common-ligatures"
+
+
+{-| The `discretionary-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures discretionaryLigatures
+
+-}
+discretionaryLigatures : Value { provides | discretionaryLigatures : Supported }
+discretionaryLigatures =
+    Value "discretionary-ligatures"
+
+
+{-| The `no-discretionary-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noDiscretionaryLigatures
+
+-}
+noDiscretionaryLigatures : Value { provides | noDiscretionaryLigatures : Supported }
+noDiscretionaryLigatures =
+    Value "no-discretionary-ligatures"
+
+
+{-| The `historical-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures historicalLigatures
+
+-}
+historicalLigatures : Value { provides | historicalLigatures : Supported }
+historicalLigatures =
+    Value "historical-ligatures"
+
+
+{-| The `no-historical-ligatures` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noHistoricalLigatures
+
+-}
+noHistoricalLigatures : Value { provides | noHistoricalLigatures : Supported }
+noHistoricalLigatures =
+    Value "no-historical-ligatures"
+
+
+{-| The `contextual` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures contextual
+
+-}
+contextual : Value { provides | contextual : Supported }
+contextual =
+    Value "contextual"
+
+
+{-| The `no-contextual` [`font-variant-ligatures` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures#Values).
+
+    fontVariantLigatures noContextual
+
+-}
+noContextual : Value { provides | noContextual : Supported }
+noContextual =
+    Value "no-contextual"
+
+
+
+-- FONT VARIANT NUMERIC --
+
+
+{-| Sets [`font-variant-numeric`](https://css-tricks.com/almanac/properties/f/font-variant-numeric/).
+
+    fontVariantNumeric ordinal
+
+See [`fontVariantNumeric4`](#fontVariantNumeric4) for a more advanced version.
+
+-}
+fontVariantNumeric :
+    BaseValue
+        { normal : Supported
+        , ordinal : Supported
+        , slashedZero : Supported
+        , liningNums : Supported
+        , oldstyleNums : Supported
+        , proportionalNums : Supported
+        , tabularNums : Supported
+        , diagonalFractions : Supported
+        , stackedFractions : Supported
+        }
+    -> Style
+fontVariantNumeric (Value str) =
+    AppendProperty ("font-variant-numeric:" ++ str)
+
+
+{-| Sets [`font-variant-numeric`](https://css-tricks.com/almanac/properties/f/font-variant-numeric/).
+
+This one can be tricky to use because many of the options are mutually exclusive.
+For example, `normal` cannot be used with any of the others, so the only way
+to get it from this function is to pass `Nothing` for everything. The other
+arguments are chosen such that you can choose between the mutually exclusive
+values, or leave that value off.
+
+    fontVariantNumeric4 Nothing Nothing Nothing Nothing -- "normal"
+
+    fontVariantNumeric4
+        (Just ordinal)
+        Nothing
+        (Just tabularNums)
+        Nothing
+        -- "ordinal tabular-nums"
+
+See [`fontVariantNumeric`](#fontVariantNumeric) for a more concise version.
+
+-}
+fontVariantNumeric4 :
+    Maybe (Value { ordinal : Supported, slashedZero : Supported })
+    -> Maybe (Value { liningNums : Supported, oldstyleNums : Supported })
+    -> Maybe (Value { proportionalNums : Supported, tabularNums : Supported })
+    -> Maybe (Value { diagonalFractions : Supported, stackedFractions : Supported })
+    -> Style
+fontVariantNumeric4 val1 val2 val3 val4 =
+    let
+        valueStr =
+            case
+                [ maybeValToString val1
+                , maybeValToString val2
+                , maybeValToString val3
+                , maybeValToString val4
+                ]
+                    |> List.filterMap identity
+            of
+                [] ->
+                    "normal"
+
+                strings ->
+                    String.join "," strings
+    in
+    AppendProperty ("font-variant-numeric:" ++ valueStr)
+
+
+maybeValToString : Maybe (Value a) -> Maybe String
+maybeValToString =
+    Maybe.map unpackValue
+
+
+{-| The `ordinal` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric ordinal
+
+-}
+ordinal : Value { provides | ordinal : Supported }
+ordinal =
+    Value "ordinal"
+
+
+{-| The `slashed-zero` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric slashedZero
+
+-}
+slashedZero : Value { provides | slashedZero : Supported }
+slashedZero =
+    Value "slashed-zero"
+
+
+{-| The `lining-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric liningNums
+
+-}
+liningNums : Value { provides | liningNums : Supported }
+liningNums =
+    Value "lining-nums"
+
+
+{-| The `oldstyle-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric oldstyleNums
+
+-}
+oldstyleNums : Value { provides | oldstyleNums : Supported }
+oldstyleNums =
+    Value "oldstyle-nums"
+
+
+{-| The `proportional-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric proportionalNums
+
+-}
+proportionalNums : Value { provides | proportionalNums : Supported }
+proportionalNums =
+    Value "proportional-nums"
+
+
+{-| The `tabular-nums` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric tabularNums
+
+-}
+tabularNums : Value { provides | tabularNums : Supported }
+tabularNums =
+    Value "tabular-nums"
+
+
+{-| The `diagonal-fractions` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric diagonalFractions
+
+-}
+diagonalFractions : Value { provides | diagonalFractions : Supported }
+diagonalFractions =
+    Value "diagonal-fractions"
+
+
+{-| The `stacked-fractions` [`font-variant-numeric` value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric).
+
+    fontVariantNumeric stackedFractions
+
+-}
+stackedFractions : Value { provides | stackedFractions : Supported }
+stackedFractions =
+    Value "stacked-fractions"
+
+
+
+-- FONT OPTICAL SIZING --
+
+
+{-| The [`font-kerning`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-kerning) property.
+
+    fontKerning none
+
+-}
+fontKerning :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        , normal : Supported
+        }
+    -> Style
+fontKerning (Value val) =
+    AppendProperty ("font-kerning:" ++ val)
+
+
+{-| The [`font-language-override`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-language-override) property.
+
+    fontLanguageOverride normal
+
+    fontLanguageOverride (string "ENG")
+
+-}
+fontLanguageOverride :
+    BaseValue
+        { normal : Supported
+        , string : Supported
+        }
+    -> Style
+fontLanguageOverride (Value val) =
+    AppendProperty ("font-language-override:" ++ val)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+    fontSynthesis none
+
+    fontSynthesis smallCaps
+
+    fontSynthesis2 smallCaps weight
+
+    fontSynthesis3 weight style smallCaps
+
+-}
+fontSynthesis :
+    BaseValue
+        { none : Supported
+        , weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Style
+fontSynthesis (Value val) =
+    AppendProperty ("font-synthesis:" ++ val)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+This is the two-argument variant, in which you can indicate
+two different font properties to be synthesised by the browser.
+
+    fontSynthesis2 smallCaps weight
+
+-}
+fontSynthesis2 :
+    Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
+    -> Style
+fontSynthesis2 (Value val1) (Value val2) =
+    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+This is the three-argument variant, in which you can indicate
+all three different font properties to be synthesised by the browser.
+
+    fontSynthesis3 weight style smallCaps
+
+-}
+fontSynthesis3 :
+    Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
+    -> Style
+fontSynthesis3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| The [`font-optical-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing) property.
+
+    fontOpticalSizing none
+
+-}
+fontOpticalSizing :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        }
+    -> Style
+fontOpticalSizing (Value val) =
+    AppendProperty ("font-optical-sizing:" ++ val)
+
+
+{-| The [`font-variant-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-position) property.
+
+    fontVariantPosition sub
+
+    fontVariantPosition normal
+
+-}
+fontVariantPosition :
+    BaseValue
+        { normal : Supported
+        , sub : Supported
+        , super : Supported
+        }
+    -> Style
+fontVariantPosition (Value val) =
+    AppendProperty ("font-variant-position:" ++ val)
+
+
+{-| The `weight` value for the [`fontSynthesis`](#fontSynthesis) property.
+
+    fontSynthesis weight
+
+-}
+weight : Value { provides | weight : Supported }
+weight =
+    Value "weight"
+
+
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- VARIABLE FONTS ---------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| The 1-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
+property.
+
+For controlling aspects of variable fonts.
+Use [`fontVariationSettingsList`](#fontVariationSettingsList) to work with variable font tags.
+
+    fontVariationSettings normal
+
+    fontVariationSettings inherit
+
+    fontVariationSettingsList [ ("XHGT", 0.7) ]
+-}
+fontVariationSettings :
+    BaseValue
+        { normal : Supported
+        }
+    -> Style
+fontVariationSettings (Value val) =
+    AppendProperty ("font-variation-settings:" ++ val)
+
+
+{-| The multi-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
+property.
+
+For using single keywords with this property, use [`fontVariationSettings`](#fontVariationSettings).
+
+    fontVariationSettingsList [ ("XHGT", 0.7) ]
+-}
+fontVariationSettingsList :
+    List
+        ( String
+        , Float
+        )
+    -> Style
+fontVariationSettingsList list =
+    AppendProperty <|
+        "font-variation-settings:"
+        ++
+        ( list
+        |> List.map
+            (\(tagVal, numberVal) -> (enquoteString tagVal) ++ " " ++ (String.fromFloat numberVal)
+            )
+        |> String.join ", "
+        )
+
 
 
 ------------------------------------------------------------------------
@@ -13879,7 +14113,7 @@ optimizeSpeed =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
----------------------------- TEXT-TRANSFORM ----------------------------
+--------------------- TEXT TRANSFORM + DECORATION ----------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -13947,10 +14181,6 @@ textTransform fullSizeKana
 fullSizeKana : Value { provedes | fullSizeKana : Supported }
 fullSizeKana =
     Value "full-size-kana"
-
-
-
--- TEXT DECORATION --
 
 
 {-| Sets [`text-decoration`][text-decoration] shorthand property.
@@ -14255,10 +14485,6 @@ boxDecoration =
     Value "box-decoration"
 
 
-
--- TEXT DECORATION --
-
-
 {-| The `wavy` [`text-decoration-style`][text-decoration-style] value.
 
     textDecorationStyle wavy
@@ -14308,8 +14534,24 @@ lineThrough =
 
 
 
--- TABLES --
--- BORDER COLLAPSE --
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {-| Sets [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/).
@@ -18361,144 +18603,6 @@ fontDisplay (Value val) =
     AppendProperty ("font-display:" ++ val)
 
 
-{-| Sets [`font-size-adjust`](https://css-tricks.com/almanac/properties/f/font-size-adjust/)
-
-    fontSizeAdjust zero
-
-    fontSizeAdjust none
-
-    fontSizeAdjust (num 0.5)
-
--}
-fontSizeAdjust :
-    BaseValue
-        { none : Supported
-        , zero : Supported
-        , num : Supported
-        }
-    -> Style
-fontSizeAdjust (Value val) =
-    AppendProperty ("font-size-adjust:" ++ val)
-
-
-{-| Sets `ultra-condensed` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay ultraCondensed
-
--}
-ultraCondensed : Value { provides | ultraCondensed : Supported }
-ultraCondensed =
-    Value "ultra-condensed"
-
-
-{-| Sets `extra-condensed` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay extraCondensed
-
--}
-extraCondensed : Value { provides | extraCondensed : Supported }
-extraCondensed =
-    Value "extra-condensed"
-
-
-{-| Sets `condensed` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay Condensed
-
--}
-condensed : Value { provides | condensed : Supported }
-condensed =
-    Value "condensed"
-
-
-{-| Sets `semi-condensed` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay semiCondensed
-
--}
-semiCondensed : Value { provides | semiCondensed : Supported }
-semiCondensed =
-    Value "semi-condensed"
-
-
-{-| Sets `ultra-expanded` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay ultraExpanded
-
--}
-ultraExpanded : Value { provides | ultraExpanded : Supported }
-ultraExpanded =
-    Value "ultra-expanded"
-
-
-{-| Sets `extra-expanded` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay extraExpanded
-
--}
-extraExpanded : Value { provides | extraExpanded : Supported }
-extraExpanded =
-    Value "extra-expanded"
-
-
-{-| Sets `expanded` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay Expanded
-
--}
-expanded : Value { provides | expanded : Supported }
-expanded =
-    Value "expanded"
-
-
-{-| Sets `semi-expanded` value for usage with [`fontStretch`](#fontStretch).
-
-      fontDisplay semiExpanded
-
--}
-semiExpanded : Value { provides | semiExpanded : Supported }
-semiExpanded =
-    Value "semi-expanded"
-
-
-{-| Sets [`font-stretch`](https://css-tricks.com/almanac/properties/f/font-stretch/)
-
-    fontStretch ultraCondensed
-
-    fontStretch extraCondensed
-
-    fontStretch condensed
-
-    fontStretch semiCondensed
-
-    fontStretch normal
-
-    fontStretch semiExpanded
-
-    fontStretch expanded
-
-    fontStretch extraExpanded
-
-    fontStretch ultraExpanded
-
--}
-fontStretch :
-    BaseValue
-        { ultraCondensed : Supported
-        , extraCondensed : Supported
-        , condensed : Supported
-        , semiCondensed : Supported
-        , normal : Supported
-        , semiExpanded : Supported
-        , expanded : Supported
-        , extraExpanded : Supported
-        , ultraExpanded : Supported
-        }
-    -> Style
-fontStretch (Value val) =
-    AppendProperty ("font-stretch:" ++ val)
-
-
 {-| Sets `first` value for usage with [`hangingPunctuation`](#hangingPunctuation).
 
       hangingPunctuation first
@@ -18830,212 +18934,6 @@ loose =
     Value "loose"
 
 
-{-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
-
-    imageRendering pixelated
-
--}
-pixelated : Value { provides | pixelated : Supported }
-pixelated =
-    Value "pixelated"
-
-
-{-| Sets `crisp-edges` value for usage with [`imageRendering`](#imageRendering).
-
-    imageRendering crispEdges
-
--}
-crispEdges : Value { provides | crispEdges : Supported }
-crispEdges =
-    Value "crisp-edges"
-
-
-{-| Sets [`image-rendering`](https://css-tricks.com/almanac/properties/i/image-rendering/)
-
-    imageRendering auto
-
-    imageRendering crispEdges
-
-    imageRendering pixelated
-
--}
-imageRendering :
-    BaseValue
-        { auto : Supported
-        , crispEdges : Supported
-        , pixelated : Supported
-        }
-    -> Style
-imageRendering (Value val) =
-    AppendProperty ("image-rendering:" ++ val)
-
-
-{-| Sets `isolate` value for usage with [`isolation`](#isolation), and
-[`unicodeBidi`](#unicodeBidi).
-
-    isolation isolate
-
-    unicodeBidi isolate
-
--}
-isolate : Value { provides | isolate : Supported }
-isolate =
-    Value "isolate"
-
-
-{-| Sets [`isolation`](https://css-tricks.com/almanac/properties/i/isolation/)
-
-    isolation auto
-
-    isolation isolate
-
--}
-isolation :
-    BaseValue
-        { auto : Supported
-        , isolate : Supported
-        }
-    -> Style
-isolation (Value val) =
-    AppendProperty ("isolation:" ++ val)
-
-
-{-| Sets [`lineClamp`](https://css-tricks.com/almanac/properties/l/line-clamp/)
-
-    lineClamp none
-
-    lineClamp zero
-
-    lineClamp (int 3)
-
--}
-lineClamp :
-    BaseValue
-        { none : Supported
-        , zero : Supported
-        , int : Supported
-        }
-    -> Style
-lineClamp (Value val) =
-    AppendProperty ("line-clamp:" ++ val)
-
-
-{-| The 1-argument variant of the
-[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
-
-    clipPath marginBox
-
-    clipPath inherit
-
-    clipPath (circle (pct 2))
-
-    clipPath2 marginBox (circleAt2 farthestSide left top)
--}
-clipPath :
-    BaseValue
-        (BasicShapeSupported
-            { marginBox : Supported
-            , borderBox : Supported
-            , paddingBox : Supported
-            , contentBox : Supported
-            , fillBox : Supported
-            , strokeBox : Supported
-            , viewBox : Supported
-            }
-        )
-    -> Style
-clipPath (Value val) =
-    AppendProperty ("clip-path:" ++ val)
-
-
-{-| The 2-argument variant of the
-[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
-
-    clipPath2 marginBox (circleAt2 farthestSide left top)
--}
-clipPath2 :
-    Value
-        { marginBox : Supported
-        , borderBox : Supported
-        , paddingBox : Supported
-        , contentBox : Supported
-        , fillBox : Supported
-        , strokeBox : Supported
-        , viewBox : Supported
-        }
-    -> Value (BasicShapeSupported a)
-    -> Style
-clipPath2 (Value val1) (Value val2) =
-    AppendProperty ("clip-path:" ++ val1 ++ " " ++ val2)
-
-
-{-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
-
-    mixBlendMode multiply
-
-    mixBlendMode saturation
-
--}
-mixBlendMode :
-    BaseValue
-        { normal : Supported
-        , multiply : Supported
-        , screen : Supported
-        , overlay : Supported
-        , darken : Supported
-        , lighten : Supported
-        , colorDodge : Supported
-        , colorBurn : Supported
-        , hardLight : Supported
-        , softLight : Supported
-        , difference : Supported
-        , exclusion : Supported
-        , hue : Supported
-        , saturation : Supported
-        , color_ : Supported
-        , luminosity : Supported
-        }
-    -> Style
-mixBlendMode (Value val) =
-    AppendProperty ("mix-blend-mode:" ++ val)
-
-
-{-| Sets `scale-down` value for usage with [`objectFit`](#objectFit).
-
-    objectFit scaleDown
-
--}
-scaleDown : Value { provides | scaleDown : Supported }
-scaleDown =
-    Value "scale-down"
-
-
-{-| Sets [`object-fit`](https://css-tricks.com/almanac/properties/o/object-fit/)
-
-    objectFit fill_
-
-    objectFit contain_
-
-    objectFit cover
-
-    objectFit scaleDown
-
-    objectFit none
-
--}
-objectFit :
-    BaseValue
-        { fill_ : Supported
-        , contain_ : Supported
-        , cover : Supported
-        , none : Supported
-        , scaleDown : Supported
-        }
-    -> Style
-objectFit (Value val) =
-    AppendProperty ("object-fit:" ++ val)
-
-
 {-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
 
     objectPosition left_
@@ -19156,41 +19054,19 @@ objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount
             ++ vertAmount
         )
 
-
-{-| Sets [`orphans`](https://css-tricks.com/almanac/properties/o/orphans/)
-**Note:** This function accepts only positive integers.
-
-    orphans (int 2)
-
--}
-orphans :
-    BaseValue
-        { int : Supported
-        }
-    -> Style
-orphans (Value val) =
-    AppendProperty ("orphans:" ++ val)
-
-
-{-| Sets [`overflow-anchor`](https://css-tricks.com/almanac/properties/o/overflow-anchor/)
-
-    overflowAnchor auto
-
-    overflowAnchor none
-
--}
-overflowAnchor :
-    BaseValue
-        { auto : Supported
-        , none : Supported
-        }
-    -> Style
-overflowAnchor (Value val) =
-    AppendProperty ("overflow-anchor:" ++ val)
-
-
-
--- Page break
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------- BREAK (PAGE BREAK) --------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| Sets [`break-before`](https://css-tricks.com/almanac/properties/b/break-before/).
@@ -19319,6 +19195,7 @@ page : Value { provides | page : Supported }
 page =
     Value "page"
 
+
 {-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/p/page-break/)
 
 **This property has been depreciated and replaced with
@@ -19396,6 +19273,19 @@ pageBreakInside (Value val) =
     AppendProperty ("page-break-inside:" ++ val)
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------------- POINTER-EVENTS-----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| Sets [`pointer-events`](https://css-tricks.com/almanac/properties/b/pointer-events/)
@@ -19463,8 +19353,19 @@ painted =
     Value "painted"
 
 
-
---- Scroll ---
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ SCROLLING ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| Sets `smooth` value for usage with [`scrollBehavior`](#scrollBehavior).
@@ -21354,3 +21255,226 @@ by the browser if the containing box is offscreen.
 paint : Value { provides | paint : Supported }
 paint =
     Value "paint"
+
+
+{-| Sets [`orphans`](https://css-tricks.com/almanac/properties/o/orphans/)
+**Note:** This function accepts only positive integers.
+
+    orphans (int 2)
+
+-}
+orphans :
+    BaseValue
+        { int : Supported
+        }
+    -> Style
+orphans (Value val) =
+    AppendProperty ("orphans:" ++ val)
+
+
+
+{-| Sets [`image-rendering`](https://css-tricks.com/almanac/properties/i/image-rendering/)
+
+    imageRendering auto
+
+    imageRendering crispEdges
+
+    imageRendering pixelated
+
+-}
+imageRendering :
+    BaseValue
+        { auto : Supported
+        , crispEdges : Supported
+        , pixelated : Supported
+        }
+    -> Style
+imageRendering (Value val) =
+    AppendProperty ("image-rendering:" ++ val)
+
+
+{-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering pixelated
+
+-}
+pixelated : Value { provides | pixelated : Supported }
+pixelated =
+    Value "pixelated"
+
+
+{-| Sets `crisp-edges` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering crispEdges
+
+-}
+crispEdges : Value { provides | crispEdges : Supported }
+crispEdges =
+    Value "crisp-edges"
+
+
+{-| Sets `isolate` value for usage with [`isolation`](#isolation), and
+[`unicodeBidi`](#unicodeBidi).
+
+    isolation isolate
+
+    unicodeBidi isolate
+
+-}
+isolate : Value { provides | isolate : Supported }
+isolate =
+    Value "isolate"
+
+
+{-| Sets [`isolation`](https://css-tricks.com/almanac/properties/i/isolation/)
+
+    isolation auto
+
+    isolation isolate
+
+-}
+isolation :
+    BaseValue
+        { auto : Supported
+        , isolate : Supported
+        }
+    -> Style
+isolation (Value val) =
+    AppendProperty ("isolation:" ++ val)
+
+
+{-| Sets [`lineClamp`](https://css-tricks.com/almanac/properties/l/line-clamp/)
+
+    lineClamp none
+
+    lineClamp zero
+
+    lineClamp (int 3)
+
+-}
+lineClamp :
+    BaseValue
+        { none : Supported
+        , zero : Supported
+        , int : Supported
+        }
+    -> Style
+lineClamp (Value val) =
+    AppendProperty ("line-clamp:" ++ val)
+
+
+{-| The 1-argument variant of the
+[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
+
+    clipPath marginBox
+
+    clipPath inherit
+
+    clipPath (circle (pct 2))
+
+    clipPath2 marginBox (circleAt2 farthestSide left top)
+-}
+clipPath :
+    BaseValue
+        (BasicShapeSupported
+            { marginBox : Supported
+            , borderBox : Supported
+            , paddingBox : Supported
+            , contentBox : Supported
+            , fillBox : Supported
+            , strokeBox : Supported
+            , viewBox : Supported
+            }
+        )
+    -> Style
+clipPath (Value val) =
+    AppendProperty ("clip-path:" ++ val)
+
+
+{-| The 2-argument variant of the
+[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
+
+    clipPath2 marginBox (circleAt2 farthestSide left top)
+-}
+clipPath2 :
+    Value
+        { marginBox : Supported
+        , borderBox : Supported
+        , paddingBox : Supported
+        , contentBox : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , viewBox : Supported
+        }
+    -> Value (BasicShapeSupported a)
+    -> Style
+clipPath2 (Value val1) (Value val2) =
+    AppendProperty ("clip-path:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
+
+    mixBlendMode multiply
+
+    mixBlendMode saturation
+
+-}
+mixBlendMode :
+    BaseValue
+        { normal : Supported
+        , multiply : Supported
+        , screen : Supported
+        , overlay : Supported
+        , darken : Supported
+        , lighten : Supported
+        , colorDodge : Supported
+        , colorBurn : Supported
+        , hardLight : Supported
+        , softLight : Supported
+        , difference : Supported
+        , exclusion : Supported
+        , hue : Supported
+        , saturation : Supported
+        , color_ : Supported
+        , luminosity : Supported
+        }
+    -> Style
+mixBlendMode (Value val) =
+    AppendProperty ("mix-blend-mode:" ++ val)
+
+
+{-| Sets `scale-down` value for usage with [`objectFit`](#objectFit).
+
+    objectFit scaleDown
+
+-}
+scaleDown : Value { provides | scaleDown : Supported }
+scaleDown =
+    Value "scale-down"
+
+
+{-| Sets [`object-fit`](https://css-tricks.com/almanac/properties/o/object-fit/)
+
+    objectFit fill_
+
+    objectFit contain_
+
+    objectFit cover
+
+    objectFit scaleDown
+
+    objectFit none
+
+-}
+objectFit :
+    BaseValue
+        { fill_ : Supported
+        , contain_ : Supported
+        , cover : Supported
+        , none : Supported
+        , scaleDown : Supported
+        }
+    -> Style
+objectFit (Value val) =
+    AppendProperty ("object-fit:" ++ val)
+
