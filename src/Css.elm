@@ -41,7 +41,7 @@ module Css exposing
     , circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
     , dpi, dpcm, dppx
 
-    -- common keyword values
+    -- common/shared/grouped keyword values
     , unset, initial, inherit, revert
     , auto, none
     , left_, right_, top_, bottom_
@@ -56,6 +56,7 @@ module Css exposing
     , normal, strict, all_, both, always, scroll, column
     , content, fill_, stroke, text, style
     , clip, cover, contain_
+    , repeat, noRepeat, repeatX, repeatY, space, round
 
     -- all
     , all
@@ -171,11 +172,6 @@ module Css exposing
     , backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
     , backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
     , backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
-    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-    , repeat, noRepeat, repeatX, repeatY, space, round
-    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
-    , TextShadowConfig, textShadow, defaultTextShadow
-    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
 
     -- font size
     , fontSize
@@ -205,15 +201,6 @@ module Css exposing
     -- variable fonts (not to be confused with variants)
     , fontVariationSettings, fontVariationSettingsList
 
-    -- cursors
-    , CursorKeyword
-    , cursor, cursor2, cursor4
-    , pointer, default, contextMenu, help, progress, wait, cell
-    , crosshair, verticalText, alias, copy, move, noDrop
-    , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
-    , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
-    , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
-
     -- list styles
     , ListStyleType, ListStyleTypeSupported
     , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, listStyleImage
@@ -225,6 +212,20 @@ module Css exposing
     , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationThickness, fromFont
     , textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
+
+    -- cursors
+    , CursorKeyword
+    , cursor, cursor2, cursor4
+    , pointer, default, contextMenu, help, progress, wait, cell
+    , crosshair, verticalText, alias, copy, move, noDrop
+    , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
+    , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
+    , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
+
+    -- shadows and gradients
+    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
+    , TextShadowConfig, textShadow, defaultTextShadow
+    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
     -- ??
     , textStroke, textStroke2, textStrokeColor, textStrokeWidth
@@ -248,7 +249,8 @@ module Css exposing
     , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
     , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
     , lineClamp
-
+    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
+    
     -- ??
     , borderCollapse
     , collapse, separate
@@ -1254,6 +1256,13 @@ makeImportant str =
         str ++ " !important"
 
 
+{-| Named after the hash mark in the CSS specification [CSS-VALUES-3].
+-}
+hashListToString : Value a -> List (Value a) -> String
+hashListToString head rest =
+    (head :: rest)
+        |> List.map unpackValue
+        |> String.join ","
 
 
 ------------------------------------------------------------------------
@@ -4113,6 +4122,95 @@ The value is called `contain_` instead of `contain` because [`contain`](#contain
 contain_ : Value { provides | contain_ : Supported }
 contain_ =
     Value "contain"
+
+
+{-| The `repeat` value for [background properties](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
+
+    backgroundRepeat repeat
+
+    strokeRepeat repeat
+
+-}
+repeat : Value { provides | repeat : Supported }
+repeat =
+    Value "repeat"
+
+
+{-| The `no-repeat` value for [background properties](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
+
+    backgroundRepeat noRepeat
+
+    strokeRpeat noRepeat
+
+-}
+noRepeat : Value { provides | repeat : Supported }
+noRepeat =
+    Value "no-repeat"
+
+
+{-| The `repeat-x` value for [repeating backgrounds](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
+
+    backgroundRepeat repeatX
+
+    strokeRepeat repeatX
+
+-}
+repeatX : Value { provides | repeatX : Supported }
+repeatX =
+    Value "repeat-x"
+
+
+{-| The `repeat-y` value for [repeating backgrounds](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
+
+    backgroundRepeat repeatY
+
+    strokeRepeat repeatY
+
+-}
+repeatY : Value { provides | repeatY : Supported }
+repeatY =
+    Value "repeat-y"
+
+
+{-| The `space` value for [repeating backgrounds](#backgroundRepeat)
+and [`strokeRepeat`](#strokeRepeat).
+
+    backgroundRepeat space
+
+    strokeRepeat space
+
+-}
+space : Value { provides | space : Supported }
+space =
+    Value "space"
+
+
+{-| The `round` value used for properties such as:
+
+  - [repeating backgrounds](#backgroundRepeat)
+  - [`strokeLinecap`](#strokeLinecap)
+  - [`strokeRepeat`](#strokeRepeat)
+  - [`strokeLinejoin`](#strokeLinejoin2)
+
+```
+    backgroundRepeat round
+
+    strokeLineCap round
+
+    strokeLinejoin2 miter round
+
+    strokeRepeat round
+```
+
+-}
+round : Value { provides | round : Supported }
+round =
+    Value "round"
+
 
 
 ------------------------------------------------------------------------
@@ -10733,94 +10831,6 @@ backgroundRepeat2 (Value horiz) (Value vert) =
     AppendProperty ("background-repeat:" ++ horiz ++ " " ++ vert)
 
 
-{-| The `repeat` value for [background properties](#backgroundRepeat)
-and [`strokeRepeat`](#strokeRepeat).
-
-    backgroundRepeat repeat
-
-    strokeRepeat repeat
-
--}
-repeat : Value { provides | repeat : Supported }
-repeat =
-    Value "repeat"
-
-
-{-| The `no-repeat` value for [background properties](#backgroundRepeat)
-and [`strokeRepeat`](#strokeRepeat).
-
-    backgroundRepeat noRepeat
-
-    strokeRpeat noRepeat
-
--}
-noRepeat : Value { provides | repeat : Supported }
-noRepeat =
-    Value "no-repeat"
-
-
-{-| The `repeat-x` value for [repeating backgrounds](#backgroundRepeat)
-and [`strokeRepeat`](#strokeRepeat).
-
-    backgroundRepeat repeatX
-
-    strokeRepeat repeatX
-
--}
-repeatX : Value { provides | repeatX : Supported }
-repeatX =
-    Value "repeat-x"
-
-
-{-| The `repeat-y` value for [repeating backgrounds](#backgroundRepeat)
-and [`strokeRepeat`](#strokeRepeat).
-
-    backgroundRepeat repeatY
-
-    strokeRepeat repeatY
-
--}
-repeatY : Value { provides | repeatY : Supported }
-repeatY =
-    Value "repeat-y"
-
-
-{-| The `space` value for [repeating backgrounds](#backgroundRepeat)
-and [`strokeRepeat`](#strokeRepeat).
-
-    backgroundRepeat space
-
-    strokeRepeat space
-
--}
-space : Value { provides | space : Supported }
-space =
-    Value "space"
-
-
-{-| The `round` value used for properties such as:
-
-  - [repeating backgrounds](#backgroundRepeat)
-  - [`strokeLinecap`](#strokeLinecap)
-  - [`strokeRepeat`](#strokeRepeat)
-  - [`strokeLinejoin`](#strokeLinejoin2)
-
-```
-    backgroundRepeat round
-
-    strokeLineCap round
-
-    strokeLinejoin2 miter round
-
-    strokeRepeat round
-```
-
--}
-round : Value { provides | round : Supported }
-round =
-    Value "round"
-
-
 {-| Sets [`background-size`](https://css-tricks.com/almanac/properties/b/background-size/).
 
     backgroundSize cover
@@ -12235,8 +12245,6 @@ weight =
     Value "weight"
 
 
-
-
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -12296,877 +12304,6 @@ fontVariationSettingsList list =
             )
         |> String.join ", "
         )
-
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------- BOX-SHADOW ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Configuration for [`boxShadow`](#boxShadow).
--}
-type alias BoxShadowConfig =
-    { offsetX :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , offsetY :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , blurRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , spreadRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , color :
-        Maybe (Value Color)
-    , inset : Bool
-    }
-
-
-{-| Default [`boxShadow`](#boxShadow) configuration.
-
-It is equivalent to the following CSS:
-
-    box-shadow: 0 0;
-
--}
-defaultBoxShadow : BoxShadowConfig
-defaultBoxShadow =
-    { offsetX = zero
-    , offsetY = zero
-    , blurRadius = Nothing
-    , spreadRadius = Nothing
-    , color = Nothing
-    , inset = False
-    }
-
-
-{-| The [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/) property.
-
-    boxShadow initial
-
-    boxShadow none
-
-For defining shadows look at [`boxShadows`](#boxShadows).
-
--}
-boxShadow : BaseValue { none : Supported } -> Style
-boxShadow (Value val) =
-    AppendProperty ("box-shadow:" ++ val)
-
-
-{-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
-
-    boxShadows [] -- "box-shadow: none"
-
-    -- "box-shadow: 3px 5px #aabbcc"
-    button
-        [ css
-            [ boxShadows
-                [ { defaultBoxShadow
-                    | offsetX = px 3
-                    , offsetY = px 5
-                    , color = Just (hex "#aabbcc")
-                  }
-                ]
-            ]
-        ]
-        [ text "Zap!" ]
-
--}
-boxShadows : List BoxShadowConfig -> Style
-boxShadows configs =
-    let
-        value =
-            case configs of
-                [] ->
-                    "none"
-
-                _ ->
-                    configs
-                        |> List.map boxShadowConfigToString
-                        |> String.join ", "
-    in
-    AppendProperty ("box-shadow:" ++ value)
-
-
-boxShadowConfigToString : BoxShadowConfig -> String
-boxShadowConfigToString config =
-    let
-        (Value offsetX) =
-            config.offsetX
-
-        (Value offsetY) =
-            config.offsetY
-
-        blurRadius =
-            case config.blurRadius of
-                Just (Value value) ->
-                    " " ++ value
-
-                Nothing ->
-                    case config.spreadRadius of
-                        Just _ ->
-                            " 0"
-
-                        Nothing ->
-                            ""
-
-        spreadRadius =
-            case config.spreadRadius of
-                Just (Value value) ->
-                    " " ++ value
-
-                Nothing ->
-                    ""
-
-        insetStr =
-            if config.inset then
-                "inset "
-
-            else
-                ""
-
-        colorVal =
-            config.color
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-    in
-    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
-
-
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
--------------------------------- CURSORS -------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| A type alias used for the various [`cursor`](#cursor) properties
--}
-type alias CursorKeyword =
-    { pointer : Supported
-    , auto : Supported
-    , default : Supported
-    , none : Supported
-    , contextMenu : Supported
-    , help : Supported
-    , progress : Supported
-    , wait : Supported
-    , cell : Supported
-    , crosshair : Supported
-    , text : Supported
-    , verticalText : Supported
-    , alias : Supported
-    , copy : Supported
-    , move : Supported
-    , noDrop : Supported
-    , notAllowed : Supported
-    , allScroll : Supported
-    , colResize : Supported
-    , rowResize : Supported
-    , nResize : Supported
-    , eResize : Supported
-    , sResize : Supported
-    , wResize : Supported
-    , neResize : Supported
-    , nwResize : Supported
-    , seResize : Supported
-    , swResize : Supported
-    , ewResize : Supported
-    , nsResize : Supported
-    , neswResize : Supported
-    , nwseResize : Supported
-    , zoomIn : Supported
-    , zoomOut : Supported
-    , grab : Supported
-    , grabbing : Supported
-    }
-
-
-{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
-property.
-
-    cursor notAllowed
-
--}
-cursor : BaseValue CursorKeyword -> Style
-cursor (Value val) =
-    AppendProperty ("cursor:" ++ val)
-
-
-{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
-property.
-
-    cursor2 (url "https://example.com") move
-
--}
-cursor2 : Value { url : Supported } -> Value CursorKeyword -> Style
-cursor2 (Value urlVal) (Value fallbackVal) =
-    AppendProperty ("cursor:" ++ urlVal ++ "," ++ fallbackVal)
-
-
-{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
-property.
-
-    cursor4 (url "https://example.com") (num 34) zero move
-
--}
-cursor4 :
-    Value { url : Supported }
-    ->
-        Value
-            { num : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { num : Supported
-            , zero : Supported
-            }
-    -> Value CursorKeyword
-    -> Style
-cursor4 (Value urlVal) (Value xVal) (Value yVal) (Value fallbackVal) =
-    AppendProperty
-        ("cursor:"
-            ++ urlVal
-            ++ " "
-            ++ xVal
-            ++ " "
-            ++ yVal
-            ++ ","
-            ++ fallbackVal
-        )
-
-
-{-| The `pointer` value for the [`cursor`](#cursor) property.
--}
-pointer : Value { provides | pointer : Supported }
-pointer =
-    Value "pointer"
-
-
-{-| The `default` value for the [`cursor`](#cursor) property.
--}
-default : Value { provides | default : Supported }
-default =
-    Value "default"
-
-
-{-| The `context-menu` value for the [`cursor`](#cursor) property.
--}
-contextMenu : Value { provides | contextMenu : Supported }
-contextMenu =
-    Value "context-menu"
-
-
-{-| The `help` value for the [`cursor`](#cursor) property.
--}
-help : Value { provides | help : Supported }
-help =
-    Value "help"
-
-
-{-| The `progress` value for the [`cursor`](#cursor) property.
--}
-progress : Value { provides | progress : Supported }
-progress =
-    Value "progress"
-
-
-{-| The `wait` value for the [`cursor`](#cursor) property.
--}
-wait : Value { provides | wait : Supported }
-wait =
-    Value "wait"
-
-
-{-| The `cell` value for the [`cursor`](#cursor) property.
--}
-cell : Value { provides | cell : Supported }
-cell =
-    Value "cell"
-
-
-{-| The `crosshair` value for the [`cursor`](#cursor) property.
--}
-crosshair : Value { provides | crosshair : Supported }
-crosshair =
-    Value "crosshair"
-
-
-{-| The `vertical-text` value for the [`cursor`](#cursor) property.
--}
-verticalText : Value { provides | verticalText : Supported }
-verticalText =
-    Value "vertical-text"
-
-
-{-| The `alias` value for the [`cursor`](#cursor) property.
--}
-alias : Value { provides | alias : Supported }
-alias =
-    Value "alias"
-
-
-{-| The `copy` value for the [`cursor`](#cursor) property.
--}
-copy : Value { provides | copy : Supported }
-copy =
-    Value "copy"
-
-
-{-| The `move` value for the [`cursor`](#cursor) property.
--}
-move : Value { provides | move : Supported }
-move =
-    Value "move"
-
-
-{-| The `no-drop` value for the [`cursor`](#cursor) property.
--}
-noDrop : Value { provides | noDrop : Supported }
-noDrop =
-    Value "no-drop"
-
-
-{-| The `notAllowed` value for the [`cursor`](#cursor) property.
--}
-notAllowed : Value { provides | notAllowed : Supported }
-notAllowed =
-    Value "not-allowed"
-
-
-{-| The `all-scroll` value for the [`cursor`](#cursor) property.
--}
-allScroll : Value { provides | allScroll : Supported }
-allScroll =
-    Value "all-scroll"
-
-
-{-| The `col-resize` value for the [`cursor`](#cursor) property.
--}
-colResize : Value { provides | colResize : Supported }
-colResize =
-    Value "col-resize"
-
-
-{-| The `row-resize` value for the [`cursor`](#cursor) property.
--}
-rowResize : Value { provides | rowResize : Supported }
-rowResize =
-    Value "row-resize"
-
-
-{-| The `n-resize` value for the [`cursor`](#cursor) property.
--}
-nResize : Value { provides | nResize : Supported }
-nResize =
-    Value "n-resize"
-
-
-{-| The `e-resize` value for the [`cursor`](#cursor) property.
--}
-eResize : Value { provides | eResize : Supported }
-eResize =
-    Value "e-resize"
-
-
-{-| The `s-resize` value for the [`cursor`](#cursor) property.
--}
-sResize : Value { provides | sResize : Supported }
-sResize =
-    Value "s-resize"
-
-
-{-| The `w-resize` value for the [`cursor`](#cursor) property.
--}
-wResize : Value { provides | wResize : Supported }
-wResize =
-    Value "w-resize"
-
-
-{-| The `ne-resize` value for the [`cursor`](#cursor) property.
--}
-neResize : Value { provides | neResize : Supported }
-neResize =
-    Value "ne-resize"
-
-
-{-| The `nw-resize` value for the [`cursor`](#cursor) property.
--}
-nwResize : Value { provides | nwResize : Supported }
-nwResize =
-    Value "nw-resize"
-
-
-{-| The `se-resize` value for the [`cursor`](#cursor) property.
--}
-seResize : Value { provides | seResize : Supported }
-seResize =
-    Value "se-resize"
-
-
-{-| The `sw-resize` value for the [`cursor`](#cursor) property.
--}
-swResize : Value { provides | swResize : Supported }
-swResize =
-    Value "sw-resize"
-
-
-{-| The `ew-resize` value for the [`cursor`](#cursor) property.
--}
-ewResize : Value { provides | ewResize : Supported }
-ewResize =
-    Value "ew-resize"
-
-
-{-| The `ns-resize` value for the [`cursor`](#cursor) property.
--}
-nsResize : Value { provides | nsResize : Supported }
-nsResize =
-    Value "ns-resize"
-
-
-{-| The `nesw-resize` value for the [`cursor`](#cursor) property.
--}
-neswResize : Value { provides | neswResize : Supported }
-neswResize =
-    Value "nesw-resize"
-
-
-{-| The `nwse-resize` value for the [`cursor`](#cursor) property.
--}
-nwseResize : Value { provides | nwseResize : Supported }
-nwseResize =
-    Value "nwse-resize"
-
-
-{-| The `zoom-in` value for the [`cursor`](#cursor) property.
--}
-zoomIn : Value { provides | zoomIn : Supported }
-zoomIn =
-    Value "zoom-in"
-
-
-{-| The `zoom-out` value for the [`cursor`](#cursor) property.
--}
-zoomOut : Value { provides | zoomOut : Supported }
-zoomOut =
-    Value "zoom-out"
-
-
-{-| The `grab` value for the [`cursor`](#cursor) property.
--}
-grab : Value { provides | grab : Supported }
-grab =
-    Value "grab"
-
-
-{-| The `grabbing` value for the [`cursor`](#cursor) property.
--}
-grabbing : Value { provides | grabbing : Supported }
-grabbing =
-    Value "grabbing"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------ TEXT SHADOW ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Configuration for [`textShadow`](#textShadow).
--}
-type alias TextShadowConfig =
-    { offsetX :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , offsetY :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , blurRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , color : Maybe (Value Color)
-    }
-
-
-{-| Default [`textShadow`](#textShadow) configuration.
-
-It is equivalent to the following CSS:
-
-    text-shadow: 0 0;
-
--}
-defaultTextShadow : TextShadowConfig
-defaultTextShadow =
-    { offsetX = zero
-    , offsetY = zero
-    , blurRadius = Nothing
-    , color = Nothing
-    }
-
-
-{-| Sets [`text-shadow`](https://css-tricks.com/almanac/properties/t/text-shadow/).
-
-    textShadow [] -- "text-shadow: none"
-
-    -- "text-shadow: 3px 5px #aabbcc"
-    span
-        [ css
-            [ textShadow
-                [ { defaultTextShadow
-                    | offsetX = px 3
-                    , offsetY = px 5
-                    , color = Just (hex "#aabbcc")
-                  }
-                ]
-            ]
-        ]
-        [ text "Zap!" ]
-
--}
-textShadow : List TextShadowConfig -> Style
-textShadow configs =
-    let
-        values =
-            case configs of
-                [] ->
-                    "none"
-
-                _ ->
-                    configs
-                        |> List.map textShadowConfigToString
-                        |> String.join ","
-    in
-    AppendProperty ("text-shadow:" ++ values)
-
-
-textShadowConfigToString : TextShadowConfig -> String
-textShadowConfigToString config =
-    let
-        offsetX =
-            unpackValue config.offsetX
-
-        offsetY =
-            unpackValue config.offsetY
-
-        blurRadius =
-            config.blurRadius
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-
-        colorSetting =
-            config.color
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-    in
-    offsetX ++ " " ++ offsetY ++ blurRadius ++ colorSetting
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------- GRADIENTS -------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-values used by properties such as [`backgroundImage`](#backgroundImage),
-and [`listStyleImage`](#listStyleImage)
-
-    linearGradient (stop red) (stop blue) []
-
-    linearGradient (stop red) (stop blue) [ stop green ]
-
--}
-linearGradient :
-    Value { colorStop : Supported }
-    -> Value { colorStop : Supported }
-    -> List (Value { colorStop : Supported })
-    -> Value { provides | linearGradient : Supported }
-linearGradient (Value firstStop) (Value secondStop) moreStops =
-    let
-        peeledStops =
-            List.map unpackValue moreStops
-
-        stops =
-            String.join "," (firstStop :: secondStop :: peeledStops)
-    in
-    Value ("linear-gradient(" ++ stops ++ ")")
-
-
-{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-values used by properties such as [`backgroundImage`](#backgroundImage),
-and [`listStyleImage`](#listStyleImage)
-
-    linearGradient2 toTop (stop red) (stop blue) []
-
-    linearGradient2 toTop (stop red) (stop blue) [ stop green ]
-
--}
-linearGradient2 :
-    Value
-        (AngleSupported
-            { toBottom : Supported
-            , toBottomLeft : Supported
-            , toBottomRight : Supported
-            , toLeft : Supported
-            , toRight : Supported
-            , toTop : Supported
-            , toTopLeft : Supported
-            , toTopRight : Supported
-            }
-        )
-    -> Value { colorStop : Supported }
-    -> Value { colorStop : Supported }
-    -> List (Value { colorStop : Supported })
-    -> Value { provides | linearGradient : Supported }
-linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
-    let
-        peeledStops =
-            List.map unpackValue moreStops
-
-        stops =
-            String.join "," (firstStop :: secondStop :: peeledStops)
-    in
-    Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
-
-
-{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
-
-    linearGradient toTop (stop red) (stop blue) []
-
-See also [`stop2`](#stop2) for controlling stop positioning.
-
--}
-stop : Value Color -> Value { provides | colorStop : Supported }
-stop (Value colorVal) =
-    Value colorVal
-
-
-{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
-
-    linearGradient toTop (stop2 red (px 20)) (stop blue) []
-
-See also [`stop`](#stop) if you don't need to control the stop position.
-
--}
-stop2 :
-    Value Color
-    -> Value (LengthSupported { pct : Supported })
-    -> Value { provides | colorStop : Supported }
-stop2 (Value colorVal) (Value positionVal) =
-    Value (colorVal ++ " " ++ positionVal)
-
-
-{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
-
-    linearGradient (stop3 (hex "111") zero (pt 1)) (stop3 (hex "6454") (pt 2) (pct 45))
-
--}
-stop3 :
-    Value Color
-    -> Value (LengthSupported { pct : Supported })
-    -> Value (LengthSupported { pct : Supported })
-    -> Value { provides | colorStop : Supported }
-stop3 (Value colorVal) (Value positionStart) (Value positionEnd) =
-    Value (colorVal ++ " " ++ positionStart ++ "," ++ positionEnd)
-
-
-{-| Provides the [`to bottom` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toBottom (stop red) (stop blue) []
-
-If you want your gradient to go to a corner, use [`toBottomLeft`](#toBottomLeft) or [`toBottomRight`](#toBottomRight):
-
-    linearGradient toBottomLeft (stop red) (stop blue) []
-
-    linearGradient toBottomRight (stop red) (stop blue) []
-
--}
-toBottom : Value { provides | toBottom : Supported }
-toBottom =
-    Value "to bottom"
-
-
-{-| Provides the [`to bottom left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toBottomLeft (stop red) (stop blue) []
-
-If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toLeft`](#toLeft) instead:
-
-    linearGradient toBottom (stop red) (stop blue) []
-
-    linearGradient toLeft (stop red) (stop blue) []
-
--}
-toBottomLeft : Value { provides | toBottomLeft : Supported }
-toBottomLeft =
-    Value "to bottom left"
-
-
-{-| Provides the [`to bottom right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toBottomRight (stop red) (stop blue) []
-
-If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toRight`](#toRight) instead:
-
-    linearGradient toBottom (stop red) (stop blue) []
-
-    linearGradient toRight (stop red) (stop blue) []
-
--}
-toBottomRight : Value { provides | toBottomRight : Supported }
-toBottomRight =
-    Value "to bottom right"
-
-
-{-| Provides the [`to left` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toLeft (stop red) (stop blue) []
-
-If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toBottomLeft`](#toBottomLeft):
-
-    linearGradient toTopLeft (stop red) (stop blue) []
-
-    linearGradient toBottomLeft (stop red) (stop blue) []
-
--}
-toLeft : Value { provides | toLeft : Supported }
-toLeft =
-    Value "to left"
-
-
-{-| Provides the [`to right` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toRight (stop red) (stop blue) []
-
-If you want your gradient to go to a corner, use [`toTopRight`](#toTopRight) or [`toBottomRight`](#toBottomRight):
-
-    linearGradient toTopRight (stop red) (stop blue) []
-
-    linearGradient toBottomRight (stop red) (stop blue) []
-
--}
-toRight : Value { provides | toRight : Supported }
-toRight =
-    Value "to right"
-
-
-{-| Provides the [`to top` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toTop (stop red) (stop blue) []
-
-If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toTopRight`](#toTopRight):
-
-    linearGradient toTopLeft (stop red) (stop blue) []
-
-    linearGradient toTopRight (stop red) (stop blue) []
-
--}
-toTop : Value { provides | toTop : Supported }
-toTop =
-    Value "to top"
-
-
-{-| Provides the [`to top left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toTopLeft (stop red) (stop blue) []
-
-If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toLeft`](#toLeft) instead:
-
-    linearGradient toTop (stop red) (stop blue) []
-
-    linearGradient toLeft (stop red) (stop blue) []
-
--}
-toTopLeft : Value { provides | toTopLeft : Supported }
-toTopLeft =
-    Value "to top left"
-
-
-{-| Provides the [`to top right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toTopRight (stop red) (stop blue) []
-
-If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toRight`](#toRight) instead:
-
-    linearGradient toTop (stop red) (stop blue) []
-
-    linearGradient toRight (stop red) (stop blue) []
-
--}
-toTopRight : Value { provides | toTopRight : Supported }
-toTopRight =
-    Value "to top right"
 
 
 ------------------------------------------------------------------------
@@ -13964,149 +13101,6 @@ upperRoman =
 
 
 
--- TEXT ORIENTATION --
-
-
-{-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
-
-    textOrientation sideways
-
-    textOrientation upright
-
--}
-textOrientation :
-    BaseValue
-        { mixed : Supported
-        , sideways : Supported
-        , sidewaysRight : Supported
-        , upright : Supported
-        , useGlyphOrientation : Supported
-        }
-    -> Style
-textOrientation (Value str) =
-    AppendProperty ("text-orientation:" ++ str)
-
-
-{-| A `mixed` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation mixed
-
--}
-mixed : Value { provides | mixed : Supported }
-mixed =
-    Value "mixed"
-
-
-{-| A `sideways` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation sideways
-
--}
-sideways : Value { provides | sideways : Supported }
-sideways =
-    Value "sideways"
-
-
-{-| A `sideways-right` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation sidewaysRight
-
--}
-sidewaysRight : Value { provides | sidewaysRight : Supported }
-sidewaysRight =
-    Value "sideways-right"
-
-
-{-| A `upright` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation upright
-
--}
-upright : Value { provides | upright : Supported }
-upright =
-    Value "upright"
-
-
-{-| A `use-glyph-orientation` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation useGlyphOrientation
-
--}
-useGlyphOrientation : Value { provides | useGlyphOrientation : Supported }
-useGlyphOrientation =
-    Value "use-glyph-orientation"
-
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
---------------------------- TEXT RENDERING -----------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/).
-
-    textRendering geometricPrecision
-
-    textRendering optimizeSpeed
-
--}
-textRendering :
-    BaseValue
-        { auto : Supported
-        , geometricPrecision : Supported
-        , optimizeLegibility : Supported
-        , optimizeSpeed : Supported
-        }
-    -> Style
-textRendering (Value str) =
-    AppendProperty ("text-rendering:" ++ str)
-
-
-{-| A `geometricPrecision` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
-
-    textRendering geometricPrecision
-
--}
-geometricPrecision : Value { provides | geometricPrecision : Supported }
-geometricPrecision =
-    Value "geometricPrecision"
-
-
-{-| An `optimizeLegibility` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
-
-    textRendering optimizeLegibility
-
--}
-optimizeLegibility : Value { provides | optimizeLegibility : Supported }
-optimizeLegibility =
-    Value "optimizeLegibility"
-
-
-{-| An `optimizeSpeed` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
-
-    textRendering optimizeSpeed
-
--}
-optimizeSpeed : Value { provides | optimizeSpeed : Supported }
-optimizeSpeed =
-    Value "optimizeSpeed"
-
-
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -14533,6 +13527,1016 @@ lineThrough =
     Value "line-through"
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------- CURSORS -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| A type alias used for the various [`cursor`](#cursor) properties
+-}
+type alias CursorKeyword =
+    { pointer : Supported
+    , auto : Supported
+    , default : Supported
+    , none : Supported
+    , contextMenu : Supported
+    , help : Supported
+    , progress : Supported
+    , wait : Supported
+    , cell : Supported
+    , crosshair : Supported
+    , text : Supported
+    , verticalText : Supported
+    , alias : Supported
+    , copy : Supported
+    , move : Supported
+    , noDrop : Supported
+    , notAllowed : Supported
+    , allScroll : Supported
+    , colResize : Supported
+    , rowResize : Supported
+    , nResize : Supported
+    , eResize : Supported
+    , sResize : Supported
+    , wResize : Supported
+    , neResize : Supported
+    , nwResize : Supported
+    , seResize : Supported
+    , swResize : Supported
+    , ewResize : Supported
+    , nsResize : Supported
+    , neswResize : Supported
+    , nwseResize : Supported
+    , zoomIn : Supported
+    , zoomOut : Supported
+    , grab : Supported
+    , grabbing : Supported
+    }
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor notAllowed
+
+-}
+cursor : BaseValue CursorKeyword -> Style
+cursor (Value val) =
+    AppendProperty ("cursor:" ++ val)
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor2 (url "https://example.com") move
+
+-}
+cursor2 : Value { url : Supported } -> Value CursorKeyword -> Style
+cursor2 (Value urlVal) (Value fallbackVal) =
+    AppendProperty ("cursor:" ++ urlVal ++ "," ++ fallbackVal)
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor4 (url "https://example.com") (num 34) zero move
+
+-}
+cursor4 :
+    Value { url : Supported }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            }
+    -> Value CursorKeyword
+    -> Style
+cursor4 (Value urlVal) (Value xVal) (Value yVal) (Value fallbackVal) =
+    AppendProperty
+        ("cursor:"
+            ++ urlVal
+            ++ " "
+            ++ xVal
+            ++ " "
+            ++ yVal
+            ++ ","
+            ++ fallbackVal
+        )
+
+
+{-| The `pointer` value for the [`cursor`](#cursor) property.
+-}
+pointer : Value { provides | pointer : Supported }
+pointer =
+    Value "pointer"
+
+
+{-| The `default` value for the [`cursor`](#cursor) property.
+-}
+default : Value { provides | default : Supported }
+default =
+    Value "default"
+
+
+{-| The `context-menu` value for the [`cursor`](#cursor) property.
+-}
+contextMenu : Value { provides | contextMenu : Supported }
+contextMenu =
+    Value "context-menu"
+
+
+{-| The `help` value for the [`cursor`](#cursor) property.
+-}
+help : Value { provides | help : Supported }
+help =
+    Value "help"
+
+
+{-| The `progress` value for the [`cursor`](#cursor) property.
+-}
+progress : Value { provides | progress : Supported }
+progress =
+    Value "progress"
+
+
+{-| The `wait` value for the [`cursor`](#cursor) property.
+-}
+wait : Value { provides | wait : Supported }
+wait =
+    Value "wait"
+
+
+{-| The `cell` value for the [`cursor`](#cursor) property.
+-}
+cell : Value { provides | cell : Supported }
+cell =
+    Value "cell"
+
+
+{-| The `crosshair` value for the [`cursor`](#cursor) property.
+-}
+crosshair : Value { provides | crosshair : Supported }
+crosshair =
+    Value "crosshair"
+
+
+{-| The `vertical-text` value for the [`cursor`](#cursor) property.
+-}
+verticalText : Value { provides | verticalText : Supported }
+verticalText =
+    Value "vertical-text"
+
+
+{-| The `alias` value for the [`cursor`](#cursor) property.
+-}
+alias : Value { provides | alias : Supported }
+alias =
+    Value "alias"
+
+
+{-| The `copy` value for the [`cursor`](#cursor) property.
+-}
+copy : Value { provides | copy : Supported }
+copy =
+    Value "copy"
+
+
+{-| The `move` value for the [`cursor`](#cursor) property.
+-}
+move : Value { provides | move : Supported }
+move =
+    Value "move"
+
+
+{-| The `no-drop` value for the [`cursor`](#cursor) property.
+-}
+noDrop : Value { provides | noDrop : Supported }
+noDrop =
+    Value "no-drop"
+
+
+{-| The `notAllowed` value for the [`cursor`](#cursor) property.
+-}
+notAllowed : Value { provides | notAllowed : Supported }
+notAllowed =
+    Value "not-allowed"
+
+
+{-| The `all-scroll` value for the [`cursor`](#cursor) property.
+-}
+allScroll : Value { provides | allScroll : Supported }
+allScroll =
+    Value "all-scroll"
+
+
+{-| The `col-resize` value for the [`cursor`](#cursor) property.
+-}
+colResize : Value { provides | colResize : Supported }
+colResize =
+    Value "col-resize"
+
+
+{-| The `row-resize` value for the [`cursor`](#cursor) property.
+-}
+rowResize : Value { provides | rowResize : Supported }
+rowResize =
+    Value "row-resize"
+
+
+{-| The `n-resize` value for the [`cursor`](#cursor) property.
+-}
+nResize : Value { provides | nResize : Supported }
+nResize =
+    Value "n-resize"
+
+
+{-| The `e-resize` value for the [`cursor`](#cursor) property.
+-}
+eResize : Value { provides | eResize : Supported }
+eResize =
+    Value "e-resize"
+
+
+{-| The `s-resize` value for the [`cursor`](#cursor) property.
+-}
+sResize : Value { provides | sResize : Supported }
+sResize =
+    Value "s-resize"
+
+
+{-| The `w-resize` value for the [`cursor`](#cursor) property.
+-}
+wResize : Value { provides | wResize : Supported }
+wResize =
+    Value "w-resize"
+
+
+{-| The `ne-resize` value for the [`cursor`](#cursor) property.
+-}
+neResize : Value { provides | neResize : Supported }
+neResize =
+    Value "ne-resize"
+
+
+{-| The `nw-resize` value for the [`cursor`](#cursor) property.
+-}
+nwResize : Value { provides | nwResize : Supported }
+nwResize =
+    Value "nw-resize"
+
+
+{-| The `se-resize` value for the [`cursor`](#cursor) property.
+-}
+seResize : Value { provides | seResize : Supported }
+seResize =
+    Value "se-resize"
+
+
+{-| The `sw-resize` value for the [`cursor`](#cursor) property.
+-}
+swResize : Value { provides | swResize : Supported }
+swResize =
+    Value "sw-resize"
+
+
+{-| The `ew-resize` value for the [`cursor`](#cursor) property.
+-}
+ewResize : Value { provides | ewResize : Supported }
+ewResize =
+    Value "ew-resize"
+
+
+{-| The `ns-resize` value for the [`cursor`](#cursor) property.
+-}
+nsResize : Value { provides | nsResize : Supported }
+nsResize =
+    Value "ns-resize"
+
+
+{-| The `nesw-resize` value for the [`cursor`](#cursor) property.
+-}
+neswResize : Value { provides | neswResize : Supported }
+neswResize =
+    Value "nesw-resize"
+
+
+{-| The `nwse-resize` value for the [`cursor`](#cursor) property.
+-}
+nwseResize : Value { provides | nwseResize : Supported }
+nwseResize =
+    Value "nwse-resize"
+
+
+{-| The `zoom-in` value for the [`cursor`](#cursor) property.
+-}
+zoomIn : Value { provides | zoomIn : Supported }
+zoomIn =
+    Value "zoom-in"
+
+
+{-| The `zoom-out` value for the [`cursor`](#cursor) property.
+-}
+zoomOut : Value { provides | zoomOut : Supported }
+zoomOut =
+    Value "zoom-out"
+
+
+{-| The `grab` value for the [`cursor`](#cursor) property.
+-}
+grab : Value { provides | grab : Supported }
+grab =
+    Value "grab"
+
+
+{-| The `grabbing` value for the [`cursor`](#cursor) property.
+-}
+grabbing : Value { provides | grabbing : Supported }
+grabbing =
+    Value "grabbing"
+
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ BOX-SHADOW ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Configuration for [`boxShadow`](#boxShadow).
+-}
+type alias BoxShadowConfig =
+    { offsetX :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , offsetY :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , blurRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , spreadRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , color :
+        Maybe (Value Color)
+    , inset : Bool
+    }
+
+
+{-| Default [`boxShadow`](#boxShadow) configuration.
+
+It is equivalent to the following CSS:
+
+    box-shadow: 0 0;
+
+-}
+defaultBoxShadow : BoxShadowConfig
+defaultBoxShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , spreadRadius = Nothing
+    , color = Nothing
+    , inset = False
+    }
+
+
+{-| The [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/) property.
+
+    boxShadow initial
+
+    boxShadow none
+
+For defining shadows look at [`boxShadows`](#boxShadows).
+
+-}
+boxShadow : BaseValue { none : Supported } -> Style
+boxShadow (Value val) =
+    AppendProperty ("box-shadow:" ++ val)
+
+
+{-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
+
+    boxShadows [] -- "box-shadow: none"
+
+    -- "box-shadow: 3px 5px #aabbcc"
+    button
+        [ css
+            [ boxShadows
+                [ { defaultBoxShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
+
+-}
+boxShadows : List BoxShadowConfig -> Style
+boxShadows configs =
+    let
+        value =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map boxShadowConfigToString
+                        |> String.join ", "
+    in
+    AppendProperty ("box-shadow:" ++ value)
+
+
+boxShadowConfigToString : BoxShadowConfig -> String
+boxShadowConfigToString config =
+    let
+        (Value offsetX) =
+            config.offsetX
+
+        (Value offsetY) =
+            config.offsetY
+
+        blurRadius =
+            case config.blurRadius of
+                Just (Value value) ->
+                    " " ++ value
+
+                Nothing ->
+                    case config.spreadRadius of
+                        Just _ ->
+                            " 0"
+
+                        Nothing ->
+                            ""
+
+        spreadRadius =
+            case config.spreadRadius of
+                Just (Value value) ->
+                    " " ++ value
+
+                Nothing ->
+                    ""
+
+        insetStr =
+            if config.inset then
+                "inset "
+
+            else
+                ""
+
+        colorVal =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+    in
+    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- TEXT SHADOW ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Configuration for [`textShadow`](#textShadow).
+-}
+type alias TextShadowConfig =
+    { offsetX :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , offsetY :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , blurRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , color : Maybe (Value Color)
+    }
+
+
+{-| Default [`textShadow`](#textShadow) configuration.
+
+It is equivalent to the following CSS:
+
+    text-shadow: 0 0;
+
+-}
+defaultTextShadow : TextShadowConfig
+defaultTextShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , color = Nothing
+    }
+
+
+{-| Sets [`text-shadow`](https://css-tricks.com/almanac/properties/t/text-shadow/).
+
+    textShadow [] -- "text-shadow: none"
+
+    -- "text-shadow: 3px 5px #aabbcc"
+    span
+        [ css
+            [ textShadow
+                [ { defaultTextShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
+
+-}
+textShadow : List TextShadowConfig -> Style
+textShadow configs =
+    let
+        values =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map textShadowConfigToString
+                        |> String.join ","
+    in
+    AppendProperty ("text-shadow:" ++ values)
+
+
+textShadowConfigToString : TextShadowConfig -> String
+textShadowConfigToString config =
+    let
+        offsetX =
+            unpackValue config.offsetX
+
+        offsetY =
+            unpackValue config.offsetY
+
+        blurRadius =
+            config.blurRadius
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+
+        colorSetting =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+    in
+    offsetX ++ " " ++ offsetY ++ blurRadius ++ colorSetting
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ GRADIENTS -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
+values used by properties such as [`backgroundImage`](#backgroundImage),
+and [`listStyleImage`](#listStyleImage)
+
+    linearGradient (stop red) (stop blue) []
+
+    linearGradient (stop red) (stop blue) [ stop green ]
+
+-}
+linearGradient :
+    Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map unpackValue moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ stops ++ ")")
+
+
+{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
+values used by properties such as [`backgroundImage`](#backgroundImage),
+and [`listStyleImage`](#listStyleImage)
+
+    linearGradient2 toTop (stop red) (stop blue) []
+
+    linearGradient2 toTop (stop red) (stop blue) [ stop green ]
+
+-}
+linearGradient2 :
+    Value
+        (AngleSupported
+            { toBottom : Supported
+            , toBottomLeft : Supported
+            , toBottomRight : Supported
+            , toLeft : Supported
+            , toRight : Supported
+            , toTop : Supported
+            , toTopLeft : Supported
+            , toTopRight : Supported
+            }
+        )
+    -> Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map unpackValue moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient toTop (stop red) (stop blue) []
+
+See also [`stop2`](#stop2) for controlling stop positioning.
+
+-}
+stop : Value Color -> Value { provides | colorStop : Supported }
+stop (Value colorVal) =
+    Value colorVal
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient toTop (stop2 red (px 20)) (stop blue) []
+
+See also [`stop`](#stop) if you don't need to control the stop position.
+
+-}
+stop2 :
+    Value Color
+    -> Value (LengthSupported { pct : Supported })
+    -> Value { provides | colorStop : Supported }
+stop2 (Value colorVal) (Value positionVal) =
+    Value (colorVal ++ " " ++ positionVal)
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient (stop3 (hex "111") zero (pt 1)) (stop3 (hex "6454") (pt 2) (pct 45))
+
+-}
+stop3 :
+    Value Color
+    -> Value (LengthSupported { pct : Supported })
+    -> Value (LengthSupported { pct : Supported })
+    -> Value { provides | colorStop : Supported }
+stop3 (Value colorVal) (Value positionStart) (Value positionEnd) =
+    Value (colorVal ++ " " ++ positionStart ++ "," ++ positionEnd)
+
+
+{-| Provides the [`to bottom` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottom (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toBottomLeft`](#toBottomLeft) or [`toBottomRight`](#toBottomRight):
+
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+-}
+toBottom : Value { provides | toBottom : Supported }
+toBottom =
+    Value "to bottom"
+
+
+{-| Provides the [`to bottom left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toLeft`](#toLeft) instead:
+
+    linearGradient toBottom (stop red) (stop blue) []
+
+    linearGradient toLeft (stop red) (stop blue) []
+
+-}
+toBottomLeft : Value { provides | toBottomLeft : Supported }
+toBottomLeft =
+    Value "to bottom left"
+
+
+{-| Provides the [`to bottom right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toRight`](#toRight) instead:
+
+    linearGradient toBottom (stop red) (stop blue) []
+
+    linearGradient toRight (stop red) (stop blue) []
+
+-}
+toBottomRight : Value { provides | toBottomRight : Supported }
+toBottomRight =
+    Value "to bottom right"
+
+
+{-| Provides the [`to left` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toBottomLeft`](#toBottomLeft):
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+-}
+toLeft : Value { provides | toLeft : Supported }
+toLeft =
+    Value "to left"
+
+
+{-| Provides the [`to right` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toRight (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopRight`](#toTopRight) or [`toBottomRight`](#toBottomRight):
+
+    linearGradient toTopRight (stop red) (stop blue) []
+
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+-}
+toRight : Value { provides | toRight : Supported }
+toRight =
+    Value "to right"
+
+
+{-| Provides the [`to top` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTop (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toTopRight`](#toTopRight):
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+
+    linearGradient toTopRight (stop red) (stop blue) []
+
+-}
+toTop : Value { provides | toTop : Supported }
+toTop =
+    Value "to top"
+
+
+{-| Provides the [`to top left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toLeft`](#toLeft) instead:
+
+    linearGradient toTop (stop red) (stop blue) []
+
+    linearGradient toLeft (stop red) (stop blue) []
+
+-}
+toTopLeft : Value { provides | toTopLeft : Supported }
+toTopLeft =
+    Value "to top left"
+
+
+{-| Provides the [`to top right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTopRight (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toRight`](#toRight) instead:
+
+    linearGradient toTop (stop red) (stop blue) []
+
+    linearGradient toRight (stop red) (stop blue) []
+
+-}
+toTopRight : Value { provides | toTopRight : Supported }
+toTopRight =
+    Value "to top right"
+
+
+-- TEXT ORIENTATION --
+
+
+{-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
+
+    textOrientation sideways
+
+    textOrientation upright
+
+-}
+textOrientation :
+    BaseValue
+        { mixed : Supported
+        , sideways : Supported
+        , sidewaysRight : Supported
+        , upright : Supported
+        , useGlyphOrientation : Supported
+        }
+    -> Style
+textOrientation (Value str) =
+    AppendProperty ("text-orientation:" ++ str)
+
+
+{-| A `mixed` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation mixed
+
+-}
+mixed : Value { provides | mixed : Supported }
+mixed =
+    Value "mixed"
+
+
+{-| A `sideways` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation sideways
+
+-}
+sideways : Value { provides | sideways : Supported }
+sideways =
+    Value "sideways"
+
+
+{-| A `sideways-right` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation sidewaysRight
+
+-}
+sidewaysRight : Value { provides | sidewaysRight : Supported }
+sidewaysRight =
+    Value "sideways-right"
+
+
+{-| A `upright` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation upright
+
+-}
+upright : Value { provides | upright : Supported }
+upright =
+    Value "upright"
+
+
+{-| A `use-glyph-orientation` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation useGlyphOrientation
+
+-}
+useGlyphOrientation : Value { provides | useGlyphOrientation : Supported }
+useGlyphOrientation =
+    Value "use-glyph-orientation"
+
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+--------------------------- TEXT RENDERING -----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/).
+
+    textRendering geometricPrecision
+
+    textRendering optimizeSpeed
+
+-}
+textRendering :
+    BaseValue
+        { auto : Supported
+        , geometricPrecision : Supported
+        , optimizeLegibility : Supported
+        , optimizeSpeed : Supported
+        }
+    -> Style
+textRendering (Value str) =
+    AppendProperty ("text-rendering:" ++ str)
+
+
+{-| A `geometricPrecision` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering geometricPrecision
+
+-}
+geometricPrecision : Value { provides | geometricPrecision : Supported }
+geometricPrecision =
+    Value "geometricPrecision"
+
+
+{-| An `optimizeLegibility` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering optimizeLegibility
+
+-}
+optimizeLegibility : Value { provides | optimizeLegibility : Supported }
+optimizeLegibility =
+    Value "optimizeLegibility"
+
+
+{-| An `optimizeSpeed` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering optimizeSpeed
+
+-}
+optimizeSpeed : Value { provides | optimizeSpeed : Supported }
+optimizeSpeed =
+    Value "optimizeSpeed"
 
 
 
@@ -17437,13 +17441,7 @@ backwards =
 
 
 
-{-| Named after the hash mark in the CSS specification [CSS-VALUES-3].
--}
-hashListToString : Value a -> List (Value a) -> String
-hashListToString head rest =
-    (head :: rest)
-        |> List.map unpackValue
-        |> String.join ","
+
 
 
 {-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
