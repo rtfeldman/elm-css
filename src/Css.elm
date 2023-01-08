@@ -232,6 +232,8 @@ module Css exposing
     , textUnderlinePosition, textUnderlinePosition2
     , textOrientation
     , mixed, sideways, sidewaysRight, upright, useGlyphOrientation
+    , wordBreak
+    , breakAll, keepAll
 
     -- script handling
     , direction, ltr, rtl
@@ -255,70 +257,6 @@ module Css exposing
     , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
     , TextShadowConfig, textShadow, defaultTextShadow
     , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-
-
-    -- ??
-    , wordSpacing
-    , tabSize
-    , fontDisplay, fallback, swap, optional
-    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
-    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
-    , lineClamp
-    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
-    
-    -- ??
-    , borderCollapse
-    , collapse, separate
-    , borderSpacing, borderSpacing2
-    , captionSide
-    , emptyCells
-    , show, hide
-    , tableLayout
-    , verticalAlign
-    , textTop, textBottom, middle
-    , whiteSpace
-    , pre, preWrap, preLine
-    , wordBreak
-    , breakAll, keepAll
-    , float
-    , clear
-    , visibility
-    , fill
-
-    -- ??
-    , strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
-    , strokeLinecap, butt, square
-    , strokeBreak, boundingBox, slice, clone
-    , strokeOrigin
-    , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
-    , strokeDashJustify, compress, dashes, gaps
-
-    -- ??
-    , paintOrder, paintOrder2, paintOrder3, markers
-
-    -- ??
-    , columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
-    , columnFill, balance, balanceAll
-    , columnSpan
-
-    -- transformations and perspective
-    , transform, transforms, transformOrigin, transformOrigin2, transformBox
-    , TransformFunction, TransformFunctionSupported
-    , matrix, matrix3d
-    , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
-    , skew, skew2, skewX, skewY
-    , rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3
-    , translate, translate2, translateX, translateY, translateZ, translate3d
-    , perspective, perspectiveOrigin, perspectiveOrigin2
-    , perspective_
-    
-    -- animation?
-    , animationName, animationNames, animationDuration, animationDurations, animationTimingFunction, animationTimingFunctions, animationIterationCount, animationIterationCounts, animationDirection, animationDirections, animationPlayState, animationPlayStates, animationDelay, animationDelays, animationFillMode, animationFillModes
-    , EasingFunction, EasingFunctionSupported, linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
-
-    -- ??
-    , opacity
-    , zoom
 
     -- break (page break)
     , breakBefore, breakAfter, breakInside, avoid, avoidPage, avoidColumn, page
@@ -344,6 +282,101 @@ module Css exposing
     , overscrollBehaviorX, overscrollBehaviorY
     , overscrollBehaviorBlock, overscrollBehaviorInline
     
+    -- transformations and perspective
+    , TransformFunction, TransformFunctionSupported
+    , transform, transforms, transformOrigin, transformOrigin2, transformBox
+    , matrix, matrix3d
+    , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
+    , skew, skew2, skewX, skewY
+    , rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3
+    , translate, translate2, translateX, translateY, translateZ, translate3d
+    , perspective, perspectiveOrigin, perspectiveOrigin2
+    , perspective_
+    
+    -- animation
+    , animationName, animationNames
+    , animationDuration, animationDurations
+    , animationTimingFunction, animationTimingFunctions
+    , animationIterationCount, animationIterationCounts
+    , animationDirection, animationDirections
+    , animationPlayState, animationPlayStates
+    , animationDelay, animationDelays
+    , animationFillMode, animationFillModes
+    , EasingFunction, EasingFunctionSupported
+    , linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
+
+    -- masks
+    , maskBorderMode
+    , maskBorderRepeat, maskBorderRepeat2
+    , maskBorderOutset, maskBorderOutset2, maskBorderOutset3, maskBorderOutset4
+    , maskBorderSlice, maskBorderSlice2, maskBorderSlice3, maskBorderSlice4
+    , maskBorderWidth, maskBorderWidth2, maskBorderWidth3, maskBorderWidth4
+    , maskClip, maskClipList
+    , maskComposite
+    , maskMode, maskModeList
+    , maskOrigin, maskOriginList
+    , maskPosition
+    , maskRepeat, maskRepeat2
+    , maskSize, maskSize2
+    , maskType
+    , noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
+
+    -- ??
+    , wordSpacing
+    , tabSize
+    , fontDisplay, fallback, swap, optional
+    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
+    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
+    , lineClamp
+    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
+    
+    -- tables
+    , borderCollapse
+    , collapse, separate
+    , borderSpacing, borderSpacing2
+    , captionSide
+    , emptyCells
+    , show, hide
+    , tableLayout
+
+
+    , verticalAlign
+    , textTop, textBottom, middle
+    , whiteSpace
+    , pre, preWrap, preLine
+
+    , float
+    , clear
+    , visibility
+    , fill
+
+    -- ??
+    , strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
+    , strokeLinecap, butt, square
+    , strokeBreak, boundingBox, slice, clone
+    , strokeOrigin
+    , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
+    , strokeDashJustify, compress, dashes, gaps
+
+    -- ??
+    , paintOrder, paintOrder2, paintOrder3, markers
+
+    -- ??
+    , columns, columns2
+    , columnWidth
+    , columnCount
+    , columnRule, columnRule2, columnRule3
+    , columnRuleWidth
+    , columnRuleStyle
+    , columnRuleColor
+    , columnFill
+    , balance, balanceAll
+    , columnSpan
+
+    -- ??
+    , opacity
+    , zoom
+    
     -- ??
     , speak, spellOut
     , userSelect
@@ -356,9 +389,6 @@ module Css exposing
     , objectPosition, objectPosition2, objectPosition4
     , boxDecorationBreak
     , clipPath, clipPath2
-    , maskBorderMode, maskBorderRepeat, maskBorderRepeat2, maskBorderOutset, maskBorderOutset2, maskBorderOutset3, maskBorderOutset4, maskBorderSlice, maskBorderSlice2, maskBorderSlice3, maskBorderSlice4, maskBorderWidth, maskBorderWidth2, maskBorderWidth3, maskBorderWidth4
-    , maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
-    , noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
     , caretColor
     , resize, horizontal, vertical
     , contain, contain2, contain3, contain4, size, layout, paint
@@ -14143,6 +14173,46 @@ useGlyphOrientation =
     Value "use-glyph-orientation"
 
 
+{-| Sets [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/)
+
+      wordBreak normal
+      wordBreak breakAll
+      wordBreak keepAll
+      wordBreak breakWord
+
+-}
+wordBreak :
+    BaseValue
+        { normal : Supported
+        , breakAll : Supported
+        , keepAll : Supported
+        , breakWord : Supported
+        }
+    -> Style
+wordBreak (Value str) =
+    AppendProperty ("word-break:" ++ str)
+
+
+{-| A `breakAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
+
+      wordBreak breakAll
+
+-}
+breakAll : Value { provides | breakAll : Supported }
+breakAll =
+    Value "break-all"
+
+
+{-| A `keepAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
+
+      wordBreak keepAll
+
+-}
+keepAll : Value { provides | keepAll : Supported }
+keepAll =
+    Value "keep-all"
+
+
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -15247,1427 +15317,1175 @@ toTopRight =
     Value "to top right"
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------- BREAK (PAGE BREAK) --------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
+{-| Sets [`break-before`](https://css-tricks.com/almanac/properties/b/break-before/).
 
-
-
-
-
-
-
-
-
-
-
-
-{-| Sets [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/).
-
-    borderCollapse collapse
-
-    borderCollapse separate
-
+    breakBefore auto
 -}
-borderCollapse :
-    BaseValue
-        { collapse : Supported
-        , separate : Supported
-        }
-    -> Style
-borderCollapse (Value str) =
-    AppendProperty ("border-collapse:" ++ str)
-
-
-{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) and
-[`visibility`](https://css-tricks.com/almanac/properties/v/visibility/) property.
-
-    borderCollapse collapse
-
-    visibility collapse
-
--}
-collapse : Value { provides | collapse : Supported }
-collapse =
-    Value "collapse"
-
-
-{-| A `separate` value for the [`border-separate`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
-
-    borderCollapse separate
-
--}
-separate : Value { provides | separate : Supported }
-separate =
-    Value "separate"
-
-
-
--- BORDER SPACING --
-
-
-{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing).
-
-    borderSpacing zero
-
-    borderSpacing (px 5)
-
--}
-borderSpacing : BaseValue Length -> Style
-borderSpacing (Value str) =
-    AppendProperty ("border-spacing:" ++ str)
-
-
-{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing), defining horizontal and vertical spacing separately.
-
-    borderSpacing2 (cm 1) (em 2)
-
--}
-borderSpacing2 : Value Length -> Value Length -> Style
-borderSpacing2 (Value valHorizontal) (Value valVertical) =
-    AppendProperty ("border-spacing:" ++ valHorizontal ++ " " ++ valVertical)
-
-
-
--- CAPTION SIDE --
-
-
-{-| Sets [`caption-side`](https://css-tricks.com/almanac/properties/c/caption-side/).
-
-    captionSide top_
-
-    captionSide bottom_
-
-    captionSide blockStart
-
-    captionSide inlineEnd
-
--}
-captionSide :
-    BaseValue
-        { top_ : Supported
-        , bottom_ : Supported
-        , blockStart : Supported
-        , blockEnd : Supported
-        , inlineStart : Supported
-        , inlineEnd : Supported
-        }
-    -> Style
-captionSide (Value str) =
-    AppendProperty ("caption-side:" ++ str)
-
-
-
--- EMPTY CELLS --
-
-
-{-| Sets [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/).
-
-    emptyCells show
-
-    emptyCells hide
-
--}
-emptyCells :
-    BaseValue
-        { show : Supported
-        , hide : Supported
-        }
-    -> Style
-emptyCells (Value str) =
-    AppendProperty ("empty-cells:" ++ str)
-
-
-{-| A `show` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
-
-    emptyCells show
-
--}
-show : Value { provides | show : Supported }
-show =
-    Value "show"
-
-
-{-| A `hide` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
-
-    emptyCells hide
-
--}
-hide : Value { provides | hide : Supported }
-hide =
-    Value "hide"
-
-
-
--- TABLE LAYOUT --
-
-
-{-| Sets [`table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
-
-    tableLayout auto
-
-    tableLayout fixed
-
--}
-tableLayout :
+breakBefore :
     BaseValue
         { auto : Supported
-        , fixed : Supported
-        }
-    -> Style
-tableLayout (Value str) =
-    AppendProperty ("table-layout:" ++ str)
-
-
-
--- VERTICAL ALIGN
-
-
-{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
-
-    verticalAlign textBottom
-
-    verticalAlign (em 1)
-
--}
-verticalAlign :
-    BaseValue
-        (LengthSupported
-            { baseline : Supported
-            , sub : Supported
-            , super : Supported
-            , textTop : Supported
-            , textBottom : Supported
-            , middle : Supported
-            , top_ : Supported
-            , bottom_ : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-verticalAlign (Value str) =
-    AppendProperty ("vertical-align:" ++ str)
-
-
-{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign textTop
-
--}
-textTop : Value { provides | textTop : Supported }
-textTop =
-    Value "text-top"
-
-
-{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign textBottom
-
--}
-textBottom : Value { provides | textBottom : Supported }
-textBottom =
-    Value "text-bottom"
-
-
-{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign middle
-
--}
-middle : Value { provides | middle : Supported }
-middle =
-    Value "middle"
-
-
--- WHITE-SPACE --
-
-
-{-| Sets [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
-
-    whiteSpace pre
-
-    whiteSpace nowrap
-
-    whiteSpace preWrap
-
-    whiteSpace preLine
-
--}
-whiteSpace :
-    BaseValue
-        { normal : Supported
-        , nowrap : Supported
-        , pre : Supported
-        , preWrap : Supported
-        , preLine : Supported
-        }
-    -> Style
-whiteSpace (Value str) =
-    AppendProperty ("white-space:" ++ str)
-
-
-{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
-and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
-
-    whiteSpace nowrap
-
-    flexWrap nowrap
-
--}
-nowrap : Value { provides | nowrap : Supported }
-nowrap =
-    Value "nowrap"
-
-
-{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace pre
-
--}
-pre : Value { provides | pre : Supported }
-pre =
-    Value "pre"
-
-
-{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace preWrap
-
--}
-preWrap : Value { provides | preWrap : Supported }
-preWrap =
-    Value "pre-wrap"
-
-
-{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace preLine
-
--}
-preLine : Value { provides | preLine : Supported }
-preLine =
-    Value "pre-line"
-
-
-
---- WORD-BREAK ---
-
-
-{-| Sets [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/)
-
-      wordBreak normal
-      wordBreak breakAll
-      wordBreak keepAll
-      wordBreak breakWord
-
--}
-wordBreak :
-    BaseValue
-        { normal : Supported
-        , breakAll : Supported
-        , keepAll : Supported
-        , breakWord : Supported
-        }
-    -> Style
-wordBreak (Value str) =
-    AppendProperty ("word-break:" ++ str)
-
-
-{-| A `breakAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
-
-      wordBreak breakAll
-
--}
-breakAll : Value { provides | breakAll : Supported }
-breakAll =
-    Value "break-all"
-
-
-{-| A `keepAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
-
-      wordBreak keepAll
-
--}
-keepAll : Value { provides | keepAll : Supported }
-keepAll =
-    Value "keep-all"
-
-
-
--- FLOAT --
-
-
-{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
-
-    float none
-
-    float left_
-
-    float right_
-
-    float inlineStart
-
--}
-float :
-    BaseValue
-        { none : Supported
+        , always : Supported
+        , avoid : Supported
+        , all : Supported
+        , avoidPage : Supported
+        , page : Supported
         , left_ : Supported
         , right_ : Supported
-        , inlineStart : Supported
-        , inlineEnd : Supported
+        , avoidColumn : Supported
+        , column : Supported
         }
     -> Style
-float (Value str) =
-    AppendProperty ("float:" ++ str)
+breakBefore (Value val) =
+    AppendProperty ("break-before:" ++ val)
 
 
+{-| Sets [`break-after`](https://css-tricks.com/almanac/properties/b/break-after/).
 
--- VISIBILITY --
-
-
-{-| Sets [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/)
-
-      visibility visible
-      visibility hidden
-      visibility collapse
-
+    breakAfter auto
 -}
-visibility :
-    BaseValue
-        { visible : Supported
-        , hidden : Supported
-        , collapse : Supported
-        }
-    -> Style
-visibility (Value str) =
-    AppendProperty ("visibility:" ++ str)
-
-
-
--- ORDER --
-
-
-{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
-
-    order (num 2)
-
-    order (num -2)
-
--}
-order :
-    BaseValue
-        { int : Supported
-        , zero : Supported
-        }
-    -> Style
-order (Value val) =
-    AppendProperty ("order:" ++ val)
-
-
-{-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
-**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
-
-    fill (hex "#60b5cc")
-
-    fill (rgb 96 181 204)
-
-    fill (rgba 96 181 204 0.5)
-
-    fill (url "#pattern")
-
--}
-fill :
-    BaseValue
-        (ColorSupported
-            { url : Supported
-            }
-        )
-    -> Style
-fill (Value val) =
-    AppendProperty ("fill:" ++ val)
-
-
-
--- COLUMNS --
-
-
-{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
-
-    columns (px 300)
-
-    columns2 (px 300) (num 2)
-
--}
-columns :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-columns (Value widthVal) =
-    AppendProperty ("columns:" ++ widthVal)
-
-
-{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
-
-    columns (px 300)
-
-    columns2 (px 300) (num 2)
-
--}
-columns2 :
-    Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    ->
-        Value
-            { auto : Supported
-            , num : Supported
-            }
-    -> Style
-columns2 (Value widthVal) (Value count) =
-    AppendProperty ("columns:" ++ widthVal ++ " " ++ count)
-
-
-{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
-
-    columnWidth auto
-
-    columnWidth (px 200)
-
--}
-columnWidth :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-columnWidth (Value widthVal) =
-    AppendProperty ("column-width:" ++ widthVal)
-
-
-{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
-
-    columnCount auto
-
-    columnCount (num 3)
-
--}
-columnCount :
+breakAfter :
     BaseValue
         { auto : Supported
-        , int : Supported
+        , always : Supported
+        , avoid : Supported
+        , all : Supported
+        , avoidPage : Supported
+        , page : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , avoidColumn : Supported
+        , column : Supported
         }
     -> Style
-columnCount (Value count) =
-    AppendProperty ("column-count:" ++ count)
+breakAfter (Value val) =
+    AppendProperty ("break-after:" ++ val)
 
 
-{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
+{-| Sets [`break-inside`](https://css-tricks.com/almanac/properties/b/break-inside/)
 
-    columnFill auto
+    breakInside auto
 
-    columnFill balance
+    breakInside avoid
 
-    columnFill balanceAll
+    breakInside avoidPage
+
+    breakInside avoidColumn
 
 -}
-columnFill :
+breakInside :
     BaseValue
         { auto : Supported
-        , balance : Supported
-        , balanceAll : Supported
+        , avoid : Supported
+        , avoidPage : Supported
+        , avoidColumn : Supported
         }
     -> Style
-columnFill (Value val) =
-    AppendProperty ("column-fill:" ++ val)
+breakInside (Value val) =
+    AppendProperty ("break-inside:" ++ val)
 
 
-{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
 
-    columnFill balance
+{-| Sets `avoid` value for usage with [`breakAfter`](#breakAfter),
+[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
 
--}
-balance : Value { provides | balance : Supported }
-balance =
-    Value "balance"
+    breakBefore avoid
 
+    breakAfter avoid
 
-{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
-
-    columnFill balanceAll
+    breakInside avoid
 
 -}
-balanceAll : Value { provides | balanceAll : Supported }
-balanceAll =
-    Value "balance-all"
+avoid : Value { provides | avoid : Supported }
+avoid =
+    Value "avoid"
 
 
-{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
+{-| Sets `avoid-page` value for usage with [`breakAfter`](#breakAfter),
+[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
 
-    columnSpan all_
+    breakBefore avoidPage
 
-    columnSpan none
+    breakAfter avoidPage
+
+    breakInside avoidPage
 
 -}
-columnSpan :
+avoidPage : Value { provides | avoidPage : Supported }
+avoidPage =
+    Value "avoid-page"
+
+
+{-| Sets `avoid-column` value for usage with [`breakAfter`](#breakAfter),
+[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
+
+    breakBefore avoidColumn
+
+    breakAfter avoidColumn
+
+    breakInside avoidColumn
+
+-}
+avoidColumn : Value { provides | avoidColumn : Supported }
+avoidColumn =
+    Value "avoid-column"
+
+
+
+{-| Sets `page` value for usage with [`breakAfter`](#breakAfter) and
+[`breakBefore`](#breakBefore).
+
+    breakBefore page
+
+    breakAfter page
+
+-}
+page : Value { provides | page : Supported }
+page =
+    Value "page"
+
+
+{-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+**This property has been depreciated and replaced with
+[`breakBefore`](#breakBefore), but is still included for backwards
+compatibility.**
+
+    pageBreakBefore auto
+
+    pageBreakBefore always
+
+    pageBreakBefore avoid
+
+    pageBreakBefore left_
+
+    pageBreakBefore right_
+
+-}
+pageBreakBefore :
     BaseValue
-        { none : Supported
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , left_ : Supported
+        , right_ : Supported
+        }
+    -> Style
+pageBreakBefore (Value val) =
+    AppendProperty ("page-break-before:" ++ val)
+
+
+{-| Sets [`page-break-after`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+**This property has been depreciated and replaced with
+[`breakAfter`](#breakAfter), but is still included for backwards
+compatibility.**
+
+    pageBreakAfter auto
+
+    pageBreakAfter always
+
+    pageBreakAfter avoid
+
+    pageBreakAfter left_
+
+    pageBreakAfter right_
+
+-}
+pageBreakAfter :
+    BaseValue
+        { auto : Supported
+        , always : Supported
+        , avoid : Supported
+        , left_ : Supported
+        , right_ : Supported
+        }
+    -> Style
+pageBreakAfter (Value val) =
+    AppendProperty ("page-break-after:" ++ val)
+
+
+{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/p/page-break/)
+
+    pageBreakInside auto
+
+    pageBreakInside avoid
+
+-}
+pageBreakInside :
+    BaseValue
+        { auto : Supported
+        , avoid : Supported
+        }
+    -> Style
+pageBreakInside (Value val) =
+    AppendProperty ("page-break-inside:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------------- POINTER-EVENTS-----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`pointer-events`](https://css-tricks.com/almanac/properties/b/pointer-events/)
+
+    pointerEvents none
+
+    pointerEvents auto
+
+-}
+pointerEvents :
+    BaseValue
+        { auto : Supported
+        , none : Supported
+        , visiblePainted : Supported
+        , visibleFill : Supported
+        , visibleStroke : Supported
+        , visible : Supported
+        , painted : Supported
+        , fill_ : Supported
+        , stroke : Supported
         , all_ : Supported
         }
     -> Style
-columnSpan (Value spanVal) =
-    AppendProperty ("column-span:" ++ spanVal)
+pointerEvents (Value val) =
+    AppendProperty ("pointer-events:" ++ val)
 
 
-{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
+{-| The `visiblePainted` value used by [`pointerEvents`](#pointerEvents)
 
-    columnRuleWidth thin
-
-    columnRuleWidth (px 2)
+    pointerEvents visiblePainted
 
 -}
-columnRuleWidth : BaseValue LineWidth -> Style
-columnRuleWidth (Value widthVal) =
-    AppendProperty ("column-rule-width:" ++ widthVal)
+visiblePainted : Value { provides | visiblePainted : Supported }
+visiblePainted =
+    Value "visiblePainted"
 
 
-{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
+{-| The `visibleFill` value used by [`pointerEvents`](#pointerEvents)
 
-    columnRuleStyle solid
-
-    columnRuleStyle dotted
-
-    columnRuleStyle dashed
+    pointerEvents visibleFill
 
 -}
-columnRuleStyle : BaseValue LineStyle -> Style
-columnRuleStyle (Value styleVal) =
-    AppendProperty ("column-rule-style:" ++ styleVal)
+visibleFill : Value { provides | visibleFill : Supported }
+visibleFill =
+    Value "visibleFill"
 
 
-{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
+{-| The `visibleStroke` value used by [`pointerEvents`](#pointerEvents)
 
-    columnRuleColor (rgb 0 0 0)
-
-    columnRuleColor (hex "#fff")
+    pointerEvents visibleStroke
 
 -}
-columnRuleColor : BaseValue Color -> Style
-columnRuleColor (Value colorVal) =
-    AppendProperty ("column-rule-color:" ++ colorVal)
+visibleStroke : Value { provides | visibleStroke : Supported }
+visibleStroke =
+    Value "visibleStroke"
 
 
--- STROKE --
+{-| The `painted` value used by [`pointerEvents`](#pointerEvents)
 
-
-{-| Sets [`stroke-dasharray`](https://css-tricks.com/almanac/properties/s/stroke-dasharray/)
-
-    strokeDasharray (num 2)
-
-    strokeDasharray (num 2.5)
-
-    strokeDasharray (em 2)
-
-    strokeDasharray (pct 15)
+    pointerEvents painted
 
 -}
-strokeDasharray :
+painted : Value { provides | painted : Supported }
+painted =
+    Value "painted"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ SCROLLING ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets `smooth` value for usage with [`scrollBehavior`](#scrollBehavior).
+
+    scrollBehavior smooth
+
+-}
+smooth : Value { provides | smooth : Supported }
+smooth =
+    Value "smooth"
+
+
+{-| Sets the
+[`scrollbar-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color) property.
+
+    scrollbarColor auto
+
+    scrollbarColor (hex "f35d93")
+-}
+scrollbarColor :
     BaseValue
-        (LengthSupported
-            { num : Supported
-            , pct : Supported
+        ( ColorSupported
+            { auto : Supported
             }
         )
     -> Style
-strokeDasharray (Value val) =
-    AppendProperty ("stroke-dasharray:" ++ val)
+scrollbarColor (Value val) =
+    AppendProperty ("scrollbar-color:" ++ val)
 
 
-{-| Sets [`stroke-dashoffset`](https://css-tricks.com/almanac/properties/s/stroke-dashoffset/)
+{-| Sets the [`scrollbar-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width) property.
 
-    strokeDashoffset zero
+    scrollbarWidth auto
 
-    strokeDashoffset (num 100)
-
-    strokeDashoffset (pct 25)
-
+    scrollbarWidth thin
 -}
-strokeDashoffset :
+scrollbarWidth :
     BaseValue
-        { zero : Supported
-        , calc : Supported
-        , num : Supported
-        , pct : Supported
-        }
-    -> Style
-strokeDashoffset (Value val) =
-    AppendProperty ("stroke-dashoffset:" ++ val)
-
-
-{-| Sets [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/)
-
-    strokeLinecap butt
-
-    strokeLinecap square
-
-    strokeLinecap round
-
--}
-strokeLinecap :
-    BaseValue
-        { butt : Supported
-        , square : Supported
-        , round : Supported
-        }
-    -> Style
-strokeLinecap (Value val) =
-    AppendProperty ("stroke-linecap:" ++ val)
-
-
-{-| A `butt` value for the [`strokeLinecap`](#strokeLinecap) property.
-
-    strokeLinecap butt
-
--}
-butt : Value { provides | butt : Supported }
-butt =
-    Value "butt"
-
-
-{-| The `square` value used by properties such as [`strokeLinecap`](#strokeLinecap),
-[`listStyle`](#listStyle),
-and [`listStyleType`](#listStyleType).
-
-    strokeLinecap square
-
-    listStyleType square
-
--}
-square : Value { provides | square : Supported }
-square =
-    Value "square"
-
-
-{-| Sets [`stroke-width`](https://css-tricks.com/almanac/properties/s/stroke-width/)
-
-    strokeWidth zero
-
-    strokeWidth (px 2)
-
-    strokeWidth (em 2)
-
-    strokeWidth (num 2)
-
-    strokeWidth (num 2.5)
-
-    strokeWidth (pct 15)
-
--}
-strokeWidth :
-    BaseValue
-        (LengthSupported
-            { num : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-strokeWidth (Value val) =
-    AppendProperty ("stroke-width:" ++ val)
-
-
-{-| Sets [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align)
-
-**Note:** This function accepts `inset_` rather than `inset` because
-[`inset` is already a property function](#inset).
-
-      strokeAlign center
-      strokeAlign inset_
-      strokeAlign outset
-
--}
-strokeAlign :
-    BaseValue
-        { center : Supported
-        , inset_ : Supported
-        , outset : Supported
-        }
-    -> Style
-strokeAlign (Value val) =
-    AppendProperty ("stroke-align:" ++ val)
-
-
-{-| Sets [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break)
-
-      strokeBreak boundingBox
-      strokeBreak slice
-      strokeBreak clone
-
--}
-strokeBreak :
-    BaseValue
-        { boundingBox : Supported
-        , slice : Supported
-        , clone : Supported
-        }
-    -> Style
-strokeBreak (Value val) =
-    AppendProperty ("stroke-break:" ++ val)
-
-
-{-| A `boundingBox` value for the [`strokeBreak`](#strokeBreak) property.
-
-      strokeBreak boundingBox
-
--}
-boundingBox : Value { provides | boundingBox : Supported }
-boundingBox =
-    Value "bounding-box"
-
-
-{-| A `slice` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
-
-      strokeBreak slice
-
-      boxDecorationbreak clone
-
--}
-slice : Value { provides | slice : Supported }
-slice =
-    Value "slice"
-
-
-{-| A `clone` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
-
-      strokeBreak clone
-
-      boxDecorationBreak clone
-
--}
-clone : Value { provides | clone : Supported }
-clone =
-    Value "clone"
-
-
-{-| Sets [`stroke-color`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-color)
-
-    strokeColor (rgb 0 100 44)
-
-    strokeColor (hex "#FF9E2C")
-
--}
-strokeColor : BaseValue Color -> Style
-strokeColor (Value val) =
-    AppendProperty ("stroke-color:" ++ val)
-
-
-{-| Sets [`stroke-image`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-image)
-
-    strokeImage (url "#svg-pattern")
-
-    strokeImage (url "http://www.example.com/chicken.jpg")
-
--}
-strokeImage :
-    BaseValue
-        { url : Supported
+        { auto : Supported
+        , thin : Supported
         , none : Supported
         }
     -> Style
-strokeImage (Value value) =
-    AppendProperty ("stroke-image:" ++ value)
+scrollbarWidth (Value val) =
+    AppendProperty ("scrollbar-width:" ++ val)
 
 
-{-| Sets [`stroke-miterlimit`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-miterlimit)
+{-| Sets [`scroll-behavior`](https://css-tricks.com/almanac/properties/s/scroll-behavior/)
 
-    strokeMiterlimit (num 4)
+    scrollBehavior auto
+
+    scrollBehavior smooth
 
 -}
-strokeMiterlimit :
+scrollBehavior :
     BaseValue
-        { num : Supported
+        { auto : Supported
+        , smooth : Supported
         }
     -> Style
-strokeMiterlimit (Value val) =
-    AppendProperty ("stroke-miterlimit:" ++ val)
+scrollBehavior (Value val) =
+    AppendProperty ("scroll-behavior:" ++ val)
 
 
-{-| Sets [`stroke-opacity`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-opacity)
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    strokeOpacity (num 0.5)
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom margins are set to the first value and the right and
+left margins are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
+
+    scrollMargin (em 4) -- set all margins to 4em
+
+    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
+
+    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
 
 -}
-strokeOpacity :
+scrollMargin :
     BaseValue
-        { num : Supported
-        }
+        Length
     -> Style
-strokeOpacity (Value val) =
-    AppendProperty ("stroke-opacity:" ++ val)
+scrollMargin (Value value) =
+    AppendProperty ("scroll-margin:" ++ value)
 
 
-{-| Sets [`stroke-origin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-origin)
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin2` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    strokeOrign matchParent
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
 
-    strokeOrign fillBox
-
-    strokeOrign strokeBox
-
-    strokeOrign contentBox
-
-    strokeOrign paddingBox
-
-    strokeOrign borderBox
+    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
 -}
-strokeOrigin :
-    BaseValue
-        { matchParent : Supported
-        , fillBox : Supported
-        , strokeBox : Supported
-        , contentBox : Supported
-        , paddingBox : Supported
-        , borderBox : Supported
-        }
-    -> Style
-strokeOrigin (Value val) =
-    AppendProperty ("stroke-origin:" ++ val)
-
-
-
-{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
-
-    strokePosition left_
-
-    strokePosition (px 45)
-
-`strokePosition` sets the horizontal direction. If you need the vertical
-direction instead, use [`strokePosition2`](#strokePosition2) like this:
-
-    strokePosition zero (px 45)
-
-If you need to set the offsets from the right or bottom, use
-[`strokePosition4`](#strokePosition4) like this:
-
-    strokePosition4 right_ (px 20) bottom_ (pct 25)
-
--}
-strokePosition :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , left_ : Supported
-            , right_ : Supported
-            , center : Supported
-            }
-        )
-    -> Style
-strokePosition (Value horiz) =
-    AppendProperty ("stroke-position:" ++ horiz)
-
-
-{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
-
-    strokePosition2 left_ top_
-
-    strokePosition2 (px 45) (pct 50)
-
-`strokePosition2` sets both the horizontal and vertical directions (in that
-order, same as CSS.) If you need only the horizontal, you can use
-[`strokePosition`](#strokePosition) instead:
-
-    strokePosition left_
-
-If you need to set the offsets from the right or bottom, use
-[`strokePosition4`](#strokePosition4) like this:
-
-    strokePosition4 right_ (px 20) bottom_ (pct 25)
-
--}
-strokePosition2 :
+scrollMargin2 :
     Value
-        (LengthSupported
-            { pct : Supported
-            , left_ : Supported
-            , right_ : Supported
-            , center : Supported
-            }
-        )
+        Length
     ->
         Value
-            (LengthSupported
-                { pct : Supported
-                , top_ : Supported
-                , bottom_ : Supported
-                , center : Supported
-                }
-            )
+            Length
     -> Style
-strokePosition2 (Value horiz) (Value vert) =
-    AppendProperty ("stroke-position:" ++ horiz ++ " " ++ vert)
+scrollMargin2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("scroll-margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
 
 
-{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin3` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    strokePosition4 right_ (px 20) bottom_ (pct 30)
+The top margin is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
 
-The four-argument form of stroke-position alternates sides and offets. So the
-example above would position the stroke-image 20px from the right, and 30%
-from the bottom.
-
-See also [`strokePosition`](#strokePosition) for horizontal alignment and
-[`strokePosition2`](#strokePosition2) for horizontal (from left) and
-vertical (from top) alignment.
+    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
 
 -}
-strokePosition4 :
+scrollMargin3 :
     Value
-        { left_ : Supported
-        , right_ : Supported
-        }
+        Length
     ->
         Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
+            Length
     ->
         Value
-            { top_ : Supported
-            , bottom_ : Supported
-            }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
+            Length
     -> Style
-strokePosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
-    AppendProperty
-        ("stroke-position:"
-            ++ horiz
-            ++ " "
-            ++ horizAmount
-            ++ " "
-            ++ vert
-            ++ " "
-            ++ vertAmount
-        )
+scrollMargin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
 
 
-{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat)
+{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+The `scrollMargin4` property is a shorthand property for setting
+`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
+and `scroll-margin-left` in a single declaration.
 
-    strokeRepeat repeat
+The four values apply to the top, right, bottom, and left margins.
 
-    strokeRepeat repeatX
-
-If you need to set horizontal and vertical direction separately, see
-[`strokeRepeat2`](#strokeRepeat2)
+    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
 
 -}
-strokeRepeat :
-    BaseValue
-        { repeat : Supported
-        , repeatX : Supported
-        , repeatY : Supported
-        , space : Supported
-        , round : Supported
-        , noRepeat : Supported
-        }
-    -> Style
-strokeRepeat (Value repeatVal) =
-    AppendProperty ("stroke-repeat:" ++ repeatVal)
-
-
-{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat) along the horizontal axis, then the vertical axis.
-
-    strokeRepeat2 repeat space
-
-    strokeRepeat2 space round
-
-If you only need to set one value for both, see
-[`strokeRepeat`](#strokeRepeat) instead.
-
--}
-strokeRepeat2 :
+scrollMargin4 :
     Value
-        { repeat : Supported
-        , space : Supported
-        , round : Supported
-        , noRepeat : Supported
-        }
+        Length
     ->
         Value
-            { repeat : Supported
-            , space : Supported
-            , round : Supported
-            , noRepeat : Supported
-            }
+            Length
+    ->
+        Value
+            Length
+    ->
+        Value
+            Length
     -> Style
-strokeRepeat2 (Value horiz) (Value vert) =
-    AppendProperty ("stroke-repeat:" ++ horiz ++ " " ++ vert)
+scrollMargin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
 
 
-{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+{-| Sets [`scroll-margin-top`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
 
-    strokeSize cover
-
-    strokeSize (px 400)
-
-If you give a length value, it will be used for the width. The height will be set
-proportional to the size of the [`stroke-image`](#strokeImage). If you
-need to set both width and height explicitly, use
-[`strokeImage2`](#strokeImage2) instead.
+    scrollMarginTop (px 4)
 
 -}
-strokeSize :
+scrollMarginTop :
     BaseValue
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            , cover : Supported
-            }
-        )
+        Length
     -> Style
-strokeSize (Value sizeVal) =
-    AppendProperty ("stroke-size:" ++ sizeVal)
+scrollMarginTop (Value value) =
+    AppendProperty ("scroll-margin-top:" ++ value)
 
 
-{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+{-| Sets [`scroll-margin-right`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
 
-    strokeSize2 (px 300) (px 100)
-
-    strokeSize2 auto (px 400)
-
-If you only want to set the width, use [`strokeImage`](#strokeImage) instead.
+    scrollMarginRight (px 4)
 
 -}
-strokeSize2 :
+scrollMarginRight :
+    BaseValue
+        Length
+    -> Style
+scrollMarginRight (Value value) =
+    AppendProperty ("scroll-margin-right:" ++ value)
+
+
+{-| Sets [`scroll-margin-bottom`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+
+    scrollMarginBottom (px 4)
+
+-}
+scrollMarginBottom :
+    BaseValue
+        Length
+    -> Style
+scrollMarginBottom (Value value) =
+    AppendProperty ("scroll-margin-bottom:" ++ value)
+
+
+{-| Sets [`scroll-margin-left`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
+
+    scrollMarginLeft (px 4)
+
+-}
+scrollMarginLeft :
+    BaseValue
+        Length
+    -> Style
+scrollMarginLeft (Value value) =
+    AppendProperty ("scroll-margin-left:" ++ value)
+
+
+{-| Sets [`scroll-margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block) property.
+The `scrollMarginBlock` property is a shorthand property for setting
+`scroll-margin-block-start` and `scroll-margin-block-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start margin is set to the first value and the block end margin is
+set to the second.
+
+    scrollMarginBlock (em 4) -- set both block margins to 4em
+
+    scrollMarginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollMarginBlock :
+    BaseValue
+        Length
+    -> Style
+scrollMarginBlock (Value value) =
+    AppendProperty ("scroll-margin-block:" ++ value)
+
+
+{-| Sets [`scroll-margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block) property.
+The `scrollMarginBlock2` property is a shorthand property for setting
+`scroll-margin-block-start` and `scroll-margin-block-end` in a single declaration.
+
+The block start margin is set to the first value and the block end margin is
+set to the second.
+
+    scrollMarginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollMarginBlock2 :
     Value
-        (LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
+        Length
     ->
         Value
-            (LengthSupported
-                { pct : Supported
-                , auto : Supported
-                }
-            )
+            Length
     -> Style
-strokeSize2 (Value widthVal) (Value heightVal) =
-    AppendProperty ("stroke-size:" ++ widthVal ++ " " ++ heightVal)
+scrollMarginBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-margin-block:" ++ valueStart ++ " " ++ valueEnd)
 
 
-{-| Sets [`stroke-dash-corner`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-corner).
+{-| Sets [`scroll-margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline) property.
+The `scrollMarginInline` property is a shorthand property for setting
+`scroll-margin-inline-start` and `scroll-margin-inline-end` in a single declaration.
 
-    strokeDashCorner none
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start margin is set to the first value and the inline end margin is
+set to the second.
 
-    strokeDashCorner (px 10)
+    scrollMarginInline (em 4) -- set both inline margins to 4em
 
-    strokeDashCorner (em 5)
+    scrollMarginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
 
 -}
-strokeDashCorner :
+scrollMarginInline :
+    BaseValue
+        Length
+    -> Style
+scrollMarginInline (Value value) =
+    AppendProperty ("scroll-margin-inline:" ++ value)
+
+
+{-| Sets [`scroll-margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline) property.
+The `scrollMarginInline2` property is a shorthand property for setting
+`scroll-margin-inline-start` and `scroll-margin-inline-end` in a single declaration.
+
+The inline start margin is set to the first value and the inline end margin is
+set to the second.
+
+    scrollMarginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+scrollMarginInline2 :
+    Value
+        Length
+    ->
+        Value
+            Length
+    -> Style
+scrollMarginInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-margin-inline:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`scroll-margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block-start) property.
+
+    scrollMarginBlockStart (px 4)
+
+-}
+scrollMarginBlockStart :
+    BaseValue
+        Length
+    -> Style
+scrollMarginBlockStart (Value value) =
+    AppendProperty ("scroll-margin-block-start:" ++ value)
+
+
+{-| Sets [`scroll-margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block-end) property.
+
+    scrollMarginBlockEnd (px 4)
+
+-}
+scrollMarginBlockEnd :
+    BaseValue
+        Length
+    -> Style
+scrollMarginBlockEnd (Value value) =
+    AppendProperty ("scroll-margin-block-end:" ++ value)
+
+
+{-| Sets [`scroll-margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline-start) property.
+
+    scrollMarginInlineStart (px 4)
+
+-}
+scrollMarginInlineStart :
+    BaseValue
+        Length
+    -> Style
+scrollMarginInlineStart (Value value) =
+    AppendProperty ("scroll-margin-inline-start:" ++ value)
+
+
+{-| Sets [`scroll-margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline-end) property.
+
+    scrollMarginInlineEnd (px 4)
+
+-}
+scrollMarginInlineEnd :
+    BaseValue
+        Length
+    -> Style
+scrollMarginInlineEnd (Value value) =
+    AppendProperty ("scroll-margin-inline-end:" ++ value)
+
+
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
+
+If there is only one argument value, it applies to all sides. If there are two
+values, the top and bottom paddings are set to the first value and the right and
+left paddings are set to the second. If there are three values, the top is set
+to the first value, the left and right are set to the second, and the bottom is
+set to the third. If there are four values they apply to the top, right,
+bottom, and left, respectively.
+
+    scrollPadding (em 4) -- set all paddings to 4em
+
+    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
+
+    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
+
+    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
+
+-}
+scrollPadding :
     BaseValue
         (LengthSupported
-            { none : Supported
+            { auto : Supported
             , pct : Supported
-            , auto : Supported
-            , cover : Supported
             }
         )
     -> Style
-strokeDashCorner (Value sizeVal) =
-    AppendProperty ("stroke-dash-corner:" ++ sizeVal)
+scrollPadding (Value value) =
+    AppendProperty ("scroll-padding:" ++ value)
 
 
-{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding2` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
 
-    strokeLinejoin crop
+The top and bottom margins are set to the first value and the right and left
+margins are set to the second.
 
-    strokeLinejoin arcs
-
-    strokeLinejoin miter
-
-**Note:** if you only want to specifiy the rendering of the cap of a corner you need to use [`strokeLinejoin2`](#strokeLinejoin2)
-and set it's first value to `miter` like so: `strokeLinejoin2 miter bevel`.
-
--}
-strokeLinejoin :
-    BaseValue
-        { crop : Supported
-        , arcs : Supported
-        , miter : Supported
-        }
-    -> Style
-strokeLinejoin (Value val) =
-    AppendProperty ("stroke-linejoin:" ++ val)
-
-
-{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
-
-    strokeLinejoin crop bevel
-
-    strokeLinejoin arcs round
-
-    strokeLinejoin miter fallback
+    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
 
 -}
-strokeLinejoin2 :
+scrollPadding2 :
     Value
-        { crop : Supported
-        , arcs : Supported
-        , miter : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     ->
         Value
-            { bevel : Supported
-            , round : Supported
-            , fallback : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     -> Style
-strokeLinejoin2 (Value extendCorner) (Value capRender) =
-    AppendProperty ("stroke-linejoin:" ++ extendCorner ++ " " ++ capRender)
+scrollPadding2 (Value valueTopBottom) (Value valueRightLeft) =
+    AppendProperty ("scroll-padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
 
 
-{-| Sets `crop` value for usage with [`strokeLinejoin`](#strokeLinejoin).
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding3` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
 
-    strokeLinejoin crop
+The top padding is set to the first value, the left and right are set to the
+second, and the bottom is set to the third.
 
--}
-crop : Value { provides | crop : Supported }
-crop =
-    Value "crop"
-
-
-{-| Sets `arcs` value for usage with [`strokeLinejoin`](#strokeLinejoin).
-
-    strokeLinejoin arcs
+    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
 
 -}
-arcs : Value { provides | arcs : Supported }
-arcs =
-    Value "arcs"
-
-
-{-| Sets `miter` value for usage with [`strokeLinejoin`](#strokeLinejoin).
-
-    strokeLinejoin miter
-
--}
-miter : Value { provides | miter : Supported }
-miter =
-    Value "miter"
-
-
-{-| Sets `bevel` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
-
-    strokeLinejoin miter bevel
-
--}
-bevel : Value { provides | bevel : Supported }
-bevel =
-    Value "bevel"
-
-
-{-| Sets [`stroke-dash-justify`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-justify).
-
-      strokeDashJustify none
-      strokeDashJustify stretch
-      strokeDashJustify compress
-      strokeDashJustify dashes
-      strokeDashJustify gaps
-
--}
-strokeDashJustify :
-    BaseValue
-        { none : Supported
-        , stretch : Supported
-        , compress : Supported
-        , dashes : Supported
-        , gaps : Supported
-        }
-    -> Style
-strokeDashJustify (Value val) =
-    AppendProperty ("stroke-dash-justify:" ++ val)
-
-
-{-| Sets `compress` value for usage with [`strokeDashJustify`](#strokeDashJustify).
-
-      strokeDashJustify compress
-
--}
-compress : Value { provides | compress : Supported }
-compress =
-    Value "compress"
-
-
-{-| Sets `dashes` value for usage with [`strokeDashJustify`](#strokeDashJustify).
-
-      strokeDashJustify dashes
-
--}
-dashes : Value { provides | dashes : Supported }
-dashes =
-    Value "dashes"
-
-
-{-| Sets `gaps` value for usage with [`strokeDashJustify`](#strokeDashJustify).
-
-      strokeDashJustify gaps
-
--}
-gaps : Value { provides | gaps : Supported }
-gaps =
-    Value "gaps"
-
-
-{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
-
-This one-argument version indicates which parts of text and shape graphics are
-painted first, followed by the other two in their relative default order.
-
-    paintOrder normal -- normal paint order.
-
-    paintOrder2 fill_ stroke -- fill, stroke, then markers.
-
-    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
-
--}
-paintOrder :
-    BaseValue
-        { normal : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
-    -> Style
-paintOrder (Value val) =
-    AppendProperty ("paint-order:" ++ val)
-
-
-{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
-
-This two-argument version indicates which parts of text and shape graphics are
-painted first, followed by the other remaining one.
-
-    paintOrder2 fill_ stroke -- fill, stroke, then markers.
-
--}
-paintOrder2 :
+scrollPadding3 :
     Value
-        { fill_ : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
     ->
         Value
-            { fill_ : Supported
-            , stroke : Supported
-            , markers : Supported
-            }
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
     -> Style
-paintOrder2 (Value val1) (Value val2) =
-    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2)
+scrollPadding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
+    AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
 
 
-{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+The `scrollPadding4` property is a shorthand property for setting
+`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
+and `scroll-padding-left` in a single declaration.
 
-This three-argument version explicitly indicates in which order should all the parts of text
-and shape graphics be painted.
+The four values apply to the top, right, bottom, and left paddings.
 
-    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
+    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
 
 -}
-paintOrder3 :
+scrollPadding4 :
     Value
-        { fill_ : Supported
-        , stroke : Supported
-        , markers : Supported
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    -> Style
+scrollPadding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
+    AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
+
+
+{-| Sets [`scroll-padding-top`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingTop (px 4)
+
+-}
+scrollPaddingTop :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingTop (Value value) =
+    AppendProperty ("scroll-padding-top:" ++ value)
+
+
+{-| Sets [`scroll-padding-right`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingRight (px 4)
+
+-}
+scrollPaddingRight :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingRight (Value value) =
+    AppendProperty ("scroll-padding-right:" ++ value)
+
+
+{-| Sets [`scroll-padding-bottom`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingBottom (px 4)
+
+-}
+scrollPaddingBottom :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingBottom (Value value) =
+    AppendProperty ("scroll-padding-bottom:" ++ value)
+
+
+{-| Sets [`scroll-padding-left`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
+
+    scrollPaddingLeft (px 4)
+
+-}
+scrollPaddingLeft :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingLeft (Value value) =
+    AppendProperty ("scroll-padding-left:" ++ value)
+
+
+{-| Sets [`scroll-padding-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block) property.
+The `scroll-padding-block` property is a shorthand property for setting
+`scroll-padding-block-start` and `scroll-padding-block-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the block start padding is set to the first value and the block end padding
+is set to the second.
+
+    scrollPaddingBlock (em 4) -- set both block paddings to 4em
+
+    scrollPaddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollPaddingBlock :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingBlock (Value value) =
+    AppendProperty ("scroll-padding-block:" ++ value)
+
+
+{-| Sets [`scroll-padding-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block) property.
+The `scroll-padding-block` property is a shorthand property for setting
+`scroll-padding-block-start` and `scroll-padding-block-end` in a single declaration.
+
+The block start padding is set to the first value and the block end padding
+is set to the second.
+
+    scrollPaddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
+
+-}
+scrollPaddingBlock2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    -> Style
+scrollPaddingBlock2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-padding-block:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`scroll-padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline) property.
+The `scroll-padding-inline` property is a shorthand property for setting
+`scroll-padding-inline-start` and `scroll-padding-inline-end` in a single declaration.
+
+If there is only one argument value, it applies to both sides. If there are two
+values, the inline start padding is set to the first value and the inline end padding
+is set to the second.
+
+    scrollPaddingInline (em 4) -- set both inline paddings to 4em
+
+    scrollPaddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+scrollPaddingInline :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingInline (Value value) =
+    AppendProperty ("scroll-padding-inline:" ++ value)
+
+
+{-| Sets [`scroll-padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline) property.
+The `scroll-padding-inline` property is a shorthand property for setting
+`scroll-padding-inline-start` and `scroll-padding-inline-end` in a single declaration.
+
+The inline start padding is set to the first value and the inline end padding
+is set to the second.
+
+    scrollPaddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
+
+-}
+scrollPaddingInline2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { auto : Supported
+                , pct : Supported
+                }
+            )
+    -> Style
+scrollPaddingInline2 (Value valueStart) (Value valueEnd) =
+    AppendProperty ("scroll-padding-inline:" ++ valueStart ++ " " ++ valueEnd)
+
+
+{-| Sets [`scroll-padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block-start) property.
+
+    scrollPaddingBlockStart (px 4)
+
+-}
+scrollPaddingBlockStart :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingBlockStart (Value value) =
+    AppendProperty ("scroll-padding-block-start:" ++ value)
+
+
+{-| Sets [`scroll-padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block-end) property.
+
+    scrollPaddingBlockEnd (px 4)
+
+-}
+scrollPaddingBlockEnd :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingBlockEnd (Value value) =
+    AppendProperty ("scroll-padding-block-end:" ++ value)
+
+
+{-| Sets [`scroll-padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline-start) property.
+
+    scrollPaddingInlineStart (px 4)
+
+-}
+scrollPaddingInlineStart :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingInlineStart (Value value) =
+    AppendProperty ("scroll-padding-inline-start:" ++ value)
+
+
+{-| Sets [`scroll-padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline-end) property.
+
+    scrollPaddingInlineEnd (px 4)
+
+-}
+scrollPaddingInlineEnd :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+scrollPaddingInlineEnd (Value value) =
+    AppendProperty ("scroll-padding-inline-end:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior auto -- sets both X and Y to auto
+
+    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+
+-}
+overscrollBehavior :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehavior (Value value) =
+    AppendProperty ("overscroll-behavior:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+
+-}
+overscrollBehavior2 :
+    Value
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
         }
     ->
         Value
-            { fill_ : Supported
-            , stroke : Supported
-            , markers : Supported
-            }
-    ->
-        Value
-            { fill_ : Supported
-            , stroke : Supported
-            , markers : Supported
+            { auto : Supported
+            , contain : Supported
+            , none : Supported
             }
     -> Style
-paintOrder3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+overscrollBehavior2 (Value xValue) (Value yValue) =
+    AppendProperty ("overscroll-behavior:" ++ xValue ++ " " ++ yValue)
 
 
-{-| Provides the `markers` value for [`paintOrder`](#paintOrder).
+{-| Sets the [`overscroll-behavior-x`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
 
-    paintOrder markers
+    overscrollBehaviorX auto
 
--}
-markers : Value { provides | markers : Supported }
-markers =
-    Value "markers"
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
+    overscrollBehaviorX contain
 
 -}
-columnRule : BaseValue LineWidth -> Style
-columnRule (Value widthVal) =
-    AppendProperty ("column-rule:" ++ widthVal)
+overscrollBehaviorX :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorX (Value value) =
+    AppendProperty ("overscroll-behavior-x:" ++ value)
 
 
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
+{-| Sets the [`overscroll-behavior-y`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
 
-    columnRule thin
+    overscrollBehaviorY auto
 
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
-
--}
-columnRule2 : Value LineWidth -> Value LineStyle -> Style
-columnRule2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
+    overscrollBehaviorY contain
 
 -}
-columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+overscrollBehaviorY :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorY (Value value) =
+    AppendProperty ("overscroll-behavior-y:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-block) property.
+
+    overscrollBehaviorBlock auto
+
+    overscrollBehaviorBlock contain
+
+-}
+overscrollBehaviorBlock :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorBlock (Value value) =
+    AppendProperty ("overscroll-behavior-block:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-inline) property.
+
+    overscrollBehaviorInline auto
+
+    overscrollBehaviorInline contain
+
+-}
+overscrollBehaviorInline :
+    BaseValue
+        { auto : Supported
+        , contain : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorInline (Value value) =
+    AppendProperty ("overscroll-behavior-inline:" ++ value)
+
 
 
 ------------------------------------------------------------------------
@@ -16683,6 +16501,13 @@ columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
+
+
+{-| A type alias used to accept a [transform-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function).
+-}
+type alias TransformFunction =
+    TransformFunctionSupported {}
+
 
 
 {-| A type alias used to accept a [transform-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function)
@@ -16715,12 +16540,6 @@ type alias TransformFunctionSupported supported =
         , rotate3d : Supported
         , perspective_ : Supported
     }
-
-
-{-| A type alias used to accept a [transform-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function).
--}
-type alias TransformFunction =
-    TransformFunctionSupported {}
 
 
 {-| The [`transform`](https://css-tricks.com/almanac/properties/t/transform/) property.
@@ -17967,174 +17786,20 @@ backwards =
 
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------- MASKS ---------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-{-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
-
-    clear none
-
-    clear both
-
-    clear left_
-
-    clear right_
-
-    clear inlineStart
-
-    clear inlineEnd
-
--}
-clear :
-    BaseValue
-        { none : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , both : Supported
-        , inlineStart : Supported
-        , inlineEnd : Supported
-        }
-    -> Style
-clear (Value val) =
-    AppendProperty ("clear:" ++ val)
-
-
-{-| Sets [`opacity`](https://css-tricks.com/almanac/properties/o/opacity/)
-
-    opacity (num 0.5)
-
-    opacity (num 1.0)
-
-    opacity zero
-
--}
-opacity :
-    BaseValue
-        { num : Supported
-        , zero : Supported
-        , calc : Supported
-        , pct : Supported
-        }
-    -> Style
-opacity (Value val) =
-    AppendProperty ("opacity:" ++ val)
-
-
-{-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
-
-    zoom (pct 150)
-
-    zoom (num 1.5)
-
-    zoom normal
-
--}
-zoom :
-    BaseValue
-        { pct : Supported
-        , zero : Supported
-        , num : Supported
-        , normal : Supported
-        , calc : Supported
-        , auto : Supported
-        }
-    -> Style
-zoom (Value val) =
-    AppendProperty ("zoom:" ++ val)
-
-
-{-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
-
-    lineHeight (pct 150)
-
-    lineHeight (em 2)
-
-    lineHeight (num 1.5)
-
-    lineHeight normal
-
--}
-lineHeight :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , normal : Supported
-            , num : Supported
-            }
-        )
-    -> Style
-lineHeight (Value val) =
-    AppendProperty ("line-height:" ++ val)
-
-
-{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/)
-
-    letterSpacing (pct 150)
-
-    letterSpacing (em 2)
-
-    letterSpacing (num 1.5)
-
-    letterSpacing normal
-
--}
-letterSpacing :
-    BaseValue
-        (LengthSupported
-            { normal : Supported
-            }
-        )
-    -> Style
-letterSpacing (Value val) =
-    AppendProperty ("letter-spacing:" ++ val)
-
-
-
-{-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
-
-    backfaceVisibility visible
-
-    backfaceVisibility hidden
-
--}
-backfaceVisibility :
-    BaseValue
-        { visible : Supported
-        , hidden : Supported
-        }
-    -> Style
-backfaceVisibility (Value val) =
-    AppendProperty ("backface-visibility" ++ val)
-
-
-{-| Sets [`bleed`](https://css-tricks.com/almanac/properties/b/bleed/)
-
-    bleed auto
-
-    bleed (pt 10)
-
--}
-bleed :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-bleed (Value val) =
-    AppendProperty ("bleed:" ++ val)
-
-
--- MASKS --
 
 {-| Sets the [`mask-border-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask-border-mode)
 property.
@@ -19039,6 +18704,1575 @@ matchSource =
     Value "match-source"
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- TABLES ---------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/).
+
+    borderCollapse collapse
+
+    borderCollapse separate
+
+-}
+borderCollapse :
+    BaseValue
+        { collapse : Supported
+        , separate : Supported
+        }
+    -> Style
+borderCollapse (Value str) =
+    AppendProperty ("border-collapse:" ++ str)
+
+
+{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) and
+[`visibility`](https://css-tricks.com/almanac/properties/v/visibility/) property.
+
+    borderCollapse collapse
+
+    visibility collapse
+
+-}
+collapse : Value { provides | collapse : Supported }
+collapse =
+    Value "collapse"
+
+
+{-| A `separate` value for the [`border-separate`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
+
+    borderCollapse separate
+
+-}
+separate : Value { provides | separate : Supported }
+separate =
+    Value "separate"
+
+
+
+-- BORDER SPACING --
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing).
+
+    borderSpacing zero
+
+    borderSpacing (px 5)
+
+-}
+borderSpacing : BaseValue Length -> Style
+borderSpacing (Value str) =
+    AppendProperty ("border-spacing:" ++ str)
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing), defining horizontal and vertical spacing separately.
+
+    borderSpacing2 (cm 1) (em 2)
+
+-}
+borderSpacing2 : Value Length -> Value Length -> Style
+borderSpacing2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-spacing:" ++ valHorizontal ++ " " ++ valVertical)
+
+
+
+-- CAPTION SIDE --
+
+
+{-| Sets [`caption-side`](https://css-tricks.com/almanac/properties/c/caption-side/).
+
+    captionSide top_
+
+    captionSide bottom_
+
+    captionSide blockStart
+
+    captionSide inlineEnd
+
+-}
+captionSide :
+    BaseValue
+        { top_ : Supported
+        , bottom_ : Supported
+        , blockStart : Supported
+        , blockEnd : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        }
+    -> Style
+captionSide (Value str) =
+    AppendProperty ("caption-side:" ++ str)
+
+
+
+-- EMPTY CELLS --
+
+
+{-| Sets [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/).
+
+    emptyCells show
+
+    emptyCells hide
+
+-}
+emptyCells :
+    BaseValue
+        { show : Supported
+        , hide : Supported
+        }
+    -> Style
+emptyCells (Value str) =
+    AppendProperty ("empty-cells:" ++ str)
+
+
+{-| A `show` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells show
+
+-}
+show : Value { provides | show : Supported }
+show =
+    Value "show"
+
+
+{-| A `hide` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells hide
+
+-}
+hide : Value { provides | hide : Supported }
+hide =
+    Value "hide"
+
+
+
+-- TABLE LAYOUT --
+
+
+{-| Sets [`table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
+
+    tableLayout auto
+
+    tableLayout fixed
+
+-}
+tableLayout :
+    BaseValue
+        { auto : Supported
+        , fixed : Supported
+        }
+    -> Style
+tableLayout (Value str) =
+    AppendProperty ("table-layout:" ++ str)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
+
+    verticalAlign textBottom
+
+    verticalAlign (em 1)
+
+-}
+verticalAlign :
+    BaseValue
+        (LengthSupported
+            { baseline : Supported
+            , sub : Supported
+            , super : Supported
+            , textTop : Supported
+            , textBottom : Supported
+            , middle : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+verticalAlign (Value str) =
+    AppendProperty ("vertical-align:" ++ str)
+
+
+{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textTop
+
+-}
+textTop : Value { provides | textTop : Supported }
+textTop =
+    Value "text-top"
+
+
+{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textBottom
+
+-}
+textBottom : Value { provides | textBottom : Supported }
+textBottom =
+    Value "text-bottom"
+
+
+{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign middle
+
+-}
+middle : Value { provides | middle : Supported }
+middle =
+    Value "middle"
+
+
+-- WHITE-SPACE --
+
+
+{-| Sets [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+
+    whiteSpace pre
+
+    whiteSpace nowrap
+
+    whiteSpace preWrap
+
+    whiteSpace preLine
+
+-}
+whiteSpace :
+    BaseValue
+        { normal : Supported
+        , nowrap : Supported
+        , pre : Supported
+        , preWrap : Supported
+        , preLine : Supported
+        }
+    -> Style
+whiteSpace (Value str) =
+    AppendProperty ("white-space:" ++ str)
+
+
+{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
+
+    whiteSpace nowrap
+
+    flexWrap nowrap
+
+-}
+nowrap : Value { provides | nowrap : Supported }
+nowrap =
+    Value "nowrap"
+
+
+{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace pre
+
+-}
+pre : Value { provides | pre : Supported }
+pre =
+    Value "pre"
+
+
+{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preWrap
+
+-}
+preWrap : Value { provides | preWrap : Supported }
+preWrap =
+    Value "pre-wrap"
+
+
+{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preLine
+
+-}
+preLine : Value { provides | preLine : Supported }
+preLine =
+    Value "pre-line"
+
+
+
+
+-- FLOAT --
+
+
+{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
+
+    float none
+
+    float left_
+
+    float right_
+
+    float inlineStart
+
+-}
+float :
+    BaseValue
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        }
+    -> Style
+float (Value str) =
+    AppendProperty ("float:" ++ str)
+
+
+
+-- VISIBILITY --
+
+
+{-| Sets [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/)
+
+      visibility visible
+      visibility hidden
+      visibility collapse
+
+-}
+visibility :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        , collapse : Supported
+        }
+    -> Style
+visibility (Value str) =
+    AppendProperty ("visibility:" ++ str)
+
+
+
+-- ORDER --
+
+
+{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
+
+    order (num 2)
+
+    order (num -2)
+
+-}
+order :
+    BaseValue
+        { int : Supported
+        , zero : Supported
+        }
+    -> Style
+order (Value val) =
+    AppendProperty ("order:" ++ val)
+
+
+{-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
+**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
+
+    fill (hex "#60b5cc")
+
+    fill (rgb 96 181 204)
+
+    fill (rgba 96 181 204 0.5)
+
+    fill (url "#pattern")
+
+-}
+fill :
+    BaseValue
+        (ColorSupported
+            { url : Supported
+            }
+        )
+    -> Style
+fill (Value val) =
+    AppendProperty ("fill:" ++ val)
+
+
+
+-- COLUMNS --
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+
+    columns2 (px 300) (num 2)
+
+-}
+columns :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+columns (Value widthVal) =
+    AppendProperty ("columns:" ++ widthVal)
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+
+    columns2 (px 300) (num 2)
+
+-}
+columns2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    ->
+        Value
+            { auto : Supported
+            , num : Supported
+            }
+    -> Style
+columns2 (Value widthVal) (Value count) =
+    AppendProperty ("columns:" ++ widthVal ++ " " ++ count)
+
+
+{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
+
+    columnWidth auto
+
+    columnWidth (px 200)
+
+-}
+columnWidth :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+columnWidth (Value widthVal) =
+    AppendProperty ("column-width:" ++ widthVal)
+
+
+{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
+
+    columnCount auto
+
+    columnCount (num 3)
+
+-}
+columnCount :
+    BaseValue
+        { auto : Supported
+        , int : Supported
+        }
+    -> Style
+columnCount (Value count) =
+    AppendProperty ("column-count:" ++ count)
+
+
+{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
+
+    columnFill auto
+
+    columnFill balance
+
+    columnFill balanceAll
+
+-}
+columnFill :
+    BaseValue
+        { auto : Supported
+        , balance : Supported
+        , balanceAll : Supported
+        }
+    -> Style
+columnFill (Value val) =
+    AppendProperty ("column-fill:" ++ val)
+
+
+{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balance
+
+-}
+balance : Value { provides | balance : Supported }
+balance =
+    Value "balance"
+
+
+{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balanceAll
+
+-}
+balanceAll : Value { provides | balanceAll : Supported }
+balanceAll =
+    Value "balance-all"
+
+
+{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
+
+    columnSpan all_
+
+    columnSpan none
+
+-}
+columnSpan :
+    BaseValue
+        { none : Supported
+        , all_ : Supported
+        }
+    -> Style
+columnSpan (Value spanVal) =
+    AppendProperty ("column-span:" ++ spanVal)
+
+
+{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
+
+    columnRuleWidth thin
+
+    columnRuleWidth (px 2)
+
+-}
+columnRuleWidth : BaseValue LineWidth -> Style
+columnRuleWidth (Value widthVal) =
+    AppendProperty ("column-rule-width:" ++ widthVal)
+
+
+{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
+
+    columnRuleStyle solid
+
+    columnRuleStyle dotted
+
+    columnRuleStyle dashed
+
+-}
+columnRuleStyle : BaseValue LineStyle -> Style
+columnRuleStyle (Value styleVal) =
+    AppendProperty ("column-rule-style:" ++ styleVal)
+
+
+{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
+
+    columnRuleColor (rgb 0 0 0)
+
+    columnRuleColor (hex "#fff")
+
+-}
+columnRuleColor : BaseValue Color -> Style
+columnRuleColor (Value colorVal) =
+    AppendProperty ("column-rule-color:" ++ colorVal)
+
+
+-- STROKE --
+
+
+{-| Sets [`stroke-dasharray`](https://css-tricks.com/almanac/properties/s/stroke-dasharray/)
+
+    strokeDasharray (num 2)
+
+    strokeDasharray (num 2.5)
+
+    strokeDasharray (em 2)
+
+    strokeDasharray (pct 15)
+
+-}
+strokeDasharray :
+    BaseValue
+        (LengthSupported
+            { num : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+strokeDasharray (Value val) =
+    AppendProperty ("stroke-dasharray:" ++ val)
+
+
+{-| Sets [`stroke-dashoffset`](https://css-tricks.com/almanac/properties/s/stroke-dashoffset/)
+
+    strokeDashoffset zero
+
+    strokeDashoffset (num 100)
+
+    strokeDashoffset (pct 25)
+
+-}
+strokeDashoffset :
+    BaseValue
+        { zero : Supported
+        , calc : Supported
+        , num : Supported
+        , pct : Supported
+        }
+    -> Style
+strokeDashoffset (Value val) =
+    AppendProperty ("stroke-dashoffset:" ++ val)
+
+
+{-| Sets [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/)
+
+    strokeLinecap butt
+
+    strokeLinecap square
+
+    strokeLinecap round
+
+-}
+strokeLinecap :
+    BaseValue
+        { butt : Supported
+        , square : Supported
+        , round : Supported
+        }
+    -> Style
+strokeLinecap (Value val) =
+    AppendProperty ("stroke-linecap:" ++ val)
+
+
+{-| A `butt` value for the [`strokeLinecap`](#strokeLinecap) property.
+
+    strokeLinecap butt
+
+-}
+butt : Value { provides | butt : Supported }
+butt =
+    Value "butt"
+
+
+{-| The `square` value used by properties such as [`strokeLinecap`](#strokeLinecap),
+[`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType).
+
+    strokeLinecap square
+
+    listStyleType square
+
+-}
+square : Value { provides | square : Supported }
+square =
+    Value "square"
+
+
+{-| Sets [`stroke-width`](https://css-tricks.com/almanac/properties/s/stroke-width/)
+
+    strokeWidth zero
+
+    strokeWidth (px 2)
+
+    strokeWidth (em 2)
+
+    strokeWidth (num 2)
+
+    strokeWidth (num 2.5)
+
+    strokeWidth (pct 15)
+
+-}
+strokeWidth :
+    BaseValue
+        (LengthSupported
+            { num : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+strokeWidth (Value val) =
+    AppendProperty ("stroke-width:" ++ val)
+
+
+{-| Sets [`stroke-align`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-align)
+
+**Note:** This function accepts `inset_` rather than `inset` because
+[`inset` is already a property function](#inset).
+
+      strokeAlign center
+      strokeAlign inset_
+      strokeAlign outset
+
+-}
+strokeAlign :
+    BaseValue
+        { center : Supported
+        , inset_ : Supported
+        , outset : Supported
+        }
+    -> Style
+strokeAlign (Value val) =
+    AppendProperty ("stroke-align:" ++ val)
+
+
+{-| Sets [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break)
+
+      strokeBreak boundingBox
+      strokeBreak slice
+      strokeBreak clone
+
+-}
+strokeBreak :
+    BaseValue
+        { boundingBox : Supported
+        , slice : Supported
+        , clone : Supported
+        }
+    -> Style
+strokeBreak (Value val) =
+    AppendProperty ("stroke-break:" ++ val)
+
+
+{-| A `boundingBox` value for the [`strokeBreak`](#strokeBreak) property.
+
+      strokeBreak boundingBox
+
+-}
+boundingBox : Value { provides | boundingBox : Supported }
+boundingBox =
+    Value "bounding-box"
+
+
+{-| A `slice` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
+
+      strokeBreak slice
+
+      boxDecorationbreak clone
+
+-}
+slice : Value { provides | slice : Supported }
+slice =
+    Value "slice"
+
+
+{-| A `clone` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
+
+      strokeBreak clone
+
+      boxDecorationBreak clone
+
+-}
+clone : Value { provides | clone : Supported }
+clone =
+    Value "clone"
+
+
+{-| Sets [`stroke-color`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-color)
+
+    strokeColor (rgb 0 100 44)
+
+    strokeColor (hex "#FF9E2C")
+
+-}
+strokeColor : BaseValue Color -> Style
+strokeColor (Value val) =
+    AppendProperty ("stroke-color:" ++ val)
+
+
+{-| Sets [`stroke-image`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-image)
+
+    strokeImage (url "#svg-pattern")
+
+    strokeImage (url "http://www.example.com/chicken.jpg")
+
+-}
+strokeImage :
+    BaseValue
+        { url : Supported
+        , none : Supported
+        }
+    -> Style
+strokeImage (Value value) =
+    AppendProperty ("stroke-image:" ++ value)
+
+
+{-| Sets [`stroke-miterlimit`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-miterlimit)
+
+    strokeMiterlimit (num 4)
+
+-}
+strokeMiterlimit :
+    BaseValue
+        { num : Supported
+        }
+    -> Style
+strokeMiterlimit (Value val) =
+    AppendProperty ("stroke-miterlimit:" ++ val)
+
+
+{-| Sets [`stroke-opacity`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-opacity)
+
+    strokeOpacity (num 0.5)
+
+-}
+strokeOpacity :
+    BaseValue
+        { num : Supported
+        }
+    -> Style
+strokeOpacity (Value val) =
+    AppendProperty ("stroke-opacity:" ++ val)
+
+
+{-| Sets [`stroke-origin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-origin)
+
+    strokeOrign matchParent
+
+    strokeOrign fillBox
+
+    strokeOrign strokeBox
+
+    strokeOrign contentBox
+
+    strokeOrign paddingBox
+
+    strokeOrign borderBox
+
+-}
+strokeOrigin :
+    BaseValue
+        { matchParent : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , contentBox : Supported
+        , paddingBox : Supported
+        , borderBox : Supported
+        }
+    -> Style
+strokeOrigin (Value val) =
+    AppendProperty ("stroke-origin:" ++ val)
+
+
+
+{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
+
+    strokePosition left_
+
+    strokePosition (px 45)
+
+`strokePosition` sets the horizontal direction. If you need the vertical
+direction instead, use [`strokePosition2`](#strokePosition2) like this:
+
+    strokePosition zero (px 45)
+
+If you need to set the offsets from the right or bottom, use
+[`strokePosition4`](#strokePosition4) like this:
+
+    strokePosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+strokePosition :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            }
+        )
+    -> Style
+strokePosition (Value horiz) =
+    AppendProperty ("stroke-position:" ++ horiz)
+
+
+{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
+
+    strokePosition2 left_ top_
+
+    strokePosition2 (px 45) (pct 50)
+
+`strokePosition2` sets both the horizontal and vertical directions (in that
+order, same as CSS.) If you need only the horizontal, you can use
+[`strokePosition`](#strokePosition) instead:
+
+    strokePosition left_
+
+If you need to set the offsets from the right or bottom, use
+[`strokePosition4`](#strokePosition4) like this:
+
+    strokePosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+strokePosition2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , top_ : Supported
+                , bottom_ : Supported
+                , center : Supported
+                }
+            )
+    -> Style
+strokePosition2 (Value horiz) (Value vert) =
+    AppendProperty ("stroke-position:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
+
+    strokePosition4 right_ (px 20) bottom_ (pct 30)
+
+The four-argument form of stroke-position alternates sides and offets. So the
+example above would position the stroke-image 20px from the right, and 30%
+from the bottom.
+
+See also [`strokePosition`](#strokePosition) for horizontal alignment and
+[`strokePosition2`](#strokePosition2) for horizontal (from left) and
+vertical (from top) alignment.
+
+-}
+strokePosition4 :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        }
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            { top_ : Supported
+            , bottom_ : Supported
+            }
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+strokePosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
+    AppendProperty
+        ("stroke-position:"
+            ++ horiz
+            ++ " "
+            ++ horizAmount
+            ++ " "
+            ++ vert
+            ++ " "
+            ++ vertAmount
+        )
+
+
+{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat)
+
+    strokeRepeat repeat
+
+    strokeRepeat repeatX
+
+If you need to set horizontal and vertical direction separately, see
+[`strokeRepeat2`](#strokeRepeat2)
+
+-}
+strokeRepeat :
+    BaseValue
+        { repeat : Supported
+        , repeatX : Supported
+        , repeatY : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
+    -> Style
+strokeRepeat (Value repeatVal) =
+    AppendProperty ("stroke-repeat:" ++ repeatVal)
+
+
+{-| Sets [`stroke-repeat`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-repeat) along the horizontal axis, then the vertical axis.
+
+    strokeRepeat2 repeat space
+
+    strokeRepeat2 space round
+
+If you only need to set one value for both, see
+[`strokeRepeat`](#strokeRepeat) instead.
+
+-}
+strokeRepeat2 :
+    Value
+        { repeat : Supported
+        , space : Supported
+        , round : Supported
+        , noRepeat : Supported
+        }
+    ->
+        Value
+            { repeat : Supported
+            , space : Supported
+            , round : Supported
+            , noRepeat : Supported
+            }
+    -> Style
+strokeRepeat2 (Value horiz) (Value vert) =
+    AppendProperty ("stroke-repeat:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+
+    strokeSize cover
+
+    strokeSize (px 400)
+
+If you give a length value, it will be used for the width. The height will be set
+proportional to the size of the [`stroke-image`](#strokeImage). If you
+need to set both width and height explicitly, use
+[`strokeImage2`](#strokeImage2) instead.
+
+-}
+strokeSize :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , cover : Supported
+            }
+        )
+    -> Style
+strokeSize (Value sizeVal) =
+    AppendProperty ("stroke-size:" ++ sizeVal)
+
+
+{-| Sets [`stroke-size`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-size).
+
+    strokeSize2 (px 300) (px 100)
+
+    strokeSize2 auto (px 400)
+
+If you only want to set the width, use [`strokeImage`](#strokeImage) instead.
+
+-}
+strokeSize2 :
+    Value
+        (LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                , auto : Supported
+                }
+            )
+    -> Style
+strokeSize2 (Value widthVal) (Value heightVal) =
+    AppendProperty ("stroke-size:" ++ widthVal ++ " " ++ heightVal)
+
+
+{-| Sets [`stroke-dash-corner`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-corner).
+
+    strokeDashCorner none
+
+    strokeDashCorner (px 10)
+
+    strokeDashCorner (em 5)
+
+-}
+strokeDashCorner :
+    BaseValue
+        (LengthSupported
+            { none : Supported
+            , pct : Supported
+            , auto : Supported
+            , cover : Supported
+            }
+        )
+    -> Style
+strokeDashCorner (Value sizeVal) =
+    AppendProperty ("stroke-dash-corner:" ++ sizeVal)
+
+
+{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
+
+    strokeLinejoin crop
+
+    strokeLinejoin arcs
+
+    strokeLinejoin miter
+
+**Note:** if you only want to specifiy the rendering of the cap of a corner you need to use [`strokeLinejoin2`](#strokeLinejoin2)
+and set it's first value to `miter` like so: `strokeLinejoin2 miter bevel`.
+
+-}
+strokeLinejoin :
+    BaseValue
+        { crop : Supported
+        , arcs : Supported
+        , miter : Supported
+        }
+    -> Style
+strokeLinejoin (Value val) =
+    AppendProperty ("stroke-linejoin:" ++ val)
+
+
+{-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
+
+    strokeLinejoin crop bevel
+
+    strokeLinejoin arcs round
+
+    strokeLinejoin miter fallback
+
+-}
+strokeLinejoin2 :
+    Value
+        { crop : Supported
+        , arcs : Supported
+        , miter : Supported
+        }
+    ->
+        Value
+            { bevel : Supported
+            , round : Supported
+            , fallback : Supported
+            }
+    -> Style
+strokeLinejoin2 (Value extendCorner) (Value capRender) =
+    AppendProperty ("stroke-linejoin:" ++ extendCorner ++ " " ++ capRender)
+
+
+{-| Sets `crop` value for usage with [`strokeLinejoin`](#strokeLinejoin).
+
+    strokeLinejoin crop
+
+-}
+crop : Value { provides | crop : Supported }
+crop =
+    Value "crop"
+
+
+{-| Sets `arcs` value for usage with [`strokeLinejoin`](#strokeLinejoin).
+
+    strokeLinejoin arcs
+
+-}
+arcs : Value { provides | arcs : Supported }
+arcs =
+    Value "arcs"
+
+
+{-| Sets `miter` value for usage with [`strokeLinejoin`](#strokeLinejoin).
+
+    strokeLinejoin miter
+
+-}
+miter : Value { provides | miter : Supported }
+miter =
+    Value "miter"
+
+
+{-| Sets `bevel` value for usage with [`strokeLinejoin`](#strokeLinejoins2).
+
+    strokeLinejoin miter bevel
+
+-}
+bevel : Value { provides | bevel : Supported }
+bevel =
+    Value "bevel"
+
+
+{-| Sets [`stroke-dash-justify`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-dash-justify).
+
+      strokeDashJustify none
+      strokeDashJustify stretch
+      strokeDashJustify compress
+      strokeDashJustify dashes
+      strokeDashJustify gaps
+
+-}
+strokeDashJustify :
+    BaseValue
+        { none : Supported
+        , stretch : Supported
+        , compress : Supported
+        , dashes : Supported
+        , gaps : Supported
+        }
+    -> Style
+strokeDashJustify (Value val) =
+    AppendProperty ("stroke-dash-justify:" ++ val)
+
+
+{-| Sets `compress` value for usage with [`strokeDashJustify`](#strokeDashJustify).
+
+      strokeDashJustify compress
+
+-}
+compress : Value { provides | compress : Supported }
+compress =
+    Value "compress"
+
+
+{-| Sets `dashes` value for usage with [`strokeDashJustify`](#strokeDashJustify).
+
+      strokeDashJustify dashes
+
+-}
+dashes : Value { provides | dashes : Supported }
+dashes =
+    Value "dashes"
+
+
+{-| Sets `gaps` value for usage with [`strokeDashJustify`](#strokeDashJustify).
+
+      strokeDashJustify gaps
+
+-}
+gaps : Value { provides | gaps : Supported }
+gaps =
+    Value "gaps"
+
+
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This one-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other two in their relative default order.
+
+    paintOrder normal -- normal paint order.
+
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
+
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
+
+-}
+paintOrder :
+    BaseValue
+        { normal : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    -> Style
+paintOrder (Value val) =
+    AppendProperty ("paint-order:" ++ val)
+
+
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This two-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other remaining one.
+
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
+
+-}
+paintOrder2 :
+    Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    -> Style
+paintOrder2 (Value val1) (Value val2) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
+
+This three-argument version explicitly indicates in which order should all the parts of text
+and shape graphics be painted.
+
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
+
+-}
+paintOrder3 :
+    Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    -> Style
+paintOrder3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Provides the `markers` value for [`paintOrder`](#paintOrder).
+
+    paintOrder markers
+
+-}
+markers : Value { provides | markers : Supported }
+markers =
+    Value "markers"
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule : BaseValue LineWidth -> Style
+columnRule (Value widthVal) =
+    AppendProperty ("column-rule:" ++ widthVal)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule2 : Value LineWidth -> Value LineStyle -> Style
+columnRule2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+
+
+
+
+
+
+
+{-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
+
+    clear none
+
+    clear both
+
+    clear left_
+
+    clear right_
+
+    clear inlineStart
+
+    clear inlineEnd
+
+-}
+clear :
+    BaseValue
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , both : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        }
+    -> Style
+clear (Value val) =
+    AppendProperty ("clear:" ++ val)
+
+
+{-| Sets [`opacity`](https://css-tricks.com/almanac/properties/o/opacity/)
+
+    opacity (num 0.5)
+
+    opacity (num 1.0)
+
+    opacity zero
+
+-}
+opacity :
+    BaseValue
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        , pct : Supported
+        }
+    -> Style
+opacity (Value val) =
+    AppendProperty ("opacity:" ++ val)
+
+
+{-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
+
+    zoom (pct 150)
+
+    zoom (num 1.5)
+
+    zoom normal
+
+-}
+zoom :
+    BaseValue
+        { pct : Supported
+        , zero : Supported
+        , num : Supported
+        , normal : Supported
+        , calc : Supported
+        , auto : Supported
+        }
+    -> Style
+zoom (Value val) =
+    AppendProperty ("zoom:" ++ val)
+
+
+{-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
+
+    lineHeight (pct 150)
+
+    lineHeight (em 2)
+
+    lineHeight (num 1.5)
+
+    lineHeight normal
+
+-}
+lineHeight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , normal : Supported
+            , num : Supported
+            }
+        )
+    -> Style
+lineHeight (Value val) =
+    AppendProperty ("line-height:" ++ val)
+
+
+{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/)
+
+    letterSpacing (pct 150)
+
+    letterSpacing (em 2)
+
+    letterSpacing (num 1.5)
+
+    letterSpacing normal
+
+-}
+letterSpacing :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            }
+        )
+    -> Style
+letterSpacing (Value val) =
+    AppendProperty ("letter-spacing:" ++ val)
+
+
+
+{-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
+
+    backfaceVisibility visible
+
+    backfaceVisibility hidden
+
+-}
+backfaceVisibility :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        }
+    -> Style
+backfaceVisibility (Value val) =
+    AppendProperty ("backface-visibility" ++ val)
+
+
+{-| Sets [`bleed`](https://css-tricks.com/almanac/properties/b/bleed/)
+
+    bleed auto
+
+    bleed (pt 10)
+
+-}
+bleed :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+bleed (Value val) =
+    AppendProperty ("bleed:" ++ val)
+
+
+
+
+
+
 {-| Sets [`caret-color`](https://css-tricks.com/almanac/properties/c/caret-color/)
 
     caretColor (hex "#60b5cc")
@@ -19586,1175 +20820,6 @@ objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount
             ++ " "
             ++ vertAmount
         )
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
--------------------------- BREAK (PAGE BREAK) --------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`break-before`](https://css-tricks.com/almanac/properties/b/break-before/).
-
-    breakBefore auto
--}
-breakBefore :
-    BaseValue
-        { auto : Supported
-        , always : Supported
-        , avoid : Supported
-        , all : Supported
-        , avoidPage : Supported
-        , page : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , avoidColumn : Supported
-        , column : Supported
-        }
-    -> Style
-breakBefore (Value val) =
-    AppendProperty ("break-before:" ++ val)
-
-
-{-| Sets [`break-after`](https://css-tricks.com/almanac/properties/b/break-after/).
-
-    breakAfter auto
--}
-breakAfter :
-    BaseValue
-        { auto : Supported
-        , always : Supported
-        , avoid : Supported
-        , all : Supported
-        , avoidPage : Supported
-        , page : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , avoidColumn : Supported
-        , column : Supported
-        }
-    -> Style
-breakAfter (Value val) =
-    AppendProperty ("break-after:" ++ val)
-
-
-{-| Sets [`break-inside`](https://css-tricks.com/almanac/properties/b/break-inside/)
-
-    breakInside auto
-
-    breakInside avoid
-
-    breakInside avoidPage
-
-    breakInside avoidColumn
-
--}
-breakInside :
-    BaseValue
-        { auto : Supported
-        , avoid : Supported
-        , avoidPage : Supported
-        , avoidColumn : Supported
-        }
-    -> Style
-breakInside (Value val) =
-    AppendProperty ("break-inside:" ++ val)
-
-
-
-{-| Sets `avoid` value for usage with [`breakAfter`](#breakAfter),
-[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
-
-    breakBefore avoid
-
-    breakAfter avoid
-
-    breakInside avoid
-
--}
-avoid : Value { provides | avoid : Supported }
-avoid =
-    Value "avoid"
-
-
-{-| Sets `avoid-page` value for usage with [`breakAfter`](#breakAfter),
-[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
-
-    breakBefore avoidPage
-
-    breakAfter avoidPage
-
-    breakInside avoidPage
-
--}
-avoidPage : Value { provides | avoidPage : Supported }
-avoidPage =
-    Value "avoid-page"
-
-
-{-| Sets `avoid-column` value for usage with [`breakAfter`](#breakAfter),
-[`breakBefore`](#breakBefore) and [`breakInside`](#breakInside).
-
-    breakBefore avoidColumn
-
-    breakAfter avoidColumn
-
-    breakInside avoidColumn
-
--}
-avoidColumn : Value { provides | avoidColumn : Supported }
-avoidColumn =
-    Value "avoid-column"
-
-
-
-{-| Sets `page` value for usage with [`breakAfter`](#breakAfter) and
-[`breakBefore`](#breakBefore).
-
-    breakBefore page
-
-    breakAfter page
-
--}
-page : Value { provides | page : Supported }
-page =
-    Value "page"
-
-
-{-| Sets [`page-break-before`](https://css-tricks.com/almanac/properties/p/page-break/)
-
-**This property has been depreciated and replaced with
-[`breakBefore`](#breakBefore), but is still included for backwards
-compatibility.**
-
-    pageBreakBefore auto
-
-    pageBreakBefore always
-
-    pageBreakBefore avoid
-
-    pageBreakBefore left_
-
-    pageBreakBefore right_
-
--}
-pageBreakBefore :
-    BaseValue
-        { auto : Supported
-        , always : Supported
-        , avoid : Supported
-        , left_ : Supported
-        , right_ : Supported
-        }
-    -> Style
-pageBreakBefore (Value val) =
-    AppendProperty ("page-break-before:" ++ val)
-
-
-{-| Sets [`page-break-after`](https://css-tricks.com/almanac/properties/p/page-break/)
-
-**This property has been depreciated and replaced with
-[`breakAfter`](#breakAfter), but is still included for backwards
-compatibility.**
-
-    pageBreakAfter auto
-
-    pageBreakAfter always
-
-    pageBreakAfter avoid
-
-    pageBreakAfter left_
-
-    pageBreakAfter right_
-
--}
-pageBreakAfter :
-    BaseValue
-        { auto : Supported
-        , always : Supported
-        , avoid : Supported
-        , left_ : Supported
-        , right_ : Supported
-        }
-    -> Style
-pageBreakAfter (Value val) =
-    AppendProperty ("page-break-after:" ++ val)
-
-
-{-| Sets [`page-break-inside`](https://css-tricks.com/almanac/properties/p/page-break/)
-
-    pageBreakInside auto
-
-    pageBreakInside avoid
-
--}
-pageBreakInside :
-    BaseValue
-        { auto : Supported
-        , avoid : Supported
-        }
-    -> Style
-pageBreakInside (Value val) =
-    AppendProperty ("page-break-inside:" ++ val)
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
----------------------------- POINTER-EVENTS-----------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`pointer-events`](https://css-tricks.com/almanac/properties/b/pointer-events/)
-
-    pointerEvents none
-
-    pointerEvents auto
-
--}
-pointerEvents :
-    BaseValue
-        { auto : Supported
-        , none : Supported
-        , visiblePainted : Supported
-        , visibleFill : Supported
-        , visibleStroke : Supported
-        , visible : Supported
-        , painted : Supported
-        , fill_ : Supported
-        , stroke : Supported
-        , all_ : Supported
-        }
-    -> Style
-pointerEvents (Value val) =
-    AppendProperty ("pointer-events:" ++ val)
-
-
-{-| The `visiblePainted` value used by [`pointerEvents`](#pointerEvents)
-
-    pointerEvents visiblePainted
-
--}
-visiblePainted : Value { provides | visiblePainted : Supported }
-visiblePainted =
-    Value "visiblePainted"
-
-
-{-| The `visibleFill` value used by [`pointerEvents`](#pointerEvents)
-
-    pointerEvents visibleFill
-
--}
-visibleFill : Value { provides | visibleFill : Supported }
-visibleFill =
-    Value "visibleFill"
-
-
-{-| The `visibleStroke` value used by [`pointerEvents`](#pointerEvents)
-
-    pointerEvents visibleStroke
-
--}
-visibleStroke : Value { provides | visibleStroke : Supported }
-visibleStroke =
-    Value "visibleStroke"
-
-
-{-| The `painted` value used by [`pointerEvents`](#pointerEvents)
-
-    pointerEvents painted
-
--}
-painted : Value { provides | painted : Supported }
-painted =
-    Value "painted"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------- SCROLLING ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets `smooth` value for usage with [`scrollBehavior`](#scrollBehavior).
-
-    scrollBehavior smooth
-
--}
-smooth : Value { provides | smooth : Supported }
-smooth =
-    Value "smooth"
-
-
-{-| Sets the
-[`scrollbar-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color) property.
-
-    scrollbarColor auto
-
-    scrollbarColor (hex "f35d93")
--}
-scrollbarColor :
-    BaseValue
-        ( ColorSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-scrollbarColor (Value val) =
-    AppendProperty ("scrollbar-color:" ++ val)
-
-
-{-| Sets the [`scrollbar-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width) property.
-
-    scrollbarWidth auto
-
-    scrollbarWidth thin
--}
-scrollbarWidth :
-    BaseValue
-        { auto : Supported
-        , thin : Supported
-        , none : Supported
-        }
-    -> Style
-scrollbarWidth (Value val) =
-    AppendProperty ("scrollbar-width:" ++ val)
-
-
-{-| Sets [`scroll-behavior`](https://css-tricks.com/almanac/properties/s/scroll-behavior/)
-
-    scrollBehavior auto
-
-    scrollBehavior smooth
-
--}
-scrollBehavior :
-    BaseValue
-        { auto : Supported
-        , smooth : Supported
-        }
-    -> Style
-scrollBehavior (Value val) =
-    AppendProperty ("scroll-behavior:" ++ val)
-
-
-{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-The `scrollMargin` property is a shorthand property for setting
-`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
-and `scroll-margin-left` in a single declaration.
-
-If there is only one argument value, it applies to all sides. If there are two
-values, the top and bottom margins are set to the first value and the right and
-left margins are set to the second. If there are three values, the top is set
-to the first value, the left and right are set to the second, and the bottom is
-set to the third. If there are four values they apply to the top, right,
-bottom, and left, respectively.
-
-    scrollMargin (em 4) -- set all margins to 4em
-
-    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
-    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
-
-    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
-
--}
-scrollMargin :
-    BaseValue
-        Length
-    -> Style
-scrollMargin (Value value) =
-    AppendProperty ("scroll-margin:" ++ value)
-
-
-{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-The `scrollMargin2` property is a shorthand property for setting
-`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
-and `scroll-margin-left` in a single declaration.
-
-The top and bottom margins are set to the first value and the right and left
-margins are set to the second.
-
-    scrollMargin2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
--}
-scrollMargin2 :
-    Value
-        Length
-    ->
-        Value
-            Length
-    -> Style
-scrollMargin2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("scroll-margin:" ++ valueTopBottom ++ " " ++ valueRightLeft)
-
-
-{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-The `scrollMargin3` property is a shorthand property for setting
-`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
-and `scroll-margin-left` in a single declaration.
-
-The top margin is set to the first value, the left and right are set to the
-second, and the bottom is set to the third.
-
-    scrollMargin3 (em 4) (px 2) (pt 5) -- top = 4em, right = 2px, bottom = 5pt, left = 2px
-
--}
-scrollMargin3 :
-    Value
-        Length
-    ->
-        Value
-            Length
-    ->
-        Value
-            Length
-    -> Style
-scrollMargin3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
-    AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
-
-
-{-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-The `scrollMargin4` property is a shorthand property for setting
-`scroll-margin-top`, `scroll-margin-right`, `scroll-margin-bottom`,
-and `scroll-margin-left` in a single declaration.
-
-The four values apply to the top, right, bottom, and left margins.
-
-    scrollMargin4 (em 4) (px 2) (pt 5) (px 3) -- top = 4em, right = 2px, bottom = 5pt, left = 3px
-
--}
-scrollMargin4 :
-    Value
-        Length
-    ->
-        Value
-            Length
-    ->
-        Value
-            Length
-    ->
-        Value
-            Length
-    -> Style
-scrollMargin4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
-    AppendProperty ("scroll-margin:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
-
-
-{-| Sets [`scroll-margin-top`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-
-    scrollMarginTop (px 4)
-
--}
-scrollMarginTop :
-    BaseValue
-        Length
-    -> Style
-scrollMarginTop (Value value) =
-    AppendProperty ("scroll-margin-top:" ++ value)
-
-
-{-| Sets [`scroll-margin-right`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-
-    scrollMarginRight (px 4)
-
--}
-scrollMarginRight :
-    BaseValue
-        Length
-    -> Style
-scrollMarginRight (Value value) =
-    AppendProperty ("scroll-margin-right:" ++ value)
-
-
-{-| Sets [`scroll-margin-bottom`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-
-    scrollMarginBottom (px 4)
-
--}
-scrollMarginBottom :
-    BaseValue
-        Length
-    -> Style
-scrollMarginBottom (Value value) =
-    AppendProperty ("scroll-margin-bottom:" ++ value)
-
-
-{-| Sets [`scroll-margin-left`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
-
-    scrollMarginLeft (px 4)
-
--}
-scrollMarginLeft :
-    BaseValue
-        Length
-    -> Style
-scrollMarginLeft (Value value) =
-    AppendProperty ("scroll-margin-left:" ++ value)
-
-
-{-| Sets [`scroll-margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block) property.
-The `scrollMarginBlock` property is a shorthand property for setting
-`scroll-margin-block-start` and `scroll-margin-block-end` in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the block start margin is set to the first value and the block end margin is
-set to the second.
-
-    scrollMarginBlock (em 4) -- set both block margins to 4em
-
-    scrollMarginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
--}
-scrollMarginBlock :
-    BaseValue
-        Length
-    -> Style
-scrollMarginBlock (Value value) =
-    AppendProperty ("scroll-margin-block:" ++ value)
-
-
-{-| Sets [`scroll-margin-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block) property.
-The `scrollMarginBlock2` property is a shorthand property for setting
-`scroll-margin-block-start` and `scroll-margin-block-end` in a single declaration.
-
-The block start margin is set to the first value and the block end margin is
-set to the second.
-
-    scrollMarginBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
--}
-scrollMarginBlock2 :
-    Value
-        Length
-    ->
-        Value
-            Length
-    -> Style
-scrollMarginBlock2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("scroll-margin-block:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`scroll-margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline) property.
-The `scrollMarginInline` property is a shorthand property for setting
-`scroll-margin-inline-start` and `scroll-margin-inline-end` in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the inline start margin is set to the first value and the inline end margin is
-set to the second.
-
-    scrollMarginInline (em 4) -- set both inline margins to 4em
-
-    scrollMarginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
--}
-scrollMarginInline :
-    BaseValue
-        Length
-    -> Style
-scrollMarginInline (Value value) =
-    AppendProperty ("scroll-margin-inline:" ++ value)
-
-
-{-| Sets [`scroll-margin-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline) property.
-The `scrollMarginInline2` property is a shorthand property for setting
-`scroll-margin-inline-start` and `scroll-margin-inline-end` in a single declaration.
-
-The inline start margin is set to the first value and the inline end margin is
-set to the second.
-
-    scrollMarginInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
--}
-scrollMarginInline2 :
-    Value
-        Length
-    ->
-        Value
-            Length
-    -> Style
-scrollMarginInline2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("scroll-margin-inline:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`scroll-margin-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block-start) property.
-
-    scrollMarginBlockStart (px 4)
-
--}
-scrollMarginBlockStart :
-    BaseValue
-        Length
-    -> Style
-scrollMarginBlockStart (Value value) =
-    AppendProperty ("scroll-margin-block-start:" ++ value)
-
-
-{-| Sets [`scroll-margin-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-block-end) property.
-
-    scrollMarginBlockEnd (px 4)
-
--}
-scrollMarginBlockEnd :
-    BaseValue
-        Length
-    -> Style
-scrollMarginBlockEnd (Value value) =
-    AppendProperty ("scroll-margin-block-end:" ++ value)
-
-
-{-| Sets [`scroll-margin-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline-start) property.
-
-    scrollMarginInlineStart (px 4)
-
--}
-scrollMarginInlineStart :
-    BaseValue
-        Length
-    -> Style
-scrollMarginInlineStart (Value value) =
-    AppendProperty ("scroll-margin-inline-start:" ++ value)
-
-
-{-| Sets [`scroll-margin-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-inline-end) property.
-
-    scrollMarginInlineEnd (px 4)
-
--}
-scrollMarginInlineEnd :
-    BaseValue
-        Length
-    -> Style
-scrollMarginInlineEnd (Value value) =
-    AppendProperty ("scroll-margin-inline-end:" ++ value)
-
-
-{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-The `scrollPadding` property is a shorthand property for setting
-`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
-and `scroll-padding-left` in a single declaration.
-
-If there is only one argument value, it applies to all sides. If there are two
-values, the top and bottom paddings are set to the first value and the right and
-left paddings are set to the second. If there are three values, the top is set
-to the first value, the left and right are set to the second, and the bottom is
-set to the third. If there are four values they apply to the top, right,
-bottom, and left, respectively.
-
-    scrollPadding (em 4) -- set all paddings to 4em
-
-    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
-    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
-
-    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
-
--}
-scrollPadding :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPadding (Value value) =
-    AppendProperty ("scroll-padding:" ++ value)
-
-
-{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-The `scrollPadding2` property is a shorthand property for setting
-`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
-and `scroll-padding-left` in a single declaration.
-
-The top and bottom margins are set to the first value and the right and left
-margins are set to the second.
-
-    scrollPadding2 (em 4) (px 2) -- top & bottom = 4em, right & left = 2px
-
--}
-scrollPadding2 :
-    Value
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    -> Style
-scrollPadding2 (Value valueTopBottom) (Value valueRightLeft) =
-    AppendProperty ("scroll-padding:" ++ valueTopBottom ++ " " ++ valueRightLeft)
-
-
-{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-The `scrollPadding3` property is a shorthand property for setting
-`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
-and `scroll-padding-left` in a single declaration.
-
-The top padding is set to the first value, the left and right are set to the
-second, and the bottom is set to the third.
-
-    scrollPadding3 (em 4) (px 2) (pct 5) -- top = 4em, right = 2px, bottom = 5%, left = 2px
-
--}
-scrollPadding3 :
-    Value
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    -> Style
-scrollPadding3 (Value valueTop) (Value valueRightLeft) (Value valueBottom) =
-    AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRightLeft ++ " " ++ valueBottom)
-
-
-{-| Sets [`scroll-padding`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-The `scrollPadding4` property is a shorthand property for setting
-`scroll-padding-top`, `scroll-padding-right`, `scroll-padding-bottom`,
-and `scroll-padding-left` in a single declaration.
-
-The four values apply to the top, right, bottom, and left paddings.
-
-    scrollPadding4 (em 4) (px 2) (pct 5) (px 3) -- top = 4em, right = 2px, bottom = 5%, left = 3px
-
--}
-scrollPadding4 :
-    Value
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    -> Style
-scrollPadding4 (Value valueTop) (Value valueRight) (Value valueBottom) (Value valueLeft) =
-    AppendProperty ("scroll-padding:" ++ valueTop ++ " " ++ valueRight ++ " " ++ valueBottom ++ " " ++ valueLeft)
-
-
-{-| Sets [`scroll-padding-top`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-
-    scrollPaddingTop (px 4)
-
--}
-scrollPaddingTop :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingTop (Value value) =
-    AppendProperty ("scroll-padding-top:" ++ value)
-
-
-{-| Sets [`scroll-padding-right`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-
-    scrollPaddingRight (px 4)
-
--}
-scrollPaddingRight :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingRight (Value value) =
-    AppendProperty ("scroll-padding-right:" ++ value)
-
-
-{-| Sets [`scroll-padding-bottom`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-
-    scrollPaddingBottom (px 4)
-
--}
-scrollPaddingBottom :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingBottom (Value value) =
-    AppendProperty ("scroll-padding-bottom:" ++ value)
-
-
-{-| Sets [`scroll-padding-left`](https://css-tricks.com/almanac/properties/s/scroll-padding/) property.
-
-    scrollPaddingLeft (px 4)
-
--}
-scrollPaddingLeft :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingLeft (Value value) =
-    AppendProperty ("scroll-padding-left:" ++ value)
-
-
-{-| Sets [`scroll-padding-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block) property.
-The `scroll-padding-block` property is a shorthand property for setting
-`scroll-padding-block-start` and `scroll-padding-block-end` in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the block start padding is set to the first value and the block end padding
-is set to the second.
-
-    scrollPaddingBlock (em 4) -- set both block paddings to 4em
-
-    scrollPaddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
--}
-scrollPaddingBlock :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingBlock (Value value) =
-    AppendProperty ("scroll-padding-block:" ++ value)
-
-
-{-| Sets [`scroll-padding-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block) property.
-The `scroll-padding-block` property is a shorthand property for setting
-`scroll-padding-block-start` and `scroll-padding-block-end` in a single declaration.
-
-The block start padding is set to the first value and the block end padding
-is set to the second.
-
-    scrollPaddingBlock2 (em 4) (px 2) -- block start = 4em, block end = 2px
-
--}
-scrollPaddingBlock2 :
-    Value
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    -> Style
-scrollPaddingBlock2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("scroll-padding-block:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`scroll-padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline) property.
-The `scroll-padding-inline` property is a shorthand property for setting
-`scroll-padding-inline-start` and `scroll-padding-inline-end` in a single declaration.
-
-If there is only one argument value, it applies to both sides. If there are two
-values, the inline start padding is set to the first value and the inline end padding
-is set to the second.
-
-    scrollPaddingInline (em 4) -- set both inline paddings to 4em
-
-    scrollPaddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
--}
-scrollPaddingInline :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingInline (Value value) =
-    AppendProperty ("scroll-padding-inline:" ++ value)
-
-
-{-| Sets [`scroll-padding-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline) property.
-The `scroll-padding-inline` property is a shorthand property for setting
-`scroll-padding-inline-start` and `scroll-padding-inline-end` in a single declaration.
-
-The inline start padding is set to the first value and the inline end padding
-is set to the second.
-
-    scrollPaddingInline2 (em 4) (px 2) -- inline start = 4em, inline end = 2px
-
--}
-scrollPaddingInline2 :
-    Value
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { auto : Supported
-                , pct : Supported
-                }
-            )
-    -> Style
-scrollPaddingInline2 (Value valueStart) (Value valueEnd) =
-    AppendProperty ("scroll-padding-inline:" ++ valueStart ++ " " ++ valueEnd)
-
-
-{-| Sets [`scroll-padding-block-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block-start) property.
-
-    scrollPaddingBlockStart (px 4)
-
--}
-scrollPaddingBlockStart :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingBlockStart (Value value) =
-    AppendProperty ("scroll-padding-block-start:" ++ value)
-
-
-{-| Sets [`scroll-padding-block-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-block-end) property.
-
-    scrollPaddingBlockEnd (px 4)
-
--}
-scrollPaddingBlockEnd :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingBlockEnd (Value value) =
-    AppendProperty ("scroll-padding-block-end:" ++ value)
-
-
-{-| Sets [`scroll-padding-inline-start`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline-start) property.
-
-    scrollPaddingInlineStart (px 4)
-
--}
-scrollPaddingInlineStart :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingInlineStart (Value value) =
-    AppendProperty ("scroll-padding-inline-start:" ++ value)
-
-
-{-| Sets [`scroll-padding-inline-end`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding-inline-end) property.
-
-    scrollPaddingInlineEnd (px 4)
-
--}
-scrollPaddingInlineEnd :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-scrollPaddingInlineEnd (Value value) =
-    AppendProperty ("scroll-padding-inline-end:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
-
-    overscrollBehavior auto -- sets both X and Y to auto
-
-    overscrollBehavior2 auto contain -- X = auto, Y = contain.
-
--}
-overscrollBehavior :
-    BaseValue
-        { auto : Supported
-        , contain : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehavior (Value value) =
-    AppendProperty ("overscroll-behavior:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
-
-    overscrollBehavior2 auto contain -- X = auto, Y = contain.
-
--}
-overscrollBehavior2 :
-    Value
-        { auto : Supported
-        , contain : Supported
-        , none : Supported
-        }
-    ->
-        Value
-            { auto : Supported
-            , contain : Supported
-            , none : Supported
-            }
-    -> Style
-overscrollBehavior2 (Value xValue) (Value yValue) =
-    AppendProperty ("overscroll-behavior:" ++ xValue ++ " " ++ yValue)
-
-
-{-| Sets the [`overscroll-behavior-x`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-    overscrollBehaviorX auto
-
-    overscrollBehaviorX contain
-
--}
-overscrollBehaviorX :
-    BaseValue
-        { auto : Supported
-        , contain : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorX (Value value) =
-    AppendProperty ("overscroll-behavior-x:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior-y`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-    overscrollBehaviorY auto
-
-    overscrollBehaviorY contain
-
--}
-overscrollBehaviorY :
-    BaseValue
-        { auto : Supported
-        , contain : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorY (Value value) =
-    AppendProperty ("overscroll-behavior-y:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-block) property.
-
-    overscrollBehaviorBlock auto
-
-    overscrollBehaviorBlock contain
-
--}
-overscrollBehaviorBlock :
-    BaseValue
-        { auto : Supported
-        , contain : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorBlock (Value value) =
-    AppendProperty ("overscroll-behavior-block:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-inline) property.
-
-    overscrollBehaviorInline auto
-
-    overscrollBehaviorInline contain
-
--}
-overscrollBehaviorInline :
-    BaseValue
-        { auto : Supported
-        , contain : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorInline (Value value) =
-    AppendProperty ("overscroll-behavior-inline:" ++ value)
 
 
 {-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
