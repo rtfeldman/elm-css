@@ -183,6 +183,9 @@ module Css exposing
     , xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
     , fontSizeAdjust
 
+    -- @font-face
+    , fontDisplay, fallback, swap, optional
+
     -- font family
     , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
 
@@ -234,6 +237,17 @@ module Css exposing
     , mixed, sideways, sidewaysRight, upright, useGlyphOrientation
     , wordBreak
     , breakAll, keepAll
+    , wordSpacing
+    , tabSize
+    , hyphens
+    , manual
+    , quotes, quotes2, quotes4
+    , textOverflow, textOverflow2
+    , ellipsis
+    , lineBreak
+    , loose
+    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3
+    , first, last, forceEnd, allowEnd
 
     -- script handling
     , direction, ltr, rtl
@@ -321,15 +335,6 @@ module Css exposing
     , maskType
     , noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
 
-    -- ??
-    , wordSpacing
-    , tabSize
-    , fontDisplay, fallback, swap, optional
-    , hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
-    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
-    , lineClamp
-    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
-    
     -- tables
     , borderCollapse
     , collapse, separate
@@ -340,6 +345,10 @@ module Css exposing
     , tableLayout
 
 
+    
+    -- ??
+    , lineClamp
+    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
     , verticalAlign
     , textTop, textBottom, middle
     , whiteSpace
@@ -375,23 +384,36 @@ module Css exposing
 
     -- ??
     , opacity
+
     , zoom
     
-    -- ??
     , speak, spellOut
+
     , userSelect
+
     , bleed
+
     , orphans, widows
+
     , mixBlendMode
+
     , imageRendering, crispEdges, pixelated
+
     , backfaceVisibility
+
     , objectFit, scaleDown
     , objectPosition, objectPosition2, objectPosition4
+
     , boxDecorationBreak
+
     , clipPath, clipPath2
+
     , caretColor
+
     , resize, horizontal, vertical
-    , contain, contain2, contain3, contain4, size, layout, paint
+
+    , contain, contain2, contain3, contain4
+    , size, layout, paint
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -11139,6 +11161,79 @@ fontSizeAdjust (Value val) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
+------------------------------- FONT-FACE ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`font-display`](https://css-tricks.com/almanac/properties/f/font-display/)
+
+    fontDisplay auto
+
+    fontDisplay block
+
+    fontDisplay swap
+
+    fontDisplay fallback
+
+    fontDisplay optional
+
+-}
+fontDisplay :
+    BaseValue
+        { auto : Supported
+        , block : Supported
+        , swap : Supported
+        , fallback : Supported
+        , optional : Supported
+        }
+    -> Style
+fontDisplay (Value val) =
+    AppendProperty ("font-display:" ++ val)
+
+
+{-| Sets `fallback` value for usage with [`fontDisplay`](#fontDisplay) or [`strokeLinejoin`](#strokeLinejoin2).
+
+      fontDisplay fallback
+
+      strokeLinejoin2 miter fallback
+
+-}
+fallback : Value { provides | fallback : Supported }
+fallback =
+    Value "fallback"
+
+
+{-| Sets `swap` value for usage with [`fontDisplay`](#fontDisplay).
+
+    fontDisplay swap
+
+-}
+swap : Value { provides | swap : Supported }
+swap =
+    Value "swap"
+
+
+{-| Sets `optional` value for usage with [`fontDisplay`](#fontDisplay).
+
+      fontDisplay optional
+
+-}
+optional : Value { provides | optional : Supported }
+optional =
+    Value "optional"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 ------------------------------ FONT FAMILY -----------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -14211,6 +14306,377 @@ breakAll =
 keepAll : Value { provides | keepAll : Supported }
 keepAll =
     Value "keep-all"
+
+
+{-| Sets [`word-spacing`](https://css-tricks.com/almanac/properties/w/word-spacing/).
+
+    wordSpacing normal
+
+    wordSpacing zero
+
+    wordSpacing (px 5)
+
+-}
+wordSpacing :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+wordSpacing (Value str) =
+    AppendProperty ("word-spacing:" ++ str)
+
+
+
+{-| Sets [`tab-size`](https://css-tricks.com/almanac/properties/t/tab-size/)
+**Note:** only positive integer values are allowed.
+
+    tabSize (int 4)
+
+-}
+tabSize :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , int : Supported
+            }
+        )
+    -> Style
+tabSize (Value val) =
+    AppendProperty ("tab-size:" ++ val)
+
+
+{-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
+
+    hyphens none
+
+    hyphens manual
+
+    hyphens auto
+
+-}
+hyphens :
+    BaseValue
+        { none : Supported
+        , manual : Supported
+        , auto : Supported
+        }
+    -> Style
+hyphens (Value val) =
+    AppendProperty ("hyphens:" ++ val)
+
+
+{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
+
+    hyphens manual
+
+-}
+manual : Value { provides | manual : Supported }
+manual =
+    Value "manual"
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This one-argument version can only use keyword or global values.
+
+    quotes none
+
+    quotes inherit
+
+    quotes2 (string "\"") (string "\"")
+
+    quotes4 (string "\"") (string "\"") (string "'") (string "'")
+
+-}
+quotes :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        }
+    -> Style
+quotes (Value val) =
+    AppendProperty ("quotes:" ++ val)
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This 2-argument version sets the starting and closing quotation marks for
+a top-level quote (a quote that is not nested within another quote). It only accepts
+string values.
+
+    quotes auto
+
+    quotes2 (string "\"") (string "\"") -- "Hey, this is a first-level quote."
+
+    quotes2 (string "'") (string "'") -- 'Hey, this is a first-level quote.'
+
+    quotes2 (string "«") (string "»") -- «Hey, this is a first-level quote.»
+
+-}
+quotes2 :
+    Value
+        { string : Supported
+        }
+    ->
+        Value
+            { string : Supported
+            }
+    -> Style
+quotes2 (Value lv1StartQuote) (Value lv1EndQuote) =
+    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote)
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This 4-argument version sets the starting and closing quotation marks for both
+a top-level quote and a nested quote. It only accepts
+string values.
+
+    quotes auto
+
+    quotes2 (string "\"") (string "\"")
+
+    -- "Hey, this is a first-level quote."
+
+
+    quotes4 (string "\"") (string "\"") (string "\'") (string "\'")
+
+    {- "Hey, this is a first-level quote.
+    'And this is someone else I made up for
+    a second-level quote!' Yeah, I did that!"
+    -}
+
+    quotes4 (string "«") (string "»") (string "👏") (string "🤔")
+
+    {- «Hey, this is a first-level quote.
+    👏And this is someone else I made up for
+    a second-level quote!🤔 Yeah, I did that!»
+    -}
+
+-}
+quotes4 :
+    Value
+        { string : Supported
+        }
+    ->
+        Value
+            { string : Supported
+            }
+    ->
+        Value
+            { string : Supported
+            }
+    ->
+        Value
+            { string : Supported
+            }
+    -> Style
+quotes4 (Value lv1StartQuote) (Value lv1EndQuote) (Value lv2StartQuote) (Value lv2EndQuote) =
+    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote ++ " " ++ lv2StartQuote ++ " " ++ lv2EndQuote)
+
+
+{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
+
+`text-overflow` describes how text that gets cut off is signalled to users.
+
+When the one-argument version is used, it sets the end of text (right end for LTR users) that is cut off.
+
+    textOverflow ellipsis
+
+When the two-argument version is used, it specifies how the
+text cut-off is displayed at the start (left in LTR) and
+the end (right in LTR) of the text.
+
+    textOverflow2 ellipsis ellipsis
+
+-}
+textOverflow :
+    BaseValue
+        { clip : Supported
+        , ellipsis : Supported
+        }
+    -> Style
+textOverflow (Value value) =
+    AppendProperty ("text-overflow:" ++ value)
+
+
+{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
+
+`text-overflow` describes how text that gets cut off is signalled to users.
+
+This version specifies how the text cut-off is displayed at the start
+(left in LTR) and at the end (right in LTR) of the text.
+
+    textOverflow2 ellipsis ellipsis
+
+-}
+textOverflow2 :
+    Value
+        { clip : Supported
+        , ellipsis : Supported
+        }
+    ->
+        Value
+            { clip : Supported
+            , ellipsis : Supported
+            }
+    -> Style
+textOverflow2 (Value startValue) (Value endValue) =
+    AppendProperty ("text-overflow:" ++ startValue ++ " " ++ endValue)
+
+
+{-| Sets `ellipsis` value for usage with [`textOverflow`](#textOverflow).
+
+    textOverflow ellipsis
+
+-}
+ellipsis : Value { provides | ellipsis : Supported }
+ellipsis =
+    Value "ellipsis"
+
+
+{-| Sets the [`lineBreak`](https://css-tricks.com/almanac/properties/l/line-break/) property.
+
+    lineBreak auto
+
+    lineBreak strict
+
+-}
+lineBreak :
+    BaseValue
+        { auto : Supported
+        , loose : Supported
+        , normal : Supported
+        , strict : Supported
+        , anywhere : Supported
+        }
+    -> Style
+lineBreak (Value value) =
+    AppendProperty ("line-break:" ++ value)
+
+
+{-| Sets `loose` value for usage with [`lineBreak`](#lineBreak).
+
+    lineBreak loose
+
+-}
+loose : Value { provides | loose : Supported }
+loose =
+    Value "loose"
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation none
+
+    hangingPunctuation first
+
+    hangingPunctuation2 first forceEnd
+
+    hangingPunctuation3 first allowEnd last
+
+-}
+hangingPunctuation :
+    BaseValue
+        { none : Supported
+        , first : Supported
+        , forceEnd : Supported
+        , allowEnd : Supported
+        , last : Supported
+        }
+    -> Style
+hangingPunctuation (Value val) =
+    AppendProperty ("hanging-punctuation:" ++ val)
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation2 first forceEnd
+
+-}
+hangingPunctuation2 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { first : Supported
+            , forceEnd : Supported
+            , allowEnd : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation2 (Value val1) (Value val2) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation3 first allowEnd last
+
+-}
+hangingPunctuation3 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { forceEnd : Supported
+            , allowEnd : Supported
+            }
+    ->
+        Value
+            { first : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Sets `first` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation first
+
+-}
+first : Value { provides | first : Supported }
+first =
+    Value "first"
+
+
+{-| Sets `last` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation last
+
+-}
+last : Value { provides | last : Supported }
+last =
+    Value "last"
+
+
+{-| Sets `force-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation forceEnd
+
+-}
+forceEnd : Value { provides | forceEnd : Supported }
+forceEnd =
+    Value "force-end"
+
+
+{-| Sets `allow-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation allowEnd
+
+-}
+allowEnd : Value { provides | allowEnd : Supported }
+allowEnd =
+    Value "allow-end"
 
 
 ------------------------------------------------------------------------
@@ -20312,393 +20778,8 @@ boxDecorationBreak (Value val) =
     AppendProperty ("box-decoration-break:" ++ val)
 
 
-{-| Sets `swap` value for usage with [`fontDisplay`](#fontDisplay).
 
-    fontDisplay swap
 
--}
-swap : Value { provides | swap : Supported }
-swap =
-    Value "swap"
-
-
-{-| Sets `fallback` value for usage with [`fontDisplay`](#fontDisplay) or [`strokeLinejoin`](#strokeLinejoin2).
-
-      fontDisplay fallback
-
-      strokeLinejoin2 miter fallback
-
--}
-fallback : Value { provides | fallback : Supported }
-fallback =
-    Value "fallback"
-
-
-{-| Sets `optional` value for usage with [`fontDisplay`](#fontDisplay).
-
-      fontDisplay optional
-
--}
-optional : Value { provides | optional : Supported }
-optional =
-    Value "optional"
-
-
-{-| Sets [`font-display`](https://css-tricks.com/almanac/properties/f/font-display/)
-
-    fontDisplay auto
-
-    fontDisplay block
-
-    fontDisplay swap
-
-    fontDisplay fallback
-
-    fontDisplay optional
-
--}
-fontDisplay :
-    BaseValue
-        { auto : Supported
-        , block : Supported
-        , swap : Supported
-        , fallback : Supported
-        , optional : Supported
-        }
-    -> Style
-fontDisplay (Value val) =
-    AppendProperty ("font-display:" ++ val)
-
-
-{-| Sets `first` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation first
-
--}
-first : Value { provides | first : Supported }
-first =
-    Value "first"
-
-
-{-| Sets `last` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation last
-
--}
-last : Value { provides | last : Supported }
-last =
-    Value "last"
-
-
-{-| Sets `force-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation forceEnd
-
--}
-forceEnd : Value { provides | forceEnd : Supported }
-forceEnd =
-    Value "force-end"
-
-
-{-| Sets `allow-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation allowEnd
-
--}
-allowEnd : Value { provides | allowEnd : Supported }
-allowEnd =
-    Value "allow-end"
-
-
-{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
-
-    hangingPunctuation none
-
-    hangingPunctuation first
-
-    hangingPunctuation2 first forceEnd
-
-    hangingPunctuation3 first allowEnd last
-
--}
-hangingPunctuation :
-    BaseValue
-        { none : Supported
-        , first : Supported
-        , forceEnd : Supported
-        , allowEnd : Supported
-        , last : Supported
-        }
-    -> Style
-hangingPunctuation (Value val) =
-    AppendProperty ("hanging-punctuation:" ++ val)
-
-
-{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
-
-    hangingPunctuation2 first forceEnd
-
--}
-hangingPunctuation2 :
-    Value
-        { first : Supported
-        , last : Supported
-        }
-    ->
-        Value
-            { first : Supported
-            , forceEnd : Supported
-            , allowEnd : Supported
-            , last : Supported
-            }
-    -> Style
-hangingPunctuation2 (Value val1) (Value val2) =
-    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2)
-
-
-{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
-
-    hangingPunctuation3 first allowEnd last
-
--}
-hangingPunctuation3 :
-    Value
-        { first : Supported
-        , last : Supported
-        }
-    ->
-        Value
-            { forceEnd : Supported
-            , allowEnd : Supported
-            }
-    ->
-        Value
-            { first : Supported
-            , last : Supported
-            }
-    -> Style
-hangingPunctuation3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
-
-
-{-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
-
-    hyphens none
-
-    hyphens manual
-
-    hyphens auto
-
--}
-hyphens :
-    BaseValue
-        { none : Supported
-        , manual : Supported
-        , auto : Supported
-        }
-    -> Style
-hyphens (Value val) =
-    AppendProperty ("hyphens:" ++ val)
-
-
-{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
-
-This one-argument version can only use keyword or global values.
-
-    quotes none
-
-    quotes inherit
-
-    quotes2 (string "\"") (string "\"")
-
-    quotes4 (string "\"") (string "\"") (string "'") (string "'")
-
--}
-quotes :
-    BaseValue
-        { none : Supported
-        , auto : Supported
-        }
-    -> Style
-quotes (Value val) =
-    AppendProperty ("quotes:" ++ val)
-
-
-{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
-
-This 2-argument version sets the starting and closing quotation marks for
-a top-level quote (a quote that is not nested within another quote). It only accepts
-string values.
-
-    quotes auto
-
-    quotes2 (string "\"") (string "\"") -- "Hey, this is a first-level quote."
-
-    quotes2 (string "'") (string "'") -- 'Hey, this is a first-level quote.'
-
-    quotes2 (string "«") (string "»") -- «Hey, this is a first-level quote.»
-
--}
-quotes2 :
-    Value
-        { string : Supported
-        }
-    ->
-        Value
-            { string : Supported
-            }
-    -> Style
-quotes2 (Value lv1StartQuote) (Value lv1EndQuote) =
-    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote)
-
-
-{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
-
-This 4-argument version sets the starting and closing quotation marks for both
-a top-level quote and a nested quote. It only accepts
-string values.
-
-    quotes auto
-
-    quotes2 (string "\"") (string "\"")
-
-    -- "Hey, this is a first-level quote."
-
-
-    quotes4 (string "\"") (string "\"") (string "\'") (string "\'")
-
-    {- "Hey, this is a first-level quote.
-    'And this is someone else I made up for
-    a second-level quote!' Yeah, I did that!"
-    -}
-
-    quotes4 (string "«") (string "»") (string "👏") (string "🤔")
-
-    {- «Hey, this is a first-level quote.
-    👏And this is someone else I made up for
-    a second-level quote!🤔 Yeah, I did that!»
-    -}
-
--}
-quotes4 :
-    Value
-        { string : Supported
-        }
-    ->
-        Value
-            { string : Supported
-            }
-    ->
-        Value
-            { string : Supported
-            }
-    ->
-        Value
-            { string : Supported
-            }
-    -> Style
-quotes4 (Value lv1StartQuote) (Value lv1EndQuote) (Value lv2StartQuote) (Value lv2EndQuote) =
-    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote ++ " " ++ lv2StartQuote ++ " " ++ lv2EndQuote)
-
-
-{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
-
-`text-overflow` describes how text that gets cut off is signalled to users.
-
-When the one-argument version is used, it sets the end of text (right end for LTR users) that is cut off.
-
-    textOverflow ellipsis
-
-When the two-argument version is used, it specifies how the
-text cut-off is displayed at the start (left in LTR) and
-the end (right in LTR) of the text.
-
-    textOverflow2 ellipsis ellipsis
-
--}
-textOverflow :
-    BaseValue
-        { clip : Supported
-        , ellipsis : Supported
-        }
-    -> Style
-textOverflow (Value value) =
-    AppendProperty ("text-overflow:" ++ value)
-
-
-{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
-
-`text-overflow` describes how text that gets cut off is signalled to users.
-
-This version specifies how the text cut-off is displayed at the start
-(left in LTR) and at the end (right in LTR) of the text.
-
-    textOverflow2 ellipsis ellipsis
-
--}
-textOverflow2 :
-    Value
-        { clip : Supported
-        , ellipsis : Supported
-        }
-    ->
-        Value
-            { clip : Supported
-            , ellipsis : Supported
-            }
-    -> Style
-textOverflow2 (Value startValue) (Value endValue) =
-    AppendProperty ("text-overflow:" ++ startValue ++ " " ++ endValue)
-
-
-{-| Sets the [`lineBreak`](https://css-tricks.com/almanac/properties/l/line-break/) property.
-
-    lineBreak auto
-
-    lineBreak strict
-
--}
-lineBreak :
-    BaseValue
-        { auto : Supported
-        , loose : Supported
-        , normal : Supported
-        , strict : Supported
-        , anywhere : Supported
-        }
-    -> Style
-lineBreak (Value value) =
-    AppendProperty ("line-break:" ++ value)
-
-
-{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
-
-    hyphens manual
-
--}
-manual : Value { provides | manual : Supported }
-manual =
-    Value "manual"
-
-
-{-| Sets `ellipsis` value for usage with [`textOverflow`](#textOverflow).
-
-    textOverflow ellipsis
-
--}
-ellipsis : Value { provides | ellipsis : Supported }
-ellipsis =
-    Value "ellipsis"
-
-
-{-| Sets `loose` value for usage with [`lineBreak`](#lineBreak).
-
-    lineBreak loose
-
--}
-loose : Value { provides | loose : Supported }
-loose =
-    Value "loose"
 
 
 {-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
@@ -20956,24 +21037,6 @@ speak (Value val) =
     AppendProperty ("speak:" ++ val)
 
 
-{-| Sets [`tab-size`](https://css-tricks.com/almanac/properties/t/tab-size/)
-**Note:** only positive integer values are allowed.
-
-    tabSize (int 4)
-
--}
-tabSize :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , int : Supported
-            }
-        )
-    -> Style
-tabSize (Value val) =
-    AppendProperty ("tab-size:" ++ val)
-
-
 {-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
 
     transformOrigin top_
@@ -21094,29 +21157,6 @@ widows :
     -> Style
 widows (Value val) =
     AppendProperty ("widows:" ++ val)
-
-
-{-| Sets [`word-spacing`](https://css-tricks.com/almanac/properties/w/word-spacing/).
-
-    wordSpacing normal
-
-    wordSpacing zero
-
-    wordSpacing (px 5)
-
--}
-wordSpacing :
-    BaseValue
-        (LengthSupported
-            { normal : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-wordSpacing (Value str) =
-    AppendProperty ("word-spacing:" ++ str)
-
-
 
 
 {-| The [`resize`](https://css-tricks.com/almanac/properties/r/resize/) property.
