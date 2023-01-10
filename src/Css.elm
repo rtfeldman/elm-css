@@ -344,6 +344,19 @@ module Css exposing
     , show, hide
     , tableLayout
 
+    -- columns
+    , columns, columns2
+    , columnWidth
+    , columnCount
+    , columnFill
+    , balance, balanceAll
+    , columnSpan
+    , columnRule, columnRule2, columnRule3
+    , columnRuleWidth
+    , columnRuleStyle
+    , columnRuleColor
+    
+    
 
     
     -- ??
@@ -370,17 +383,6 @@ module Css exposing
     -- ??
     , paintOrder, paintOrder2, paintOrder3, markers
 
-    -- ??
-    , columns, columns2
-    , columnWidth
-    , columnCount
-    , columnRule, columnRule2, columnRule3
-    , columnRuleWidth
-    , columnRuleStyle
-    , columnRuleColor
-    , columnFill
-    , balance, balanceAll
-    , columnSpan
 
     -- ??
     , opacity
@@ -19342,6 +19344,254 @@ tableLayout (Value str) =
     AppendProperty ("table-layout:" ++ str)
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ COLUMNS ---------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+
+    columns2 (px 300) (num 2)
+
+-}
+columns :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+columns (Value widthVal) =
+    AppendProperty ("columns:" ++ widthVal)
+
+
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
+
+    columns (px 300)
+
+    columns2 (px 300) (num 2)
+
+-}
+columns2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    ->
+        Value
+            { auto : Supported
+            , num : Supported
+            }
+    -> Style
+columns2 (Value widthVal) (Value count) =
+    AppendProperty ("columns:" ++ widthVal ++ " " ++ count)
+
+
+{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
+
+    columnWidth auto
+
+    columnWidth (px 200)
+
+-}
+columnWidth :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+columnWidth (Value widthVal) =
+    AppendProperty ("column-width:" ++ widthVal)
+
+
+{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
+
+    columnCount auto
+
+    columnCount (num 3)
+
+-}
+columnCount :
+    BaseValue
+        { auto : Supported
+        , int : Supported
+        }
+    -> Style
+columnCount (Value count) =
+    AppendProperty ("column-count:" ++ count)
+
+
+{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
+
+    columnFill auto
+
+    columnFill balance
+
+    columnFill balanceAll
+
+-}
+columnFill :
+    BaseValue
+        { auto : Supported
+        , balance : Supported
+        , balanceAll : Supported
+        }
+    -> Style
+columnFill (Value val) =
+    AppendProperty ("column-fill:" ++ val)
+
+
+{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balance
+
+-}
+balance : Value { provides | balance : Supported }
+balance =
+    Value "balance"
+
+
+{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
+
+    columnFill balanceAll
+
+-}
+balanceAll : Value { provides | balanceAll : Supported }
+balanceAll =
+    Value "balance-all"
+
+
+{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
+
+    columnSpan all_
+
+    columnSpan none
+
+-}
+columnSpan :
+    BaseValue
+        { none : Supported
+        , all_ : Supported
+        }
+    -> Style
+columnSpan (Value spanVal) =
+    AppendProperty ("column-span:" ++ spanVal)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule : BaseValue LineWidth -> Style
+columnRule (Value widthVal) =
+    AppendProperty ("column-rule:" ++ widthVal)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule2 : Value LineWidth -> Value LineStyle -> Style
+columnRule2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
+
+    columnRuleWidth thin
+
+    columnRuleWidth (px 2)
+
+-}
+columnRuleWidth : BaseValue LineWidth -> Style
+columnRuleWidth (Value widthVal) =
+    AppendProperty ("column-rule-width:" ++ widthVal)
+
+
+{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
+
+    columnRuleStyle solid
+
+    columnRuleStyle dotted
+
+    columnRuleStyle dashed
+
+-}
+columnRuleStyle : BaseValue LineStyle -> Style
+columnRuleStyle (Value styleVal) =
+    AppendProperty ("column-rule-style:" ++ styleVal)
+
+
+{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
+
+    columnRuleColor (rgb 0 0 0)
+
+    columnRuleColor (hex "#fff")
+
+-}
+columnRuleColor : BaseValue Color -> Style
+columnRuleColor (Value colorVal) =
+    AppendProperty ("column-rule-color:" ++ colorVal)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -19592,176 +19842,6 @@ fill (Value val) =
 
 -- COLUMNS --
 
-
-{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
-
-    columns (px 300)
-
-    columns2 (px 300) (num 2)
-
--}
-columns :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-columns (Value widthVal) =
-    AppendProperty ("columns:" ++ widthVal)
-
-
-{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
-
-    columns (px 300)
-
-    columns2 (px 300) (num 2)
-
--}
-columns2 :
-    Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    ->
-        Value
-            { auto : Supported
-            , num : Supported
-            }
-    -> Style
-columns2 (Value widthVal) (Value count) =
-    AppendProperty ("columns:" ++ widthVal ++ " " ++ count)
-
-
-{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
-
-    columnWidth auto
-
-    columnWidth (px 200)
-
--}
-columnWidth :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-columnWidth (Value widthVal) =
-    AppendProperty ("column-width:" ++ widthVal)
-
-
-{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
-
-    columnCount auto
-
-    columnCount (num 3)
-
--}
-columnCount :
-    BaseValue
-        { auto : Supported
-        , int : Supported
-        }
-    -> Style
-columnCount (Value count) =
-    AppendProperty ("column-count:" ++ count)
-
-
-{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
-
-    columnFill auto
-
-    columnFill balance
-
-    columnFill balanceAll
-
--}
-columnFill :
-    BaseValue
-        { auto : Supported
-        , balance : Supported
-        , balanceAll : Supported
-        }
-    -> Style
-columnFill (Value val) =
-    AppendProperty ("column-fill:" ++ val)
-
-
-{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
-
-    columnFill balance
-
--}
-balance : Value { provides | balance : Supported }
-balance =
-    Value "balance"
-
-
-{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
-
-    columnFill balanceAll
-
--}
-balanceAll : Value { provides | balanceAll : Supported }
-balanceAll =
-    Value "balance-all"
-
-
-{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
-
-    columnSpan all_
-
-    columnSpan none
-
--}
-columnSpan :
-    BaseValue
-        { none : Supported
-        , all_ : Supported
-        }
-    -> Style
-columnSpan (Value spanVal) =
-    AppendProperty ("column-span:" ++ spanVal)
-
-
-{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
-
-    columnRuleWidth thin
-
-    columnRuleWidth (px 2)
-
--}
-columnRuleWidth : BaseValue LineWidth -> Style
-columnRuleWidth (Value widthVal) =
-    AppendProperty ("column-rule-width:" ++ widthVal)
-
-
-{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
-
-    columnRuleStyle solid
-
-    columnRuleStyle dotted
-
-    columnRuleStyle dashed
-
--}
-columnRuleStyle : BaseValue LineStyle -> Style
-columnRuleStyle (Value styleVal) =
-    AppendProperty ("column-rule-style:" ++ styleVal)
-
-
-{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
-
-    columnRuleColor (rgb 0 0 0)
-
-    columnRuleColor (hex "#fff")
-
--}
-columnRuleColor : BaseValue Color -> Style
-columnRuleColor (Value colorVal) =
-    AppendProperty ("column-rule-color:" ++ colorVal)
 
 
 -- STROKE --
@@ -20520,59 +20600,6 @@ paintOrder3 (Value val1) (Value val2) (Value val3) =
 markers : Value { provides | markers : Supported }
 markers =
     Value "markers"
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
-
--}
-columnRule : BaseValue LineWidth -> Style
-columnRule (Value widthVal) =
-    AppendProperty ("column-rule:" ++ widthVal)
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
-
--}
-columnRule2 : Value LineWidth -> Value LineStyle -> Style
-columnRule2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
-
--}
-columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
 
 
 
