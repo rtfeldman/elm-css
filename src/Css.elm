@@ -481,7 +481,7 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 
 @docs unset, initial, inherit
 
-@docs all, revert
+@docs revert
 
 @docs Angle, AngleSupported, Width, WidthSupported
 
