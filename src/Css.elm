@@ -23,6 +23,8 @@ module Css exposing
     , BasicShape, BasicShapeSupported
     , Length, LengthSupported
     , Color, ColorSupported
+    , LineStyle, LineStyleSupported
+    , LineWidth, LineWidthSupported
     , Resolution, ResolutionSupported
     , Time, TimeSupported
 
@@ -31,7 +33,7 @@ module Css exposing
     , calc, minus, plus, times, dividedBy
 
     -- common value types
-    , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct
+    , zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inch, pt, pc, pct
     , fr, minmax, fitContentTo
     , deg, grad, rad, turn
     , s, ms
@@ -76,6 +78,10 @@ module Css exposing
 
     -- stacking contexts + box-sizing
     , zIndex, isolation, boxSizing
+
+    -- contain (DOM)
+    , contain, contain2, contain3, contain4
+    , size, layout, paint
 
     -- sizing
     , width, minWidth, maxWidth, height, minHeight, maxHeight
@@ -136,10 +142,11 @@ module Css exposing
     , outline, outline3, outlineWidth, outlineColor
     , invert, outlineStyle, outlineOffset
 
-    -- overflow
+    -- overflow and resizing
     , overflow, overflowX, overflowY, overflowBlock, overflowInline
     , overflowWrap, overflowAnchor
     , breakWord, anywhere
+    , resize, horizontal, vertical
 
     -- flex
     , flex, flex2, flex3, flexDirection
@@ -180,7 +187,7 @@ module Css exposing
 
     -- font size
     , fontSize
-    , xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
+    , xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
     , fontSizeAdjust
 
     -- @font-face
@@ -203,7 +210,11 @@ module Css exposing
     , commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4
     , ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-    , fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition
+    , fontKerning
+    , fontLanguageOverride
+    , fontSynthesis, fontSynthesis2, fontSynthesis3
+    , fontOpticalSizing
+    , fontVariantPosition
     , weight
 
     -- variable fonts (not to be confused with variants)
@@ -211,17 +222,28 @@ module Css exposing
     
     -- list styles
     , ListStyleType, ListStyleTypeSupported
-    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, listStyleImage
+    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside
+    , listStyleType
+    , listStyleImage
     , arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
 
     -- text transform + decoration
     , textTransform
     , capitalize, uppercase, lowercase, fullSizeKana
-    , textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationThickness, fromFont
-    , textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
+    , textDecoration, textDecoration2, textDecoration3
+    , textDecorationLine, textDecorationLine2, textDecorationLine3
+    , textDecorationStyle
+    , textDecorationColor
+    , textDecorationThickness
+    , fromFont
+    , textDecorationSkip
+    , textDecorationSkipInk
+    , objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
 
     -- text decoration (other)
+    , lineHeight
+    , letterSpacing
     , textIndent, textIndent2, textIndent3, hanging, eachLine
     , textUnderlineOffset
     , textEmphasis, textEmphasis2
@@ -260,23 +282,54 @@ module Css exposing
     , textRendering
     , geometricPrecision, optimizeLegibility, optimizeSpeed
 
-    -- cursors
-    , CursorKeyword
-    , cursor, cursor2, cursor4
-    , pointer, default, contextMenu, help, progress, wait, cell
-    , crosshair, verticalText, alias, copy, move, noDrop
-    , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
-    , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
-    , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
+    -- text selection
+    , userSelect
 
-    -- shadows and gradients
-    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
-    , TextShadowConfig, textShadow, defaultTextShadow
-    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+    -- accessibility
+    , speak, spellOut
 
-    -- break (page break)
-    , breakBefore, breakAfter, breakInside, avoid, avoidPage, avoidColumn, page
-    , pageBreakBefore, pageBreakAfter, pageBreakInside
+    -- columns
+    , columns, columns2
+    , columnWidth
+    , columnCount
+    , columnFill
+    , balance, balanceAll
+    , columnSpan
+    , columnRule, columnRule2, columnRule3
+    , columnRuleWidth
+    , columnRuleStyle
+    , columnRuleColor
+    
+    -- tables
+    , borderCollapse
+    , collapse, separate
+    , borderSpacing, borderSpacing2
+    , captionSide
+    , emptyCells
+    , show, hide
+    , tableLayout
+
+    -- content fragmentation
+    , breakBefore
+    , breakAfter
+    , breakInside
+    , avoid, avoidPage, avoidColumn, page
+    , pageBreakBefore
+    , pageBreakAfter
+    , pageBreakInside
+    , orphans, widows
+    , boxDecorationBreak
+
+    -- arranging inline/block stuff
+    , float
+    , clear
+    , verticalAlign
+    , textTop, textBottom, middle
+
+    -- replaced elements
+    , objectFit
+    , scaleDown
+    , objectPosition, objectPosition2, objectPosition4
 
     -- pointer-events
     , pointerEvents
@@ -284,8 +337,11 @@ module Css exposing
 
     -- scrolling
     , scrollbarColor, scrollbarWidth
-    , scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
-    , scrollSnapType, scrollSnapType2, mandatory, proximity
+    , scrollBehavior, smooth
+    , scrollSnapAlign
+    , scrollSnapStop
+    , scrollSnapType, scrollSnapType2
+    , mandatory, proximity
     , scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4
     , scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
     , scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
@@ -298,9 +354,26 @@ module Css exposing
     , overscrollBehaviorX, overscrollBehaviorY
     , overscrollBehaviorBlock, overscrollBehaviorInline
     
+    -- cursors
+    , CursorKeyword
+    , cursor, cursor2, cursor4
+    , pointer, default, contextMenu, help, progress, wait, cell
+    , crosshair, verticalText, alias, copy, move, noDrop
+    , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
+    , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
+    , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
+    , caretColor
+
+    -- shadows and gradients
+    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
+    , TextShadowConfig, textShadow, defaultTextShadow
+    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+
     -- transformations and perspective
     , TransformFunction, TransformFunctionSupported
-    , transform, transforms, transformOrigin, transformOrigin2, transformBox
+    , transform, transforms
+    , transformOrigin, transformOrigin2
+    , transformBox
     , matrix, matrix3d
     , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
     , skew, skew2, skewX, skewY
@@ -308,6 +381,7 @@ module Css exposing
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , perspective, perspectiveOrigin, perspectiveOrigin2
     , perspective_
+    , backfaceVisibility
     
     -- animation
     , animationName, animationNames
@@ -320,6 +394,14 @@ module Css exposing
     , animationFillMode, animationFillModes
     , EasingFunction, EasingFunctionSupported
     , linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
+
+    -- visual stuff??
+    , opacity
+    , visibility
+    , mixBlendMode
+    , imageRendering
+    , crispEdges, pixelated
+    , clipPath, clipPath2
 
     -- masks
     , maskBorderMode
@@ -337,28 +419,14 @@ module Css exposing
     , maskType
     , noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
 
-    -- tables
-    , borderCollapse
-    , collapse, separate
-    , borderSpacing, borderSpacing2
-    , captionSide
-    , emptyCells
-    , show, hide
-    , tableLayout
-
-    -- columns
-    , columns, columns2
-    , columnWidth
-    , columnCount
-    , columnFill
-    , balance, balanceAll
-    , columnSpan
-    , columnRule, columnRule2, columnRule3
-    , columnRuleWidth
-    , columnRuleStyle
-    , columnRuleColor
+    -- drawing
+    , paintOrder, paintOrder2, paintOrder3, markers
     
+    -- using a printer
+    , bleed
+
     -- SVG attributes that can be used as CSS presentation properties.
+    , fill
     , strokeDasharray
     , strokeDashoffset
     , strokeWidth
@@ -377,55 +445,8 @@ module Css exposing
     , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
 
-
-    
-    -- ??
+    -- WebKit stuff that's standardised for legacy support
     , lineClamp
-    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
-
-    , verticalAlign
-    , textTop, textBottom, middle
-
-    , float
-
-    , clear
-
-    , visibility
-
-    , fill
-
-    , paintOrder, paintOrder2, paintOrder3, markers
-
-    , opacity
-
-    
-    , speak, spellOut
-
-    , userSelect
-
-    , bleed
-
-    , orphans, widows
-
-    , mixBlendMode
-
-    , imageRendering, crispEdges, pixelated
-
-    , backfaceVisibility
-
-    , objectFit, scaleDown
-    , objectPosition, objectPosition2, objectPosition4
-
-    , boxDecorationBreak
-
-    , clipPath, clipPath2
-
-    , caretColor
-
-    , resize, horizontal, vertical
-
-    , contain, contain2, contain3, contain4
-    , size, layout, paint
     )
 
 {-| If you need something that `elm-css` does not support right now, the
@@ -467,7 +488,7 @@ All CSS properties can have the values `unset`, `initial`, `inherit` and `revert
 
 ## Numeric Units
 
-@docs Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inches, pt, pc, pct, num, int
+@docs Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inch, pt, pc, pct, num, int
 
 
 ## Calc
@@ -2321,13 +2342,13 @@ q value =
 
 {-| [`in`](https://css-tricks.com/the-lengths-of-css/) length units.
 
-    borderWidth (inches 5)
+    borderWidth (inch 5)
 
-(This is `inches` instead of `in` because `in` is a reserved keyword in Elm.)
+(This is `inch` instead of `in` because `in` is a reserved keyword in Elm.)
 
 -}
-inches : Float -> Value { provides | inches : Supported }
-inches value =
+inch : Float -> Value { provides | inch : Supported }
+inch value =
     Value (String.fromFloat value ++ "in")
 
 
@@ -4882,6 +4903,193 @@ boxSizing :
 boxSizing (Value value) =
     AppendProperty ("box-sizing:" ++ value)
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------- CONTAIN --------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+    contain none
+
+    contain content
+
+    contain2 size layout
+
+    contain3 size layout style
+
+    contain4 -- all multiple choice values in use, no value entry needed
+
+-}
+contain :
+    BaseValue
+        { none : Supported
+        , strict : Supported
+        , content : Supported
+        , size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    -> Style
+contain (Value value) =
+    AppendProperty ("contain:" ++ value)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This two-argument version lets you use 2 of the 4 multiple choice values you
+can use for this property.
+
+    contain2 size layout
+
+-}
+contain2 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain2 (Value value1) (Value value2) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This two-argument version lets you use 3 of the 4 multiple choice values you
+can use for this property.
+
+    contain3 size layout style
+
+-}
+contain3 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain3 (Value value1) (Value value2) (Value value3) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2 ++ " " ++ value3)
+
+
+{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
+
+This two-argument version lets you use all 4 multiple choice values you
+can use for this property.
+
+    contain4 size layout style paint
+
+**Note: The `style` value is considered at-risk from being depreciated.**
+
+-}
+contain4 :
+    Value
+        { size : Supported
+        , layout : Supported
+        , style : Supported
+        , paint : Supported
+        }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    ->
+        Value
+            { size : Supported
+            , layout : Supported
+            , style : Supported
+            , paint : Supported
+            }
+    -> Style
+contain4 (Value value1) (Value value2) (Value value3) (Value value4) =
+    AppendProperty ("contain:" ++ value1 ++ " " ++ value2 ++ " " ++ value3 ++ " " ++ value4)
+
+
+{-| Sets the `size` value for [`contain`](#contain).
+
+This indicates that the element can be sized without
+needing to look at the size of its descendants.
+
+    contain size
+
+-}
+size : Value { provides | size : Supported }
+size =
+    Value "size"
+
+
+{-| Sets the `layout` value for [`contain`](#contain).
+
+This indicates that nothing outside the element
+may affect its internal layout and vice versa.
+
+    contain layout
+
+-}
+layout : Value { provides | layout : Supported }
+layout =
+    Value "layout"
+
+
+{-| Sets the `paint` value for [`contain`](#contain).
+
+Indicates that descendants of the element will not
+display outside its bounds and will not be painted
+by the browser if the containing box is offscreen.
+
+    contain paint
+
+-}
+paint : Value { provides | paint : Supported }
+paint =
+    Value "paint"
+
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -5741,8 +5949,6 @@ visited =
     pseudoClass "visited"
 
 
-
-
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -5756,7 +5962,6 @@ visited =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
-
 
 
 {-| Sets [`margin`](https://css-tricks.com/almanac/properties/m/margin/) property.
@@ -8694,6 +8899,49 @@ anywhere =
     Value "anywhere"
 
 
+{-| The [`resize`](https://css-tricks.com/almanac/properties/r/resize/) property.
+
+    resize none
+
+    resize both
+
+    resize inline
+
+-}
+resize :
+    BaseValue
+        { none : Supported
+        , both : Supported
+        , horizontal : Supported
+        , vertical : Supported
+        , block : Supported
+        , inline : Supported
+        }
+    -> Style
+resize (Value value) =
+    AppendProperty ("resize:" ++ value)
+
+
+{-| The `horizontal` value used by [`resize`](#resize).
+
+    resize horizontal
+
+-}
+horizontal : Value { provides | horizontal : Supported }
+horizontal =
+    Value "horizontal"
+
+
+{-| The `vertical` value used by [`resize`](#resize).
+
+    resize vertical
+
+-}
+vertical : Value { provides | vertical : Supported }
+vertical =
+    Value "vertical"
+
+
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -9665,6 +9913,23 @@ wrap =
 wrapReverse : Value { provides | wrapReverse : Supported }
 wrapReverse =
     Value "wrap-reverse"
+
+
+{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
+
+    order (num 2)
+
+    order (num -2)
+
+-}
+order :
+    BaseValue
+        { int : Supported
+        , zero : Supported
+        }
+    -> Style
+order (Value val) =
+    AppendProperty ("order:" ++ val)
 
 
 ------------------------------------------------------------------------
@@ -13729,6 +13994,52 @@ lineThrough =
 ------------------------------------------------------------------------
 
 
+{-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
+
+    lineHeight (pct 150)
+
+    lineHeight (em 2)
+
+    lineHeight (num 1.5)
+
+    lineHeight normal
+
+-}
+lineHeight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , normal : Supported
+            , num : Supported
+            }
+        )
+    -> Style
+lineHeight (Value val) =
+    AppendProperty ("line-height:" ++ val)
+
+
+{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/)
+
+    letterSpacing (pct 150)
+
+    letterSpacing (em 2)
+
+    letterSpacing (num 1.5)
+
+    letterSpacing normal
+
+-}
+letterSpacing :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            }
+        )
+    -> Style
+letterSpacing (Value val) =
+    AppendProperty ("letter-spacing:" ++ val)
+
+
 {-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
 
     textIndent (em 1.5)
@@ -14995,7 +15306,7 @@ optimizeSpeed =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
--------------------------------- CURSORS -------------------------------
+----------------------------- USER-SELECT ------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -15004,332 +15315,75 @@ optimizeSpeed =
 ------------------------------------------------------------------------
 
 
-{-| A type alias used for the various [`cursor`](#cursor) properties
--}
-type alias CursorKeyword =
-    { pointer : Supported
-    , auto : Supported
-    , default : Supported
-    , none : Supported
-    , contextMenu : Supported
-    , help : Supported
-    , progress : Supported
-    , wait : Supported
-    , cell : Supported
-    , crosshair : Supported
-    , text : Supported
-    , verticalText : Supported
-    , alias : Supported
-    , copy : Supported
-    , move : Supported
-    , noDrop : Supported
-    , notAllowed : Supported
-    , allScroll : Supported
-    , colResize : Supported
-    , rowResize : Supported
-    , nResize : Supported
-    , eResize : Supported
-    , sResize : Supported
-    , wResize : Supported
-    , neResize : Supported
-    , nwResize : Supported
-    , seResize : Supported
-    , swResize : Supported
-    , ewResize : Supported
-    , nsResize : Supported
-    , neswResize : Supported
-    , nwseResize : Supported
-    , zoomIn : Supported
-    , zoomOut : Supported
-    , grab : Supported
-    , grabbing : Supported
-    }
+{-| Sets [`user-select`](https://css-tricks.com/almanac/properties/u/user-select/)
 
+    userSelect none
 
-{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
-property.
+    userSelect auto
 
-    cursor notAllowed
+    userSelect text
+
+    userSelect contain_
+
+    userSelect all_
 
 -}
-cursor : BaseValue CursorKeyword -> Style
-cursor (Value val) =
-    AppendProperty ("cursor:" ++ val)
-
-
-{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
-property.
-
-    cursor2 (url "https://example.com") move
-
--}
-cursor2 : Value { url : Supported } -> Value CursorKeyword -> Style
-cursor2 (Value urlVal) (Value fallbackVal) =
-    AppendProperty ("cursor:" ++ urlVal ++ "," ++ fallbackVal)
-
-
-{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
-property.
-
-    cursor4 (url "https://example.com") (num 34) zero move
-
--}
-cursor4 :
-    Value { url : Supported }
-    ->
-        Value
-            { num : Supported
-            , zero : Supported
-            }
-    ->
-        Value
-            { num : Supported
-            , zero : Supported
-            }
-    -> Value CursorKeyword
+userSelect :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        , text : Supported
+        , contain_ : Supported
+        , all_ : Supported
+        }
     -> Style
-cursor4 (Value urlVal) (Value xVal) (Value yVal) (Value fallbackVal) =
-    AppendProperty
-        ("cursor:"
-            ++ urlVal
-            ++ " "
-            ++ xVal
-            ++ " "
-            ++ yVal
-            ++ ","
-            ++ fallbackVal
-        )
+userSelect (Value val) =
+    AppendProperty ("user-select:" ++ val)
 
 
-{-| The `pointer` value for the [`cursor`](#cursor) property.
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ ACCESSIBILITY ---------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`speak`](https://css-tricks.com/almanac/properties/s/speak/)
+
+    speak none
+
+    speak normal
+
+    speak spellOut
+
 -}
-pointer : Value { provides | pointer : Supported }
-pointer =
-    Value "pointer"
+speak :
+    BaseValue
+        { none : Supported
+        , normal : Supported
+        , spellOut : Supported
+        }
+    -> Style
+speak (Value val) =
+    AppendProperty ("speak:" ++ val)
 
 
-{-| The `default` value for the [`cursor`](#cursor) property.
+{-| Sets `spellOut` value for usage with [`speak`](#speak).
+
+    speak spellOut
+
 -}
-default : Value { provides | default : Supported }
-default =
-    Value "default"
-
-
-{-| The `context-menu` value for the [`cursor`](#cursor) property.
--}
-contextMenu : Value { provides | contextMenu : Supported }
-contextMenu =
-    Value "context-menu"
-
-
-{-| The `help` value for the [`cursor`](#cursor) property.
--}
-help : Value { provides | help : Supported }
-help =
-    Value "help"
-
-
-{-| The `progress` value for the [`cursor`](#cursor) property.
--}
-progress : Value { provides | progress : Supported }
-progress =
-    Value "progress"
-
-
-{-| The `wait` value for the [`cursor`](#cursor) property.
--}
-wait : Value { provides | wait : Supported }
-wait =
-    Value "wait"
-
-
-{-| The `cell` value for the [`cursor`](#cursor) property.
--}
-cell : Value { provides | cell : Supported }
-cell =
-    Value "cell"
-
-
-{-| The `crosshair` value for the [`cursor`](#cursor) property.
--}
-crosshair : Value { provides | crosshair : Supported }
-crosshair =
-    Value "crosshair"
-
-
-{-| The `vertical-text` value for the [`cursor`](#cursor) property.
--}
-verticalText : Value { provides | verticalText : Supported }
-verticalText =
-    Value "vertical-text"
-
-
-{-| The `alias` value for the [`cursor`](#cursor) property.
--}
-alias : Value { provides | alias : Supported }
-alias =
-    Value "alias"
-
-
-{-| The `copy` value for the [`cursor`](#cursor) property.
--}
-copy : Value { provides | copy : Supported }
-copy =
-    Value "copy"
-
-
-{-| The `move` value for the [`cursor`](#cursor) property.
--}
-move : Value { provides | move : Supported }
-move =
-    Value "move"
-
-
-{-| The `no-drop` value for the [`cursor`](#cursor) property.
--}
-noDrop : Value { provides | noDrop : Supported }
-noDrop =
-    Value "no-drop"
-
-
-{-| The `notAllowed` value for the [`cursor`](#cursor) property.
--}
-notAllowed : Value { provides | notAllowed : Supported }
-notAllowed =
-    Value "not-allowed"
-
-
-{-| The `all-scroll` value for the [`cursor`](#cursor) property.
--}
-allScroll : Value { provides | allScroll : Supported }
-allScroll =
-    Value "all-scroll"
-
-
-{-| The `col-resize` value for the [`cursor`](#cursor) property.
--}
-colResize : Value { provides | colResize : Supported }
-colResize =
-    Value "col-resize"
-
-
-{-| The `row-resize` value for the [`cursor`](#cursor) property.
--}
-rowResize : Value { provides | rowResize : Supported }
-rowResize =
-    Value "row-resize"
-
-
-{-| The `n-resize` value for the [`cursor`](#cursor) property.
--}
-nResize : Value { provides | nResize : Supported }
-nResize =
-    Value "n-resize"
-
-
-{-| The `e-resize` value for the [`cursor`](#cursor) property.
--}
-eResize : Value { provides | eResize : Supported }
-eResize =
-    Value "e-resize"
-
-
-{-| The `s-resize` value for the [`cursor`](#cursor) property.
--}
-sResize : Value { provides | sResize : Supported }
-sResize =
-    Value "s-resize"
-
-
-{-| The `w-resize` value for the [`cursor`](#cursor) property.
--}
-wResize : Value { provides | wResize : Supported }
-wResize =
-    Value "w-resize"
-
-
-{-| The `ne-resize` value for the [`cursor`](#cursor) property.
--}
-neResize : Value { provides | neResize : Supported }
-neResize =
-    Value "ne-resize"
-
-
-{-| The `nw-resize` value for the [`cursor`](#cursor) property.
--}
-nwResize : Value { provides | nwResize : Supported }
-nwResize =
-    Value "nw-resize"
-
-
-{-| The `se-resize` value for the [`cursor`](#cursor) property.
--}
-seResize : Value { provides | seResize : Supported }
-seResize =
-    Value "se-resize"
-
-
-{-| The `sw-resize` value for the [`cursor`](#cursor) property.
--}
-swResize : Value { provides | swResize : Supported }
-swResize =
-    Value "sw-resize"
-
-
-{-| The `ew-resize` value for the [`cursor`](#cursor) property.
--}
-ewResize : Value { provides | ewResize : Supported }
-ewResize =
-    Value "ew-resize"
-
-
-{-| The `ns-resize` value for the [`cursor`](#cursor) property.
--}
-nsResize : Value { provides | nsResize : Supported }
-nsResize =
-    Value "ns-resize"
-
-
-{-| The `nesw-resize` value for the [`cursor`](#cursor) property.
--}
-neswResize : Value { provides | neswResize : Supported }
-neswResize =
-    Value "nesw-resize"
-
-
-{-| The `nwse-resize` value for the [`cursor`](#cursor) property.
--}
-nwseResize : Value { provides | nwseResize : Supported }
-nwseResize =
-    Value "nwse-resize"
-
-
-{-| The `zoom-in` value for the [`cursor`](#cursor) property.
--}
-zoomIn : Value { provides | zoomIn : Supported }
-zoomIn =
-    Value "zoom-in"
-
-
-{-| The `zoom-out` value for the [`cursor`](#cursor) property.
--}
-zoomOut : Value { provides | zoomOut : Supported }
-zoomOut =
-    Value "zoom-out"
-
-
-{-| The `grab` value for the [`cursor`](#cursor) property.
--}
-grab : Value { provides | grab : Supported }
-grab =
-    Value "grab"
-
-
-{-| The `grabbing` value for the [`cursor`](#cursor) property.
--}
-grabbing : Value { provides | grabbing : Supported }
-grabbing =
-    Value "grabbing"
+spellOut : Value { provides | spellOut : Supported }
+spellOut =
+    Value "spell-out"
 
 
 
@@ -15339,7 +15393,7 @@ grabbing =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
------------------------------- BOX-SHADOW ------------------------------
+------------------------------ COLUMNS ---------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -15348,514 +15402,226 @@ grabbing =
 ------------------------------------------------------------------------
 
 
-{-| Configuration for [`boxShadow`](#boxShadow).
--}
-type alias BoxShadowConfig =
-    { offsetX :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , offsetY :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , blurRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , spreadRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , color :
-        Maybe (Value Color)
-    , inset : Bool
-    }
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
 
+    columns (px 300)
 
-{-| Default [`boxShadow`](#boxShadow) configuration.
-
-It is equivalent to the following CSS:
-
-    box-shadow: 0 0;
+    columns2 (px 300) (num 2)
 
 -}
-defaultBoxShadow : BoxShadowConfig
-defaultBoxShadow =
-    { offsetX = zero
-    , offsetY = zero
-    , blurRadius = Nothing
-    , spreadRadius = Nothing
-    , color = Nothing
-    , inset = False
-    }
-
-
-{-| The [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/) property.
-
-    boxShadow initial
-
-    boxShadow none
-
-For defining shadows look at [`boxShadows`](#boxShadows).
-
--}
-boxShadow : BaseValue { none : Supported } -> Style
-boxShadow (Value val) =
-    AppendProperty ("box-shadow:" ++ val)
-
-
-{-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
-
-    boxShadows [] -- "box-shadow: none"
-
-    -- "box-shadow: 3px 5px #aabbcc"
-    button
-        [ css
-            [ boxShadows
-                [ { defaultBoxShadow
-                    | offsetX = px 3
-                    , offsetY = px 5
-                    , color = Just (hex "#aabbcc")
-                  }
-                ]
-            ]
-        ]
-        [ text "Zap!" ]
-
--}
-boxShadows : List BoxShadowConfig -> Style
-boxShadows configs =
-    let
-        value =
-            case configs of
-                [] ->
-                    "none"
-
-                _ ->
-                    configs
-                        |> List.map boxShadowConfigToString
-                        |> String.join ", "
-    in
-    AppendProperty ("box-shadow:" ++ value)
-
-
-boxShadowConfigToString : BoxShadowConfig -> String
-boxShadowConfigToString config =
-    let
-        (Value offsetX) =
-            config.offsetX
-
-        (Value offsetY) =
-            config.offsetY
-
-        blurRadius =
-            case config.blurRadius of
-                Just (Value value) ->
-                    " " ++ value
-
-                Nothing ->
-                    case config.spreadRadius of
-                        Just _ ->
-                            " 0"
-
-                        Nothing ->
-                            ""
-
-        spreadRadius =
-            case config.spreadRadius of
-                Just (Value value) ->
-                    " " ++ value
-
-                Nothing ->
-                    ""
-
-        insetStr =
-            if config.inset then
-                "inset "
-
-            else
-                ""
-
-        colorVal =
-            config.color
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-    in
-    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------ TEXT SHADOW ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Configuration for [`textShadow`](#textShadow).
--}
-type alias TextShadowConfig =
-    { offsetX :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , offsetY :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , blurRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , color : Maybe (Value Color)
-    }
-
-
-{-| Default [`textShadow`](#textShadow) configuration.
-
-It is equivalent to the following CSS:
-
-    text-shadow: 0 0;
-
--}
-defaultTextShadow : TextShadowConfig
-defaultTextShadow =
-    { offsetX = zero
-    , offsetY = zero
-    , blurRadius = Nothing
-    , color = Nothing
-    }
-
-
-{-| Sets [`text-shadow`](https://css-tricks.com/almanac/properties/t/text-shadow/).
-
-    textShadow [] -- "text-shadow: none"
-
-    -- "text-shadow: 3px 5px #aabbcc"
-    span
-        [ css
-            [ textShadow
-                [ { defaultTextShadow
-                    | offsetX = px 3
-                    , offsetY = px 5
-                    , color = Just (hex "#aabbcc")
-                  }
-                ]
-            ]
-        ]
-        [ text "Zap!" ]
-
--}
-textShadow : List TextShadowConfig -> Style
-textShadow configs =
-    let
-        values =
-            case configs of
-                [] ->
-                    "none"
-
-                _ ->
-                    configs
-                        |> List.map textShadowConfigToString
-                        |> String.join ","
-    in
-    AppendProperty ("text-shadow:" ++ values)
-
-
-textShadowConfigToString : TextShadowConfig -> String
-textShadowConfigToString config =
-    let
-        offsetX =
-            unpackValue config.offsetX
-
-        offsetY =
-            unpackValue config.offsetY
-
-        blurRadius =
-            config.blurRadius
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-
-        colorSetting =
-            config.color
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-    in
-    offsetX ++ " " ++ offsetY ++ blurRadius ++ colorSetting
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------- GRADIENTS -------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-values used by properties such as [`backgroundImage`](#backgroundImage),
-and [`listStyleImage`](#listStyleImage)
-
-    linearGradient (stop red) (stop blue) []
-
-    linearGradient (stop red) (stop blue) [ stop green ]
-
--}
-linearGradient :
-    Value { colorStop : Supported }
-    -> Value { colorStop : Supported }
-    -> List (Value { colorStop : Supported })
-    -> Value { provides | linearGradient : Supported }
-linearGradient (Value firstStop) (Value secondStop) moreStops =
-    let
-        peeledStops =
-            List.map unpackValue moreStops
-
-        stops =
-            String.join "," (firstStop :: secondStop :: peeledStops)
-    in
-    Value ("linear-gradient(" ++ stops ++ ")")
-
-
-{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
-values used by properties such as [`backgroundImage`](#backgroundImage),
-and [`listStyleImage`](#listStyleImage)
-
-    linearGradient2 toTop (stop red) (stop blue) []
-
-    linearGradient2 toTop (stop red) (stop blue) [ stop green ]
-
--}
-linearGradient2 :
-    Value
-        (AngleSupported
-            { toBottom : Supported
-            , toBottomLeft : Supported
-            , toBottomRight : Supported
-            , toLeft : Supported
-            , toRight : Supported
-            , toTop : Supported
-            , toTopLeft : Supported
-            , toTopRight : Supported
+columns :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
             }
         )
-    -> Value { colorStop : Supported }
-    -> Value { colorStop : Supported }
-    -> List (Value { colorStop : Supported })
-    -> Value { provides | linearGradient : Supported }
-linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
-    let
-        peeledStops =
-            List.map unpackValue moreStops
-
-        stops =
-            String.join "," (firstStop :: secondStop :: peeledStops)
-    in
-    Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
+    -> Style
+columns (Value widthVal) =
+    AppendProperty ("columns:" ++ widthVal)
 
 
-{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
 
-    linearGradient toTop (stop red) (stop blue) []
+    columns (px 300)
 
-See also [`stop2`](#stop2) for controlling stop positioning.
+    columns2 (px 300) (num 2)
 
 -}
-stop : Value Color -> Value { provides | colorStop : Supported }
-stop (Value colorVal) =
-    Value colorVal
+columns2 :
+    Value
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    ->
+        Value
+            { auto : Supported
+            , num : Supported
+            }
+    -> Style
+columns2 (Value widthVal) (Value count) =
+    AppendProperty ("columns:" ++ widthVal ++ " " ++ count)
 
 
-{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
 
-    linearGradient toTop (stop2 red (px 20)) (stop blue) []
+    columnWidth auto
 
-See also [`stop`](#stop) if you don't need to control the stop position.
-
--}
-stop2 :
-    Value Color
-    -> Value (LengthSupported { pct : Supported })
-    -> Value { provides | colorStop : Supported }
-stop2 (Value colorVal) (Value positionVal) =
-    Value (colorVal ++ " " ++ positionVal)
-
-
-{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
-
-    linearGradient (stop3 (hex "111") zero (pt 1)) (stop3 (hex "6454") (pt 2) (pct 45))
+    columnWidth (px 200)
 
 -}
-stop3 :
-    Value Color
-    -> Value (LengthSupported { pct : Supported })
-    -> Value (LengthSupported { pct : Supported })
-    -> Value { provides | colorStop : Supported }
-stop3 (Value colorVal) (Value positionStart) (Value positionEnd) =
-    Value (colorVal ++ " " ++ positionStart ++ "," ++ positionEnd)
+columnWidth :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+columnWidth (Value widthVal) =
+    AppendProperty ("column-width:" ++ widthVal)
 
 
-{-| Provides the [`to bottom` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
 
-    linearGradient toBottom (stop red) (stop blue) []
+    columnCount auto
 
-If you want your gradient to go to a corner, use [`toBottomLeft`](#toBottomLeft) or [`toBottomRight`](#toBottomRight):
-
-    linearGradient toBottomLeft (stop red) (stop blue) []
-
-    linearGradient toBottomRight (stop red) (stop blue) []
+    columnCount (num 3)
 
 -}
-toBottom : Value { provides | toBottom : Supported }
-toBottom =
-    Value "to bottom"
+columnCount :
+    BaseValue
+        { auto : Supported
+        , int : Supported
+        }
+    -> Style
+columnCount (Value count) =
+    AppendProperty ("column-count:" ++ count)
 
 
-{-| Provides the [`to bottom left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
 
-    linearGradient toBottomLeft (stop red) (stop blue) []
+    columnFill auto
 
-If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toLeft`](#toLeft) instead:
+    columnFill balance
 
-    linearGradient toBottom (stop red) (stop blue) []
-
-    linearGradient toLeft (stop red) (stop blue) []
-
--}
-toBottomLeft : Value { provides | toBottomLeft : Supported }
-toBottomLeft =
-    Value "to bottom left"
-
-
-{-| Provides the [`to bottom right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toBottomRight (stop red) (stop blue) []
-
-If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toRight`](#toRight) instead:
-
-    linearGradient toBottom (stop red) (stop blue) []
-
-    linearGradient toRight (stop red) (stop blue) []
+    columnFill balanceAll
 
 -}
-toBottomRight : Value { provides | toBottomRight : Supported }
-toBottomRight =
-    Value "to bottom right"
+columnFill :
+    BaseValue
+        { auto : Supported
+        , balance : Supported
+        , balanceAll : Supported
+        }
+    -> Style
+columnFill (Value val) =
+    AppendProperty ("column-fill:" ++ val)
 
 
-{-| Provides the [`to left` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
 
-    linearGradient toLeft (stop red) (stop blue) []
-
-If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toBottomLeft`](#toBottomLeft):
-
-    linearGradient toTopLeft (stop red) (stop blue) []
-
-    linearGradient toBottomLeft (stop red) (stop blue) []
-
--}
-toLeft : Value { provides | toLeft : Supported }
-toLeft =
-    Value "to left"
-
-
-{-| Provides the [`to right` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
-
-    linearGradient toRight (stop red) (stop blue) []
-
-If you want your gradient to go to a corner, use [`toTopRight`](#toTopRight) or [`toBottomRight`](#toBottomRight):
-
-    linearGradient toTopRight (stop red) (stop blue) []
-
-    linearGradient toBottomRight (stop red) (stop blue) []
+    columnFill balance
 
 -}
-toRight : Value { provides | toRight : Supported }
-toRight =
-    Value "to right"
+balance : Value { provides | balance : Supported }
+balance =
+    Value "balance"
 
 
-{-| Provides the [`to top` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
 
-    linearGradient toTop (stop red) (stop blue) []
-
-If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toTopRight`](#toTopRight):
-
-    linearGradient toTopLeft (stop red) (stop blue) []
-
-    linearGradient toTopRight (stop red) (stop blue) []
+    columnFill balanceAll
 
 -}
-toTop : Value { provides | toTop : Supported }
-toTop =
-    Value "to top"
+balanceAll : Value { provides | balanceAll : Supported }
+balanceAll =
+    Value "balance-all"
 
 
-{-| Provides the [`to top left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
 
-    linearGradient toTopLeft (stop red) (stop blue) []
+    columnSpan all_
 
-If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toLeft`](#toLeft) instead:
-
-    linearGradient toTop (stop red) (stop blue) []
-
-    linearGradient toLeft (stop red) (stop blue) []
+    columnSpan none
 
 -}
-toTopLeft : Value { provides | toTopLeft : Supported }
-toTopLeft =
-    Value "to top left"
+columnSpan :
+    BaseValue
+        { none : Supported
+        , all_ : Supported
+        }
+    -> Style
+columnSpan (Value spanVal) =
+    AppendProperty ("column-span:" ++ spanVal)
 
 
-{-| Provides the [`to top right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
 
-    linearGradient toTopRight (stop red) (stop blue) []
+    columnRule thin
 
-If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toRight`](#toRight) instead:
+    columnRule2 thin solid
 
-    linearGradient toTop (stop red) (stop blue) []
-
-    linearGradient toRight (stop red) (stop blue) []
+    columnRule3 thin solid (hex "#000000")
 
 -}
-toTopRight : Value { provides | toTopRight : Supported }
-toTopRight =
-    Value "to top right"
+columnRule : BaseValue LineWidth -> Style
+columnRule (Value widthVal) =
+    AppendProperty ("column-rule:" ++ widthVal)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule2 : Value LineWidth -> Value LineStyle -> Style
+columnRule2 (Value widthVal) (Value styleVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
+
+
+{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
+This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
+[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
+properties.
+
+    columnRule thin
+
+    columnRule2 thin solid
+
+    columnRule3 thin solid (hex "#000000")
+
+-}
+columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
+columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
+    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
+
+    columnRuleWidth thin
+
+    columnRuleWidth (px 2)
+
+-}
+columnRuleWidth : BaseValue LineWidth -> Style
+columnRuleWidth (Value widthVal) =
+    AppendProperty ("column-rule-width:" ++ widthVal)
+
+
+{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
+
+    columnRuleStyle solid
+
+    columnRuleStyle dotted
+
+    columnRuleStyle dashed
+
+-}
+columnRuleStyle : BaseValue LineStyle -> Style
+columnRuleStyle (Value styleVal) =
+    AppendProperty ("column-rule-style:" ++ styleVal)
+
+
+{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
+
+    columnRuleColor (rgb 0 0 0)
+
+    columnRuleColor (hex "#fff")
+
+-}
+columnRuleColor : BaseValue Color -> Style
+columnRuleColor (Value colorVal) =
+    AppendProperty ("column-rule-color:" ++ colorVal)
 
 
 ------------------------------------------------------------------------
@@ -15864,7 +15630,164 @@ toTopRight =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
--------------------------- BREAK (PAGE BREAK) --------------------------
+------------------------------- TABLES ---------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/).
+
+    borderCollapse collapse
+
+    borderCollapse separate
+
+-}
+borderCollapse :
+    BaseValue
+        { collapse : Supported
+        , separate : Supported
+        }
+    -> Style
+borderCollapse (Value str) =
+    AppendProperty ("border-collapse:" ++ str)
+
+
+{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) and
+[`visibility`](https://css-tricks.com/almanac/properties/v/visibility/) property.
+
+    borderCollapse collapse
+
+    visibility collapse
+
+-}
+collapse : Value { provides | collapse : Supported }
+collapse =
+    Value "collapse"
+
+
+{-| A `separate` value for the [`border-separate`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
+
+    borderCollapse separate
+
+-}
+separate : Value { provides | separate : Supported }
+separate =
+    Value "separate"
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing).
+
+    borderSpacing zero
+
+    borderSpacing (px 5)
+
+-}
+borderSpacing : BaseValue Length -> Style
+borderSpacing (Value str) =
+    AppendProperty ("border-spacing:" ++ str)
+
+
+{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing), defining horizontal and vertical spacing separately.
+
+    borderSpacing2 (cm 1) (em 2)
+
+-}
+borderSpacing2 : Value Length -> Value Length -> Style
+borderSpacing2 (Value valHorizontal) (Value valVertical) =
+    AppendProperty ("border-spacing:" ++ valHorizontal ++ " " ++ valVertical)
+
+
+{-| Sets [`caption-side`](https://css-tricks.com/almanac/properties/c/caption-side/).
+
+    captionSide top_
+
+    captionSide bottom_
+
+    captionSide blockStart
+
+    captionSide inlineEnd
+
+-}
+captionSide :
+    BaseValue
+        { top_ : Supported
+        , bottom_ : Supported
+        , blockStart : Supported
+        , blockEnd : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        }
+    -> Style
+captionSide (Value str) =
+    AppendProperty ("caption-side:" ++ str)
+
+
+{-| Sets [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/).
+
+    emptyCells show
+
+    emptyCells hide
+
+-}
+emptyCells :
+    BaseValue
+        { show : Supported
+        , hide : Supported
+        }
+    -> Style
+emptyCells (Value str) =
+    AppendProperty ("empty-cells:" ++ str)
+
+
+{-| A `show` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells show
+
+-}
+show : Value { provides | show : Supported }
+show =
+    Value "show"
+
+
+{-| A `hide` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
+
+    emptyCells hide
+
+-}
+hide : Value { provides | hide : Supported }
+hide =
+    Value "hide"
+
+
+{-| Sets [`table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
+
+    tableLayout auto
+
+    tableLayout fixed
+
+-}
+tableLayout :
+    BaseValue
+        { auto : Supported
+        , fixed : Supported
+        }
+    -> Style
+tableLayout (Value str) =
+    AppendProperty ("table-layout:" ++ str)
+
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------- CONTENT FRAGMENTATION --------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -16077,6 +16000,350 @@ pageBreakInside (Value val) =
     AppendProperty ("page-break-inside:" ++ val)
 
 
+{-| Sets [`orphans`](https://css-tricks.com/almanac/properties/o/orphans/)
+**Note:** This function accepts only positive integers.
+
+    orphans (int 2)
+
+-}
+orphans :
+    BaseValue
+        { int : Supported
+        }
+    -> Style
+orphans (Value val) =
+    AppendProperty ("orphans:" ++ val)
+
+
+{-| Sets [`widows`](https://css-tricks.com/almanac/properties/w/widows/)
+**Note:** This function accepts only positive integers.
+
+    widows (int 2)
+
+-}
+widows :
+    BaseValue
+        { int : Supported
+        }
+    -> Style
+widows (Value val) =
+    AppendProperty ("widows:" ++ val)
+
+
+{-| Sets [`box-decoration-break`](https://css-tricks.com/almanac/properties/b/box-decoration-break/)
+
+    boxDecorationBreak slice
+
+    boxDecorationBreak clone
+
+-}
+boxDecorationBreak :
+    BaseValue
+        { slice : Supported
+        , clone : Supported
+        }
+    -> Style
+boxDecorationBreak (Value val) =
+    AppendProperty ("box-decoration-break:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+--------------------- ARRANGING BLOCK/INLINE STUFF ---------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
+
+    float none
+
+    float left_
+
+    float right_
+
+    float inlineStart
+
+-}
+float :
+    BaseValue
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        }
+    -> Style
+float (Value str) =
+    AppendProperty ("float:" ++ str)
+
+
+{-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
+
+    clear none
+
+    clear both
+
+    clear left_
+
+    clear right_
+
+    clear inlineStart
+
+    clear inlineEnd
+
+-}
+clear :
+    BaseValue
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , both : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        }
+    -> Style
+clear (Value val) =
+    AppendProperty ("clear:" ++ val)
+
+
+{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
+
+    verticalAlign textBottom
+
+    verticalAlign (em 1)
+
+-}
+verticalAlign :
+    BaseValue
+        (LengthSupported
+            { baseline : Supported
+            , sub : Supported
+            , super : Supported
+            , textTop : Supported
+            , textBottom : Supported
+            , middle : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+verticalAlign (Value str) =
+    AppendProperty ("vertical-align:" ++ str)
+
+
+{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textTop
+
+-}
+textTop : Value { provides | textTop : Supported }
+textTop =
+    Value "text-top"
+
+
+{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textBottom
+
+-}
+textBottom : Value { provides | textBottom : Supported }
+textBottom =
+    Value "text-bottom"
+
+
+{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign middle
+
+-}
+middle : Value { provides | middle : Supported }
+middle =
+    Value "middle"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------ REPLACED ELEMENTS -----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`object-fit`](https://css-tricks.com/almanac/properties/o/object-fit/)
+
+    objectFit fill_
+
+    objectFit contain_
+
+    objectFit cover
+
+    objectFit scaleDown
+
+    objectFit none
+
+-}
+objectFit :
+    BaseValue
+        { fill_ : Supported
+        , contain_ : Supported
+        , cover : Supported
+        , none : Supported
+        , scaleDown : Supported
+        }
+    -> Style
+objectFit (Value val) =
+    AppendProperty ("object-fit:" ++ val)
+
+
+{-| Sets `scale-down` value for usage with [`objectFit`](#objectFit).
+
+    objectFit scaleDown
+
+-}
+scaleDown : Value { provides | scaleDown : Supported }
+scaleDown =
+    Value "scale-down"
+
+
+{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
+
+    objectPosition left_
+
+    objectPosition (px 45)
+
+`objectPosition` sets the horizontal direction. If you need the vertical
+direction instead, use [`objectPosition2`](#objectPosition2) like this:
+
+    objectPosition zero (px 45)
+
+If you need to set the offsets from the right or bottom, use
+[`objectPosition4`](#objectPosition4) like this:
+
+    objectPosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+objectPosition :
+    BaseValue
+        (LengthSupported
+            { left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+objectPosition (Value horiz) =
+    AppendProperty ("object-position:" ++ horiz)
+
+
+{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
+
+    objectPosition2 left_ top_
+
+    objectPosition2 (px 45) (pct 50)
+
+`objectPosition2` sets both the horizontal and vertical directions (in that
+order, same as CSS.) If you need only the horizontal, you can use
+[`objectPosition`](#objectPosition) instead:
+
+    objectPosition left_
+
+If you need to set the offsets from the right or bottom, use
+[`objectPosition4`](#objectPosition4) like this:
+
+    objectPosition4 right_ (px 20) bottom_ (pct 25)
+
+-}
+objectPosition2 :
+    Value
+        (LengthSupported
+            { left_ : Supported
+            , right_ : Supported
+            , center : Supported
+            , pct : Supported
+            }
+        )
+    ->
+        Value
+            (LengthSupported
+                { top_ : Supported
+                , bottom_ : Supported
+                , center : Supported
+                , pct : Supported
+                }
+            )
+    -> Style
+objectPosition2 (Value horiz) (Value vert) =
+    AppendProperty ("object-position:" ++ horiz ++ " " ++ vert)
+
+
+{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
+
+    objectPosition4 right_ (px 20) bottom_ (pct 30)
+
+The four-argument form of object position alternates sides and offets. So the
+example above would position the object image 20px from the right, and 30%
+from the bottom.
+
+See also [`objectPosition`](#objectPosition) for horizontal alignment and
+[`objectPosition2`](#objectPosition2) for horizontal (from left) and
+vertical (from top) alignment.
+
+-}
+objectPosition4 :
+    Value
+        { left_ : Supported
+        , right_ : Supported
+        }
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    ->
+        Value
+            { top_ : Supported
+            , bottom_ : Supported
+            }
+    ->
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    -> Style
+objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
+    AppendProperty
+        ("object-position:"
+            ++ horiz
+            ++ " "
+            ++ horizAmount
+            ++ " "
+            ++ vert
+            ++ " "
+            ++ vertAmount
+        )
+
+
+
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -16232,6 +16499,111 @@ scrollBehavior :
     -> Style
 scrollBehavior (Value val) =
     AppendProperty ("scroll-behavior:" ++ val)
+
+
+{-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
+
+    scrollSnapAlign none
+
+    scrollSnapAlign start
+
+    scrollSnapAlign center
+
+    scrollSnapAlign end
+
+-}
+scrollSnapAlign :
+    BaseValue
+        { none : Supported
+        , start : Supported
+        , center : Supported
+        , end : Supported
+        }
+    -> Style
+scrollSnapAlign (Value val) =
+    AppendProperty ("scroll-snap-align:" ++ val)
+
+
+{-| Sets [`scroll-snap-stop`](https://css-tricks.com/almanac/properties/s/scroll-snap-stop/)
+
+    scrollSnapStop normal
+
+    scrollSnapStop always
+
+-}
+scrollSnapStop :
+    BaseValue
+        { normal : Supported
+        , always : Supported
+        }
+    -> Style
+scrollSnapStop (Value val) =
+    AppendProperty ("scroll-snap-stop:" ++ val)
+
+
+{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
+
+    scrollSnapType none
+
+-}
+scrollSnapType :
+    BaseValue
+        { none : Supported
+        , x : Supported
+        , y : Supported
+        , block : Supported
+        , inline : Supported
+        , both : Supported
+        }
+    -> Style
+scrollSnapType (Value val) =
+    AppendProperty ("scroll-snap-type:" ++ val)
+
+
+
+{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
+
+    scrollSnapType2 x mandatory
+
+    scrollSnapType2 both proximity
+
+-}
+scrollSnapType2 :
+    Value
+        { x : Supported
+        , y : Supported
+        , block : Supported
+        , inline : Supported
+        , both : Supported
+        }
+    ->
+        Value
+            { mandatory : Supported
+            , proximity : Supported
+            }
+    -> Style
+scrollSnapType2 (Value val1) (Value val2) =
+    AppendProperty ("scroll-snap-type:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets `mandatory` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+
+    scrollSnapType2 x mandatory
+
+-}
+mandatory : Value { provides | mandatory : Supported }
+mandatory =
+    Value "mandatory"
+
+
+{-| Sets `proximity` value for usage with [`scrollSnapType2`](#scrollSnapType2).
+
+    scrollSnapType2 x proximity
+
+-}
+proximity : Value { provides | proximity : Supported }
+proximity =
+    Value "proximity"
 
 
 {-| Sets [`scroll-margin`](https://css-tricks.com/almanac/properties/s/scroll-margin/) property.
@@ -16924,7 +17296,7 @@ This property is a shorthand for setting both `overscroll-behavior-x` and `overs
 overscrollBehavior :
     BaseValue
         { auto : Supported
-        , contain : Supported
+        , contain_ : Supported
         , none : Supported
         }
     -> Style
@@ -16936,19 +17308,19 @@ overscrollBehavior (Value value) =
 
 This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
 
-    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+    overscrollBehavior2 auto contain_ -- X = auto, Y = contain.
 
 -}
 overscrollBehavior2 :
     Value
         { auto : Supported
-        , contain : Supported
+        , contain_ : Supported
         , none : Supported
         }
     ->
         Value
             { auto : Supported
-            , contain : Supported
+            , contain_ : Supported
             , none : Supported
             }
     -> Style
@@ -16960,13 +17332,13 @@ overscrollBehavior2 (Value xValue) (Value yValue) =
 
     overscrollBehaviorX auto
 
-    overscrollBehaviorX contain
+    overscrollBehaviorX contain_
 
 -}
 overscrollBehaviorX :
     BaseValue
         { auto : Supported
-        , contain : Supported
+        , contain_ : Supported
         , none : Supported
         }
     -> Style
@@ -16978,13 +17350,13 @@ overscrollBehaviorX (Value value) =
 
     overscrollBehaviorY auto
 
-    overscrollBehaviorY contain
+    overscrollBehaviorY contain_
 
 -}
 overscrollBehaviorY :
     BaseValue
         { auto : Supported
-        , contain : Supported
+        , contain_ : Supported
         , none : Supported
         }
     -> Style
@@ -16996,13 +17368,13 @@ overscrollBehaviorY (Value value) =
 
     overscrollBehaviorBlock auto
 
-    overscrollBehaviorBlock contain
+    overscrollBehaviorBlock contain_
 
 -}
 overscrollBehaviorBlock :
     BaseValue
         { auto : Supported
-        , contain : Supported
+        , contain_ : Supported
         , none : Supported
         }
     -> Style
@@ -17014,19 +17386,907 @@ overscrollBehaviorBlock (Value value) =
 
     overscrollBehaviorInline auto
 
-    overscrollBehaviorInline contain
+    overscrollBehaviorInline contain_
 
 -}
 overscrollBehaviorInline :
     BaseValue
         { auto : Supported
-        , contain : Supported
+        , contain_ : Supported
         , none : Supported
         }
     -> Style
 overscrollBehaviorInline (Value value) =
     AppendProperty ("overscroll-behavior-inline:" ++ value)
 
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------- CURSORS -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| A type alias used for the various [`cursor`](#cursor) properties
+-}
+type alias CursorKeyword =
+    { pointer : Supported
+    , auto : Supported
+    , default : Supported
+    , none : Supported
+    , contextMenu : Supported
+    , help : Supported
+    , progress : Supported
+    , wait : Supported
+    , cell : Supported
+    , crosshair : Supported
+    , text : Supported
+    , verticalText : Supported
+    , alias : Supported
+    , copy : Supported
+    , move : Supported
+    , noDrop : Supported
+    , notAllowed : Supported
+    , allScroll : Supported
+    , colResize : Supported
+    , rowResize : Supported
+    , nResize : Supported
+    , eResize : Supported
+    , sResize : Supported
+    , wResize : Supported
+    , neResize : Supported
+    , nwResize : Supported
+    , seResize : Supported
+    , swResize : Supported
+    , ewResize : Supported
+    , nsResize : Supported
+    , neswResize : Supported
+    , nwseResize : Supported
+    , zoomIn : Supported
+    , zoomOut : Supported
+    , grab : Supported
+    , grabbing : Supported
+    }
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor notAllowed
+
+-}
+cursor : BaseValue CursorKeyword -> Style
+cursor (Value val) =
+    AppendProperty ("cursor:" ++ val)
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor2 (url "https://example.com") move
+
+-}
+cursor2 : Value { url : Supported } -> Value CursorKeyword -> Style
+cursor2 (Value urlVal) (Value fallbackVal) =
+    AppendProperty ("cursor:" ++ urlVal ++ "," ++ fallbackVal)
+
+
+{-| The [`cursor`](https://css-tricks.com/almanac/properties/c/cursor/)
+property.
+
+    cursor4 (url "https://example.com") (num 34) zero move
+
+-}
+cursor4 :
+    Value { url : Supported }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            }
+    ->
+        Value
+            { num : Supported
+            , zero : Supported
+            }
+    -> Value CursorKeyword
+    -> Style
+cursor4 (Value urlVal) (Value xVal) (Value yVal) (Value fallbackVal) =
+    AppendProperty
+        ("cursor:"
+            ++ urlVal
+            ++ " "
+            ++ xVal
+            ++ " "
+            ++ yVal
+            ++ ","
+            ++ fallbackVal
+        )
+
+
+{-| The `pointer` value for the [`cursor`](#cursor) property.
+-}
+pointer : Value { provides | pointer : Supported }
+pointer =
+    Value "pointer"
+
+
+{-| The `default` value for the [`cursor`](#cursor) property.
+-}
+default : Value { provides | default : Supported }
+default =
+    Value "default"
+
+
+{-| The `context-menu` value for the [`cursor`](#cursor) property.
+-}
+contextMenu : Value { provides | contextMenu : Supported }
+contextMenu =
+    Value "context-menu"
+
+
+{-| The `help` value for the [`cursor`](#cursor) property.
+-}
+help : Value { provides | help : Supported }
+help =
+    Value "help"
+
+
+{-| The `progress` value for the [`cursor`](#cursor) property.
+-}
+progress : Value { provides | progress : Supported }
+progress =
+    Value "progress"
+
+
+{-| The `wait` value for the [`cursor`](#cursor) property.
+-}
+wait : Value { provides | wait : Supported }
+wait =
+    Value "wait"
+
+
+{-| The `cell` value for the [`cursor`](#cursor) property.
+-}
+cell : Value { provides | cell : Supported }
+cell =
+    Value "cell"
+
+
+{-| The `crosshair` value for the [`cursor`](#cursor) property.
+-}
+crosshair : Value { provides | crosshair : Supported }
+crosshair =
+    Value "crosshair"
+
+
+{-| The `vertical-text` value for the [`cursor`](#cursor) property.
+-}
+verticalText : Value { provides | verticalText : Supported }
+verticalText =
+    Value "vertical-text"
+
+
+{-| The `alias` value for the [`cursor`](#cursor) property.
+-}
+alias : Value { provides | alias : Supported }
+alias =
+    Value "alias"
+
+
+{-| The `copy` value for the [`cursor`](#cursor) property.
+-}
+copy : Value { provides | copy : Supported }
+copy =
+    Value "copy"
+
+
+{-| The `move` value for the [`cursor`](#cursor) property.
+-}
+move : Value { provides | move : Supported }
+move =
+    Value "move"
+
+
+{-| The `no-drop` value for the [`cursor`](#cursor) property.
+-}
+noDrop : Value { provides | noDrop : Supported }
+noDrop =
+    Value "no-drop"
+
+
+{-| The `notAllowed` value for the [`cursor`](#cursor) property.
+-}
+notAllowed : Value { provides | notAllowed : Supported }
+notAllowed =
+    Value "not-allowed"
+
+
+{-| The `all-scroll` value for the [`cursor`](#cursor) property.
+-}
+allScroll : Value { provides | allScroll : Supported }
+allScroll =
+    Value "all-scroll"
+
+
+{-| The `col-resize` value for the [`cursor`](#cursor) property.
+-}
+colResize : Value { provides | colResize : Supported }
+colResize =
+    Value "col-resize"
+
+
+{-| The `row-resize` value for the [`cursor`](#cursor) property.
+-}
+rowResize : Value { provides | rowResize : Supported }
+rowResize =
+    Value "row-resize"
+
+
+{-| The `n-resize` value for the [`cursor`](#cursor) property.
+-}
+nResize : Value { provides | nResize : Supported }
+nResize =
+    Value "n-resize"
+
+
+{-| The `e-resize` value for the [`cursor`](#cursor) property.
+-}
+eResize : Value { provides | eResize : Supported }
+eResize =
+    Value "e-resize"
+
+
+{-| The `s-resize` value for the [`cursor`](#cursor) property.
+-}
+sResize : Value { provides | sResize : Supported }
+sResize =
+    Value "s-resize"
+
+
+{-| The `w-resize` value for the [`cursor`](#cursor) property.
+-}
+wResize : Value { provides | wResize : Supported }
+wResize =
+    Value "w-resize"
+
+
+{-| The `ne-resize` value for the [`cursor`](#cursor) property.
+-}
+neResize : Value { provides | neResize : Supported }
+neResize =
+    Value "ne-resize"
+
+
+{-| The `nw-resize` value for the [`cursor`](#cursor) property.
+-}
+nwResize : Value { provides | nwResize : Supported }
+nwResize =
+    Value "nw-resize"
+
+
+{-| The `se-resize` value for the [`cursor`](#cursor) property.
+-}
+seResize : Value { provides | seResize : Supported }
+seResize =
+    Value "se-resize"
+
+
+{-| The `sw-resize` value for the [`cursor`](#cursor) property.
+-}
+swResize : Value { provides | swResize : Supported }
+swResize =
+    Value "sw-resize"
+
+
+{-| The `ew-resize` value for the [`cursor`](#cursor) property.
+-}
+ewResize : Value { provides | ewResize : Supported }
+ewResize =
+    Value "ew-resize"
+
+
+{-| The `ns-resize` value for the [`cursor`](#cursor) property.
+-}
+nsResize : Value { provides | nsResize : Supported }
+nsResize =
+    Value "ns-resize"
+
+
+{-| The `nesw-resize` value for the [`cursor`](#cursor) property.
+-}
+neswResize : Value { provides | neswResize : Supported }
+neswResize =
+    Value "nesw-resize"
+
+
+{-| The `nwse-resize` value for the [`cursor`](#cursor) property.
+-}
+nwseResize : Value { provides | nwseResize : Supported }
+nwseResize =
+    Value "nwse-resize"
+
+
+{-| The `zoom-in` value for the [`cursor`](#cursor) property.
+-}
+zoomIn : Value { provides | zoomIn : Supported }
+zoomIn =
+    Value "zoom-in"
+
+
+{-| The `zoom-out` value for the [`cursor`](#cursor) property.
+-}
+zoomOut : Value { provides | zoomOut : Supported }
+zoomOut =
+    Value "zoom-out"
+
+
+{-| The `grab` value for the [`cursor`](#cursor) property.
+-}
+grab : Value { provides | grab : Supported }
+grab =
+    Value "grab"
+
+
+{-| The `grabbing` value for the [`cursor`](#cursor) property.
+-}
+grabbing : Value { provides | grabbing : Supported }
+grabbing =
+    Value "grabbing"
+
+
+{-| Sets [`caret-color`](https://css-tricks.com/almanac/properties/c/caret-color/)
+
+    caretColor (hex "#60b5cc")
+
+    caretColor (rgb 96 181 204)
+
+    caretColor (rgba 96 181 204 0.5)
+
+-}
+caretColor :
+    BaseValue
+        (ColorSupported
+            { auto : Supported
+            }
+        )
+    -> Style
+caretColor (Value val) =
+    AppendProperty ("caret-color:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ BOX-SHADOW ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Configuration for [`boxShadow`](#boxShadow).
+-}
+type alias BoxShadowConfig =
+    { offsetX :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , offsetY :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , blurRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , spreadRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , color :
+        Maybe (Value Color)
+    , inset : Bool
+    }
+
+
+{-| Default [`boxShadow`](#boxShadow) configuration.
+
+It is equivalent to the following CSS:
+
+    box-shadow: 0 0;
+
+-}
+defaultBoxShadow : BoxShadowConfig
+defaultBoxShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , spreadRadius = Nothing
+    , color = Nothing
+    , inset = False
+    }
+
+
+{-| The [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/) property.
+
+    boxShadow initial
+
+    boxShadow none
+
+For defining shadows look at [`boxShadows`](#boxShadows).
+
+-}
+boxShadow : BaseValue { none : Supported } -> Style
+boxShadow (Value val) =
+    AppendProperty ("box-shadow:" ++ val)
+
+
+{-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
+
+    boxShadows [] -- "box-shadow: none"
+
+    -- "box-shadow: 3px 5px #aabbcc"
+    button
+        [ css
+            [ boxShadows
+                [ { defaultBoxShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
+
+-}
+boxShadows : List BoxShadowConfig -> Style
+boxShadows configs =
+    let
+        value =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map boxShadowConfigToString
+                        |> String.join ", "
+    in
+    AppendProperty ("box-shadow:" ++ value)
+
+
+boxShadowConfigToString : BoxShadowConfig -> String
+boxShadowConfigToString config =
+    let
+        (Value offsetX) =
+            config.offsetX
+
+        (Value offsetY) =
+            config.offsetY
+
+        blurRadius =
+            case config.blurRadius of
+                Just (Value value) ->
+                    " " ++ value
+
+                Nothing ->
+                    case config.spreadRadius of
+                        Just _ ->
+                            " 0"
+
+                        Nothing ->
+                            ""
+
+        spreadRadius =
+            case config.spreadRadius of
+                Just (Value value) ->
+                    " " ++ value
+
+                Nothing ->
+                    ""
+
+        insetStr =
+            if config.inset then
+                "inset "
+
+            else
+                ""
+
+        colorVal =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+    in
+    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- TEXT SHADOW ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Configuration for [`textShadow`](#textShadow).
+-}
+type alias TextShadowConfig =
+    { offsetX :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , offsetY :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , blurRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , color : Maybe (Value Color)
+    }
+
+
+{-| Default [`textShadow`](#textShadow) configuration.
+
+It is equivalent to the following CSS:
+
+    text-shadow: 0 0;
+
+-}
+defaultTextShadow : TextShadowConfig
+defaultTextShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , color = Nothing
+    }
+
+
+{-| Sets [`text-shadow`](https://css-tricks.com/almanac/properties/t/text-shadow/).
+
+    textShadow [] -- "text-shadow: none"
+
+    -- "text-shadow: 3px 5px #aabbcc"
+    span
+        [ css
+            [ textShadow
+                [ { defaultTextShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
+
+-}
+textShadow : List TextShadowConfig -> Style
+textShadow configs =
+    let
+        values =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map textShadowConfigToString
+                        |> String.join ","
+    in
+    AppendProperty ("text-shadow:" ++ values)
+
+
+textShadowConfigToString : TextShadowConfig -> String
+textShadowConfigToString config =
+    let
+        offsetX =
+            unpackValue config.offsetX
+
+        offsetY =
+            unpackValue config.offsetY
+
+        blurRadius =
+            config.blurRadius
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+
+        colorSetting =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+    in
+    offsetX ++ " " ++ offsetY ++ blurRadius ++ colorSetting
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ GRADIENTS -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
+values used by properties such as [`backgroundImage`](#backgroundImage),
+and [`listStyleImage`](#listStyleImage)
+
+    linearGradient (stop red) (stop blue) []
+
+    linearGradient (stop red) (stop blue) [ stop green ]
+
+-}
+linearGradient :
+    Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map unpackValue moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ stops ++ ")")
+
+
+{-| Produces [`linear-gradient()`](https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient())
+values used by properties such as [`backgroundImage`](#backgroundImage),
+and [`listStyleImage`](#listStyleImage)
+
+    linearGradient2 toTop (stop red) (stop blue) []
+
+    linearGradient2 toTop (stop red) (stop blue) [ stop green ]
+
+-}
+linearGradient2 :
+    Value
+        (AngleSupported
+            { toBottom : Supported
+            , toBottomLeft : Supported
+            , toBottomRight : Supported
+            , toLeft : Supported
+            , toRight : Supported
+            , toTop : Supported
+            , toTopLeft : Supported
+            , toTopRight : Supported
+            }
+        )
+    -> Value { colorStop : Supported }
+    -> Value { colorStop : Supported }
+    -> List (Value { colorStop : Supported })
+    -> Value { provides | linearGradient : Supported }
+linearGradient2 (Value angle) (Value firstStop) (Value secondStop) moreStops =
+    let
+        peeledStops =
+            List.map unpackValue moreStops
+
+        stops =
+            String.join "," (firstStop :: secondStop :: peeledStops)
+    in
+    Value ("linear-gradient(" ++ angle ++ "," ++ stops ++ ")")
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient toTop (stop red) (stop blue) []
+
+See also [`stop2`](#stop2) for controlling stop positioning.
+
+-}
+stop : Value Color -> Value { provides | colorStop : Supported }
+stop (Value colorVal) =
+    Value colorVal
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient toTop (stop2 red (px 20)) (stop blue) []
+
+See also [`stop`](#stop) if you don't need to control the stop position.
+
+-}
+stop2 :
+    Value Color
+    -> Value (LengthSupported { pct : Supported })
+    -> Value { provides | colorStop : Supported }
+stop2 (Value colorVal) (Value positionVal) =
+    Value (colorVal ++ " " ++ positionVal)
+
+
+{-| Provides a stop for a [gradient](https://css-tricks.com/snippets/css/css-linear-gradient/).
+
+    linearGradient (stop3 (hex "111") zero (pt 1)) (stop3 (hex "6454") (pt 2) (pct 45))
+
+-}
+stop3 :
+    Value Color
+    -> Value (LengthSupported { pct : Supported })
+    -> Value (LengthSupported { pct : Supported })
+    -> Value { provides | colorStop : Supported }
+stop3 (Value colorVal) (Value positionStart) (Value positionEnd) =
+    Value (colorVal ++ " " ++ positionStart ++ "," ++ positionEnd)
+
+
+{-| Provides the [`to bottom` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottom (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toBottomLeft`](#toBottomLeft) or [`toBottomRight`](#toBottomRight):
+
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+-}
+toBottom : Value { provides | toBottom : Supported }
+toBottom =
+    Value "to bottom"
+
+
+{-| Provides the [`to bottom left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toLeft`](#toLeft) instead:
+
+    linearGradient toBottom (stop red) (stop blue) []
+
+    linearGradient toLeft (stop red) (stop blue) []
+
+-}
+toBottomLeft : Value { provides | toBottomLeft : Supported }
+toBottomLeft =
+    Value "to bottom left"
+
+
+{-| Provides the [`to bottom right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toBottom`](#toBottom) or [`toRight`](#toRight) instead:
+
+    linearGradient toBottom (stop red) (stop blue) []
+
+    linearGradient toRight (stop red) (stop blue) []
+
+-}
+toBottomRight : Value { provides | toBottomRight : Supported }
+toBottomRight =
+    Value "to bottom right"
+
+
+{-| Provides the [`to left` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toBottomLeft`](#toBottomLeft):
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+
+    linearGradient toBottomLeft (stop red) (stop blue) []
+
+-}
+toLeft : Value { provides | toLeft : Supported }
+toLeft =
+    Value "to left"
+
+
+{-| Provides the [`to right` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toRight (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopRight`](#toTopRight) or [`toBottomRight`](#toBottomRight):
+
+    linearGradient toTopRight (stop red) (stop blue) []
+
+    linearGradient toBottomRight (stop red) (stop blue) []
+
+-}
+toRight : Value { provides | toRight : Supported }
+toRight =
+    Value "to right"
+
+
+{-| Provides the [`to top` side angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTop (stop red) (stop blue) []
+
+If you want your gradient to go to a corner, use [`toTopLeft`](#toTopLeft) or [`toTopRight`](#toTopRight):
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+
+    linearGradient toTopRight (stop red) (stop blue) []
+
+-}
+toTop : Value { provides | toTop : Supported }
+toTop =
+    Value "to top"
+
+
+{-| Provides the [`to top left` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTopLeft (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toLeft`](#toLeft) instead:
+
+    linearGradient toTop (stop red) (stop blue) []
+
+    linearGradient toLeft (stop red) (stop blue) []
+
+-}
+toTopLeft : Value { provides | toTopLeft : Supported }
+toTopLeft =
+    Value "to top left"
+
+
+{-| Provides the [`to top right` corner angle](https://css-tricks.com/snippets/css/css-linear-gradient/) for gradients.
+
+    linearGradient toTopRight (stop red) (stop blue) []
+
+If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toRight`](#toRight) instead:
+
+    linearGradient toTop (stop red) (stop blue) []
+
+    linearGradient toRight (stop red) (stop blue) []
+
+-}
+toTopRight : Value { provides | toTopRight : Supported }
+toTopRight =
+    Value "to top right"
 
 
 ------------------------------------------------------------------------
@@ -17141,7 +18401,79 @@ plusListToString head rest =
 
 
 
--- MATRIX TRANSFORMATION
+{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
+
+    transformOrigin top_
+
+    transformOrigin center
+
+    transformOrigin bottom
+
+    transformOrigin (pct 50)
+
+-}
+transformOrigin :
+    BaseValue
+        { top_ : Supported
+        , center : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        , calc : Supported
+        }
+    -> Style
+transformOrigin (Value vert) =
+    AppendProperty ("transform-origin:" ++ vert)
+
+
+{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
+
+    transformOrigin2 top_ left
+
+    transformOrigin2 center right_
+
+    transformOrigin2 bottom_ right_
+
+    transformOrigin2 (pct 50) (pct 50)
+
+-}
+transformOrigin2 :
+    Value
+        { top_ : Supported
+        , center : Supported
+        , bottom_ : Supported
+        , pct : Supported
+        , calc : Supported
+        }
+    ->
+        Value
+            { left_ : Supported
+            , center : Supported
+            , right_ : Supported
+            , pct : Supported
+            , calc : Supported
+            }
+    -> Style
+transformOrigin2 (Value vert) (Value horiz) =
+    AppendProperty ("transform-origin:" ++ vert ++ " " ++ horiz)
+
+
+{-| Sets the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
+
+    transformBox contentBox
+
+    transformBox fillBox
+-}
+transformBox :
+    BaseValue
+        { contentBox : Supported
+        , borderBox : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , viewBox : Supported
+        }
+    -> Style
+transformBox (Value val) =
+    AppendProperty ("transform-box:" ++ val)
 
 
 {-| Sets `matrix` value for usage with [`transform`](#transform).
@@ -17774,6 +19106,22 @@ perspective_ (Value length) =
     Value ("perspective(" ++ length ++ ")")
 
 
+{-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
+
+    backfaceVisibility visible
+
+    backfaceVisibility hidden
+
+-}
+backfaceVisibility :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        }
+    -> Style
+backfaceVisibility (Value val) =
+    AppendProperty ("backface-visibility" ++ val)
+
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -18325,6 +19673,179 @@ backwards : Value { provides | backwards : Supported }
 backwards =
     Value "backwards"
 
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- VISUAL STUFF? ----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`opacity`](https://css-tricks.com/almanac/properties/o/opacity/)
+
+    opacity (num 0.5)
+
+    opacity (num 1.0)
+
+    opacity zero
+
+-}
+opacity :
+    BaseValue
+        { num : Supported
+        , zero : Supported
+        , calc : Supported
+        , pct : Supported
+        }
+    -> Style
+opacity (Value val) =
+    AppendProperty ("opacity:" ++ val)
+
+
+{-| Sets [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/)
+
+      visibility visible
+      visibility hidden
+      visibility collapse
+
+-}
+visibility :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        , collapse : Supported
+        }
+    -> Style
+visibility (Value str) =
+    AppendProperty ("visibility:" ++ str)
+
+
+{-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
+
+    mixBlendMode multiply
+
+    mixBlendMode saturation
+
+-}
+mixBlendMode :
+    BaseValue
+        { normal : Supported
+        , multiply : Supported
+        , screen : Supported
+        , overlay : Supported
+        , darken : Supported
+        , lighten : Supported
+        , colorDodge : Supported
+        , colorBurn : Supported
+        , hardLight : Supported
+        , softLight : Supported
+        , difference : Supported
+        , exclusion : Supported
+        , hue : Supported
+        , saturation : Supported
+        , color_ : Supported
+        , luminosity : Supported
+        }
+    -> Style
+mixBlendMode (Value val) =
+    AppendProperty ("mix-blend-mode:" ++ val)
+
+
+{-| Sets [`image-rendering`](https://css-tricks.com/almanac/properties/i/image-rendering/)
+
+    imageRendering auto
+
+    imageRendering crispEdges
+
+    imageRendering pixelated
+
+-}
+imageRendering :
+    BaseValue
+        { auto : Supported
+        , crispEdges : Supported
+        , pixelated : Supported
+        }
+    -> Style
+imageRendering (Value val) =
+    AppendProperty ("image-rendering:" ++ val)
+
+
+{-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering pixelated
+
+-}
+pixelated : Value { provides | pixelated : Supported }
+pixelated =
+    Value "pixelated"
+
+
+{-| Sets `crisp-edges` value for usage with [`imageRendering`](#imageRendering).
+
+    imageRendering crispEdges
+
+-}
+crispEdges : Value { provides | crispEdges : Supported }
+crispEdges =
+    Value "crisp-edges"
+
+
+{-| The 1-argument variant of the
+[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
+
+    clipPath marginBox
+
+    clipPath inherit
+
+    clipPath (circle (pct 2))
+
+    clipPath2 marginBox (circleAt2 farthestSide left top)
+-}
+clipPath :
+    BaseValue
+        (BasicShapeSupported
+            { marginBox : Supported
+            , borderBox : Supported
+            , paddingBox : Supported
+            , contentBox : Supported
+            , fillBox : Supported
+            , strokeBox : Supported
+            , viewBox : Supported
+            }
+        )
+    -> Style
+clipPath (Value val) =
+    AppendProperty ("clip-path:" ++ val)
+
+
+{-| The 2-argument variant of the
+[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
+
+    clipPath2 marginBox (circleAt2 farthestSide left top)
+-}
+clipPath2 :
+    Value
+        { marginBox : Supported
+        , borderBox : Supported
+        , paddingBox : Supported
+        , contentBox : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , viewBox : Supported
+        }
+    -> Value (BasicShapeSupported a)
+    -> Style
+clipPath2 (Value val1) (Value val2) =
+    AppendProperty ("clip-path:" ++ val1 ++ " " ++ val2)
 
 
 ------------------------------------------------------------------------
@@ -19081,7 +20602,7 @@ maskSize :
             { pct : Supported
             , auto : Supported
             , cover : Supported
-            , contain : Supported
+            , contain_ : Supported
             }
         )
     -> Style
@@ -19251,7 +20772,7 @@ matchSource =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
-------------------------------- TABLES ---------------------------------
+------------------------------- DRAWING --------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -19260,398 +20781,126 @@ matchSource =
 ------------------------------------------------------------------------
 
 
-{-| Sets [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/).
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
 
-    borderCollapse collapse
+This one-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other two in their relative default order.
 
-    borderCollapse separate
+    paintOrder normal -- normal paint order.
+
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
+
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
 
 -}
-borderCollapse :
+paintOrder :
     BaseValue
-        { collapse : Supported
-        , separate : Supported
+        { normal : Supported
+        , stroke : Supported
+        , markers : Supported
         }
     -> Style
-borderCollapse (Value str) =
-    AppendProperty ("border-collapse:" ++ str)
+paintOrder (Value val) =
+    AppendProperty ("paint-order:" ++ val)
 
 
-{-| A `collapse` value for the [`border-collapse`](https://css-tricks.com/almanac/properties/b/border-collapse/) and
-[`visibility`](https://css-tricks.com/almanac/properties/v/visibility/) property.
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
 
-    borderCollapse collapse
+This two-argument version indicates which parts of text and shape graphics are
+painted first, followed by the other remaining one.
 
-    visibility collapse
-
--}
-collapse : Value { provides | collapse : Supported }
-collapse =
-    Value "collapse"
-
-
-{-| A `separate` value for the [`border-separate`](https://css-tricks.com/almanac/properties/b/border-collapse/) property.
-
-    borderCollapse separate
+    paintOrder2 fill_ stroke -- fill, stroke, then markers.
 
 -}
-separate : Value { provides | separate : Supported }
-separate =
-    Value "separate"
-
-
-
--- BORDER SPACING --
-
-
-{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing).
-
-    borderSpacing zero
-
-    borderSpacing (px 5)
-
--}
-borderSpacing : BaseValue Length -> Style
-borderSpacing (Value str) =
-    AppendProperty ("border-spacing:" ++ str)
-
-
-{-| Sets [`border-spacing`](https://developer.mozilla.org/en-US/docs/Web/CSS/border-spacing), defining horizontal and vertical spacing separately.
-
-    borderSpacing2 (cm 1) (em 2)
-
--}
-borderSpacing2 : Value Length -> Value Length -> Style
-borderSpacing2 (Value valHorizontal) (Value valVertical) =
-    AppendProperty ("border-spacing:" ++ valHorizontal ++ " " ++ valVertical)
-
-
-
--- CAPTION SIDE --
-
-
-{-| Sets [`caption-side`](https://css-tricks.com/almanac/properties/c/caption-side/).
-
-    captionSide top_
-
-    captionSide bottom_
-
-    captionSide blockStart
-
-    captionSide inlineEnd
-
--}
-captionSide :
-    BaseValue
-        { top_ : Supported
-        , bottom_ : Supported
-        , blockStart : Supported
-        , blockEnd : Supported
-        , inlineStart : Supported
-        , inlineEnd : Supported
-        }
-    -> Style
-captionSide (Value str) =
-    AppendProperty ("caption-side:" ++ str)
-
-
-
--- EMPTY CELLS --
-
-
-{-| Sets [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/).
-
-    emptyCells show
-
-    emptyCells hide
-
--}
-emptyCells :
-    BaseValue
-        { show : Supported
-        , hide : Supported
-        }
-    -> Style
-emptyCells (Value str) =
-    AppendProperty ("empty-cells:" ++ str)
-
-
-{-| A `show` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
-
-    emptyCells show
-
--}
-show : Value { provides | show : Supported }
-show =
-    Value "show"
-
-
-{-| A `hide` value for the [`empty-cells`](https://css-tricks.com/almanac/properties/e/empty-cells/) property.
-
-    emptyCells hide
-
--}
-hide : Value { provides | hide : Supported }
-hide =
-    Value "hide"
-
-
-
--- TABLE LAYOUT --
-
-
-{-| Sets [`table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/).
-
-    tableLayout auto
-
-    tableLayout fixed
-
--}
-tableLayout :
-    BaseValue
-        { auto : Supported
-        , fixed : Supported
-        }
-    -> Style
-tableLayout (Value str) =
-    AppendProperty ("table-layout:" ++ str)
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------- COLUMNS ---------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
-
-    columns (px 300)
-
-    columns2 (px 300) (num 2)
-
--}
-columns :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-columns (Value widthVal) =
-    AppendProperty ("columns:" ++ widthVal)
-
-
-{-| Sets [`columns`](https://css-tricks.com/almanac/properties/c/columns/)
-
-    columns (px 300)
-
-    columns2 (px 300) (num 2)
-
--}
-columns2 :
+paintOrder2 :
     Value
-        (LengthSupported
-            { auto : Supported
-            }
-        )
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
     ->
         Value
-            { auto : Supported
-            , num : Supported
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
             }
     -> Style
-columns2 (Value widthVal) (Value count) =
-    AppendProperty ("columns:" ++ widthVal ++ " " ++ count)
+paintOrder2 (Value val1) (Value val2) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2)
 
 
-{-| Sets [`column-width`](https://css-tricks.com/almanac/properties/c/column-width/)
+{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
 
-    columnWidth auto
+This three-argument version explicitly indicates in which order should all the parts of text
+and shape graphics be painted.
 
-    columnWidth (px 200)
+    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
 
 -}
-columnWidth :
+paintOrder3 :
+    Value
+        { fill_ : Supported
+        , stroke : Supported
+        , markers : Supported
+        }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    ->
+        Value
+            { fill_ : Supported
+            , stroke : Supported
+            , markers : Supported
+            }
+    -> Style
+paintOrder3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Provides the `markers` value for [`paintOrder`](#paintOrder).
+
+    paintOrder markers
+
+-}
+markers : Value { provides | markers : Supported }
+markers =
+    Value "markers"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+--------------------------- USING A PRINTER ----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`bleed`](https://css-tricks.com/almanac/properties/b/bleed/)
+
+    bleed auto
+
+    bleed (pt 10)
+
+-}
+bleed :
     BaseValue
         (LengthSupported
             { auto : Supported
             }
         )
     -> Style
-columnWidth (Value widthVal) =
-    AppendProperty ("column-width:" ++ widthVal)
-
-
-{-| Sets [`column-count`](https://css-tricks.com/almanac/properties/c/column-count/)
-
-    columnCount auto
-
-    columnCount (num 3)
-
--}
-columnCount :
-    BaseValue
-        { auto : Supported
-        , int : Supported
-        }
-    -> Style
-columnCount (Value count) =
-    AppendProperty ("column-count:" ++ count)
-
-
-{-| Sets [`column-fill`](https://css-tricks.com/almanac/properties/c/column-fill/)
-
-    columnFill auto
-
-    columnFill balance
-
-    columnFill balanceAll
-
--}
-columnFill :
-    BaseValue
-        { auto : Supported
-        , balance : Supported
-        , balanceAll : Supported
-        }
-    -> Style
-columnFill (Value val) =
-    AppendProperty ("column-fill:" ++ val)
-
-
-{-| A `balance` value used in properties such as [`columnFill`](#columnFill)
-
-    columnFill balance
-
--}
-balance : Value { provides | balance : Supported }
-balance =
-    Value "balance"
-
-
-{-| A `balance-all` value used in properties such as [`columnFill`](#columnFill)
-
-    columnFill balanceAll
-
--}
-balanceAll : Value { provides | balanceAll : Supported }
-balanceAll =
-    Value "balance-all"
-
-
-{-| Sets [`column-span`](https://css-tricks.com/almanac/properties/c/column-span/)
-
-    columnSpan all_
-
-    columnSpan none
-
--}
-columnSpan :
-    BaseValue
-        { none : Supported
-        , all_ : Supported
-        }
-    -> Style
-columnSpan (Value spanVal) =
-    AppendProperty ("column-span:" ++ spanVal)
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
-
--}
-columnRule : BaseValue LineWidth -> Style
-columnRule (Value widthVal) =
-    AppendProperty ("column-rule:" ++ widthVal)
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
-
--}
-columnRule2 : Value LineWidth -> Value LineStyle -> Style
-columnRule2 (Value widthVal) (Value styleVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal)
-
-
-{-| Sets [`column-rule`](https://css-tricks.com/almanac/properties/c/column-rule/).
-This is a shorthand for the [`columnRuleWidth`](#columnRuleWidth),
-[`columnRuleStyle`](#columnRuleStyle), and [`columnRuleColor`](#columnRuleColor)
-properties.
-
-    columnRule thin
-
-    columnRule2 thin solid
-
-    columnRule3 thin solid (hex "#000000")
-
--}
-columnRule3 : Value LineWidth -> Value LineStyle -> Value Color -> Style
-columnRule3 (Value widthVal) (Value styleVal) (Value colorVal) =
-    AppendProperty ("column-rule:" ++ widthVal ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`column-rule-width`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-width)
-
-    columnRuleWidth thin
-
-    columnRuleWidth (px 2)
-
--}
-columnRuleWidth : BaseValue LineWidth -> Style
-columnRuleWidth (Value widthVal) =
-    AppendProperty ("column-rule-width:" ++ widthVal)
-
-
-{-| Sets [`column-rule-style`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-style)
-
-    columnRuleStyle solid
-
-    columnRuleStyle dotted
-
-    columnRuleStyle dashed
-
--}
-columnRuleStyle : BaseValue LineStyle -> Style
-columnRuleStyle (Value styleVal) =
-    AppendProperty ("column-rule-style:" ++ styleVal)
-
-
-{-| Sets [`column-rule-color`](https://www.w3.org/TR/css-multicol-1/#propdef-column-rule-color)
-
-    columnRuleColor (rgb 0 0 0)
-
-    columnRuleColor (hex "#fff")
-
--}
-columnRuleColor : BaseValue Color -> Style
-columnRuleColor (Value colorVal) =
-    AppendProperty ("column-rule-color:" ++ colorVal)
+bleed (Value val) =
+    AppendProperty ("bleed:" ++ val)
 
 
 ------------------------------------------------------------------------
@@ -19667,6 +20916,29 @@ columnRuleColor (Value colorVal) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
+
+
+{-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
+**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
+
+    fill (hex "#60b5cc")
+
+    fill (rgb 96 181 204)
+
+    fill (rgba 96 181 204 0.5)
+
+    fill (url "#pattern")
+
+-}
+fill :
+    BaseValue
+        (ColorSupported
+            { url : Supported
+            }
+        )
+    -> Style
+fill (Value val) =
+    AppendProperty ("fill:" ++ val)
 
 
 {-| Sets [`stroke-dasharray`](https://css-tricks.com/almanac/properties/s/stroke-dasharray/)
@@ -20335,1110 +21607,19 @@ gaps =
     Value "gaps"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
-
-    verticalAlign textBottom
-
-    verticalAlign (em 1)
-
--}
-verticalAlign :
-    BaseValue
-        (LengthSupported
-            { baseline : Supported
-            , sub : Supported
-            , super : Supported
-            , textTop : Supported
-            , textBottom : Supported
-            , middle : Supported
-            , top_ : Supported
-            , bottom_ : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-verticalAlign (Value str) =
-    AppendProperty ("vertical-align:" ++ str)
-
-
-{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign textTop
-
--}
-textTop : Value { provides | textTop : Supported }
-textTop =
-    Value "text-top"
-
-
-{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign textBottom
-
--}
-textBottom : Value { provides | textBottom : Supported }
-textBottom =
-    Value "text-bottom"
-
-
-{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign middle
-
--}
-middle : Value { provides | middle : Supported }
-middle =
-    Value "middle"
-
-
-
-
-{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
-
-    float none
-
-    float left_
-
-    float right_
-
-    float inlineStart
-
--}
-float :
-    BaseValue
-        { none : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , inlineStart : Supported
-        , inlineEnd : Supported
-        }
-    -> Style
-float (Value str) =
-    AppendProperty ("float:" ++ str)
-
-
-
--- VISIBILITY --
-
-
-{-| Sets [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/)
-
-      visibility visible
-      visibility hidden
-      visibility collapse
-
--}
-visibility :
-    BaseValue
-        { visible : Supported
-        , hidden : Supported
-        , collapse : Supported
-        }
-    -> Style
-visibility (Value str) =
-    AppendProperty ("visibility:" ++ str)
-
-
-
--- ORDER --
-
-
-{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
-
-    order (num 2)
-
-    order (num -2)
-
--}
-order :
-    BaseValue
-        { int : Supported
-        , zero : Supported
-        }
-    -> Style
-order (Value val) =
-    AppendProperty ("order:" ++ val)
-
-
-{-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
-**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
-
-    fill (hex "#60b5cc")
-
-    fill (rgb 96 181 204)
-
-    fill (rgba 96 181 204 0.5)
-
-    fill (url "#pattern")
-
--}
-fill :
-    BaseValue
-        (ColorSupported
-            { url : Supported
-            }
-        )
-    -> Style
-fill (Value val) =
-    AppendProperty ("fill:" ++ val)
-
-
-
-
-
-{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
-
-This one-argument version indicates which parts of text and shape graphics are
-painted first, followed by the other two in their relative default order.
-
-    paintOrder normal -- normal paint order.
-
-    paintOrder2 fill_ stroke -- fill, stroke, then markers.
-
-    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
-
--}
-paintOrder :
-    BaseValue
-        { normal : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
-    -> Style
-paintOrder (Value val) =
-    AppendProperty ("paint-order:" ++ val)
-
-
-{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
-
-This two-argument version indicates which parts of text and shape graphics are
-painted first, followed by the other remaining one.
-
-    paintOrder2 fill_ stroke -- fill, stroke, then markers.
-
--}
-paintOrder2 :
-    Value
-        { fill_ : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
-    ->
-        Value
-            { fill_ : Supported
-            , stroke : Supported
-            , markers : Supported
-            }
-    -> Style
-paintOrder2 (Value val1) (Value val2) =
-    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2)
-
-
-{-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
-
-This three-argument version explicitly indicates in which order should all the parts of text
-and shape graphics be painted.
-
-    paintOrder3 markers stroke fill_ -- markers, stroke, then fill.
-
--}
-paintOrder3 :
-    Value
-        { fill_ : Supported
-        , stroke : Supported
-        , markers : Supported
-        }
-    ->
-        Value
-            { fill_ : Supported
-            , stroke : Supported
-            , markers : Supported
-            }
-    ->
-        Value
-            { fill_ : Supported
-            , stroke : Supported
-            , markers : Supported
-            }
-    -> Style
-paintOrder3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty ("paint-order:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
-
-
-{-| Provides the `markers` value for [`paintOrder`](#paintOrder).
-
-    paintOrder markers
-
--}
-markers : Value { provides | markers : Supported }
-markers =
-    Value "markers"
-
-
-
-
-
-
-
-{-| Sets [`clear`](https://css-tricks.com/almanac/properties/c/clear/) property.
-
-    clear none
-
-    clear both
-
-    clear left_
-
-    clear right_
-
-    clear inlineStart
-
-    clear inlineEnd
-
--}
-clear :
-    BaseValue
-        { none : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , both : Supported
-        , inlineStart : Supported
-        , inlineEnd : Supported
-        }
-    -> Style
-clear (Value val) =
-    AppendProperty ("clear:" ++ val)
-
-
-{-| Sets [`opacity`](https://css-tricks.com/almanac/properties/o/opacity/)
-
-    opacity (num 0.5)
-
-    opacity (num 1.0)
-
-    opacity zero
-
--}
-opacity :
-    BaseValue
-        { num : Supported
-        , zero : Supported
-        , calc : Supported
-        , pct : Supported
-        }
-    -> Style
-opacity (Value val) =
-    AppendProperty ("opacity:" ++ val)
-
-
-{-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
-
-    lineHeight (pct 150)
-
-    lineHeight (em 2)
-
-    lineHeight (num 1.5)
-
-    lineHeight normal
-
--}
-lineHeight :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , normal : Supported
-            , num : Supported
-            }
-        )
-    -> Style
-lineHeight (Value val) =
-    AppendProperty ("line-height:" ++ val)
-
-
-{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/)
-
-    letterSpacing (pct 150)
-
-    letterSpacing (em 2)
-
-    letterSpacing (num 1.5)
-
-    letterSpacing normal
-
--}
-letterSpacing :
-    BaseValue
-        (LengthSupported
-            { normal : Supported
-            }
-        )
-    -> Style
-letterSpacing (Value val) =
-    AppendProperty ("letter-spacing:" ++ val)
-
-
-
-{-| Sets [`backface-visibility`](https://css-tricks.com/almanac/properties/b/backface-visibility/)
-
-    backfaceVisibility visible
-
-    backfaceVisibility hidden
-
--}
-backfaceVisibility :
-    BaseValue
-        { visible : Supported
-        , hidden : Supported
-        }
-    -> Style
-backfaceVisibility (Value val) =
-    AppendProperty ("backface-visibility" ++ val)
-
-
-{-| Sets [`bleed`](https://css-tricks.com/almanac/properties/b/bleed/)
-
-    bleed auto
-
-    bleed (pt 10)
-
--}
-bleed :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-bleed (Value val) =
-    AppendProperty ("bleed:" ++ val)
-
-
-
-
-
-
-{-| Sets [`caret-color`](https://css-tricks.com/almanac/properties/c/caret-color/)
-
-    caretColor (hex "#60b5cc")
-
-    caretColor (rgb 96 181 204)
-
-    caretColor (rgba 96 181 204 0.5)
-
--}
-caretColor :
-    BaseValue
-        (ColorSupported
-            { auto : Supported
-            }
-        )
-    -> Style
-caretColor (Value val) =
-    AppendProperty ("caret-color:" ++ val)
-
-
-
-
-{-| Sets [`box-decoration-break`](https://css-tricks.com/almanac/properties/b/box-decoration-break/)
-
-    boxDecorationBreak slice
-
-    boxDecorationBreak clone
-
--}
-boxDecorationBreak :
-    BaseValue
-        { slice : Supported
-        , clone : Supported
-        }
-    -> Style
-boxDecorationBreak (Value val) =
-    AppendProperty ("box-decoration-break:" ++ val)
-
-
-
-
-
-
-{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
-
-    objectPosition left_
-
-    objectPosition (px 45)
-
-`objectPosition` sets the horizontal direction. If you need the vertical
-direction instead, use [`objectPosition2`](#objectPosition2) like this:
-
-    objectPosition zero (px 45)
-
-If you need to set the offsets from the right or bottom, use
-[`objectPosition4`](#objectPosition4) like this:
-
-    objectPosition4 right_ (px 20) bottom_ (pct 25)
-
--}
-objectPosition :
-    BaseValue
-        (LengthSupported
-            { left_ : Supported
-            , right_ : Supported
-            , center : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-objectPosition (Value horiz) =
-    AppendProperty ("object-position:" ++ horiz)
-
-
-{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
-
-    objectPosition2 left_ top_
-
-    objectPosition2 (px 45) (pct 50)
-
-`objectPosition2` sets both the horizontal and vertical directions (in that
-order, same as CSS.) If you need only the horizontal, you can use
-[`objectPosition`](#objectPosition) instead:
-
-    objectPosition left_
-
-If you need to set the offsets from the right or bottom, use
-[`objectPosition4`](#objectPosition4) like this:
-
-    objectPosition4 right_ (px 20) bottom_ (pct 25)
-
--}
-objectPosition2 :
-    Value
-        (LengthSupported
-            { left_ : Supported
-            , right_ : Supported
-            , center : Supported
-            , pct : Supported
-            }
-        )
-    ->
-        Value
-            (LengthSupported
-                { top_ : Supported
-                , bottom_ : Supported
-                , center : Supported
-                , pct : Supported
-                }
-            )
-    -> Style
-objectPosition2 (Value horiz) (Value vert) =
-    AppendProperty ("object-position:" ++ horiz ++ " " ++ vert)
-
-
-{-| Sets [`object-position`](https://css-tricks.com/almanac/properties/o/object-position/).
-
-    objectPosition4 right_ (px 20) bottom_ (pct 30)
-
-The four-argument form of object position alternates sides and offets. So the
-example above would position the object image 20px from the right, and 30%
-from the bottom.
-
-See also [`objectPosition`](#objectPosition) for horizontal alignment and
-[`objectPosition2`](#objectPosition2) for horizontal (from left) and
-vertical (from top) alignment.
-
--}
-objectPosition4 :
-    Value
-        { left_ : Supported
-        , right_ : Supported
-        }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    ->
-        Value
-            { top_ : Supported
-            , bottom_ : Supported
-            }
-    ->
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    -> Style
-objectPosition4 (Value horiz) (Value horizAmount) (Value vert) (Value vertAmount) =
-    AppendProperty
-        ("object-position:"
-            ++ horiz
-            ++ " "
-            ++ horizAmount
-            ++ " "
-            ++ vert
-            ++ " "
-            ++ vertAmount
-        )
-
-
-{-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
-
-    scrollSnapAlign none
-
-    scrollSnapAlign start
-
-    scrollSnapAlign center
-
-    scrollSnapAlign end
-
--}
-scrollSnapAlign :
-    BaseValue
-        { none : Supported
-        , start : Supported
-        , center : Supported
-        , end : Supported
-        }
-    -> Style
-scrollSnapAlign (Value val) =
-    AppendProperty ("scroll-snap-align:" ++ val)
-
-
-{-| Sets [`scroll-snap-stop`](https://css-tricks.com/almanac/properties/s/scroll-snap-stop/)
-
-    scrollSnapStop normal
-
-    scrollSnapStop always
-
--}
-scrollSnapStop :
-    BaseValue
-        { normal : Supported
-        , always : Supported
-        }
-    -> Style
-scrollSnapStop (Value val) =
-    AppendProperty ("scroll-snap-stop:" ++ val)
-
-
-{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
-
-    scrollSnapType none
-
--}
-scrollSnapType :
-    BaseValue
-        { none : Supported
-        , x : Supported
-        , y : Supported
-        , block : Supported
-        , inline : Supported
-        , both : Supported
-        }
-    -> Style
-scrollSnapType (Value val) =
-    AppendProperty ("scroll-snap-type:" ++ val)
-
-
-{-| Sets `mandatory` value for usage with [`scrollSnapType2`](#scrollSnapType2).
-
-    scrollSnapType2 x mandatory
-
--}
-mandatory : Value { provides | mandatory : Supported }
-mandatory =
-    Value "mandatory"
-
-
-{-| Sets `proximity` value for usage with [`scrollSnapType2`](#scrollSnapType2).
-
-    scrollSnapType2 x proximity
-
--}
-proximity : Value { provides | proximity : Supported }
-proximity =
-    Value "proximity"
-
-
-{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
-
-    scrollSnapType2 x mandatory
-
-    scrollSnapType2 both proximity
-
--}
-scrollSnapType2 :
-    Value
-        { x : Supported
-        , y : Supported
-        , block : Supported
-        , inline : Supported
-        , both : Supported
-        }
-    ->
-        Value
-            { mandatory : Supported
-            , proximity : Supported
-            }
-    -> Style
-scrollSnapType2 (Value val1) (Value val2) =
-    AppendProperty ("scroll-snap-type:" ++ val1 ++ " " ++ val2)
-
-
-{-| Sets `spellOut` value for usage with [`speak`](#speak).
-
-    speak spellOut
-
--}
-spellOut : Value { provides | spellOut : Supported }
-spellOut =
-    Value "spell-out"
-
-
-{-| Sets [`speak`](https://css-tricks.com/almanac/properties/s/speak/)
-
-    speak none
-
-    speak normal
-
-    speak spellOut
-
--}
-speak :
-    BaseValue
-        { none : Supported
-        , normal : Supported
-        , spellOut : Supported
-        }
-    -> Style
-speak (Value val) =
-    AppendProperty ("speak:" ++ val)
-
-
-{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
-
-    transformOrigin top_
-
-    transformOrigin center
-
-    transformOrigin bottom
-
-    transformOrigin (pct 50)
-
--}
-transformOrigin :
-    BaseValue
-        { top_ : Supported
-        , center : Supported
-        , bottom_ : Supported
-        , pct : Supported
-        , calc : Supported
-        }
-    -> Style
-transformOrigin (Value vert) =
-    AppendProperty ("transform-origin:" ++ vert)
-
-
-{-| Sets [`transform-origin`](https://css-tricks.com/almanac/properties/t/transform-origin/).
-
-    transformOrigin2 top_ left
-
-    transformOrigin2 center right_
-
-    transformOrigin2 bottom_ right_
-
-    transformOrigin2 (pct 50) (pct 50)
-
--}
-transformOrigin2 :
-    Value
-        { top_ : Supported
-        , center : Supported
-        , bottom_ : Supported
-        , pct : Supported
-        , calc : Supported
-        }
-    ->
-        Value
-            { left_ : Supported
-            , center : Supported
-            , right_ : Supported
-            , pct : Supported
-            , calc : Supported
-            }
-    -> Style
-transformOrigin2 (Value vert) (Value horiz) =
-    AppendProperty ("transform-origin:" ++ vert ++ " " ++ horiz)
-
-
-{-| Sets the [`transform-box`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box) property.
-
-    transformBox contentBox
-
-    transformBox fillBox
--}
-transformBox :
-    BaseValue
-        { contentBox : Supported
-        , borderBox : Supported
-        , fillBox : Supported
-        , strokeBox : Supported
-        , viewBox : Supported
-        }
-    -> Style
-transformBox (Value val) =
-    AppendProperty ("transform-box:" ++ val)
-
-
-
-
---- unicode-bidi ---
-
-
-
-{-| Sets [`user-select`](https://css-tricks.com/almanac/properties/u/user-select/)
-
-    userSelect none
-
-    userSelect auto
-
-    userSelect text
-
-    userSelect contain_
-
-    userSelect all_
-
--}
-userSelect :
-    BaseValue
-        { none : Supported
-        , auto : Supported
-        , text : Supported
-        , contain_ : Supported
-        , all_ : Supported
-        }
-    -> Style
-userSelect (Value val) =
-    AppendProperty ("user-select:" ++ val)
-
-
-{-| Sets [`widows`](https://css-tricks.com/almanac/properties/w/widows/)
-**Note:** This function accepts only positive integers.
-
-    widows (int 2)
-
--}
-widows :
-    BaseValue
-        { int : Supported
-        }
-    -> Style
-widows (Value val) =
-    AppendProperty ("widows:" ++ val)
-
-
-{-| The [`resize`](https://css-tricks.com/almanac/properties/r/resize/) property.
-
-    resize none
-
-    resize both
-
-    resize inline
-
--}
-resize :
-    BaseValue
-        { none : Supported
-        , both : Supported
-        , horizontal : Supported
-        , vertical : Supported
-        , block : Supported
-        , inline : Supported
-        }
-    -> Style
-resize (Value value) =
-    AppendProperty ("resize:" ++ value)
-
-
-{-| The `horizontal` value used by [`resize`](#resize).
-
-    resize horizontal
-
--}
-horizontal : Value { provides | horizontal : Supported }
-horizontal =
-    Value "horizontal"
-
-
-{-| The `vertical` value used by [`resize`](#resize).
-
-    resize vertical
-
--}
-vertical : Value { provides | vertical : Supported }
-vertical =
-    Value "vertical"
-
-
-{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
-
-    contain none
-
-    contain content
-
-    contain2 size layout
-
-    contain3 size layout style
-
-    contain4 -- all multiple choice values in use, no value entry needed
-
--}
-contain :
-    BaseValue
-        { none : Supported
-        , strict : Supported
-        , content : Supported
-        , size : Supported
-        , layout : Supported
-        , style : Supported
-        , paint : Supported
-        }
-    -> Style
-contain (Value value) =
-    AppendProperty ("contain:" ++ value)
-
-
-{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
-
-This two-argument version lets you use 2 of the 4 multiple choice values you
-can use for this property.
-
-    contain2 size layout
-
--}
-contain2 :
-    Value
-        { size : Supported
-        , layout : Supported
-        , style : Supported
-        , paint : Supported
-        }
-    ->
-        Value
-            { size : Supported
-            , layout : Supported
-            , style : Supported
-            , paint : Supported
-            }
-    -> Style
-contain2 (Value value1) (Value value2) =
-    AppendProperty ("contain:" ++ value1 ++ " " ++ value2)
-
-
-{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
-
-This two-argument version lets you use 3 of the 4 multiple choice values you
-can use for this property.
-
-    contain3 size layout style
-
--}
-contain3 :
-    Value
-        { size : Supported
-        , layout : Supported
-        , style : Supported
-        , paint : Supported
-        }
-    ->
-        Value
-            { size : Supported
-            , layout : Supported
-            , style : Supported
-            , paint : Supported
-            }
-    ->
-        Value
-            { size : Supported
-            , layout : Supported
-            , style : Supported
-            , paint : Supported
-            }
-    -> Style
-contain3 (Value value1) (Value value2) (Value value3) =
-    AppendProperty ("contain:" ++ value1 ++ " " ++ value2 ++ " " ++ value3)
-
-
-{-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
-
-This two-argument version lets you use all 4 multiple choice values you
-can use for this property.
-
-    contain4 size layout style paint
-
-**Note: The `style` value is considered at-risk from being depreciated.**
-
--}
-contain4 :
-    Value
-        { size : Supported
-        , layout : Supported
-        , style : Supported
-        , paint : Supported
-        }
-    ->
-        Value
-            { size : Supported
-            , layout : Supported
-            , style : Supported
-            , paint : Supported
-            }
-    ->
-        Value
-            { size : Supported
-            , layout : Supported
-            , style : Supported
-            , paint : Supported
-            }
-    ->
-        Value
-            { size : Supported
-            , layout : Supported
-            , style : Supported
-            , paint : Supported
-            }
-    -> Style
-contain4 (Value value1) (Value value2) (Value value3) (Value value4) =
-    AppendProperty ("contain:" ++ value1 ++ " " ++ value2 ++ " " ++ value3 ++ " " ++ value4)
-
-
-{-| Sets the `size` value for [`contain`](#contain).
-
-This indicates that the element can be sized without
-needing to look at the size of its descendants.
-
-    contain size
-
--}
-size : Value { provides | size : Supported }
-size =
-    Value "size"
-
-
-{-| Sets the `layout` value for [`contain`](#contain).
-
-This indicates that nothing outside the element
-may affect its internal layout and vice versa.
-
-    contain layout
-
--}
-layout : Value { provides | layout : Supported }
-layout =
-    Value "layout"
-
-
-{-| Sets the `paint` value for [`contain`](#contain).
-
-Indicates that descendants of the element will not
-display outside its bounds and will not be painted
-by the browser if the containing box is offscreen.
-
-    contain paint
-
--}
-paint : Value { provides | paint : Supported }
-paint =
-    Value "paint"
-
-
-{-| Sets [`orphans`](https://css-tricks.com/almanac/properties/o/orphans/)
-**Note:** This function accepts only positive integers.
-
-    orphans (int 2)
-
--}
-orphans :
-    BaseValue
-        { int : Supported
-        }
-    -> Style
-orphans (Value val) =
-    AppendProperty ("orphans:" ++ val)
-
-
-
-{-| Sets [`image-rendering`](https://css-tricks.com/almanac/properties/i/image-rendering/)
-
-    imageRendering auto
-
-    imageRendering crispEdges
-
-    imageRendering pixelated
-
--}
-imageRendering :
-    BaseValue
-        { auto : Supported
-        , crispEdges : Supported
-        , pixelated : Supported
-        }
-    -> Style
-imageRendering (Value val) =
-    AppendProperty ("image-rendering:" ++ val)
-
-
-{-| Sets `pixelated` value for usage with [`imageRendering`](#imageRendering).
-
-    imageRendering pixelated
-
--}
-pixelated : Value { provides | pixelated : Supported }
-pixelated =
-    Value "pixelated"
-
-
-{-| Sets `crisp-edges` value for usage with [`imageRendering`](#imageRendering).
-
-    imageRendering crispEdges
-
--}
-crispEdges : Value { provides | crispEdges : Supported }
-crispEdges =
-    Value "crisp-edges"
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------ WEBKIT STUFF THAT'S STANDARDISED --------------------
+-------------------------- FOR LEGACY SUPPORT --------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| Sets [`lineClamp`](https://css-tricks.com/almanac/properties/l/line-clamp/)
@@ -21459,120 +21640,4 @@ lineClamp :
     -> Style
 lineClamp (Value val) =
     AppendProperty ("line-clamp:" ++ val)
-
-
-{-| The 1-argument variant of the
-[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
-
-    clipPath marginBox
-
-    clipPath inherit
-
-    clipPath (circle (pct 2))
-
-    clipPath2 marginBox (circleAt2 farthestSide left top)
--}
-clipPath :
-    BaseValue
-        (BasicShapeSupported
-            { marginBox : Supported
-            , borderBox : Supported
-            , paddingBox : Supported
-            , contentBox : Supported
-            , fillBox : Supported
-            , strokeBox : Supported
-            , viewBox : Supported
-            }
-        )
-    -> Style
-clipPath (Value val) =
-    AppendProperty ("clip-path:" ++ val)
-
-
-{-| The 2-argument variant of the
-[`clip-path`](https://css-tricks.com/almanac/properties/c/clip-path/) property.
-
-    clipPath2 marginBox (circleAt2 farthestSide left top)
--}
-clipPath2 :
-    Value
-        { marginBox : Supported
-        , borderBox : Supported
-        , paddingBox : Supported
-        , contentBox : Supported
-        , fillBox : Supported
-        , strokeBox : Supported
-        , viewBox : Supported
-        }
-    -> Value (BasicShapeSupported a)
-    -> Style
-clipPath2 (Value val1) (Value val2) =
-    AppendProperty ("clip-path:" ++ val1 ++ " " ++ val2)
-
-
-{-| Sets [`mix-blend-mode`](https://css-tricks.com/almanac/properties/m/mix-blend-mode/)
-
-    mixBlendMode multiply
-
-    mixBlendMode saturation
-
--}
-mixBlendMode :
-    BaseValue
-        { normal : Supported
-        , multiply : Supported
-        , screen : Supported
-        , overlay : Supported
-        , darken : Supported
-        , lighten : Supported
-        , colorDodge : Supported
-        , colorBurn : Supported
-        , hardLight : Supported
-        , softLight : Supported
-        , difference : Supported
-        , exclusion : Supported
-        , hue : Supported
-        , saturation : Supported
-        , color_ : Supported
-        , luminosity : Supported
-        }
-    -> Style
-mixBlendMode (Value val) =
-    AppendProperty ("mix-blend-mode:" ++ val)
-
-
-{-| Sets `scale-down` value for usage with [`objectFit`](#objectFit).
-
-    objectFit scaleDown
-
--}
-scaleDown : Value { provides | scaleDown : Supported }
-scaleDown =
-    Value "scale-down"
-
-
-{-| Sets [`object-fit`](https://css-tricks.com/almanac/properties/o/object-fit/)
-
-    objectFit fill_
-
-    objectFit contain_
-
-    objectFit cover
-
-    objectFit scaleDown
-
-    objectFit none
-
--}
-objectFit :
-    BaseValue
-        { fill_ : Supported
-        , contain_ : Supported
-        , cover : Supported
-        , none : Supported
-        , scaleDown : Supported
-        }
-    -> Style
-objectFit (Value val) =
-    AppendProperty ("object-fit:" ++ val)
 
