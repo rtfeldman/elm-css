@@ -398,7 +398,6 @@ module Css exposing
 
     , opacity
 
-    , zoom
     
     , speak, spellOut
 
@@ -1129,11 +1128,6 @@ Other values you can use for flex item alignment:
 # Opacity
 
 @docs opacity
-
-
-# Viewport
-
-@docs zoom
 
 
 # Scroll
@@ -20668,29 +20662,6 @@ opacity :
     -> Style
 opacity (Value val) =
     AppendProperty ("opacity:" ++ val)
-
-
-{-| Sets [`zoom`](https://css-tricks.com/almanac/properties/z/zoom/)
-
-    zoom (pct 150)
-
-    zoom (num 1.5)
-
-    zoom normal
-
--}
-zoom :
-    BaseValue
-        { pct : Supported
-        , zero : Supported
-        , num : Supported
-        , normal : Supported
-        , calc : Supported
-        , auto : Supported
-        }
-    -> Style
-zoom (Value val) =
-    AppendProperty ("zoom:" ++ val)
 
 
 {-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
