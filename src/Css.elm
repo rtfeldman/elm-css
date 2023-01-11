@@ -202,7 +202,7 @@ module Css exposing
     , backgroundRepeat, backgroundRepeat2
     , backgroundSize, backgroundSize2
 
-    -- font size
+    -- Font size
     , fontSize
     , xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
     , fontSizeAdjust
@@ -210,17 +210,23 @@ module Css exposing
     -- @font-face
     , fontDisplay, fallback, swap, optional
 
-    -- font family
-    , fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
+    -- Font family
+    , fontFamily, fontFamilies
+    , serif, sansSerif, monospace, cursive, fantasy, systemUi
 
-    -- font style, weight + stretch
+    -- Font style, weight + stretch
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
     , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
-    
-    -- font features and variants
-    , fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
-    , fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
+    , fontSynthesis, fontSynthesis2, fontSynthesis3
+    , weight
+    , fontVariationSettings, fontVariationSettingsList
+
+    -- Typographic features
+    , fontFeatureSettings, fontFeatureSettingsList
+    , featureTag, featureTag2
+    , fontVariantCaps
+    , smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
     , fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3
     , jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
     , fontVariantLigatures
@@ -229,71 +235,55 @@ module Css exposing
     , ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     , fontKerning
     , fontLanguageOverride
-    , fontSynthesis, fontSynthesis2, fontSynthesis3
     , fontOpticalSizing
     , fontVariantPosition
-    , weight
-
-    -- variable fonts (not to be confused with variants)
-    , fontVariationSettings, fontVariationSettingsList
     
-    -- list styles
-    , ListStyleType, ListStyleTypeSupported
-    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside
-    , listStyleType
-    , listStyleImage
-    , arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
+    -- Typographic metrics
+    , lineHeight
+    , letterSpacing
+    , textIndent, textIndent2, textIndent3
+    , hanging, eachLine
+    , wordSpacing
+    , tabSize
 
-    -- text transform + decoration
-    , textTransform
-    , capitalize, uppercase, lowercase, fullSizeKana
+    -- Text wrapping, overflow and newlines
+    , wordBreak, breakAll, keepAll
+    , lineBreak, loose
+    , whiteSpace, pre, preWrap, preLine
+    , textOverflow, textOverflow2, ellipsis
+    , hyphens, manual
+    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3
+    , first, last, forceEnd, allowEnd
+
+    -- Text decoration + transform
     , textDecoration, textDecoration2, textDecoration3
     , textDecorationLine, textDecorationLine2, textDecorationLine3
     , textDecorationStyle
-    , textDecorationColor
-    , textDecorationThickness
-    , fromFont
-    , textDecorationSkip
-    , textDecorationSkipInk
-    , objects, spaces, ink, edges, boxDecoration
     , wavy, underline, overline, lineThrough
-
-    -- text decoration (other)
-    , lineHeight
-    , letterSpacing
-    , textIndent, textIndent2, textIndent3, hanging, eachLine
+    , textDecorationColor
+    , textDecorationThickness, fromFont
+    , textDecorationSkipInk
+    , textUnderlinePosition, textUnderlinePosition2
     , textUnderlineOffset
     , textEmphasis, textEmphasis2
     , textEmphasisStyle, textEmphasisStyle2
-    , textEmphasisColor, textEmphasisPosition, textEmphasisPosition2
+    , textEmphasisColor
+    , textEmphasisPosition, textEmphasisPosition2
     , filled, open, dot, doubleCircle, triangle, sesame, over
+    , textTransform
+    , capitalize, uppercase, lowercase, fullSizeKana
 
-    -- more text stuff to rearrange
+    -- text alignment and justification
     , textAlign, justify 
     , textJustify, interWord, interCharacter
-    , textUnderlinePosition, textUnderlinePosition2
-    , textOrientation
-    , mixed, sideways, sidewaysRight, upright, useGlyphOrientation
-    , wordBreak
-    , breakAll, keepAll
-    , wordSpacing
-    , tabSize
-    , hyphens
-    , manual
-    , quotes, quotes2, quotes4
-    , textOverflow, textOverflow2
-    , ellipsis
-    , lineBreak
-    , loose
-    , hangingPunctuation, hangingPunctuation2, hangingPunctuation3
-    , first, last, forceEnd, allowEnd
-    , whiteSpace
-    , pre, preWrap, preLine
-
+    
     -- script handling
     , direction, ltr, rtl
     , writingMode, verticalLr, verticalRl, horizontalTb
     , unicodeBidi, embed, plaintext, bidiOverride, isolateOverride
+    , textOrientation
+    , mixed, sideways, sidewaysRight, upright, useGlyphOrientation
+    , quotes, quotes2, quotes4
 
     -- text rendering
     , textRendering
@@ -304,6 +294,13 @@ module Css exposing
 
     -- accessibility
     , speak, spellOut
+    
+    -- list styles
+    , ListStyleType, ListStyleTypeSupported
+    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside
+    , listStyleType
+    , listStyleImage
+    , arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
 
     -- columns
     , columns, columns2
@@ -327,13 +324,9 @@ module Css exposing
     , tableLayout
 
     -- content fragmentation
-    , breakBefore
-    , breakAfter
-    , breakInside
+    , breakBefore, breakAfter, breakInside
     , avoid, avoidPage, avoidColumn, page
-    , pageBreakBefore
-    , pageBreakAfter
-    , pageBreakInside
+    , pageBreakBefore, pageBreakAfter, pageBreakInside
     , orphans, widows
     , boxDecorationBreak
 
@@ -522,37 +515,42 @@ functions let you define custom properties and selectors, respectively.
 ## Numerical units
 
 ### Lengths
+
 @docs Length, LengthSupported
 @docs zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inch, pt, pc, pct, num, int
 
-
 ### Angles
+
 @docs Angle, AngleSupported, Width, WidthSupported
 @docs deg, grad, rad, turn
 
 ### Time
+
 @docs Time, TimeSupported, s, ms
 
 ### Flex
+
 @docs fr, minmax, fitContentTo
 
+## Names & URLs
+
+@docs customIdent, string, url
+
 ## Color
+
 @docs Color, ColorSupported, hex, rgb, rgba, hsl, hsla, currentcolor
 
 ## Shapes
+
 @docs BasicShape, BasicShapeSupported
 @docs circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
 
 ## Resolution
+
 @docs Resolution, ResolutionSupported, dpi, dpcm, dppx
 
-## Ident
-@docs customIdent
-
-## URLs
-@docs url
-
 ## Calc
+
 @docs calc, CalcOperation, minus, plus, times, dividedBy
 
 
@@ -919,7 +917,8 @@ Other values you can use for flex item alignment:
 # Background
 
 @docs backgroundColor
-@docs backgroundAttachment, backgroundAttachments, local
+@docs backgroundAttachment, backgroundAttachments
+@docs local
 @docs backgroundBlendMode, backgroundBlendModes
 @docs multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
 @docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
@@ -927,6 +926,198 @@ Other values you can use for flex item alignment:
 @docs backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4
 @docs backgroundRepeat, backgroundRepeat2
 @docs backgroundSize, backgroundSize2
+
+
+------------------------------------------------------
+
+
+# Basic typographic options
+
+## Sizing
+
+@docs fontSize
+@docs xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger
+@docs fontSizeAdjust
+
+## @font-face
+
+@docs fontDisplay, fallback, swap, optional
+
+## Font family
+
+@docs fontFamily, fontFamilies
+@docs serif, sansSerif, monospace, cursive, fantasy, systemUi
+
+## Font style, weight & stretch
+
+@docs fontStyle, italic, oblique
+@docs fontWeight, bold, lighter, bolder
+@docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
+    
+## Missing typeface synthesis
+
+@docs fontSynthesis, fontSynthesis2, fontSynthesis3
+@docs weight
+
+## Variable fonts (not to be confused with font variants)
+
+@docs fontVariationSettings, fontVariationSettingsList
+
+
+------------------------------------------------------
+
+
+# Typographic features
+
+## OpenType typographic features
+
+@docs fontFeatureSettings, fontFeatureSettingsList
+@docs featureTag, featureTag2
+
+## Alternative capitals
+
+@docs fontVariantCaps
+@docs smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
+
+## East Asian glyph variants
+
+@docs fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3
+@docs jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
+
+## Ligatures & contextual forms
+
+@docs fontVariantLigatures
+@docs commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
+    
+## Numerical variants
+
+@docs fontVariantNumeric, fontVariantNumeric4
+@docs ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
+    
+## Kerning
+
+@docs fontKerning
+
+## Language override
+
+@docs fontLanguageOverride
+
+## Optical sizing
+
+@docs fontOpticalSizing
+
+## Superscript & subscript
+
+@docs fontVariantPosition
+
+
+------------------------------------------------------
+
+
+# Typographic metrics
+
+@docs lineHeight
+@docs letterSpacing
+@docs textIndent, textIndent2, textIndent3
+@docs hanging, eachLine
+@docs wordSpacing
+@docs tabSize
+
+
+------------------------------------------------------
+
+
+# Text wrapping, overflow and newlines
+
+@docs wordBreak, breakAll, keepAll
+@docs lineBreak, loose
+@docs whiteSpace, pre, preWrap, preLine
+@docs textOverflow, textOverflow2, ellipsis
+@docs hyphens, manual
+@docs hangingPunctuation, hangingPunctuation2, hangingPunctuation3
+@docs first, last, forceEnd, allowEnd
+
+
+------------------------------------------------------
+
+
+# Text decoration and transform
+
+@docs textDecoration, textDecoration2, textDecoration3
+@docs textDecorationLine, textDecorationLine2, textDecorationLine3
+@docs textDecorationStyle
+@docs wavy, underline, overline, lineThrough
+@docs textDecorationColor
+@docs textDecorationThickness, fromFont
+@docs textDecorationSkipInk
+@docs textUnderlinePosition, textUnderlinePosition2
+@docs textUnderlineOffset
+@docs textEmphasis, textEmphasis2
+@docs textEmphasisStyle, textEmphasisStyle2
+@docs textEmphasisColor
+@docs textEmphasisPosition, textEmphasisPosition2
+@docs filled, open, dot, doubleCircle, triangle, sesame, over
+@docs textTransform
+@docs capitalize, uppercase, lowercase, fullSizeKana
+
+
+------------------------------------------------------
+
+
+# Text alignment and justification
+
+@docs textAlign, justify
+@docs textJustify, interWord, interCharacter
+
+
+------------------------------------------------------
+
+
+# Script handling
+
+@docs direction, ltr, rtl
+@docs writingMode, verticalLr, verticalRl, horizontalTb
+@docs unicodeBidi, embed, plaintext, bidiOverride, isolateOverride
+@docs textOrientation
+@docs mixed, sideways, sidewaysRight, upright, useGlyphOrientation
+@docs quotes, quotes2, quotes4
+
+
+------------------------------------------------------
+
+
+# Text rendering
+
+@docs textRendering
+@docs geometricPrecision, optimizeLegibility, optimizeSpeed
+
+
+------------------------------------------------------
+
+
+# Text selection
+
+@docs userSelect
+
+
+------------------------------------------------------
+
+
+# Accessibility
+
+@docs speak, spellOut
+
+
+------------------------------------------------------
+
+
+# List styles
+
+@docs ListStyleType, ListStyleTypeSupported
+@docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside
+@docs listStyleType
+@docs listStyleImage
+@docs arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
 
 
 ------------------------------------------------------
@@ -943,85 +1134,16 @@ Other values you can use for flex item alignment:
 
 
 
-# Typography
 
 
-## Spacing
-
-@docs wordSpacing
-@docs tabSize
 
 
-## Display
-
-@docs fontDisplay, fallback, swap, optional
-@docs writingMode, verticalLr, verticalRl, horizontalTb
-@docs hyphens, quotes, quotes2, quotes4, textOverflow, textOverflow2, lineBreak, manual, ellipsis, loose
-@docs hangingPunctuation, hangingPunctuation2, hangingPunctuation3, first, last, forceEnd, allowEnd
-@docs lineClamp
 
 
-## Font Size
-
-@docs fontSize, xxSmall, xSmall, small, medium, large, xLarge, xxLarge, smaller, larger, lineHeight, letterSpacing
-@docs fontSizeAdjust
 
 
-## Font Family
-
-@docs fontFamily, fontFamilies, serif, sansSerif, monospace, cursive, fantasy, systemUi
 
 
-## Font Styles
-
-@docs fontStyle, italic, oblique
-
-[`normal`](#normal) is also a supported font style.
-
-
-## Font Weights
-
-@docs fontWeight, bold, lighter, bolder
-
-[`normal`](#normal) is also a supported font weight.
-
-@docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
-
-
-## Font Feature Settings
-
-@docs fontFeatureSettings, fontFeatureSettingsList, featureTag, featureTag2
-
-[`normal`](#normal) is also a supported font feature settings.
-
-
-## Font Variation Settings
-
-@docs fontVariationSettings, fontVariationSettingsList
-
-## Font Variant Caps
-
-@docs fontVariantCaps, smallCaps, allSmallCaps, petiteCaps, allPetiteCaps, unicase, titlingCaps
-
-
-## Font Variant East Asian
-
-@docs fontVariantEastAsian, fontVariantEastAsian2, fontVariantEastAsian3, jis78, jis83, jis90, jis04, simplified, traditional, proportionalWidth
-
-
-## Font Variant Ligatures
-
-@docs fontVariantLigatures, commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
-
-
-## Font Variant Numeric
-
-@docs fontVariantNumeric, fontVariantNumeric4, ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
-
-
-## Font Optical Sizing
-
-@docs fontKerning, fontLanguageOverride, fontSynthesis, fontSynthesis2, fontSynthesis3, fontOpticalSizing, fontVariantPosition, weight
 
 
 # Cursors
@@ -1040,56 +1162,6 @@ Other values you can use for flex item alignment:
 @docs wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
 @docs neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
 
-
-# List Style
-
-@docs ListStyleType, ListStyleTypeSupported
-@docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, listStyleImage
-@docs arabicIndic, armenian, bengali, cambodian, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
-
-[`square`](#square) is also a supported value for [`listStyle`](#listStyle) and [`listStyleType`](#listStyleType).
-
-
-# Direction
-
-@docs direction, ltr, rtl
-
-
-# Text Align
-
-@docs justify, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
-
-
-# Text Orientation
-
-@docs textOrientation
-@docs mixed, sideways, sidewaysRight, upright, useGlyphOrientation
-
-
-# Text Rendering
-
-@docs textRendering
-@docs geometricPrecision, optimizeLegibility, optimizeSpeed
-
-
-# Text Transform
-
-@docs textTransform
-@docs capitalize, uppercase, lowercase, fullSizeKana
-
-
-# Text Decoration
-
-@docs textDecoration, textDecoration2, textDecoration3, textDecorationLine, textDecorationLine2, textDecorationLine3, textDecorationStyle, textDecorationColor, textDecorationThickness, fromFont
-@docs textDecorationSkip, textDecorationSkipInk, objects, spaces, ink, edges, boxDecoration
-
-@docs wavy, underline, overline, lineThrough
-
-@docs textIndent, textIndent2, textIndent3, hanging, eachLine
-
-@docs textUnderlineOffset
-
-@docs textEmphasis, textEmphasis2, textEmphasisStyle, textEmphasisStyle2, textEmphasisColor, textEmphasisPosition, textEmphasisPosition2, filled, open, dot, doubleCircle, triangle, sesame, over
 
 
 # Tables
@@ -1120,24 +1192,6 @@ Other values you can use for flex item alignment:
 ## Table Layout
 
 @docs tableLayout
-
-
-## Vertical Align
-
-@docs verticalAlign
-@docs textTop, textBottom, middle
-
-
-## White space
-
-@docs whiteSpace
-@docs pre, preWrap, preLine
-
-
-## Word break
-
-@docs wordBreak
-@docs breakAll, keepAll
 
 
 ## Float
@@ -1243,13 +1297,6 @@ Other values you can use for flex item alignment:
 @docs overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
 
 
-# Accessibility
-
-@docs speak, spellOut
-@docs userSelect
-@docs unicodeBidi, embed, bidiOverride, isolateOverride, plaintext
-
-
 # Printing
 
 @docs bleed
@@ -1284,13 +1331,12 @@ Other values you can use for flex item alignment:
 @docs TextShadowConfig, color, defaultTextShadow
 @docs linearGradient, linearGradient2, stop, stop2, stop3, textShadow
 @docs toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-
+@docs lineClamp, middle, textTop, textBottom, verticalAlign
 
 -}
 
 import Css.Preprocess as Preprocess exposing (Style(..))
 import Css.Structure as Structure
-
 
 
 ------------------------------------------------------------------------
@@ -11985,6 +12031,141 @@ semiExpanded =
     Value "semi-expanded"
 
 
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+    fontSynthesis none
+
+    fontSynthesis smallCaps
+
+    fontSynthesis2 smallCaps weight
+
+    fontSynthesis3 weight style smallCaps
+
+-}
+fontSynthesis :
+    BaseValue
+        { none : Supported
+        , weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    -> Style
+fontSynthesis (Value val) =
+    AppendProperty ("font-synthesis:" ++ val)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+This is the two-argument variant, in which you can indicate
+two different font properties to be synthesised by the browser.
+
+    fontSynthesis2 smallCaps weight
+
+-}
+fontSynthesis2 :
+    Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
+    -> Style
+fontSynthesis2 (Value val1) (Value val2) =
+    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2)
+
+
+{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
+
+This is the three-argument variant, in which you can indicate
+all three different font properties to be synthesised by the browser.
+
+    fontSynthesis3 weight style smallCaps
+
+-}
+fontSynthesis3 :
+    Value
+        { weight : Supported
+        , style : Supported
+        , smallCaps : Supported
+        }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
+    ->
+        Value
+            { weight : Supported
+            , style : Supported
+            , smallCaps : Supported
+            }
+    -> Style
+fontSynthesis3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| The `weight` value for the [`fontSynthesis`](#fontSynthesis) property.
+
+    fontSynthesis weight
+
+-}
+weight : Value { provides | weight : Supported }
+weight =
+    Value "weight"
+
+
+{-| The 1-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
+property.
+
+For controlling aspects of variable fonts.
+Use [`fontVariationSettingsList`](#fontVariationSettingsList) to work with variable font tags.
+
+    fontVariationSettings normal
+
+    fontVariationSettings inherit
+
+    fontVariationSettingsList [ ("XHGT", 0.7) ]
+-}
+fontVariationSettings :
+    BaseValue
+        { normal : Supported
+        }
+    -> Style
+fontVariationSettings (Value val) =
+    AppendProperty ("font-variation-settings:" ++ val)
+
+
+{-| The multi-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
+property.
+
+For using single keywords with this property, use [`fontVariationSettings`](#fontVariationSettings).
+
+    fontVariationSettingsList [ ("XHGT", 0.7) ]
+-}
+fontVariationSettingsList :
+    List
+        ( String
+        , Float
+        )
+    -> Style
+fontVariationSettingsList list =
+    AppendProperty <|
+        "font-variation-settings:"
+        ++
+        ( list
+        |> List.map
+            (\(tagVal, numberVal) -> (enquoteString tagVal) ++ " " ++ (String.fromFloat numberVal)
+            )
+        |> String.join ", "
+        )
+
+
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -12659,85 +12840,6 @@ fontLanguageOverride (Value val) =
     AppendProperty ("font-language-override:" ++ val)
 
 
-{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
-
-    fontSynthesis none
-
-    fontSynthesis smallCaps
-
-    fontSynthesis2 smallCaps weight
-
-    fontSynthesis3 weight style smallCaps
-
--}
-fontSynthesis :
-    BaseValue
-        { none : Supported
-        , weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
-    -> Style
-fontSynthesis (Value val) =
-    AppendProperty ("font-synthesis:" ++ val)
-
-
-{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
-
-This is the two-argument variant, in which you can indicate
-two different font properties to be synthesised by the browser.
-
-    fontSynthesis2 smallCaps weight
-
--}
-fontSynthesis2 :
-    Value
-        { weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
-    ->
-        Value
-            { weight : Supported
-            , style : Supported
-            , smallCaps : Supported
-            }
-    -> Style
-fontSynthesis2 (Value val1) (Value val2) =
-    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2)
-
-
-{-| The [`font-synthesis`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis) property.
-
-This is the three-argument variant, in which you can indicate
-all three different font properties to be synthesised by the browser.
-
-    fontSynthesis3 weight style smallCaps
-
--}
-fontSynthesis3 :
-    Value
-        { weight : Supported
-        , style : Supported
-        , smallCaps : Supported
-        }
-    ->
-        Value
-            { weight : Supported
-            , style : Supported
-            , smallCaps : Supported
-            }
-    ->
-        Value
-            { weight : Supported
-            , style : Supported
-            , smallCaps : Supported
-            }
-    -> Style
-fontSynthesis3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty ("font-synthesis:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
-
-
 {-| The [`font-optical-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing) property.
 
     fontOpticalSizing none
@@ -12771,75 +12873,1769 @@ fontVariantPosition (Value val) =
     AppendProperty ("font-variant-position:" ++ val)
 
 
-{-| The `weight` value for the [`fontSynthesis`](#fontSynthesis) property.
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------- TYPOGRAPHIC METRICS ----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
-    fontSynthesis weight
+
+{-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
+
+    lineHeight (pct 150)
+
+    lineHeight (em 2)
+
+    lineHeight (num 1.5)
+
+    lineHeight normal
 
 -}
-weight : Value { provides | weight : Supported }
-weight =
-    Value "weight"
+lineHeight :
+    BaseValue
+        (LengthSupported
+            { pct : Supported
+            , normal : Supported
+            , num : Supported
+            }
+        )
+    -> Style
+lineHeight (Value val) =
+    AppendProperty ("line-height:" ++ val)
 
 
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------ VARIABLE FONTS ---------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
+{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/)
 
+    letterSpacing (pct 150)
 
-{-| The 1-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
-property.
+    letterSpacing (em 2)
 
-For controlling aspects of variable fonts.
-Use [`fontVariationSettingsList`](#fontVariationSettingsList) to work with variable font tags.
+    letterSpacing (num 1.5)
 
-    fontVariationSettings normal
+    letterSpacing normal
 
-    fontVariationSettings inherit
-
-    fontVariationSettingsList [ ("XHGT", 0.7) ]
 -}
-fontVariationSettings :
+letterSpacing :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            }
+        )
+    -> Style
+letterSpacing (Value val) =
+    AppendProperty ("letter-spacing:" ++ val)
+
+
+{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
+
+    textIndent (em 1.5)
+
+-}
+textIndent : BaseValue (LengthSupported { pct : Supported }) -> Style
+textIndent (Value val) =
+    AppendProperty ("text-indent:" ++ val)
+
+
+{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
+
+    textIndent2 (em 1.5) hanging
+
+-}
+textIndent2 :
+    Value (LengthSupported { pct : Supported })
+    ->
+        Value
+            { hanging : Supported
+            , eachLine : Supported
+            }
+    -> Style
+textIndent2 (Value lengthVal) (Value optionVal) =
+    AppendProperty ("text-indent:" ++ lengthVal ++ " " ++ optionVal)
+
+
+{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
+
+    textIndent3 (em 1.5) hanging eachLine
+
+-}
+textIndent3 :
+    Value (LengthSupported { pct : Supported })
+    -> Value { hanging : Supported }
+    -> Value { eachLine : Supported }
+    -> Style
+textIndent3 (Value lengthVal) (Value hangingVal) (Value eachLineVal) =
+    AppendProperty
+        ("text-indent:"
+            ++ lengthVal
+            ++ " "
+            ++ hangingVal
+            ++ " "
+            ++ eachLineVal
+        )
+
+
+{-| The `hanging` value used for properties such as [`textIdent2`](#textIdent2).
+
+    textIdent2 (px 20) hanging
+
+-}
+hanging : Value { provides | hanging : Supported }
+hanging =
+    Value "hanging"
+
+
+{-| The `each-line` value used for properties such as [`textIdent2`](#textIdent2).
+
+    textIdent2 (px 20) eachLine
+
+-}
+eachLine : Value { provides | eachLine : Supported }
+eachLine =
+    Value "each-line"
+
+
+{-| Sets [`word-spacing`](https://css-tricks.com/almanac/properties/w/word-spacing/).
+
+    wordSpacing normal
+
+    wordSpacing zero
+
+    wordSpacing (px 5)
+
+-}
+wordSpacing :
+    BaseValue
+        (LengthSupported
+            { normal : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+wordSpacing (Value str) =
+    AppendProperty ("word-spacing:" ++ str)
+
+
+{-| Sets [`tab-size`](https://css-tricks.com/almanac/properties/t/tab-size/)
+**Note:** only positive integer values are allowed.
+
+    tabSize (int 4)
+
+-}
+tabSize :
+    BaseValue
+        (LengthSupported
+            { auto : Supported
+            , int : Supported
+            }
+        )
+    -> Style
+tabSize (Value val) =
+    AppendProperty ("tab-size:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------- TEXT WRAPPING, OVERFLOW AND NEWLINES ------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+
+{-| Sets [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/)
+
+      wordBreak normal
+      wordBreak breakAll
+      wordBreak keepAll
+      wordBreak breakWord
+
+-}
+wordBreak :
     BaseValue
         { normal : Supported
+        , breakAll : Supported
+        , keepAll : Supported
+        , breakWord : Supported
         }
     -> Style
-fontVariationSettings (Value val) =
-    AppendProperty ("font-variation-settings:" ++ val)
+wordBreak (Value str) =
+    AppendProperty ("word-break:" ++ str)
 
 
-{-| The multi-argument variant of the [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)
-property.
+{-| A `breakAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
 
-For using single keywords with this property, use [`fontVariationSettings`](#fontVariationSettings).
+      wordBreak breakAll
 
-    fontVariationSettingsList [ ("XHGT", 0.7) ]
 -}
-fontVariationSettingsList :
-    List
-        ( String
-        , Float
+breakAll : Value { provides | breakAll : Supported }
+breakAll =
+    Value "break-all"
+
+
+{-| A `keepAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
+
+      wordBreak keepAll
+
+-}
+keepAll : Value { provides | keepAll : Supported }
+keepAll =
+    Value "keep-all"
+
+
+{-| Sets the [`lineBreak`](https://css-tricks.com/almanac/properties/l/line-break/) property.
+
+    lineBreak auto
+
+    lineBreak strict
+
+-}
+lineBreak :
+    BaseValue
+        { auto : Supported
+        , loose : Supported
+        , normal : Supported
+        , strict : Supported
+        , anywhere : Supported
+        }
+    -> Style
+lineBreak (Value value) =
+    AppendProperty ("line-break:" ++ value)
+
+
+{-| Sets `loose` value for usage with [`lineBreak`](#lineBreak).
+
+    lineBreak loose
+
+-}
+loose : Value { provides | loose : Supported }
+loose =
+    Value "loose"
+
+
+{-| Sets [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+
+    whiteSpace pre
+
+    whiteSpace nowrap
+
+    whiteSpace preWrap
+
+    whiteSpace preLine
+
+-}
+whiteSpace :
+    BaseValue
+        { normal : Supported
+        , nowrap : Supported
+        , pre : Supported
+        , preWrap : Supported
+        , preLine : Supported
+        }
+    -> Style
+whiteSpace (Value str) =
+    AppendProperty ("white-space:" ++ str)
+
+
+{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
+
+    whiteSpace nowrap
+
+    flexWrap nowrap
+
+-}
+nowrap : Value { provides | nowrap : Supported }
+nowrap =
+    Value "nowrap"
+
+
+{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace pre
+
+-}
+pre : Value { provides | pre : Supported }
+pre =
+    Value "pre"
+
+
+{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preWrap
+
+-}
+preWrap : Value { provides | preWrap : Supported }
+preWrap =
+    Value "pre-wrap"
+
+
+{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preLine
+
+-}
+preLine : Value { provides | preLine : Supported }
+preLine =
+    Value "pre-line"
+
+
+{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
+
+`text-overflow` describes how text that gets cut off is signalled to users.
+
+When the one-argument version is used, it sets the end of text (right end for LTR users) that is cut off.
+
+    textOverflow ellipsis
+
+When the two-argument version is used, it specifies how the
+text cut-off is displayed at the start (left in LTR) and
+the end (right in LTR) of the text.
+
+    textOverflow2 ellipsis ellipsis
+
+-}
+textOverflow :
+    BaseValue
+        { clip : Supported
+        , ellipsis : Supported
+        }
+    -> Style
+textOverflow (Value value) =
+    AppendProperty ("text-overflow:" ++ value)
+
+
+{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
+
+`text-overflow` describes how text that gets cut off is signalled to users.
+
+This version specifies how the text cut-off is displayed at the start
+(left in LTR) and at the end (right in LTR) of the text.
+
+    textOverflow2 ellipsis ellipsis
+
+-}
+textOverflow2 :
+    Value
+        { clip : Supported
+        , ellipsis : Supported
+        }
+    ->
+        Value
+            { clip : Supported
+            , ellipsis : Supported
+            }
+    -> Style
+textOverflow2 (Value startValue) (Value endValue) =
+    AppendProperty ("text-overflow:" ++ startValue ++ " " ++ endValue)
+
+
+{-| Sets `ellipsis` value for usage with [`textOverflow`](#textOverflow).
+
+    textOverflow ellipsis
+
+-}
+ellipsis : Value { provides | ellipsis : Supported }
+ellipsis =
+    Value "ellipsis"
+
+
+{-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
+
+    hyphens none
+
+    hyphens manual
+
+    hyphens auto
+
+-}
+hyphens :
+    BaseValue
+        { none : Supported
+        , manual : Supported
+        , auto : Supported
+        }
+    -> Style
+hyphens (Value val) =
+    AppendProperty ("hyphens:" ++ val)
+
+
+{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
+
+    hyphens manual
+
+-}
+manual : Value { provides | manual : Supported }
+manual =
+    Value "manual"
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation none
+
+    hangingPunctuation first
+
+    hangingPunctuation2 first forceEnd
+
+    hangingPunctuation3 first allowEnd last
+
+-}
+hangingPunctuation :
+    BaseValue
+        { none : Supported
+        , first : Supported
+        , forceEnd : Supported
+        , allowEnd : Supported
+        , last : Supported
+        }
+    -> Style
+hangingPunctuation (Value val) =
+    AppendProperty ("hanging-punctuation:" ++ val)
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation2 first forceEnd
+
+-}
+hangingPunctuation2 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { first : Supported
+            , forceEnd : Supported
+            , allowEnd : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation2 (Value val1) (Value val2) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2)
+
+
+{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
+
+    hangingPunctuation3 first allowEnd last
+
+-}
+hangingPunctuation3 :
+    Value
+        { first : Supported
+        , last : Supported
+        }
+    ->
+        Value
+            { forceEnd : Supported
+            , allowEnd : Supported
+            }
+    ->
+        Value
+            { first : Supported
+            , last : Supported
+            }
+    -> Style
+hangingPunctuation3 (Value val1) (Value val2) (Value val3) =
+    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
+
+
+{-| Sets `first` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation first
+
+-}
+first : Value { provides | first : Supported }
+first =
+    Value "first"
+
+
+{-| Sets `last` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation last
+
+-}
+last : Value { provides | last : Supported }
+last =
+    Value "last"
+
+
+{-| Sets `force-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation forceEnd
+
+-}
+forceEnd : Value { provides | forceEnd : Supported }
+forceEnd =
+    Value "force-end"
+
+
+{-| Sets `allow-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
+
+      hangingPunctuation allowEnd
+
+-}
+allowEnd : Value { provides | allowEnd : Supported }
+allowEnd =
+    Value "allow-end"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+--------------------- TEXT TRANSFORM + DECORATION ----------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`text-decoration`][text-decoration] shorthand property.
+
+    textDecoration underline
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration :
+    BaseValue
+        (ColorSupported
+            { none : Supported
+            , underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            , solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
         )
     -> Style
-fontVariationSettingsList list =
-    AppendProperty <|
-        "font-variation-settings:"
-        ++
-        ( list
-        |> List.map
-            (\(tagVal, numberVal) -> (enquoteString tagVal) ++ " " ++ (String.fromFloat numberVal)
-            )
-        |> String.join ", "
+textDecoration (Value line) =
+    AppendProperty ("text-decoration:" ++ line)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration2 underline dotted
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration2 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    -> Style
+textDecoration2 (Value line) (Value styleVal) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal)
+
+
+{-| Sets [`text-decoration`][text-decoration] property.
+
+    textDecoration3 underline dotted (hex "#cf0")
+
+[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
+
+-}
+textDecoration3 :
+    Value
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { solid : Supported
+            , double : Supported
+            , dotted : Supported
+            , dashed : Supported
+            , wavy : Supported
+            }
+    -> Value Color
+    -> Style
+textDecoration3 (Value line) (Value styleVal) (Value colorVal) =
+    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal ++ " " ++ colorVal)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine underline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine :
+    BaseValue
+        { none : Supported
+        , underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    -> Style
+textDecorationLine (Value line) =
+    AppendProperty ("text-decoration-line:" ++ line)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine2 underline overline
+
+**Note:** The first and second argument **MUST NOT** be the same.
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine2 :
+    Value
+        { underline : Supported
+        , overline : Supported
+        , lineThrough : Supported
+        }
+    ->
+        Value
+            { underline : Supported
+            , overline : Supported
+            , lineThrough : Supported
+            }
+    -> Style
+textDecorationLine2 (Value line1) (Value line2) =
+    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2)
+
+
+{-| Sets [`text-decoration-line`][text-decoration-line] property.
+
+    textDecorationLine3 underline overline lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
+
+-}
+textDecorationLine3 :
+    Value { underline : Supported }
+    -> Value { overline : Supported }
+    -> Value { lineThrough : Supported }
+    -> Style
+textDecorationLine3 (Value line1) (Value line2) (Value line3) =
+    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2 ++ " " ++ line3)
+
+
+{-| Sets [`text-decoration-style`][text-decoration-style] property.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/
+
+-}
+textDecorationStyle :
+    BaseValue
+        { solid : Supported
+        , double : Supported
+        , dotted : Supported
+        , dashed : Supported
+        , wavy : Supported
+        }
+    -> Style
+textDecorationStyle (Value styleVal) =
+    AppendProperty ("text-decoration-style:" ++ styleVal)
+
+
+{-| The `wavy` [`text-decoration-style`][text-decoration-style] value.
+
+    textDecorationStyle wavy
+
+[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
+
+-}
+wavy : Value { provides | wavy : Supported }
+wavy =
+    Value "wavy"
+
+
+{-| The `underline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine underline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+underline : Value { provides | underline : Supported }
+underline =
+    Value "underline"
+
+
+{-| The `overline` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine overline
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+overline : Value { provides | overline : Supported }
+overline =
+    Value "overline"
+
+
+{-| The `line-through` [`text-decoration-line`][text-decoration-line] value.
+
+    textDecorationLine lineThrough
+
+[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
+
+-}
+lineThrough : Value { provides | lineThrough : Supported }
+lineThrough =
+    Value "line-through"
+
+
+{-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color) property.
+
+    textDecorationColor (hex "#0cf")
+
+-}
+textDecorationColor : BaseValue Color -> Style
+textDecorationColor (Value colorVal) =
+    AppendProperty ("text-decoration-color:" ++ colorVal)
+
+
+{-| Sets the [`text-decoration-thickness`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness) property.
+
+    textDecorationThickness (pct 10)
+
+-}
+textDecorationThickness :
+    BaseValue
+        ( LengthSupported
+            { pct : Supported
+            , auto : Supported
+            , fromFont : Supported
+            }
         )
+    -> Style
+textDecorationThickness (Value value) =
+    AppendProperty ("text-decoration-thickness:" ++ value)
+
+
+{-| Sets the `from-font` value for usage with [`textDecorationThickness`](#textDecorationThickness).
+
+    textDecorationThickness fromFont
+
+-}
+fromFont : Value { provides | fromFont : Supported }
+fromFont =
+    Value "from-font"
+
+
+{-| Sets [`text-decoration-skip-ink`](https://css-tricks.com/almanac/properties/t/text-decoration-skip-ink/) property.
+
+    textDecorationSkipInk auto
+
+    textDecorationSkipInk all
+
+    textDecorationSkipInk none
+
+-}
+textDecorationSkipInk :
+    Value
+        { auto : Supported
+        , all : Supported
+        , none : Supported
+        }
+    -> Style
+textDecorationSkipInk (Value val) =
+    AppendProperty ("text-decoration-skip-ink:" ++ val)
+
+
+{-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
+
+    textUnderlinePosition auto
+
+    textUnderlinePosition under
+
+    textUnderlinePosition left_
+
+    textUnderlinePosition right_
+
+-}
+textUnderlinePosition :
+    BaseValue
+        { auto : Supported
+        , under : Supported
+        , left_ : Supported
+        , right_ : Supported
+        }
+    -> Style
+textUnderlinePosition (Value val) =
+    AppendProperty ("text-underline-position:" ++ val)
+
+
+{-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
+
+    textUnderlinePosition2 under left_
+
+    textUnderlinePosition2 under right_
+
+-}
+textUnderlinePosition2 :
+    Value { under : Supported }
+    ->
+        Value
+            { left_ : Supported
+            , right_ : Supported
+            }
+    -> Style
+textUnderlinePosition2 (Value underVal) (Value val) =
+    AppendProperty ("text-underline-position:" ++ underVal ++ " " ++ val)
+
+
+{-| Sets the [text-underline-offset](https://css-tricks.com/almanac/properties/t/text-underline-offset/) property.
+
+    textUnderlineOffset (pct 5)
+-}
+textUnderlineOffset :
+    BaseValue
+        ( LengthSupported
+            { pct : Supported
+            , auto : Supported
+            }
+        )
+    -> Style
+textUnderlineOffset (Value value) =
+    AppendProperty ("text-underline-offset:" ++ value)
+
+
+{-| Sets the [`text-emphasis`](https://css-tricks.com/almanac/properties/t/text-emphasis/) property.
+
+This is for drawing attention towards textual elements in a way that is commonly
+used in East Asian languages.
+
+    textEmphasis (hex "ff0000")
+
+    textEmphasis sesame
+
+    textEmphasis2 triangle (hex "00ff00")
+
+-}
+textEmphasis :
+    BaseValue
+        (ColorSupported
+            { none : Supported
+            , filled : Supported
+            , open : Supported
+            , dot : Supported
+            , circle_ : Supported
+            , doubleCircle : Supported
+            , triangle : Supported
+            , sesame : Supported
+            , string : Supported
+            }
+        )
+    -> Style
+textEmphasis (Value value) =
+    AppendProperty ("text-emphasis:" ++ value)
+
+
+{-| Sets the [`text-emphasis`](https://css-tricks.com/almanac/properties/t/text-emphasis/) property.
+
+This 2-argument form sets [`text-emphasis-style`](#textEmphasisStyle) and [`textEmphasisColor`](#textEmphasisColor) in a single declaration.
+
+    textEmphasis2 filled (hex "ff0000")
+-}
+textEmphasis2 :
+    BaseValue
+        { none : Supported
+        , filled : Supported
+        , open : Supported
+        , dot : Supported
+        , circle_ : Supported
+        , doubleCircle : Supported
+        , triangle : Supported
+        , sesame : Supported
+        , string : Supported
+        }
+    ->
+        BaseValue
+            (Color)
+    -> Style
+textEmphasis2 (Value value1) (Value value2) =
+    AppendProperty
+        ("text-emphasis:"
+            ++ value1
+            ++ " "
+            ++ value2
+        )
+
+
+{-| Sets the [`text-emphasis-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-style) property.
+
+    textEmphasisStyle none
+
+    textEmphasisStyle open
+
+    textEmphasisStyle (string "🐯")
+-}
+textEmphasisStyle :
+    BaseValue
+        { none : Supported
+        , filled : Supported
+        , open : Supported
+        , dot : Supported
+        , circle_ : Supported
+        , doubleCircle : Supported
+        , triangle : Supported
+        , sesame : Supported
+        , string : Supported
+        }
+    -> Style
+textEmphasisStyle (Value value) =
+    AppendProperty ("text-emphasis-style:" ++ value)
+
+
+{-| Sets the [`text-emphasis-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-style) property when you want to use two arguments - one for `filled` or `open`, and one for the shape style.
+
+    textEmphasisStyle filled sesame
+
+    textEmphasisStyle open dot
+-}
+textEmphasisStyle2 :
+    BaseValue
+        { filled : Supported
+        , open : Supported
+        }
+    -> BaseValue
+        { dot : Supported
+        , circle_ : Supported
+        , doubleCircle : Supported
+        , triangle : Supported
+        , sesame : Supported
+        }
+    -> Style
+textEmphasisStyle2 (Value val1) (Value val2) =
+    AppendProperty
+        ("text-emphasis-style:"
+        ++ val1
+        ++ " "
+        ++ val2
+        )
+
+
+{-| Sets the [`text-emphasis-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color) property.
+
+    textEmphasisColor currentcolor
+
+    textemphasisColor (hex "0000ff")
+-}
+textEmphasisColor :
+    BaseValue (Color)
+    -> Style
+textEmphasisColor (Value value) =
+    AppendProperty ("text-emphasis-color:" ++ value)
+
+
+{-| Sets the [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position) property.
+
+This is the one argument version, which is limited to setting global values.
+
+If you want to specify the positions of the text-emphasis, you must use the [2-argument form](#textEmphasisPosition2).
+
+    textEmphasisPosition inherit
+
+    textEmphasisPosition revert
+
+    textEmphasisPosition2 over left_
+
+    textEmphasisPosition2 under right_
+
+-}
+textEmphasisPosition :
+    BaseValue a
+    -> Style
+textEmphasisPosition (Value value) =
+    AppendProperty ("text-emphasis-position:" ++ value)
+
+
+{-| Sets the the [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position) property.
+
+This is the 2-argument form that lets you specify the positions of the emphasis.
+
+if you want to apply global values, you must use the [1-argument form](#textEmphasisPosition).
+
+    textEmphasisPosition inherit
+
+    textEmphasisPosition revert
+
+    textEmphasisPosition2 over left_
+
+    textEmphasisPosition2 under right_
+
+-}
+textEmphasisPosition2 :
+    BaseValue
+        { over : Supported
+        , under : Supported
+        }
+    -> BaseValue
+        { left_ : Supported
+        , right_ : Supported
+        }
+    -> Style
+textEmphasisPosition2 (Value val1) (Value val2) =
+    AppendProperty
+        ("text-emphasis-position:"
+        ++ val1
+        ++ " "
+        ++ val2
+        )
+
+
+{-| The `filled` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis filled
+
+-}
+filled : Value { provides | filled : Supported }
+filled =
+    Value "filled"
+
+
+{-| The `open` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis open
+
+-}
+open : Value { provides | open : Supported }
+open =
+    Value "open"
+
+
+{-| The `dot` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis dot
+
+-}
+dot : Value { provides | dot : Supported }
+dot =
+    Value "dot"
+
+
+{-| The `doubleCircle` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis doubleCircle
+
+-}
+doubleCircle : Value { provides | doubleCircle : Supported }
+doubleCircle =
+    Value "double-circle"
+
+
+{-| The `triangle` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis triangle
+
+-}
+triangle : Value { provides | triangle : Supported }
+triangle =
+    Value "triangle"
+
+
+{-| The `sesame` value used in [`textEmphasis`](#textEmphasis).
+
+    textEmphasis sesame
+
+-}
+sesame : Value { provides | sesame : Supported }
+sesame =
+    Value "sesame"
+
+
+{-| The `over` value used in [`textEmphasisPosition2`](#textEmphasisPosition2).
+
+    textEmphasisPosition2 over left_
+
+-}
+over : Value { provides | over : Supported }
+over =
+    Value "over"
+
+
+{-| Sets [`text-transform`](https://css-tricks.com/almanac/properties/t/text-transform/).
+
+    textTransform capitalize
+
+    textTransform uppercase
+
+-}
+textTransform :
+    BaseValue
+        { capitalize : Supported
+        , uppercase : Supported
+        , lowercase : Supported
+        , fullWidth : Supported
+        , fullSizeKana : Supported
+        , none : Supported
+        }
+    -> Style
+textTransform (Value str) =
+    AppendProperty ("text-transform:" ++ str)
+
+
+{-| A `capitalize` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
+
+    textTransform capitalize
+
+-}
+capitalize : Value { provides | capitalize : Supported }
+capitalize =
+    Value "capitalize"
+
+
+{-| An `uppercase` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
+
+    textTransform uppercase
+
+-}
+uppercase : Value { provides | uppercase : Supported }
+uppercase =
+    Value "uppercase"
+
+
+{-| A `lowercase` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
+
+    textTransform lowercase
+
+-}
+lowercase : Value { provides | lowercase : Supported }
+lowercase =
+    Value "lowercase"
+
+
+{-| The `full-size-kana` value used by [`textTransform`](#textTransform)
+
+textTransform fullSizeKana
+
+-}
+fullSizeKana : Value { provedes | fullSizeKana : Supported }
+fullSizeKana =
+    Value "full-size-kana"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------ TEXT ALIGNMENT AND JUSTIFICATION --------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
+
+    textAlign left_
+
+    textAlign justfy
+
+-}
+textAlign :
+    BaseValue
+        { left_ : Supported
+        , right_ : Supported
+        , center : Supported
+        , justify : Supported
+        , start : Supported
+        , end : Supported
+        , matchParent : Supported
+        }
+    -> Style
+textAlign (Value str) =
+    AppendProperty ("text-align:" ++ str)
+
+
+{-| A `justify` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
+
+    textAlign justify
+
+-}
+justify : Value { provides | justify : Supported }
+justify =
+    Value "justify"
+
+
+
+{-| Sets [`text-justify`](https://css-tricks.com/almanac/properties/t/text-justify/)
+
+    textJustify interWord
+
+    textJustify interCharacter
+
+    textJustify auto
+
+    textJustify none
+
+-}
+textJustify :
+    BaseValue
+        { interWord : Supported
+        , interCharacter : Supported
+        , auto : Supported
+        , none : Supported
+        }
+    -> Style
+textJustify (Value val) =
+    AppendProperty ("text-justify:" ++ val)
+
+
+{-| A `inter-word` value for the [`textJustify`](#textJustify) property.
+
+    textJustify interWord
+
+-}
+interWord : Value { provides | interWord : Supported }
+interWord =
+    Value "inter-word"
+
+
+{-| A `inter-character` value for the [`textJustify`](#textJustify) property.
+
+    textJustify interCharacter
+
+-}
+interCharacter : Value { provides | interCharacter : Supported }
+interCharacter =
+    Value "inter-character"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------------- SCRIPT HANDLING ---------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`direction`](https://css-tricks.com/almanac/properties/d/direction/)
+
+    direction ltr
+
+    direction rtl
+
+-}
+direction :
+    BaseValue
+        { rtl : Supported
+        , ltr : Supported
+        }
+    -> Style
+direction (Value str) =
+    AppendProperty ("direction:" ++ str)
+
+
+{-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction ltr
+
+-}
+ltr : Value { provides | ltr : Supported }
+ltr =
+    Value "ltr"
+
+
+{-| A `rtl` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
+
+    direction rtl
+
+-}
+rtl : Value { provides | rtl : Supported }
+rtl =
+    Value "rtl"
+
+
+{-| Sets [`writing-mode`](https://css-tricks.com/almanac/properties/w/writing-mode/).
+
+    writingMode horizontalTb
+
+    writingMode verticalRl
+
+    writingMode verticalLr
+
+-}
+writingMode :
+    BaseValue
+        { horizontalTb : Supported
+        , verticalRl : Supported
+        , verticalLr : Supported
+        }
+    -> Style
+writingMode (Value str) =
+    AppendProperty ("writing-mode:" ++ str)
+
+
+{-| Sets `horizontal-tb` value for usage with [`writingMode`](#writingMode).
+
+    writingMode horizontalTb
+
+-}
+horizontalTb : Value { provides | horizontalTb : Supported }
+horizontalTb =
+    Value "horizontal-tb"
+
+
+{-| Sets `vertical-lr` value for usage with [`writingMode`](#writingMode).
+
+    writingMode verticalLr
+
+-}
+verticalLr : Value { provides | verticalLr : Supported }
+verticalLr =
+    Value "vertical-lr"
+
+
+{-| Sets `vertical-rl` value for usage with [`writingMode`](#writingMode).
+
+    writingMode verticalRl
+
+-}
+verticalRl : Value { provides | verticalRl : Supported }
+verticalRl =
+    Value "vertical-rl"
+
+
+{-| Sets [`unicode-bidi`](https://css-tricks.com/almanac/properties/u/unicode-bidi/)
+
+    unicodeBidi normal
+
+    unicodeBidi embed
+
+    unicodeBidi isolate
+
+    unicodeBidi bidiOverride
+
+    unicodeBidi isolateOverride
+
+    unicodeBidi plaintext
+
+-}
+unicodeBidi :
+    BaseValue
+        { normal : Supported
+        , embed : Supported
+        , isolate : Supported
+        , bidiOverride : Supported
+        , isolateOverride : Supported
+        , plaintext : Supported
+        }
+    -> Style
+unicodeBidi (Value val) =
+    AppendProperty ("unicode-bidi:" ++ val)
+
+
+{-| Sets `embed` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi embed
+
+-}
+embed : Value { provides | embed : Supported }
+embed =
+    Value "embed"
+
+
+{-| Sets `plaintext` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi plaintext
+
+-}
+plaintext : Value { provides | plaintext : Supported }
+plaintext =
+    Value "plaintext"
+
+
+{-| Sets `bidi-override` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi bidiOverride
+
+-}
+bidiOverride : Value { provides | bidiOverride : Supported }
+bidiOverride =
+    Value "bidi-override"
+
+
+{-| Sets `isolate-override` value for usage with [`unicodeBidi`](#unicodeBidi).
+
+    unicodeBidi isolateOverride
+
+-}
+isolateOverride : Value { provides | isolateOverride : Supported }
+isolateOverride =
+    Value "isolate-override"
+
+
+{-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
+
+    textOrientation sideways
+
+    textOrientation upright
+
+-}
+textOrientation :
+    BaseValue
+        { mixed : Supported
+        , sideways : Supported
+        , sidewaysRight : Supported
+        , upright : Supported
+        , useGlyphOrientation : Supported
+        }
+    -> Style
+textOrientation (Value str) =
+    AppendProperty ("text-orientation:" ++ str)
+
+
+{-| A `mixed` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation mixed
+
+-}
+mixed : Value { provides | mixed : Supported }
+mixed =
+    Value "mixed"
+
+
+{-| A `sideways` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation sideways
+
+-}
+sideways : Value { provides | sideways : Supported }
+sideways =
+    Value "sideways"
+
+
+{-| A `sideways-right` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation sidewaysRight
+
+-}
+sidewaysRight : Value { provides | sidewaysRight : Supported }
+sidewaysRight =
+    Value "sideways-right"
+
+
+{-| A `upright` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation upright
+
+-}
+upright : Value { provides | upright : Supported }
+upright =
+    Value "upright"
+
+
+{-| A `use-glyph-orientation` value for the
+[`textOrientation`](#textOrientation) property.
+
+    textOrientation useGlyphOrientation
+
+-}
+useGlyphOrientation : Value { provides | useGlyphOrientation : Supported }
+useGlyphOrientation =
+    Value "use-glyph-orientation"
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This one-argument version can only use keyword or global values.
+
+    quotes none
+
+    quotes inherit
+
+    quotes2 (string "\"") (string "\"")
+
+    quotes4 (string "\"") (string "\"") (string "'") (string "'")
+
+-}
+quotes :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        }
+    -> Style
+quotes (Value val) =
+    AppendProperty ("quotes:" ++ val)
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This 2-argument version sets the starting and closing quotation marks for
+a top-level quote (a quote that is not nested within another quote). It only accepts
+string values.
+
+    quotes auto
+
+    quotes2 (string "\"") (string "\"") -- "Hey, this is a first-level quote."
+
+    quotes2 (string "'") (string "'") -- 'Hey, this is a first-level quote.'
+
+    quotes2 (string "«") (string "»") -- «Hey, this is a first-level quote.»
+
+-}
+quotes2 :
+    Value
+        { string : Supported
+        }
+    ->
+        Value
+            { string : Supported
+            }
+    -> Style
+quotes2 (Value lv1StartQuote) (Value lv1EndQuote) =
+    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote)
+
+
+{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
+
+This 4-argument version sets the starting and closing quotation marks for both
+a top-level quote and a nested quote. It only accepts
+string values.
+
+    quotes auto
+
+    quotes2 (string "\"") (string "\"")
+
+    -- "Hey, this is a first-level quote."
+
+
+    quotes4 (string "\"") (string "\"") (string "\'") (string "\'")
+
+    {- "Hey, this is a first-level quote.
+    'And this is someone else I made up for
+    a second-level quote!' Yeah, I did that!"
+    -}
+
+    quotes4 (string "«") (string "»") (string "👏") (string "🤔")
+
+    {- «Hey, this is a first-level quote.
+    👏And this is something else I made up for
+    a second-level quote!🤔 Yeah, I did that!»
+    -}
+
+-}
+quotes4 :
+    Value
+        { string : Supported
+        }
+    ->
+        Value
+            { string : Supported
+            }
+    ->
+        Value
+            { string : Supported
+            }
+    ->
+        Value
+            { string : Supported
+            }
+    -> Style
+quotes4 (Value lv1StartQuote) (Value lv1EndQuote) (Value lv2StartQuote) (Value lv2EndQuote) =
+    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote ++ " " ++ lv2StartQuote ++ " " ++ lv2EndQuote)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+--------------------------- TEXT RENDERING -----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/).
+
+    textRendering geometricPrecision
+
+    textRendering optimizeSpeed
+
+-}
+textRendering :
+    BaseValue
+        { auto : Supported
+        , geometricPrecision : Supported
+        , optimizeLegibility : Supported
+        , optimizeSpeed : Supported
+        }
+    -> Style
+textRendering (Value str) =
+    AppendProperty ("text-rendering:" ++ str)
+
+
+{-| A `geometricPrecision` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering geometricPrecision
+
+-}
+geometricPrecision : Value { provides | geometricPrecision : Supported }
+geometricPrecision =
+    Value "geometricPrecision"
+
+
+{-| An `optimizeLegibility` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering optimizeLegibility
+
+-}
+optimizeLegibility : Value { provides | optimizeLegibility : Supported }
+optimizeLegibility =
+    Value "optimizeLegibility"
+
+
+{-| An `optimizeSpeed` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
+
+    textRendering optimizeSpeed
+
+-}
+optimizeSpeed : Value { provides | optimizeSpeed : Supported }
+optimizeSpeed =
+    Value "optimizeSpeed"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+----------------------------- USER-SELECT ------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`user-select`](https://css-tricks.com/almanac/properties/u/user-select/)
+
+    userSelect none
+
+    userSelect auto
+
+    userSelect text
+
+    userSelect contain_
+
+    userSelect all_
+
+-}
+userSelect :
+    BaseValue
+        { none : Supported
+        , auto : Supported
+        , text : Supported
+        , contain_ : Supported
+        , all_ : Supported
+        }
+    -> Style
+userSelect (Value val) =
+    AppendProperty ("user-select:" ++ val)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------ ACCESSIBILITY ---------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`speak`](https://css-tricks.com/almanac/properties/s/speak/)
+
+    speak none
+
+    speak normal
+
+    speak spellOut
+
+-}
+speak :
+    BaseValue
+        { none : Supported
+        , normal : Supported
+        , spellOut : Supported
+        }
+    -> Style
+speak (Value val) =
+    AppendProperty ("speak:" ++ val)
+
+
+{-| Sets `spellOut` value for usage with [`speak`](#speak).
+
+    speak spellOut
+
+-}
+spellOut : Value { provides | spellOut : Supported }
+spellOut =
+    Value "spell-out"
 
 
 ------------------------------------------------------------------------
@@ -13634,1840 +15430,6 @@ and [`listStyleType`](#listStyleType)
 upperRoman : Value { provides | upperRoman : Supported }
 upperRoman =
     Value "upper-roman"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
---------------------- TEXT TRANSFORM + DECORATION ----------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`text-transform`](https://css-tricks.com/almanac/properties/t/text-transform/).
-
-    textTransform capitalize
-
-    textTransform uppercase
-
--}
-textTransform :
-    BaseValue
-        { capitalize : Supported
-        , uppercase : Supported
-        , lowercase : Supported
-        , fullWidth : Supported
-        , fullSizeKana : Supported
-        , none : Supported
-        }
-    -> Style
-textTransform (Value str) =
-    AppendProperty ("text-transform:" ++ str)
-
-
-{-| A `capitalize` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
-
-    textTransform capitalize
-
--}
-capitalize : Value { provides | capitalize : Supported }
-capitalize =
-    Value "capitalize"
-
-
-{-| An `uppercase` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
-
-    textTransform uppercase
-
--}
-uppercase : Value { provides | uppercase : Supported }
-uppercase =
-    Value "uppercase"
-
-
-{-| A `lowercase` value for the [`text-transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform#Syntax) property.
-
-    textTransform lowercase
-
--}
-lowercase : Value { provides | lowercase : Supported }
-lowercase =
-    Value "lowercase"
-
-
-{-| The `full-size-kana` value used by [`textTransform`](#textTransform)
-
-textTransform fullSizeKana
-
--}
-fullSizeKana : Value { provedes | fullSizeKana : Supported }
-fullSizeKana =
-    Value "full-size-kana"
-
-
-{-| Sets [`text-decoration`][text-decoration] shorthand property.
-
-    textDecoration underline
-
-[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
-
--}
-textDecoration :
-    BaseValue
-        (ColorSupported
-            { none : Supported
-            , underline : Supported
-            , overline : Supported
-            , lineThrough : Supported
-            , solid : Supported
-            , double : Supported
-            , dotted : Supported
-            , dashed : Supported
-            , wavy : Supported
-            }
-        )
-    -> Style
-textDecoration (Value line) =
-    AppendProperty ("text-decoration:" ++ line)
-
-
-{-| Sets [`text-decoration`][text-decoration] property.
-
-    textDecoration2 underline dotted
-
-[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
-
--}
-textDecoration2 :
-    Value
-        { none : Supported
-        , underline : Supported
-        , overline : Supported
-        , lineThrough : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , double : Supported
-            , dotted : Supported
-            , dashed : Supported
-            , wavy : Supported
-            }
-    -> Style
-textDecoration2 (Value line) (Value styleVal) =
-    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal)
-
-
-{-| Sets [`text-decoration`][text-decoration] property.
-
-    textDecoration3 underline dotted (hex "#cf0")
-
-[text-decoration]: https://css-tricks.com/almanac/properties/t/text-decoration/
-
--}
-textDecoration3 :
-    Value
-        { none : Supported
-        , underline : Supported
-        , overline : Supported
-        , lineThrough : Supported
-        }
-    ->
-        Value
-            { solid : Supported
-            , double : Supported
-            , dotted : Supported
-            , dashed : Supported
-            , wavy : Supported
-            }
-    -> Value Color
-    -> Style
-textDecoration3 (Value line) (Value styleVal) (Value colorVal) =
-    AppendProperty ("text-decoration:" ++ line ++ " " ++ styleVal ++ " " ++ colorVal)
-
-
-{-| Sets [`text-decoration-line`][text-decoration-line] property.
-
-    textDecorationLine underline
-
-[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
-
--}
-textDecorationLine :
-    BaseValue
-        { none : Supported
-        , underline : Supported
-        , overline : Supported
-        , lineThrough : Supported
-        }
-    -> Style
-textDecorationLine (Value line) =
-    AppendProperty ("text-decoration-line:" ++ line)
-
-
-{-| Sets [`text-decoration-line`][text-decoration-line] property.
-
-    textDecorationLine2 underline overline
-
-**Note:** The first and second argument **MUST NOT** be the same.
-
-[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
-
--}
-textDecorationLine2 :
-    Value
-        { underline : Supported
-        , overline : Supported
-        , lineThrough : Supported
-        }
-    ->
-        Value
-            { underline : Supported
-            , overline : Supported
-            , lineThrough : Supported
-            }
-    -> Style
-textDecorationLine2 (Value line1) (Value line2) =
-    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2)
-
-
-{-| Sets [`text-decoration-line`][text-decoration-line] property.
-
-    textDecorationLine3 underline overline lineThrough
-
-[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/
-
--}
-textDecorationLine3 :
-    Value { underline : Supported }
-    -> Value { overline : Supported }
-    -> Value { lineThrough : Supported }
-    -> Style
-textDecorationLine3 (Value line1) (Value line2) (Value line3) =
-    AppendProperty ("text-decoration-line:" ++ line1 ++ " " ++ line2 ++ " " ++ line3)
-
-
-{-| Sets [`text-decoration-style`][text-decoration-style] property.
-
-    textDecorationStyle wavy
-
-[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/
-
--}
-textDecorationStyle :
-    BaseValue
-        { solid : Supported
-        , double : Supported
-        , dotted : Supported
-        , dashed : Supported
-        , wavy : Supported
-        }
-    -> Style
-textDecorationStyle (Value styleVal) =
-    AppendProperty ("text-decoration-style:" ++ styleVal)
-
-
-{-| Sets [`text-decoration-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color) property.
-
-    textDecorationColor (hex "#0cf")
-
--}
-textDecorationColor : BaseValue Color -> Style
-textDecorationColor (Value colorVal) =
-    AppendProperty ("text-decoration-color:" ++ colorVal)
-
-
-{-| Sets the [`text-decoration-thickness`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness) property.
-
-    textDecorationThickness (pct 10)
-
--}
-textDecorationThickness :
-    BaseValue
-        ( LengthSupported
-            { pct : Supported
-            , auto : Supported
-            , fromFont : Supported
-            }
-        )
-    -> Style
-textDecorationThickness (Value value) =
-    AppendProperty ("text-decoration-thickness:" ++ value)
-
-
-{-| Sets the `from-font` value for usage with [`textDecorationThickness`](#textDecorationThickness).
-
-    textDecorationThickness fromFont
-
--}
-fromFont : Value { provides | fromFont : Supported }
-fromFont =
-    Value "from-font"
-
-
-{-| Sets [`text-decoration-skip`](https://css-tricks.com/almanac/properties/t/text-decoration-skip/) property.
-
-    textDecorationSkip objects
-
-    textDecorationSkip none
-
-    textDecorationSkip spaces
-
-    textDecorationSkip ink
-
-    textDecorationSkip edges
-
-    textDecorationSkip boxDecoration
-
-Note: Using [`textDecorationSkipInk`](#textDecorationSkipInk) is considerered better practice
-instead of `textDecorationSkip ink`.
-
--}
-textDecorationSkip :
-    BaseValue
-        { objects : Supported
-        , none : Supported
-        , spaces : Supported
-        , ink : Supported
-        , edges : Supported
-        , boxDecoration : Supported
-        }
-    -> Style
-textDecorationSkip (Value val) =
-    AppendProperty ("text-decoration-skip:" ++ val)
-
-
-{-| Sets [`text-decoration-skip-ink`](https://css-tricks.com/almanac/properties/t/text-decoration-skip-ink/) property.
-
-    textDecorationSkipInk auto
-
-    textDecorationSkipInk all
-
-    textDecorationSkipInk none
-
--}
-textDecorationSkipInk :
-    Value
-        { auto : Supported
-        , all : Supported
-        , none : Supported
-        }
-    -> Style
-textDecorationSkipInk (Value val) =
-    AppendProperty ("text-decoration-skip-ink:" ++ val)
-
-
-{-| Sets `objects` value for usage with [`textDecorationSkip`](#textDecorationSkip).
-
-    textDecorationSkip objects
-
--}
-objects : Value { provides | objects : Supported }
-objects =
-    Value "objects"
-
-
-{-| Sets `spaces` value for usage with [`textDecorationSkip`](#textDecorationSkip).
-
-    textDecorationSkip spaces
-
--}
-spaces : Value { provides | spaces : Supported }
-spaces =
-    Value "spaces"
-
-
-{-| Sets `ink` value for usage with [`textDecorationSkip`](#textDecorationSkip).
-
-    textDecorationSkip ink
-
--}
-ink : Value { provides | ink : Supported }
-ink =
-    Value "ink"
-
-
-{-| Sets `edges` value for usage with [`textDecorationSkip`](#textDecorationSkip).
-
-    textDecorationSkip edges
-
--}
-edges : Value { provides | edges : Supported }
-edges =
-    Value "edges"
-
-
-{-| Sets `boxDecoration` value for usage with [`textDecorationSkip`](#textDecorationSkip).
-
-    textDecorationSkip boxDecoration
-
--}
-boxDecoration : Value { provides | boxDecoration : Supported }
-boxDecoration =
-    Value "box-decoration"
-
-
-{-| The `wavy` [`text-decoration-style`][text-decoration-style] value.
-
-    textDecorationStyle wavy
-
-[text-decoration-style]: https://css-tricks.com/almanac/properties/t/text-decoration-style/#article-header-id-0
-
--}
-wavy : Value { provides | wavy : Supported }
-wavy =
-    Value "wavy"
-
-
-{-| The `underline` [`text-decoration-line`][text-decoration-line] value.
-
-    textDecorationLine underline
-
-[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
-
--}
-underline : Value { provides | underline : Supported }
-underline =
-    Value "underline"
-
-
-{-| The `overline` [`text-decoration-line`][text-decoration-line] value.
-
-    textDecorationLine overline
-
-[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
-
--}
-overline : Value { provides | overline : Supported }
-overline =
-    Value "overline"
-
-
-{-| The `line-through` [`text-decoration-line`][text-decoration-line] value.
-
-    textDecorationLine lineThrough
-
-[text-decoration-line]: https://css-tricks.com/almanac/properties/t/text-decoration-line/#article-header-id-0
-
--}
-lineThrough : Value { provides | lineThrough : Supported }
-lineThrough =
-    Value "line-through"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
--------------------------- OTHER TEXT DECORATION -----------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`line-height`](https://css-tricks.com/almanac/properties/l/line-height/)
-
-    lineHeight (pct 150)
-
-    lineHeight (em 2)
-
-    lineHeight (num 1.5)
-
-    lineHeight normal
-
--}
-lineHeight :
-    BaseValue
-        (LengthSupported
-            { pct : Supported
-            , normal : Supported
-            , num : Supported
-            }
-        )
-    -> Style
-lineHeight (Value val) =
-    AppendProperty ("line-height:" ++ val)
-
-
-{-| Sets [`letter-spacing`](https://css-tricks.com/almanac/properties/l/letter-spacing/)
-
-    letterSpacing (pct 150)
-
-    letterSpacing (em 2)
-
-    letterSpacing (num 1.5)
-
-    letterSpacing normal
-
--}
-letterSpacing :
-    BaseValue
-        (LengthSupported
-            { normal : Supported
-            }
-        )
-    -> Style
-letterSpacing (Value val) =
-    AppendProperty ("letter-spacing:" ++ val)
-
-
-{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
-
-    textIndent (em 1.5)
-
--}
-textIndent : BaseValue (LengthSupported { pct : Supported }) -> Style
-textIndent (Value val) =
-    AppendProperty ("text-indent:" ++ val)
-
-
-{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
-
-    textIndent2 (em 1.5) hanging
-
--}
-textIndent2 :
-    Value (LengthSupported { pct : Supported })
-    ->
-        Value
-            { hanging : Supported
-            , eachLine : Supported
-            }
-    -> Style
-textIndent2 (Value lengthVal) (Value optionVal) =
-    AppendProperty ("text-indent:" ++ lengthVal ++ " " ++ optionVal)
-
-
-{-| The [`text-indent`](https://css-tricks.com/almanac/properties/t/text-indent/) property.
-
-    textIndent3 (em 1.5) hanging eachLine
-
--}
-textIndent3 :
-    Value (LengthSupported { pct : Supported })
-    -> Value { hanging : Supported }
-    -> Value { eachLine : Supported }
-    -> Style
-textIndent3 (Value lengthVal) (Value hangingVal) (Value eachLineVal) =
-    AppendProperty
-        ("text-indent:"
-            ++ lengthVal
-            ++ " "
-            ++ hangingVal
-            ++ " "
-            ++ eachLineVal
-        )
-
-
-{-| The `hanging` value used for properties such as [`textIdent2`](#textIdent2).
-
-    textIdent2 (px 20) hanging
-
--}
-hanging : Value { provides | hanging : Supported }
-hanging =
-    Value "hanging"
-
-
-{-| The `each-line` value used for properties such as [`textIdent2`](#textIdent2).
-
-    textIdent2 (px 20) eachLine
-
--}
-eachLine : Value { provides | eachLine : Supported }
-eachLine =
-    Value "each-line"
-
-
-{-| Sets the [text-underline-offset](https://css-tricks.com/almanac/properties/t/text-underline-offset/) property.
-
-    textUnderlineOffset (pct 5)
--}
-textUnderlineOffset :
-    BaseValue
-        ( LengthSupported
-            { pct : Supported
-            , auto : Supported
-            }
-        )
-    -> Style
-textUnderlineOffset (Value value) =
-    AppendProperty ("text-underline-offset:" ++ value)
-
-
-{-| Sets the [`text-emphasis`](https://css-tricks.com/almanac/properties/t/text-emphasis/) property.
-
-This is for drawing attention towards textual elements in a way that is commonly
-used in East Asian languages.
-
-    textEmphasis (hex "ff0000")
-
-    textEmphasis sesame
-
-    textEmphasis2 triangle (hex "00ff00")
-
--}
-textEmphasis :
-    BaseValue
-        (ColorSupported
-            { none : Supported
-            , filled : Supported
-            , open : Supported
-            , dot : Supported
-            , circle_ : Supported
-            , doubleCircle : Supported
-            , triangle : Supported
-            , sesame : Supported
-            , string : Supported
-            }
-        )
-    -> Style
-textEmphasis (Value value) =
-    AppendProperty ("text-emphasis:" ++ value)
-
-
-{-| Sets the [`text-emphasis`](https://css-tricks.com/almanac/properties/t/text-emphasis/) property.
-
-This 2-argument form sets [`text-emphasis-style`](#textEmphasisStyle) and [`textEmphasisColor`](#textEmphasisColor) in a single declaration.
-
-    textEmphasis2 filled (hex "ff0000")
--}
-textEmphasis2 :
-    BaseValue
-        { none : Supported
-        , filled : Supported
-        , open : Supported
-        , dot : Supported
-        , circle_ : Supported
-        , doubleCircle : Supported
-        , triangle : Supported
-        , sesame : Supported
-        , string : Supported
-        }
-    ->
-        BaseValue
-            (Color)
-    -> Style
-textEmphasis2 (Value value1) (Value value2) =
-    AppendProperty
-        ("text-emphasis:"
-            ++ value1
-            ++ " "
-            ++ value2
-        )
-
-
-{-| Sets the [`text-emphasis-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-style) property.
-
-    textEmphasisStyle none
-
-    textEmphasisStyle open
-
-    textEmphasisStyle (string "🐯")
--}
-textEmphasisStyle :
-    BaseValue
-        { none : Supported
-        , filled : Supported
-        , open : Supported
-        , dot : Supported
-        , circle_ : Supported
-        , doubleCircle : Supported
-        , triangle : Supported
-        , sesame : Supported
-        , string : Supported
-        }
-    -> Style
-textEmphasisStyle (Value value) =
-    AppendProperty ("text-emphasis-style:" ++ value)
-
-
-{-| Sets the [`text-emphasis-style`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-style) property when you want to use two arguments - one for `filled` or `open`, and one for the shape style.
-
-    textEmphasisStyle filled sesame
-
-    textEmphasisStyle open dot
--}
-textEmphasisStyle2 :
-    BaseValue
-        { filled : Supported
-        , open : Supported
-        }
-    -> BaseValue
-        { dot : Supported
-        , circle_ : Supported
-        , doubleCircle : Supported
-        , triangle : Supported
-        , sesame : Supported
-        }
-    -> Style
-textEmphasisStyle2 (Value val1) (Value val2) =
-    AppendProperty
-        ("text-emphasis-style:"
-        ++ val1
-        ++ " "
-        ++ val2
-        )
-
-
-{-| Sets the [`text-emphasis-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-color) property.
-
-    textEmphasisColor currentcolor
-
-    textemphasisColor (hex "0000ff")
--}
-textEmphasisColor :
-    BaseValue (Color)
-    -> Style
-textEmphasisColor (Value value) =
-    AppendProperty ("text-emphasis-color:" ++ value)
-
-
-{-| Sets the [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position) property.
-
-This is the one argument version, which is limited to setting global values.
-
-If you want to specify the positions of the text-emphasis, you must use the [2-argument form](#textEmphasisPosition2).
-
-    textEmphasisPosition inherit
-
-    textEmphasisPosition revert
-
-    textEmphasisPosition2 over left_
-
-    textEmphasisPosition2 under right_
-
--}
-textEmphasisPosition :
-    BaseValue a
-    -> Style
-textEmphasisPosition (Value value) =
-    AppendProperty ("text-emphasis-position:" ++ value)
-
-
-{-| Sets the the [`text-emphasis-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-emphasis-position) property.
-
-This is the 2-argument form that lets you specify the positions of the emphasis.
-
-if you want to apply global values, you must use the [1-argument form](#textEmphasisPosition).
-
-    textEmphasisPosition inherit
-
-    textEmphasisPosition revert
-
-    textEmphasisPosition2 over left_
-
-    textEmphasisPosition2 under right_
-
--}
-textEmphasisPosition2 :
-    BaseValue
-        { over : Supported
-        , under : Supported
-        }
-    -> BaseValue
-        { left_ : Supported
-        , right_ : Supported
-        }
-    -> Style
-textEmphasisPosition2 (Value val1) (Value val2) =
-    AppendProperty
-        ("text-emphasis-position:"
-        ++ val1
-        ++ " "
-        ++ val2
-        )
-
-
-{-| The `filled` value used in [`textEmphasis`](#textEmphasis).
-
-    textEmphasis filled
-
--}
-filled : Value { provides | filled : Supported }
-filled =
-    Value "filled"
-
-
-{-| The `open` value used in [`textEmphasis`](#textEmphasis).
-
-    textEmphasis open
-
--}
-open : Value { provides | open : Supported }
-open =
-    Value "open"
-
-
-{-| The `dot` value used in [`textEmphasis`](#textEmphasis).
-
-    textEmphasis dot
-
--}
-dot : Value { provides | dot : Supported }
-dot =
-    Value "dot"
-
-
-{-| The `doubleCircle` value used in [`textEmphasis`](#textEmphasis).
-
-    textEmphasis doubleCircle
-
--}
-doubleCircle : Value { provides | doubleCircle : Supported }
-doubleCircle =
-    Value "double-circle"
-
-
-{-| The `triangle` value used in [`textEmphasis`](#textEmphasis).
-
-    textEmphasis triangle
-
--}
-triangle : Value { provides | triangle : Supported }
-triangle =
-    Value "triangle"
-
-
-{-| The `sesame` value used in [`textEmphasis`](#textEmphasis).
-
-    textEmphasis sesame
-
--}
-sesame : Value { provides | sesame : Supported }
-sesame =
-    Value "sesame"
-
-
-{-| The `over` value used in [`textEmphasisPosition2`](#textEmphasisPosition2).
-
-    textEmphasisPosition2 over left_
-
--}
-over : Value { provides | over : Supported }
-over =
-    Value "over"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
---------------------- MORE TEXT STUFF TO REARRANGE ---------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
-
-    textAlign left_
-
-    textAlign justfy
-
--}
-textAlign :
-    BaseValue
-        { left_ : Supported
-        , right_ : Supported
-        , center : Supported
-        , justify : Supported
-        , start : Supported
-        , end : Supported
-        , matchParent : Supported
-        }
-    -> Style
-textAlign (Value str) =
-    AppendProperty ("text-align:" ++ str)
-
-
-{-| A `justify` value for the [`text-align`](https://css-tricks.com/almanac/properties/t/text-align/)
-
-    textAlign justify
-
--}
-justify : Value { provides | justify : Supported }
-justify =
-    Value "justify"
-
-
-{-| Sets [`text-justify`](https://css-tricks.com/almanac/properties/t/text-justify/)
-
-    textJustify interWord
-
-    textJustify interCharacter
-
-    textJustify auto
-
-    textJustify none
-
--}
-textJustify :
-    BaseValue
-        { interWord : Supported
-        , interCharacter : Supported
-        , auto : Supported
-        , none : Supported
-        }
-    -> Style
-textJustify (Value val) =
-    AppendProperty ("text-justify:" ++ val)
-
-
-{-| A `inter-word` value for the [`textJustify`](#textJustify) property.
-
-    textJustify interWord
-
--}
-interWord : Value { provides | interWord : Supported }
-interWord =
-    Value "inter-word"
-
-
-{-| A `inter-character` value for the [`textJustify`](#textJustify) property.
-
-    textJustify interCharacter
-
--}
-interCharacter : Value { provides | interCharacter : Supported }
-interCharacter =
-    Value "inter-character"
-
-
-{-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
-
-    textUnderlinePosition auto
-
-    textUnderlinePosition under
-
-    textUnderlinePosition left_
-
-    textUnderlinePosition right_
-
--}
-textUnderlinePosition :
-    BaseValue
-        { auto : Supported
-        , under : Supported
-        , left_ : Supported
-        , right_ : Supported
-        }
-    -> Style
-textUnderlinePosition (Value val) =
-    AppendProperty ("text-underline-position:" ++ val)
-
-
-{-| Sets [`text-underline-position`](https://css-tricks.com/almanac/properties/t/text-underline-position/)
-
-    textUnderlinePosition2 under left_
-
-    textUnderlinePosition2 under right_
-
--}
-textUnderlinePosition2 :
-    Value { under : Supported }
-    ->
-        Value
-            { left_ : Supported
-            , right_ : Supported
-            }
-    -> Style
-textUnderlinePosition2 (Value underVal) (Value val) =
-    AppendProperty ("text-underline-position:" ++ underVal ++ " " ++ val)
-
-
-
-{-| Sets [`text-orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation).
-
-    textOrientation sideways
-
-    textOrientation upright
-
--}
-textOrientation :
-    BaseValue
-        { mixed : Supported
-        , sideways : Supported
-        , sidewaysRight : Supported
-        , upright : Supported
-        , useGlyphOrientation : Supported
-        }
-    -> Style
-textOrientation (Value str) =
-    AppendProperty ("text-orientation:" ++ str)
-
-
-{-| A `mixed` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation mixed
-
--}
-mixed : Value { provides | mixed : Supported }
-mixed =
-    Value "mixed"
-
-
-{-| A `sideways` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation sideways
-
--}
-sideways : Value { provides | sideways : Supported }
-sideways =
-    Value "sideways"
-
-
-{-| A `sideways-right` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation sidewaysRight
-
--}
-sidewaysRight : Value { provides | sidewaysRight : Supported }
-sidewaysRight =
-    Value "sideways-right"
-
-
-{-| A `upright` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation upright
-
--}
-upright : Value { provides | upright : Supported }
-upright =
-    Value "upright"
-
-
-{-| A `use-glyph-orientation` value for the
-[`textOrientation`](#textOrientation) property.
-
-    textOrientation useGlyphOrientation
-
--}
-useGlyphOrientation : Value { provides | useGlyphOrientation : Supported }
-useGlyphOrientation =
-    Value "use-glyph-orientation"
-
-
-{-| Sets [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/)
-
-      wordBreak normal
-      wordBreak breakAll
-      wordBreak keepAll
-      wordBreak breakWord
-
--}
-wordBreak :
-    BaseValue
-        { normal : Supported
-        , breakAll : Supported
-        , keepAll : Supported
-        , breakWord : Supported
-        }
-    -> Style
-wordBreak (Value str) =
-    AppendProperty ("word-break:" ++ str)
-
-
-{-| A `breakAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
-
-      wordBreak breakAll
-
--}
-breakAll : Value { provides | breakAll : Supported }
-breakAll =
-    Value "break-all"
-
-
-{-| A `keepAll` value for the [`word-break`](https://css-tricks.com/almanac/properties/w/word-break/) property.
-
-      wordBreak keepAll
-
--}
-keepAll : Value { provides | keepAll : Supported }
-keepAll =
-    Value "keep-all"
-
-
-{-| Sets [`word-spacing`](https://css-tricks.com/almanac/properties/w/word-spacing/).
-
-    wordSpacing normal
-
-    wordSpacing zero
-
-    wordSpacing (px 5)
-
--}
-wordSpacing :
-    BaseValue
-        (LengthSupported
-            { normal : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-wordSpacing (Value str) =
-    AppendProperty ("word-spacing:" ++ str)
-
-
-
-{-| Sets [`tab-size`](https://css-tricks.com/almanac/properties/t/tab-size/)
-**Note:** only positive integer values are allowed.
-
-    tabSize (int 4)
-
--}
-tabSize :
-    BaseValue
-        (LengthSupported
-            { auto : Supported
-            , int : Supported
-            }
-        )
-    -> Style
-tabSize (Value val) =
-    AppendProperty ("tab-size:" ++ val)
-
-
-{-| Sets [`hyphens`](https://css-tricks.com/almanac/properties/h/hyphens/)
-
-    hyphens none
-
-    hyphens manual
-
-    hyphens auto
-
--}
-hyphens :
-    BaseValue
-        { none : Supported
-        , manual : Supported
-        , auto : Supported
-        }
-    -> Style
-hyphens (Value val) =
-    AppendProperty ("hyphens:" ++ val)
-
-
-{-| Sets `manual` value for usage with [`hyphens`](#hyphens).
-
-    hyphens manual
-
--}
-manual : Value { provides | manual : Supported }
-manual =
-    Value "manual"
-
-
-{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
-
-This one-argument version can only use keyword or global values.
-
-    quotes none
-
-    quotes inherit
-
-    quotes2 (string "\"") (string "\"")
-
-    quotes4 (string "\"") (string "\"") (string "'") (string "'")
-
--}
-quotes :
-    BaseValue
-        { none : Supported
-        , auto : Supported
-        }
-    -> Style
-quotes (Value val) =
-    AppendProperty ("quotes:" ++ val)
-
-
-{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
-
-This 2-argument version sets the starting and closing quotation marks for
-a top-level quote (a quote that is not nested within another quote). It only accepts
-string values.
-
-    quotes auto
-
-    quotes2 (string "\"") (string "\"") -- "Hey, this is a first-level quote."
-
-    quotes2 (string "'") (string "'") -- 'Hey, this is a first-level quote.'
-
-    quotes2 (string "«") (string "»") -- «Hey, this is a first-level quote.»
-
--}
-quotes2 :
-    Value
-        { string : Supported
-        }
-    ->
-        Value
-            { string : Supported
-            }
-    -> Style
-quotes2 (Value lv1StartQuote) (Value lv1EndQuote) =
-    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote)
-
-
-{-| Sets the [`quotes`](https://css-tricks.com/almanac/properties/q/quotes/) property.
-
-This 4-argument version sets the starting and closing quotation marks for both
-a top-level quote and a nested quote. It only accepts
-string values.
-
-    quotes auto
-
-    quotes2 (string "\"") (string "\"")
-
-    -- "Hey, this is a first-level quote."
-
-
-    quotes4 (string "\"") (string "\"") (string "\'") (string "\'")
-
-    {- "Hey, this is a first-level quote.
-    'And this is someone else I made up for
-    a second-level quote!' Yeah, I did that!"
-    -}
-
-    quotes4 (string "«") (string "»") (string "👏") (string "🤔")
-
-    {- «Hey, this is a first-level quote.
-    👏And this is something else I made up for
-    a second-level quote!🤔 Yeah, I did that!»
-    -}
-
--}
-quotes4 :
-    Value
-        { string : Supported
-        }
-    ->
-        Value
-            { string : Supported
-            }
-    ->
-        Value
-            { string : Supported
-            }
-    ->
-        Value
-            { string : Supported
-            }
-    -> Style
-quotes4 (Value lv1StartQuote) (Value lv1EndQuote) (Value lv2StartQuote) (Value lv2EndQuote) =
-    AppendProperty ("quotes:" ++ lv1StartQuote ++ " " ++ lv1EndQuote ++ " " ++ lv2StartQuote ++ " " ++ lv2EndQuote)
-
-
-{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
-
-`text-overflow` describes how text that gets cut off is signalled to users.
-
-When the one-argument version is used, it sets the end of text (right end for LTR users) that is cut off.
-
-    textOverflow ellipsis
-
-When the two-argument version is used, it specifies how the
-text cut-off is displayed at the start (left in LTR) and
-the end (right in LTR) of the text.
-
-    textOverflow2 ellipsis ellipsis
-
--}
-textOverflow :
-    BaseValue
-        { clip : Supported
-        , ellipsis : Supported
-        }
-    -> Style
-textOverflow (Value value) =
-    AppendProperty ("text-overflow:" ++ value)
-
-
-{-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
-
-`text-overflow` describes how text that gets cut off is signalled to users.
-
-This version specifies how the text cut-off is displayed at the start
-(left in LTR) and at the end (right in LTR) of the text.
-
-    textOverflow2 ellipsis ellipsis
-
--}
-textOverflow2 :
-    Value
-        { clip : Supported
-        , ellipsis : Supported
-        }
-    ->
-        Value
-            { clip : Supported
-            , ellipsis : Supported
-            }
-    -> Style
-textOverflow2 (Value startValue) (Value endValue) =
-    AppendProperty ("text-overflow:" ++ startValue ++ " " ++ endValue)
-
-
-{-| Sets `ellipsis` value for usage with [`textOverflow`](#textOverflow).
-
-    textOverflow ellipsis
-
--}
-ellipsis : Value { provides | ellipsis : Supported }
-ellipsis =
-    Value "ellipsis"
-
-
-{-| Sets the [`lineBreak`](https://css-tricks.com/almanac/properties/l/line-break/) property.
-
-    lineBreak auto
-
-    lineBreak strict
-
--}
-lineBreak :
-    BaseValue
-        { auto : Supported
-        , loose : Supported
-        , normal : Supported
-        , strict : Supported
-        , anywhere : Supported
-        }
-    -> Style
-lineBreak (Value value) =
-    AppendProperty ("line-break:" ++ value)
-
-
-{-| Sets `loose` value for usage with [`lineBreak`](#lineBreak).
-
-    lineBreak loose
-
--}
-loose : Value { provides | loose : Supported }
-loose =
-    Value "loose"
-
-
-{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
-
-    hangingPunctuation none
-
-    hangingPunctuation first
-
-    hangingPunctuation2 first forceEnd
-
-    hangingPunctuation3 first allowEnd last
-
--}
-hangingPunctuation :
-    BaseValue
-        { none : Supported
-        , first : Supported
-        , forceEnd : Supported
-        , allowEnd : Supported
-        , last : Supported
-        }
-    -> Style
-hangingPunctuation (Value val) =
-    AppendProperty ("hanging-punctuation:" ++ val)
-
-
-{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
-
-    hangingPunctuation2 first forceEnd
-
--}
-hangingPunctuation2 :
-    Value
-        { first : Supported
-        , last : Supported
-        }
-    ->
-        Value
-            { first : Supported
-            , forceEnd : Supported
-            , allowEnd : Supported
-            , last : Supported
-            }
-    -> Style
-hangingPunctuation2 (Value val1) (Value val2) =
-    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2)
-
-
-{-| Sets [`hanging-punctuation`](https://css-tricks.com/almanac/properties/h/hanging-punctuation/)
-
-    hangingPunctuation3 first allowEnd last
-
--}
-hangingPunctuation3 :
-    Value
-        { first : Supported
-        , last : Supported
-        }
-    ->
-        Value
-            { forceEnd : Supported
-            , allowEnd : Supported
-            }
-    ->
-        Value
-            { first : Supported
-            , last : Supported
-            }
-    -> Style
-hangingPunctuation3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty ("hanging-punctuation:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
-
-
-{-| Sets `first` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation first
-
--}
-first : Value { provides | first : Supported }
-first =
-    Value "first"
-
-
-{-| Sets `last` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation last
-
--}
-last : Value { provides | last : Supported }
-last =
-    Value "last"
-
-
-{-| Sets `force-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation forceEnd
-
--}
-forceEnd : Value { provides | forceEnd : Supported }
-forceEnd =
-    Value "force-end"
-
-
-{-| Sets `allow-end` value for usage with [`hangingPunctuation`](#hangingPunctuation).
-
-      hangingPunctuation allowEnd
-
--}
-allowEnd : Value { provides | allowEnd : Supported }
-allowEnd =
-    Value "allow-end"
-
-
-
-{-| Sets [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
-
-    whiteSpace pre
-
-    whiteSpace nowrap
-
-    whiteSpace preWrap
-
-    whiteSpace preLine
-
--}
-whiteSpace :
-    BaseValue
-        { normal : Supported
-        , nowrap : Supported
-        , pre : Supported
-        , preWrap : Supported
-        , preLine : Supported
-        }
-    -> Style
-whiteSpace (Value str) =
-    AppendProperty ("white-space:" ++ str)
-
-
-{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
-and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
-
-    whiteSpace nowrap
-
-    flexWrap nowrap
-
--}
-nowrap : Value { provides | nowrap : Supported }
-nowrap =
-    Value "nowrap"
-
-
-{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace pre
-
--}
-pre : Value { provides | pre : Supported }
-pre =
-    Value "pre"
-
-
-{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace preWrap
-
--}
-preWrap : Value { provides | preWrap : Supported }
-preWrap =
-    Value "pre-wrap"
-
-
-{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace preLine
-
--}
-preLine : Value { provides | preLine : Supported }
-preLine =
-    Value "pre-line"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
----------------------------- SCRIPT HANDLING ---------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`direction`](https://css-tricks.com/almanac/properties/d/direction/)
-
-    direction ltr
-
-    direction rtl
-
--}
-direction :
-    BaseValue
-        { rtl : Supported
-        , ltr : Supported
-        }
-    -> Style
-direction (Value str) =
-    AppendProperty ("direction:" ++ str)
-
-
-{-| A `ltr` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
-
-    direction ltr
-
--}
-ltr : Value { provides | ltr : Supported }
-ltr =
-    Value "ltr"
-
-
-{-| A `rtl` value for the [`direction`](https://css-tricks.com/almanac/properties/d/direction/) property.
-
-    direction rtl
-
--}
-rtl : Value { provides | rtl : Supported }
-rtl =
-    Value "rtl"
-
-
-{-| Sets [`writing-mode`](https://css-tricks.com/almanac/properties/w/writing-mode/).
-
-    writingMode horizontalTb
-
-    writingMode verticalRl
-
-    writingMode verticalLr
-
--}
-writingMode :
-    BaseValue
-        { horizontalTb : Supported
-        , verticalRl : Supported
-        , verticalLr : Supported
-        }
-    -> Style
-writingMode (Value str) =
-    AppendProperty ("writing-mode:" ++ str)
-
-
-{-| Sets `horizontal-tb` value for usage with [`writingMode`](#writingMode).
-
-    writingMode horizontalTb
-
--}
-horizontalTb : Value { provides | horizontalTb : Supported }
-horizontalTb =
-    Value "horizontal-tb"
-
-
-{-| Sets `vertical-lr` value for usage with [`writingMode`](#writingMode).
-
-    writingMode verticalLr
-
--}
-verticalLr : Value { provides | verticalLr : Supported }
-verticalLr =
-    Value "vertical-lr"
-
-
-{-| Sets `vertical-rl` value for usage with [`writingMode`](#writingMode).
-
-    writingMode verticalRl
-
--}
-verticalRl : Value { provides | verticalRl : Supported }
-verticalRl =
-    Value "vertical-rl"
-
-
-{-| Sets [`unicode-bidi`](https://css-tricks.com/almanac/properties/u/unicode-bidi/)
-
-    unicodeBidi normal
-
-    unicodeBidi embed
-
-    unicodeBidi isolate
-
-    unicodeBidi bidiOverride
-
-    unicodeBidi isolateOverride
-
-    unicodeBidi plaintext
-
--}
-unicodeBidi :
-    BaseValue
-        { normal : Supported
-        , embed : Supported
-        , isolate : Supported
-        , bidiOverride : Supported
-        , isolateOverride : Supported
-        , plaintext : Supported
-        }
-    -> Style
-unicodeBidi (Value val) =
-    AppendProperty ("unicode-bidi:" ++ val)
-
-
-{-| Sets `embed` value for usage with [`unicodeBidi`](#unicodeBidi).
-
-    unicodeBidi embed
-
--}
-embed : Value { provides | embed : Supported }
-embed =
-    Value "embed"
-
-
-{-| Sets `plaintext` value for usage with [`unicodeBidi`](#unicodeBidi).
-
-    unicodeBidi plaintext
-
--}
-plaintext : Value { provides | plaintext : Supported }
-plaintext =
-    Value "plaintext"
-
-
-{-| Sets `bidi-override` value for usage with [`unicodeBidi`](#unicodeBidi).
-
-    unicodeBidi bidiOverride
-
--}
-bidiOverride : Value { provides | bidiOverride : Supported }
-bidiOverride =
-    Value "bidi-override"
-
-
-{-| Sets `isolate-override` value for usage with [`unicodeBidi`](#unicodeBidi).
-
-    unicodeBidi isolateOverride
-
--}
-isolateOverride : Value { provides | isolateOverride : Supported }
-isolateOverride =
-    Value "isolate-override"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
---------------------------- TEXT RENDERING -----------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/).
-
-    textRendering geometricPrecision
-
-    textRendering optimizeSpeed
-
--}
-textRendering :
-    BaseValue
-        { auto : Supported
-        , geometricPrecision : Supported
-        , optimizeLegibility : Supported
-        , optimizeSpeed : Supported
-        }
-    -> Style
-textRendering (Value str) =
-    AppendProperty ("text-rendering:" ++ str)
-
-
-{-| A `geometricPrecision` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
-
-    textRendering geometricPrecision
-
--}
-geometricPrecision : Value { provides | geometricPrecision : Supported }
-geometricPrecision =
-    Value "geometricPrecision"
-
-
-{-| An `optimizeLegibility` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
-
-    textRendering optimizeLegibility
-
--}
-optimizeLegibility : Value { provides | optimizeLegibility : Supported }
-optimizeLegibility =
-    Value "optimizeLegibility"
-
-
-{-| An `optimizeSpeed` value for the [`text-rendering`](https://css-tricks.com/almanac/properties/t/text-rendering/) property.
-
-    textRendering optimizeSpeed
-
--}
-optimizeSpeed : Value { provides | optimizeSpeed : Supported }
-optimizeSpeed =
-    Value "optimizeSpeed"
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------ USER-SELECT ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`user-select`](https://css-tricks.com/almanac/properties/u/user-select/)
-
-    userSelect none
-
-    userSelect auto
-
-    userSelect text
-
-    userSelect contain_
-
-    userSelect all_
-
--}
-userSelect :
-    BaseValue
-        { none : Supported
-        , auto : Supported
-        , text : Supported
-        , contain_ : Supported
-        , all_ : Supported
-        }
-    -> Style
-userSelect (Value val) =
-    AppendProperty ("user-select:" ++ val)
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------- ACCESSIBILITY ---------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`speak`](https://css-tricks.com/almanac/properties/s/speak/)
-
-    speak none
-
-    speak normal
-
-    speak spellOut
-
--}
-speak :
-    BaseValue
-        { none : Supported
-        , normal : Supported
-        , spellOut : Supported
-        }
-    -> Style
-speak (Value val) =
-    AppendProperty ("speak:" ++ val)
-
-
-{-| Sets `spellOut` value for usage with [`speak`](#speak).
-
-    speak spellOut
-
--}
-spellOut : Value { provides | spellOut : Supported }
-spellOut =
-    Value "spell-out"
-
 
 
 ------------------------------------------------------------------------
