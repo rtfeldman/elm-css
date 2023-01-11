@@ -345,9 +345,16 @@ module Css exposing
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted
 
-    -- scrolling
+    -- scrollbar customisation
     , scrollbarColor, scrollbarWidth
+
+    -- scrolling behavior
     , scrollBehavior, smooth
+    , overscrollBehavior, overscrollBehavior2
+    , overscrollBehaviorX, overscrollBehaviorY
+    , overscrollBehaviorBlock, overscrollBehaviorInline
+
+    -- scroll snapping
     , scrollSnapAlign
     , scrollSnapStop
     , scrollSnapType, scrollSnapType2
@@ -360,9 +367,6 @@ module Css exposing
     , scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
     , scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
     , scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
-    , overscrollBehavior, overscrollBehavior2
-    , overscrollBehaviorX, overscrollBehaviorY
-    , overscrollBehaviorBlock, overscrollBehaviorInline
     
     -- cursors
     , CursorKeyword
@@ -1123,27 +1127,121 @@ Other values you can use for flex item alignment:
 ------------------------------------------------------
 
 
+# Columns
+
+@docs columns, columns2
+@docs columnWidth
+@docs columnCount
+@docs columnFill
+@docs balance, balanceAll
+@docs columnSpan
+@docs columnRule, columnRule2, columnRule3
+@docs columnRuleWidth
+@docs columnRuleStyle
+@docs columnRuleColor
 
 
+------------------------------------------------------
 
 
+# Tables
+
+@docs borderCollapse
+@docs collapse, separate
+@docs borderSpacing, borderSpacing2
+@docs captionSide
+@docs emptyCells
+@docs show, hide
+@docs tableLayout
 
 
+------------------------------------------------------
 
 
+# Content fragmentation
+
+@docs breakBefore, breakAfter, breakInside
+@docs avoid, avoidPage, avoidColumn, page
+@docs pageBreakBefore, pageBreakAfter, pageBreakInside
+@docs orphans, widows
+@docs boxDecorationBreak
 
 
+------------------------------------------------------
 
 
+# Arranging inline/block stuff
+
+@docs float
+@docs clear
+@docs verticalAlign
+@docs textTop, textBottom, middle
 
 
+------------------------------------------------------
 
 
+# Replaced elements
+
+@docs objectFit
+@docs scaleDown
+@docs objectPosition, objectPosition2, objectPosition4
 
 
+------------------------------------------------------
 
 
+# pointer-events
 
+@docs pointerEvents
+@docs visiblePainted, visibleFill, visibleStroke, painted
+
+
+------------------------------------------------------
+
+
+# Scrollbar customisation
+
+@docs scrollbarColor, scrollbarWidth
+
+
+------------------------------------------------------
+
+
+# Scrolling behavior
+
+@docs scrollBehavior, smooth
+@docs overscrollBehavior, overscrollBehavior2
+@docs overscrollBehaviorX, overscrollBehaviorY
+@docs overscrollBehaviorBlock, overscrollBehaviorInline
+
+
+------------------------------------------------------
+
+
+# Scroll snapping
+
+@docs scrollSnapType, scrollSnapType2
+@docs scrollSnapAlign
+@docs scrollSnapStop
+@docs mandatory, proximity
+
+### Margin
+
+@docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4
+@docs scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
+@docs scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
+@docs scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
+
+### Padding
+
+@docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4
+@docs scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
+@docs scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
+@docs scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
+
+
+------------------------------------------------------
 
 
 # Cursors
@@ -1163,46 +1261,25 @@ Other values you can use for flex item alignment:
 @docs neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
 
 
-
-# Tables
-
-
-## Border Collapse
-
-@docs borderCollapse
-@docs collapse, separate
+---------
 
 
-## Border Spacing
-
-@docs borderSpacing, borderSpacing2
 
 
-## Caption Side
-
-@docs captionSide
 
 
-## Empty Cells
-
-@docs emptyCells
-@docs show, hide
 
 
-## Table Layout
-
-@docs tableLayout
 
 
-## Float
-
-@docs float
-@docs clear
 
 
-# Visibility
 
-@docs visibility
+
+
+
+
+
 
 
 # SVG
@@ -1226,13 +1303,6 @@ Other values you can use for flex item alignment:
 ## Other
 
 @docs paintOrder, paintOrder2, paintOrder3, markers
-
-
-# Columns
-
-@docs columns, columns2, columnWidth, columnCount, columnRuleWidth, columnRuleStyle, columnRuleColor, columnRule, columnRule2, columnRule3
-@docs columnFill, balance, balanceAll
-@docs columnSpan
 
 
 # Transformation
@@ -1282,37 +1352,15 @@ Other values you can use for flex item alignment:
 
 @docs opacity
 
-
-# Scroll
-
-@docs scrollbarColor, scrollbarWidth
-@docs scrollBehavior, smooth, scrollSnapAlign, scrollSnapStop
-@docs scrollSnapType, scrollSnapType2, mandatory, proximity
-@docs scrollMargin, scrollMargin2, scrollMargin3, scrollMargin4, scrollMarginTop, scrollMarginLeft, scrollMarginRight, scrollMarginBottom
-@docs scrollMarginBlock, scrollMarginBlock2, scrollMarginInline, scrollMarginInline2
-@docs scrollMarginBlockStart, scrollMarginBlockEnd, scrollMarginInlineStart, scrollMarginInlineEnd
-@docs scrollPadding, scrollPadding2, scrollPadding3, scrollPadding4, scrollPaddingTop, scrollPaddingLeft, scrollPaddingRight, scrollPaddingBottom
-@docs scrollPaddingBlock, scrollPaddingBlock2, scrollPaddingInline, scrollPaddingInline2
-@docs scrollPaddingBlockStart, scrollPaddingBlockEnd, scrollPaddingInlineStart, scrollPaddingInlineEnd
-@docs overscrollBehavior, overscrollBehavior2, overscrollBehaviorX, overscrollBehaviorY, overscrollBehaviorBlock, overscrollBehaviorInline
-
-
 # Printing
 
 @docs bleed
-@docs orphans, widows
-@docs breakBefore, breakAfter, breakInside, avoid, avoidPage, avoidColumn, page
-@docs pageBreakBefore, pageBreakAfter, pageBreakInside
-
 
 # Rendering
 
 @docs mixBlendMode
 @docs imageRendering, crispEdges, pixelated
 @docs backfaceVisibility
-@docs objectFit, scaleDown
-@docs objectPosition, objectPosition2, objectPosition4
-@docs boxDecorationBreak
 @docs clipPath, clipPath2
 
 # Masks
@@ -1324,14 +1372,12 @@ Other values you can use for flex item alignment:
 # Other / stuff I'm adding to make the compiled result valid while I work on this rewrite
 
 @docs caretColor
-@docs pointerEvents
-@docs visiblePainted, visibleFill, visibleStroke, painted
 @docs BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow, Image, ImageSupported, LineStyle, LineStyleSupported
 @docs LineWidth, LineWidthSupported
 @docs TextShadowConfig, color, defaultTextShadow
 @docs linearGradient, linearGradient2, stop, stop2, stop3, textShadow
 @docs toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-@docs lineClamp, middle, textTop, textBottom, verticalAlign
+@docs lineClamp, visibility
 
 -}
 
@@ -16475,7 +16521,7 @@ painted =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
------------------------------- SCROLLING ------------------------------
+----------------------- SCROLLBAR CUSTOMISATION ------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -16483,15 +16529,6 @@ painted =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 
-
-{-| Sets `smooth` value for usage with [`scrollBehavior`](#scrollBehavior).
-
-    scrollBehavior smooth
-
--}
-smooth : Value { provides | smooth : Supported }
-smooth =
-    Value "smooth"
 
 
 {-| Sets the
@@ -16529,6 +16566,21 @@ scrollbarWidth (Value val) =
     AppendProperty ("scrollbar-width:" ++ val)
 
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------- SCROLLING BEHAVIOR --------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
 {-| Sets [`scroll-behavior`](https://css-tricks.com/almanac/properties/s/scroll-behavior/)
 
     scrollBehavior auto
@@ -16544,6 +16596,191 @@ scrollBehavior :
     -> Style
 scrollBehavior (Value val) =
     AppendProperty ("scroll-behavior:" ++ val)
+
+
+{-| Sets `smooth` value for usage with [`scrollBehavior`](#scrollBehavior).
+
+    scrollBehavior smooth
+
+-}
+smooth : Value { provides | smooth : Supported }
+smooth =
+    Value "smooth"
+
+
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior auto -- sets both X and Y to auto
+
+    overscrollBehavior2 auto contain -- X = auto, Y = contain.
+
+-}
+overscrollBehavior :
+    BaseValue
+        { auto : Supported
+        , contain_ : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehavior (Value value) =
+    AppendProperty ("overscroll-behavior:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
+
+    overscrollBehavior2 auto contain_ -- X = auto, Y = contain.
+
+-}
+overscrollBehavior2 :
+    Value
+        { auto : Supported
+        , contain_ : Supported
+        , none : Supported
+        }
+    ->
+        Value
+            { auto : Supported
+            , contain_ : Supported
+            , none : Supported
+            }
+    -> Style
+overscrollBehavior2 (Value xValue) (Value yValue) =
+    AppendProperty ("overscroll-behavior:" ++ xValue ++ " " ++ yValue)
+
+
+{-| Sets the [`overscroll-behavior-x`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+    overscrollBehaviorX auto
+
+    overscrollBehaviorX contain_
+
+-}
+overscrollBehaviorX :
+    BaseValue
+        { auto : Supported
+        , contain_ : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorX (Value value) =
+    AppendProperty ("overscroll-behavior-x:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-y`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
+
+    overscrollBehaviorY auto
+
+    overscrollBehaviorY contain_
+
+-}
+overscrollBehaviorY :
+    BaseValue
+        { auto : Supported
+        , contain_ : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorY (Value value) =
+    AppendProperty ("overscroll-behavior-y:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-block) property.
+
+    overscrollBehaviorBlock auto
+
+    overscrollBehaviorBlock contain_
+
+-}
+overscrollBehaviorBlock :
+    BaseValue
+        { auto : Supported
+        , contain_ : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorBlock (Value value) =
+    AppendProperty ("overscroll-behavior-block:" ++ value)
+
+
+{-| Sets the [`overscroll-behavior-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-inline) property.
+
+    overscrollBehaviorInline auto
+
+    overscrollBehaviorInline contain_
+
+-}
+overscrollBehaviorInline :
+    BaseValue
+        { auto : Supported
+        , contain_ : Supported
+        , none : Supported
+        }
+    -> Style
+overscrollBehaviorInline (Value value) =
+    AppendProperty ("overscroll-behavior-inline:" ++ value)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------- SCROLL SNAPPING -----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
+
+    scrollSnapType none
+
+-}
+scrollSnapType :
+    BaseValue
+        { none : Supported
+        , x : Supported
+        , y : Supported
+        , block : Supported
+        , inline : Supported
+        , both : Supported
+        }
+    -> Style
+scrollSnapType (Value val) =
+    AppendProperty ("scroll-snap-type:" ++ val)
+
+
+{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
+
+    scrollSnapType2 x mandatory
+
+    scrollSnapType2 both proximity
+
+-}
+scrollSnapType2 :
+    Value
+        { x : Supported
+        , y : Supported
+        , block : Supported
+        , inline : Supported
+        , both : Supported
+        }
+    ->
+        Value
+            { mandatory : Supported
+            , proximity : Supported
+            }
+    -> Style
+scrollSnapType2 (Value val1) (Value val2) =
+    AppendProperty ("scroll-snap-type:" ++ val1 ++ " " ++ val2)
 
 
 {-| Sets [`scroll-snap-align`](https://css-tricks.com/almanac/properties/s/scroll-snap-align/)
@@ -16584,51 +16821,6 @@ scrollSnapStop :
     -> Style
 scrollSnapStop (Value val) =
     AppendProperty ("scroll-snap-stop:" ++ val)
-
-
-{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
-
-    scrollSnapType none
-
--}
-scrollSnapType :
-    BaseValue
-        { none : Supported
-        , x : Supported
-        , y : Supported
-        , block : Supported
-        , inline : Supported
-        , both : Supported
-        }
-    -> Style
-scrollSnapType (Value val) =
-    AppendProperty ("scroll-snap-type:" ++ val)
-
-
-
-{-| Sets [`scroll-snap-type`](https://css-tricks.com/almanac/properties/s/scroll-snap-type/)
-
-    scrollSnapType2 x mandatory
-
-    scrollSnapType2 both proximity
-
--}
-scrollSnapType2 :
-    Value
-        { x : Supported
-        , y : Supported
-        , block : Supported
-        , inline : Supported
-        , both : Supported
-        }
-    ->
-        Value
-            { mandatory : Supported
-            , proximity : Supported
-            }
-    -> Style
-scrollSnapType2 (Value val1) (Value val2) =
-    AppendProperty ("scroll-snap-type:" ++ val1 ++ " " ++ val2)
 
 
 {-| Sets `mandatory` value for usage with [`scrollSnapType2`](#scrollSnapType2).
@@ -17327,123 +17519,6 @@ scrollPaddingInlineEnd :
     -> Style
 scrollPaddingInlineEnd (Value value) =
     AppendProperty ("scroll-padding-inline-end:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
-
-    overscrollBehavior auto -- sets both X and Y to auto
-
-    overscrollBehavior2 auto contain -- X = auto, Y = contain.
-
--}
-overscrollBehavior :
-    BaseValue
-        { auto : Supported
-        , contain_ : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehavior (Value value) =
-    AppendProperty ("overscroll-behavior:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-This property is a shorthand for setting both `overscroll-behavior-x` and `overscroll-behavior-y`.
-
-    overscrollBehavior2 auto contain_ -- X = auto, Y = contain.
-
--}
-overscrollBehavior2 :
-    Value
-        { auto : Supported
-        , contain_ : Supported
-        , none : Supported
-        }
-    ->
-        Value
-            { auto : Supported
-            , contain_ : Supported
-            , none : Supported
-            }
-    -> Style
-overscrollBehavior2 (Value xValue) (Value yValue) =
-    AppendProperty ("overscroll-behavior:" ++ xValue ++ " " ++ yValue)
-
-
-{-| Sets the [`overscroll-behavior-x`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-    overscrollBehaviorX auto
-
-    overscrollBehaviorX contain_
-
--}
-overscrollBehaviorX :
-    BaseValue
-        { auto : Supported
-        , contain_ : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorX (Value value) =
-    AppendProperty ("overscroll-behavior-x:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior-y`](https://css-tricks.com/almanac/properties/o/overscroll-behavior/) property.
-
-    overscrollBehaviorY auto
-
-    overscrollBehaviorY contain_
-
--}
-overscrollBehaviorY :
-    BaseValue
-        { auto : Supported
-        , contain_ : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorY (Value value) =
-    AppendProperty ("overscroll-behavior-y:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior-block`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-block) property.
-
-    overscrollBehaviorBlock auto
-
-    overscrollBehaviorBlock contain_
-
--}
-overscrollBehaviorBlock :
-    BaseValue
-        { auto : Supported
-        , contain_ : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorBlock (Value value) =
-    AppendProperty ("overscroll-behavior-block:" ++ value)
-
-
-{-| Sets the [`overscroll-behavior-inline`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-inline) property.
-
-    overscrollBehaviorInline auto
-
-    overscrollBehaviorInline contain_
-
--}
-overscrollBehaviorInline :
-    BaseValue
-        { auto : Supported
-        , contain_ : Supported
-        , none : Supported
-        }
-    -> Style
-overscrollBehaviorInline (Value value) =
-    AppendProperty ("overscroll-behavior-inline:" ++ value)
-
 
 
 ------------------------------------------------------------------------
