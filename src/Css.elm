@@ -14454,7 +14454,7 @@ string values.
     quotes4 (string "«") (string "»") (string "👏") (string "🤔")
 
     {- «Hey, this is a first-level quote.
-    👏And this is someone else I made up for
+    👏And this is something else I made up for
     a second-level quote!🤔 Yeah, I did that!»
     -}
 
