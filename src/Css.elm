@@ -149,24 +149,41 @@ module Css exposing
     , resize, horizontal, vertical
 
     -- flex
-    , flex, flex2, flex3, flexDirection
-    , flexGrow, flexShrink, flexBasis
-    , flexWrap, flexFlow, flexFlow2
-    , alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2
-    , justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
-    , placeContent, placeContent2, placeItems, placeItems2, placeSelf, placeSelf2
-    , flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly
-    , firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
-    , row, rowReverse, columnReverse
+    , flex, flex2, flex3
+    , flexDirection
+    , flexBasis
+    , flexGrow
+    , flexShrink
+    , flexWrap
+    , flexFlow, flexFlow2
+    , alignContent, alignContent2
+    , alignItems, alignItems2
+    , alignSelf, alignSelf2
+    , justifyContent, justifyContent2
+    , justifyItems, justifyItems2
+    , justifySelf, justifySelf2
+    , placeContent, placeContent2
+    , placeItems, placeItems2
+    , placeSelf, placeSelf2
     , order
+    --
+    , row, rowReverse, columnReverse
+    , flexStart, flexEnd, selfStart, selfEnd
+    , spaceBetween, spaceAround, spaceEvenly
+    , firstBaseline, lastBaseline
+    , safe, unsafe
+    , legacy, legacyLeft, legacyRight, legacyCenter
     , nowrap, wrap, wrapReverse
     
     -- grid
-    , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
-    , gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3
-    , gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3
-    , span
+    , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2
+    , gridRowStart, gridRowStart2, gridRowStart3
+    , gridRowEnd, gridRowEnd2, gridRowEnd3
+    , gridColumnStart, gridColumnStart2, gridColumnStart3
+    , gridColumnEnd, gridColumnEnd2, gridColumnEnd3
     , gridTemplateAreas, gridTemplateAreasList
+    --
+    , dense, span
 
     -- gaps
     , gap, gap2, rowGap, columnGap
@@ -454,6 +471,7 @@ module Css exposing
 and [`Css.Global.selector`](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Global#selector)
 functions let you define custom properties and selectors, respectively.
 
+# Basic stuff
 
 ## CSS Values
 
@@ -475,126 +493,9 @@ functions let you define custom properties and selectors, respectively.
 @docs important
 
 
-# General Values
 
-All CSS properties can have the values `unset`, `initial`, `inherit` and `revert`.
+------------------------------------------------------
 
-@docs unset, initial, inherit
-
-@docs revert
-
-@docs Angle, AngleSupported, Width, WidthSupported
-
-
-## Numeric Units
-
-@docs Length, LengthSupported, zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inch, pt, pc, pct, num, int
-
-
-## Calc
-
-@docs calc, CalcOperation, minus, plus, times, dividedBy
-
-
-## Color
-
-@docs Color, ColorSupported, color, backgroundColor, hex, rgb, rgba, hsl, hsla, currentcolor
-
-
-## Time
-
-@docs Time, TimeSupported, s, ms
-
-
-## Angles
-
-@docs deg, grad, rad, turn
-
-## Shapes
-
-@docs BasicShape, BasicShapeSupported
-@docs circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
-
-## Resolution
-
-@docs Resolution, ResolutionSupported, dpi, dpcm, dppx
-
-## Flex
-
-@docs fr, minmax, fitContentTo
-
-
-## Ident
-
-@docs customIdent
-
-## URLs
-
-@docs url
-
-
-
-
-# Shared/Grouped keyword values
-
-Many different kinds of CSS properties use the same keyword values,
-so they're put in this place for easier understanding.
-
-Some of these keywords are used only in one property but they fit
-into a group of functionality (like Logical Values), so they're also grouped here.
-
-
-## Very common keywords
-
-@docs auto, none
-
-## (usually) Absolute positional values
-
-@docs left_, right_, top_, bottom_
-
-## (usually) Logical Values
-
-Logical values are those that set properties by their relation to the user's reading direction.
-
-Sometimes these keywords mean other things too.
-
-@docs block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
-
-## Content sizing values
-
-@docs minContent, maxContent, fitContent
-
-## Axis values
-
-@docs x, y, z
-
-## Alignment values
-
-@docs stretch, center
-
-## Geometry box values
-
-@docs marginBox, borderBox, paddingBox, contentBox, fillBox, strokeBox, viewBox
-
-## Typographic values
-
-@docs baseline, sub, super, ruby, fullWidth, under, circle_
-
-## Visibility
-
-@docs hidden, visible
-
-## Thickness
-
-@docs thin, thick
-
-## Miscellaneous shared
-
-@docs normal, strict, all_, both, always, scroll, column
-@docs content, fill_, stroke, text, style
-@docs clip, cover, contain_
-@docs repeat, noRepeat, repeatX, repeatY, space, round_
-@docs isolate, matchParent
 
 
 # Pseudo-Classes
@@ -613,197 +514,339 @@ Sometimes these keywords mean other things too.
 @docs before, after, backdrop, cue, marker, placeholder, selection
 
 
+------------------------------------------------------
+
+
+# Value types
+
+## Numerical units
+
+### Lengths
+@docs Length, LengthSupported
+@docs zero, px, em, ex, ch, rem, vh, vw, vmin, vmax, mm, cm, q, inch, pt, pc, pct, num, int
+
+
+### Angles
+@docs Angle, AngleSupported, Width, WidthSupported
+@docs deg, grad, rad, turn
+
+### Time
+@docs Time, TimeSupported, s, ms
+
+### Flex
+@docs fr, minmax, fitContentTo
+
+## Color
+@docs Color, ColorSupported, hex, rgb, rgba, hsl, hsla, currentcolor
+
+## Shapes
+@docs BasicShape, BasicShapeSupported
+@docs circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+
+## Resolution
+@docs Resolution, ResolutionSupported, dpi, dpcm, dppx
+
+## Ident
+@docs customIdent
+
+## URLs
+@docs url
+
+## Calc
+@docs calc, CalcOperation, minus, plus, times, dividedBy
+
+
+------------------------------------------------------
+
+
+# Shared/Grouped keyword values
+
+Many different kinds of CSS properties use the same keyword values,
+so they're put in this place for easier understanding.
+
+Some of these keywords are used only in one property but they fit
+into a group of functionality (like Logical Values), so they're also grouped here.
+
+
+## General Values
+
+All CSS properties can have the values `unset`, `initial`, `inherit` and `revert`.
+
+@docs unset, initial, inherit, revert
+
+
+## Very common keywords
+
+@docs auto, none
+
+
+## (usually) Absolute positional values
+
+@docs left_, right_, top_, bottom_
+
+
+## (usually) Logical Values
+
+Logical values are those that set properties by their relation to the user's reading direction.
+
+Sometimes these keywords mean other things too.
+
+@docs block, inline, start, end, blockStart, blockEnd, inlineStart, inlineEnd
+
+
+## Content sizing values
+
+@docs minContent, maxContent, fitContent
+
+
+## Axis values
+
+@docs x, y, z
+
+
+## Alignment values
+
+@docs stretch, center
+
+
+## Geometry box values
+
+@docs marginBox, borderBox, paddingBox, contentBox, fillBox, strokeBox, viewBox
+
+
+## Typographic values
+
+@docs baseline, sub, super, ruby, fullWidth, under, circle_
+
+
+## Visibility
+
+@docs hidden, visible
+
+
+## Thickness
+
+@docs thin, thick
+
+
+## Miscellaneous shared
+
+@docs normal, strict, all_, both, always, scroll, column
+@docs content, fill_, stroke, text, style
+@docs clip, cover, contain_
+@docs repeat, noRepeat, repeatX, repeatY, space, round_
+@docs isolate, matchParent
+
+
+------------------------------------------------------
+
+
 # All
 
 @docs all
 
-# Sizing
 
-@docs width, minWidth, maxWidth, height, minHeight, maxHeight
-@docs blockSize, minBlockSize, maxBlockSize, inlineSize, minInlineSize, maxInlineSize
-
-# Backgrounds
-
-
-## Background Attachment
-
-@docs backgroundAttachment, backgroundAttachments, local
-
-
-## Background Blend Mode
-
-@docs backgroundBlendMode, backgroundBlendModes, multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
-
-
-## Background Clip and Origin
-
-@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
-
-
-## Background Image
-
-@docs ImageSupported, Image
-@docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
-
-@docs linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-
-# Shadows
-
-
-## Box Shadow
-
-@docs BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
-
-
-## Text Shadow
-
-@docs TextShadowConfig, textShadow, defaultTextShadow
-
-
-# Borders
-
-@docs LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
-
-@docs border, border2, border3
-
-@docs borderTop, borderTop2, borderTop3
-
-@docs borderRight, borderRight2, borderRight3
-
-@docs borderBottom, borderBottom2, borderBottom3
-
-@docs borderLeft, borderLeft2, borderLeft3
-
-@docs borderBlock, borderBlock2, borderBlock3
-
-@docs borderBlockStart, borderBlockStart2, borderBlockStart3
-
-@docs borderBlockEnd, borderBlockEnd2, borderBlockEnd3
-
-@docs borderInline, borderInline2, borderInline3
-
-@docs borderInlineStart, borderInlineStart2, borderInlineStart3
-
-@docs borderInlineEnd, borderInlineEnd2, borderInlineEnd3
-
-
-## Border Width
-
-@docs borderWidth, borderWidth2, borderWidth3, borderWidth4, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
-
-@docs borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth, borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
-
-
-## Border Style
-
-@docs borderStyle, borderStyle2, borderStyle3, borderStyle4, borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
-
-@docs borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle, borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
-
-@docs dotted, dashed, solid, double, groove, ridge, inset_, outset
-
-
-## Border Color
-
-@docs borderColor, borderColor2, borderColor3, borderColor4, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
-
-@docs borderBlockColor, borderBlockStartColor, borderBlockEndColor, borderInlineColor, borderInlineStartColor, borderInlineEndColor
-
-
-## Border Radius
-
-@docs borderRadius, borderRadius2, borderRadius3, borderRadius4, borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2, borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
-
-@docs borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2, borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
-
-
-## Border Image
-
-@docs borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
-
-@docs borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
-
-
-# Outline
-
-@docs outline, outline3, outlineWidth, outlineColor, invert, outlineStyle, outlineOffset
+------------------------------------------------------
 
 
 # Display
 
 @docs display, display2, displayListItem2, displayListItem3
+@docs flex_, flow, flowRoot, grid, contents, listItem
+@docs inlineBlock, inlineFlex, inlineTable, inlineGrid
+@docs rubyBase, rubyBaseContainer, rubyText, rubyTextContainer
+@docs runIn, table
+@docs tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
 
 
-## Display values
-
-You can also use [`block`](#block), [`inline`](#inline) and [`ruby`](#ruby) as values.
-
-@docs flex_, flow, flowRoot, grid, contents, listItem, inlineBlock, inlineFlex, inlineTable, inlineGrid, rubyBase, rubyBaseContainer, rubyText, rubyTextContainer, runIn, table, tableCaption, tableCell, tableColumn, tableColumnGroup, tableFooterGroup, tableHeaderGroup, tableRow, tableRowGroup
+------------------------------------------------------
 
 
-# Positions
+# Position
 
-@docs position, zIndex
-
+@docs position
 @docs absolute, fixed, relative, static, sticky
+
+
+------------------------------------------------------
+
+
+# Stacking contexts & box-sizing
+
+@docs zIndex, isolation, boxSizing
+
+
+------------------------------------------------------
+
+
+# Contain
+
+@docs contain, contain2, contain3, contain4
+@docs size, layout, paint
+
+
+------------------------------------------------------
+
+
+# Sizing
+
+@docs width, minWidth, maxWidth, height, minHeight, maxHeight
+@docs blockSize, minBlockSize, maxBlockSize
+@docs inlineSize, minInlineSize, maxInlineSize
+
+
+------------------------------------------------------
 
 
 # Inset
 
-@docs inset, inset2, inset3, inset4, top, right, bottom, left
+@docs inset, inset2, inset3, inset4
 
-@docs insetBlock, insetBlock2, insetInline, insetInline2, insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
+## Absolute insets
 
+@docs top, right, bottom, left
 
-# Paddings
+## Logical insets
 
-@docs padding, padding2, padding3, padding4, paddingTop, paddingRight, paddingBottom, paddingLeft
-
-
-## Logical Paddings
-
-@docs paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
-
-@docs paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
+@docs insetBlock, insetBlock2, insetInline, insetInline2
+@docs insetBlockStart, insetBlockEnd, insetInlineStart, insetInlineEnd
 
 
-## Margins
-
-@docs margin, margin2, margin3, margin4, marginTop, marginRight, marginBottom, marginLeft
+------------------------------------------------------
 
 
-# Gaps
+# Margin
 
-@docs gap, gap2, rowGap, columnGap
+@docs margin, margin2, margin3, margin4
 
+## Absolute margin edges
 
-# Box Sizing
-## Logical Margins
+@docs marginTop, marginRight, marginBottom, marginLeft
+
+## Logical margin edges
 
 @docs marginBlock, marginBlock2, marginBlockStart, marginBlockEnd
-
 @docs marginInline, marginInline2, marginInlineStart, marginInlineEnd
 
 
-## Box Sizing
-
-@docs boxSizing
+------------------------------------------------------
 
 
-# Flexbox
+# Padding
+
+@docs padding, padding2, padding3, padding4
+
+## Absolute padding edges
+
+@docs paddingTop, paddingRight, paddingBottom, paddingLeft
+
+## Logical padding edges
+
+@docs paddingBlock, paddingBlock2, paddingBlockStart, paddingBlockEnd
+@docs paddingInline, paddingInline2, paddingInlineStart, paddingInlineEnd
+
+
+------------------------------------------------------
+
+
+# Borders
+
+@docs border, border2, border3
+
+## Absolute border edges
+
+@docs borderTop, borderTop2, borderTop3
+@docs borderRight, borderRight2, borderRight3
+@docs borderBottom, borderBottom2, borderBottom3
+@docs borderLeft, borderLeft2, borderLeft3
+
+## Logical border edges
+
+@docs borderBlock, borderBlock2, borderBlock3
+@docs borderBlockStart, borderBlockStart2, borderBlockStart3
+@docs borderBlockEnd, borderBlockEnd2, borderBlockEnd3
+@docs borderInline, borderInline2, borderInline3
+@docs borderInlineStart, borderInlineStart2, borderInlineStart3
+@docs borderInlineEnd, borderInlineEnd2, borderInlineEnd3
+
+## Border width
+
+@docs borderWidth, borderWidth2, borderWidth3, borderWidth4
+@docs borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
+@docs borderBlockWidth, borderBlockStartWidth, borderBlockEndWidth
+@docs borderInlineWidth, borderInlineStartWidth, borderInlineEndWidth
+
+## Border style
+
+@docs borderStyle, borderStyle2, borderStyle3, borderStyle4
+@docs borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle
+@docs borderBlockStyle, borderBlockStartStyle, borderBlockEndStyle
+@docs borderInlineStyle, borderInlineStartStyle, borderInlineEndStyle
+@docs dotted, dashed, solid, double, groove, ridge, inset_, outset
+
+## Border color
+
+@docs borderColor, borderColor2, borderColor3, borderColor4
+@docs borderTopColor, borderRightColor, borderBottomColor, borderLeftColor
+@docs borderBlockColor, borderBlockStartColor, borderBlockEndColor
+@docs borderInlineColor, borderInlineStartColor, borderInlineEndColor
+
+## Border radius
+
+@docs borderRadius, borderRadius2, borderRadius3, borderRadius4
+@docs borderTopLeftRadius, borderTopLeftRadius2, borderTopRightRadius, borderTopRightRadius2
+@docs borderBottomRightRadius, borderBottomRightRadius2, borderBottomLeftRadius, borderBottomLeftRadius2
+@docs borderStartStartRadius, borderStartStartRadius2, borderStartEndRadius, borderStartEndRadius2
+@docs borderEndStartRadius, borderEndStartRadius2, borderEndEndRadius, borderEndEndRadius2
+
+## Border image
+
+@docs borderImageOutset, borderImageOutset2, borderImageOutset3, borderImageOutset4
+@docs borderImageWidth, borderImageWidth2, borderImageWidth3, borderImageWidth4
+
+
+------------------------------------------------------
+
+
+# Outlines
+
+@docs outline, outline3, outlineWidth, outlineColor
+@docs invert, outlineStyle, outlineOffset
+
+
+------------------------------------------------------
+
+
+# Overflow and resizing
+
+@docs overflow, overflowX, overflowY, overflowBlock, overflowInline
+@docs overflowWrap, overflowAnchor
+@docs breakWord, anywhere
+@docs resize, horizontal, vertical
+
+
+------------------------------------------------------
+
+
+# Flex
 
 The CSS Flexible Box Layout Module.
 See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
 
+## Basics
 
-## Flexbox Alignment
+@docs flex, flex2, flex3
+@docs flexBasis
+@docs flexGrow
+@docs flexShrink
 
-@docs alignContent, alignContent2, alignItems, alignItems2, alignSelf, alignSelf2, justifyContent, justifyContent2, justifyItems, justifyItems2, justifySelf, justifySelf2
+## Layout dynamics
 
-@docs placeContent, placeContent2, placeItems, placeItems2, placeSelf, placeSelf2
+@docs flexDirection
+@docs flexWrap
+@docs flexFlow, flexFlow2
 
-
-### Align Items
+## Alignment
 
 Other values you can use for flex item alignment:
 
@@ -817,42 +860,88 @@ Other values you can use for flex item alignment:
   - [`stretch`](#stretch)
   - [`baseline`](#baseline)
 
-@docs flexStart, flexEnd, selfStart, selfEnd, spaceBetween, spaceAround, spaceEvenly
-@docs firstBaseline, lastBaseline, safe, unsafe, legacy, legacyLeft, legacyRight, legacyCenter
+@docs alignContent, alignContent2
+@docs alignItems, alignItems2
+@docs alignSelf, alignSelf2
 
+## Justify
 
-### Flexbox Direction
+@docs justifyContent, justifyContent2
+@docs justifyItems, justifyItems2
+@docs justifySelf, justifySelf2
 
-@docs flexDirection, row, rowReverse, columnReverse
+## Place
 
+@docs placeContent, placeContent2
+@docs placeItems, placeItems2
+@docs placeSelf, placeSelf2
 
-### Flexbox Order
+## Order
 
 @docs order
 
+## Flex value keywords
 
-### Flexbox Sizing
-
-[`content`](#content) is also a supported value.
-
-@docs flexGrow, flexShrink, flexBasis
-
-
-### Flexbox Wrapping
-
-@docs flexWrap, nowrap, wrap, wrapReverse
+@docs row, rowReverse, columnReverse
+@docs flexStart, flexEnd, selfStart, selfEnd
+@docs spaceBetween, spaceAround, spaceEvenly
+@docs firstBaseline, lastBaseline
+@docs safe, unsafe
+@docs legacy, legacyLeft, legacyRight, legacyCenter
+@docs nowrap, wrap, wrapReverse
 
 
-### Flexbox Shorthands
-
-@docs flex, flex2, flex3, flexFlow, flexFlow2
+------------------------------------------------------
 
 
 # Grid
 
-@docs gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2, dense
-@docs gridRowStart, gridRowStart2, gridRowStart3, gridRowEnd, gridRowEnd2, gridRowEnd3, gridColumnStart, gridColumnStart2, gridColumnStart3, gridColumnEnd, gridColumnEnd2, gridColumnEnd3, span
+@docs gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2
+@docs gridRowStart, gridRowStart2, gridRowStart3
+@docs gridRowEnd, gridRowEnd2, gridRowEnd3
+@docs gridColumnStart, gridColumnStart2, gridColumnStart3
+@docs gridColumnEnd, gridColumnEnd2, gridColumnEnd3
 @docs gridTemplateAreas, gridTemplateAreasList
+@docs dense, span
+
+
+------------------------------------------------------
+
+
+# Gap
+
+@docs gap, gap2, rowGap, columnGap
+
+
+------------------------------------------------------
+
+
+# Background
+
+@docs backgroundColor
+@docs backgroundAttachment, backgroundAttachments, local
+@docs backgroundBlendMode, backgroundBlendModes
+@docs multiply, screen, overlay, darken, lighten, colorDodge, colorBurn, hardLight, softLight, difference, exclusion, hue, saturation, color_, luminosity
+@docs backgroundClip, backgroundClips, backgroundOrigin, backgroundOrigins
+@docs backgroundImage, backgroundImages
+@docs backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4
+@docs backgroundRepeat, backgroundRepeat2
+@docs backgroundSize, backgroundSize2
+
+
+------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Typography
 
@@ -961,15 +1050,6 @@ Other values you can use for flex item alignment:
 [`square`](#square) is also a supported value for [`listStyle`](#listStyle) and [`listStyleType`](#listStyleType).
 
 
-# Overflow
-
-@docs overflow, overflowX, overflowY, overflowBlock, overflowInline
-@docs overflowAnchor
-
-@docs overflowWrap
-@docs breakWord, anywhere
-
-
 # Direction
 
 @docs direction, ltr, rtl
@@ -977,7 +1057,7 @@ Other values you can use for flex item alignment:
 
 # Text Align
 
-@docs justify, matchParent, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
+@docs justify, textAlign, textJustify, interWord, interCharacter, textUnderlinePosition, textUnderlinePosition2
 
 
 # Text Orientation
@@ -1186,7 +1266,6 @@ Other values you can use for flex item alignment:
 @docs objectFit, scaleDown
 @docs objectPosition, objectPosition2, objectPosition4
 @docs boxDecorationBreak
-@docs isolation, isolate
 @docs clipPath, clipPath2
 
 # Masks
@@ -1195,13 +1274,17 @@ Other values you can use for flex item alignment:
 @docs maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
 @docs noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
 
-# Other
+# Other / stuff I'm adding to make the compiled result valid while I work on this rewrite
 
 @docs caretColor
 @docs pointerEvents
 @docs visiblePainted, visibleFill, visibleStroke, painted
-@docs resize, horizontal, vertical
-@docs contain, contain2, contain3, contain4, size, layout, paint
+@docs BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow, Image, ImageSupported, LineStyle, LineStyleSupported
+@docs LineWidth, LineWidthSupported
+@docs TextShadowConfig, color, defaultTextShadow
+@docs linearGradient, linearGradient2, stop, stop2, stop3, textShadow
+@docs toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+
 
 -}
 
@@ -9026,23 +9109,6 @@ flex3 (Value grow) (Value shrink) (Value basis) =
     AppendProperty ("flex:" ++ grow ++ " " ++ shrink ++ " " ++ basis)
 
 
-{-| Sets [`flex-direction`](https://css-tricks.com/almanac/properties/f/flex-direction/).
-
-    flexDirection column
-
--}
-flexDirection :
-    BaseValue
-        { row : Supported
-        , rowReverse : Supported
-        , column : Supported
-        , columnReverse : Supported
-        }
-    -> Style
-flexDirection (Value val) =
-    AppendProperty ("flex-direction:" ++ val)
-
-
 {-| Sets [`flex-basis`](https://css-tricks.com/almanac/properties/f/flex-basis/).
 
     flexBasis (em 10)
@@ -9093,6 +9159,23 @@ flexShrink :
     -> Style
 flexShrink (Value val) =
     AppendProperty ("flex-shrink:" ++ val)
+
+
+{-| Sets [`flex-direction`](https://css-tricks.com/almanac/properties/f/flex-direction/).
+
+    flexDirection column
+
+-}
+flexDirection :
+    BaseValue
+        { row : Supported
+        , rowReverse : Supported
+        , column : Supported
+        , columnReverse : Supported
+        }
+    -> Style
+flexDirection (Value val) =
+    AppendProperty ("flex-direction:" ++ val)
 
 
 {-| Sets [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/).
@@ -9701,6 +9784,23 @@ placeSelf2 (Value alignSelfValue) (Value justifySelfValue) =
     AppendProperty ("place-self:" ++ alignSelfValue ++ " " ++ justifySelfValue)
 
 
+{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
+
+    order (num 2)
+
+    order (num -2)
+
+-}
+order :
+    BaseValue
+        { int : Supported
+        , zero : Supported
+        }
+    -> Style
+order (Value val) =
+    AppendProperty ("order:" ++ val)
+
+
 {-| The `row` [`flex-direction` value](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction#Values).
 
     flexDirection row
@@ -9916,23 +10016,6 @@ wrapReverse =
     Value "wrap-reverse"
 
 
-{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
-
-    order (num 2)
-
-    order (num -2)
-
--}
-order :
-    BaseValue
-        { int : Supported
-        , zero : Supported
-        }
-    -> Style
-order (Value val) =
-    AppendProperty ("order:" ++ val)
-
-
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -10047,19 +10130,6 @@ gridAutoFlow2 (Value val1) (Value val2) =
         ++ val1
         ++ " "
         ++ val2
-
-
-
-{-| The `dense` value for the [`grid-auto-flow`](#gridAutoFlow) property.
-
-    gridAutoFlow dense
-
-    gridAutoFlow2 row dense
-
--}
-dense : Value { provides | dense : Supported }
-dense =
-    Value "dense"
 
 
 {-| The 1-argument version of the [`grid-row-start`](https://css-tricks.com/almanac/properties/g/grid-row-start/)
@@ -10343,26 +10413,8 @@ gridColumnEnd3 (Value val1) (Value val2) (Value val3) =
         ++ " "
         ++ val2
         ++ " "
+       
         ++ val3
-
-
-{-| The `span` value for the following properties:
-
--   [`gridRowStart2`](#gridRowStart2)
--   [`gridRowStart3`](#gridRowStart3)
--   [`gridRowEnd2`](#gridRowEnd2)
--   [`gridRowEnd3`](#gridRowEnd3)
--   [`gridColumnStart2`](#gridColumnStart2)
--   [`gridColumnStart3`](#gridColumnStart3)
--   [`gridColumnEnd2`](#gridColumnEnd2)
--   [`gridColumnEnd3`](#gridColumnEnd3)
-```
-    gridColumnEnd3 span (customIdent "big-grid") (int 2)
-```
--}
-span : Value { provides | span : Supported }
-span =
-    Value "span"
 
 {-| The [`grid-template-areas`](https://css-tricks.com/almanac/properties/g/grid-template-areas/)
 property. Use the [`gridTemplateAreasList`](#gridTemplateAreasList) function if you want
@@ -10405,6 +10457,36 @@ gridTemplateAreasList listStr =
         |> List.map enquoteString
         |> String.join " "
         )
+
+
+{-| The `dense` value for the [`grid-auto-flow`](#gridAutoFlow) property.
+
+    gridAutoFlow dense
+
+    gridAutoFlow2 row dense
+
+-}
+dense : Value { provides | dense : Supported }
+dense =
+    Value "dense"
+    
+{-| The `span` value for the following properties:
+
+-   [`gridRowStart2`](#gridRowStart2)
+-   [`gridRowStart3`](#gridRowStart3)
+-   [`gridRowEnd2`](#gridRowEnd2)
+-   [`gridRowEnd3`](#gridRowEnd3)
+-   [`gridColumnStart2`](#gridColumnStart2)
+-   [`gridColumnStart3`](#gridColumnStart3)
+-   [`gridColumnEnd2`](#gridColumnEnd2)
+-   [`gridColumnEnd3`](#gridColumnEnd3)
+```
+    gridColumnEnd3 span (customIdent "big-grid") (int 2)
+```
+-}
+span : Value { provides | span : Supported }
+span =
+    Value "span"
 
 
 ------------------------------------------------------------------------
