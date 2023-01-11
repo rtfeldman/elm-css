@@ -248,6 +248,8 @@ module Css exposing
     , loose
     , hangingPunctuation, hangingPunctuation2, hangingPunctuation3
     , first, last, forceEnd, allowEnd
+    , whiteSpace
+    , pre, preWrap, preLine
 
     -- script handling
     , direction, ltr, rtl
@@ -356,35 +358,44 @@ module Css exposing
     , columnRuleStyle
     , columnRuleColor
     
-    
-
-    
-    -- ??
-    , lineClamp
-    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
-    , verticalAlign
-    , textTop, textBottom, middle
-    , whiteSpace
-    , pre, preWrap, preLine
-
-    , float
-    , clear
-    , visibility
-    , fill
-
-    -- ??
-    , strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
+    -- SVG attributes that can be used as CSS presentation properties.
+    , strokeDasharray
+    , strokeDashoffset
+    , strokeWidth
+    , strokeAlign
+    , strokeColor
+    , strokeImage
+    , strokeMiterlimit
+    , strokeOpacity
+    , strokePosition, strokePosition2, strokePosition4
+    , strokeRepeat, strokeRepeat2
+    , strokeSize, strokeSize2
+    , strokeDashCorner
     , strokeLinecap, butt, square
     , strokeBreak, boundingBox, slice, clone
     , strokeOrigin
     , strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
     , strokeDashJustify, compress, dashes, gaps
 
+
+    
     -- ??
+    , lineClamp
+    , LineWidth, LineWidthSupported, LineStyle, LineStyleSupported
+
+    , verticalAlign
+    , textTop, textBottom, middle
+
+    , float
+
+    , clear
+
+    , visibility
+
+    , fill
+
     , paintOrder, paintOrder2, paintOrder3, markers
 
-
-    -- ??
     , opacity
 
     , zoom
@@ -14681,6 +14692,74 @@ allowEnd =
     Value "allow-end"
 
 
+
+{-| Sets [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+
+    whiteSpace pre
+
+    whiteSpace nowrap
+
+    whiteSpace preWrap
+
+    whiteSpace preLine
+
+-}
+whiteSpace :
+    BaseValue
+        { normal : Supported
+        , nowrap : Supported
+        , pre : Supported
+        , preWrap : Supported
+        , preLine : Supported
+        }
+    -> Style
+whiteSpace (Value str) =
+    AppendProperty ("white-space:" ++ str)
+
+
+{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
+and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
+
+    whiteSpace nowrap
+
+    flexWrap nowrap
+
+-}
+nowrap : Value { provides | nowrap : Supported }
+nowrap =
+    Value "nowrap"
+
+
+{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace pre
+
+-}
+pre : Value { provides | pre : Supported }
+pre =
+    Value "pre"
+
+
+{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preWrap
+
+-}
+preWrap : Value { provides | preWrap : Supported }
+preWrap =
+    Value "pre-wrap"
+
+
+{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+
+    whiteSpace preLine
+
+-}
+preLine : Value { provides | preLine : Supported }
+preLine =
+    Value "pre-line"
+
+
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -19581,270 +19660,19 @@ columnRuleColor (Value colorVal) =
     AppendProperty ("column-rule-color:" ++ colorVal)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
-
-    verticalAlign textBottom
-
-    verticalAlign (em 1)
-
--}
-verticalAlign :
-    BaseValue
-        (LengthSupported
-            { baseline : Supported
-            , sub : Supported
-            , super : Supported
-            , textTop : Supported
-            , textBottom : Supported
-            , middle : Supported
-            , top_ : Supported
-            , bottom_ : Supported
-            , pct : Supported
-            }
-        )
-    -> Style
-verticalAlign (Value str) =
-    AppendProperty ("vertical-align:" ++ str)
-
-
-{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign textTop
-
--}
-textTop : Value { provides | textTop : Supported }
-textTop =
-    Value "text-top"
-
-
-{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign textBottom
-
--}
-textBottom : Value { provides | textBottom : Supported }
-textBottom =
-    Value "text-bottom"
-
-
-{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
-
-    verticalAlign middle
-
--}
-middle : Value { provides | middle : Supported }
-middle =
-    Value "middle"
-
-
--- WHITE-SPACE --
-
-
-{-| Sets [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
-
-    whiteSpace pre
-
-    whiteSpace nowrap
-
-    whiteSpace preWrap
-
-    whiteSpace preLine
-
--}
-whiteSpace :
-    BaseValue
-        { normal : Supported
-        , nowrap : Supported
-        , pre : Supported
-        , preWrap : Supported
-        , preLine : Supported
-        }
-    -> Style
-whiteSpace (Value str) =
-    AppendProperty ("white-space:" ++ str)
-
-
-{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
-and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
-
-    whiteSpace nowrap
-
-    flexWrap nowrap
-
--}
-nowrap : Value { provides | nowrap : Supported }
-nowrap =
-    Value "nowrap"
-
-
-{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace pre
-
--}
-pre : Value { provides | pre : Supported }
-pre =
-    Value "pre"
-
-
-{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace preWrap
-
--}
-preWrap : Value { provides | preWrap : Supported }
-preWrap =
-    Value "pre-wrap"
-
-
-{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
-
-    whiteSpace preLine
-
--}
-preLine : Value { provides | preLine : Supported }
-preLine =
-    Value "pre-line"
-
-
-
-
--- FLOAT --
-
-
-{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
-
-    float none
-
-    float left_
-
-    float right_
-
-    float inlineStart
-
--}
-float :
-    BaseValue
-        { none : Supported
-        , left_ : Supported
-        , right_ : Supported
-        , inlineStart : Supported
-        , inlineEnd : Supported
-        }
-    -> Style
-float (Value str) =
-    AppendProperty ("float:" ++ str)
-
-
-
--- VISIBILITY --
-
-
-{-| Sets [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/)
-
-      visibility visible
-      visibility hidden
-      visibility collapse
-
--}
-visibility :
-    BaseValue
-        { visible : Supported
-        , hidden : Supported
-        , collapse : Supported
-        }
-    -> Style
-visibility (Value str) =
-    AppendProperty ("visibility:" ++ str)
-
-
-
--- ORDER --
-
-
-{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
-
-    order (num 2)
-
-    order (num -2)
-
--}
-order :
-    BaseValue
-        { int : Supported
-        , zero : Supported
-        }
-    -> Style
-order (Value val) =
-    AppendProperty ("order:" ++ val)
-
-
-{-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
-**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
-
-    fill (hex "#60b5cc")
-
-    fill (rgb 96 181 204)
-
-    fill (rgba 96 181 204 0.5)
-
-    fill (url "#pattern")
-
--}
-fill :
-    BaseValue
-        (ColorSupported
-            { url : Supported
-            }
-        )
-    -> Style
-fill (Value val) =
-    AppendProperty ("fill:" ++ val)
-
-
-
--- COLUMNS --
-
-
-
--- STROKE --
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------- SVG STROKE ATTRIBUTES ---------------------------
+--------------- (THAT CAN BE USED AS CSS PROPERTIES) -------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 {-| Sets [`stroke-dasharray`](https://css-tricks.com/almanac/properties/s/stroke-dasharray/)
@@ -19889,50 +19717,6 @@ strokeDashoffset :
     -> Style
 strokeDashoffset (Value val) =
     AppendProperty ("stroke-dashoffset:" ++ val)
-
-
-{-| Sets [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/)
-
-    strokeLinecap butt
-
-    strokeLinecap square
-
-    strokeLinecap round
-
--}
-strokeLinecap :
-    BaseValue
-        { butt : Supported
-        , square : Supported
-        , round : Supported
-        }
-    -> Style
-strokeLinecap (Value val) =
-    AppendProperty ("stroke-linecap:" ++ val)
-
-
-{-| A `butt` value for the [`strokeLinecap`](#strokeLinecap) property.
-
-    strokeLinecap butt
-
--}
-butt : Value { provides | butt : Supported }
-butt =
-    Value "butt"
-
-
-{-| The `square` value used by properties such as [`strokeLinecap`](#strokeLinecap),
-[`listStyle`](#listStyle),
-and [`listStyleType`](#listStyleType).
-
-    strokeLinecap square
-
-    listStyleType square
-
--}
-square : Value { provides | square : Supported }
-square =
-    Value "square"
 
 
 {-| Sets [`stroke-width`](https://css-tricks.com/almanac/properties/s/stroke-width/)
@@ -19981,58 +19765,6 @@ strokeAlign :
     -> Style
 strokeAlign (Value val) =
     AppendProperty ("stroke-align:" ++ val)
-
-
-{-| Sets [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break)
-
-      strokeBreak boundingBox
-      strokeBreak slice
-      strokeBreak clone
-
--}
-strokeBreak :
-    BaseValue
-        { boundingBox : Supported
-        , slice : Supported
-        , clone : Supported
-        }
-    -> Style
-strokeBreak (Value val) =
-    AppendProperty ("stroke-break:" ++ val)
-
-
-{-| A `boundingBox` value for the [`strokeBreak`](#strokeBreak) property.
-
-      strokeBreak boundingBox
-
--}
-boundingBox : Value { provides | boundingBox : Supported }
-boundingBox =
-    Value "bounding-box"
-
-
-{-| A `slice` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
-
-      strokeBreak slice
-
-      boxDecorationbreak clone
-
--}
-slice : Value { provides | slice : Supported }
-slice =
-    Value "slice"
-
-
-{-| A `clone` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
-
-      strokeBreak clone
-
-      boxDecorationBreak clone
-
--}
-clone : Value { provides | clone : Supported }
-clone =
-    Value "clone"
 
 
 {-| Sets [`stroke-color`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-color)
@@ -20090,36 +19822,6 @@ strokeOpacity :
     -> Style
 strokeOpacity (Value val) =
     AppendProperty ("stroke-opacity:" ++ val)
-
-
-{-| Sets [`stroke-origin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-origin)
-
-    strokeOrign matchParent
-
-    strokeOrign fillBox
-
-    strokeOrign strokeBox
-
-    strokeOrign contentBox
-
-    strokeOrign paddingBox
-
-    strokeOrign borderBox
-
--}
-strokeOrigin :
-    BaseValue
-        { matchParent : Supported
-        , fillBox : Supported
-        , strokeBox : Supported
-        , contentBox : Supported
-        , paddingBox : Supported
-        , borderBox : Supported
-        }
-    -> Style
-strokeOrigin (Value val) =
-    AppendProperty ("stroke-origin:" ++ val)
-
 
 
 {-| Sets [`stroke-position`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-position).
@@ -20372,6 +20074,132 @@ strokeDashCorner (Value sizeVal) =
     AppendProperty ("stroke-dash-corner:" ++ sizeVal)
 
 
+{-| Sets [`stroke-linecap`](https://css-tricks.com/almanac/properties/s/stroke-linecap/)
+
+    strokeLinecap butt
+
+    strokeLinecap square
+
+    strokeLinecap round
+
+-}
+strokeLinecap :
+    BaseValue
+        { butt : Supported
+        , square : Supported
+        , round : Supported
+        }
+    -> Style
+strokeLinecap (Value val) =
+    AppendProperty ("stroke-linecap:" ++ val)
+
+
+{-| A `butt` value for the [`strokeLinecap`](#strokeLinecap) property.
+
+    strokeLinecap butt
+
+-}
+butt : Value { provides | butt : Supported }
+butt =
+    Value "butt"
+
+
+{-| The `square` value used by properties such as [`strokeLinecap`](#strokeLinecap),
+[`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType).
+
+    strokeLinecap square
+
+    listStyleType square
+
+-}
+square : Value { provides | square : Supported }
+square =
+    Value "square"
+
+
+
+{-| Sets [`stroke-break`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-break)
+
+      strokeBreak boundingBox
+      strokeBreak slice
+      strokeBreak clone
+
+-}
+strokeBreak :
+    BaseValue
+        { boundingBox : Supported
+        , slice : Supported
+        , clone : Supported
+        }
+    -> Style
+strokeBreak (Value val) =
+    AppendProperty ("stroke-break:" ++ val)
+
+
+{-| A `boundingBox` value for the [`strokeBreak`](#strokeBreak) property.
+
+      strokeBreak boundingBox
+
+-}
+boundingBox : Value { provides | boundingBox : Supported }
+boundingBox =
+    Value "bounding-box"
+
+
+{-| A `slice` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
+
+      strokeBreak slice
+
+      boxDecorationbreak clone
+
+-}
+slice : Value { provides | slice : Supported }
+slice =
+    Value "slice"
+
+
+{-| A `clone` value for the [`strokeBreak`](#strokeBreak) and [`boxDecorationBreak`](#boxDecorationBreak) properties.
+
+      strokeBreak clone
+
+      boxDecorationBreak clone
+
+-}
+clone : Value { provides | clone : Supported }
+clone =
+    Value "clone"
+
+
+{-| Sets [`stroke-origin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-origin)
+
+    strokeOrign matchParent
+
+    strokeOrign fillBox
+
+    strokeOrign strokeBox
+
+    strokeOrign contentBox
+
+    strokeOrign paddingBox
+
+    strokeOrign borderBox
+
+-}
+strokeOrigin :
+    BaseValue
+        { matchParent : Supported
+        , fillBox : Supported
+        , strokeBox : Supported
+        , contentBox : Supported
+        , paddingBox : Supported
+        , borderBox : Supported
+        }
+    -> Style
+strokeOrigin (Value val) =
+    AppendProperty ("stroke-origin:" ++ val)
+
+
 {-| Sets [`stroke-linejoin`](https://www.w3.org/TR/fill-stroke-3/#propdef-stroke-linejoin).
 
     strokeLinejoin crop
@@ -20511,6 +20339,191 @@ dashes =
 gaps : Value { provides | gaps : Supported }
 gaps =
     Value "gaps"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{-| Sets [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/).
+
+    verticalAlign textBottom
+
+    verticalAlign (em 1)
+
+-}
+verticalAlign :
+    BaseValue
+        (LengthSupported
+            { baseline : Supported
+            , sub : Supported
+            , super : Supported
+            , textTop : Supported
+            , textBottom : Supported
+            , middle : Supported
+            , top_ : Supported
+            , bottom_ : Supported
+            , pct : Supported
+            }
+        )
+    -> Style
+verticalAlign (Value str) =
+    AppendProperty ("vertical-align:" ++ str)
+
+
+{-| A `textTop` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textTop
+
+-}
+textTop : Value { provides | textTop : Supported }
+textTop =
+    Value "text-top"
+
+
+{-| A `textBottom` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign textBottom
+
+-}
+textBottom : Value { provides | textBottom : Supported }
+textBottom =
+    Value "text-bottom"
+
+
+{-| A `middle` value for the [`vertical-align`](https://css-tricks.com/almanac/properties/v/vertical-align/) property.
+
+    verticalAlign middle
+
+-}
+middle : Value { provides | middle : Supported }
+middle =
+    Value "middle"
+
+
+
+
+{-| Sets [`float`](https://css-tricks.com/almanac/properties/f/float/).
+
+    float none
+
+    float left_
+
+    float right_
+
+    float inlineStart
+
+-}
+float :
+    BaseValue
+        { none : Supported
+        , left_ : Supported
+        , right_ : Supported
+        , inlineStart : Supported
+        , inlineEnd : Supported
+        }
+    -> Style
+float (Value str) =
+    AppendProperty ("float:" ++ str)
+
+
+
+-- VISIBILITY --
+
+
+{-| Sets [`visibility`](https://css-tricks.com/almanac/properties/v/visibility/)
+
+      visibility visible
+      visibility hidden
+      visibility collapse
+
+-}
+visibility :
+    BaseValue
+        { visible : Supported
+        , hidden : Supported
+        , collapse : Supported
+        }
+    -> Style
+visibility (Value str) =
+    AppendProperty ("visibility:" ++ str)
+
+
+
+-- ORDER --
+
+
+{-| Sets [`order`](https://css-tricks.com/almanac/properties/o/order/)
+
+    order (num 2)
+
+    order (num -2)
+
+-}
+order :
+    BaseValue
+        { int : Supported
+        , zero : Supported
+        }
+    -> Style
+order (Value val) =
+    AppendProperty ("order:" ++ val)
+
+
+{-| Sets [`fill`](https://css-tricks.com/almanac/properties/f/fill/)
+**Note:** `fill` also accepts the patterns of SVG shapes that are defined inside of a [`defs`](https://css-tricks.com/snippets/svg/svg-patterns/) element.
+
+    fill (hex "#60b5cc")
+
+    fill (rgb 96 181 204)
+
+    fill (rgba 96 181 204 0.5)
+
+    fill (url "#pattern")
+
+-}
+fill :
+    BaseValue
+        (ColorSupported
+            { url : Supported
+            }
+        )
+    -> Style
+fill (Value val) =
+    AppendProperty ("fill:" ++ val)
+
+
+
 
 
 {-| The [`paint-order`](https://css-tricks.com/almanac/properties/p/paint-order/) property.
