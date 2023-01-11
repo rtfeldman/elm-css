@@ -58,7 +58,7 @@ module Css exposing
     , normal, strict, all_, both, always, scroll, column
     , content, fill_, stroke, text, style
     , clip, cover, contain_
-    , repeat, noRepeat, repeatX, repeatY, space, round
+    , repeat, noRepeat, repeatX, repeatY, space, round_
     , isolate, matchParent
 
     -- all
@@ -593,7 +593,8 @@ Sometimes these keywords mean other things too.
 @docs normal, strict, all_, both, always, scroll, column
 @docs content, fill_, stroke, text, style
 @docs clip, cover, contain_
-
+@docs repeat, noRepeat, repeatX, repeatY, space, round_
+@docs isolate, matchParent
 
 
 # Pseudo-Classes
@@ -645,9 +646,6 @@ Sometimes these keywords mean other things too.
 @docs backgroundImage, backgroundImages, backgroundPosition, backgroundPosition2, backgroundPosition3, backgroundPosition4, backgroundRepeat, backgroundRepeat2, backgroundSize, backgroundSize2
 
 @docs linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-
-@docs repeat, noRepeat, repeatX, repeatY, space, round
-
 
 # Shadows
 
@@ -4293,19 +4291,22 @@ space =
   - [`strokeRepeat`](#strokeRepeat)
   - [`strokeLinejoin`](#strokeLinejoin2)
 
+**This is called `round_` because `round` is a function
+word used in Elm Core's `Basics` module.**
+
 ```
-    backgroundRepeat round
+    backgroundRepeat round_
 
-    strokeLineCap round
+    strokeLineCap round_
 
-    strokeLinejoin2 miter round
+    strokeLinejoin2 miter round_
 
-    strokeRepeat round
+    strokeRepeat round_
 ```
 
 -}
-round : Value { provides | round : Supported }
-round =
+round_ : Value { provides | round_ : Supported }
+round_ =
     Value "round"
 
 
@@ -11174,7 +11175,7 @@ backgroundRepeat :
         , repeatX : Supported
         , repeatY : Supported
         , space : Supported
-        , round : Supported
+        , round_ : Supported
         , noRepeat : Supported
         }
     -> Style
@@ -11196,14 +11197,14 @@ backgroundRepeat2 :
     Value
         { repeat : Supported
         , space : Supported
-        , round : Supported
+        , round_ : Supported
         , noRepeat : Supported
         }
     ->
         Value
             { repeat : Supported
             , space : Supported
-            , round : Supported
+            , round_ : Supported
             , noRepeat : Supported
             }
     -> Style
@@ -19894,7 +19895,7 @@ maskBorderRepeat :
     BaseValue
         { stretch : Supported
         , repeat : Supported
-        , round : Supported
+        , round_ : Supported
         , space : Supported
         }
     -> Style
@@ -19911,13 +19912,13 @@ maskBorderRepeat2 :
     Value
         { stretch : Supported
         , repeat : Supported
-        , round : Supported
+        , round_ : Supported
         , space : Supported
         }
     -> Value
         { stretch : Supported
         , repeat : Supported
-        , round : Supported
+        , round_ : Supported
         , space : Supported
         }
     -> Style
@@ -20528,7 +20529,7 @@ maskRepeat :
     BaseValue
         { repeat : Supported
         , space : Supported
-        , round : Supported
+        , round_ : Supported
         , noRepeat : Supported
         }
     -> Style
@@ -20545,13 +20546,13 @@ maskRepeat2 :
     Value
         { repeat : Supported
         , space : Supported
-        , round : Supported
+        , round_ : Supported
         , noRepeat : Supported
         }
     -> Value
         { repeat : Supported
         , space : Supported
-        , round : Supported
+        , round_ : Supported
         , noRepeat : Supported
         }
     -> Style
@@ -20569,7 +20570,7 @@ maskRepeat2 (Value valX) (Value valY) =
 --         ( Value
 --             { repeat : Supported
 --             , space : Supported
---             , round : Supported
+--             , round_ : Supported
 --             , noRepeat : Supported
 --             }
 --         )
@@ -21227,7 +21228,7 @@ strokeRepeat :
         , repeatX : Supported
         , repeatY : Supported
         , space : Supported
-        , round : Supported
+        , round_ : Supported
         , noRepeat : Supported
         }
     -> Style
@@ -21249,14 +21250,14 @@ strokeRepeat2 :
     Value
         { repeat : Supported
         , space : Supported
-        , round : Supported
+        , round_ : Supported
         , noRepeat : Supported
         }
     ->
         Value
             { repeat : Supported
             , space : Supported
-            , round : Supported
+            , round_ : Supported
             , noRepeat : Supported
             }
     -> Style
@@ -21353,7 +21354,7 @@ strokeLinecap :
     BaseValue
         { butt : Supported
         , square : Supported
-        , round : Supported
+        , round_ : Supported
         }
     -> Style
 strokeLinecap (Value val) =
@@ -21507,7 +21508,7 @@ strokeLinejoin2 :
     ->
         Value
             { bevel : Supported
-            , round : Supported
+            , round_ : Supported
             , fallback : Supported
             }
     -> Style
