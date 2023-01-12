@@ -188,9 +188,6 @@ module Css exposing
     -- gaps
     , gap, gap2, rowGap, columnGap
 
-    -- color
-    , color
-
     -- backgrounds
     , backgroundColor
     , backgroundAttachment, backgroundAttachments, local
@@ -214,7 +211,8 @@ module Css exposing
     , fontFamily, fontFamilies
     , serif, sansSerif, monospace, cursive, fantasy, systemUi
 
-    -- Font style, weight + stretch
+    -- Font color, style, weight + stretch
+    , color
     , fontStyle, italic, oblique
     , fontWeight, bold, lighter, bolder
     , fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
@@ -378,11 +376,16 @@ module Css exposing
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
     , caretColor
 
-    -- shadows and gradients
-    , BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow
-    , TextShadowConfig, textShadow, defaultTextShadow
-    , linearGradient, linearGradient2, stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
+    -- gradients
+    , linearGradient, linearGradient2
+    , stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
+    -- shadows
+    , BoxShadowConfig
+    , boxShadow, boxShadows, defaultBoxShadow
+    , TextShadowConfig
+    , textShadow, defaultTextShadow
+    
     -- transformations and perspective
     , TransformFunction, TransformFunctionSupported
     , transform, transforms
@@ -390,8 +393,8 @@ module Css exposing
     , transformBox
     , matrix, matrix3d
     , scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
-    , skew, skew2, skewX, skewY
     , rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3
+    , skew, skew2, skewX, skewY
     , translate, translate2, translateX, translateY, translateZ, translate3d
     , perspective, perspectiveOrigin, perspectiveOrigin2
     , perspective_
@@ -409,7 +412,7 @@ module Css exposing
     , EasingFunction, EasingFunctionSupported
     , linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
 
-    -- visual stuff??
+    -- visual stuff
     , opacity
     , visibility
     , mixBlendMode
@@ -544,10 +547,15 @@ functions let you define custom properties and selectors, respectively.
 
 @docs Color, ColorSupported, hex, rgb, rgba, hsl, hsla, currentcolor
 
-## Shapes
+## Images & Shapes
 
+@docs Image, ImageSupported
 @docs BasicShape, BasicShapeSupported
 @docs circle, circleAt, circleAt2, ellipse, ellipseAt, ellipseAt2, closestSide, farthestSide, polygon, path
+
+## Lines
+@docs LineStyle, LineStyleSupported
+@docs LineWidth, LineWidthSupported
 
 ## Resolution
 
@@ -952,8 +960,9 @@ Other values you can use for flex item alignment:
 @docs fontFamily, fontFamilies
 @docs serif, sansSerif, monospace, cursive, fantasy, systemUi
 
-## Font style, weight & stretch
+## Font color, style, weight & stretch
 
+@docs color
 @docs fontStyle, italic, oblique
 @docs fontWeight, bold, lighter, bolder
 @docs fontStretch, ultraCondensed, extraCondensed, condensed, semiCondensed, semiExpanded, expanded, extraExpanded, ultraExpanded
@@ -1267,102 +1276,91 @@ Other values you can use for flex item alignment:
 ------------------------------------------------------
 
 
+# Gradients
+
+@docs linearGradient, linearGradient2
+@docs stop, stop2, stop3, toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 
 
+------------------------------------------------------
 
 
+# Shadows
+
+@docs BoxShadowConfig
+@docs boxShadow, boxShadows, defaultBoxShadow
+@docs TextShadowConfig
+@docs textShadow, defaultTextShadow
 
 
-
-
-
-
-
-
-
-
-
+------------------------------------------------------
 
 
 # Transformation
 
-@docs transform, transforms, transformOrigin, transformOrigin2, transformBox
 @docs TransformFunction, TransformFunctionSupported
-
+@docs transform, transforms
+@docs transformOrigin, transformOrigin2
+@docs transformBox
 
 ## Matrix transformation
 
 @docs matrix, matrix3d
 
+## Scaling (resizing)
+
+@docs scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
+
+## Rotation
+
+@docs rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3
+
+## Skewing (distortion)
+
+@docs skew, skew2, skewX, skewY
+
+## Translation (moving)
+
+@docs translate, translate2, translateX, translateY, translateZ, translate3d
 
 ## Perspective
 
 @docs perspective, perspectiveOrigin, perspectiveOrigin2
 @docs perspective_
 
+## 3D Rendering options
 
-## Rotation
-
-@docs rotate, rotate2, rotate_, rotateX, rotateY, rotateZ, rotate3d, vec3
-
-
-## Scaling (resizing)
-
-@docs scale, scale2, scale3, scale_, scale2_, scaleX, scaleY, scaleZ, scale3d
+@docs backfaceVisibility
 
 
-## Skewing (distortion)
-
-@docs skew, skew2, skewX, skewY
-
-
-## Translation (moving)
-
-@docs translate, translate2, translateX, translateY, translateZ, translate3d
+------------------------------------------------------
 
 
 # Animation
 
-@docs animationName, animationNames, animationDuration, animationDurations, animationTimingFunction, animationTimingFunctions, animationIterationCount, animationIterationCounts, animationDirection, animationDirections, animationPlayState, animationPlayStates, animationDelay, animationDelays, animationFillMode, animationFillModes
-@docs EasingFunction, EasingFunctionSupported, linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
+@docs animationName, animationNames
+@docs animationDuration, animationDurations
+@docs animationTimingFunction, animationTimingFunctions
+@docs animationIterationCount, animationIterationCounts
+@docs animationDirection, animationDirections
+@docs animationPlayState, animationPlayStates
+@docs animationDelay, animationDelays
+@docs animationFillMode, animationFillModes
+@docs EasingFunction, EasingFunctionSupported
+@docs linear, ease, easeIn, easeOut, easeInOut, cubicBezier, stepStart, stepEnd, steps, steps2, jumpStart, jumpEnd, jumpNone, jumpBoth, infinite, reverse, alternate, alternateReverse, running, paused, forwards, backwards
 
 
-# Opacity
+------------------------------------------------------
+
+
+# Visual stuff
 
 @docs opacity
-
-# Rendering
-
-@docs mixBlendMode
-@docs imageRendering, crispEdges, pixelated
-@docs backfaceVisibility
-@docs clipPath, clipPath2
-
-
-# Other / stuff I'm adding to make the compiled result valid while I work on this rewrite
-
-
-@docs BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow, Image, ImageSupported, LineStyle, LineStyleSupported
-@docs LineWidth, LineWidthSupported
-@docs TextShadowConfig, color, defaultTextShadow
-@docs linearGradient, linearGradient2, stop, stop2, stop3, textShadow
-@docs toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
 @docs visibility
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@docs mixBlendMode
+@docs imageRendering
+@docs crispEdges, pixelated
+@docs clipPath, clipPath2
 
 
 ------------------------------------------------------
@@ -10757,35 +10755,6 @@ columnGap (Value widthVal) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
---------------------------------- COLOR --------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Sets [`color`](https://css-tricks.com/almanac/properties/c/color/).
-
-    color (hex "#60b5cc")
-
-    color (rgb 96 181 204)
-
-    color (rgba 96 181 204 0.5)
-
--}
-color : BaseValue Color -> Style
-color (Value val) =
-    AppendProperty ("color:" ++ val)
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
 --------------------------- BACKGROUND ---------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -11510,6 +11479,20 @@ backgroundSize2 (Value widthVal) (Value heightVal) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
+
+
+{-| Sets [`color`](https://css-tricks.com/almanac/properties/c/color/).
+
+    color (hex "#60b5cc")
+
+    color (rgb 96 181 204)
+
+    color (rgba 96 181 204 0.5)
+
+-}
+color : BaseValue Color -> Style
+color (Value val) =
+    AppendProperty ("color:" ++ val)
 
 
 {-| Sets [`font-size`](https://css-tricks.com/almanac/properties/f/font-size/)
@@ -17947,285 +17930,6 @@ caretColor (Value val) =
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
------------------------------- BOX-SHADOW ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Configuration for [`boxShadow`](#boxShadow).
--}
-type alias BoxShadowConfig =
-    { offsetX :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , offsetY :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , blurRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , spreadRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , color :
-        Maybe (Value Color)
-    , inset : Bool
-    }
-
-
-{-| Default [`boxShadow`](#boxShadow) configuration.
-
-It is equivalent to the following CSS:
-
-    box-shadow: 0 0;
-
--}
-defaultBoxShadow : BoxShadowConfig
-defaultBoxShadow =
-    { offsetX = zero
-    , offsetY = zero
-    , blurRadius = Nothing
-    , spreadRadius = Nothing
-    , color = Nothing
-    , inset = False
-    }
-
-
-{-| The [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/) property.
-
-    boxShadow initial
-
-    boxShadow none
-
-For defining shadows look at [`boxShadows`](#boxShadows).
-
--}
-boxShadow : BaseValue { none : Supported } -> Style
-boxShadow (Value val) =
-    AppendProperty ("box-shadow:" ++ val)
-
-
-{-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
-
-    boxShadows [] -- "box-shadow: none"
-
-    -- "box-shadow: 3px 5px #aabbcc"
-    button
-        [ css
-            [ boxShadows
-                [ { defaultBoxShadow
-                    | offsetX = px 3
-                    , offsetY = px 5
-                    , color = Just (hex "#aabbcc")
-                  }
-                ]
-            ]
-        ]
-        [ text "Zap!" ]
-
--}
-boxShadows : List BoxShadowConfig -> Style
-boxShadows configs =
-    let
-        value =
-            case configs of
-                [] ->
-                    "none"
-
-                _ ->
-                    configs
-                        |> List.map boxShadowConfigToString
-                        |> String.join ", "
-    in
-    AppendProperty ("box-shadow:" ++ value)
-
-
-boxShadowConfigToString : BoxShadowConfig -> String
-boxShadowConfigToString config =
-    let
-        (Value offsetX) =
-            config.offsetX
-
-        (Value offsetY) =
-            config.offsetY
-
-        blurRadius =
-            case config.blurRadius of
-                Just (Value value) ->
-                    " " ++ value
-
-                Nothing ->
-                    case config.spreadRadius of
-                        Just _ ->
-                            " 0"
-
-                        Nothing ->
-                            ""
-
-        spreadRadius =
-            case config.spreadRadius of
-                Just (Value value) ->
-                    " " ++ value
-
-                Nothing ->
-                    ""
-
-        insetStr =
-            if config.inset then
-                "inset "
-
-            else
-                ""
-
-        colorVal =
-            config.color
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-    in
-    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
------------------------------ TEXT SHADOW ------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-
-
-{-| Configuration for [`textShadow`](#textShadow).
--}
-type alias TextShadowConfig =
-    { offsetX :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , offsetY :
-        Value
-            (LengthSupported
-                { pct : Supported
-                }
-            )
-    , blurRadius :
-        Maybe
-            (Value
-                (LengthSupported
-                    { pct : Supported
-                    }
-                )
-            )
-    , color : Maybe (Value Color)
-    }
-
-
-{-| Default [`textShadow`](#textShadow) configuration.
-
-It is equivalent to the following CSS:
-
-    text-shadow: 0 0;
-
--}
-defaultTextShadow : TextShadowConfig
-defaultTextShadow =
-    { offsetX = zero
-    , offsetY = zero
-    , blurRadius = Nothing
-    , color = Nothing
-    }
-
-
-{-| Sets [`text-shadow`](https://css-tricks.com/almanac/properties/t/text-shadow/).
-
-    textShadow [] -- "text-shadow: none"
-
-    -- "text-shadow: 3px 5px #aabbcc"
-    span
-        [ css
-            [ textShadow
-                [ { defaultTextShadow
-                    | offsetX = px 3
-                    , offsetY = px 5
-                    , color = Just (hex "#aabbcc")
-                  }
-                ]
-            ]
-        ]
-        [ text "Zap!" ]
-
--}
-textShadow : List TextShadowConfig -> Style
-textShadow configs =
-    let
-        values =
-            case configs of
-                [] ->
-                    "none"
-
-                _ ->
-                    configs
-                        |> List.map textShadowConfigToString
-                        |> String.join ","
-    in
-    AppendProperty ("text-shadow:" ++ values)
-
-
-textShadowConfigToString : TextShadowConfig -> String
-textShadowConfigToString config =
-    let
-        offsetX =
-            unpackValue config.offsetX
-
-        offsetY =
-            unpackValue config.offsetY
-
-        blurRadius =
-            config.blurRadius
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-
-        colorSetting =
-            config.color
-                |> Maybe.map (unpackValue >> (++) " ")
-                |> Maybe.withDefault ""
-    in
-    offsetX ++ " " ++ offsetY ++ blurRadius ++ colorSetting
-
-
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
-------------------------------------------------------------------------
 ------------------------------ GRADIENTS -------------------------------
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
@@ -18464,6 +18168,270 @@ If you want your gradient to go to a side, use [`toTop`](#toTop) or [`toRight`](
 toTopRight : Value { provides | toTopRight : Supported }
 toTopRight =
     Value "to top right"
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-------------------------------- SHADOWS -------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| Configuration for [`boxShadow`](#boxShadow).
+-}
+type alias BoxShadowConfig =
+    { offsetX :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , offsetY :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , blurRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , spreadRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , color :
+        Maybe (Value Color)
+    , inset : Bool
+    }
+
+
+{-| Default [`boxShadow`](#boxShadow) configuration.
+
+It is equivalent to the following CSS:
+
+    box-shadow: 0 0;
+
+-}
+defaultBoxShadow : BoxShadowConfig
+defaultBoxShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , spreadRadius = Nothing
+    , color = Nothing
+    , inset = False
+    }
+
+
+{-| The [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/) property.
+
+    boxShadow initial
+
+    boxShadow none
+
+For defining shadows look at [`boxShadows`](#boxShadows).
+
+-}
+boxShadow : BaseValue { none : Supported } -> Style
+boxShadow (Value val) =
+    AppendProperty ("box-shadow:" ++ val)
+
+
+{-| Sets [`box-shadow`](https://css-tricks.com/almanac/properties/b/box-shadow/).
+
+    boxShadows [] -- "box-shadow: none"
+
+    -- "box-shadow: 3px 5px #aabbcc"
+    button
+        [ css
+            [ boxShadows
+                [ { defaultBoxShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
+
+-}
+boxShadows : List BoxShadowConfig -> Style
+boxShadows configs =
+    let
+        value =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map boxShadowConfigToString
+                        |> String.join ", "
+    in
+    AppendProperty ("box-shadow:" ++ value)
+
+
+boxShadowConfigToString : BoxShadowConfig -> String
+boxShadowConfigToString config =
+    let
+        (Value offsetX) =
+            config.offsetX
+
+        (Value offsetY) =
+            config.offsetY
+
+        blurRadius =
+            case config.blurRadius of
+                Just (Value value) ->
+                    " " ++ value
+
+                Nothing ->
+                    case config.spreadRadius of
+                        Just _ ->
+                            " 0"
+
+                        Nothing ->
+                            ""
+
+        spreadRadius =
+            case config.spreadRadius of
+                Just (Value value) ->
+                    " " ++ value
+
+                Nothing ->
+                    ""
+
+        insetStr =
+            if config.inset then
+                "inset "
+
+            else
+                ""
+
+        colorVal =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+    in
+    insetStr ++ offsetX ++ " " ++ offsetY ++ blurRadius ++ spreadRadius ++ colorVal
+
+
+{-| Configuration for [`textShadow`](#textShadow).
+-}
+type alias TextShadowConfig =
+    { offsetX :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , offsetY :
+        Value
+            (LengthSupported
+                { pct : Supported
+                }
+            )
+    , blurRadius :
+        Maybe
+            (Value
+                (LengthSupported
+                    { pct : Supported
+                    }
+                )
+            )
+    , color : Maybe (Value Color)
+    }
+
+
+{-| Default [`textShadow`](#textShadow) configuration.
+
+It is equivalent to the following CSS:
+
+    text-shadow: 0 0;
+
+-}
+defaultTextShadow : TextShadowConfig
+defaultTextShadow =
+    { offsetX = zero
+    , offsetY = zero
+    , blurRadius = Nothing
+    , color = Nothing
+    }
+
+
+{-| Sets [`text-shadow`](https://css-tricks.com/almanac/properties/t/text-shadow/).
+
+    textShadow [] -- "text-shadow: none"
+
+    -- "text-shadow: 3px 5px #aabbcc"
+    span
+        [ css
+            [ textShadow
+                [ { defaultTextShadow
+                    | offsetX = px 3
+                    , offsetY = px 5
+                    , color = Just (hex "#aabbcc")
+                  }
+                ]
+            ]
+        ]
+        [ text "Zap!" ]
+
+-}
+textShadow : List TextShadowConfig -> Style
+textShadow configs =
+    let
+        values =
+            case configs of
+                [] ->
+                    "none"
+
+                _ ->
+                    configs
+                        |> List.map textShadowConfigToString
+                        |> String.join ","
+    in
+    AppendProperty ("text-shadow:" ++ values)
+
+
+textShadowConfigToString : TextShadowConfig -> String
+textShadowConfigToString config =
+    let
+        offsetX =
+            unpackValue config.offsetX
+
+        offsetY =
+            unpackValue config.offsetY
+
+        blurRadius =
+            config.blurRadius
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+
+        colorSetting =
+            config.color
+                |> Maybe.map (unpackValue >> (++) " ")
+                |> Maybe.withDefault ""
+    in
+    offsetX ++ " " ++ offsetY ++ blurRadius ++ colorSetting
 
 
 ------------------------------------------------------------------------
@@ -18980,60 +18948,6 @@ scale3d valX valY valZ =
     Value ("scale3d(" ++ String.fromFloat valX ++ "," ++ String.fromFloat valY ++ "," ++ String.fromFloat valZ ++ ")")
 
 
-
--- SKEWING (distortion)
-
-
-{-| Sets `skew` value for usage with [`transform`](#transform).
-
-    transform (skew (deg 30))
-
--}
-skew :
-    Value Angle
-    -> Value { provides | skew : Supported }
-skew (Value angle) =
-    Value ("skew(" ++ angle ++ ")")
-
-
-{-| Sets `skew` value for usage with [`transform`](#transform).
-
-    transform (skew2 (deg 30) (deg 10))
-
--}
-skew2 :
-    Value Angle
-    -> Value Angle
-    -> Value { provides | skew2 : Supported }
-skew2 (Value angle1) (Value angle2) =
-    Value ("skew(" ++ angle1 ++ "," ++ angle2 ++ ")")
-
-
-{-| Sets `skewX` value for usage with [`transform`](#transform).
-
-    transform (skewX (deg 30))
-
--}
-skewX :
-    Value Angle
-    -> Value { provides | skewX : Supported }
-skewX (Value angle) =
-    Value ("skewX(" ++ angle ++ ")")
-
-
-{-| Sets `skewY` value for usage with [`transform`](#transform).
-
-    transform (skewY (deg 30))
-
--}
-skewY :
-    Value Angle
-    -> Value { provides | skewY : Supported }
-skewY (Value angle) =
-    Value ("skewY(" ++ angle ++ ")")
-
-
-
 -- ROTATION
 
 
@@ -19180,6 +19094,58 @@ vec3 vec1Val vec2Val vec3Val =
             ++ " "
             ++ String.fromFloat vec3Val
         )
+
+
+-- SKEWING (distortion)
+
+
+{-| Sets `skew` value for usage with [`transform`](#transform).
+
+    transform (skew (deg 30))
+
+-}
+skew :
+    Value Angle
+    -> Value { provides | skew : Supported }
+skew (Value angle) =
+    Value ("skew(" ++ angle ++ ")")
+
+
+{-| Sets `skew` value for usage with [`transform`](#transform).
+
+    transform (skew2 (deg 30) (deg 10))
+
+-}
+skew2 :
+    Value Angle
+    -> Value Angle
+    -> Value { provides | skew2 : Supported }
+skew2 (Value angle1) (Value angle2) =
+    Value ("skew(" ++ angle1 ++ "," ++ angle2 ++ ")")
+
+
+{-| Sets `skewX` value for usage with [`transform`](#transform).
+
+    transform (skewX (deg 30))
+
+-}
+skewX :
+    Value Angle
+    -> Value { provides | skewX : Supported }
+skewX (Value angle) =
+    Value ("skewX(" ++ angle ++ ")")
+
+
+{-| Sets `skewY` value for usage with [`transform`](#transform).
+
+    transform (skewY (deg 30))
+
+-}
+skewY :
+    Value Angle
+    -> Value { provides | skewY : Supported }
+skewY (Value angle) =
+    Value ("skewY(" ++ angle ++ ")")
 
 
 -- PERSPECTIVE
