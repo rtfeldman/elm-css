@@ -1249,7 +1249,6 @@ Other values you can use for flex item alignment:
 @docs CursorKeyword
 @docs cursor, cursor2, cursor4
 
-
 ## Cursor values
 
 [`text`](#text) is also a supported value for `cursor`.
@@ -1260,14 +1259,12 @@ Other values you can use for flex item alignment:
 @docs wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
 @docs neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
 
+## Caret color
 
----------
-
-
-
+@docs caretColor
 
 
-
+------------------------------------------------------
 
 
 
@@ -1282,27 +1279,9 @@ Other values you can use for flex item alignment:
 
 
 
-# SVG
 
 
-## Fill
 
-@docs fill
-
-
-## Stroke
-
-@docs strokeDasharray, strokeDashoffset, strokeWidth, strokeAlign, strokeColor, strokeImage, strokeMiterlimit, strokeOpacity, strokePosition, strokePosition2, strokePosition4, strokeRepeat, strokeRepeat2, strokeSize, strokeSize2, strokeDashCorner
-@docs strokeLinecap, butt, square
-@docs strokeBreak, boundingBox, slice, clone
-@docs strokeOrigin
-@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
-@docs strokeDashJustify, compress, dashes, gaps
-
-
-## Other
-
-@docs paintOrder, paintOrder2, paintOrder3, markers
 
 
 # Transformation
@@ -1352,10 +1331,6 @@ Other values you can use for flex item alignment:
 
 @docs opacity
 
-# Printing
-
-@docs bleed
-
 # Rendering
 
 @docs mixBlendMode
@@ -1363,21 +1338,103 @@ Other values you can use for flex item alignment:
 @docs backfaceVisibility
 @docs clipPath, clipPath2
 
-# Masks
-
-@docs maskBorderMode, maskBorderRepeat, maskBorderRepeat2, maskBorderOutset, maskBorderOutset2, maskBorderOutset3, maskBorderOutset4, maskBorderSlice, maskBorderSlice2, maskBorderSlice3, maskBorderSlice4, maskBorderWidth, maskBorderWidth2, maskBorderWidth3, maskBorderWidth4
-@docs maskClip, maskClipList, maskComposite, maskMode, maskModeList, maskOrigin, maskOriginList, maskPosition, maskRepeat, maskRepeat2, maskSize, maskSize2, maskType
-@docs noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
 
 # Other / stuff I'm adding to make the compiled result valid while I work on this rewrite
 
-@docs caretColor
+
 @docs BoxShadowConfig, boxShadow, boxShadows, defaultBoxShadow, Image, ImageSupported, LineStyle, LineStyleSupported
 @docs LineWidth, LineWidthSupported
 @docs TextShadowConfig, color, defaultTextShadow
 @docs linearGradient, linearGradient2, stop, stop2, stop3, textShadow
 @docs toBottom, toBottomLeft, toBottomRight, toLeft, toRight, toTop, toTopLeft, toTopRight
-@docs lineClamp, visibility
+@docs visibility
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------
+
+
+## Masks
+
+@docs maskBorderMode
+@docs maskBorderRepeat, maskBorderRepeat2
+@docs maskBorderOutset, maskBorderOutset2, maskBorderOutset3, maskBorderOutset4
+@docs maskBorderSlice, maskBorderSlice2, maskBorderSlice3, maskBorderSlice4
+@docs maskBorderWidth, maskBorderWidth2, maskBorderWidth3, maskBorderWidth4
+@docs maskClip, maskClipList
+@docs maskComposite
+@docs maskMode, maskModeList
+@docs maskOrigin, maskOriginList
+@docs maskPosition
+@docs maskRepeat, maskRepeat2
+@docs maskSize, maskSize2
+@docs maskType
+@docs noClip, add, subtract, intersect, exclude, alpha, luminance, matchSource
+
+
+------------------------------------------------------
+
+
+## Rendering
+
+@docs paintOrder, paintOrder2, paintOrder3, markers
+
+
+------------------------------------------------------
+
+
+# Using a printer
+
+@docs bleed
+
+
+------------------------------------------------------
+
+
+# SVG attributes that can be used as CSS presentation properties.
+
+@docs fill
+@docs strokeDasharray
+@docs strokeDashoffset
+@docs strokeWidth
+@docs strokeAlign
+@docs strokeColor
+@docs strokeImage
+@docs strokeMiterlimit
+@docs strokeOpacity
+@docs strokePosition, strokePosition2, strokePosition4
+@docs strokeRepeat, strokeRepeat2
+@docs strokeSize, strokeSize2
+@docs strokeDashCorner
+@docs strokeLinecap, butt, square
+@docs strokeBreak, boundingBox, slice, clone
+@docs strokeOrigin
+@docs strokeLinejoin, strokeLinejoin2, crop, arcs, miter, bevel
+@docs strokeDashJustify, compress, dashes, gaps
+
+
+------------------------------------------------------
+
+
+# WebKit stuff that's standardised for legacy support
+
+@docs lineClamp
+
+
 
 -}
 
