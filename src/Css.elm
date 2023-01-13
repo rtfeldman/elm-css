@@ -82,6 +82,9 @@ module Css exposing
     -- contain (DOM)
     , contain, contain2, contain3, contain4
     , size, layout, paint
+    , containIntrinsicSize, containIntrinsicSize2, containIntrinsicSize4
+    , containIntrinsicWidth, containIntrinsicWidth2, containIntrinsicHeight, containIntrinsicHeight2
+    , containIntrinsicInlineSize, containIntrinsicInlineSize2, containIntrinsicBlockSize, containIntrinsicBlockSize2
 
     -- sizing
     , width, minWidth, maxWidth, height, minHeight, maxHeight
@@ -693,6 +696,9 @@ Sometimes these keywords mean other things too.
 
 @docs contain, contain2, contain3, contain4
 @docs size, layout, paint
+@docs containIntrinsicSize, containIntrinsicSize2, containIntrinsicSize4
+@docs containIntrinsicWidth, containIntrinsicWidth2, containIntrinsicHeight, containIntrinsicHeight2
+@docs containIntrinsicInlineSize, containIntrinsicInlineSize2, containIntrinsicBlockSize, containIntrinsicBlockSize2
 
 
 ------------------------------------------------------
@@ -2073,7 +2079,7 @@ type alias LengthSupported supported =
         , px : Supported
         , cm : Supported
         , mm : Supported
-        , inches : Supported
+        , inch : Supported
         , pc : Supported
         , pt : Supported
         , q : Supported
@@ -5241,7 +5247,7 @@ contain3 (Value value1) (Value value2) (Value value3) =
 
 {-| The [`contain`](https://css-tricks.com/almanac/properties/c/contain/) property.
 
-This two-argument version lets you use all 4 multiple choice values you
+This 4-argument version lets you use all 4 multiple choice values you
 can use for this property.
 
     contain4 size layout style paint
@@ -5320,6 +5326,329 @@ by the browser if the containing box is offscreen.
 paint : Value { provides | paint : Supported }
 paint =
     Value "paint"
+
+
+{-| The [`contain-intrinsic-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-size)
+property.
+
+This 1-argument variant lets you use global values, `none` and lengths for width and height.
+
+    containIntrinsicSize revert
+
+    containIntrinsicSize none
+
+                    -- width + height
+    containIntrinsicSize (px 500)
+
+                        -- width | height
+    containIntrinsicSize2 (rem 5) (px 800)
+
+                    -- width + height w/ auto
+    containIntrinsicSize2 auto (px 800)
+
+                      -- width w/ auto | height w/ auto
+    containIntrinsicSize4 auto (rem 50) auto (px 250)
+
+-}
+containIntrinsicSize :
+    BaseValue
+        ( LengthSupported
+            { none : Supported
+            }
+        )
+    -> Style
+containIntrinsicSize (Value val) =
+    AppendProperty <| "contain-intrinsic-size:" ++ val
+
+
+{-| The [`contain-intrinsic-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-size)
+property.
+
+This 2-argument variant lets you use separate lengths for
+width and height or joined with and height with `auto`.
+
+    containIntrinsicSize revert
+
+    containIntrinsicSize none
+
+                    -- width + height
+    containIntrinsicSize (px 500)
+
+                        -- width | height
+    containIntrinsicSize2 (rem 5) (px 800)
+
+                    -- width + height w/ auto
+    containIntrinsicSize2 auto (px 800)
+
+                      -- width w/ auto | height w/ auto
+    containIntrinsicSize4 auto (rem 50) auto (px 250)
+
+-}
+containIntrinsicSize2 :
+    Value 
+        ( LengthSupported
+            { auto : Supported
+            }
+        )
+    -> Value (Length)
+    -> Style
+containIntrinsicSize2 (Value val1) (Value val2) =
+    AppendProperty <| "contain-intrinsic-size:" ++ val1 ++ " " ++ val2
+
+
+{-| The [`contain-intrinsic-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-size)
+property.
+
+This 4-argument variant lets you use separate lengths for
+width and height with `auto`.
+
+Note: The 1st and 3rd argument can only be `auto`.
+
+    containIntrinsicSize revert
+
+    containIntrinsicSize none
+
+                    -- width + height
+    containIntrinsicSize (px 500)
+
+                        -- width | height
+    containIntrinsicSize2 (rem 5) (px 800)
+
+                    -- width + height w/ auto
+    containIntrinsicSize2 auto (px 800)
+
+                      -- width w/ auto | height w/ auto
+    containIntrinsicSize4 auto (rem 50) auto (px 250)
+
+-}
+containIntrinsicSize4 :
+    Value { auto : Supported }
+    -> Value (Length)
+    -> Value { auto : Supported }
+    -> Value (Length)
+    -> Style
+containIntrinsicSize4 (Value valAutoX) (Value valX) (Value valAutoY) (Value valY) =
+    AppendProperty
+        <| "contain-intrinsic-size:"
+        ++ valAutoX
+        ++ " "
+        ++ valX
+        ++ " "
+        ++ valAutoY
+        ++ " "
+        ++ valY
+
+
+{-| The [`contain-intrinsic-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-width)
+property.
+
+This 1-argument variant lets you use global values, `none` and lengths.
+
+    containIntrinsicWidth revert
+
+    containIntrinsicWidth none
+
+                     -- specified width
+    containIntrinsicWidth (px 500)
+
+                     -- specified width w/ auto
+    containIntrinsicWidth2 auto (px 800)
+
+-}
+containIntrinsicWidth :
+    BaseValue
+        ( LengthSupported
+            { none : Supported
+            }
+        )
+    -> Style
+containIntrinsicWidth (Value val) =
+    AppendProperty <| "contain-intrinsic-width:" ++ val
+
+
+{-| The [`contain-intrinsic-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-width)
+property.
+
+This 2-argument variant lets you use lengths with `auto`.
+
+Note: The 1st argument can only be `auto`.
+
+    containIntrinsicWidth revert
+
+    containIntrinsicWidth none
+
+                     -- specified width
+    containIntrinsicWidth (px 500)
+
+                     -- specified width w/ auto
+    containIntrinsicWidth2 auto (px 800)
+
+-}
+containIntrinsicWidth2 :
+    Value { auto : Supported }
+    -> Value (Length)
+    -> Style
+containIntrinsicWidth2 (Value valAuto) (Value val) =
+    AppendProperty <| "contain-intrinsic-width:" ++ valAuto ++ " " ++ val
+
+
+{-| The [`contain-intrinsic-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-height)
+property.
+
+This 1-argument variant lets you use global values, `none` and lengths.
+
+    containIntrinsicHeight revert
+
+    containIntrinsicHeight none
+
+                     -- specified height
+    containIntrinsicHeight (px 500)
+
+                     -- specified height w/ auto
+    containIntrinsicHeight2 auto (px 800)
+
+-}
+containIntrinsicHeight :
+    BaseValue
+        ( LengthSupported
+            { none : Supported
+            }
+        )
+    -> Style
+containIntrinsicHeight (Value val) =
+    AppendProperty <| "contain-intrinsic-height:" ++ val
+
+
+{-| The [`contain-intrinsic-height`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-height)
+property.
+
+This 2-argument variant lets you use lengths with `auto`.
+
+Note: The 1st argument can only be `auto`.
+
+    containIntrinsicHeight revert
+
+    containIntrinsicHeight none
+
+                     -- specified height
+    containIntrinsicHeight (px 500)
+
+                     -- specified height w/ auto
+    containIntrinsicHeight2 auto (px 800)
+
+-}
+containIntrinsicHeight2 :
+    Value { auto : Supported }
+    -> Value (Length)
+    -> Style
+containIntrinsicHeight2 (Value valAuto) (Value val) =
+    AppendProperty <| "contain-intrinsic-height:" ++ valAuto ++ " " ++ val
+
+
+{-| The [`contain-intrinsic-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-inline-size)
+property.
+
+This 1-argument variant lets you use global values, `none` and lengths.
+
+    containIntrinsicInlineSize revert
+
+    containIntrinsicInlineSize none
+
+                -- specified inline size
+    containIntrinsicInlineSize (px 500)
+
+                -- specified inline size w/ auto
+    containIntrinsicInlineSize2 auto (px 800)
+
+-}
+containIntrinsicInlineSize :
+    BaseValue
+        ( LengthSupported
+            { none : Supported
+            }
+        )
+    -> Style
+containIntrinsicInlineSize (Value val) =
+    AppendProperty <| "contain-intrinsic-inline-size:" ++ val
+
+
+{-| The [`contain-intrinsic-inline-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-inline-size)
+property.
+
+This 2-argument variant lets you use lengths with `auto`.
+
+Note: The 1st argument can only be `auto`.
+
+    containIntrinsicInlineSize revert
+
+    containIntrinsicInlineSize none
+
+                -- specified inline size
+    containIntrinsicInlineSize (px 500)
+
+                -- specified inline size w/ auto
+    containIntrinsicInlineSize2 auto (px 800)
+
+-}
+containIntrinsicInlineSize2 :
+    Value { auto : Supported }
+    -> Value (Length)
+    -> Style
+containIntrinsicInlineSize2 (Value valAuto) (Value val) =
+    AppendProperty <| "contain-intrinsic-inline-size:" ++ valAuto ++ " " ++ val
+
+
+{-| The [`contain-intrinsic-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-block-size)
+property.
+
+This 1-argument variant lets you use global values, `none` and lengths.
+
+    containIntrinsicBlockSize revert
+
+    containIntrinsicBlockSize none
+
+                -- specified block size
+    containIntrinsicBlockSize (px 500)
+
+                -- specified block size w/ auto
+    containIntrinsicBlockSize2 auto (px 800)
+
+-}
+containIntrinsicBlockSize :
+    BaseValue
+        ( LengthSupported
+            { none : Supported
+            }
+        )
+    -> Style
+containIntrinsicBlockSize (Value val) =
+    AppendProperty <| "contain-intrinsic-block-size:" ++ val
+
+
+{-| The [`contain-intrinsic-block-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-block-size)
+property.
+
+This 2-argument variant lets you use lengths with `auto`.
+
+Note: The 1st argument can only be `auto`.
+
+    containIntrinsicBlockSize revert
+
+    containIntrinsicBlockSize none
+
+                -- specified block size
+    containIntrinsicBlockSize (px 500)
+
+                -- specified block size w/ auto
+    containIntrinsicBlockSize2 auto (px 800)
+
+-}
+containIntrinsicBlockSize2 :
+    Value { auto : Supported }
+    -> Value (Length)
+    -> Style
+containIntrinsicBlockSize2 (Value valAuto) (Value val) =
+    AppendProperty <| "contain-intrinsic-block-size:" ++ valAuto ++ " " ++ val
 
 
 ------------------------------------------------------------------------
