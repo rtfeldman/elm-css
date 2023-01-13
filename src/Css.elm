@@ -346,6 +346,11 @@ module Css exposing
     , pointerEvents
     , visiblePainted, visibleFill, visibleStroke, painted
 
+    -- touch action
+    , touchAction
+    , panX, panY
+    , pinchZoom, manipulation
+
     -- scrollbar customisation
     , scrollbarColor, scrollbarWidth
 
@@ -1210,6 +1215,16 @@ Other values you can use for flex item alignment:
 
 @docs pointerEvents
 @docs visiblePainted, visibleFill, visibleStroke, painted
+
+
+------------------------------------------------------
+
+
+# Touch action
+
+@docs touchAction
+@docs panX, panY
+@docs pinchZoom, manipulation
 
 
 ------------------------------------------------------
@@ -16853,7 +16868,7 @@ pointerEvents (Value val) =
     AppendProperty ("pointer-events:" ++ val)
 
 
-{-| The `visiblePainted` value used by [`pointerEvents`](#pointerEvents)
+{-| The `visiblePainted` value used by [`pointerEvents`](#pointerEvents).
 
     pointerEvents visiblePainted
 
@@ -16863,7 +16878,7 @@ visiblePainted =
     Value "visiblePainted"
 
 
-{-| The `visibleFill` value used by [`pointerEvents`](#pointerEvents)
+{-| The `visibleFill` value used by [`pointerEvents`](#pointerEvents).
 
     pointerEvents visibleFill
 
@@ -16873,7 +16888,7 @@ visibleFill =
     Value "visibleFill"
 
 
-{-| The `visibleStroke` value used by [`pointerEvents`](#pointerEvents)
+{-| The `visibleStroke` value used by [`pointerEvents`](#pointerEvents).
 
     pointerEvents visibleStroke
 
@@ -16883,7 +16898,7 @@ visibleStroke =
     Value "visibleStroke"
 
 
-{-| The `painted` value used by [`pointerEvents`](#pointerEvents)
+{-| The `painted` value used by [`pointerEvents`](#pointerEvents).
 
     pointerEvents painted
 
@@ -16891,6 +16906,83 @@ visibleStroke =
 painted : Value { provides | painted : Supported }
 painted =
     Value "painted"
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+---------------------------- POINTER-EVENTS-----------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+
+{-| The [`touch-action`](https://css-tricks.com/almanac/properties/t/touch-action/)
+property.
+
+    touchAction auto
+
+    touchAction panY
+
+    touchAction pinchZoom
+-}
+touchAction :
+    BaseValue
+        { auto : Supported
+        , none : Supported
+        , panX : Supported
+        , panY : Supported
+        , pinchZoom : Supported
+        , manipulation : Supported
+        }
+    -> Style
+touchAction (Value val) =
+    AppendProperty <| "touch-action:" ++ val
+
+
+{-| The `pan-x` value used by [`touch-action`](#touchAction).
+
+    touchAction panX
+
+-}
+panX : Value { provides | panX : Supported }
+panX =
+    Value "pan-x"
+
+
+{-| The `pan-y` value used by [`touch-action`](#touchAction).
+
+    touchAction panY
+
+-}
+panY : Value { provides | panY : Supported }
+panY =
+    Value "pan-y"
+
+
+{-| The `pinch-zoom` value used by [`touch-action`](#touchAction).
+
+    touchAction pinchZoom
+
+-}
+pinchZoom : Value { provides | pinchZoom : Supported }
+pinchZoom =
+    Value "pinch-zoom"
+
+
+{-| The `manipulation` value used by [`touch-action`](#touchAction).
+
+    touchAction manipulation
+
+-}
+manipulation : Value { provides | manipulation : Supported }
+manipulation =
+    Value "manipulation"
 
 
 ------------------------------------------------------------------------
