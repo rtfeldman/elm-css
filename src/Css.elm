@@ -59,7 +59,7 @@ module Css exposing
     , content, fill_, stroke, text, style
     , clip, cover, contain_
     , repeat, noRepeat, repeatX, repeatY, space, round_
-    , isolate, matchParent
+    , isolate, matchParent, nowrap
 
     -- all
     , all
@@ -176,7 +176,7 @@ module Css exposing
     , firstBaseline, lastBaseline
     , safe, unsafe
     , legacy, legacyLeft, legacyRight, legacyCenter
-    , nowrap, wrap, wrapReverse
+    , wrap, wrapReverse
     
     -- grid
     , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2
@@ -250,7 +250,7 @@ module Css exposing
     -- Text wrapping, overflow and newlines
     , wordBreak, breakAll, keepAll
     , lineBreak, loose
-    , whiteSpace, pre, preWrap, preLine
+    , whiteSpace, pre, preWrap, preLine, breakSpaces
     , textOverflow, textOverflow2, ellipsis
     , hyphens, manual
     , hangingPunctuation, hangingPunctuation2, hangingPunctuation3
@@ -648,7 +648,7 @@ Sometimes these keywords mean other things too.
 @docs content, fill_, stroke, text, style
 @docs clip, cover, contain_
 @docs repeat, noRepeat, repeatX, repeatY, space, round_
-@docs isolate, matchParent
+@docs isolate, matchParent, nowrap
 
 
 ------------------------------------------------------
@@ -904,7 +904,7 @@ Other values you can use for flex item alignment:
 @docs firstBaseline, lastBaseline
 @docs safe, unsafe
 @docs legacy, legacyLeft, legacyRight, legacyCenter
-@docs nowrap, wrap, wrapReverse
+@docs wrap, wrapReverse, breakSpaces
 
 
 ------------------------------------------------------
@@ -4546,7 +4546,6 @@ round_ =
     Value "round"
 
 
-
 {-| Sets `isolate` value for usage with [`isolation`](#isolation), and
 [`unicodeBidi`](#unicodeBidi).
 
@@ -4571,6 +4570,19 @@ and [`strokeOrigin`](#strokeOrigin) properties.
 matchParent : Value { provides | matchParent : Supported }
 matchParent =
     Value "match-parent"
+
+
+{-| A `nowrap` value for the [`white-space`](#whiteSpace)
+and [`flex-wrap`](#flexWrap)properties.
+
+    whiteSpace nowrap
+
+    flexWrap nowrap
+
+-}
+nowrap : Value { provides | nowrap : Supported }
+nowrap =
+    Value "nowrap"
 
 
 ------------------------------------------------------------------------
@@ -13560,26 +13572,14 @@ whiteSpace :
         , pre : Supported
         , preWrap : Supported
         , preLine : Supported
+        , breakSpaces : Supported
         }
     -> Style
 whiteSpace (Value str) =
     AppendProperty ("white-space:" ++ str)
 
 
-{-| A `nowrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/)
-and [`flex-wrap`](https://css-tricks.com/almanac/properties/f/flex-wrap/) properties.
-
-    whiteSpace nowrap
-
-    flexWrap nowrap
-
--}
-nowrap : Value { provides | nowrap : Supported }
-nowrap =
-    Value "nowrap"
-
-
-{-| A `pre` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+{-| A `pre` value for the [`white-space`](#whiteSpace) property.
 
     whiteSpace pre
 
@@ -13589,7 +13589,7 @@ pre =
     Value "pre"
 
 
-{-| A `pre-wrap` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+{-| A `pre-wrap` value for the [`white-space`](#whiteSpace) property.
 
     whiteSpace preWrap
 
@@ -13599,7 +13599,7 @@ preWrap =
     Value "pre-wrap"
 
 
-{-| A `pre-line` value for the [`white-space`](https://css-tricks.com/almanac/properties/w/whitespace/) property.
+{-| A `pre-line` value for the [`white-space`](#whiteSpace) property.
 
     whiteSpace preLine
 
@@ -13607,6 +13607,15 @@ preWrap =
 preLine : Value { provides | preLine : Supported }
 preLine =
     Value "pre-line"
+
+{-| A `break-spaces` value for the [`white-space`](#whiteSpace) property.
+
+    whiteSpace breakSpaces
+
+-}
+breakSpaces : Value { provides | breakSpaces : Supported }
+breakSpaces =
+    Value "break-spaces"
 
 
 {-| Sets the [`text-overflow`](https://css-tricks.com/almanac/properties/t/text-overflow/) property.
