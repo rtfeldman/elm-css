@@ -180,13 +180,17 @@ module Css exposing
     
     -- grid
     , gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2
-    , gridRowStart, gridRowStart2, gridRowStart3
-    , gridRowEnd, gridRowEnd2, gridRowEnd3
-    , gridColumnStart, gridColumnStart2, gridColumnStart3
-    , gridColumnEnd, gridColumnEnd2, gridColumnEnd3
+    , GridLine(..)
+    , gridArea, gridAreaLine, gridArea2Lines, gridArea3Lines, gridArea4Lines
+    , gridRow, gridRowLine, gridRow2Lines
+    , gridRowStart, gridRowStartLine
+    , gridRowEnd, gridRowEndLine
+    , gridColumn, gridColumnLine, gridColumn2Lines
+    , gridColumnStart, gridColumnStartLine
+    , gridColumnEnd, gridColumnEndLine
     , gridTemplateAreas, gridTemplateAreasList
     --
-    , dense, span
+    , dense
 
     -- gaps
     , gap, gap2, rowGap, columnGap
@@ -920,12 +924,16 @@ Other values you can use for flex item alignment:
 # Grid
 
 @docs gridAutoRows, gridAutoColumns, gridAutoFlow, gridAutoFlow2
-@docs gridRowStart, gridRowStart2, gridRowStart3
-@docs gridRowEnd, gridRowEnd2, gridRowEnd3
-@docs gridColumnStart, gridColumnStart2, gridColumnStart3
-@docs gridColumnEnd, gridColumnEnd2, gridColumnEnd3
+@docs GridLine
+@docs gridArea, gridAreaLine, gridArea2Lines, gridArea3Lines, gridArea4Lines
+@docs gridRow, gridRowLine, gridRow2Lines
+@docs gridRowStart, gridRowStartLine
+@docs gridRowEnd, gridRowEndLine
+@docs gridColumn, gridColumnLine, gridColumn2Lines
+@docs gridColumnStart, gridColumnStartLine
+@docs gridColumnEnd, gridColumnEndLine
 @docs gridTemplateAreas, gridTemplateAreasList
-@docs dense, span
+@docs dense
 
 
 ------------------------------------------------------
@@ -10642,6 +10650,340 @@ gridAutoFlow2 (Value val1) (Value val2) =
         ++ val2
 
 
+{-| A type wrapping all of the possibilities of a `<grid-line>`.
+
+No `Int` should be zero - if it's zero, it won't work.
+
+- `GridLineAuto` - `auto`
+- `GridLineIdent` - `<custom-ident>`
+- `GridLineNum` - `<integer>`
+- `GridLineIdentNum` - `<custom-ident> <integer>`
+- `GridLineSpanIdent` - `span <custom-ident>`
+- `GridLineSpanNum` - `span <integer>`
+- `GridLineSpanIdentNum` - `span <custom-ident> <integer>`
+
+```
+    gridArea2Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+
+    gridRowStartLine (GridLineSpanIdent "big-grid")
+
+```
+-}
+type GridLine
+    = GridLineAuto
+    | GridLineIdent String
+    | GridLineNum Int
+    | GridLineIdentNum String Int
+    | GridLineSpanIdent String
+    | GridLineSpanNum Int
+    | GridLineSpanIdentNum String Int
+
+
+{-| Internal helper function that turns a `GridLine` into a string
+ready to go in a property.
+-}
+unwrapGridLine : GridLine -> String
+unwrapGridLine gl =
+    case gl of
+        GridLineAuto -> "auto"
+        GridLineIdent str -> str
+        GridLineNum numby -> String.fromInt numby
+        GridLineIdentNum str numby -> str ++ " " ++ String.fromInt numby
+        GridLineSpanIdent str -> "span " ++ str
+        GridLineSpanNum numby -> "span " ++ String.fromInt numby
+        GridLineSpanIdentNum str numby -> "span " ++ str ++ " " ++ String.fromInt numby
+
+
+{-| The [`grid-area`](https://css-tricks.com/almanac/properties/g/grid-area/)
+property.
+
+This variant is for single keyword arguments.
+
+    gridArea auto
+
+    gridArea inherit
+      
+    gridAreaLine (GridLineIdentNum "big-grid" 4)
+
+    gridArea2Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+
+    gridArea3Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+
+    gridArea4Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+        (GridLineSpanIdentNum "another-grid" 12)
+
+-}
+gridArea :
+    BaseValue
+        { auto : Supported
+        , customIdent : Supported
+        }
+    -> Style
+gridArea (Value val) =
+    AppendProperty <| "grid-area:" ++ val
+
+
+{-| The [`grid-area`](https://css-tricks.com/almanac/properties/g/grid-area/)
+property.
+
+This variant specifies 1 `<grid-line>` ([`GridLine`](#GridLine)) that determines
+the start and end positions of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridArea auto
+
+    gridArea inherit
+      
+    gridAreaLine (GridLineIdentNum "big-grid" 4)
+
+    gridArea2Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+
+    gridArea3Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+
+    gridArea4Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+        (GridLineSpanIdentNum "another-grid" 12)
+
+-}
+gridAreaLine :
+    GridLine
+    -> Style
+gridAreaLine gl =
+    AppendProperty <| "grid-area:" ++ (unwrapGridLine gl)
+
+
+{-| The [`grid-area`](https://css-tricks.com/almanac/properties/g/grid-area/)
+property.
+
+This variant specifies 2 `<grid-line>`s ([`GridLine`](#GridLine)) that determines
+the start and end positions of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridArea auto
+
+    gridArea inherit
+      
+    gridAreaLine (GridLineIdentNum "big-grid" 4)
+
+    gridArea2Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+
+    gridArea3Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+
+    gridArea4Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+        (GridLineSpanIdentNum "another-grid" 12)
+
+-}
+gridArea2Lines :
+    GridLine
+    -> GridLine
+    -> Style
+gridArea2Lines gl1 gl2 =
+    AppendProperty <|
+        "grid-area:"
+        ++ (unwrapGridLine gl1)
+        ++ " / "
+        ++ (unwrapGridLine gl2)
+
+
+{-| The [`grid-area`](https://css-tricks.com/almanac/properties/g/grid-area/)
+property.
+
+This variant specifies 3 `<grid-line>`s ([`GridLine`](#GridLine)) that determines
+the start and end positions of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridArea auto
+
+    gridArea inherit
+      
+    gridAreaLine (GridLineIdentNum "big-grid" 4)
+
+    gridArea2Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+
+    gridArea3Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+
+    gridArea4Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+        (GridLineSpanIdentNum "another-grid" 12)
+
+-}
+gridArea3Lines :
+    GridLine
+    -> GridLine
+    -> GridLine
+    -> Style
+gridArea3Lines gl1 gl2 gl3 =
+    AppendProperty <|
+        "grid-area:"
+        ++ (unwrapGridLine gl1)
+        ++ " / "
+        ++ (unwrapGridLine gl2)
+        ++ " / "
+        ++ (unwrapGridLine gl3)
+
+
+{-| The [`grid-area`](https://css-tricks.com/almanac/properties/g/grid-area/)
+property.
+
+This variant specifies 4 `<grid-line>`s ([`GridLine`](#GridLine)) that determines
+the start and end positions of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridArea auto
+
+    gridArea inherit
+      
+    gridAreaLine (GridLineIdentNum "big-grid" 4)
+
+    gridArea2Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+
+    gridArea3Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+
+    gridArea4Lines
+        (GridLineIdentNum "big-grid" 4)
+        (GridLineSpanIdent "other-grid")
+        (GridLineNum 7)
+        (GridLineSpanIdentNum "another-grid" 12)
+
+-}
+gridArea4Lines :
+    GridLine
+    -> GridLine
+    -> GridLine
+    -> GridLine
+    -> Style
+gridArea4Lines gl1 gl2 gl3 gl4 =
+    AppendProperty <|
+        "grid-area:"
+        ++ (unwrapGridLine gl1)
+        ++ " / "
+        ++ (unwrapGridLine gl2)
+        ++ " / "
+        ++ (unwrapGridLine gl3)
+        ++ " / "
+        ++ (unwrapGridLine gl4)
+
+
+{-| The [`grid-row`](https://css-tricks.com/almanac/properties/g/grid-row/)
+property.
+
+This variant is for single keyword arguments.
+
+    gridRow auto
+
+    gridRow inherit
+
+    gridRowLine (GridLineIdentNum "main-grid" 3)
+    -- grid-row: main-grid 3
+
+    gridRow2Lines GridLineAuto (GridLineSpanIdentNum "grid-thing" 5)
+    -- grid-row: auto / span grid-thing 5
+-}
+gridRow :
+    BaseValue
+        { auto : Supported
+        , customIdent : Supported
+        }
+    -> Style
+gridRow (Value val) =
+    AppendProperty <| "grid-row:" ++ val
+
+
+{-| The [`grid-row`](https://css-tricks.com/almanac/properties/g/grid-row/)
+property.
+
+This variant specifies 1 `<grid-line>` ([`GridLine`](#GridLine)) that determines
+the start and end position of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridRow auto
+
+    gridRow inherit
+
+    gridRowLine (GridLineIdentNum "main-grid" 3)
+    -- grid-row: main-grid 3
+
+    gridRow2Lines GridLineAuto (GridLineSpanIdentNum "grid-thing" 5)
+    -- grid-row: auto / span grid-thing 5
+-}
+gridRowLine :
+    GridLine
+    -> Style
+gridRowLine gl1 =
+    AppendProperty <| "grid-row:" ++ (unwrapGridLine gl1)
+
+
+{-| The [`grid-row`](https://css-tricks.com/almanac/properties/g/grid-row/)
+property.
+
+This variant specifies 2 `<grid-line>`s ([`GridLine`](#GridLine)) that determine
+the start and end position of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridRow auto
+
+    gridRow inherit
+
+    gridRowLine (GridLineIdentNum "main-grid" 3)
+    -- grid-row: main-grid 3
+
+    gridRow2Lines GridLineAuto (GridLineSpanIdentNum "grid-thing" 5)
+    -- grid-row: auto / span grid-thing 5
+-}
+gridRow2Lines :
+    GridLine
+    -> GridLine
+    -> Style
+gridRow2Lines gl1 gl2 =
+    AppendProperty <| "grid-row:"
+        ++ (unwrapGridLine gl1)
+        ++ " / "
+        ++ (unwrapGridLine gl2)
+
+
 {-| The 1-argument version of the [`grid-row-start`](https://css-tricks.com/almanac/properties/g/grid-row-start/)
 property.
 
@@ -10649,11 +10991,11 @@ property.
 
     gridRowStart auto
 
-    gridRowStart2 span (int 3)
+    gridRowStartLine <| GridLineSpanIdent "big-grid"
 
-    gridRowStart2 (customIdent "big-grid") (int 2)
+    gridRowStartLine <| GridLineSpanNum 3
 
-    gridRowStart3 span (customIdent "big-grid") (int 2)
+    gridRowStartLine <| GridLineIdentNum "big-grid" 2
 -}
 gridRowStart :
     BaseValue (
@@ -10667,50 +11009,23 @@ gridRowStart (Value val) =
     AppendProperty ("grid-row-start:" ++ val)
 
 
-{-| The 2-argument version of [`gridRowStart`](#gridRowStart).
+{-| The variant of [`gridRowStart`](#gridRowStart) that accepts a `<grid-line>` ([`GridLine`](#GridLine)) type.
 
-    gridRowStart2 span (customIdent "big-grid")
+    gridRowStart (customIdent "big-grid")
 
-    gridRowStart2 span (int 3)
+    gridRowStart auto
 
-    gridRowStart2 (customIdent "big-grid") (int 2)
+    gridRowStartLine <| GridLineSpanIdent "big-grid"
+
+    gridRowStartLine <| GridLineSpanNum 3
+
+    gridRowStartLine <| GridLineIdentNum "big-grid" 2
 -}
-gridRowStart2 :
-    Value
-        { customIdent : Supported
-        , span : Supported
-        }
-    -> Value
-        { int : Supported
-        , customIdent : Supported
-        }
+gridRowStartLine :
+    GridLine
     -> Style
-gridRowStart2 (Value val1) (Value val2) =
-    AppendProperty ("grid-row-start:" ++ val1 ++ " " ++ val2)
-
-
-{-| The 3-argument version of [`gridRowStart`](#gridRowStart).
-
-    gridRowStart3 span (customIdent "big-grid") (int 2)
--}
-gridRowStart3 :
-    Value
-        { span : Supported
-        }
-    -> Value
-        { customIdent : Supported
-        }
-    -> Value
-        { int : Supported }
-    -> Style
-gridRowStart3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty <|
-        "grid-row-start:"
-        ++ val1
-        ++ " "
-        ++ val2
-        ++ " "
-        ++ val3
+gridRowStartLine gl =
+    AppendProperty ("grid-row-start:" ++ unwrapGridLine gl)
 
 
 {-| The 1-argument version of the [`grid-row-end`](https://css-tricks.com/almanac/properties/g/grid-row-end/)
@@ -10738,50 +11053,102 @@ gridRowEnd (Value val) =
     AppendProperty ("grid-row-end:" ++ val)
 
 
-{-| The 2-argument version of [`gridRowEnd`](#gridRowEnd).
+{-| The variant of [`gridRowEnd`](#gridRowEnd) that accepts a `<grid-line>` ([`GridLine`](#GridLine)) type.
 
-    gridRowEnd2 span (customIdent "big-grid")
+    gridRowEnd (customIdent "big-grid")
 
-    gridRowEnd2 span (int 3)
+    gridRowEnd auto
 
-    gridRowEnd2 (customIdent "big-grid") (int 2)
+    gridRowEndLine <| GridLineSpanIdent "big-grid"
+
+    gridRowEndLine <| GridLineSpanNum 3
+
+    gridRowEndLine <| GridLineIdentNum "big-grid" 2
 -}
-gridRowEnd2 :
-    Value
-        { customIdent : Supported
-        , span : Supported
-        }
-    -> Value
-        { int : Supported
+gridRowEndLine :
+    GridLine
+    -> Style
+gridRowEndLine gl =
+    AppendProperty ("grid-row-end:" ++ unwrapGridLine gl)
+
+
+{-| The [`grid-column`](https://css-tricks.com/almanac/properties/g/grid-column/)
+property.
+
+This variant is for single keyword arguments.
+
+    gridColumn auto
+
+    gridColumn inherit
+
+    gridColumnLine (GridLineIdentNum "main-grid" 3)
+    -- grid-column: main-grid 3
+
+    gridColumn2Lines GridLineAuto (GridLineSpanIdentNum "grid-thing" 5)
+    -- grid-column: auto / span grid-thing 5
+-}
+gridColumn :
+    BaseValue
+        { auto : Supported
         , customIdent : Supported
         }
     -> Style
-gridRowEnd2 (Value val1) (Value val2) =
-    AppendProperty ("grid-row-end:" ++ val1 ++ " " ++ val2)
+gridColumn (Value val) =
+    AppendProperty <| "grid-column:" ++ val
 
 
-{-| The 3-argument version of [`gridRowEnd`](#gridRowEnd).
+{-| The [`grid-column`](https://css-tricks.com/almanac/properties/g/grid-column/)
+property.
 
-    gridRowEnd3 span (customIdent "big-grid") (int 2)
+This variant specifies 1 `<grid-line>` ([`GridLine`](#GridLine)) that determines
+the start and end position of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridColumn auto
+
+    gridColumn inherit
+
+    gridColumnLine (GridLineIdentNum "main-grid" 3)
+    -- grid-column: main-grid 3
+
+    gridColumn2Lines GridLineAuto (GridLineSpanIdentNum "grid-thing" 5)
+    -- grid-column: auto / span grid-thing 5
 -}
-gridRowEnd3 :
-    Value
-        { span : Supported
-        }
-    -> Value
-        { customIdent : Supported
-        }
-    -> Value
-        { int : Supported }
+gridColumnLine :
+    GridLine
     -> Style
-gridRowEnd3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty <|
-        "grid-row-end:"
-        ++ val1
-        ++ " "
-        ++ val2
-        ++ " "
-        ++ val3
+gridColumnLine gl1 =
+    AppendProperty <| "grid-column:" ++ (unwrapGridLine gl1)
+
+
+{-| The [`grid-column`](https://css-tricks.com/almanac/properties/g/grid-column/)
+property.
+
+This variant specifies 2 `<grid-line>`s ([`GridLine`](#GridLine)) that determine
+the start and end position of this grid item.
+
+Numbers used in this should not be zero, else they won't work.
+
+    gridColumn auto
+
+    gridColumn inherit
+
+    gridColumnLine (GridLineIdentNum "main-grid" 3)
+    -- grid-column: main-grid 3
+
+    gridColumn2Lines GridLineAuto (GridLineSpanIdentNum "grid-thing" 5)
+    -- grid-column: auto / span grid-thing 5
+-}
+gridColumn2Lines :
+    GridLine
+    -> GridLine
+    -> Style
+gridColumn2Lines gl1 gl2 =
+    AppendProperty <| "grid-column:"
+        ++ (unwrapGridLine gl1)
+        ++ " / "
+        ++ (unwrapGridLine gl2)
 
 
 {-| The 1-argument version of the [`grid-column-start`](https://css-tricks.com/almanac/properties/g/grid-column-start/)
@@ -10791,11 +11158,11 @@ property.
 
     gridColumnStart auto
 
-    gridColumnStart2 span (int 3)
+    gridColumnStartLine <| GridLineSpanIdent "big-grid"
 
-    gridColumnStart2 (customIdent "big-grid") (int 2)
+    gridColumnStartLine <| GridLineSpanNum 3
 
-    gridColumnStart3 span (customIdent "big-grid") (int 2)
+    gridColumnStartLine <| GridLineIdentNum "big-grid" 2
 -}
 gridColumnStart :
     BaseValue (
@@ -10809,50 +11176,23 @@ gridColumnStart (Value val) =
     AppendProperty ("grid-column-start:" ++ val)
 
 
-{-| The 2-argument version of [`gridColumnStart`](#gridColumnStart).
+{-| The variant of [`gridColumnStart`](#gridColumnStart) that accepts a `<grid-line>` ([`GridLine`](#GridLine)) type.
 
-    gridColumnStart2 span (customIdent "big-grid")
+    gridColumnStart (customIdent "big-grid")
 
-    gridColumnStart2 span (int 3)
+    gridColumnStart auto
 
-    gridColumnStart2 (customIdent "big-grid") (int 2)
+    gridColumnStartLine <| GridLineSpanIdent "big-grid"
+
+    gridColumnStartLine <| GridLineSpanNum 3
+
+    gridColumnStartLine <| GridLineIdentNum "big-grid" 2
 -}
-gridColumnStart2 :
-    Value
-        { customIdent : Supported
-        , span : Supported
-        }
-    -> Value
-        { int : Supported
-        , customIdent : Supported
-        }
+gridColumnStartLine :
+    GridLine
     -> Style
-gridColumnStart2 (Value val1) (Value val2) =
-    AppendProperty ("grid-column-start:" ++ val1 ++ " " ++ val2)
-
-
-{-| The 3-argument version of [`gridColumnStart`](#gridColumnStart).
-
-    gridColumnStart3 span (customIdent "big-grid") (int 2)
--}
-gridColumnStart3 :
-    Value
-        { span : Supported
-        }
-    -> Value
-        { customIdent : Supported
-        }
-    -> Value
-        { int : Supported }
-    -> Style
-gridColumnStart3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty <|
-        "grid-column-start:"
-        ++ val1
-        ++ " "
-        ++ val2
-        ++ " "
-        ++ val3
+gridColumnStartLine gl =
+    AppendProperty ("grid-column-start:" ++ unwrapGridLine gl)
 
 
 {-| The 1-argument version of the [`grid-column-end`](https://css-tricks.com/almanac/properties/g/grid-column-end/)
@@ -10880,51 +11220,24 @@ gridColumnEnd (Value val) =
     AppendProperty ("grid-column-end:" ++ val)
 
 
-{-| The 2-argument version of [`gridColumnEnd`](#gridColumnEnd).
+{-| The variant of [`gridColumnEnd`](#gridColumnEnd) that accepts a `<grid-line>` ([`GridLine`](#GridLine)) type.
 
-    gridColumnEnd2 span (customIdent "big-grid")
+    gridColumnEnd (customIdent "big-grid")
 
-    gridColumnEnd2 span (int 3)
+    gridColumnEnd auto
 
-    gridColumnEnd2 (customIdent "big-grid") (int 2)
+    gridColumnEndLine <| GridLineSpanIdent "big-grid"
+
+    gridColumnEndLine <| GridLineSpanNum 3
+
+    gridColumnEndLine <| GridLineIdentNum "big-grid" 2
 -}
-gridColumnEnd2 :
-    Value
-        { customIdent : Supported
-        , span : Supported
-        }
-    -> Value
-        { int : Supported
-        , customIdent : Supported
-        }
+gridColumnEndLine :
+    GridLine
     -> Style
-gridColumnEnd2 (Value val1) (Value val2) =
-    AppendProperty ("grid-column-end:" ++ val1 ++ " " ++ val2)
+gridColumnEndLine gl =
+    AppendProperty ("grid-column-end:" ++ unwrapGridLine gl)
 
-
-{-| The 3-argument version of [`gridColumnEnd`](#gridColumnEnd).
-
-    gridColumnEnd3 span (customIdent "big-grid") (int 2)
--}
-gridColumnEnd3 :
-    Value
-        { span : Supported
-        }
-    -> Value
-        { customIdent : Supported
-        }
-    -> Value
-        { int : Supported }
-    -> Style
-gridColumnEnd3 (Value val1) (Value val2) (Value val3) =
-    AppendProperty <|
-        "grid-column-end:"
-        ++ val1
-        ++ " "
-        ++ val2
-        ++ " "
-       
-        ++ val3
 
 {-| The [`grid-template-areas`](https://css-tricks.com/almanac/properties/g/grid-template-areas/)
 property. Use the [`gridTemplateAreasList`](#gridTemplateAreasList) function if you want
@@ -10979,24 +11292,6 @@ gridTemplateAreasList listStr =
 dense : Value { provides | dense : Supported }
 dense =
     Value "dense"
-    
-{-| The `span` value for the following properties:
-
--   [`gridRowStart2`](#gridRowStart2)
--   [`gridRowStart3`](#gridRowStart3)
--   [`gridRowEnd2`](#gridRowEnd2)
--   [`gridRowEnd3`](#gridRowEnd3)
--   [`gridColumnStart2`](#gridColumnStart2)
--   [`gridColumnStart3`](#gridColumnStart3)
--   [`gridColumnEnd2`](#gridColumnEnd2)
--   [`gridColumnEnd3`](#gridColumnEnd3)
-```
-    gridColumnEnd3 span (customIdent "big-grid") (int 2)
-```
--}
-span : Value { provides | span : Supported }
-span =
-    Value "span"
 
 
 ------------------------------------------------------------------------
