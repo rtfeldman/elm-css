@@ -234,6 +234,7 @@ module Css exposing
     , commonLigatures, noCommonLigatures, discretionaryLigatures, noDiscretionaryLigatures, historicalLigatures, noHistoricalLigatures, contextual, noContextual
     , fontVariantNumeric, fontVariantNumeric4
     , ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
+    , fontVariantEmoji, emoji, unicode
     , fontKerning
     , fontLanguageOverride
     , fontOpticalSizing
@@ -1019,6 +1020,10 @@ Other values you can use for flex item alignment:
 @docs fontVariantNumeric, fontVariantNumeric4
 @docs ordinal, slashedZero, liningNums, oldstyleNums, proportionalNums, tabularNums, diagonalFractions, stackedFractions
     
+## Emoji variants
+
+@docs fontVariantEmoji, emoji, unicode
+
 ## Kerning
 
 @docs fontKerning
@@ -13247,8 +13252,43 @@ stackedFractions =
     Value "stacked-fractions"
 
 
+{-| The [`font-variant-emoji`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-emoji)
+property.
 
--- FONT OPTICAL SIZING --
+    fontVariantEmoji unset
+
+    fontVariantemoji emoji
+
+    fontVariantemoji normal
+-}
+fontVariantEmoji :
+    BaseValue
+        { normal : Supported
+        , text : Supported
+        , emoji : Supported
+        , unicode : Supported
+        }
+    -> Style
+fontVariantEmoji (Value val) =
+    AppendProperty <| "font-variant-emoji:" ++ val
+
+
+{-| The `emoji` value used with [`fontVariantEmoji`](#fontVariantEmoji).
+
+    fontVariantemoji emoji
+-}
+emoji : Value { provides | emoji : Supported }
+emoji =
+    Value "emoji"
+
+
+{-| The `unicode` value used with [`fontVariantEmoji`](#fontVariantEmoji).
+
+    fontVariantemoji unicode
+-}
+unicode : Value { provides | unicode : Supported }
+unicode =
+    Value "unicode"
 
 
 {-| The [`font-kerning`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-kerning) property.
