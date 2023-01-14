@@ -353,6 +353,7 @@ module Css exposing
 
     -- scrollbar customisation
     , scrollbarColor, scrollbarWidth
+    , scrollbarGutter, scrollbarGutter2, stable, bothEdges
 
     -- scrolling behavior
     , scrollBehavior, smooth
@@ -1233,6 +1234,7 @@ Other values you can use for flex item alignment:
 # Scrollbar customisation
 
 @docs scrollbarColor, scrollbarWidth
+@docs scrollbarGutter, scrollbarGutter2, stable, bothEdges
 
 
 ------------------------------------------------------
@@ -17034,6 +17036,66 @@ scrollbarWidth :
     -> Style
 scrollbarWidth (Value val) =
     AppendProperty ("scrollbar-width:" ++ val)
+
+
+{-| The [`scrollbar-gutter`](https://css-tricks.com/almanac/properties/s/scrollbar-gutter/)
+property.
+
+This 1-argument variant can accept global values and some keywords.
+
+    scrollbarGutter auto
+
+    scrollbarGutter inherit
+    
+    scrollbarGutter2 stable bothEdges
+-}
+scrollbarGutter :
+    BaseValue
+        { auto : Supported
+        , stable : Supported
+        }
+    -> Style
+scrollbarGutter (Value val) =
+    AppendProperty ("scrollbar-gutter:" ++ val)
+
+
+{-| The [`scrollbar-gutter`](https://css-tricks.com/almanac/properties/s/scrollbar-gutter/)
+property.
+
+This 2-argument variant can only accept the keywords `stable` and `bothEdges`.
+
+    scrollbarGutter auto
+
+    scrollbarGutter inherit
+
+    scrollbarGutter2 stable bothEdges
+-}
+scrollbarGutter2 :
+    Value { stable : Supported }
+    -> Value { bothEdges : Supported }
+    -> Style
+scrollbarGutter2 (Value val1) (Value val2) =
+    AppendProperty ("scrollbar-gutter:" ++ val1 ++ " " ++ val2)
+
+
+{-| The `stable` value used by [`scrollbarGutter`](#scrollbarGutter).
+
+    scrollbarGutter stable
+
+-}
+stable : Value { provides | stable : Supported }
+stable =
+    Value "stable"
+
+
+{-| The `both-edges` value used by [`scrollbarGutter`](#scrollbarGutter).
+
+    scrollbarGutter2 stable bothEdges
+
+-}
+bothEdges : Value { provides | bothEdges : Supported }
+bothEdges =
+    Value "both-edges"
 
 
 ------------------------------------------------------------------------
