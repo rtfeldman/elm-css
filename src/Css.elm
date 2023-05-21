@@ -302,7 +302,7 @@ values.
 
 Because only one `css` attribute per element has any effect, you cannot reuse
 styles after compiling them to attributes. Trying to reuse styles by using
-multiple attributes will not not work:
+multiple attributes will not work:
 
     greenBorder : Attribute msg
     greenBorder =
